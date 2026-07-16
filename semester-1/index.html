@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل الدراسي الأول | Fouad EduLab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#131c30; --navy:#1B2640; --teal:#14C8A8;
+    --teal-glow:rgba(20,200,168,.35); --coral:#ff6b4a;
+    --text:#EAF1F0; --text-dim:#9FB0C3; --border:rgba(20,200,168,.35);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:linear-gradient(180deg,var(--navy-deep),var(--navy) 35%,var(--navy-deep));
+    color:var(--text); font-family:'Tajawal','Cairo',sans-serif; line-height:1.8; min-height:100dvh;
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:clamp(16px,4vw,40px);}
+  .crumb{color:var(--text-dim);font-size:14px;margin-bottom:8px;}
+  .crumb a{color:var(--teal);text-decoration:none;}
+  h1{font-family:'Cairo',sans-serif;font-weight:800;font-size:clamp(26px,4.5vw,38px);margin:0 0 30px;}
+
+  .unit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
+  .unit-card{
+    display:block;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:20px;
+    text-decoration:none;
+    color:var(--text);
+    background:rgba(255,255,255,.02);
+    transition:.25s;
+  }
+  .unit-card:hover{border-color:var(--teal);box-shadow:0 0 18px var(--teal-glow);transform:translateY(-2px);}
+  .unit-card.disabled{opacity:.4;pointer-events:none;}
+  .unit-num{color:var(--teal);font-weight:700;font-size:13px;margin-bottom:6px;}
+  .unit-title{font-family:'Cairo',sans-serif;font-weight:700;font-size:16px;}
+  .unit-status{font-size:12px;color:var(--text-dim);margin-top:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../index.html">الرئيسية</a> · الفصل الدراسي الأول</div>
+  <h1>الفصل الدراسي الأول</h1>
+
+  <div class="unit-grid">
+    <a class="unit-card" href="unit-01/index.html">
+      <div class="unit-num">الوحدة 01</div>
+      <div class="unit-title">التركيب الذّري والصيَغ والروابط الكيميائية</div>
+      <div class="unit-status">6 دروس متاحة</div>
+    </a>
+    <a class="unit-card disabled" href="#">
+      <div class="unit-num">الوحدة 02</div>
+      <div class="unit-title">قيد الإعداد</div>
+      <div class="unit-status">—</div>
+    </a>
+    <a class="unit-card disabled" href="#">
+      <div class="unit-num">الوحدة 03</div>
+      <div class="unit-title">قيد الإعداد</div>
+      <div class="unit-status">—</div>
+    </a>
+    <a class="unit-card disabled" href="#">
+      <div class="unit-num">الوحدة 04</div>
+      <div class="unit-title">قيد الإعداد</div>
+      <div class="unit-status">—</div>
+    </a>
+    <a class="unit-card disabled" href="#">
+      <div class="unit-num">الوحدة 05</div>
+      <div class="unit-title">قيد الإعداد</div>
+      <div class="unit-status">—</div>
+    </a>
+    <a class="unit-card disabled" href="#">
+      <div class="unit-num">الوحدة 06</div>
+      <div class="unit-title">قيد الإعداد</div>
+      <div class="unit-status">—</div>
+    </a>
+  </div>
+</div>
+</body>
+</html>

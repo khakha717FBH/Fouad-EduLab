@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدرس 1 | ما تركيب الذرة؟ | مختبر فؤاد التعليمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#131c30;
+    --navy:#1B2640;
+    --teal:#14C8A8;
+    --teal-glow:rgba(20,200,168,.35);
+    --coral:#ff6b4a;
+    --text:#EAF1F0;
+    --text-dim:#9FB0C3;
+    --border:rgba(20,200,168,.35);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:linear-gradient(180deg,var(--navy-deep),var(--navy) 40%,var(--navy-deep));
+    color:var(--text);
+    font-family:'Tajawal','Cairo',sans-serif;
+    line-height:1.8;
+    min-height:100dvh;
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:clamp(16px,4vw,40px);}
+
+  header.hero{
+    text-align:center;
+    padding:clamp(28px,6vw,56px) clamp(16px,4vw,32px);
+    border-bottom:1px solid var(--border);
+  }
+  .eyebrow{
+    color:var(--teal);
+    font-weight:700;
+    font-size:clamp(13px,2.2vw,15px);
+    letter-spacing:.5px;
+  }
+  h1{
+    font-family:'Cairo',sans-serif;
+    font-weight:800;
+    font-size:clamp(28px,5vw,44px);
+    margin:8px 0 20px;
+  }
+  .objectives{
+    display:grid;
+    gap:12px;
+    max-width:620px;
+    margin:0 auto;
+    text-align:right;
+  }
+  .objective{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    background:rgba(20,200,168,.06);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:12px 16px;
+    font-size:clamp(14px,2.4vw,16px);
+  }
+  .objective .num{
+    flex:0 0 auto;
+    width:28px;height:28px;
+    border-radius:50%;
+    border:1px solid var(--teal);
+    color:var(--teal);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:14px;
+  }
+
+  .station{
+    margin-top:clamp(28px,5vw,44px);
+    padding:clamp(18px,4vw,28px);
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:rgba(255,255,255,.02);
+  }
+  .station-label{
+    display:inline-block;
+    color:var(--teal);
+    font-weight:700;
+    font-size:13px;
+    border:1px solid var(--teal);
+    border-radius:999px;
+    padding:4px 14px;
+    margin-bottom:12px;
+  }
+  .station h2{
+    font-family:'Cairo',sans-serif;
+    font-size:clamp(19px,3.2vw,24px);
+    margin:0 0 14px;
+  }
+  .station p{color:var(--text-dim);font-size:clamp(14px,2.4vw,16px);}
+
+  .media-frame{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/9;
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid var(--border);
+    margin:14px 0;
+    background:#0d1424;
+  }
+  .media-frame iframe{width:100%;height:100%;border:0;}
+  .h5p-frame{aspect-ratio:unset;height:auto;min-height:400px;}
+  .h5p-frame iframe{height:400px;}
+
+  .btn{
+    display:inline-block;
+    background:transparent;
+    border:1px solid var(--teal);
+    color:var(--teal);
+    font-family:'Tajawal',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    padding:11px 26px;
+    border-radius:999px;
+    text-decoration:none;
+    transition:.25s;
+    margin-top:8px;
+  }
+  .btn:hover{
+    background:var(--teal);
+    color:var(--navy-deep);
+    box-shadow:0 0 18px var(--teal-glow);
+  }
+  .btn-coral{border-color:var(--coral);color:var(--coral);}
+  .btn-coral:hover{background:var(--coral);color:var(--navy-deep);box-shadow:0 0 18px rgba(255,107,74,.35);}
+
+  .facts-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:14px;
+    margin:16px 0;
+  }
+  .fact-card{
+    background:rgba(20,200,168,.05);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px;
+    text-align:center;
+  }
+  .fact-card .term{color:var(--teal);font-weight:700;margin-bottom:6px;}
+
+  .ion-states{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:14px;
+    margin:16px 0;
+  }
+  .ion-card{
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:14px;
+    text-align:center;
+    background:rgba(255,255,255,.02);
+  }
+  .ion-card img{width:100%;border-radius:10px;margin-bottom:10px;}
+  .ion-card h3{margin:6px 0;font-size:15px;color:var(--teal);}
+  .ion-card .charge{color:var(--coral);font-weight:700;}
+
+  footer{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:13px;
+    padding:32px 16px 40px;
+  }
+
+  .quiz-options{
+    display:grid;
+    gap:10px;
+    margin-bottom:16px;
+  }
+  .quiz-option{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:13px 20px;
+    cursor:pointer;
+    font-size:clamp(14px,2.4vw,16px);
+    transition:.2s;
+  }
+  .quiz-option:hover{
+    border-color:var(--teal);
+    background:rgba(20,200,168,.08);
+  }
+  .quiz-option input{
+    accent-color:var(--teal);
+    width:18px;height:18px;
+    flex:0 0 auto;
+  }
+  .quiz-option.selected{
+    border-color:var(--teal);
+    box-shadow:0 0 14px var(--teal-glow);
+  }
+  .quiz-option.correct{
+    border-color:var(--teal);
+    background:rgba(20,200,168,.16);
+  }
+  .quiz-option.incorrect{
+    border-color:var(--coral);
+    background:rgba(255,107,74,.1);
+  }
+  .quiz-feedback{
+    margin-top:6px;
+    font-weight:700;
+    font-size:15px;
+    min-height:22px;
+  }
+  .quiz-feedback.correct{color:var(--teal);}
+  .quiz-feedback.incorrect{color:var(--coral);}
+
+  .chips-pool{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:16px 0 26px;
+    min-height:44px;
+  }
+  .chip{
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--teal);
+    color:var(--text);
+    border-radius:999px;
+    padding:9px 20px;
+    font-weight:700;
+    font-size:14px;
+    cursor:grab;
+    touch-action:none;
+    user-select:none;
+    transition:box-shadow .2s, opacity .2s;
+  }
+  .chip:hover{box-shadow:0 0 12px var(--teal-glow);}
+  .chip.dragging{
+    position:fixed;
+    z-index:999;
+    opacity:.9;
+    pointer-events:none;
+    box-shadow:0 0 18px var(--teal-glow);
+  }
+  .chip.placed{
+    opacity:0;
+    pointer-events:none;
+    position:absolute;
+  }
+
+  .particle-cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+    gap:16px;
+  }
+  .particle-card{
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:16px;
+    text-align:center;
+    background:rgba(255,255,255,.02);
+  }
+  .ball{
+    width:64px;height:64px;
+    border-radius:50%;
+    margin:12px auto;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;
+    font-size:22px;
+    color:#fff;
+  }
+  .ball-p{background:radial-gradient(circle at 35% 30%,#ff8a70,var(--coral) 70%);}
+  .ball-n{background:radial-gradient(circle at 35% 30%,#5fd9c9,var(--teal) 70%);}
+  .ball-e{width:34px;height:34px;background:radial-gradient(circle at 35% 30%,#8fe0c9,var(--teal) 70%);}
+
+  .slot{
+    display:inline-block;
+    min-width:70px;
+    border:1px dashed var(--text-dim);
+    border-radius:999px;
+    padding:6px 14px;
+    font-size:13px;
+    color:var(--text-dim);
+    transition:.2s;
+  }
+  .name-slot{display:block;min-height:20px;margin-bottom:4px;}
+  .inline-slot{margin-right:4px;}
+  .prop-row{margin-top:8px;font-size:13px;color:var(--text-dim);}
+  .slot.correct{
+    border-style:solid;
+    border-color:var(--teal);
+    color:var(--teal);
+    background:rgba(20,200,168,.1);
+  }
+  .slot.dragover{
+    border-color:var(--teal);
+    box-shadow:0 0 10px var(--teal-glow);
+  }
+
+  /* شريط مؤشر التقدّم */
+  .progress-track{
+    position:sticky;
+    top:0;
+    z-index:50;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    padding:14px 10px;
+    background:rgba(19,28,48,.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  .progress-dot{
+    width:10px;height:10px;
+    border-radius:50%;
+    background:rgba(255,255,255,.12);
+    border:1px solid var(--text-dim);
+    transition:transform .35s, background .35s, box-shadow .35s, border-color .35s;
+  }
+  .progress-dot.active{
+    background:var(--teal);
+    border-color:var(--teal);
+    box-shadow:0 0 10px var(--teal-glow);
+    transform:scale(1.35);
+  }
+
+  /* الظهور التدريجي للمحطات عند التمرير */
+  .station{
+    opacity:0;
+    transform:translateY(26px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .station.in-view{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* حركات التغذية الراجعة اللحظية */
+  @keyframes popIn{
+    0%{transform:scale(.82);}
+    60%{transform:scale(1.08);}
+    100%{transform:scale(1);}
+  }
+  @keyframes shakeX{
+    0%,100%{transform:translateX(0);}
+    25%{transform:translateX(-7px);}
+    75%{transform:translateX(7px);}
+  }
+  .quiz-option.correct{animation:popIn .35s ease;}
+  .quiz-option.incorrect{animation:shakeX .4s ease;}
+  .slot.correct{animation:popIn .35s ease;}
+  .chip.shake{animation:shakeX .4s ease;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">مختبر فؤاد التعليمي · الوحدة الأولى</div>
+  <h1>الدرس 1: ما تركيب الذرة؟</h1>
+  <div class="objectives">
+    <div class="objective"><span class="num">1</span><span>تصف تركيب الذرة.</span></div>
+    <div class="objective"><span class="num">2</span><span>تحدد العدد الذري (Z) والعدد الكتلي (A) للذرة.</span></div>
+    <div class="objective"><span class="num">3</span><span>تحسب عدد الجسيمات الذرية في أيون موجب أو سالب.</span></div>
+  </div>
+</header>
+
+<div class="progress-track" aria-label="مؤشر التقدّم عبر محطات الدرس">
+  <div class="progress-dot" data-target="station-1"></div>
+  <div class="progress-dot" data-target="station-2"></div>
+  <div class="progress-dot" data-target="station-3"></div>
+  <div class="progress-dot" data-target="station-4"></div>
+  <div class="progress-dot" data-target="station-5"></div>
+</div>
+
+<div class="wrap">
+
+  <section class="station" id="station-1">
+    <span class="station-label">المحطة الأولى</span>
+    <h2>تحدي البداية</h2>
+    <p style="color:var(--text);font-size:clamp(16px,2.8vw,19px);font-weight:600;margin-bottom:18px;">
+      إذا كبّرت ذرة الذهب ملايين المرات، ماذا تتوقع أن تجد بداخلها؟
+    </p>
+
+    <div class="quiz-options" id="q1-options">
+      <label class="quiz-option">
+        <input type="radio" name="q1" value="neutrons">
+        <span>نيوترونات فقط</span>
+      </label>
+      <label class="quiz-option">
+        <input type="radio" name="q1" value="electrons">
+        <span>إلكترونات فقط</span>
+      </label>
+      <label class="quiz-option">
+        <input type="radio" name="q1" value="all">
+        <span>بروتونات وإلكترونات ونيوترونات</span>
+      </label>
+      <label class="quiz-option">
+        <input type="radio" name="q1" value="protons">
+        <span>بروتونات فقط</span>
+      </label>
+    </div>
+
+    <button class="btn" onclick="checkQ1()">تحقق</button>
+    <div id="q1-feedback" class="quiz-feedback"></div>
+  </section>
+
+  <section class="station" id="station-2">
+    <span class="station-label">المحطة الثانية</span>
+    <h2>داخل الذرة</h2>
+    <p>شاهد الفيديو التفاعلي</p>
+    <div class="media-frame h5p-frame">
+      <iframe src="https://app.lumi.education/api/v1/run/Y3bpBe/embed" title="فيديو تفاعلي - داخل الذرة" loading="lazy" allowfullscreen="allowfullscreen" allow="geolocation *; microphone *; camera *; midi *; encrypted-media *"></iframe>
+    </div>
+    <p>ساعدنا في إعادة ترتيب بطاقات الجسيمات الذرية بعد أن اختلطت المعلومات — اسحب كل بطاقة إلى مكانها الصحيح</p>
+
+    <div class="chips-pool" id="chips-pool">
+      <div class="chip" data-value="النيوترون">النيوترون</div>
+      <div class="chip" data-value="البروتون">البروتون</div>
+      <div class="chip" data-value="الإلكترون">الإلكترون</div>
+      <div class="chip" data-value="موجبة">موجبة</div>
+      <div class="chip" data-value="سالبة">سالبة</div>
+      <div class="chip" data-value="متعادلة">متعادلة</div>
+      <div class="chip" data-value="1">1</div>
+      <div class="chip" data-value="1">1</div>
+      <div class="chip" data-value="1/1836">1/1836</div>
+    </div>
+
+    <div class="particle-cards">
+      <div class="particle-card">
+        <div class="slot name-slot" data-answer="البروتون">اسم الجسيم</div>
+        <div class="ball ball-p">p</div>
+        <div class="prop-row">الشحنة: <span class="slot inline-slot" data-answer="موجبة">؟</span></div>
+        <div class="prop-row">الكتلة: <span class="slot inline-slot" data-answer="1">؟</span></div>
+      </div>
+      <div class="particle-card">
+        <div class="slot name-slot" data-answer="النيوترون">اسم الجسيم</div>
+        <div class="ball ball-n">n</div>
+        <div class="prop-row">الشحنة: <span class="slot inline-slot" data-answer="متعادلة">؟</span></div>
+        <div class="prop-row">الكتلة: <span class="slot inline-slot" data-answer="1">؟</span></div>
+      </div>
+      <div class="particle-card">
+        <div class="slot name-slot" data-answer="الإلكترون">اسم الجسيم</div>
+        <div class="ball ball-e">e</div>
+        <div class="prop-row">الشحنة: <span class="slot inline-slot" data-answer="سالبة">؟</span></div>
+        <div class="prop-row">الكتلة: <span class="slot inline-slot" data-answer="1/1836">؟</span></div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--text-dim);margin-top:10px;">ملاحظة: حجوم الجسيمات غير متناسبة فعليًا؛ الإلكترون أصغر بكثير من البروتون والنيوترون.</p>
+  </section>
+
+  <section class="station" id="station-3">
+    <span class="station-label">المحطة الثالثة</span>
+    <h2>أسرار الذرة</h2>
+    <p>أكتشف</p>
+    <a class="btn" href="https://khakha717fbh.github.io/atom-L1/" target="_blank" rel="noopener">مختبر افتراضي: اكتشف أسرار الذرة</a>
+    <p style="font-size:13px;color:var(--text-dim);margin-top:8px;">يفتح في صفحة كاملة لتجربة تفاعلية بلا تمرير مزدوج — يحتوي زر عودة لهذا الدرس داخل كود النشاط نفسه.</p>
+
+    <p style="margin-top:20px;">لخّص</p>
+    <div class="facts-grid">
+      <div class="fact-card">
+        <div class="term">العدد الكتلي (A)</div>
+        عدد البروتونات + عدد النيوترونات في نواة الذرة
+      </div>
+      <div class="fact-card">
+        <div class="term">العدد الذري (Z)</div>
+        عدد البروتونات في نواة الذرة
+      </div>
+    </div>
+    <p>الرمز الكيميائي العام لعنصر كيميائي</p>
+
+    <p style="margin-top:20px;">شاهد</p>
+    <div class="media-frame">
+      <iframe src="https://www.youtube.com/embed/ovs8vZmTKYM?si=n026T1RIyvR1pNLq" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+    </div>
+
+    <p style="margin-top:20px;">تحقق</p>
+    <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSflBV_Ytp5cS4OSi_y-zQ7Z3vDEJ3C1VBU4BDMtoe6Ot9IETg/viewform" target="_blank" rel="noopener">اختبر نفسك</a>
+  </section>
+
+  <section class="station" id="station-4">
+    <span class="station-label">المحطة الرابعة</span>
+    <h2>ماذا لو فقدت الذرة المتعادلة أحد إلكتروناتها؟</h2>
+    <p>قارن حالات الذرة في الليثيوم</p>
+    <div class="ion-states">
+      <div class="ion-card">
+        <h3>الأيون السالب</h3>
+        <div>3 بروتونات</div>
+        <div>4 إلكترونات</div>
+        <div class="charge">الشحنة = −1</div>
+      </div>
+      <div class="ion-card">
+        <h3>الذرة المتعادلة</h3>
+        <div>3 بروتونات</div>
+        <div>3 إلكترونات</div>
+        <div class="charge">الشحنة = 0</div>
+      </div>
+      <div class="ion-card">
+        <h3>الأيون الموجب</h3>
+        <div>3 بروتونات</div>
+        <div>2 إلكترونات</div>
+        <div class="charge">الشحنة = +1</div>
+      </div>
+    </div>
+
+    <p style="margin-top:20px;">شاهد</p>
+    <div class="media-frame">
+      <iframe src="https://www.youtube.com/embed/JlQsozUKeFE" title="فيديو تعليمي" loading="lazy" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section class="station" id="station-5" style="text-align:center;">
+    <span class="station-label">المحطة الأخيرة</span>
+    <h2>تقييم نهاية الدرس 1-1: ما تركيب الذرة؟</h2>
+    <a class="btn btn-coral" href="https://khakha717fbh.github.io/Term-1-U-1-Exam-1-1/" target="_blank" rel="noopener">ابدأ التقييم</a>
+  </section>
+
+  <section class="station" style="text-align:center;">
+    <div style="font-size:28px;">🤖</div>
+    <h2>مساعد الذكاء الاصطناعي فهيم</h2>
+    <p>لديك سؤال أو فكرة غامضة؟ يستخدم أسلوب السؤال والجواب ليساعدك على التفكير وصياغة الإجابة بنفسك</p>
+    <a class="btn" href="https://gemini.google.com/gem/52a8cb37e0eb?usp=sharing" target="_blank" rel="noopener">تحدث مع فهيم</a>
+  </section>
+
+</div>
+
+<footer>
+  آفاق لا تنتهي للتعلم الإبداعي · Fouad EduLab 2026 © · منصة تعليم العلوم - دولة قطر
+</footer>
+
+<script>
+  // تظليل الخيار عند اختياره
+  document.querySelectorAll('#q1-options .quiz-option').forEach(opt=>{
+    opt.addEventListener('click',()=>{
+      document.querySelectorAll('#q1-options .quiz-option').forEach(o=>o.classList.remove('selected'));
+      opt.classList.add('selected');
+    });
+  });
+
+  function checkQ1(){
+    const selected = document.querySelector('input[name="q1"]:checked');
+    const feedback = document.getElementById('q1-feedback');
+    if(!selected){
+      feedback.textContent = 'اختر إجابة أولاً';
+      feedback.className = 'quiz-feedback incorrect';
+      return;
+    }
+    document.querySelectorAll('#q1-options .quiz-option').forEach(o=>o.classList.remove('correct','incorrect'));
+    const chosenLabel = selected.closest('.quiz-option');
+
+    if(selected.value === 'all'){
+      chosenLabel.classList.add('correct');
+      feedback.textContent = 'إجابة صحيحة — الذرة تحتوي دائمًا على البروتونات والإلكترونات والنيوترونات مهما تغير حجمها';
+      feedback.className = 'quiz-feedback correct';
+    } else {
+      chosenLabel.classList.add('incorrect');
+      feedback.textContent = 'حاول مرة أخرى — فكّر في مكونات الذرة الثلاثة معًا';
+      feedback.className = 'quiz-feedback incorrect';
+    }
+  }
+</script>
+<script src="https://app.Lumi.education/api/v1/h5p/core/js/h5p-resizer.js" charset="UTF-8"></script>
+
+<script>
+  // نشاط سحب وإفلات بطاقات الجسيمات — يعمل بالفأرة واللمس عبر Pointer Events
+  (function(){
+    let dragEl = null, startX = 0, startY = 0, origParent = null, origNext = null;
+
+    document.querySelectorAll('#chips-pool .chip').forEach(chip=>{
+      chip.addEventListener('pointerdown', e=>{
+        dragEl = chip;
+        origParent = chip.parentNode;
+        origNext = chip.nextSibling;
+        const rect = chip.getBoundingClientRect();
+        startX = e.clientX - rect.left;
+        startY = e.clientY - rect.top;
+        chip.classList.add('dragging');
+        chip.style.left = rect.left + 'px';
+        chip.style.top = rect.top + 'px';
+        chip.style.width = rect.width + 'px';
+        document.body.appendChild(chip);
+        chip.setPointerCapture(e.pointerId);
+      });
+
+      chip.addEventListener('pointermove', e=>{
+        if(dragEl !== chip) return;
+        chip.style.left = (e.clientX - startX) + 'px';
+        chip.style.top = (e.clientY - startY) + 'px';
+
+        document.querySelectorAll('.slot').forEach(s=>s.classList.remove('dragover'));
+        const prevDisplay = chip.style.display;
+        chip.style.display = 'none';
+        const under = document.elementFromPoint(e.clientX, e.clientY);
+        chip.style.display = prevDisplay;
+        const slot = under ? under.closest('.slot') : null;
+        if(slot && !slot.classList.contains('correct')) slot.classList.add('dragover');
+      });
+
+      chip.addEventListener('pointerup', e=>{
+        if(dragEl !== chip) return;
+        document.querySelectorAll('.slot').forEach(s=>s.classList.remove('dragover'));
+        chip.classList.remove('dragging');
+
+        const prevDisplay = chip.style.display;
+        chip.style.display = 'none';
+        const under = document.elementFromPoint(e.clientX, e.clientY);
+        chip.style.display = prevDisplay;
+        const slot = under ? under.closest('.slot') : null;
+
+        if(slot && !slot.classList.contains('correct') && slot.dataset.answer === chip.dataset.value){
+          slot.textContent = chip.dataset.value;
+          slot.classList.add('correct');
+          chip.classList.add('placed');
+          origParent.insertBefore(chip, origNext);
+          if(typeof playSnap === 'function') playSnap();
+        } else {
+          chip.style.position = '';
+          chip.style.left = '';
+          chip.style.top = '';
+          chip.style.width = '';
+          origParent.insertBefore(chip, origNext);
+          if(slot){
+            chip.classList.add('shake');
+            if(typeof playWrong === 'function') playWrong();
+            setTimeout(()=> chip.classList.remove('shake'), 400);
+          }
+        }
+        dragEl = null;
+      });
+    });
+  })();
+</script>
+
+<script>
+  // نظام صوتي خفيف عبر Web Audio API — بلا ملفات صوتية خارجية
+  let audioCtx = null;
+  function ensureAudio(){
+    if(!audioCtx){
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+  }
+  document.addEventListener('pointerdown', ensureAudio, {once:true});
+
+  function tone(freq, duration, type, vol, delay){
+    if(!audioCtx) return;
+    const t0 = audioCtx.currentTime + (delay || 0);
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type || 'sine';
+    osc.frequency.setValueAtTime(freq, t0);
+    gain.gain.setValueAtTime(0, t0);
+    gain.gain.linearRampToValueAtTime(vol || 0.05, t0 + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + duration);
+    osc.connect(gain).connect(audioCtx.destination);
+    osc.start(t0);
+    osc.stop(t0 + duration + 0.02);
+  }
+  function playTick(){ tone(880, 0.045, 'sine', 0.025); }
+  function playSnap(){ tone(520, 0.05, 'triangle', 0.06); tone(1040, 0.08, 'triangle', 0.05, 0.05); }
+  function playWrong(){ tone(180, 0.15, 'sawtooth', 0.035); }
+  function playChime(){ [660,880,1100].forEach((f,i)=> tone(f, 0.25, 'sine', 0.035, i*0.08)); }
+
+  // نقرة خفيفة عند التحويم على العناصر التفاعلية
+  document.querySelectorAll('.quiz-option, .chip, .btn').forEach(el=>{
+    el.addEventListener('pointerenter', ()=> playTick());
+  });
+
+  // مراقبة ظهور المحطات: ظهور تدريجي + تفعيل نقطة التقدم + نغمة انتقال (مرة واحدة لكل محطة)
+  const seenStations = new Set();
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting) return;
+      entry.target.classList.add('in-view');
+      const dot = document.querySelector('.progress-dot[data-target="'+entry.target.id+'"]');
+      if(dot && !dot.classList.contains('active')){
+        dot.classList.add('active');
+        if(!seenStations.has(entry.target.id)){
+          seenStations.add(entry.target.id);
+          playChime();
+        }
+      }
+    });
+  }, {threshold:.32});
+  document.querySelectorAll('.station[id^="station-"]').forEach(s=> io.observe(s));
+
+  // ربط الصوت والحركة بالتغذية الراجعة للسؤال متعدد الخيارات
+  const origCheckQ1 = checkQ1;
+  checkQ1 = function(){
+    document.querySelectorAll('#q1-options .quiz-option').forEach(o=>o.classList.remove('correct','incorrect'));
+    origCheckQ1();
+    const chosen = document.querySelector('#q1-options .quiz-option.correct, #q1-options .quiz-option.incorrect');
+    if(chosen && chosen.classList.contains('correct')) playSnap();
+    else if(chosen) playWrong();
+  };
+
+</script>
+</body>
+</html>

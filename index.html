@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fouad EduLab | مختبر فؤاد التعليمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#131c30;
+    --navy:#1B2640;
+    --teal:#14C8A8;
+    --teal-glow:rgba(20,200,168,.35);
+    --coral:#ff6b4a;
+    --text:#EAF1F0;
+    --text-dim:#9FB0C3;
+    --border:rgba(20,200,168,.35);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:linear-gradient(180deg,var(--navy-deep),var(--navy) 35%,var(--navy-deep));
+    color:var(--text);
+    font-family:'Tajawal','Cairo',sans-serif;
+    line-height:1.85;
+    min-height:100dvh;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:0 clamp(16px,4vw,40px);}
+
+  /* الهيدر */
+  nav{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px clamp(16px,4vw,40px);
+    background:rgba(19,28,48,.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .brand{font-family:'Cairo',sans-serif;font-weight:800;font-size:18px;color:var(--text);text-decoration:none;}
+  .brand span{color:var(--teal);}
+  .nav-links{display:flex;gap:10px;}
+
+  /* الهيرو */
+  header.hero{
+    text-align:center;
+    padding:clamp(56px,10vw,110px) clamp(16px,4vw,40px) clamp(40px,7vw,70px);
+  }
+  .eyebrow{color:var(--teal);font-weight:700;font-size:14px;letter-spacing:.5px;margin-bottom:10px;}
+  h1{
+    font-family:'Cairo',sans-serif;font-weight:800;
+    font-size:clamp(34px,6vw,58px);
+    margin:0 0 18px;
+  }
+  h1 .accent{color:var(--teal);}
+  .tagline{
+    color:var(--text-dim);
+    font-size:clamp(16px,2.6vw,20px);
+    max-width:600px;margin:0 auto 32px;
+  }
+  .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+
+  .btn{
+    display:inline-block;
+    background:transparent;
+    border:1px solid var(--teal);
+    color:var(--teal);
+    font-family:'Tajawal',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    padding:13px 32px;
+    border-radius:999px;
+    text-decoration:none;
+    transition:.25s;
+  }
+  .btn:hover{background:var(--teal);color:var(--navy-deep);box-shadow:0 0 20px var(--teal-glow);}
+  .btn-coral{border-color:var(--coral);color:var(--coral);}
+  .btn-coral:hover{background:var(--coral);color:var(--navy-deep);box-shadow:0 0 20px rgba(255,107,74,.35);}
+  .btn-ghost{border-color:var(--border);color:var(--text-dim);font-size:13px;padding:8px 18px;}
+  .btn-ghost:hover{border-color:var(--teal);color:var(--teal);background:transparent;box-shadow:none;}
+
+  /* الأقسام */
+  section{padding:clamp(36px,6vw,64px) 0;border-top:1px solid var(--border);}
+  .section-title{
+    font-family:'Cairo',sans-serif;font-weight:800;
+    font-size:clamp(24px,3.6vw,32px);
+    margin:0 0 20px;text-align:center;
+  }
+  .vision-text{
+    max-width:720px;margin:0 auto;
+    color:var(--text-dim);
+    font-size:clamp(15px,2.2vw,17px);
+    text-align:center;
+  }
+
+  .pillars{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:20px;
+    margin-top:32px;
+  }
+  .pillar{
+    background:rgba(255,255,255,.02);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:24px;
+  }
+  .pillar-icon{
+    width:44px;height:44px;
+    border-radius:12px;
+    border:1px solid var(--teal);
+    color:var(--teal);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:18px;
+    margin-bottom:16px;
+  }
+  .pillar h3{
+    font-family:'Cairo',sans-serif;
+    font-size:17px;margin:0 0 10px;color:var(--text);
+  }
+  .pillar p{color:var(--text-dim);font-size:14px;margin:0;}
+
+  /* التعريف */
+  .about{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:24px;
+    align-items:center;
+    text-align:center;
+  }
+  .about-name{font-family:'Cairo',sans-serif;font-weight:800;font-size:22px;margin-bottom:8px;}
+  .about-text{color:var(--text-dim);max-width:560px;margin:0 auto 20px;}
+  .about-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+
+  footer{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:13px;
+    padding:36px 16px 44px;
+    border-top:1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="index.html">Fouad <span>EduLab</span></a>
+  <div class="nav-links">
+    <a class="btn btn-ghost" href="#about">عن المعلم</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">آفاق لا تنتهي للتعلم الإبداعي</div>
+  <h1>Fouad <span class="accent">EduLab</span></h1>
+  <p class="tagline">منصة تعليمية حديثة تهدف إلى تحويل تعلم العلوم إلى تجربة فهم وتفكير واستكشاف.</p>
+  <div class="hero-actions">
+    <a class="btn" href="semester-1/index.html">طالب</a>
+    <a class="btn btn-coral" href="https://sites.google.com/view/fouadedulab/teacher" target="_blank" rel="noopener">معلم</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <h2 class="section-title">الرؤية والرسالة</h2>
+    <p class="vision-text">
+      أؤمن بأن الغرفة الصفية ليست مكانًا لتلقين المعرفة، بل هي مختبر ديناميكي يكتشف فيه كل طالب إمكاناته القصوى.
+      رسالتي كمعلم ترتكز على مبدأ "التمايز لا الفصل" (Differentiation, not Segregation)، حيث ألتزم بتطبيق التصميم
+      الشامل للتعلم (UDL) لإنشاء بيئة تعليمية موحدة، تحتضن الفروق الفردية، وتدعم الطلاب الذين يحتاجون إلى مساندة
+      وتستثير عقول الطلاب الموهوبين عبر أنشطة متدرجة الصعوبة تحاكي التحديات العلمية الحقيقية.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="section-title">الركائز الأساسية لممارستي التعليمية</h2>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-icon">AI</div>
+        <h3>الذكاء الاصطناعي كشريك تعليمي</h3>
+        <p>لا أنظر إلى التكنولوجيا كأداة لاسترجاع المعلومات، بل أقود بحوثًا إجرائية داخل صفي لتدريب الطلاب على استخدامها كشريك في التفكير الناقد وحل المشكلات وبناء المشاريع الاستقصائية.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">&lt;/&gt;</div>
+        <h3>الابتكار التقني وأتمتة التعليم</h3>
+        <p>أوظف شغفي بالتقنية لتبسيط العمليات الإدارية والتعليمية، عبر تطوير حلول برمجية مخصصة لأتمتة الاختبارات وتصميم بنوك الأسئلة، مما يتيح وقتًا أكبر للتفاعل الإنساني المباشر مع الطلاب.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">⚛</div>
+        <h3>بيئات تعلم تفاعلية نشطة</h3>
+        <p>التعلم الفعال يحدث عندما يكون الطالب محور العملية التعليمية؛ لذلك أصمم دروسًا تبدأ من منصات رقمية تفاعلية تفجّر الفضول العلمي وصولًا إلى تدريب النخب للمنافسة في الأولمبيادات العلمية.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="about">
+      <div>
+        <div class="about-name">من أنا؟</div>
+        <p class="about-text">
+          أنا فؤاد حوراني، معلم علوم شغوف بتطوير التعليم وتوظيف التكنولوجيا والذكاء الاصطناعي
+          لصناعة تجارب تعلم تفاعلية تُنمّي التفكير العلمي والفضول لدى الطلاب.
+        </p>
+        <div class="about-actions">
+          <a class="btn" href="https://drive.google.com/file/d/1uky9PT1R_YaQ5BmsXvN7mtKDc3bYZfpu/view?usp=drive_link" target="_blank" rel="noopener">السيرة الذاتية</a>
+          <a class="btn btn-coral" href="https://wa.link/lcrian" target="_blank" rel="noopener">للاستفسار والدعم الفني</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  آفاق لا تنتهي للتعلم الإبداعي · Fouad EduLab 2026 © · منصة تعليم العلوم - دولة قطر
+</footer>
+
+</body>
+</html>
