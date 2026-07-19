@@ -4,8 +4,8 @@
    طريقة الاستخدام في أي ملف تقييم/درس:
 
    1) أضف سطرًا واحدًا قبل إغلاق </body> (المسار نسبي حسب عمق الدرس):
-        <script src="../../../shared/certificate-system/certificate.js"></script>
-
+     <script src="../../shared/certificate-system/certificate.js"></script>
+     
    2) (اختياري) ضع عنصرًا فارغًا في المكان اللي تبي يظهر فيه زر
       "عرض الشهادة" — عادة مباشرة بعد آخر سؤال بالتقييم:
         <div id="certTriggerSlot"></div>
