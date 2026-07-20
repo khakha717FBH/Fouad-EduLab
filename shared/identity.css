@@ -1,0 +1,115 @@
+/* =========================================================
+   مختبر فؤاد التعليمي — الهوية البصرية المشتركة
+   shared/identity/identity.css
+
+   يُستدعى بوسم <link> عادي داخل <head> كل درس، بعد روابط
+   الخطوط مباشرة:
+
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="[مسار نسبي]/shared/identity/identity.css">
+
+   أمثلة المسار النسبي حسب عمق الملف:
+     من semester-1/unit-01/lesson-XX.html  → ../../shared/identity/identity.css
+     من semester-1/index.html               → ../shared/identity/identity.css
+     من index.html (الجذر)                  → shared/identity/identity.css
+
+   هذا الملف يغطي فقط: الألوان، الخط الأساسي، هيكل الجسم،
+   الأزرار، وشريط التنقل التعريفي (breadcrumb).
+   أنماط المحطات/الأسئلة/السحب والإفلات/شريط التقدّم تُبنى
+   لاحقًا في shared/template-boilerplate/.
+   ========================================================= */
+
+:root{
+  /* الخلفيات الكحلية */
+  --navy-dark:#1B2640;
+  --navy-darker:#131c30;
+  --navy-deepest:#0b1120;
+
+  /* التركوازي — اللون التفاعلي الأساسي */
+  --turquoise:#14C8A8;
+  --turquoise-soft:rgba(20,200,168,.35);
+  --turquoise-faint:rgba(20,200,168,.08);
+
+  /* المرجاني — للتمييز النادر فقط */
+  --coral:#ff6b4a;
+  --coral-soft:rgba(255,107,74,.35);
+
+  /* النصوص */
+  --ink:#eef2f7;
+  --ink-dim:#9fb0c9;
+
+  /* اسم عام لحدود البطاقات/المحطات — بديل دلالي لـ turquoise-soft،
+     يُستخدم لاحقًا بمكوّنات template-boilerplate */
+  --border:var(--turquoise-soft);
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+
+body{
+  background:linear-gradient(180deg, var(--navy-darker), var(--navy-dark) 40%, var(--navy-darker));
+  color:var(--ink);
+  font-family:'Tajawal','Cairo',sans-serif;
+  line-height:1.8;
+  min-height:100dvh;
+}
+
+h1,h2,h3{
+  font-family:'Cairo',sans-serif;
+  font-weight:800;
+}
+
+.wrap{
+  max-width:900px;
+  margin:0 auto;
+  padding:clamp(16px,4vw,40px);
+}
+
+/* ===================== أزرار حبة الدواء ===================== */
+.btn{
+  display:inline-block;
+  background:transparent;
+  border:1px solid var(--turquoise);
+  color:var(--turquoise);
+  font-family:'Tajawal',sans-serif;
+  font-weight:700;
+  font-size:15px;
+  padding:11px 26px;
+  border-radius:999px;
+  text-decoration:none;
+  cursor:pointer;
+  transition:.25s;
+}
+.btn:hover{
+  background:var(--turquoise);
+  color:var(--navy-darker);
+  box-shadow:0 0 18px var(--turquoise-soft);
+}
+.btn:focus-visible{
+  outline:2px solid var(--coral);
+  outline-offset:3px;
+}
+.btn-coral{
+  border-color:var(--coral);
+  color:var(--coral);
+}
+.btn-coral:hover{
+  background:var(--coral);
+  color:var(--navy-darker);
+  box-shadow:0 0 18px var(--coral-soft);
+}
+
+/* ===================== شريط تنقل تعريفي (breadcrumb) ===================== */
+.crumb{
+  padding:14px clamp(16px,4vw,40px) 0;
+  font-size:13px;
+  color:var(--ink-dim);
+}
+.crumb a{
+  color:var(--turquoise);
+  text-decoration:none;
+}
+.crumb a:hover{
+  text-decoration:underline;
+}
