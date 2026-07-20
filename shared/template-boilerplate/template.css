@@ -1,0 +1,286 @@
+/* =========================================================
+   مختبر فؤاد التعليمي — الهيكل العام لأي درس (نموذج 5E)
+   shared/template-boilerplate/template.css
+
+   عناصر هيكلية/آلية عامة تصلح لأي مادة دراسية فقط: حاوية
+   المحطة، شريط التقدّم، سؤال الاختيار من متعدد، نظام السحب
+   والإفلات، إطار الوسائط، بطاقات الحقائق، الحركات المشتركة.
+
+   ممنوع أي محتوى أو رسومات خاصة بمادة معيّنة هنا — تلك تُبنى
+   دائمًا داخل ملف الدرس نفسه.
+
+   يُستدعى بوسم <link> داخل <head>، بعد identity.css مباشرة
+   (يعتمد على متغيرات الألوان المعرّفة هناك):
+
+     <link rel="stylesheet" href="[مسار نسبي]/shared/identity/identity.css">
+     <link rel="stylesheet" href="[مسار نسبي]/shared/template-boilerplate/template.css">
+   ========================================================= */
+
+/* شبكة أمان: [hidden] قد تُلغى بتصريح display بمكان آخر بالملف */
+[hidden]{display:none !important;}
+
+/* ===== ترويسة الدرس ===== */
+header.hero{
+  text-align:center;
+  padding:clamp(28px,6vw,56px) clamp(16px,4vw,32px);
+  border-bottom:1px solid var(--border);
+}
+.eyebrow{
+  color:var(--turquoise);
+  font-weight:700;
+  font-size:clamp(13px,2.2vw,15px);
+  letter-spacing:.5px;
+}
+header.hero h1{
+  font-size:clamp(28px,5vw,44px);
+  margin:8px 0 20px;
+}
+.objectives{
+  display:grid;
+  gap:12px;
+  max-width:620px;
+  margin:0 auto;
+  text-align:right;
+}
+.objective{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  background:var(--turquoise-faint);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:12px 16px;
+  font-size:clamp(14px,2.4vw,16px);
+}
+.objective .num{
+  flex:0 0 auto;
+  width:28px;height:28px;
+  border-radius:50%;
+  border:1px solid var(--turquoise);
+  color:var(--turquoise);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:14px;
+}
+
+/* ===== شريط مؤشر التقدّم (نقاط لاصقة أعلى الصفحة) ===== */
+.progress-track{
+  position:sticky;
+  top:0;
+  z-index:50;
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  padding:14px 10px;
+  background:rgba(19,28,48,.88);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border);
+}
+.progress-dot{
+  width:10px;height:10px;
+  border-radius:50%;
+  background:rgba(255,255,255,.12);
+  border:1px solid var(--ink-dim);
+  transition:transform .35s, background .35s, box-shadow .35s, border-color .35s;
+}
+.progress-dot.active{
+  background:var(--turquoise);
+  border-color:var(--turquoise);
+  box-shadow:0 0 10px var(--turquoise-soft);
+  transform:scale(1.35);
+}
+
+/* ===== حاوية المحطة + الظهور التدريجي عند التمرير ===== */
+.station{
+  margin-top:clamp(28px,5vw,44px);
+  padding:clamp(18px,4vw,28px);
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:rgba(255,255,255,.02);
+  opacity:0;
+  transform:translateY(26px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+.station.in-view{
+  opacity:1;
+  transform:translateY(0);
+}
+.station-label{
+  display:inline-block;
+  color:var(--turquoise);
+  font-weight:700;
+  font-size:13px;
+  border:1px solid var(--turquoise);
+  border-radius:999px;
+  padding:4px 14px;
+  margin-bottom:12px;
+}
+.station h2{
+  font-size:clamp(19px,3.2vw,24px);
+  margin:0 0 14px;
+}
+/* تنبيه: لو أضفت لاحقًا صنف تغذية راجعة على وسم <p> داخل .station،
+   استخدم دومًا انتقاء مركّب (مثل .quiz-feedback.correct) لا صنفًا
+   منفردًا — القاعدة أدناه سبق أن ألغت ألوان تغذية راجعة بالغلط */
+.station p{color:var(--ink-dim);font-size:clamp(14px,2.4vw,16px);}
+
+/* ===== إطار عرض الوسائط (فيديو/H5P/Genially) ===== */
+.media-frame{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  margin:14px 0;
+  background:#0d1424;
+}
+.media-frame iframe{width:100%;height:100%;border:0;}
+.h5p-frame{aspect-ratio:unset;height:auto;min-height:400px;}
+.h5p-frame iframe{height:400px;}
+
+/* ===== سؤال اختيار من متعدد ===== */
+.quiz-options{
+  display:grid;
+  gap:10px;
+  margin-bottom:16px;
+}
+.quiz-option{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:13px 20px;
+  cursor:pointer;
+  font-size:clamp(14px,2.4vw,16px);
+  transition:.2s;
+}
+.quiz-option:hover{
+  border-color:var(--turquoise);
+  background:var(--turquoise-faint);
+}
+.quiz-option input{
+  accent-color:var(--turquoise);
+  width:18px;height:18px;
+  flex:0 0 auto;
+}
+.quiz-option.selected{
+  border-color:var(--turquoise);
+  box-shadow:0 0 14px var(--turquoise-soft);
+}
+.quiz-option.correct{
+  border-color:var(--turquoise);
+  background:rgba(20,200,168,.16);
+  animation:tplPopIn .35s ease;
+}
+.quiz-option.incorrect{
+  border-color:var(--coral);
+  background:rgba(255,107,74,.1);
+  animation:tplShakeX .4s ease;
+}
+.quiz-feedback{
+  margin-top:6px;
+  font-weight:700;
+  font-size:15px;
+  min-height:22px;
+}
+.quiz-feedback.correct{color:var(--turquoise);}
+.quiz-feedback.incorrect{color:var(--coral);}
+
+/* ===== بطاقات حقائق (شبكة تعريفات/مصطلحات عامة) ===== */
+.facts-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:14px;
+  margin:16px 0;
+}
+.fact-card{
+  background:var(--turquoise-faint);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  text-align:center;
+}
+.fact-card .term{color:var(--turquoise);font-weight:700;margin-bottom:6px;}
+
+/* ===== نظام السحب والإفلات العام (شرائح ← خانات) ===== */
+.chips-pool{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:16px 0 26px;
+  min-height:44px;
+}
+.chip{
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--turquoise);
+  color:var(--ink);
+  border-radius:999px;
+  padding:9px 20px;
+  font-weight:700;
+  font-size:14px;
+  cursor:grab;
+  touch-action:none;
+  user-select:none;
+  transition:box-shadow .2s, opacity .2s;
+}
+.chip:hover{box-shadow:0 0 12px var(--turquoise-soft);}
+.chip.dragging{
+  position:fixed;
+  z-index:999;
+  opacity:.9;
+  pointer-events:none;
+  box-shadow:0 0 18px var(--turquoise-soft);
+}
+.chip.placed{
+  opacity:0;
+  pointer-events:none;
+  position:absolute;
+}
+.chip.shake{animation:tplShakeX .4s ease;}
+
+.slot{
+  display:inline-block;
+  min-width:70px;
+  border:1px dashed var(--ink-dim);
+  border-radius:999px;
+  padding:6px 14px;
+  font-size:13px;
+  color:var(--ink-dim);
+  transition:.2s;
+}
+.name-slot{display:block;min-height:20px;margin-bottom:4px;}
+.inline-slot{margin-right:4px;}
+.prop-row{margin-top:8px;font-size:13px;color:var(--ink-dim);}
+.slot.correct{
+  border-style:solid;
+  border-color:var(--turquoise);
+  color:var(--turquoise);
+  background:rgba(20,200,168,.1);
+  animation:tplPopIn .35s ease;
+}
+.slot.dragover{
+  border-color:var(--turquoise);
+  box-shadow:0 0 10px var(--turquoise-soft);
+}
+
+/* ===== حركات مشتركة للتغذية الراجعة ===== */
+@keyframes tplPopIn{
+  0%{transform:scale(.82);}
+  60%{transform:scale(1.08);}
+  100%{transform:scale(1);}
+}
+@keyframes tplShakeX{
+  0%,100%{transform:translateX(0);}
+  25%{transform:translateX(-7px);}
+  75%{transform:translateX(7px);}
+}
+
+/* ===== تذييل عام ===== */
+footer.site-footer{
+  text-align:center;
+  color:var(--ink-dim);
+  font-size:13px;
+  padding:32px 16px 40px;
+}
