@@ -3,8 +3,8 @@
    shared/template-boilerplate/template.css
 
    عناصر هيكلية/آلية عامة تصلح لأي مادة دراسية فقط: حاوية
-   المحطة، شريط التقدّم، سؤال الاختيار من متعدد، نظام السحب
-   والإفلات، إطار الوسائط، بطاقات الحقائق، الحركات المشتركة.
+   المحطة، شريط التقدّم، عدّاد XP، سؤال الاختيار من متعدد، نظام
+   السحب والإفلات، إطار الوسائط، بطاقات الحقائق، الحركات المشتركة.
 
    ممنوع أي محتوى أو رسومات خاصة بمادة معيّنة هنا — تلك تُبنى
    دائمًا داخل ملف الدرس نفسه.
@@ -62,7 +62,26 @@ header.hero h1{
   font-weight:700;font-size:14px;
 }
 
-/* ===== شريط مؤشر التقدّم (نقاط لاصقة أعلى الصفحة) ===== */
+/* ===== شريط مؤشر التقدّم (نقاط لاصقة أعلى الصفحة) + عدّاد XP =====
+
+   بنية مرجعية كاملة (انسخها بأي درس جديد):
+
+   <div class="progress-track">
+     <div class="xp-counter" id="xpCounter">
+       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+       </svg>
+       <span id="xpValue">0</span>
+       <span class="xp-label">XP</span>
+     </div>
+     <div class="progress-dot" data-target="station-1"></div>
+     <div class="progress-dot" data-target="station-2"></div>
+     ...
+   </div>
+
+   عدّاد XP اختياري بالكامل: لو غاب من الـHTML، يستمر template.js
+   بتتبّع النقاط بذاكرة الجلسة بصمت دون أي عرض أو خطأ. */
 .progress-track{
   position:sticky;
   top:0;
@@ -87,6 +106,58 @@ header.hero h1{
   border-color:var(--turquoise);
   box-shadow:0 0 10px var(--turquoise-soft);
   transform:scale(1.35);
+}
+
+/* عدّاد XP — يتموضع مطلقًا داخل .progress-track (الذي يُعَدّ سياق
+   تموضع صالح لكونه position:sticky) كي لا يزيح توسيط نقاط التقدّم */
+.xp-counter{
+  position:absolute;
+  inset-inline-start:14px;
+  top:50%;
+  transform:translateY(-50%);
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--turquoise);
+  border-radius:999px;
+  padding:6px 14px;
+  font-weight:800;
+  font-size:13px;
+  color:var(--turquoise);
+  white-space:nowrap;
+}
+.xp-counter svg{width:15px;height:15px;flex-shrink:0;}
+.xp-counter .xp-label{color:var(--ink-dim);font-weight:600;font-size:11px;}
+
+@keyframes xpBump{
+  0%{transform:translateY(-50%) scale(1);}
+  40%{transform:translateY(-50%) scale(1.12); box-shadow:0 0 14px var(--turquoise-soft);}
+  100%{transform:translateY(-50%) scale(1);}
+}
+.xp-counter.xp-bump{animation:xpBump .45s ease;}
+
+.xp-popup{
+  position:absolute;
+  top:-4px;
+  left:50%;
+  transform:translateX(-50%);
+  color:var(--coral);
+  font-weight:800;
+  font-size:13px;
+  pointer-events:none;
+  animation:xpPopupFloat .9s ease forwards;
+}
+@keyframes xpPopupFloat{
+  0%{opacity:0; transform:translate(-50%, 4px) scale(.8);}
+  20%{opacity:1; transform:translate(-50%, -6px) scale(1);}
+  80%{opacity:1; transform:translate(-50%, -22px) scale(1);}
+  100%{opacity:0; transform:translate(-50%, -30px) scale(1);}
+}
+
+@media (max-width:380px){
+  .xp-counter{padding:5px 10px; font-size:12px;}
+  .xp-counter .xp-label{display:none;}
 }
 
 /* ===== حاوية المحطة + الظهور التدريجي عند التمرير ===== */
