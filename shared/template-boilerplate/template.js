@@ -46,7 +46,7 @@
         }
       }
     });
-  }, {threshold:.32});
+  }, {threshold:0, rootMargin:'0px 0px -12% 0px'});
   document.querySelectorAll('.station[id^="station-"]').forEach(function(s){ io.observe(s); });
 
   // ---------- 2) تظليل الخيار المختار داخل كل مجموعة أسئلة ----------
