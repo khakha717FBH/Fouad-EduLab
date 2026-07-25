@@ -1,0 +1,2342 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدرس 2-1 — كيف تُصنّف العناصر وتُحدد الصيغ الكيميائية؟ | مختبر فؤاد التعليمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  الدرس 2-1 — مختبر فؤاد التعليمي (دمج الحصتين في ملف واحد)
+  المعايير: C0901.3 / C0902.1 / C0902.2
+  مبني وفق دورة 5E عبر تدفّق متصل واحد:
+  تحدي البداية ← استكشاف 1 (الجدول الدوري) ← استكشاف 2 (التوزيع الإلكتروني) ←
+  تفسير (الاستقرار) ← تحقّق سريع غير مُقيَّم ← استكشاف/تفسير (التكافؤ) ←
+  توسّع (دراسة حالة أكسيد الألومنيوم) ← تقييم ختامي مُقيَّم + شهادة
+  رابط فهيم مضمَّن بالفعل أدناه (Gemini Gem — وصول عام "Anyone with the link").
+  (رابط العودة مسار نسبي ثابت داخل مستودع GitHub — لا حاجة لتعديله يدويًا طالما الملف باقٍ في نفس مجلد الوحدة)
+  ═══════════════════════════════════════════════════════════════════
+-->
+<style>
+  :root{
+    --navy-dark:#1B2640;
+    --navy-darker:#131c30;
+    --navy-deepest:#0b1120;
+    --turquoise:#14C8A8;
+    --turquoise-soft:rgba(20,200,168,.35);
+    --turquoise-faint:rgba(20,200,168,.08);
+    --coral:#ff6b4a;
+    --ink:#eef2f7;
+    --ink-dim:#9fb0c9;
+    --metal:#14C8A8;
+    --metalloid:#e0b34d;
+    --nonmetal:#8e9dfb;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;overscroll-behavior-y:contain;}
+  body{
+    margin:0;
+    overscroll-behavior-y:contain;
+    background:linear-gradient(180deg,var(--navy-dark),var(--navy-darker) 55%,var(--navy-deepest));
+    font-family:'Tajawal',sans-serif;
+    color:var(--ink);
+    min-height:100vh;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--turquoise-soft);}
+
+  /* ===== شريط علوي ثابت: تقدّم + نقاط + XP ===== */
+  .top-bar{
+    position:sticky; top:0; z-index:400;
+    background:rgba(19,28,48,.92);
+    backdrop-filter:blur(6px);
+    padding:10px 18px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    border-bottom:1px solid var(--turquoise-faint);
+  }
+  .top-bar .brand{display:flex;align-items:center;gap:8px;font-family:'Cairo';font-weight:800;color:var(--turquoise);font-size:.82rem;white-space:nowrap;}
+  .top-bar .brand svg{width:18px;height:18px;flex-shrink:0;}
+  /* ===== stepper موحّد: يجمع نسبة الإنجاز + التنقّل المباشر بين المحطات في عنصر واحد
+     بدل شريط تقدّم مستمر + صف نقاط منفصلين — كل قطعة تمثل محطة، تُملأ بنسبة إنجازها
+     الخاصة، وتبقى قابلة للضغط للقفز المباشر إليها (scrollIntoView) ===== */
+  .stepper{display:flex;gap:4px;flex:1;min-width:120px;}
+  .step-seg{position:relative;flex:1;min-width:10px;height:8px;border-radius:999px;background:rgba(255,255,255,.08);border:none;padding:0;cursor:pointer;overflow:hidden;transition:box-shadow .3s ease;}
+  .step-seg-fill{position:absolute;inset:0;width:0%;background:linear-gradient(90deg,var(--turquoise),#8fe9d8);border-radius:999px;transition:width .5s ease;}
+  .step-seg.active{box-shadow:0 0 6px var(--turquoise);}
+  .xp-pill{background:var(--navy-darker);border:1.5px solid var(--turquoise-soft);color:var(--turquoise);padding:6px 14px;border-radius:999px;font-weight:800;font-size:.78rem;white-space:nowrap;}
+  @media (max-width:640px){ .top-bar .brand span.brand-text{display:none;} }
+
+  /* ===== شريط المسار التنقّلي (الرئيسية ← الفصل ← الوحدة ← الدرس) ===== */
+  .crumb{
+    padding:12px clamp(16px,4vw,28px) 0;
+    font-size:.78rem;
+    color:var(--ink-dim);
+  }
+  .crumb a{color:var(--turquoise);text-decoration:none;}
+  .crumb a:hover{text-decoration:underline;}
+
+  /* ===== حاوية الصفحة ===== */
+  .page-wrap{max-width:900px;margin:0 auto;padding:26px 16px 110px;}
+
+  .lesson-header{text-align:center;margin-bottom:26px;}
+  .lesson-breadcrumb{color:var(--turquoise);font-weight:700;font-size:.82rem;margin-bottom:10px;}
+  .lesson-header h1{font-family:'Cairo';font-weight:800;font-size:1.4rem;color:var(--ink);margin:0 0 16px;line-height:1.5;}
+  .objectives-box{background:rgba(255,255,255,.03);border:1px solid var(--turquoise-soft);border-radius:16px;padding:16px 22px;text-align:right;max-width:640px;margin:0 auto;}
+  .objectives-box h3{font-family:'Cairo';color:var(--turquoise);font-size:.9rem;margin:0 0 8px;}
+  .objectives-box ul{margin:0;padding-inline-start:20px;font-size:.83rem;color:var(--ink-dim);line-height:1.9;}
+
+  /* ===== بطاقات المحطات ===== */
+  .station{
+    scroll-margin-top:74px;
+    background:rgba(255,255,255,.025);
+    border:1px solid var(--turquoise-soft);
+    border-radius:22px;
+    padding:26px 22px;
+    margin-bottom:26px;
+    opacity:0; transform:translateY(24px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .station.visible{opacity:1; transform:translateY(0);}
+  /* شارة المحطة الجديدة — مطابقة لنمط shared/template-boilerplate (.station-label)
+     كي تتّسق بصريًا مع بقية دروس الوحدة. تعرض رقم المحطة فقط، وتضيف
+     "· المرحلة" حين تضم المحطة أكثر من نشاط، بدل تعدد المحطات المستقلة */
+  .station-label{display:inline-block;color:var(--turquoise);font-weight:700;font-size:.75rem;border:1px solid var(--turquoise);border-radius:999px;padding:4px 14px;margin-bottom:10px;}
+  /* محدد مركّب (.station p.station-tagline) عمدًا: قاعدة .station p العامة
+     أعلى تفوقها في الأسبقية على صنف مفرد، فتُلغي الهامش المخصّص هنا صامتة */
+  .station p.station-tagline{color:var(--ink-dim);font-weight:600;font-size:.85rem;margin:-6px 0 14px;}
+  .station h2{font-family:'Cairo';font-weight:800;font-size:1.12rem;color:var(--ink);margin:0 0 12px;}
+  .station p{line-height:1.85;color:var(--ink-dim);margin:0 0 10px;}
+  .station .note{font-size:.78rem;color:var(--ink-dim);opacity:.85;}
+  .station .note a{color:var(--turquoise);text-decoration:underline;opacity:1;}
+
+  /* ===== أزرار حبّة الدواء ===== */
+  .pill-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--navy-darker);border:1.5px solid var(--turquoise);color:var(--turquoise);
+    font-family:'Tajawal',sans-serif;font-weight:700;font-size:.88rem;
+    padding:11px 22px;border-radius:999px;cursor:pointer;
+    transition:background .25s ease,color .25s ease,box-shadow .25s ease;
+  }
+  .pill-btn:hover:not(:disabled){background:var(--turquoise);color:var(--navy-darker);box-shadow:0 0 16px rgba(20,200,168,.45);}
+  .pill-btn:active{transform:scale(.97);}
+  .pill-btn.small{padding:8px 16px;font-size:.8rem;}
+  .pill-btn.ghost{background:transparent;}
+  .pill-btn.full{width:100%;justify-content:center;}
+  .pill-btn:disabled{opacity:.5;cursor:default;box-shadow:none;background:var(--navy-darker);color:var(--ink-dim);border-color:var(--ink-dim);}
+  .pill-btn:focus-visible{outline:2px solid var(--coral);outline-offset:3px;}
+
+  /* ===== محطة التنشيط ===== */
+  .atom-status{font-weight:700;text-align:center;min-height:1.5em;color:var(--ink);}
+  .engage-atoms-row{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:14px;}
+  .engage-atom-card{background:rgba(255,255,255,.03);border:1px solid var(--turquoise-soft);border-radius:18px;padding:16px;flex:1 1 210px;max-width:240px;text-align:center;}
+  .engage-atom-visual{display:flex;justify-content:center;margin-bottom:4px;}
+  .engage-atom-label{font-family:'Cairo';font-weight:800;color:var(--ink);margin-bottom:10px;font-size:.85rem;}
+  /* جدول بيانات محطة تحدي البداية — استُبدلت بطاقات نموذج بور الطويلة
+     بجدول مضغوط (رأس بأسماء العناصر، ثم صف واحد لكل معطى) لسببين: (1)
+     طول البطاقات كان يخرج التوهج خارج نطاق الرؤية على شاشات الحاسوب/
+     الجوال فور الضغط، و(2) لمنع تكرار تسميات "العدد الذرّي/الكتلي/
+     الحالة" ثلاث مرات — كل تسمية تظهر مرة واحدة فقط كعنوان صف */
+  .engage-fact-table{width:100%;display:grid;grid-template-columns:auto repeat(3,1fr);gap:2px;background:var(--turquoise-faint);border:1px solid var(--turquoise-soft);border-radius:14px;overflow:hidden;margin-top:14px;}
+  .eft-cell{background:var(--navy-dark);padding:10px 8px;text-align:center;font-size:.82rem;display:flex;align-items:center;justify-content:center;transition:background .25s ease, color .25s ease;}
+  .eft-label{color:var(--ink-dim);font-weight:700;font-size:.75rem;justify-content:flex-end;padding-inline-end:14px;}
+  .eft-header{font-family:'Cairo';font-weight:800;color:var(--ink);background:rgba(20,200,168,.08);}
+  .eft-value{color:var(--turquoise);font-weight:800;}
+  /* تمييز حيادي لدليل الفرضية — لا يعلن "صح/خطأ"، فقط يلفت الانتباه لخلية
+     بعينها. نفس منطق اللون المرجاني لكل الخيارات الأربعة بلا استثناء،
+     بما فيها الخيار الصحيح، حتى لا يسرّب اللون نفسه أي حكم */
+  .eft-value.hl, .eft-header.hl{background:rgba(255,107,74,.16);color:var(--coral);animation:factPulse 1s ease 2;}
+  @keyframes factPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,74,.35);}50%{box-shadow:0 0 0 6px rgba(255,107,74,0);}}
+
+  /* ===== أسئلة اختيار من متعدد ===== */
+  .mc-q{font-weight:700;color:var(--ink);}
+  .mc-options{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
+  .mc-option{background:rgba(255,255,255,.04);border:1.5px solid var(--turquoise-soft);color:var(--ink);padding:10px 18px;border-radius:14px;cursor:pointer;font-family:'Tajawal';font-weight:600;font-size:.85rem;transition:all .2s ease;}
+  .mc-option:hover:not(:disabled){border-color:var(--turquoise);}
+  .mc-option.correct{background:rgba(20,200,168,.18);border-color:var(--turquoise);color:var(--turquoise);}
+  .mc-option.wrong{background:rgba(255,107,74,.15);border-color:var(--coral);color:var(--coral);}
+  .mc-option.picked{background:rgba(255,255,255,.07);border-color:var(--ink-dim);}
+  .mc-option:disabled{cursor:default;}
+  .mc-atom-options{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;}
+  .mc-atom-option{background:rgba(255,255,255,.04);border:1.5px solid var(--turquoise-soft);border-radius:14px;padding:8px;cursor:pointer;}
+  .mc-atom-option:hover:not(:disabled){border-color:var(--turquoise);}
+  .mc-atom-option.correct{border-color:var(--turquoise);box-shadow:0 0 10px rgba(20,200,168,.4);}
+  .mc-atom-option.wrong{border-color:var(--coral);}
+  .fb{margin-top:8px;font-weight:700;font-size:.85rem;min-height:1.3em;}
+  .fb.fb-correct{color:var(--turquoise);}
+  .fb.fb-wrong{color:var(--coral);}
+  .fb.fb-hint{color:var(--ink-dim);}
+
+  /* ===== الجدول الدوري المصغّر =====
+     مضغوط على ٨ أعمدة فعلية (المجموعات ١، ٢، ١٣–١٨ فقط) بدل ١٨ عمودًا
+     كاملًا — عمود الانتقال (٣–١٢) فارغ دائمًا ضمن أول ٢٠ عنصرًا أصلًا
+     (العناصر الانتقالية خارج نطاق منهج الصف التاسع)، فحذفه لا يُخفي أي
+     معلومة، فقط يزيل مساحة فارغة كانت تفرض تمريرًا أفقيًا على الجوال.
+     عمود ١ محجوز دائمًا لأرقام الدورات، وصفّ ١ محجوز لأرقام المجموعات —
+     بجدول استكشاف ٢ فقط: أرقام الدورات تظهر من البداية (مهمّة ١ مرئية
+     أصلًا من أول تحميل)، وأرقام المجموعات تظهر فور اكتمال مهمّة الدورة
+     (نفس لحظة ظهور مهمّة المجموعة، انظر groupLabelsRevealed). جدول
+     استكشاف ١ يستخدم نفس الإحداثيات فتبقى الشبكتان متطابقتين بصريًا،
+     لكن الخانة المحجوزة تبقى فارغة عنده عمدًا (بلا أي إشارة لصف/عمود). */
+  .ptable-wrap{padding-bottom:4px;}
+  .ptable-grid{display:grid;grid-template-columns:20px repeat(8,minmax(0,1fr));grid-template-rows:18px repeat(4,minmax(38px,1fr));gap:3px;direction:ltr;max-width:440px;margin:0 auto;}
+  .ptable-cell{border-radius:6px;border:1px solid rgba(0,0,0,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font-family:'Cairo';color:var(--navy-deepest);font-weight:800;padding:0;transition:transform .15s ease;}
+  /* جدول محطة التصنيف (المرحلة الأولى) للعرض فقط بعد تبسيط النشاط —
+     بلا مؤشر نقر وبلا استقبال أحداث مؤشّر، خلافًا لجدول الأنماط التفاعلي */
+  #ptableClassify .ptable-cell{cursor:default;pointer-events:none;}
+  .ptable-cell:hover{transform:scale(1.14);z-index:2;}
+  /* نصفّر إطار التركيز الافتراضي للمتصفح عند النقر بالفأرة/اللمس (يظهر
+     أحيانًا بلون بنفسجي/أزرق حسب المتصفح لأن :focus-visible لا يُفعَّل
+     عادة إلا بالتنقّل عبر لوحة المفاتيح) — نُبقي حلقة مرجانية واضحة فقط
+     لمستخدمي لوحة المفاتيح تحديدًا عبر :focus-visible */
+  .ptable-cell:focus{outline:none;}
+  .ptable-cell:focus-visible{outline:2px solid var(--coral);outline-offset:2px;}
+  .ptable-cell .ptable-z{font-size:.46rem;font-weight:600;line-height:1;}
+  .ptable-cell .ptable-sym{font-size:.74rem;line-height:1.1;}
+  .ptable-label{display:flex;align-items:center;justify-content:center;font-family:'Cairo';font-weight:700;font-size:.6rem;color:var(--ink-dim);}
+  .cat-metal{background:var(--metal);}
+  .cat-metalloid{background:var(--metalloid);}
+  .cat-nonmetal{background:var(--nonmetal);}
+  .ptable-cell.undiscovered{background:rgba(255,255,255,.07);color:var(--ink);border:1px solid var(--turquoise-soft);}
+  /* خلايا الرموز المجهولة X/Y/Z بمحطة التحقّق السريع — لون مرجاني للدلالة
+     على "غموض يُستنتَج" (نفس دلالة علامة "؟" المرجانية المستخدمة سابقًا
+     في بطاقة فحص العنصر قبل حذفها)، للعرض فقط بلا أي تفاعل نقر */
+  .ptable-cell.unknown-cell{background:rgba(255,107,74,.16);border:1.5px solid var(--coral);color:var(--coral);}
+  #ptableCheckin .ptable-cell{cursor:default;pointer-events:none;}
+  /* إطارا التأكيد يطابقان لون مفهومهما (مرجاني=دورة، تركوازي=مجموعة)
+     بدل الأبيض المحايد سابقًا — يعزّزان نفس الربط اللوني المستخدم في
+     نص كل مهمّة (hl-term-period/hl-term-group)، لا يقطعانه بلون غريب
+     لا معنى له */
+  .ptable-cell.track-done{outline:2px solid var(--coral);outline-offset:1px;}
+  .ptable-cell.track-done-group{outline:2px solid var(--turquoise);outline-offset:1px;}
+  .ptable-placeholder{display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.03);border:1px dashed var(--ink-dim);border-radius:6px;color:var(--ink-dim);font-size:.5rem;text-align:center;padding:2px;}
+  .cat-legend{display:flex;gap:16px;margin-top:10px;font-size:.78rem;color:var(--ink-dim);flex-wrap:wrap;}
+  .cat-legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend-dot{width:12px;height:12px;border-radius:4px;display:inline-block;}
+  /* تمييز نصّي داخل أوامر المهمّتين — نفس لون المؤشّر الذي سيراه الطالب
+     يتراكم في الجدول (مرجاني=دورة، تركوازي=مجموعة)، إشارة لحظية بديلة
+     عن مفتاح الألوان المنفصل الذي حُذف */
+  .hl-term-period{color:var(--coral);font-weight:800;}
+  .hl-term-group{color:var(--turquoise);font-weight:800;}
+  .reveal-note{background:rgba(20,200,168,.08);border-inline-start:3px solid var(--turquoise);padding:12px 16px;border-radius:8px;margin-top:14px;font-size:.88rem;color:var(--ink);}
+  .track-task{background:rgba(255,255,255,.03);border:1px solid var(--turquoise-soft);border-radius:16px;padding:16px 18px;margin-bottom:14px;}
+  .track-q{font-weight:700;color:var(--ink);margin:0 0 8px;}
+  .track-status{color:var(--turquoise);font-weight:700;font-size:.88rem;margin:0;}
+
+  /* ===== كتلة كشف النمط (دورة/مجموعة) — بديل الفقرة الطويلة، بطاقتان
+     مرمّزتان بلون متطابق مع إطاري التوهّج اللذين رآهما الطالب أثناء
+     النقر أعلاه (مرجاني=دورة/صفّ، تركوازي=مجموعة/عمود). flex-wrap
+     يكفل الرصّ رأسيًا تلقائيًا على شاشات الجوال الضيقة دون media query ===== */
+  .pattern-reveal{background:rgba(20,200,168,.06);border:1px solid var(--turquoise-soft);border-radius:18px;padding:16px;margin-top:14px;}
+  .pattern-lead{font-weight:700;color:var(--ink);margin:0 0 14px;font-size:.9rem;}
+  .pattern-cards{display:flex;gap:12px;flex-wrap:wrap;}
+  .pattern-card{flex:1 1 230px;background:rgba(255,255,255,.035);border-radius:14px;padding:14px 16px;border-inline-start:4px solid var(--turquoise);}
+  .pattern-card.pc-period{border-inline-start-color:var(--coral);}
+  .pattern-card-title{font-family:'Cairo';font-weight:800;font-size:.92rem;margin:0 0 8px;display:flex;align-items:center;gap:6px;color:var(--turquoise);}
+  .pattern-card.pc-period .pattern-card-title{color:var(--coral);}
+  .pattern-card ul{margin:0;padding-inline-start:18px;font-size:.83rem;color:var(--ink-dim);line-height:1.75;}
+  .pattern-card ul li b{color:var(--ink);}
+  .pattern-card ul li{margin-bottom:4px;}
+  .pattern-stat-pill{display:block;width:fit-content;max-width:100%;margin:14px auto 0;background:var(--turquoise-faint);color:var(--turquoise);border-radius:999px;padding:5px 16px;font-size:.76rem;font-weight:700;text-align:center;}
+  .pattern-teaser{margin:12px 0 0;font-size:.78rem;color:var(--ink-dim);opacity:.85;text-align:center;}
+  .popin{animation:popIn .3s ease;}
+
+  /* ===== لعبة مطابقة العنصر بتوزيعه الإلكتروني — انقر ثم انقر، بلا سحب،
+     تغذية راجعة فورية لكل زوج (تتّسق مع بقية أنشطة الدرس) ===== */
+  .match-game{display:flex;gap:14px;margin-top:14px;}
+  .match-col{flex:1;display:flex;flex-direction:column;gap:10px;min-width:0;}
+  .match-card{background:rgba(255,255,255,.04);border:1.5px solid var(--turquoise-soft);border-radius:14px;padding:12px 10px;cursor:pointer;transition:border-color .2s ease,box-shadow .2s ease,background .2s ease,color .2s ease;color:var(--ink);font-family:'Tajawal';width:100%;}
+  .match-card:hover:not(.matched){border-color:var(--turquoise);}
+  .match-card.selected{border-color:var(--coral);box-shadow:0 0 0 3px rgba(255,107,74,.18);}
+  .match-card.matched{border-color:var(--turquoise);background:rgba(20,200,168,.14);color:var(--turquoise);cursor:default;pointer-events:none;}
+  .match-card.shake{animation:shake .4s ease;}
+  .match-el{display:flex;flex-direction:column;align-items:center;gap:2px;}
+  .match-el .match-z{font-size:.65rem;color:var(--ink-dim);}
+  .match-el .match-sym{font-family:'Cairo';font-weight:800;font-size:1.15rem;}
+  .match-cfg{font-family:'Cairo';font-weight:700;font-size:1rem;text-align:center;}
+
+  /* ===== أسئلة تأمّلية (كشف نموذجي) ===== */
+  .reflect-card{background:rgba(255,255,255,.03);border:1px solid var(--turquoise-soft);border-radius:16px;padding:16px 18px;margin-bottom:14px;}
+  .reflect-q{font-weight:700;color:var(--ink);margin-bottom:8px;}
+  .reflect-card textarea{width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid var(--turquoise-soft);background:var(--navy-darker);color:var(--ink);font-family:'Tajawal';resize:vertical;}
+  .reflect-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+  .hint-box{background:rgba(255,107,74,.08);border-inline-start:3px solid var(--coral);padding:10px 14px;border-radius:8px;margin-top:8px;font-size:.83rem;color:var(--ink);}
+  .model-box{background:rgba(20,200,168,.08);border-inline-start:3px solid var(--turquoise);padding:10px 14px;border-radius:8px;margin-top:8px;font-size:.83rem;color:var(--ink);}
+
+  /* ===== باني الذرّة ===== */
+  .atom-builder{display:flex;flex-direction:column;align-items:center;gap:14px;}
+  .builder-controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;}
+  .builder-controls select{padding:10px 14px;border-radius:999px;border:1.5px solid var(--turquoise);background:var(--navy-darker);color:var(--ink);font-family:'Tajawal';max-width:260px;}
+  .atom-meta{font-weight:700;color:var(--turquoise);font-size:.85rem;margin:0;}
+  .builder-instruction{font-size:.85rem;color:var(--ink-dim);text-align:center;margin:0;}
+  .level-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+  .level-btn.shake{animation:shake .4s ease;}
+  .builder-confirm{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:4px;padding-top:16px;border-top:1px dashed var(--turquoise-soft);width:100%;max-width:420px;}
+  .builder-confirm-label{font-weight:700;font-size:.85rem;color:var(--ink);text-align:center;margin:0;}
+  .builder-confirm-inputs{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+  .builder-confirm-field{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:.75rem;color:var(--ink-dim);text-align:center;}
+  .builder-confirm-input,.gp-input{width:52px;padding:8px;border-radius:8px;border:1.5px solid var(--turquoise-soft);background:var(--navy-darker);color:var(--ink);text-align:center;font-family:'Tajawal';}
+  .builder-confirm-input.correct,.gp-input.correct{border-color:var(--turquoise);background:rgba(20,200,168,.12);}
+  .builder-confirm-input.wrong,.gp-input.wrong{border-color:var(--coral);background:rgba(255,107,74,.12);}
+
+  /* ===== بطاقات تحدّي الاستقرار ===== */
+  .challenge-card{background:rgba(255,255,255,.03);border:1px solid var(--turquoise-soft);border-radius:16px;padding:16px 18px;margin-bottom:14px;position:relative;}
+  .challenge-card.done{box-shadow:0 0 0 1px var(--turquoise) inset;}
+  .challenge-card.bonus-card{border-color:var(--coral);}
+  .challenge-card.shake{animation:shake .4s ease;}
+  .bonus-tag{position:absolute;top:-11px;inset-inline-end:16px;background:var(--coral);color:var(--navy-deepest);font-size:.68rem;font-weight:800;padding:3px 10px;border-radius:999px;}
+  .bonus-toggle-wrap{text-align:center;margin-top:18px;}
+  .pill-btn.bonus-toggle{border-color:var(--coral);color:var(--coral);}
+  .pill-btn.bonus-toggle:hover:not(:disabled){background:var(--coral);color:var(--navy-deepest);box-shadow:0 0 16px rgba(255,107,74,.45);}
+  .bonus-reveal{max-height:0;opacity:0;overflow:hidden;pointer-events:none;transition:max-height .5s ease,opacity .4s ease;}
+  .bonus-reveal.open{max-height:2000px;opacity:1;pointer-events:auto;margin-top:4px;}
+  .bonus-reveal-inner{padding-top:14px;}
+  @media (prefers-reduced-motion: reduce){ .bonus-reveal{transition:none !important;} }
+  .challenge-q{margin-bottom:10px;line-height:1.7;color:var(--ink);}
+  .z-badge{display:inline-block;background:rgba(20,200,168,.12);color:var(--turquoise);padding:2px 10px;border-radius:999px;font-size:.72rem;font-weight:700;margin-inline-start:6px;white-space:nowrap;}
+  .zchip-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:10px;}
+  .zchip{display:inline-flex;align-items:center;gap:6px;background:rgba(20,200,168,.12);color:var(--turquoise);padding:6px 14px;border-radius:999px;font-size:.78rem;font-weight:700;white-space:nowrap;}
+  .zchip b{font-family:'Cairo';font-size:1rem;}
+  .challenge-inputs{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .challenge-inputs input[type="number"]{width:70px;padding:8px;border-radius:8px;border:1.5px solid var(--turquoise-soft);background:var(--navy-darker);color:var(--ink);font-family:'Tajawal';}
+  .sign-toggle{display:inline-flex;align-items:center;gap:4px;font-size:.83rem;color:var(--ink-dim);cursor:pointer;}
+
+  /* ===== ملخّص التقييم الختامي ===== */
+  .eval-summary{margin-top:16px;background:rgba(20,200,168,.08);border:1px solid var(--turquoise);border-radius:16px;padding:16px 20px;}
+  .eval-summary p{color:var(--ink);margin:0 0 6px;}
+  .eval-summary .muted{color:var(--ink-dim);font-size:.82rem;}
+
+  /* ===== زر فهيم العائم ===== */
+  .fahim-fab{
+    position:fixed; bottom:20px; inset-inline-start:20px; z-index:500;
+    display:flex; align-items:center; gap:0;
+    background:var(--navy-darker); border:1.5px solid var(--turquoise); color:var(--turquoise);
+    border-radius:999px; padding:14px; text-decoration:none; overflow:hidden;
+    animation:fahimPulse 2.8s ease-in-out infinite;
+  }
+  .fahim-fab svg{flex-shrink:0;width:20px;height:20px;}
+  .fahim-fab .fahim-label{max-width:0;overflow:hidden;white-space:nowrap;transition:max-width .3s ease,margin .3s ease;font-weight:700;font-size:.85rem;}
+  .fahim-fab:hover .fahim-label{max-width:140px;margin-inline-start:8px;}
+  .fahim-fab:focus-visible{outline:2px solid var(--coral);outline-offset:3px;}
+
+  /* ===== تنبيه صغير (Toast) ===== */
+  .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy-darker);border:1.5px solid var(--turquoise);color:var(--turquoise);padding:12px 22px;border-radius:999px;font-weight:700;font-size:.85rem;opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease;z-index:600;white-space:nowrap;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  /* ===== تذييل ===== */
+  .lesson-footer{text-align:center;margin-top:10px;}
+
+  @keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
+  @keyframes popIn{0%{transform:scale(.85);opacity:0;}100%{transform:scale(1);opacity:1;}}
+  @keyframes fahimPulse{0%,100%{box-shadow:0 0 0 0 rgba(20,200,168,.35);}50%{box-shadow:0 0 0 10px rgba(20,200,168,0);}}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}
+  }
+
+  /* ===== جدول مرجع التكافؤ ===== */
+  .valency-ref{overflow-x:auto;margin:14px 0;}
+  .valency-ref table{border-collapse:collapse;min-width:560px;width:100%;font-size:.8rem;}
+  .valency-ref th,.valency-ref td{border:1px solid var(--turquoise-soft);padding:8px 6px;text-align:center;}
+  .valency-ref th{color:var(--turquoise);font-family:'Cairo';font-weight:700;background:rgba(20,200,168,.06);}
+  .valency-ref td.val{color:var(--ink);font-weight:800;}
+
+  /* ===== مثال محلول (غير تفاعلي) ===== */
+  .worked-example{background:rgba(255,255,255,.03);border:1px dashed var(--turquoise-soft);border-radius:16px;padding:16px 18px;margin:14px 0;}
+  .final-formula{text-align:center;font-family:'Cairo';font-weight:800;font-size:1.3rem;color:var(--turquoise);direction:ltr;margin-top:8px;}
+  /* ===== جدول المثال المحلول المتسلسل (رمز ← توزيع إلكتروني ← تكافؤ ← تبديل ← صيغة)
+     مطابق لتسلسل خطوات كتاب الطالب — dir=ltr يطابق نفس اتجاه جدول التكافؤ
+     المرجعي أعلاه في نفس المحطة (تناسق بصري بين الجدولين المتجاورين) */
+  .we-table{margin:14px 0;direction:ltr;font-family:'Cairo';}
+  .we-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+  .we-row:last-child{border-bottom:none;}
+  .we-label{flex:0 0 auto;width:34%;max-width:150px;color:var(--ink-dim);font-weight:700;font-size:.72rem;}
+  .we-vals{flex:1;display:flex;}
+  .we-vals.we-formula-vals{justify-content:center;}
+  .we-cell{flex:1;text-align:center;}
+  .we-sym{font-size:1.15rem;font-weight:800;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:3px;}
+  .we-electrons{color:var(--ink);font-weight:700;font-size:.95rem;}
+  .we-valency,.we-swap{font-size:1.15rem;font-weight:800;color:var(--turquoise);}
+  .we-valency sup,.we-swap sup{font-size:.65em;}
+  .we-cross-row{padding:2px 0;border-bottom:none;}
+  .we-cross-wrap{position:relative;aspect-ratio:100/26;}
+  .we-cross-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
+  .we-cross-svg line{stroke:var(--coral);stroke-width:1.8;stroke-linecap:round;}
+
+  /* ===== بطاقة تحدٍّ تكافؤ (نمط الشكل 1-11 من كتاب الطالب) ===== */
+  .compound-card{background:rgba(255,255,255,.03);border:1px solid var(--turquoise-soft);border-radius:18px;padding:18px;margin-top:16px;transition:border-color .3s ease, box-shadow .3s ease;}
+  .compound-card h4{font-family:'Cairo';color:var(--ink);margin:0 0 10px;font-size:.95rem;text-align:center;}
+  .compound-card.vd-complete{border-color:var(--turquoise);box-shadow:0 0 0 1px var(--turquoise-faint);}
+  #valencyPracticeCard .mc-q{text-align:center;}
+
+  /* يضمن أن خاصية hidden تفوز دائمًا على أي display آخر معرَّف لنفس العنصر */
+  [hidden]{display:none !important;}
+
+  .compound-menu{background:rgba(255,255,255,.03);border:1px solid var(--turquoise-soft);border-radius:16px;padding:16px 18px;margin-top:16px;}
+  .menu-label{font-family:'Cairo';font-weight:700;color:var(--turquoise);font-size:.85rem;margin:0 0 10px;text-align:center;}
+  .menu-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+  .menu-btn.done{background:rgba(20,200,168,.14);}
+
+  .tbl-row{display:flex;gap:14px;padding:14px 4px;border-bottom:1px dashed var(--turquoise-faint);align-items:flex-start;}
+  .tbl-row:last-child{border-bottom:none;}
+  .tbl-label{width:100px;flex-shrink:0;font-family:'Cairo';font-weight:800;color:var(--turquoise);font-size:.82rem;text-align:right;padding-top:6px;}
+  .tbl-cells{flex:1;display:flex;gap:22px;justify-content:center;align-items:flex-start;flex-wrap:wrap;}
+  .sym-cell{font-family:'Cairo';font-weight:800;font-size:1.35rem;color:var(--ink);min-width:50px;text-align:center;}
+  .config-cell{font-family:'Cairo';font-weight:700;font-size:1rem;color:var(--ink-dim);min-width:70px;text-align:center;}
+  .vd-valence-highlight{color:var(--coral);font-weight:800;}
+
+  .vd-numpick{display:flex;gap:6px;justify-content:center;}
+  .vd-num-btn{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--turquoise-soft);background:var(--navy-darker);color:var(--ink);font-family:'Cairo';font-weight:700;cursor:pointer;transition:border-color .2s ease;}
+  .vd-num-btn:hover:not(:disabled){border-color:var(--turquoise);}
+  .vd-num-btn.vd-num-correct{background:rgba(20,200,168,.18);border-color:var(--turquoise);color:var(--turquoise);}
+  .vd-num-btn:disabled{opacity:.35;cursor:default;}
+  .vd-num-btn:focus-visible{outline:2px solid var(--coral);outline-offset:2px;}
+
+  .vd-formula-box{display:flex;align-items:center;justify-content:center;min-width:110px;width:100%;}
+  .vd-formula{display:flex;align-items:baseline;font-family:'Cairo';font-weight:800;font-size:1.4rem;color:var(--ink);direction:ltr;}
+  .vd-slot-input{
+    width:30px;height:28px;margin-inline-start:2px;padding:0;
+    font-family:'Cairo';font-weight:800;font-size:.9rem;text-align:center;
+    color:var(--ink);background:var(--navy-darker);
+    border:1.5px dashed var(--turquoise-soft);border-radius:6px;
+    transform:translateY(6px);transition:border-color .2s ease,background .2s ease;
+  }
+  .vd-slot-input:focus{outline:none;border-color:var(--turquoise);border-style:solid;}
+  .vd-slot-input.filled{border-style:solid;border-color:var(--turquoise);color:var(--turquoise);background:rgba(20,200,168,.08);}
+  .vd-slot-input:disabled{opacity:1;}
+
+  .vd-simplify-btns{display:flex;gap:10px;justify-content:center;}
+  .vd-divide-chip{
+    display:block;margin:12px auto 0;background:rgba(255,107,74,.1);border:2px solid var(--coral);color:var(--coral);
+    font-family:'Cairo';font-weight:800;font-size:1rem;padding:8px 20px;border-radius:999px;cursor:pointer;
+  }
+  .vd-divide-chip:hover{background:rgba(255,107,74,.2);}
+  .vd-divide-chip:focus-visible{outline:2px solid var(--turquoise);outline-offset:3px;}
+  .vd-formula-input{padding:9px 16px;border-radius:10px;border:1.5px solid var(--turquoise-soft);background:var(--navy-darker);color:var(--ink);font-family:'Cairo';font-weight:700;text-align:center;width:140px;}
+  .vd-formula-input:focus{outline:none;border-color:var(--turquoise);}
+
+  @keyframes vdShake{0%,100%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
+  .vd-shake{animation:vdShake .4s ease;}
+  @keyframes vdPop{0%{transform:scale(1) translateY(6px);}50%{transform:scale(1.3) translateY(6px);}100%{transform:scale(1) translateY(6px);}}
+  .vd-pop{animation:vdPop .4s ease;}
+  @media (prefers-reduced-motion: reduce){ .vd-pop,.vd-shake{transition:none !important;animation:none !important;} }
+  @media (max-width:560px){ .tbl-row{flex-direction:column;} .tbl-label{width:auto;text-align:center;padding-top:0;} }
+
+  /* ===== دراسة الحالة (أكسيد الألومنيوم) ===== */
+  .case-intro{display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:rgba(255,255,255,.03);border:1px solid var(--turquoise-soft);border-radius:16px;padding:16px 18px;margin-bottom:16px;}
+  .case-intro svg{flex-shrink:0;width:64px;height:64px;}
+  .config-pair{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin:14px 0;}
+  .config-item{text-align:center;font-family:'Cairo';}
+  .config-item .lbl{color:var(--ink-dim);font-size:.78rem;margin-top:6px;}
+  .al-final{margin-top:16px;padding:14px;border-radius:14px;background:rgba(20,200,168,.08);border:1px solid var(--turquoise);text-align:center;display:none;}
+  .al-final.show{display:block;}
+
+  /* ===== بوابة الاسم قبل التقييم ===== */
+  .name-gate{background:rgba(255,255,255,.03);border:1px solid var(--turquoise-soft);border-radius:16px;padding:18px 20px;text-align:center;}
+  .name-gate label{display:block;font-size:.85rem;margin-bottom:8px;color:#c9d5e4;}
+  .name-gate input{
+    width:100%;max-width:340px;padding:10px 16px;border-radius:999px;
+    border:1.5px solid var(--turquoise);background:var(--navy-darker);color:#fff;
+    font-family:'Tajawal';margin:0 auto 14px;display:block;outline:none;
+  }
+  .short-answer{margin-top:10px;}
+  .short-answer input,.short-answer textarea{
+    width:100%;padding:10px 14px;border-radius:12px;border:1.5px solid var(--turquoise-soft);
+    background:var(--navy-darker);color:var(--ink);font-family:'Tajawal';resize:vertical;
+  }
+  .short-answer textarea{min-height:70px;}
+  .short-answer input::placeholder,.short-answer textarea::placeholder{color:var(--ink-dim);opacity:1;}
+
+  /* ===== ملخّص التقييم الختامي ===== */
+  .eval-summary{margin-top:16px;background:rgba(20,200,168,.08);border:1px solid var(--turquoise);border-radius:16px;padding:16px 20px;}
+  .eval-summary p{color:var(--ink);margin:0 0 6px;}
+  .eval-summary .muted{color:var(--ink-dim);font-size:.82rem;}
+</style>
+</head>
+<body>
+
+<div class="crumb">
+  <a href="../../index.html">الرئيسية</a> ·
+  <a href="../index.html">الفصل الأول</a> ·
+  <a href="index.html">الوحدة الأولى</a> ·
+  الدرس 2
+</div>
+
+<!-- ===== شريط التقدّم العلوي ===== -->
+<div class="top-bar">
+  <span class="brand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/></svg>
+    <span class="brand-text">مختبر فؤاد التعليمي</span>
+  </span>
+  <div class="stepper">
+    <button class="step-seg" data-station="engage" title="المحطة الأولى — تحدي البداية" onclick="document.getElementById('st-engage').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="explore1" title="المحطة الثانية · المرحلة الأولى" onclick="document.getElementById('st-explore1').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="explore2" title="المحطة الثانية · المرحلة الثانية" onclick="document.getElementById('st-explore2').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="explore3" title="المحطة الثانية · المرحلة الثالثة" onclick="document.getElementById('st-explore3').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="checkin" title="المحطة الثانية · المرحلة الرابعة" onclick="document.getElementById('st-checkin').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="explain3" title="المحطة الثالثة · المرحلة الأولى" onclick="document.getElementById('st-explain3').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="valency" title="المحطة الثالثة · المرحلة الثانية" onclick="document.getElementById('st-valency').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="elaborate" title="المحطة الرابعة — دراسة الحالة" onclick="document.getElementById('st-elaborate').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="evaluate" title="المحطة الأخيرة — التقييم الختامي" onclick="document.getElementById('st-evaluate').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
+  </div>
+  <span class="xp-pill">⚡ <span id="xpValue">0</span> XP</span>
+</div>
+
+<div class="page-wrap">
+
+  <!-- ===== رأس الدرس ===== -->
+  <div class="lesson-header">
+    <p class="lesson-breadcrumb">الوحدة 1 · الدرس 2-1</p>
+    <h1>كيف تُصنّف العناصر وتُحدد الصيغ الكيميائية؟</h1>
+    <div class="objectives-box">
+      <h3>في نهاية هذا الدرس سوف يمكنك أن:</h3>
+      <ul>
+        <li>تصف كيفية ترتيب العناصر في الجدول الدوري.</li>
+        <li>تكتب التوزيع الإلكتروني لذرات بعض العناصر.</li>
+        <li>تحدد صيغ المركبات باستخدام أعداد التكافؤ.</li>
+        <li>تشرح أن الذرات تصل الى توزيع إلكتروني مشابه لأقرب غاز نبيل عندما تتحد لتكوين المركبات.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== محطة 1: تحدي البداية ===================== -->
+  <section class="station" id="st-engage">
+    <div class="station-label">المحطة الأولى</div>
+    <h2>تحدي البداية</h2>
+    <p class="station-tagline">افترض أنك عالم كيميائي</p>
+    <p>أمامك جدول بيانات لثلاثة عناصر مختلفة. اختر الأساس الذي تظنّه صحيحًا لترتيب عناصر الجدول الدوري، وراقب الدليل الذي يظهر في الجدول مع كل اختيار.</p>
+
+    <div class="engage-atoms-row" id="engageAtomsRow"></div>
+
+    <div id="engageChallengeQWrap" style="margin-top:22px;"></div>
+
+    <div class="reflect-card" id="engageCostCard" style="margin-top:18px;" hidden>
+      <p style="margin:0;">جرّبت الفرضيات الأربع كلها! انتقل إلى المحطة التالية لتكتشف بنفسك الأساس الذي اعتمده العلماء فعليًا.</p>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 2: استكشاف 1 (تصنيف فلز/لافلز) ===================== -->
+  <section class="station" id="st-explore1">
+    <div class="station-label">المحطة الثانية · المرحلة الأولى</div>
+    <h2>الاستكشاف الأول</h2>
+    <p class="station-tagline">أين تقع الفلزّات؟</p>
+    <p>أمامك العناصر العشرون الأولى في الجدول الدوري — بلا ألوان أو تصنيف بعد. تأمّلها جيّدًا، ثم أجب عن السؤال الآتي.</p>
+
+    <div class="ptable-wrap">
+      <div class="ptable-grid" id="ptableClassify"></div>
+    </div>
+    <div class="cat-legend" id="catLegend" hidden>
+      <span><span class="legend-dot" style="background:var(--nonmetal)"></span> لا فلزّ</span>
+      <span><span class="legend-dot" style="background:var(--metalloid)"></span> شبه فلزّ</span>
+      <span><span class="legend-dot" style="background:var(--metal)"></span> فلزّ</span>
+    </div>
+
+    <div id="metalPredictWrap" style="margin-top:18px;"></div>
+    <p class="reveal-note" id="revealNote" hidden>🔎 هذا هو "الخط المتعرّج": الفلزّات (تركوازي) تحتلّ يسار الجدول ووسطه، اللافلزّات (بنفسجي) أقصى يمينه، وتفصل بينهما أشباه الفلزّات (أصفر) على طول خط متعرّج.</p>
+  </section>
+
+  <!-- ===================== محطة 3: استكشاف 2 (أنماط الجدول) ===================== -->
+  <section class="station" id="st-explore2">
+    <div class="station-label">المحطة الثانية · المرحلة الثانية</div>
+    <h2>الاستكشاف الثاني</h2>
+    <p class="station-tagline">استكشف نمط الجدول</p>
+    <p>أكمل المهمّتين التاليتين لتكتشف نمطَي الجدول الدوري بنفسك.</p>
+
+    <div class="ptable-wrap">
+      <div class="ptable-grid" id="ptablePatterns"></div>
+    </div>
+
+    <div class="track-task" id="trackPeriodTask">
+      <p class="track-q">المهمّة 1 من 2: انقر عناصر <b class="hl-term-period">الصفّ الثالث</b> بالترتيب، من اليسار إلى اليمين.</p>
+      <p class="track-status" id="trackPeriodStatus">انقر: <b dir="ltr">Na</b> (الصوديوم)</p>
+    </div>
+
+    <div class="pattern-reveal" id="periodRevealNote" hidden>
+      <p class="pattern-lead">🔎 لاحظت الآن بنفسك نمطًا حقيقيًا — وله اسم في الكيمياء:</p>
+      <div class="pattern-cards">
+        <div class="pattern-card pc-period">
+          <p class="pattern-card-title" id="periodCardTitle">🟠 ما اسم هذا النمط؟</p>
+          <div id="pdBlank1"></div>
+          <div id="pdBlank2"></div>
+        </div>
+      </div>
+      <span class="pattern-stat-pill">📊 الجدول الدوري الكامل يضمّ 7 دورات</span>
+    </div>
+
+    <div class="track-task" id="trackGroupTask" hidden>
+      <p class="track-q">المهمّة 2 من 2: أكملت الصفّ! الآن انقر كل عناصر <b class="hl-term-group">العمود الأول</b>، بأي ترتيب.</p>
+      <p class="track-status" id="trackGroupStatus">تبقّى 4 من 4 عناصر.</p>
+    </div>
+
+    <div class="pattern-reveal" id="groupRevealNote" hidden>
+      <p class="pattern-lead">🔎 وهذا نمط ثانٍ اكتشفته بنفسك — وله اسم أيضًا:</p>
+      <div class="pattern-cards">
+        <div class="pattern-card pc-group">
+          <p class="pattern-card-title" id="groupCardTitle">🔵 ما اسم هذا النمط؟</p>
+          <div id="grpBlank1"></div>
+        </div>
+      </div>
+      <span class="pattern-stat-pill">📊 الجدول الدوري الكامل يضمّ 18 مجموعة</span>
+      <p class="pattern-teaser">👀 وهذا التشابه في الخواص سيتّضح أكثر في المحطة القادمة.</p>
+    </div>
+
+
+    <div id="transferQWrap" class="reflect-card" style="margin-top:24px;"></div>
+    <p class="note">🎯 سؤال مهارات التفكير العليا: ماذا يحدث لحجم الذرّات كلّما اتّجهنا من الأعلى إلى الأسفل عبر المجموعة الواحدة؟
+      <button type="button" class="pill-btn small ghost" onclick="revealModel('model-bonus1')">أظهر الإجابة</button>
+    </p>
+    <p class="model-box" id="model-bonus1" hidden>يزداد حجم الذرّات كلّما اتّجهنا من الأعلى إلى الأسفل عبر المجموعة الواحدة، بسبب إضافة مستوى طاقة جديد للإلكترونات.</p>
+  </section>
+
+  <!-- ===================== محطة 4: استكشاف 3 ===================== -->
+  <section class="station" id="st-explore3">
+    <div class="station-label">المحطة الثانية · المرحلة الثالثة</div>
+    <h2>الاستكشاف الثالث</h2>
+    <p class="station-tagline">ما الرابط بين التوزيع الإلكتروني للذرّة والجدول الدوري؟</p>
+    <p>اختر عنصرًا، ثم في كل خطوة اختر بنفسك المستوى الذي تراه صحيحًا لوضع الإلكترون التالي فيه. راقب جيّدًا ماذا يحدث لكل مستوى كلّما امتلأ.</p>
+
+    <div class="atom-builder">
+      <div class="builder-controls">
+        <label>العنصر: <select id="atomSelect"></select></label>
+        <button type="button" class="pill-btn small ghost" id="resetAtomBtn">إعادة</button>
+      </div>
+      <p class="atom-meta" id="atomMeta"></p>
+      <div id="atomSvgWrap" dir="ltr"></div>
+      <p class="builder-instruction">أضف الإلكترون التالي إلى:</p>
+      <div class="level-btns" id="levelBtns" dir="ltr">
+        <button type="button" class="pill-btn small level-btn" data-level="0">المستوى الأول</button>
+        <button type="button" class="pill-btn small level-btn" data-level="1">المستوى الثاني</button>
+        <button type="button" class="pill-btn small level-btn" data-level="2">المستوى الثالث</button>
+        <button type="button" class="pill-btn small level-btn" data-level="3">المستوى الرابع</button>
+      </div>
+      <p id="builderStatus" class="atom-status"></p>
+      <p class="hint-box" id="builderHint" hidden></p>
+
+      <div class="builder-confirm" id="builderConfirm" hidden>
+        <p class="builder-confirm-label">اكتب الآن التوزيع الإلكتروني الذي بنيته، مستوى مستوى (من الأقرب للنواة):</p>
+        <div class="builder-confirm-inputs" id="builderConfirmInputs" dir="ltr"></div>
+        <button type="button" class="pill-btn small" id="checkBuilderBtn">تحقّق ✓</button>
+        <p class="fb" id="fb-builder"></p>
+      </div>
+    </div>
+
+    <p class="hint-box" id="explore3LockNote">🔒 أكمل بناء الذرّات الثلاث المطلوبة أعلاه لفتح بقية هذا النشاط.</p>
+
+    <div id="explore3AfterBuild" hidden>
+      <div class="cap-check" id="capCheck">
+        <h2 style="margin-top:24px;">🔎 ماذا لاحظت؟</h2>
+        <p>بنيتَ الآن الذرّات الثلاث المطلوبة — أجب عن الأسئلة التالية بناءً على ما لاحظته بنفسك أثناء البناء:</p>
+        <div id="capQ1Wrap"></div>
+        <div id="capQ2Wrap"></div>
+        <div id="capQ3Wrap"></div>
+      </div>
+
+      <h2 style="margin-top:24px;">🔎 قارن ذرّتين من نفس المجموعة</h2>
+      <p>الليثيوم (Li) والصوديوم (Na) اللذان بنيتهما أعلاه يقعان في نفس المجموعة (1) رغم اختلاف دورتيهما. انظر إلى الرسمين التاليين وعُدّ بنفسك عدد إلكترونات المستوى الأخير (الأبعد عن النواة) في كلّ منهما:</p>
+      <div class="engage-atoms-row" id="groupPatternAtoms" dir="ltr"></div>
+      <div class="builder-confirm-inputs" id="groupPatternInputs" dir="ltr" style="margin-top:14px;">
+        <label class="builder-confirm-field">Li — المستوى الأخير<input type="number" min="0" max="8" class="gp-input" id="gpLi"></label>
+        <label class="builder-confirm-field">Na — المستوى الأخير<input type="number" min="0" max="8" class="gp-input" id="gpNa"></label>
+      </div>
+      <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <button type="button" class="pill-btn small" onclick="checkGroupPattern()">تحقّق ✓</button>
+      </div>
+      <p class="fb" id="fb-groupPattern"></p>
+      <p class="note">💡 هذا العدد يُسمّى "إلكترونات المستوى الأخير"، وهو غير "التكافؤ" (مفهوم مختلف ستتعرّف عليه في محطة قادمة، مستخدمًا هذا العدد نفسه).</p>
+
+      <h2 style="margin-top:24px;">🔎 قارن ذرّتين من نفس الدورة</h2>
+      <p>الصوديوم (Na) الذي بنيته أعلاه والكلور (Cl) يقعان في نفس الدورة (3) رغم اختلاف مجموعتيهما. انظر إلى الرسمين التاليين وعُدّ بنفسك عدد مستويات الطاقة الكلي (لا عدد الإلكترونات) في كلّ منهما:</p>
+      <div class="engage-atoms-row" id="periodPatternAtoms" dir="ltr"></div>
+      <div class="builder-confirm-inputs" id="periodPatternInputs" dir="ltr" style="margin-top:14px;">
+        <label class="builder-confirm-field">Na — عدد المستويات<input type="number" min="0" max="4" class="gp-input" id="ppNa"></label>
+        <label class="builder-confirm-field">Cl — عدد المستويات<input type="number" min="0" max="4" class="gp-input" id="ppCl"></label>
+      </div>
+      <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <button type="button" class="pill-btn small" onclick="checkPeriodPattern()">تحقّق ✓</button>
+      </div>
+      <p class="fb" id="fb-periodPattern"></p>
+
+      <p class="reveal-note" id="groupPeriodSynthesis" hidden>🔗 الآن تعرّفتَ إلى نمطين مهمّين في الجدول الدوري:<br>١. عناصر المجموعة الواحدة تشترك في نفس عدد إلكترونات مستوى الطاقة الأخير.<br>٢. عناصر الدورة الواحدة تشترك في نفس عدد مستويات الطاقة.</p>
+
+      <h2 style="margin-top:24px;">🎮 طابق كل عنصر بتوزيعه الإلكتروني</h2>
+      <p>انقر بطاقة عنصر، ثم انقر التوزيع الذي تراه مطابقًا لها (أو بالترتيب المعاكس). لا حدّ لعدد المحاولات.</p>
+      <div class="match-game" id="matchGameWrap">
+        <div class="match-col" id="matchConfigsCol"></div>
+        <div class="match-col" id="matchElementsCol"></div>
+      </div>
+      <p class="fb" id="fb-matchGame"></p>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 5: تحقّق سريع (غير مُقيَّم) ===================== -->
+  <section class="station" id="st-checkin">
+    <div class="station-label">المحطة الثانية · المرحلة الرابعة</div>
+    <h2>التحقّق السريع</h2>
+    <p class="station-tagline">تحقّق ممّا تعلّمته حتى الآن</p>
+    <p>هذا تحقّق سريع وغير مُقيَّم — الهدف أن تراجع أهمّ ما تعلّمته حتى الآن قبل الانتقال إلى الجزء التالي من الدرس. الاختبار النهائي المُقيَّم والشهادة سيكونان في نهاية هذا الدرس.</p>
+
+    <p>أمامك جدول دوري مفرَّغ من رموزه الحقيقية، باستثناء ثلاثة عناصر استُبدلت بالرموز X وY وZ (يظهر العدد الذرّي فوق كل رمز). استخدم موضع كلٍّ منها في الجدول للإجابة عن الأسئلة التالية:</p>
+    <div class="ptable-wrap">
+      <div class="ptable-grid" id="ptableCheckin"></div>
+    </div>
+
+    <div id="tq1Wrap" style="margin-top:18px;"></div>
+    <div id="tq2Wrap" style="margin-top:18px;"></div>
+    <div id="tq3Wrap" style="margin-top:18px;"></div>
+    <div class="eval-summary" id="checkinSummary" hidden></div>
+  </section>
+  <!-- ===================== محطة 6: تفسير ===================== -->
+  <section class="station" id="st-explain3">
+    <div class="station-label">المحطة الثالثة · المرحلة الأولى</div>
+    <h2>التفسير</h2>
+    <p class="station-tagline">كيف تصل ذرّات العناصر إلى حالة الاستقرار؟</p>
+    <p>تميل ذرّات العناصر دائمًا للوصول إلى حالة الاستقرار (توزيع إلكتروني مشابه لأقرب غاز نبيل)، وذلك بفقد أو اكتساب إلكترونات عند تكوين مركّبات جديدة. جرّب التحدّيات التالية:</p>
+    <div id="explain3Cards"></div>
+
+    <p style="margin-top:24px;font-weight:700;color:var(--ink);">سؤال أخير للتأكّد من فهمك:</p>
+    <div id="eq3Wrap"></div>
+
+    <p class="note">🎯 سؤال مهارات التفكير العليا: لماذا لا توجد صخور أو معادن في القشرة الأرضية تحتوي على الهيليوم؟
+      <button type="button" class="pill-btn small ghost" onclick="revealModel('model-bonus2')">أظهر الإجابة</button>
+    </p>
+    <p class="model-box" id="model-bonus2" hidden>يُعدّ الهيليوم غازًا نبيلاً، ويمتلك مستوى طاقة خارجيًا ممتلئًا بالإلكترونات، لذا لا يحتاج إلى فقد أو اكتساب إلكترونات في التفاعلات الكيميائية، وهو غير نشط كيميائيًا نهائيًا، ولا يكوّن مركّبات في القشرة الأرضية.</p>
+    <div class="bonus-toggle-wrap">
+      <button type="button" class="pill-btn small ghost bonus-toggle" id="bonusToggleBtn" onclick="toggleBonusChallenges()">⭐ تحدٍّ إضافي: تجرؤ؟</button>
+    </div>
+    <div class="bonus-reveal" id="bonusChallengesWrap"><div class="bonus-reveal-inner" id="bonusChallengesInner"></div></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- محطة 7 — الاستكشاف والتفسير: التكافؤ والصيغ الكيميائية -->
+  <!-- ===================================================== -->
+  <section class="station" id="st-valency">
+    <div class="station-label">المحطة الثالثة · المرحلة الثانية</div>
+    <h2>التكافؤ والصيغ</h2>
+    <p class="station-tagline">ما التكافؤ؟ وكيف نستخدمه لكتابة الصيغ الكيميائية؟</p>
+    <p><b>التكافؤ</b> هو أقلّ عدد من الإلكترونات يجب أن تفقده الذرّة أو تكتسبه أو تشارك به للوصول إلى توزيع إلكتروني مشابه لأقرب غاز نبيل.</p>
+
+    <div class="valency-ref">
+      <table dir="ltr">
+        <tr><th>المجموعة</th><td class="val">1</td><td class="val">2</td><td class="val">13</td><td class="val">14</td><td class="val">15</td><td class="val">16</td><td class="val">17</td><td class="val">18</td></tr>
+        <tr><th>التكافؤ</th><td class="val">1<sup>+</sup></td><td class="val">2<sup>+</sup></td><td class="val">3<sup>+</sup></td><td class="val">4</td><td class="val">3<sup>-</sup></td><td class="val">2<sup>-</sup></td><td class="val">1<sup>-</sup></td><td class="val">0</td></tr>
+      </table>
+    </div>
+    <p class="note">لاحظ: عناصر المجموعات 1 و2 و13 تفقد إلكترونات، ومجموعات 15 و16 و17 تكتسبها، ومجموعة 18 مستقرّة أصلًا (تكافؤها صفر).</p>
+
+    <div class="worked-example">
+      <p style="margin:0 0 6px;font-weight:700;color:var(--ink);">مثال محلول: أكسيد الصوديوم (Na + O)</p>
+
+      <div class="we-table">
+        <div class="we-row">
+          <div class="we-label">الرمز</div>
+          <div class="we-vals">
+            <div class="we-cell we-sym">Na <span class="z-badge">العدد الذرّي: 11</span></div>
+            <div class="we-cell we-sym">O <span class="z-badge">العدد الذرّي: 8</span></div>
+          </div>
+        </div>
+        <div class="we-row">
+          <div class="we-label">التوزيع الإلكتروني</div>
+          <div class="we-vals">
+            <div class="we-cell we-electrons">2,8,1</div>
+            <div class="we-cell we-electrons">2,6</div>
+          </div>
+        </div>
+        <div class="we-row">
+          <div class="we-label">التكافؤ</div>
+          <div class="we-vals">
+            <div class="we-cell we-valency">1<sup>+</sup></div>
+            <div class="we-cell we-valency">2<sup>-</sup></div>
+          </div>
+        </div>
+        <div class="we-row we-cross-row">
+          <div class="we-label"></div>
+          <div class="we-vals we-cross-wrap">
+            <svg class="we-cross-svg" viewBox="0 0 100 26">
+              <defs>
+                <marker id="weArrowHead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="#ff6b4a"></path>
+                </marker>
+              </defs>
+              <line x1="22" y1="0" x2="78" y2="26" marker-end="url(#weArrowHead)"></line>
+              <line x1="78" y1="0" x2="22" y2="26" marker-end="url(#weArrowHead)"></line>
+            </svg>
+          </div>
+        </div>
+        <div class="we-row">
+          <div class="we-label">تبديل</div>
+          <div class="we-vals">
+            <div class="we-cell we-swap">2<sup>-</sup></div>
+            <div class="we-cell we-swap">1<sup>+</sup></div>
+          </div>
+        </div>
+        <div class="we-row">
+          <div class="we-formula-label">الصيغة</div>
+          <div class="we-vals we-formula-vals">
+            <div class="final-formula" style="margin-top:0;">Na<sub>2</sub>O</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="note" style="text-align:center;">نُبدّل العددين: يصبح تكافؤ الأكسجين رقمًا سفليًا للصوديوم، والعكس.</p>
+    </div>
+
+    <p style="margin-top:20px;font-weight:700;color:var(--ink);">الآن جرّب بنفسك — اختر مركّبًا وابنِ صيغته خطوة بخطوة.</p>
+
+    <div class="compound-menu">
+      <p class="menu-label">اختر مركّبًا لتبدأ:</p>
+      <div class="menu-btns" id="valencyMenuBtns"></div>
+    </div>
+    <div id="valencyPracticeCard"></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- محطة 8 — التوسّع: دراسة حالة أكسيد الألومنيوم -->
+  <!-- ===================================================== -->
+  <section class="station" id="st-elaborate">
+    <div class="station-label">المحطة الرابعة</div>
+    <h2>دراسة الحالة</h2>
+    <p class="station-tagline">ماذا تعرف عن أكسيد الألومنيوم؟</p>
+    <div class="case-intro">
+      <svg viewBox="0 0 64 64" fill="none" stroke="#14C8A8" stroke-width="2">
+        <path d="M10 46 L20 22 L32 38 L40 18 L54 46 Z" fill="rgba(20,200,168,.12)"/>
+        <circle cx="18" cy="30" r="2.4" fill="#14C8A8"/>
+        <circle cx="36" cy="26" r="2.4" fill="#14C8A8"/>
+        <circle cx="46" cy="34" r="2.4" fill="#14C8A8"/>
+      </svg>
+      <p style="margin:0;">مَعدن <b>البوكسيت</b> يُستخدم لاستخراج الألومنيوم، ويُستخرج في أماكن كثيرة من العالم. الاسم الكيميائي للبوكسيت هو <b>أكسيد الألومنيوم</b>. لنكتشف صيغته الكيميائية سويًا.</p>
+    </div>
+
+    <div class="config-pair">
+      <div class="config-item" id="alConfigWrap"></div>
+      <div class="config-item" id="oConfigWrap2"></div>
+    </div>
+
+    <div id="alQ1Wrap"></div>
+    <div id="alQ2Wrap" style="margin-top:16px;"></div>
+    <div id="alQ3Wrap" style="margin-top:16px;"></div>
+    <div id="alQ4Wrap" style="margin-top:16px;"></div>
+
+    <div class="al-final" id="alFinal">
+      <p style="margin:0;color:var(--ink-dim);">إذًا: يفقد الألومنيوم 3 إلكترونات ليصبح <b dir="ltr">Al³⁺</b>، ويكتسب الأكسجين إلكترونين ليصبح <b dir="ltr">O²⁻</b>. بتبديل العددين، الصيغة الكيميائية لأكسيد الألومنيوم هي:</p>
+      <div class="final-formula" style="margin-top:10px;">Al<sub>2</sub>O<sub>3</sub></div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- محطة 9 — التقييم الختامي المُقيَّم + الشهادة -->
+  <!-- ===================================================== -->
+  <section class="station" id="st-evaluate">
+    <div class="station-label">المحطة الأخيرة</div>
+    <h2>التقييم الختامي</h2>
+    <p class="station-tagline">تحقّق ممّا تعلّمته في هذا الدرس</p>
+    <p>هذا هو التقييم الختامي المُقيَّم لدرس 2-1 كاملًا. محاولة واحدة لكلّ سؤال، وفي النهاية تحصل على شهادتك.</p>
+
+    <p class="note" style="background:rgba(20,200,168,.06);border:1px solid var(--turquoise-soft);border-radius:12px;padding:10px 14px;">
+      🔎 عالق في سؤال؟ راجع المفهوم أولًا (التمرير لا يُفقدك تقدّمك هنا):
+      <a href="#st-explore1">الجدول الدوري</a> ·
+      <a href="#st-explore3">التوزيع الإلكتروني</a> ·
+      <a href="#st-explain3">الاستقرار وأقرب غاز نبيل</a> ·
+      <a href="#st-valency">التكافؤ والصيغ</a>
+    </p>
+
+    <div class="name-gate" id="nameGate">
+      <label for="studentNameInput">اكتب اسمك لتظهر شهادتك باسمك عند إنهاء التقييم</label>
+      <input type="text" id="studentNameInput" placeholder="مثال: سارة أحمد">
+      <button class="pill-btn" onclick="startFinalEvaluate()">ابدأ التقييم الختامي</button>
+    </div>
+
+    <div id="evalQuestions" hidden>
+      <div id="fq1Wrap"></div>
+      <div id="fq2Wrap" style="margin-top:18px;"></div>
+      <div id="fq7Wrap" style="margin-top:18px;"></div>
+      <div id="fq3Wrap" style="margin-top:18px;"></div>
+
+      <div class="short-answer" style="margin-top:18px;">
+        <p class="mc-q">اشرح باختصار كيف تُستخدم أعداد التكافؤ لكتابة صيغة مركّب كيميائي.</p>
+        <textarea id="fq4Input" placeholder="اكتب إجابتك هنا..."></textarea>
+        <button class="pill-btn small" style="margin-top:8px;" onclick="submitShortAnswer('fq4','evaluate','q4')">تحقّق</button>
+        <p class="fb" id="fq4Fb"></p>
+      </div>
+
+      <div class="short-answer" style="margin-top:18px;">
+        <p class="mc-q">ما الصيغة الكيميائية لأكسيد الألومنيوم؟ (Al + O)</p>
+        <div class="zchip-row"><span class="zchip"><b dir="ltr">Al</b> — العدد الذرّي: 13</span><span class="zchip"><b dir="ltr">O</b> — العدد الذرّي: 8</span></div>
+        <input type="text" id="fq5Input" dir="ltr" placeholder="مثال: X4Y5">
+        <button class="pill-btn small" style="margin-top:8px;" onclick="submitShortAnswer('fq5','evaluate','q5')">تحقّق</button>
+        <p class="fb" id="fq5Fb"></p>
+      </div>
+
+      <div class="short-answer" style="margin-top:18px;">
+        <p class="mc-q">ما الصيغة الكيميائية لفلوريد المغنيسيوم (Mg + F)؟</p>
+        <div class="zchip-row"><span class="zchip"><b dir="ltr">Mg</b> — العدد الذرّي: 12</span><span class="zchip"><b dir="ltr">F</b> — العدد الذرّي: 9</span></div>
+        <input type="text" id="fq6Input" dir="ltr" placeholder="مثال: X4Y5">
+        <button class="pill-btn small" style="margin-top:8px;" onclick="submitShortAnswer('fq6','evaluate','q6')">تحقّق</button>
+        <p class="fb" id="fq6Fb"></p>
+      </div>
+    </div>
+
+    <div class="eval-summary" id="evalSummary" hidden></div>
+    <div id="certTriggerSlot"></div>
+  </section>
+
+  
+
+  <!-- ===== تذييل ===== -->
+  <div class="lesson-footer">
+    <a class="pill-btn full" href="index.html" id="returnLessonBtn" style="max-width:320px;margin:0 auto;">⟵ العودة إلى محور الوحدة</a>
+    <div id="siteFooterSlot"></div>
+  </div>
+
+</div><!-- /.page-wrap -->
+
+<!-- ===== زر فهيم العائم ===== -->
+<a class="fahim-fab" href="https://gemini.google.com/gem/1TQZrpFiFLee8pVh8sSs21emE6EKo_tzK?usp=sharing" target="_blank" rel="noopener" id="fahimFab" title="اسأل فهيم">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 10a3 3 0 1 1 3 3v1"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>
+  <span class="fahim-label">اسأل فهيم</span>
+</a>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const ELEMENTS = [
+  {z:1,sym:'H',name:'الهيدروجين',cat:'nonmetal',group:1,period:1,mass:1,conductivity:'لا يوصل الكهرباء',physicalState:'غاز'},
+  {z:2,sym:'He',name:'الهيليوم',cat:'nonmetal',group:18,period:1,mass:4,conductivity:'لا يوصل الكهرباء',physicalState:'غاز'},
+  {z:3,sym:'Li',name:'الليثيوم',cat:'metal',group:1,period:2,mass:7,conductivity:'موصل جيد للكهرباء',physicalState:'صلب لامع'},
+  {z:4,sym:'Be',name:'البريليوم',cat:'metal',group:2,period:2,mass:9,conductivity:'موصل جيد للكهرباء',physicalState:'صلب لامع'},
+  {z:5,sym:'B',name:'البورون',cat:'metalloid',group:13,period:2,mass:11,conductivity:'موصل ضعيف للكهرباء',physicalState:'صلب غير لامع'},
+  {z:6,sym:'C',name:'الكربون',cat:'nonmetal',group:14,period:2,mass:12,conductivity:'لا يوصل الكهرباء',physicalState:'صلب هش غير لامع'},
+  {z:7,sym:'N',name:'النيتروجين',cat:'nonmetal',group:15,period:2,mass:14,conductivity:'لا يوصل الكهرباء',physicalState:'غاز'},
+  {z:8,sym:'O',name:'الأكسجين',cat:'nonmetal',group:16,period:2,mass:16,conductivity:'لا يوصل الكهرباء',physicalState:'غاز'},
+  {z:9,sym:'F',name:'الفلور',cat:'nonmetal',group:17,period:2,mass:19,conductivity:'لا يوصل الكهرباء',physicalState:'غاز'},
+  {z:10,sym:'Ne',name:'النيون',cat:'nonmetal',group:18,period:2,mass:20,conductivity:'لا يوصل الكهرباء',physicalState:'غاز'},
+  {z:11,sym:'Na',name:'الصوديوم',cat:'metal',group:1,period:3,mass:23,conductivity:'موصل جيد للكهرباء',physicalState:'صلب لامع'},
+  {z:12,sym:'Mg',name:'المغنيسيوم',cat:'metal',group:2,period:3,mass:24,conductivity:'موصل جيد للكهرباء',physicalState:'صلب لامع'},
+  {z:13,sym:'Al',name:'الألومنيوم',cat:'metal',group:13,period:3,mass:27,conductivity:'موصل جيد للكهرباء',physicalState:'صلب لامع'},
+  {z:14,sym:'Si',name:'السيليكون',cat:'metalloid',group:14,period:3,mass:28,conductivity:'موصل ضعيف للكهرباء',physicalState:'صلب غير لامع'},
+  {z:15,sym:'P',name:'الفوسفور',cat:'nonmetal',group:15,period:3,mass:31,conductivity:'لا يوصل الكهرباء',physicalState:'صلب هش غير لامع'},
+  {z:16,sym:'S',name:'الكبريت',cat:'nonmetal',group:16,period:3,mass:32,conductivity:'لا يوصل الكهرباء',physicalState:'صلب هش غير لامع'},
+  {z:17,sym:'Cl',name:'الكلور',cat:'nonmetal',group:17,period:3,mass:35,conductivity:'لا يوصل الكهرباء',physicalState:'غاز'},
+  {z:18,sym:'Ar',name:'الأرجون',cat:'nonmetal',group:18,period:3,mass:40,conductivity:'لا يوصل الكهرباء',physicalState:'غاز'},
+  {z:19,sym:'K',name:'البوتاسيوم',cat:'metal',group:1,period:4,mass:39,conductivity:'موصل جيد للكهرباء',physicalState:'صلب لامع'},
+  {z:20,sym:'Ca',name:'الكالسيوم',cat:'metal',group:2,period:4,mass:40,conductivity:'موصل جيد للكهرباء',physicalState:'صلب لامع'}
+];
+
+function shellsFor(z){
+  const caps=[2,8,8,8];
+  let rem=z, shells=[];
+  for(const cap of caps){ if(rem<=0) break; const e=Math.min(cap,rem); shells.push(e); rem-=e; }
+  return shells;
+}
+
+const VALENCY_BY_GROUP = {1:1,2:2,13:3,14:4,15:3,16:2,17:1,18:0};
+function elBySym(sym){ return ELEMENTS.find(e=>e.sym===sym); }
+function valencyOf(sym){ return VALENCY_BY_GROUP[elBySym(sym).group]; }
+function gcd(a,b){ return b?gcd(b,a%b):a; }
+
+/* ==================================================================
+   الصوت — Web Audio API فقط، بلا ملفات خارجية
+   ================================================================== */
+let audioCtx=null;
+function actx(){ if(!audioCtx){ audioCtx = new (window.AudioContext||window.webkitAudioContext)(); } return audioCtx; }
+function tone(f1,f2,dur,vol,type){
+  try{
+    const c=actx();
+    const o=c.createOscillator(); const g=c.createGain();
+    o.type=type||'sine';
+    o.frequency.setValueAtTime(f1,c.currentTime);
+    if(f2) o.frequency.exponentialRampToValueAtTime(f2,c.currentTime+dur*.6);
+    g.gain.setValueAtTime(.0001,c.currentTime);
+    g.gain.exponentialRampToValueAtTime(vol||.1,c.currentTime+.02);
+    g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+dur);
+    o.connect(g); g.connect(c.destination);
+    o.start(); o.stop(c.currentTime+dur+.05);
+  }catch(e){ /* المتصفح قد لا يدعم الصوت التلقائي قبل تفاعل المستخدم */ }
+}
+function sndHover(){ tone(650,720,.08,.04); }
+function sndClick(){ tone(520,480,.09,.07); }
+function sndSuccess(){ tone(520,900,.35,.13); }
+function sndTransition(){ tone(400,650,.45,.09); }
+function sndError(){ tone(300,220,.25,.08,'sawtooth'); }
+
+/* ==================================================================
+   الحالة والتقدّم — لا تراجع أبدًا، بلا شارات أثناء الأنشطة
+   ================================================================== */
+const state = {
+  xp:0,
+  stationProgress:{engage:0,explore1:0,explore2:0,explore3:0,explain3:0,checkin:0,valency:0,elaborate:0,evaluate:0},
+  weights:{engage:5,explore1:6,explore2:7,explore3:15,explain3:12,checkin:5,valency:18,elaborate:12,evaluate:20},
+  exercises:{}
+};
+const checklist = {
+  engage:{challenge:false},
+  explore1:{predict:false},
+  explore2:{trackPeriod:false,trackGroup:false,pdBlank1:false,pdBlank2:false,grpBlank1:false,transferQ:false},
+  explore3:{build:false,cap1:false,cap2:false,cap3:false,groupPattern:false,periodPattern:false,matchGame:false},
+  explain3:{c1:false,c2:false,c3:false,eq3:false},
+  checkin:{tq1:false,tq2:false,tq3:false},
+  valency:{comp0:false,comp1:false,comp2:false},
+  elaborate:{q1:false,q2:false,q3:false,q4:false},
+  evaluate:{q1:false,q2:false,q3:false,q4:false,q5:false,q6:false,q7:false}
+};
+const STATION_LABELS = {engage:'تحدي البداية',explore1:'الاستكشاف الأول',explore2:'الاستكشاف الثاني',explore3:'الاستكشاف الثالث',explain3:'التفسير',checkin:'التحقّق السريع',valency:'التكافؤ والصيغ',elaborate:'دراسة الحالة',evaluate:'التقييم الختامي'};
+const builtSet = new Set();
+let checkinCorrect = 0;
+let finalEvalCorrect = 0;
+const FINAL_EVAL_TOTAL = 7;
+let studentName = '';
+const LESSON_TITLE = 'كيف تُصنّف العناصر وتُحدد الصيغ الكيميائية؟';
+
+function ensureEx(id){ if(!state.exercises[id]) state.exercises[id]={attempts:0,completedCount:0,hintUsed:false}; return state.exercises[id]; }
+function markAttempt(id){ ensureEx(id).attempts++; }
+
+function awardXP(id, base){
+  const ex = ensureEx(id);
+  const mult = ex.completedCount===0 ? 1 : Math.max(.2, 1/(ex.completedCount+1));
+  const gained = Math.max(1, Math.round(base*mult));
+  state.xp += gained;
+  ex.completedCount++;
+  updateXPDisplay();
+  return gained;
+}
+function toggleHint(id, boxId){
+  const box=document.getElementById(boxId);
+  if(!box) return;
+  box.hidden=!box.hidden;
+  sndClick();
+  const ex=ensureEx(id);
+  if(ex.attempts===0 && !ex.hintUsed){ ex.hintUsed=true; state.xp+=2; updateXPDisplay(); }
+}
+function revealModel(id){ const el=document.getElementById(id); if(el){ el.hidden=!el.hidden; sndClick(); } }
+function updateXPDisplay(){ document.getElementById('xpValue').textContent = state.xp; }
+
+function markDone(station,key){ checklist[station][key]=true; updateStation(station); }
+
+function updateStation(station){
+  const items=checklist[station];
+  const vals=Object.values(items);
+  const doneCount=vals.filter(Boolean).length;
+  const pct=Math.round(doneCount/vals.length*100);
+  const wasComplete = state.stationProgress[station]>=100;
+  state.stationProgress[station] = Math.max(state.stationProgress[station], pct);
+  recomputeProgress();
+  if(state.stationProgress[station]>=100 && !wasComplete){
+    sndTransition();
+    showToast(STATION_LABELS[station] + ' — اكتملت! 🎉');
+  }
+}
+let maxProgress = 0;
+function recomputeProgress(){
+  let total=0;
+  for(const k in state.weights){ total += (state.stationProgress[k]/100)*state.weights[k]; }
+  maxProgress = Math.max(maxProgress, total);
+  renderProgressBar();
+}
+function renderProgressBar(){
+  Object.keys(state.stationProgress).forEach(k=>{
+    const seg=document.querySelector('.step-seg[data-station="'+k+'"]');
+    if(!seg) return;
+    const pct=state.stationProgress[k];
+    const fill=seg.querySelector('.step-seg-fill');
+    if(fill) fill.style.width=pct+'%';
+    seg.classList.toggle('active', pct>0 && pct<100);
+  });
+}
+let toastTimer=null;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+/* ==================================================================
+   رسم ذرّة صغيرة (SVG) لعرض التوزيع الإلكتروني
+   ================================================================== */
+function miniAtomSVG(shells){
+  const cx=40, cy=40; const radii=[14,26,38];
+  let s='<svg viewBox="0 0 80 80" width="70" height="70">';
+  s+='<circle cx="'+cx+'" cy="'+cy+'" r="6" fill="#131c30" stroke="#ff6b4a" stroke-width="1"/>';
+  shells.forEach((count,i)=>{
+    s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+radii[i]+'" fill="none" stroke="rgba(20,200,168,.35)" stroke-width="1"/>';
+    for(let k=0;k<count;k++){
+      const angle=(2*Math.PI*k/count)-Math.PI/2;
+      const ex=cx+radii[i]*Math.cos(angle), ey=cy+radii[i]*Math.sin(angle);
+      s+='<circle cx="'+ex.toFixed(1)+'" cy="'+ey.toFixed(1)+'" r="2.6" fill="#14C8A8"/>';
+    }
+  });
+  s+='</svg>';
+  return s;
+}
+
+/* ==================================================================
+   رسم ذرّة بور (SVG) — تُستخدم في التنشيط وباني الذرّة
+   ================================================================== */
+function atomSVG(symbolText, placed, size){
+  size = size || 230;
+  const cx=150, cy=150; const radii=[35,65,95,125];
+  let maxShellIndex=0;
+  for(let i=0;i<4;i++){ if(placed[i]>0) maxShellIndex=i; }
+  let circles='', electrons='';
+  for(let i=0;i<=maxShellIndex;i++){
+    circles += '<circle cx="'+cx+'" cy="'+cy+'" r="'+radii[i]+'" fill="none" stroke="rgba(20,200,168,.35)" stroke-width="1.5"/>';
+    const count=placed[i];
+    for(let k=0;k<count;k++){
+      const angle=(2*Math.PI*k/count)-Math.PI/2;
+      const ex=cx+radii[i]*Math.cos(angle), ey=cy+radii[i]*Math.sin(angle);
+      electrons += '<circle cx="'+ex.toFixed(1)+'" cy="'+ey.toFixed(1)+'" r="5" fill="#14C8A8"/>';
+    }
+  }
+  return '<svg viewBox="0 0 300 300" width="'+size+'" height="'+size+'">'+
+    '<circle cx="'+cx+'" cy="'+cy+'" r="18" fill="#131c30" stroke="#ff6b4a" stroke-width="1.5"/>'+
+    '<text x="'+cx+'" y="'+(cy+5)+'" text-anchor="middle" font-family="Cairo" font-weight="800" font-size="14" fill="#eef2f7">'+symbolText+'</text>'+
+    circles+electrons+'</svg>';
+}
+
+/* ==================================================================
+   محطة تحدي البداية — جدول بيانات ثلاثة عناصر (Ar، K، Ca) ببياناتها
+   الخام (العدد الذرّي، العدد الكتلي، الحالة)، تليها سؤال واحد مشترك:
+   على أي أساس رتّب العلماء العناصر؟ — Ar وCa يتشاركان نفس العدد الكتلي
+   (40) رغم اختلاف هويتهما، وK أقل عددًا ذرّيًا من Ar رغم زيادة كتلته
+   عليه؛ هذا يجعل مشتّتي "العدد الكتلي" و"الحالة" أدلّة حقيقية قابلة
+   للفحص لا خيارات عشوائية، ويهيّئ لاكتشاف Explore 1 دون حرق إجابته
+   بالكامل. عمدًا بلا نموذج بور هنا (لا علاقة له بهدف المقارنة)، وبصيغة
+   جدول لا بطاقات منفصلة كي يبقى الجدول كاملًا مرئيًا بلا تمرير حتى على
+   شاشات صغيرة، ولتفادي تكرار تسميات المعطيات ثلاث مرات */
+const ENGAGE_CHALLENGE_ELEMENTS = ['Ar','K','Ca'];
+const ENGAGE_FACT_ROWS = [
+  { fact:'label', label:'', cell:el=>el.name+' ('+el.sym+')' },
+  { fact:'z',     label:'العدد الذرّي', cell:el=>el.z },
+  { fact:'mass',  label:'العدد الكتلي', cell:el=>el.mass },
+  { fact:'state', label:'الحالة', cell:el=>el.physicalState }
+];
+
+function renderEngageAtoms(){
+  const row = document.getElementById('engageAtomsRow');
+  if(!row) return;
+  const els = ENGAGE_CHALLENGE_ELEMENTS.map(elBySym);
+  let html = '<div class="engage-fact-table">';
+  ENGAGE_FACT_ROWS.forEach(r=>{
+    const isHeader = r.fact==='label';
+    html += '<div class="eft-cell eft-label">'+r.label+'</div>';
+    els.forEach(el=>{
+      html += '<div class="eft-cell '+(isHeader?'eft-header':'eft-value')+'" data-fact="'+r.fact+'" data-el="'+el.sym+'">'+r.cell(el)+'</div>';
+    });
+  });
+  html += '</div>';
+  row.innerHTML = html;
+  renderEngageChallengeQuestion();
+}
+
+/* سؤال واحد مشترك — اختبار فرضية لا اختيار صح/خطأ: كل خيار يُبرز خانة
+   محددة داخل البطاقات الثلاث كدليل جزئي، بلا أي إعلان "صحيح/خاطئ" ظاهر
+   (لا لون حاسم، لا تعطيل، لا صوت مختلف). عمدًا مستقل عن محرّك renderMC
+   العام لأن ذاك مصمّم لقفل واعتراف نهائي، وهنا الهدف عكسه تمامًا: إبقاء
+   كل الخيارات مفتوحة للتجربة إلى أن يكتشف الطالب الإجابة بنفسه في
+   المحطة القادمة */
+const ENGAGE_CHALLENGE_OPTIONS = [
+  { label:'العدد الكتلي', hint:'الأرجون والكالسيوم عنصران مختلفان تمامًا، لكن عددهما الكتلي متساوٍ — هل هذا أساس متين للترتيب؟', highlight:{fact:'mass', elements:['Ar','Ca']} },
+  { label:'العدد الذرّي', hint:'لاحظ، الأعداد الذرّية هنا متسلسلة تمامًا بلا أي فجوة أو تكرار — نمط يستحق التحقق منه.', highlight:{fact:'z', elements:['Ar','K','Ca']} },
+  { label:'حالة العنصر', hint:'البوتاسيوم والكالسيوم بنفس الحالة الفيزيائية رغم اختلافهما الواضح — فكّر مرة أخرى.', highlight:{fact:'state', elements:['K','Ca']} },
+  { label:'الترتيب الأبجدي لاسم العنصر', hint:'أسماء العناصر تختلف من لغة لأخرى، فلن يتفق ترتيبها الأبجدي بالضرورة من لغة لأخرى.', highlight:{fact:'label', elements:['Ar','K','Ca']} }
+];
+
+function renderEngageChallengeQuestion(){
+  const wrap = document.getElementById('engageChallengeQWrap');
+  if(!wrap) return;
+  let html = '<p class="mc-q">ما الأساس الذي اعتمد عليه العلماء في ترتيب عناصر الجدول الدوري؟</p><div class="mc-options">';
+  ENGAGE_CHALLENGE_OPTIONS.forEach((opt,i)=>{
+    html += '<button type="button" class="mc-option" data-idx="'+i+'" onclick="selectEngageChallenge('+i+')">'+opt.label+'</button>';
+  });
+  html += '</div><p class="fb" id="engageChallengeFb"></p>';
+  wrap.innerHTML = html;
+}
+
+function clearEngageHighlights(){
+  document.querySelectorAll('#engageAtomsRow .hl').forEach(el=>el.classList.remove('hl'));
+}
+
+function applyEngageHighlight(spec){
+  if(!spec) return;
+  spec.elements.forEach(sym=>{
+    const el = document.querySelector('#engageAtomsRow [data-fact="'+spec.fact+'"][data-el="'+sym+'"]');
+    if(el) el.classList.add('hl');
+  });
+}
+
+const engageTriedIdx = new Set();
+
+function selectEngageChallenge(idx){
+  markAttempt('engageChallenge');
+  const wrap = document.getElementById('engageChallengeQWrap');
+  const fb = document.getElementById('engageChallengeFb');
+  const opt = ENGAGE_CHALLENGE_OPTIONS[idx];
+
+  // كل الخيارات تبقى قابلة للضغط دائمًا — لا تعطيل، لا وسم صح/خطأ على
+  // الزر نفسه، فقط تمييز حيادي لآخر خيار جرّبه الطالب
+  wrap.querySelectorAll('.mc-option').forEach(b=>b.classList.remove('picked'));
+  wrap.querySelector('[data-idx="'+idx+'"]').classList.add('picked');
+
+  clearEngageHighlights();
+  applyEngageHighlight(opt.highlight);
+
+  fb.textContent = opt.hint;
+  fb.className = 'fb fb-hint';
+  sndClick();
+
+  engageTriedIdx.add(idx);
+  awardXP('engageChallenge', 6);
+  checkEngageProgress();
+}
+
+// بطاقة الجسر تظهر فقط بعد أن يجرّب الطالب الخيارات الأربعة كلها (لا من
+// أول ضغطة) — حتى لا تتزاحم بصريًا مع تلميح كل خيار جديد أثناء الاستكشاف،
+// وتترك مساحة كاملة لتجربة كل الفرضيات قبل الدفع نحو المحطة التالية
+function checkEngageProgress(){
+  const costCard = document.getElementById('engageCostCard');
+  if(engageTriedIdx.size >= ENGAGE_CHALLENGE_OPTIONS.length && costCard && costCard.hidden){
+    costCard.hidden = false;
+    markDone('engage','challenge');
+  }
+}
+
+/* ==================================================================
+   محرّك أسئلة الاختيار من متعدّد (عام الاستخدام)
+   ================================================================== */
+function renderMC(containerId, q, station, key, atomMode){
+  let html='<div id="mcwrap-'+q.id+'">'+(q.q?('<p class="mc-q">'+q.q+'</p>'):'')+
+    '<div class="'+(atomMode?'mc-atom-options':'mc-options')+'"'+(atomMode?' dir="ltr"':'')+'>';
+  q.options.forEach((opt,i)=>{
+    const cls = atomMode ? 'mc-atom-option' : 'mc-option';
+    html+='<button type="button" class="'+cls+'" data-idx="'+i+'" onclick="selectMC(\''+q.id+'\','+i+','+q.correct+',\''+station+'\',\''+key+'\')">'+opt+'</button>';
+  });
+  html+='</div><p class="fb"></p></div>';
+  document.getElementById(containerId).innerHTML = html;
+}
+function selectMC(id, idx, correctIdx, station, key){
+  markAttempt(id);
+  const wrap=document.getElementById('mcwrap-'+id);
+  if(!wrap) return;
+  const buttons=wrap.querySelectorAll('.mc-option, .mc-atom-option');
+  buttons.forEach(b=>b.disabled=true);
+  const chosen=wrap.querySelector('[data-idx="'+idx+'"]');
+  const correct = idx===correctIdx;
+  if(chosen) chosen.classList.add(correct?'correct':'wrong');
+  if(!correct){
+    const rightBtn=wrap.querySelector('[data-idx="'+correctIdx+'"]');
+    if(rightBtn) rightBtn.classList.add('correct');
+  }
+  const fb=wrap.querySelector('.fb');
+  if(correct){ if(fb) fb.textContent='إجابة صحيحة ✓'; sndSuccess(); awardXP(id,6); }
+  else { if(fb) fb.textContent='الإجابة الصحيحة موضّحة بالتحديد الأخضر.'; sndError(); }
+  if(station) markDone(station,key);
+  if(station==='engage') checkEngageProgress();
+  if(station==='checkin'){ if(correct) checkinCorrect++; updateCheckinSummaryIfComplete(); }
+  if(station==='elaborate') checkElaborateReveal();
+  if(station==='evaluate'){ if(correct) finalEvalCorrect++; checkEvaluateComplete(); }
+}
+
+/* ==================================================================
+   محطة الاستكشاف 1 و2 — الجدول الدوري: شبكتان مستقلتان تعرضان نفس
+   العناصر: #ptableClassify (استكشاف 1 — تصنيف فلز/لافلز فقط، بلا أي
+   إشارة لصفّ/عمود) و#ptablePatterns (استكشاف 2 — تتبّع نمط الصفوف
+   والأعمدة، حيث تُكشف تسميتا "دورة"/"مجموعة" فقط في نهاية المهمّتين).
+   كل شبكة تُبنى وتُعاد رسمها بشكل مستقل عبر renderPeriodicTable(containerId).
+   ================================================================== */
+let periodicRevealed = false;
+// خريطة تحويل رقم المجموعة الحقيقي إلى عمود مضغوط متسلسل (١–٨) — نفس
+// أرقام المجموعات الحقيقية (١٣، ١٤...) تبقى مستخدمة بكل مكان آخر بالكود
+// (النصوص، الحسابات)، هذه الخريطة للموضع البصري فقط داخل الشبكة.
+const GROUP_TO_COMPACT_COL = {1:1,2:2,13:3,14:4,15:5,16:6,17:7,18:8};
+// تسميات أرقام الدورات تظهر تلقائيًا بجدول استكشاف ٢ من أول لحظة (مهمّة
+// الدورة مرئية أصلًا بلا إخفاء)، أمّا تسميات أرقام المجموعات فمشروطة
+// بهذا العلم — يُفعَّل فقط عند اكتمال مهمّة الدورة (نفس لحظة ظهور مهمّة
+// المجموعة)، فيرتبط كل رقم بمهمّته مباشرة لا بنهاية المهمّتين معًا.
+// جدول استكشاف ١ لا يُظهر أيًا من النوعين أبدًا (mode!=='patterns').
+let groupLabelsRevealed = false;
+function renderPeriodicTable(containerId){
+  const container=document.getElementById(containerId);
+  if(!container) return;
+  const mode = containerId==='ptableClassify' ? 'classify' : 'patterns';
+  const showPeriodLabels = mode==='patterns';
+  const showGroupLabels = mode==='patterns' && groupLabelsRevealed;
+  let html='';
+  ELEMENTS.forEach(el=>{
+    const catClass = periodicRevealed ? 'cat-'+el.cat : 'undiscovered';
+    const col = GROUP_TO_COMPACT_COL[el.group]+1; // +1: العمود الأول محجوز للتسمية
+    const row = el.period+1; // +1: الصفّ الأول محجوز للتسمية
+    html += '<button type="button" class="ptable-cell '+catClass+'" style="grid-column:'+col+';grid-row:'+row+'" data-z="'+el.z+'" aria-label="'+el.name+'">'+
+      '<span class="ptable-z">'+el.z+'</span><span class="ptable-sym">'+el.sym+'</span></button>';
+  });
+  // العناصر الإضافية المستقبلية بالدورة الرابعة (بعد K وCa) — تملأ باقي
+  // الأعمدة المضغوطة المتبقية بنفس الصفّ (٦ أعمدة: ١٣ إلى ١٨)
+  html += '<div class="ptable-placeholder" style="grid-column:4/10;grid-row:5">عناصر إضافية — قادمة لاحقًا</div>';
+  if(showGroupLabels){
+    Object.keys(GROUP_TO_COMPACT_COL).forEach(g=>{
+      const cls = g==='1' ? 'ptable-label hl-term-group' : 'ptable-label';
+      html += '<div class="'+cls+'" style="grid-column:'+(GROUP_TO_COMPACT_COL[g]+1)+';grid-row:1">'+g+'</div>';
+    });
+  }
+  if(showPeriodLabels){
+    [1,2,3,4].forEach(p=>{
+      const cls = p===3 ? 'ptable-label hl-term-period' : 'ptable-label';
+      html += '<div class="'+cls+'" style="grid-column:1;grid-row:'+(p+1)+'">'+p+'</div>';
+    });
+  }
+  container.innerHTML = html;
+  container.querySelectorAll('.ptable-cell').forEach(cell=>{
+    if(mode!=='patterns') return; // جدول التصنيف أصبح للعرض فقط — بلا نقر
+    cell.addEventListener('click', ()=>{
+      const el = ELEMENTS.find(e=>e.z===Number(cell.dataset.z));
+      if(!el) return;
+      handlePatternClick(el, container);
+    });
+    cell.addEventListener('pointerenter', sndHover);
+  });
+}
+
+/* ==================================================================
+   جدول محطة التحقّق السريع — مفرَّغ من كل الرموز الحقيقية باستثناء
+   ثلاثة عناصر (X,Y,Z) تحمل موضعها الحقيقي (دورة/مجموعة) وعددها الذرّي
+   الحقيقي، ليستنتج الطالب توزيعها الإلكتروني بنفس قاعدة الملء
+   المتسلسلة (2,8,8) التي تدرّب عليها في باني الذرّة أعلاه — بلا أي
+   اعتماد على "رقم المجموعة = عدد إلكترونات التكافؤ"، فهذه القاعدة غير
+   دقيقة خارج المجموعتين 1 و2 (كما نبّهنا فؤاد سابقًا)، ولم يصل الطالب
+   بعد لمحطة التكافؤ التي تشرحها. العناصر الثلاثة (N,P,Ar) لم تُذكر
+   بالاسم في أي نشاط سابق بالدرس كلّه — تحصينًا ضد الحفظ القريب. تنبيه
+   مهمّ: تجنّبنا عمدًا الأكسجين (موضعه مكشوف صراحة بسؤال transferQWrap
+   في استكشاف 2) والنيون (توزيعه 2,8 مكشوف صراحة بتلميح تحدّي الفلور
+   في محطة التفسير) — كلاهما يسبق هذه المحطة مباشرة، فيُبطلان الغاية
+   من "الاستنتاج من الموضع" لو استُخدما هنا. */
+const CHECKIN_UNKNOWNS = [
+  {letter:'X', z:7},  // النيتروجين — الدورة 2، المجموعة 15 — توزيعه 2,5
+  {letter:'Y', z:15}, // الفوسفور — الدورة 3، المجموعة 15 — توزيعه 2,8,5
+  {letter:'Z', z:18}  // الأرجون — الدورة 3، المجموعة 18 — توزيعه 2,8,8
+];
+function renderCheckinTable(){
+  const container = document.getElementById('ptableCheckin');
+  if(!container) return;
+  const letterByZ = {};
+  CHECKIN_UNKNOWNS.forEach(u=>{ letterByZ[u.z]=u.letter; });
+  let html='';
+  ELEMENTS.forEach(el=>{
+    const col = GROUP_TO_COMPACT_COL[el.group]+1;
+    const row = el.period+1;
+    const letter = letterByZ[el.z];
+    if(letter){
+      html += '<div class="ptable-cell unknown-cell" style="grid-column:'+col+';grid-row:'+row+'">'+
+        '<span class="ptable-z">'+el.z+'</span><span class="ptable-sym">'+letter+'</span></div>';
+    } else {
+      html += '<div class="ptable-cell undiscovered" style="grid-column:'+col+';grid-row:'+row+'"></div>';
+    }
+  });
+  html += '<div class="ptable-placeholder" style="grid-column:4/10;grid-row:5">عناصر إضافية — قادمة لاحقًا</div>';
+  // تسميتا الدورة والمجموعة ظاهرتان دائمًا هنا (خلافًا لجدولَي استكشاف
+  // 1 و2) لأن قراءة الموضع نفسها هي جوهر هذا النشاط، لا مفاجأة مؤجَّلة
+  Object.keys(GROUP_TO_COMPACT_COL).forEach(g=>{
+    html += '<div class="ptable-label" style="grid-column:'+(GROUP_TO_COMPACT_COL[g]+1)+';grid-row:1">'+g+'</div>';
+  });
+  [1,2,3,4].forEach(p=>{
+    html += '<div class="ptable-label" style="grid-column:1;grid-row:'+(p+1)+'">'+p+'</div>';
+  });
+  container.innerHTML = html;
+}
+// ترتيب عناصر الصفّ الثالث من اليسار لليمين (رقم المجموعة تصاعديًا) وعناصر
+// العمود الأول من الأعلى للأسفل (رقم الدورة تصاعديًا) — مُشتقّة من نفس
+// مصفوفة العناصر، لا بيانات مكررة يدويًا. الأسماء الداخلية (PERIOD3_SEQ)
+// هي تسمية برمجية فقط ولا تظهر لأي طالب.
+const PERIOD3_SEQ = ELEMENTS.filter(e=>e.period===3).sort((a,b)=>a.group-b.group);
+const GROUP1_SEQ = ELEMENTS.filter(e=>e.group===1).sort((a,b)=>a.period-b.period);
+let periodTrackIdx = 0;
+const groupTrackDone = new Set();
+
+// لا رسم مدارات ولا معاينة كاملة للصفّ/العمود هنا إطلاقًا — حفاظًا على
+// مفاجأة استكشاف 3 (باني الذرّة) من جهة، وعلى تركيز الطالب أثناء بناء
+// النمط عنصرًا بعد عنصر من جهة أخرى؛ التلوين التراكمي داخل الجدول
+// (track-done/track-done-group) هو التمثيل البصري الوحيد للتقدّم
+function updatePeriodTrackUI(){
+  const statusEl = document.getElementById('trackPeriodStatus');
+  if(periodTrackIdx>=PERIOD3_SEQ.length){
+    statusEl.innerHTML = 'أحسنت! أكملت الصفّ الثالث بالكامل 🎉';
+  } else {
+    const next = PERIOD3_SEQ[periodTrackIdx];
+    statusEl.innerHTML = 'انقر: <b dir="ltr">'+next.sym+'</b> ('+next.name+')';
+  }
+}
+function updateGroupTrackUI(){
+  const statusEl = document.getElementById('trackGroupStatus');
+  const remaining = GROUP1_SEQ.length - groupTrackDone.size;
+  statusEl.innerHTML = remaining<=0 ? 'أحسنت! أكملت العمود الأول بالكامل 🎉' : ('تبقّى '+remaining+' من '+GROUP1_SEQ.length+' عناصر.');
+}
+
+// كشف بطاقة "دورة": ٣ فراغات اختيار من متعدّد تظهر معًا (بلا ترتيب
+// إجباري بينها) — عنوان البطاقة يبقى محايدًا ("ما اسم هذا النمط؟") حتى
+// تُحلّ الفراغة الأولى (فراغة المصطلح نفسه)، تفاديًا لتسريب الإجابة عبر
+// العنوان قبل أن يجيب الطالب عليها بنفسه
+function revealPeriodCard(){
+  document.getElementById('periodRevealNote').hidden=false;
+  renderMC('pdBlank1', {id:'pdBlank1', q:'كل صفّ أفقي في الجدول الدوري يُسمّى: ......', options:['دورة','مجموعة','عنصر','ذرّة'], correct:0}, 'explore2', 'pdBlank1');
+  renderMC('pdBlank2', {id:'pdBlank2', q:'العدد الذرّي يزداد بمقدار ...... بالضبط كلّما تحرّكت يمينًا عبر الدورة.', options:['يتغيّر','واحد','اثنان','ثلاثة'], correct:1}, 'explore2', 'pdBlank2');
+  document.getElementById('pdBlank1').addEventListener('click', ()=>{
+    document.getElementById('periodCardTitle').textContent = '🟠 دورة (Period)';
+  }, {once:true});
+}
+// نفس المنطق لبطاقة "مجموعة" — مشتّت الفراغة الأولى هنا هو "دورة" نفسها
+// (المصطلح المتعلَّم للتوّ بالبطاقة السابقة)، أقوى تمييز ممكن بين
+// المفهومين لحظة تقديم الثاني
+function revealGroupCard(){
+  document.getElementById('groupRevealNote').hidden=false;
+  renderMC('grpBlank1', {id:'grpBlank1', q:'كل عمود رأسي في الجدول الدوري يُسمّى: ......', options:['دورة','مجموعة','عنصر','ذرّة'], correct:1}, 'explore2', 'grpBlank1');
+  document.getElementById('grpBlank1').addEventListener('click', ()=>{
+    document.getElementById('groupCardTitle').textContent = '🔵 مجموعة (Group)';
+  }, {once:true});
+}
+function handleTrackClick(el, containerEl){
+  if(periodTrackIdx < PERIOD3_SEQ.length){
+    if(el.z === PERIOD3_SEQ[periodTrackIdx].z){
+      const cell=containerEl.querySelector('.ptable-cell[data-z="'+el.z+'"]');
+      if(cell) cell.classList.add('track-done');
+      periodTrackIdx++;
+      sndSuccess();
+      updatePeriodTrackUI();
+      if(periodTrackIdx>=PERIOD3_SEQ.length){
+        markDone('explore2','trackPeriod');
+        awardXP('trackPeriod', 10);
+        revealPeriodCard();
+        groupLabelsRevealed = true;
+        renderPeriodicTable('ptablePatterns');
+        reapplyTrackVisuals(document.getElementById('ptablePatterns'));
+        document.getElementById('trackGroupTask').hidden=false;
+        updateGroupTrackUI();
+      }
+    } else if(el.period===3){
+      showToast('ليس الآن — انقر: '+PERIOD3_SEQ[periodTrackIdx].sym);
+    }
+    return;
+  }
+  if(GROUP1_SEQ.some(e=>e.z===el.z) && !groupTrackDone.has(el.z)){
+    groupTrackDone.add(el.z);
+    const cell=containerEl.querySelector('.ptable-cell[data-z="'+el.z+'"]');
+    if(cell) cell.classList.add('track-done-group');
+    sndSuccess();
+    updateGroupTrackUI();
+    if(groupTrackDone.size>=GROUP1_SEQ.length){
+      markDone('explore2','trackGroup');
+      awardXP('trackGroup', 10);
+      revealGroupCard();
+    }
+  }
+}
+
+// نقرة داخل شبكة استكشاف 2 (الأنماط): تُقدّم منطق تتبّع المهمّتين مباشرة
+// بلا أي معاينة كاملة للصفّ/العمود — التلوين التراكمي (track-done) وحده
+// من يبني النمط أمام الطالب، عنصرًا بعد عنصر بترتيب نقره الفعلي
+function handlePatternClick(el, containerEl){
+  sndClick();
+  handleTrackClick(el, containerEl);
+}
+
+// يُستدعى بعد أن ينهي الطالب تصنيف الرموز الستّة بنفسه — يكشف الألوان
+// الحقيقية في الشبكتين معًا كتأكيد لاحق (Explain) لا كبداية (يطابق قاعدة
+// "لا يظهر التفسير المباشر قبل محاولة الطالب الاستكشافية الأولى")
+function revealClassification(){
+  if(periodicRevealed) return;
+  periodicRevealed = true;
+  renderPeriodicTable('ptableClassify');
+  renderPeriodicTable('ptablePatterns');
+  reapplyTrackVisuals(document.getElementById('ptablePatterns'));
+  document.getElementById('catLegend').hidden = false;
+  document.getElementById('revealNote').hidden = false;
+  showToast('اكتشفت التصنيف الحقيقي! 🎉');
+}
+
+/* سؤال تنبّؤ واحد يحلّ محلّ نشاط السحب والإفلات — الجدول يبقى بلا ألوان
+   (undiscovered) حتى لحظة الإجابة، فيحافظ الترتيب على مبدأ "توقّع قبل
+   الكشف" رغم تبسيط التفاعل نفسه. الإجابة (صح أو خطأ) تكشف التصنيف
+   الحقيقي فورًا كتغذية راجعة عبر revealClassification نفسها المستخدمة
+   سابقًا مع السحب والإفلات — بلا أي تكرار للمنطق. */
+const METAL_PREDICT_CORRECT = 0;
+function renderMetalPredictQ(){
+  const html = '<div id="mcwrap-predictMetal"><p class="mc-q">خمّن: أين تقع الفلزّات في الجدول الدوري؟</p>'+
+    '<div class="mc-options">'+
+      '<button type="button" class="mc-option" data-idx="0" onclick="checkMetalPrediction(0)">يسار الجدول ووسطه</button>'+
+      '<button type="button" class="mc-option" data-idx="1" onclick="checkMetalPrediction(1)">يمين الجدول فقط</button>'+
+      '<button type="button" class="mc-option" data-idx="2" onclick="checkMetalPrediction(2)">الصفوف العلوية فقط</button>'+
+      '<button type="button" class="mc-option" data-idx="3" onclick="checkMetalPrediction(3)">موزّعة عشوائيًا بلا نمط واضح</button>'+
+    '</div><p class="fb"></p></div>';
+  document.getElementById('metalPredictWrap').innerHTML = html;
+}
+function checkMetalPrediction(idx){
+  markAttempt('predictMetal');
+  const wrap = document.getElementById('mcwrap-predictMetal');
+  if(!wrap) return;
+  const buttons = wrap.querySelectorAll('.mc-option');
+  buttons.forEach(b=>b.disabled=true);
+  const chosen = wrap.querySelector('[data-idx="'+idx+'"]');
+  const correct = idx===METAL_PREDICT_CORRECT;
+  if(chosen) chosen.classList.add(correct?'correct':'wrong');
+  if(!correct){
+    const rightBtn = wrap.querySelector('[data-idx="'+METAL_PREDICT_CORRECT+'"]');
+    if(rightBtn) rightBtn.classList.add('correct');
+  }
+  const fb = wrap.querySelector('.fb');
+  if(correct){ fb.textContent='إجابة صحيحة ✓ لاحظ التصنيف الحقيقي على الجدول أعلاه الآن.'; sndSuccess(); awardXP('predictMetal',6); }
+  else { fb.textContent='الإجابة الصحيحة موضّحة بالتحديد الأخضر — قارنها بالتصنيف الحقيقي الذي ظهر على الجدول أعلاه.'; sndError(); }
+  markDone('explore1','predict');
+  revealClassification();
+}
+function reapplyTrackVisuals(containerEl){
+  if(!containerEl) return;
+  PERIOD3_SEQ.slice(0,periodTrackIdx).forEach(e=>{
+    const cell=containerEl.querySelector('.ptable-cell[data-z="'+e.z+'"]');
+    if(cell) cell.classList.add('track-done');
+  });
+  groupTrackDone.forEach(z=>{
+    const cell=containerEl.querySelector('.ptable-cell[data-z="'+z+'"]');
+    if(cell) cell.classList.add('track-done-group');
+  });
+}
+
+/* ==================================================================
+   محطة الاستكشاف 3 — باني الذرّة + جدول إلكترونات المستوى الخارجي
+   ================================================================== */
+const builderState = {z:3, placed:[0,0,0,0]};
+const BUILDER_CAPS = [2,8,8,8];
+const LEVEL_NAMES = ['المستوى الأول','المستوى الثاني','المستوى الثالث','المستوى الرابع'];
+// ثلاثة عناصر فقط (لا خمسة) لتخفيف العبء المعرفي، لكن بترتيب يضمن مرور
+// الطالب بكل نقاط الانتقال الحرجة عبر خطوات فرعية إجبارية داخل كل بناء:
+// الليثيوم (Li) يفرضه المرور بامتلاء المستوى الأول أولًا، ثم يقدّم الانتقال
+// الأول بنفسه (إلكترون 3). الصوديوم (Na) يفرضه المرور بامتلاء المستوى
+// الثاني، ثم يقدّم الانتقال الثاني بنفسه (إلكترون 11) — وهو أيضًا من
+// المجموعة 1 كالليثيوم، ما يتيح مقارنة ذرّتين من نفس المجموعة لاحقًا.
+// الكالسيوم (Ca) يفرضه المرور بامتلاء المستوى الثالث، ثم يقدّم الانتقال
+// الثالث إلى مستوى رابع (إلكترون 20) — اللحظة الوحيدة التي تصل بالطالب
+// إلى الدورة الرابعة بمشاركته الفعلية، لا مشاهدةً فقط كما في استكشاف 2
+const REQUIRED_BUILD_Z = [3,11,20];
+
+function populateAtomSelect(){
+  const sel=document.getElementById('atomSelect');
+  sel.innerHTML = ELEMENTS.filter(e=>REQUIRED_BUILD_Z.includes(e.z))
+    .map(e=>'<option value="'+e.z+'">'+e.z+' — '+e.name+' ('+e.sym+')</option>').join('');
+  sel.value = REQUIRED_BUILD_Z[0];
+}
+function resetBuilder(){
+  builderState.z = Number(document.getElementById('atomSelect').value);
+  builderState.placed=[0,0,0,0];
+  const el=ELEMENTS.find(e=>e.z===builderState.z);
+  document.getElementById('atomSvgWrap').innerHTML = atomSVG(el.sym, builderState.placed);
+  document.getElementById('atomMeta').textContent = 'المجموعة: '+el.group+' · الدورة: '+el.period;
+  document.getElementById('builderStatus').textContent = 'اختر المستوى الذي يجب أن يستقبل الإلكترون الأول.';
+  document.getElementById('builderHint').hidden = true;
+  document.getElementById('builderConfirm').hidden = true;
+  document.getElementById('fb-builder').textContent = '';
+  document.getElementById('fb-builder').className = 'fb';
+  document.querySelectorAll('.level-btn').forEach(b=>b.disabled=false);
+}
+
+// الطالب هو من يقرّر أي مستوى يستقبل الإلكترون التالي — لا تعبئة تلقائية.
+// كل ضغطة تُقارَن بقاعدة الملء الصحيحة (أقرب مستوى غير ممتلئ للنواة)، وأي
+// اختيار خاطئ يُرفض مع سؤال يقود الطالب لمراجعة قراره بنفسه، لا بكشف الإجابة.
+function addElectronAttempt(levelIndex){
+  const total = builderState.placed.reduce((a,b)=>a+b,0);
+  if(total>=builderState.z) return;
+  const correctIndex = builderState.placed.findIndex((n,i)=>n<BUILDER_CAPS[i]);
+  const hintEl = document.getElementById('builderHint');
+  const btn = document.querySelector('.level-btn[data-level="'+levelIndex+'"]');
+
+  if(levelIndex===correctIndex){
+    builderState.placed[levelIndex]++;
+    sndClick();
+    hintEl.hidden = true;
+    const el=ELEMENTS.find(e=>e.z===builderState.z);
+    document.getElementById('atomSvgWrap').innerHTML = atomSVG(el.sym, builderState.placed);
+    const newTotal = builderState.placed.reduce((a,b)=>a+b,0);
+    if(newTotal===builderState.z){
+      sndSuccess();
+      document.getElementById('builderStatus').textContent = 'اكتملت الذرّة! الآن اكتب التوزيع الذي بنيته أدناه.';
+      showBuilderConfirm();
+    } else {
+      document.getElementById('builderStatus').textContent = 'الإلكترونات المضافة: '+newTotal+' من '+builderState.z;
+    }
+  } else {
+    sndError();
+    if(btn){ btn.classList.add('shake'); setTimeout(()=>btn.classList.remove('shake'),420); }
+    if(builderState.placed[levelIndex]>=BUILDER_CAPS[levelIndex]){
+      hintEl.textContent = LEVEL_NAMES[levelIndex]+' يحتوي حاليًا على '+builderState.placed[levelIndex]+' إلكترون(ات) ولا يقبل المزيد الآن — جرّب مستوى آخر.';
+    } else {
+      hintEl.textContent = 'انظر إلى '+LEVEL_NAMES[correctIndex]+' في الرسم أعلاه — هل امتلأ فعلًا قبل الانتقال إلى مستوى أبعد عن النواة؟';
+    }
+    hintEl.hidden = false;
+  }
+}
+
+function showBuilderConfirm(){
+  const shellsUsed = builderState.placed.filter(n=>n>0).length;
+  const wrap = document.getElementById('builderConfirmInputs');
+  wrap.innerHTML = '';
+  for(let i=0;i<shellsUsed;i++){
+    wrap.innerHTML += '<label class="builder-confirm-field">'+LEVEL_NAMES[i]+'<input type="number" min="0" max="8" class="builder-confirm-input" dir="ltr" data-idx="'+i+'"></label>';
+  }
+  document.getElementById('builderConfirm').hidden = false;
+  document.getElementById('fb-builder').textContent = '';
+  document.getElementById('fb-builder').className = 'fb';
+  document.querySelectorAll('.level-btn').forEach(b=>b.disabled=true);
+}
+
+function checkBuilderConfirm(){
+  const inputs = document.querySelectorAll('.builder-confirm-input');
+  let allCorrect = true;
+  inputs.forEach(inp=>{
+    const idx = Number(inp.dataset.idx);
+    const val = Number(inp.value);
+    if(val===builderState.placed[idx]){ inp.classList.add('correct'); inp.classList.remove('wrong'); }
+    else { inp.classList.add('wrong'); inp.classList.remove('correct'); allCorrect=false; }
+  });
+  const fb = document.getElementById('fb-builder');
+  if(allCorrect){
+    sndSuccess();
+    const el=ELEMENTS.find(e=>e.z===builderState.z);
+    const config = builderState.placed.filter(n=>n>0).join(',');
+    const shellsUsed = builderState.placed.filter(n=>n>0).length;
+    fb.innerHTML = 'أحسنت! التوزيع الإلكتروني الصحيح لذرّة '+el.name+': <b dir="ltr">'+config+'</b> — استخدمتَ <b dir="ltr">'+shellsUsed+'</b> مستويات طاقة، وهذا العنصر يقع في الدورة <b dir="ltr">'+el.period+'</b> 👀';
+    fb.className = 'fb fb-correct';
+    builtSet.add(builderState.z);
+    awardXP('build-'+builderState.z, 5);
+    if(builtSet.size>=3){
+      markDone('explore3','build');
+      const afterBuild = document.getElementById('explore3AfterBuild');
+      if(afterBuild && afterBuild.hidden){
+        afterBuild.hidden = false;
+        document.getElementById('explore3LockNote').hidden = true;
+        sndTransition();
+      }
+    }
+  } else {
+    sndError();
+    fb.textContent = 'بعض الخانات غير صحيحة (باللون الأحمر) — عد إلى الرسم أعلاه وأعد العدّ بدقّة لكل مستوى.';
+    fb.className = 'fb fb-wrong';
+  }
+}
+// يعرض ذرّتي الليثيوم والصوديوم بشكل ثابت (بلا تفاعل) للمقارنة — يُستخدم
+// shellsFor لأن التوزيع محسوب رياضيًا وليس معتمِدًا على حالة الباني الحيّة،
+// فيبقى صحيحًا بصرف النظر عن أي عنصر آخر يعرضه الباني حاليًا
+function renderGroupPatternAtoms(){
+  const wrap = document.getElementById('groupPatternAtoms');
+  if(!wrap) return;
+  const pair = [elBySym('Li'), elBySym('Na')];
+  wrap.innerHTML = pair.map(el=>{
+    return '<div class="engage-atom-card"><div class="engage-atom-visual">'+atomSVG(el.sym, shellsFor(el.z), 150)+'</div>'+
+      '<div class="engage-atom-label">'+el.name+' ('+el.sym+') — المجموعة '+el.group+'</div></div>';
+  }).join('');
+}
+function checkGroupPattern(){
+  markAttempt('groupPattern');
+  const liInput=document.getElementById('gpLi'), naInput=document.getElementById('gpNa');
+  const li=Number(liInput.value), na=Number(naInput.value);
+  const correct=1;
+  [[liInput,li],[naInput,na]].forEach(([inp,val])=>{
+    if(val===correct){ inp.classList.add('correct'); inp.classList.remove('wrong'); }
+    else { inp.classList.add('wrong'); inp.classList.remove('correct'); }
+  });
+  const fb=document.getElementById('fb-groupPattern');
+  if(li===correct && na===correct){
+    fb.textContent='صحيح! كلاهما إلكترون واحد في المستوى الأخير — لأنّهما في نفس المجموعة (1)، رغم اختلاف عدد المستويات الكلي بينهما.';
+    fb.className='fb fb-correct';
+    sndSuccess(); awardXP('groupPattern',10); markDone('explore3','groupPattern');
+    checkGroupPeriodSynthesis();
+  } else {
+    fb.textContent='أحد الرقمين غير دقيق — عد إلى رسمي الذرّتين أعلاه، وركّز على المستوى الأبعد عن النواة فقط.';
+    fb.className='fb fb-wrong';
+    sndError();
+  }
+}
+
+// يعرض ذرّتي الصوديوم والكلور بشكل ثابت للمقارنة — نفس آلية بطاقة
+// المجموعة أعلاه تمامًا، لكن بمتغيّر معكوس: الدورة ثابتة (3) والمجموعة
+// مختلفة، فيركّز الطالب هذه المرّة على عدد المستويات الكلي لا آخرها
+function renderPeriodPatternAtoms(){
+  const wrap = document.getElementById('periodPatternAtoms');
+  if(!wrap) return;
+  const pair = [elBySym('Na'), elBySym('Cl')];
+  wrap.innerHTML = pair.map(el=>{
+    return '<div class="engage-atom-card"><div class="engage-atom-visual">'+atomSVG(el.sym, shellsFor(el.z), 150)+'</div>'+
+      '<div class="engage-atom-label">'+el.name+' ('+el.sym+') — الدورة '+el.period+'</div></div>';
+  }).join('');
+}
+function checkPeriodPattern(){
+  markAttempt('periodPattern');
+  const naInput=document.getElementById('ppNa'), clInput=document.getElementById('ppCl');
+  const na=Number(naInput.value), cl=Number(clInput.value);
+  const correct=3;
+  [[naInput,na],[clInput,cl]].forEach(([inp,val])=>{
+    if(val===correct){ inp.classList.add('correct'); inp.classList.remove('wrong'); }
+    else { inp.classList.add('wrong'); inp.classList.remove('correct'); }
+  });
+  const fb=document.getElementById('fb-periodPattern');
+  if(na===correct && cl===correct){
+    fb.textContent='صحيح! كلاهما 3 مستويات طاقة — لأنّهما في نفس الدورة (3)، رغم اختلاف عدد إلكترونات مستواهما الأخير.';
+    fb.className='fb fb-correct';
+    sndSuccess(); awardXP('periodPattern',10); markDone('explore3','periodPattern');
+    checkGroupPeriodSynthesis();
+  } else {
+    fb.textContent='أحد الرقمين غير دقيق — عد إلى رسمي الذرّتين أعلاه، وعُدّ كل الحلقات لا الحلقة الأخيرة فقط.';
+    fb.className='fb fb-wrong';
+    sndError();
+  }
+}
+// جملة التركيب الختامية تظهر فقط بعد اكتمال البطاقتين معًا (لا واحدة
+// بمفردها) — كي لا تُسرّب نمط الدورة قبل أن يكتشفه الطالب بنفسه في
+// بطاقته، ولا تبقى ناقصة لو أكمل بطاقة الدورة قبل بطاقة المجموعة
+function checkGroupPeriodSynthesis(){
+  if(checklist.explore3.groupPattern && checklist.explore3.periodPattern){
+    const note = document.getElementById('groupPeriodSynthesis');
+    if(note && note.hidden){ note.hidden=false; sndTransition(); }
+  }
+}
+
+/* ==================================================================
+   لعبة مطابقة العنصر بتوزيعه الإلكتروني — تقييم تكويني ختامي لمحطة
+   الاستكشاف الثالث. عناصر من الدورة 3 حصرًا (Mg,Al,S,Cl) — لا يفتقر
+   أيّ منها إلى نقل حقيقي: (1) لا يتكرّر أيّ منها مع الذرّات الثلاث التي
+   بناها الطالب بيده (Li,Na,Ca)، و(2) توزيعاتها الأربعة متطابقة الشكل
+   العام (2,8,_)، فتفرض عدًّا دقيقًا للرقم الأخير لا مطابقة بطول الرقم.
+   انقر ثم انقر (لا سحب) — يطابق آلية بقية أنشطة الدرس ويتفادى تعقيد
+   Pointer Events الذي واجهناه سابقًا مع نشاط السحب والإفلات المحذوف. */
+const MATCH_GAME_SYMS = ['Mg','Al','S','Cl'];
+let matchSelected = null; // {sym, type, btn}
+let matchMatchedCount = 0;
+
+function shuffleArr(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+function configStr(z){ return shellsFor(z).join(','); }
+
+function renderMatchGame(){
+  matchSelected = null;
+  matchMatchedCount = 0;
+  const elCol = document.getElementById('matchElementsCol');
+  const cfgCol = document.getElementById('matchConfigsCol');
+  if(!elCol || !cfgCol) return;
+  elCol.innerHTML = shuffleArr(MATCH_GAME_SYMS).map(sym=>{
+    const el = elBySym(sym);
+    return '<button type="button" class="match-card match-el" data-sym="'+sym+'" onclick="selectMatchCard(this,\''+sym+'\',\'el\')">'+
+      '<span class="match-z">'+el.z+'</span><span class="match-sym" dir="ltr">'+el.sym+'</span></button>';
+  }).join('');
+  cfgCol.innerHTML = shuffleArr(MATCH_GAME_SYMS).map(sym=>{
+    return '<button type="button" class="match-card match-cfg" dir="ltr" data-sym="'+sym+'" onclick="selectMatchCard(this,\''+sym+'\',\'cfg\')">'+configStr(elBySym(sym).z)+'</button>';
+  }).join('');
+  document.getElementById('fb-matchGame').textContent = '';
+  document.getElementById('fb-matchGame').className = 'fb';
+}
+
+function selectMatchCard(btn, sym, type){
+  if(btn.classList.contains('matched')) return;
+  if(!matchSelected){
+    btn.classList.add('selected');
+    matchSelected = {sym, type, btn};
+    sndClick();
+    return;
+  }
+  if(matchSelected.btn===btn){
+    btn.classList.remove('selected');
+    matchSelected = null;
+    return;
+  }
+  if(matchSelected.type===type){
+    matchSelected.btn.classList.remove('selected');
+    btn.classList.add('selected');
+    matchSelected = {sym, type, btn};
+    sndClick();
+    return;
+  }
+  markAttempt('matchGame');
+  const prevBtn = matchSelected.btn;
+  const correct = matchSelected.sym===sym;
+  if(correct){
+    prevBtn.classList.remove('selected');
+    prevBtn.classList.add('matched');
+    btn.classList.add('matched');
+    matchSelected = null;
+    matchMatchedCount++;
+    sndSuccess();
+    awardXP('matchGame-'+sym, 5);
+    if(matchMatchedCount>=MATCH_GAME_SYMS.length){
+      markDone('explore3','matchGame');
+      const fb=document.getElementById('fb-matchGame');
+      fb.textContent='أحسنت! طابقتَ كل العناصر بتوزيعاتها الصحيحة 🎉';
+      fb.className='fb fb-correct';
+      sndTransition();
+    }
+  } else {
+    sndError();
+    prevBtn.classList.add('shake');
+    btn.classList.add('shake');
+    matchSelected = null;
+    setTimeout(()=>{
+      prevBtn.classList.remove('shake','selected');
+      btn.classList.remove('shake');
+    }, 420);
+  }
+}
+
+/* ==================================================================
+   محطة التفسير — تحدّيات الاستقرار
+   ================================================================== */
+const CHALLENGES = [
+  {id:'c1', el:'البوتاسيوم (K)', z:19, action:'lose', count:1, sign:'+', hint:'توزيع البوتاسيوم 2,8,8,1 — كم إلكترونًا في مستواه الأخير؟'},
+  {id:'c2', el:'الألومنيوم (Al)', z:13, action:'lose', count:3, sign:'+', hint:'توزيع الألومنيوم 2,8,3 — كم إلكترونًا في مستواه الأخير؟'},
+  {id:'c3', el:'الفلور (F)', z:9, action:'gain', count:1, sign:'-', hint:'توزيع الفلور 2,7 — كم إلكترونًا ينقصه ليصل إلى توزيع النيون (2,8)؟'}
+];
+const BONUS_CHALLENGES = [
+  {id:'bonus1', el:'الكالسيوم (Ca)', z:20, action:'lose', count:2, sign:'+', hint:'توزيع الكالسيوم 2,8,8,2 — كم إلكترونًا في مستواه الأخير؟', isBonus:true},
+  {id:'bonus2', el:'الأكسجين (O)', z:8, action:'gain', count:2, sign:'-', hint:'توزيع الأكسجين 2,6 — كم إلكترونًا ينقصه ليصل إلى توزيع النيون (2,8)؟', isBonus:true}
+];
+const ALL_CHALLENGES = CHALLENGES.concat(BONUS_CHALLENGES);
+
+function challengeCardHTML(ch){
+  const bonusClass = ch.isBonus ? ' bonus-card' : '';
+  const bonusTag = ch.isBonus ? '<span class="bonus-tag">تحدٍّ إضافي ⭐</span>' : '';
+  const verb = ch.action==='lose' ? 'تفقدها' : 'تكتسبها';
+  return '<div class="challenge-card'+bonusClass+'" id="card-'+ch.id+'">'+bonusTag+
+    '<p class="challenge-q">ذرّة <b>'+ch.el+'</b> <span class="z-badge">العدد الذرّي: '+ch.z+'</span> — كم عدد الإلكترونات التي يجب أن '+verb+' لتصل إلى توزيع إلكتروني مشابه لأقرب غاز نبيل؟ وهل يصبح الأيون الناتج موجبًا أم سالبًا؟</p>'+
+    '<div class="challenge-inputs">'+
+      '<input type="number" min="0" max="8" id="count-'+ch.id+'" placeholder="العدد">'+
+      '<label class="sign-toggle"><input type="radio" name="sign-'+ch.id+'" value="+"> (+)</label>'+
+      '<label class="sign-toggle"><input type="radio" name="sign-'+ch.id+'" value="-"> (−)</label>'+
+      '<button type="button" class="pill-btn small" onclick="checkChallenge(\''+ch.id+'\')">تحقّق</button>'+
+      '<button type="button" class="pill-btn small ghost" onclick="toggleHint(\''+ch.id+'\',\'hint-'+ch.id+'\')">🦉 تلميح</button>'+
+    '</div>'+
+    '<p class="hint-box" id="hint-'+ch.id+'" hidden>'+ch.hint+'</p>'+
+    '<p class="fb" id="fb-'+ch.id+'"></p>'+
+  '</div>';
+}
+function findChallenge(id){ return ALL_CHALLENGES.find(c=>c.id===id); }
+function toggleBonusChallenges(){
+  const wrap=document.getElementById('bonusChallengesWrap');
+  const inner=document.getElementById('bonusChallengesInner');
+  const btn=document.getElementById('bonusToggleBtn');
+  if(!inner.innerHTML) inner.innerHTML = BONUS_CHALLENGES.map(challengeCardHTML).join('');
+  wrap.classList.add('open');
+  btn.hidden=true;
+  sndTransition();
+}
+function checkChallenge(id){
+  const ch=findChallenge(id);
+  if(!ch) return;
+  markAttempt(id);
+  const countVal=Number(document.getElementById('count-'+id).value);
+  const signEl=document.querySelector('input[name="sign-'+id+'"]:checked');
+  const fb=document.getElementById('fb-'+id);
+  const card=document.getElementById('card-'+id);
+  if(countVal===ch.count && signEl && signEl.value===ch.sign){
+    fb.textContent='أحسنت! إجابة صحيحة ✓'; fb.className='fb fb-correct';
+    sndSuccess();
+    awardXP(id, ch.isBonus?8:6);
+    if(!ch.isBonus) markDone('explain3', id);
+    card.classList.add('done');
+  } else {
+    fb.textContent='ليست صحيحة تمامًا — جرّب مرّة أخرى، أو استعن بتلميح فهيم.'; fb.className='fb fb-wrong';
+    sndError();
+    card.classList.add('shake');
+    setTimeout(()=>card.classList.remove('shake'),450);
+  }
+}
+
+/* ==================================================================
+   محطة التحقّق السريع (منتصف الدرس، غير مُقيَّم)
+   ================================================================== */
+function updateCheckinSummaryIfComplete(){
+  const c=checklist.checkin;
+  if(c.tq1 && c.tq2 && c.tq3){
+    const summary=document.getElementById('checkinSummary');
+    summary.hidden=false;
+    summary.innerHTML = '<p>🎉 أحسنت! أجبت بشكل صحيح عن '+checkinCorrect+' من 3 أسئلة، ورصيدك الآن '+state.xp+' نقطة خبرة.</p>';
+    sndTransition();
+  }
+}
+
+/* سؤال الأيونات الختامي في محطة التفسير (eq3) يستخدم دالة تحقّق مخصّصة لا renderMC/selectMC
+   العامة — لأن كل خيار خاطئ هنا يمثّل خطأ مفاهيميًا مختلفًا تمامًا (خطأ
+   في الاتجاه فلزّ/لافلزّ، أو خطأ في العدد رغم صحّة الاتجاه)، فيستحق كل
+   خيار رسالة تشخيصية خاصة به بدل رسالة "غير صحيح" العامة الموحّدة.
+   خلافًا لبقية أسئلة الدرس: محاولات متعددة لا محاولة واحدة — الخيار
+   الخاطئ يُقفل نهائيًا محمّرًا (بلا كشف الإجابة الصحيحة مسبقًا)، بينما
+   تبقى بقية الخيارات متاحة، حتى يصل الطالب بنفسه للإجابة الصحيحة. هذا
+   يضمن قراءة أكبر عدد ممكن من رسائل التشخيص المختلفة، لا محاولة واحدة
+   قد تُصيب بالحظ فتُفوّت البقية. XP يُمنح مرّة واحدة فقط عند النجاح
+   النهائي، بصرف النظر عن عدد المحاولات — بلا أي خصم. */
+const EQ3_CORRECT = 2;
+const EQ3_FEEDBACK = [
+  'غير صحيح — الكالسيوم فلزّ، والفلزّات تفقد الإلكترونات لا تكتسبها. الصحيح: يفقد الكالسيوم إلكترونين ليصل إلى توزيع الأرجون (2,8,8).',
+  'غير صحيح — الكلور لافلزّ، واللافلزّات تكتسب الإلكترونات لا تفقدها. الصحيح: يكتسب الكلور إلكترونًا واحدًا ليصل إلى توزيع الأرجون (2,8,8).',
+  'إجابة صحيحة ✓ — الفلور لافلزّ فيكتسب الإلكترونات، ويحتاج إلكترونًا واحدًا بالضبط ليكتمل مستواه الأخير ويصل إلى توزيع النيون (2,8).',
+  'غير صحيح — الاتجاه صحيح (فلزّ يفقد)، لكن العدد غير كافٍ: يحتاج فقد إلكترونين لا واحدًا، لأن مستواه الأخير يحوي إلكترونين.'
+];
+function renderEq3(){
+  const options = [
+    'اكتساب ذرّة الكالسيوم (Ca) <span class="z-badge">العدد الذرّي: 20</span> إلكترونين',
+    'فقد ذرّة الكلور (Cl) <span class="z-badge">العدد الذرّي: 17</span> إلكترونًا واحدًا',
+    'اكتساب ذرّة الفلور (F) <span class="z-badge">العدد الذرّي: 9</span> إلكترونًا واحدًا',
+    'فقد ذرّة المغنيسيوم (Mg) <span class="z-badge">العدد الذرّي: 12</span> إلكترونًا واحدًا'
+  ];
+  let html = '<div id="mcwrap-eq3"><p class="mc-q">أي ممّا يأتي يُنتج أيونًا بتوزيع إلكتروني مماثل لأقرب غاز نبيل؟</p><div class="mc-options">';
+  options.forEach((opt,i)=>{
+    html += '<button type="button" class="mc-option" data-idx="'+i+'" onclick="selectEq3('+i+')">'+opt+'</button>';
+  });
+  html += '</div><p class="fb"></p></div>';
+  document.getElementById('eq3Wrap').innerHTML = html;
+}
+function selectEq3(idx){
+  markAttempt('eq3');
+  const wrap = document.getElementById('mcwrap-eq3');
+  if(!wrap) return;
+  const chosen = wrap.querySelector('[data-idx="'+idx+'"]');
+  if(!chosen || chosen.disabled) return;
+  const correct = idx===EQ3_CORRECT;
+  const fb = wrap.querySelector('.fb');
+  fb.textContent = EQ3_FEEDBACK[idx];
+  fb.className = 'fb ' + (correct?'fb-correct':'fb-wrong');
+  if(correct){
+    wrap.querySelectorAll('.mc-option').forEach(b=>b.disabled=true);
+    chosen.classList.add('correct');
+    sndSuccess();
+    awardXP('eq3',6);
+    markDone('explain3','eq3');
+  } else {
+    chosen.disabled = true;
+    chosen.classList.add('wrong');
+    sndError();
+  }
+}
+
+/* ==================================================================
+   محطة التكافؤ — بطاقة تفاعلية (نمط الشكل 1-11 من كتاب الطالب)
+   الطالب: يختار مركّبًا ← يحدّد التكافؤ ← يكتب التبديل المتقاطع ←
+   يجيب عن إمكانية القسمة ← يكتب الصيغة الكاملة بنفسه
+   ================================================================== */
+const VALENCY_COMPOUNDS = [
+  {name:'أكسيد البوتاسيوم',   symA:'K',  symB:'O'},
+  {name:'فلوريد الكالسيوم',   symA:'Ca', symB:'F'},
+  {name:'كبريتيد الكالسيوم',  symA:'Ca', symB:'S'},
+  {name:'فلوريد الألومنيوم',  symA:'Al', symB:'F', isBonus:true},
+  {name:'كبريتيد المغنيسيوم', symA:'Mg', symB:'S', isBonus:true}
+];
+const valencyCompState = VALENCY_COMPOUNDS.map(c=>({
+  name:c.name, symA:c.symA, symB:c.symB,
+  valA:valencyOf(c.symA), valB:valencyOf(c.symB),
+  determinedA:null, determinedB:null,
+  slotADone:false, slotBDone:false,
+  subA:null, subB:null,
+  simplifyAnswered:false, finalized:false
+}));
+
+function valencyConfigHTML(shells){
+  return shells.map((n,idx)=> idx===shells.length-1 ? '<span class="vd-valence-highlight">'+n+'</span>' : n).join(',');
+}
+
+let valencyBonusRevealed = false;
+function renderValencyMenu(){
+  const btnHTML = i => {
+    const done = valencyCompState[i].finalized;
+    return '<button type="button" class="menu-btn pill-btn small'+(done?' done':'')+'" data-idx="'+i+'">'+(done?'✓ ':'')+VALENCY_COMPOUNDS[i].name+'</button>';
+  };
+  const mandatoryIdx = VALENCY_COMPOUNDS.map((c,i)=>i).filter(i=>!VALENCY_COMPOUNDS[i].isBonus);
+  const bonusIdx = VALENCY_COMPOUNDS.map((c,i)=>i).filter(i=>VALENCY_COMPOUNDS[i].isBonus);
+  let html = mandatoryIdx.map(btnHTML).join('');
+  html += '<div class="bonus-toggle-wrap">'+
+    '<button type="button" class="pill-btn small ghost bonus-toggle" id="valencyBonusToggleBtn" onclick="toggleValencyBonus()"'+(valencyBonusRevealed?' hidden':'')+'>⭐ تحدٍّ إضافي: تجرؤ؟</button>'+
+    '</div>'+
+    '<div class="bonus-reveal'+(valencyBonusRevealed?' open':'')+'" id="valencyBonusWrap"><div class="bonus-reveal-inner menu-btns" id="valencyBonusInner">'+
+    (valencyBonusRevealed ? bonusIdx.map(btnHTML).join('') : '')+
+    '</div></div>';
+  document.getElementById('valencyMenuBtns').innerHTML = html;
+}
+function toggleValencyBonus(){
+  valencyBonusRevealed = true;
+  renderValencyMenu();
+  sndTransition();
+}
+function selectValencyCompound(i){ renderValencyCard(i); }
+
+function renderValencyCard(i){
+  const st = valencyCompState[i];
+  const shellsA = shellsFor(elBySym(st.symA).z);
+  const shellsB = shellsFor(elBySym(st.symB).z);
+  document.getElementById('valencyPracticeCard').innerHTML =
+    '<div class="compound-card'+(st.finalized?' vd-complete':'')+'" id="valencyCardInner">'+
+      '<h4>'+st.name+' ('+st.symA+' + '+st.symB+')</h4>'+
+      '<div class="tbl-row"><span class="tbl-label">الرمز</span><div class="tbl-cells" dir="ltr">'+
+        '<span class="tbl-cell sym-cell">'+st.symA+'</span><span class="tbl-cell sym-cell">'+st.symB+'</span></div></div>'+
+      '<div class="tbl-row"><span class="tbl-label">التوزيع الإلكتروني</span><div class="tbl-cells" dir="ltr">'+
+        '<span class="tbl-cell config-cell">'+valencyConfigHTML(shellsA)+'</span><span class="tbl-cell config-cell">'+valencyConfigHTML(shellsB)+'</span></div></div>'+
+      '<div class="tbl-row"><span class="tbl-label">التكافؤ</span><div class="tbl-cells" dir="ltr">'+
+        '<div class="tbl-cell" id="valPickA"></div><div class="tbl-cell" id="valPickB"></div></div></div>'+
+      '<div class="tbl-row" id="valencySwapRow" hidden><span class="tbl-label">تبديل</span><div class="tbl-cells" dir="ltr" id="valencySwapArea"></div></div>'+
+      '<div class="tbl-row" id="valencyDivRow" hidden><span class="tbl-label">قسمة</span><div class="tbl-cells" id="valencyDivArea" style="flex-direction:column;"></div></div>'+
+      '<div class="tbl-row" id="valencyFormulaRow" hidden><span class="tbl-label">الصيغة</span><div class="tbl-cells" id="valencyFormulaArea" style="flex-direction:column;"></div></div>'+
+    '</div>';
+  renderValencyNumPicker(i,'A', st.symA);
+  renderValencyNumPicker(i,'B', st.symB);
+  syncValencyProgress(i);
+}
+
+/* يعيد رسم الصفوف بحسب تقدّم الطالب المحفوظ فعليًا — بلا صوت (استعادة صامتة) */
+function syncValencyProgress(i){
+  const st = valencyCompState[i];
+  if(st.determinedA===null || st.determinedB===null) return;
+  syncValencySwapRow(i);
+  if(!(st.slotADone && st.slotBDone)) return;
+  syncValencyDivisionRow(i);
+  if(!st.simplifyAnswered) return;
+  syncValencyFormulaRow(i);
+}
+
+function renderValencyNumPicker(i, role, sym){
+  const container = document.getElementById('valPick'+role);
+  const st = valencyCompState[i];
+  const determined = role==='A' ? st.determinedA : st.determinedB;
+  const opts = [0,1,2,3,4];
+  container.innerHTML = '<div class="vd-numpick">'+opts.map(n=>{
+      const isCorrect = determined!==null && n===determined;
+      const isDisabled = determined!==null;
+      return '<button type="button" class="vd-num-btn'+(isCorrect?' vd-num-correct':'')+'" data-comp="'+i+'" data-role="'+role+'" data-val="'+n+'"'+(isDisabled?' disabled':'')+' aria-label="تكافؤ '+sym+' = '+n+'">'+n+'</button>';
+    }).join('')+'</div><p class="fb vd-val-fb" data-comp="'+i+'" data-role="'+role+'"></p>';
+}
+
+/* ---------- خطوة التكافؤ ---------- */
+function handleValencyNumPick(btn){
+  const i = btn.dataset.comp, role = btn.dataset.role;
+  const st = valencyCompState[i];
+  const already = role==='A' ? st.determinedA!==null : st.determinedB!==null;
+  if(already) return;
+  const val = parseInt(btn.dataset.val,10);
+  const correctVal = role==='A' ? st.valA : st.valB;
+  const fb = document.querySelector('.vd-val-fb[data-comp="'+i+'"][data-role="'+role+'"]');
+  if(val===correctVal){
+    if(role==='A') st.determinedA=val; else st.determinedB=val;
+    document.querySelectorAll('.vd-num-btn[data-comp="'+i+'"][data-role="'+role+'"]').forEach(b=>{
+      b.disabled=true;
+      if(parseInt(b.dataset.val,10)===val) b.classList.add('vd-num-correct');
+    });
+    fb.textContent='صحيح ✓'; fb.className='fb vd-val-fb fb-correct';
+    sndSuccess();
+    awardXP('valTek_'+i+'_'+role, 6);
+    if(st.determinedA!==null && st.determinedB!==null){ syncValencySwapRow(i); sndTransition(); }
+  } else {
+    fb.textContent='حاول مجددًا — هل هذه الذرّة فلز يفقد إلكترونات، أم لا فلز يحتاج الوصول لثمانية؟';
+    fb.className='fb vd-val-fb fb-wrong';
+    sndError();
+    btn.classList.add('vd-shake');
+    setTimeout(()=>btn.classList.remove('vd-shake'),420);
+  }
+}
+
+/* ---------- خطوة التبديل — الطالب يكتب الرقمين (لا سحب ولا اختيار) ---------- */
+function syncValencySwapRow(i){
+  const st = valencyCompState[i];
+  document.getElementById('valencySwapRow').hidden=false;
+  document.getElementById('valencySwapArea').innerHTML =
+    '<div class="vd-formula-box"><div class="vd-formula">'+
+      '<span class="vd-sym">'+st.symA+'</span><input type="text" inputmode="numeric" maxlength="1" class="vd-slot-input" data-comp="'+i+'" data-slot="A" aria-label="الرقم السفلي لـ '+st.symA+'">'+
+      '<span class="vd-sym">'+st.symB+'</span><input type="text" inputmode="numeric" maxlength="1" class="vd-slot-input" data-comp="'+i+'" data-slot="B" aria-label="الرقم السفلي لـ '+st.symB+'">'+
+    '</div></div>'+
+    '<p class="fb" style="text-align:center;color:var(--ink-dim);">اكتب في فتحة كل رمز تكافؤ الذرّة الأخرى (تبديل متقاطع).</p>';
+  const inputA = document.querySelector('.vd-slot-input[data-comp="'+i+'"][data-slot="A"]');
+  const inputB = document.querySelector('.vd-slot-input[data-comp="'+i+'"][data-slot="B"]');
+  inputA.addEventListener('input', onValencySlotInput);
+  inputB.addEventListener('input', onValencySlotInput);
+  if(st.slotADone && st.slotBDone){
+    inputA.value=st.subA; inputA.disabled=true; inputA.classList.add('filled');
+    inputB.value=st.subB; inputB.disabled=true; inputB.classList.add('filled');
+  } else {
+    if(st.slotADone){ inputA.value=st.determinedB; inputA.disabled=true; inputA.classList.add('filled'); }
+    if(st.slotBDone){ inputB.value=st.determinedA; inputB.disabled=true; inputB.classList.add('filled'); }
+  }
+}
+function onValencySlotInput(e){
+  const inp = e.currentTarget;
+  if(inp.disabled) return;
+  const raw = inp.value.trim();
+  if(raw==='') return;
+  const i = inp.dataset.comp, slotId = inp.dataset.slot;
+  const st = valencyCompState[i];
+  const correctVal = slotId==='A' ? st.determinedB : st.determinedA; // تبديل متقاطع
+  if(parseInt(raw,10)===correctVal){
+    inp.value = correctVal;
+    inp.disabled = true;
+    inp.classList.add('filled','vd-pop');
+    setTimeout(()=>inp.classList.remove('vd-pop'),400);
+    if(slotId==='A') st.slotADone=true; else st.slotBDone=true;
+    sndSuccess();
+    awardXP('valSwap_'+i+'_'+slotId, 6);
+    if(st.slotADone && st.slotBDone){
+      st.subA = st.determinedB;
+      st.subB = st.determinedA;
+      syncValencyDivisionRow(i);
+      sndTransition();
+    }
+  } else {
+    inp.classList.add('vd-shake');
+    sndError();
+    setTimeout(()=>{
+      inp.classList.remove('vd-shake');
+      inp.value='';
+      inp.focus();
+    },420);
+  }
+}
+
+/* ---------- خطوة القسمة ---------- */
+function syncValencyDivisionRow(i){
+  const st = valencyCompState[i];
+  document.getElementById('valencyDivRow').hidden=false;
+  document.getElementById('valencyDivArea').innerHTML =
+    '<p class="mc-q">هل قسمة العددين معًا (تبسيط النسبة) ممكنة؟</p>'+
+    '<div class="vd-simplify-btns">'+
+      '<button type="button" class="pill-btn" data-comp="'+i+'" data-answer="ممكنة"'+(st.simplifyAnswered?' disabled':'')+'>ممكنة</button>'+
+      '<button type="button" class="pill-btn" data-comp="'+i+'" data-answer="غير ممكنة"'+(st.simplifyAnswered?' disabled':'')+'>غير ممكنة</button>'+
+    '</div>'+
+    '<p class="fb vd-hint" data-comp="'+i+'"></p>'+
+    '<button type="button" class="vd-divide-chip" data-comp="'+i+'" hidden></button>';
+  if(st.simplifyAnswered){
+    const hintEl = document.querySelector('.vd-hint[data-comp="'+i+'"]');
+    hintEl.textContent='تمّت الإجابة عن هذه الخطوة ✓'; hintEl.className='fb vd-hint fb-correct';
+  }
+}
+function handleValencySimplifyAnswer(btn){
+  const i = btn.dataset.comp;
+  const st = valencyCompState[i];
+  if(st.simplifyAnswered) return;
+  const g = gcd(st.subA, st.subB);
+  const correctAnswer = g>1 ? 'ممكنة' : 'غير ممكنة';
+  const chosen = btn.dataset.answer;
+  const hintEl = document.querySelector('.vd-hint[data-comp="'+i+'"]');
+  if(chosen===correctAnswer){
+    st.simplifyAnswered=true;
+    document.querySelectorAll('#valencyDivArea .pill-btn').forEach(b=>b.disabled=true);
+    sndSuccess();
+    awardXP('valDiv_'+i, 6);
+    if(correctAnswer==='ممكنة'){
+      hintEl.textContent='صحيح — اضغط بطاقة القسمة لتبسيط الصيغة.';
+      hintEl.className='fb vd-hint fb-correct';
+      const divChip = document.querySelector('.vd-divide-chip[data-comp="'+i+'"]');
+      divChip.hidden=false; divChip.textContent='÷'+g;
+    } else {
+      hintEl.textContent='صحيح — لا يوجد عدد أكبر من 1 يقسم الرقمين معًا.';
+      hintEl.className='fb vd-hint fb-correct';
+      syncValencyFormulaRow(i);
+      sndTransition();
+    }
+  } else {
+    hintEl.textContent='جرّب: هل يوجد عدد أكبر من 1 يقسم كِلا الرقمين دون باقٍ؟';
+    hintEl.className='fb vd-hint fb-wrong';
+    sndError();
+    btn.classList.add('vd-shake');
+    setTimeout(()=>btn.classList.remove('vd-shake'),420);
+  }
+}
+function handleValencyDivideChip(divChip){
+  if(divChip.disabled) return;
+  divChip.disabled=true;
+  const i = divChip.dataset.comp;
+  const st = valencyCompState[i];
+  const g = gcd(st.subA, st.subB);
+  const slotA = document.querySelector('.vd-slot-input[data-comp="'+i+'"][data-slot="A"]');
+  const slotB = document.querySelector('.vd-slot-input[data-comp="'+i+'"][data-slot="B"]');
+  slotA.classList.add('vd-pop'); slotB.classList.add('vd-pop');
+  sndTransition();
+  setTimeout(()=>{
+    st.subA = st.subA/g; st.subB = st.subB/g;
+    slotA.value = st.subA; slotB.value = st.subB;
+  },150);
+  setTimeout(()=>{
+    slotA.classList.remove('vd-pop'); slotB.classList.remove('vd-pop');
+    syncValencyFormulaRow(i);
+    sndTransition();
+  },500);
+}
+
+/* ---------- خطوة الصيغة — كتابة حرّة من الطالب ---------- */
+function syncValencyFormulaRow(i){
+  const st = valencyCompState[i];
+  document.getElementById('valencyFormulaRow').hidden=false;
+  const subPlain = n=> n===1?'':String(n);
+  const prefillValue = st.finalized ? (st.symA+subPlain(st.subA)+st.symB+subPlain(st.subB)) : '';
+  document.getElementById('valencyFormulaArea').innerHTML =
+    '<p class="mc-q">اكتب الصيغة الكيميائية الكاملة للمركّب:</p>'+
+    '<input type="text" id="valencyFormulaInput'+i+'" dir="ltr" placeholder="مثال: MgO" class="vd-formula-input" value="'+prefillValue+'"'+(st.finalized?' disabled':'')+'>'+
+    ' <button type="button" class="pill-btn small" data-comp="'+i+'" data-action="checkValencyFormula"'+(st.finalized?' disabled':'')+'>تحقّق</button>'+
+    '<p class="fb" id="valencyFormulaFb'+i+'"></p>';
+  if(st.finalized){
+    const subHTML = n=> n===1?'':('<sub>'+n+'</sub>');
+    const fb = document.getElementById('valencyFormulaFb'+i);
+    fb.textContent='صحيح ✓ أحسنت!'; fb.className='fb fb-correct';
+    document.getElementById('valencyFormulaArea').insertAdjacentHTML('beforeend', '<div class="final-formula" style="margin-top:10px;">'+st.symA+subHTML(st.subA)+st.symB+subHTML(st.subB)+'</div>');
+  }
+}
+function checkValencyFormulaInput(btn){
+  const i = btn.dataset.comp;
+  const st = valencyCompState[i];
+  const input = document.getElementById('valencyFormulaInput'+i);
+  const sub = n=> n===1?'':String(n);
+  const target = normFormula(st.symA+sub(st.subA)+st.symB+sub(st.subB));
+  const val = normFormula(input.value);
+  if(val===target){
+    sndSuccess();
+    awardXP('valFormula_'+i, 10);
+    finalizeValencyCompound(i);
+  } else {
+    const fb = document.getElementById('valencyFormulaFb'+i);
+    fb.textContent='ليست صحيحة بعد — تحقّق من الرمزين والأرقام، وتذكّر أننا لا نكتب الرقم 1.';
+    fb.className='fb fb-wrong';
+    sndError();
+    input.classList.add('vd-shake');
+    setTimeout(()=>input.classList.remove('vd-shake'),420);
+  }
+}
+function finalizeValencyCompound(i){
+  valencyCompState[i].finalized=true;
+  syncValencyFormulaRow(i);
+  document.getElementById('valencyCardInner').classList.add('vd-complete');
+  if(!VALENCY_COMPOUNDS[i].isBonus) markDone('valency','comp'+i);
+  renderValencyMenu();
+}
+
+document.addEventListener('click', function(e){
+  const menuBtn = e.target.closest('#valencyMenuBtns .menu-btn');
+  if(menuBtn){ selectValencyCompound(parseInt(menuBtn.dataset.idx,10)); return; }
+  const numBtn = e.target.closest('.vd-num-btn');
+  if(numBtn){ handleValencyNumPick(numBtn); return; }
+  const ansBtn = e.target.closest('.vd-simplify-btns .pill-btn');
+  if(ansBtn){ handleValencySimplifyAnswer(ansBtn); return; }
+  const divChip = e.target.closest('.vd-divide-chip');
+  if(divChip){ handleValencyDivideChip(divChip); return; }
+  const checkBtn = e.target.closest('[data-action="checkValencyFormula"]');
+  if(checkBtn){ checkValencyFormulaInput(checkBtn); return; }
+});
+
+
+/* ==================================================================
+   محطة التوسّع — أكسيد الألومنيوم
+   ================================================================== */
+function renderElaborate(){
+  document.getElementById('alConfigWrap').innerHTML = miniAtomSVG(shellsFor(13))+'<div class="lbl">الألومنيوم (Al) — Z=13 — التوزيع: 2,8,3</div>';
+  document.getElementById('oConfigWrap2').innerHTML = miniAtomSVG(shellsFor(8))+'<div class="lbl">الأكسجين (O) — Z=8 — التوزيع: 2,6</div>';
+  renderMC('alQ1Wrap', {id:'al1', q:'ما تكافؤ الألومنيوم؟', options:['2','4','3','1'], correct:2}, 'elaborate','q1');
+  renderMC('alQ2Wrap', {id:'al2', q:'ما تكافؤ الأكسجين؟', options:['3','2','1','4'], correct:1}, 'elaborate','q2');
+  renderMC('alQ3Wrap', {id:'al3', q:'ما رمز أيون الألومنيوم بعد أن يفقد إلكترونات التكافؤ؟', options:['<span dir="ltr">Al<sup>+</sup></span>','<span dir="ltr">Al<sup>2+</sup></span>','<span dir="ltr">Al<sup>4+</sup></span>','<span dir="ltr">Al<sup>3+</sup></span>'], correct:3}, 'elaborate','q3');
+  renderMC('alQ4Wrap', {id:'al4', q:'ما رمز أيون الأكسجين بعد أن يكتسب إلكترونات التكافؤ؟', options:['<span dir="ltr">O<sup>2-</sup></span>','<span dir="ltr">O<sup>-</sup></span>','<span dir="ltr">O<sup>+</sup></span>','<span dir="ltr">O<sup>3-</sup></span>'], correct:0}, 'elaborate','q4');
+}
+function checkElaborateReveal(){
+  const c = checklist.elaborate;
+  if(c.q1 && c.q2 && c.q3 && c.q4){
+    document.getElementById('alFinal').classList.add('show');
+    sndSuccess();
+  }
+}
+
+function startFinalEvaluate(){
+  const name = document.getElementById('studentNameInput').value.trim();
+  if(!name){ document.getElementById('studentNameInput').focus(); return; }
+  studentName = name;
+  document.getElementById('nameGate').hidden = true;
+  document.getElementById('evalQuestions').hidden = false;
+  renderMC('fq1Wrap', {id:'fq1', q:'اختر التوزيع الإلكتروني الصحيح لذرّة الكبريت (S) <span class="z-badge">العدد الذرّي: 16</span>', options:[miniAtomSVG([2,8,5]),miniAtomSVG([2,8,6]),miniAtomSVG([2,6,8]),miniAtomSVG([2,8,4])], correct:1}, 'evaluate','q1', true);
+  renderMC('fq2Wrap', {id:'fq2', q:'اختر التوزيع الإلكتروني الصحيح لأيون الكبريتيد (<span dir="ltr">S<sup>2-</sup></span>)', options:[miniAtomSVG([2,8,6]),miniAtomSVG([2,8,4]),miniAtomSVG([2,8,8]),miniAtomSVG([2,6,8])], correct:2}, 'evaluate','q2', true);
+  renderMC('fq7Wrap', {id:'fq7', q:'عنصر توزيعه الإلكتروني 2,8,4 — ما رقم مجموعته ودورته في الجدول الدوري؟', options:['المجموعة 14 / الدورة 3','المجموعة 4 / الدورة 3','المجموعة 14 / الدورة 4','المجموعة 3 / الدورة 14'], correct:0}, 'evaluate','q7');
+  renderMC('fq3Wrap', {id:'fq3', q:'ما الصيغة الكيميائية الصحيحة لمركّب كبريتيد البوتاسيوم (K + S)؟<span class="zchip-row"><span class="zchip"><b dir="ltr">K</b> — العدد الذرّي: 19</span></span>', options:['KS<sub>2</sub>','K<sub>2</sub>S<sub>2</sub>','K<sub>2</sub>S','KS'], correct:2}, 'evaluate','q3');
+  sndTransition();
+}
+function normFormula(s){
+  const supMap={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
+  return (s||'').trim().replace(/[₀-₉]/g,c=>supMap[c]||c).replace(/\s+/g,'').toLowerCase();
+}
+function submitShortAnswer(id, station, key){
+  const input = document.getElementById(id+'Input');
+  const fb = document.getElementById(id+'Fb');
+  const val = input.value.trim();
+  let correct = false;
+  if(id==='fq4'){
+    const hasSwap = /تبديل|تبادل|تقايض/.test(val);
+    const hasValency = /تكافؤ/.test(val);
+    correct = hasSwap && hasValency;
+    fb.textContent = correct ? 'إجابة مقبولة ✓ (تذكر: نبدّل عددَي التكافؤ بين العنصرين)' : 'قريب! المطلوب ذكر "تبديل التكافؤ بين العنصرين". حاول لاحقًا في نشاط مراجعة.';
+  } else {
+    const target = id==='fq5' ? 'al2o3' : 'mgf2';
+    correct = normFormula(val) === target;
+    fb.textContent = correct ? 'إجابة صحيحة ✓' : ('الإجابة الصحيحة: '+(id==='fq5'?'Al2O3':'MgF2'));
+  }
+  fb.className = 'fb '+(correct?'fb-correct':'fb-wrong');
+  input.disabled = true;
+  input.nextElementSibling.disabled = true;
+  if(correct){ sndSuccess(); finalEvalCorrect++; awardXP(id,6); } else { sndError(); }
+  markDone(station,key);
+  checkEvaluateComplete();
+}
+function checkEvaluateComplete(){
+  const c = checklist.evaluate;
+  if(c.q1&&c.q2&&c.q3&&c.q4&&c.q5&&c.q6&&c.q7){
+    const percent = Math.round(finalEvalCorrect/FINAL_EVAL_TOTAL*100);
+    const summary = document.getElementById('evalSummary');
+    summary.hidden = false;
+    const badge = percent>=80?'متميز':percent>=65?'متمكن':'مشارك';
+    summary.innerHTML = '<p>🎉 أحسنت يا '+studentName+'! أنهيت درس 2-1 كاملًا بعلامة '+percent+'% ومستوى «'+badge+'».</p>';
+    Certificate.finish(studentName, LESSON_TITLE, percent);
+    sndTransition();
+  }
+}
+
+function initReveal(){
+  const sections=document.querySelectorAll('.station');
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('visible'); } });
+    }, {threshold:.12});
+    sections.forEach(s=>io.observe(s));
+  } else {
+    sections.forEach(s=>s.classList.add('visible'));
+  }
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  renderEngageAtoms();
+  renderPeriodicTable('ptableClassify');
+  renderPeriodicTable('ptablePatterns');
+  renderCheckinTable();
+  renderMetalPredictQ();
+  populateAtomSelect();
+  resetBuilder();
+  renderMC('capQ1Wrap', {id:'cap1', q:'من خلال الذرّات التي بنيتها، ما الحدّ الأقصى لعدد الإلكترونات في المستوى الأول؟', options:['2','4','6','8'], correct:0}, 'explore3', 'cap1');
+  renderMC('transferQWrap', {id:'transferOxygen', q:'كيف تصف لصديقك موقع عنصر الأكسجين (O) في الجدول الدوري؟', options:['في الدورة 16، والمجموعة 2','في الدورة 3، والمجموعة 16','في الدورة 2، والمجموعة 16','في الدورة 2، والمجموعة 15'], correct:2}, 'explore2', 'transferQ');
+  renderMC('capQ2Wrap', {id:'cap2', q:'ما الحدّ الأقصى لعدد الإلكترونات في المستوى الثاني؟', options:['2','4','6','8'], correct:3}, 'explore3', 'cap2');
+  renderMC('capQ3Wrap', {id:'cap3', q:'ما الحدّ الأقصى لعدد الإلكترونات في المستوى الثالث (ضمن أوّل عشرين عنصرًا)؟', options:['2','4','6','8'], correct:3}, 'explore3', 'cap3');
+  renderGroupPatternAtoms();
+  renderPeriodPatternAtoms();
+  renderMatchGame();
+  document.getElementById('atomSelect').addEventListener('change', resetBuilder);
+  document.querySelectorAll('.level-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>addElectronAttempt(Number(btn.dataset.level)));
+  });
+  document.getElementById('checkBuilderBtn').addEventListener('click', checkBuilderConfirm);
+  document.getElementById('resetAtomBtn').addEventListener('click', resetBuilder);
+  renderMC('tq1Wrap', {id:'tq1', q:'X وY يقعان في المجموعة نفسها (15). استنتج من بيانات كلٍّ منهما في الجدول أعلاه: كم إلكترونًا في المستوى الأخير لكلٍّ من X وY معًا؟', options:['2','15','7','5'], correct:3}, 'checkin','tq1');
+  renderMC('tq2Wrap', {id:'tq2', q:'بالنظر إلى موضع Y في الجدول أعلاه (الدورة 3)، كم عدد مستويات الطاقة في ذرّته؟', options:['3','2','4','1'], correct:0}, 'checkin','tq2');
+  renderMC('tq3Wrap', {id:'tq3', q:'أيّ الرموز الثلاثة (X، Y، Z) توزيعه الإلكتروني 2,8,5؟', options:['X','Y','Z'], correct:1}, 'checkin','tq3');
+  document.getElementById('explain3Cards').innerHTML = CHALLENGES.map(challengeCardHTML).join('');
+  renderEq3();
+  renderValencyMenu();
+  renderElaborate();
+  initReveal();
+  renderProgressBar();
+});
+</script>
+
+<!-- وحدة الشهادة المشتركة — تحقن نفسها تلقائيًا (الأنماط، بنية الشهادة، والزر) -->
+<script src="../../shared/certificate-system/certificate.js"></script>
+<script src="../../shared/identity/footer.js"></script>
+</body>
+</html>
