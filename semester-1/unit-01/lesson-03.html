@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدرس 3 — كيف تتكوّن الروابط الأيونية؟ | مختبر فؤاد التعليمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/identity/identity.css">
+<link rel="stylesheet" href="../../shared/template-boilerplate/template.css">
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  الدرس 3 — مختبر فؤاد التعليمي
+  "كيف تتكوّن الروابط الأيونية؟"
+  ⚠️ ملف قيد البناء التدريجي: المحطات 1 (التنشيط) و2 (الاستكشاف) و3
+  (التفسير) فقط جاهزة حتى الآن، من أصل 7 محطات مخطَّطة (Engage → Explore
+  → Explain → Elaborate×3 → Evaluate). محطات التوسّع والتقييم لم تُبنَ
+  بعد — ستُضاف لاحقًا بنفس هذا الملف.
+  شهادة الإنجاز (Certificate.finish) لا تُربَط إلا عند بناء محطة
+  التقييم الختامي فعليًا — غير مطلوبة بهذه المرحلة.
+  ═══════════════════════════════════════════════════════════════════
+-->
+<style>
+  /* ============ أنماط خاصة بمحتوى محطة 2 فقط (رسم الذرّتين والتفاعل) ============
+     لا تُنقَل هذه الأنماط إلى template.css المشترك لأنها خاصة بمادة هذا
+     الدرس تحديدًا (نموذج بور)، لا هيكلًا عامًا يصلح لأي درس آخر. */
+  #stage-wrap{
+    width:100%;
+    max-width:920px;
+    margin:0 auto;
+    background:rgba(255,255,255,0.02);
+    border:1px solid rgba(20,200,168,0.15);
+    border-radius:22px;
+    padding:10px;
+    position:relative;
+  }
+  svg#stage{
+    width:100%;
+    height:auto;
+    display:block;
+    touch-action:none; /* يمنع تمرير الصفحة أثناء التفاعل داخل المشهد فقط */
+    -webkit-tap-highlight-color:transparent;
+  }
+  .nucleus{fill:var(--navy-darker); stroke:var(--turquoise-soft); stroke-width:1.5;}
+  .nucleus-label{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:13px;
+    fill:var(--ink);
+    pointer-events:none;
+    user-select:none;
+  }
+  .element-label{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:22px;
+    fill:var(--ink);
+    pointer-events:none;
+    user-select:none;
+  }
+  .ion-charge{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:16px;
+    fill:var(--coral);
+    pointer-events:none;
+    user-select:none;
+    opacity:0;
+  }
+  .orbit{ fill:none; stroke-dasharray:2 5; }
+  /* تدرّج لوني ضمن عائلة التركوازي نفسها بدل الترقيم — كلما ابتعدنا عن
+     النواة زاد تشبّع اللون وسماكة الخط، فيُقرأ مستوى الطاقة بالعين */
+  .orbit-shell-0{ stroke:rgba(20,200,168,.22); stroke-width:1.3; }
+  .orbit-shell-1{ stroke:rgba(20,200,168,.52); stroke-width:1.5; }
+  .orbit-shell-2{ stroke:rgba(20,200,168,.88); stroke-width:1.9; }
+  .orbit.target-highlight{
+    stroke:var(--turquoise);
+    stroke-width:2.2;
+    stroke-dasharray:none;
+    filter:drop-shadow(0 0 6px var(--turquoise-soft));
+  }
+  .levels-caption{
+    color:var(--ink-dim);
+    font-size:.78rem;
+    max-width:480px;
+    text-align:center;
+    margin:14px auto 0;
+  }
+  .electron{ fill:var(--turquoise); }
+  .electron.clickable{
+    cursor:pointer;
+    filter:drop-shadow(0 0 5px var(--turquoise-soft));
+    transform-box:fill-box;
+    transform-origin:center;
+    transition:transform .18s ease, filter .18s ease;
+  }
+  .electron.clickable:hover{
+    transform:scale(1.3);
+    filter:drop-shadow(0 0 9px var(--turquoise));
+  }
+  .electron.clickable:focus-visible{
+    outline:2px solid var(--coral);
+    outline-offset:3px;
+  }
+  @keyframes pulse{
+    0%,100%{ r:6.5; opacity:1; }
+    50%{ r:8; opacity:.75; }
+  }
+  .electron.pulsing{ animation:pulse 1.6s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce){
+    .electron.pulsing{ animation:none; }
+  }
+  .atom-group{ transition:transform .55s cubic-bezier(.22,1,.36,1); }
+  @media (prefers-reduced-motion: reduce){
+    .atom-group{ transition:transform .01s linear; }
+  }
+  #hint{
+    margin-top:18px;
+    font-size:.85rem;
+    color:var(--ink-dim);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    transition:opacity .4s ease;
+  }
+  #hint.hidden{opacity:0; pointer-events:none;}
+  #success-tag{
+    margin-top:18px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(20,200,168,.08);
+    border:1px solid var(--turquoise-soft);
+    color:var(--turquoise);
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:.9rem;
+    padding:9px 20px;
+    border-radius:999px;
+    opacity:0;
+    transform:translateY(6px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  #success-tag.show{opacity:1; transform:translateY(0);}
+  .stage-note{
+    text-align:center;
+    color:var(--ink-dim);
+    font-size:.85rem;
+    margin:0 0 14px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="crumb"><!-- ⚠️ راجع نصوص الروابط أدناه مقابل عناوين index.html الفعلية قبل الرفع -->
+  <a href="../../index.html">الرئيسية</a> ›
+  <a href="../index.html">الفصل الأول</a> ›
+  <a href="index.html">الوحدة 1</a> ›
+  الدرس 3
+</nav>
+
+<div class="progress-track">
+  <div class="xp-counter" id="xpCounter">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+    <span id="xpValue">0</span>
+    <span class="xp-label">XP</span>
+  </div>
+  <div class="progress-dot" data-target="station-1"></div>
+  <div class="progress-dot" data-target="station-2"></div>
+  <div class="progress-dot" data-target="station-3"></div>
+</div>
+
+<header class="hero">
+  <div class="eyebrow">الوحدة 1 · الدرس 3</div>
+  <h1>كيف تتكوّن الروابط الأيونية؟</h1>
+  <div class="objectives-box">
+    <h3>في نهاية هذا الدرس سوف تتمكن من أن:</h3>
+    <ul>
+      <li>تصف كيفية تشكيل الروابط الأيونية.</li>
+      <li>تشرح كيف تكوّن الأيونات شبكة بلورية عملاقة.</li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===================== محطة 1: التنشيط ===================== -->
+  <section class="station" id="station-1">
+    <div class="station-label">المحطة الأولى · التنشيط</div>
+    <h2>كيف يجتمع فلزٌّ خطير وغازٌ سامّ ليكوّنا ملح الطعام؟</h2>
+    <p class="station-tagline">تأمّل هذا التناقض قبل أن تكتشف السبب</p>
+
+    <p>الصوديوم فلزّ يتفاعل بعنف فور ملامسته الماء، والكلور غاز سامّ خطير — لكن اتحادهما معًا ينتج مادة نتناولها يوميًا بأمان تام: ملح الطعام (كلوريد الصوديوم). كيف يحدث هذا التحوّل الجذري؟</p>
+
+    <div class="facts-grid">
+      <div class="fact-card">
+        <div class="term">🧂 كلوريد الصوديوم</div>
+        <p>ملح الطعام — مادة آمنة تمامًا، نتناولها يوميًا.</p>
+      </div>
+      <div class="fact-card">
+        <div class="term">⚡ الصوديوم (Na) النقي</div>
+        <p>فلزّ يتفاعل بعنف فور ملامسته للماء.</p>
+      </div>
+      <div class="fact-card">
+        <div class="term">☠️ غاز الكلور (Cl₂)</div>
+        <p>غاز سامّ وخطير بشكله النقي.</p>
+      </div>
+    </div>
+
+    <p>🤔 برأيك، ماذا يحدث فعليًا على مستوى الذرّات عندما يلتقي الصوديوم بالكلور؟</p>
+    <div class="quiz-options" id="engagePredictOptions">
+      <label class="quiz-option">
+        <input type="radio" name="engagePredict" value="none">
+        لن يحدث شيء يُذكر بينهما
+      </label>
+      <label class="quiz-option">
+        <input type="radio" name="engagePredict" value="transfer">
+        تتبادلان إلكترونًا فتتحوّلان إلى مادة مختلفة تمامًا عنهما
+      </label>
+      <label class="quiz-option">
+        <input type="radio" name="engagePredict" value="mix">
+        تمتزجان فقط دون أي تغيّر حقيقي في تركيبهما
+      </label>
+    </div>
+    <p id="engagePredictFeedback" hidden>إجابة تستحق التأمّل! تابع إلى المحطة التالية لتكتشف بنفسك ما يحدث فعليًا، إلكترونًا بإلكترون. 👇</p>
+  </section>
+
+  <!-- ===================== محطة 2: استكشاف (نقل الإلكترون) ===================== -->
+  <section class="station" id="station-2">
+    <div class="station-label">المحطة الثانية · الاستكشاف</div>
+    <h2>ماذا يحدث لو التقت هاتان الذرّتان؟</h2>
+    <p class="stage-note">صوديوم (Na) على اليسار — كلور (Cl) على اليمين</p>
+
+    <div id="stage-wrap">
+      <svg id="stage" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+
+    <p class="levels-caption">درجة التركوازي حول كل ذرّة تختلف بين مدار وآخر — كلما اشتدّ اللون ابتعدنا عن النواة وزاد مستوى الطاقة</p>
+
+    <div style="text-align:center;">
+      <div id="hint">👆 انقر على الإلكترون المتوهج</div>
+      <div id="success-tag">✓ تم نقل الإلكترون</div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 3: التفسير ===================== -->
+  <section class="station" id="station-3">
+    <div class="station-label">المحطة الثالثة · التفسير</div>
+    <h2>لماذا تنقل الذرّات إلكتروناتها؟</h2>
+    <p class="station-tagline">كيف تصل الذرّات إلى حالة الاستقرار؟</p>
+
+    <p>في المحطة السابقة، نقلت بنفسك إلكترونًا من ذرّة الصوديوم إلى ذرّة الكلور. لكن لماذا فعلت الذرّتان ذلك بالتحديد؟</p>
+
+    <p>تميل غالبية ذرّات العناصر إلى الوصول لحالة استقرار تُشبه أقرب غاز نبيل لها، بامتلاك 8 إلكترونات في مستوى الطاقة الأخير — تُعرف هذه الميول باسم <b>قاعدة الثمانية</b>. لتحقيق ذلك، تفقد بعض الذرّات إلكتروناتها الخارجية القليلة، بينما تكتسب ذرّات أخرى الإلكترونات التي تنقصها.</p>
+
+    <div class="facts-grid">
+      <div class="fact-card">
+        <div class="term">قاعدة الثمانية</div>
+        <p>ميل ذرّات العناصر للوصول إلى توزيع إلكتروني مشابه لأقرب غاز نبيل، غالبًا بامتلاك 8 إلكترونات في المستوى الأخير.</p>
+      </div>
+      <div class="fact-card">
+        <div class="term">أيون موجب</div>
+        <p>ذرّة فقدت إلكترونًا واحدًا أو أكثر، فأصبح عدد بروتوناتها أكبر من عدد إلكتروناتها — كما حدث مع ذرّة الصوديوم.</p>
+      </div>
+      <div class="fact-card">
+        <div class="term">أيون سالب</div>
+        <p>ذرّة اكتسبت إلكترونًا واحدًا أو أكثر، فأصبح عدد إلكتروناتها أكبر من عدد بروتوناتها — كما حدث مع ذرّة الكلور.</p>
+      </div>
+      <div class="fact-card">
+        <div class="term">الرابطة الأيونية</div>
+        <p>تجاذب كهروستاتيكي ينشأ بين أيون موجب وأيون سالب بعد نقل كامل للإلكترون بينهما — وليست خيطًا ماديًا، وليست مشاركة للإلكترونات.</p>
+      </div>
+    </div>
+
+    <p>بهذا، تحوّلت ذرّة الصوديوم المتعادلة إلى أيون موجب (Na⁺)، وذرّة الكلور المتعادلة إلى أيون سالب (Cl⁻) — وتجاذب الأيونان المتضادّان في الشحنة، مكوّنَين معًا الرابطة الأيونية التي شاهدتها.</p>
+
+    <p>لكن هل يقتصر الأمر على ذرّتين فقط تلتقيان وتنفصلان عن بقية المادة؟ 👀 ستكتشف الإجابة في محطة قادمة.</p>
+
+    <p>والآن، ماذا لو كان العنصر الآخر يحتاج أكثر من إلكترون واحد ليصل للاستقرار؟ في المحطة القادمة ستبني بنفسك رابطات أيونية جديدة، تبدأ بسيطة كهذه، ثم تزداد تعقيدًا تدريجيًا.</p>
+  </section>
+
+</main>
+
+<script>
+/* ==========================================================
+   منطق محطة 1 فقط (سؤال توقّع غير مُقيَّم) — لا كشف لإجابة
+   صحيحة/خاطئة هنا عمدًا (القاعدة الحرجة: لا تفسير قبل محاولة
+   الطالب الاستكشافية بمحطة 2). الاختيار نفسه يُبرَز بصريًا
+   تلقائيًا عبر template.js (صنف .selected)، هذا السكربت فقط
+   يكشف رسالة التأمّل المشتركة بعد أي اختيار.
+   ========================================================== */
+(function(){
+  "use strict";
+  const feedback = document.getElementById('engagePredictFeedback');
+  document.querySelectorAll('input[name="engagePredict"]').forEach(function(radio){
+    radio.addEventListener('change', function(){
+      feedback.hidden = false;
+    }, { once: true });
+  });
+})();
+</script>
+
+<script>
+/* ==========================================================
+   منطق محطة 2 فقط (نقل الإلكترون Na → Cl) — خاص بمحتوى هذا
+   الدرس، لا يتكرر بأي درس آخر. يستخدم window.Sounds (من
+   shared/sounds/sounds.js) و window.XP (من shared/template-
+   boilerplate/template.js)، لذا يجب أن يُحمَّل هذا السكربت
+   بعد تحميل الصفحة لهذين السكربتين (موضعه أدناه يضمن ذلك).
+   ========================================================== */
+(function(){
+  "use strict";
+
+  const svg = document.getElementById('stage');
+  const hint = document.getElementById('hint');
+  const successTag = document.getElementById('success-tag');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // الصوديوم (سيصبح أيونًا موجبًا) على اليسار، الكلور (سيصبح أيونًا سالبًا)
+  // على اليمين — يطابق ترتيب كتابة الصيغة الكيميائية NaCl من اليسار
+  // لليمين حتى داخل صفحة RTL، بصرف النظر عن اتجاه النص المحيط
+  const NA = { cx: 230, cy: 230, label: 'Na', atomicNumber: 11, shells: [2, 8, 1] };
+  const CL = { cx: 670, cy: 230, label: 'Cl', atomicNumber: 17, shells: [2, 8, 7] };
+  const SHELL_RADII = [42, 76, 112];
+  const ELECTRON_R = 6.5;
+
+  function svgEl(tag, attrs){
+    const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for(const k in attrs) el.setAttribute(k, attrs[k]);
+    return el;
+  }
+
+  function electronPositions(cx, cy, r, count, startDeg){
+    startDeg = (startDeg === undefined) ? -90 : startDeg;
+    const pts = [];
+    for(let i=0;i<count;i++){
+      const angle = (startDeg + i*(360/count)) * Math.PI/180;
+      pts.push({ x: cx + r*Math.cos(angle), y: cy + r*Math.sin(angle) });
+    }
+    return pts;
+  }
+
+  function renderAtom(cfg, prefix){
+    const g = svgEl('g', { id: prefix + 'Group', class:'atom-group' });
+    g.style.transformOrigin = cfg.cx + 'px ' + cfg.cy + 'px';
+
+    g.appendChild(svgEl('circle', { cx:cfg.cx, cy:cfg.cy, r:26, class:'nucleus' }));
+
+    const nucleusLabel = svgEl('text', { x:cfg.cx, y:cfg.cy+4, class:'nucleus-label', 'text-anchor':'middle' });
+    nucleusLabel.textContent = '+' + cfg.atomicNumber;
+    g.appendChild(nucleusLabel);
+
+    const symbolY = cfg.cy - (SHELL_RADII[2] + 35);
+    const symbol = svgEl('text', { x:cfg.cx, y:symbolY, class:'element-label', 'text-anchor':'middle' });
+    symbol.textContent = cfg.label;
+    g.appendChild(symbol);
+
+    const charge = svgEl('text', {
+      x: cfg.cx + 24, y: symbolY - 14, class:'ion-charge', id: prefix + 'Charge', 'text-anchor':'middle'
+    });
+    g.appendChild(charge);
+
+    cfg.shells.forEach((count, shellIndex) => {
+      const r = SHELL_RADII[shellIndex];
+      g.appendChild(svgEl('circle', {
+        cx:cfg.cx, cy:cfg.cy, r, class:'orbit orbit-shell-' + shellIndex,
+        id: prefix + 'Orbit' + shellIndex, 'data-shell': shellIndex
+      }));
+      const pts = electronPositions(cfg.cx, cfg.cy, r, count);
+      pts.forEach((p, i) => {
+        g.appendChild(svgEl('circle', {
+          cx:p.x, cy:p.y, r:ELECTRON_R, class:'electron',
+          id: prefix + '-e-' + shellIndex + '-' + i,
+          'data-atom': prefix, 'data-shell': shellIndex
+        }));
+      });
+    });
+
+    svg.appendChild(g);
+    return g;
+  }
+
+  renderAtom(CL, 'cl');
+  renderAtom(NA, 'na');
+
+  const naElectron = document.getElementById('na-e-2-0');
+  naElectron.classList.add('clickable', 'pulsing');
+  naElectron.setAttribute('tabindex', '0');
+  naElectron.setAttribute('role', 'button');
+  naElectron.setAttribute('aria-label', 'انقل الإلكترون من الصوديوم إلى الكلور');
+
+  const clOuterOrbit = document.getElementById('clOrbit2');
+  const naOuterOrbit = document.getElementById('naOrbit2');
+  const naGroup = document.getElementById('naGroup');
+  const clGroup = document.getElementById('clGroup');
+  const naCharge = document.getElementById('naCharge');
+  const clCharge = document.getElementById('clCharge');
+
+  let transferred = false;
+
+  function tween(el, attrsFrom, attrsTo, duration, onDone){
+    if(reduceMotion) duration = 1;
+    const start = performance.now();
+    function step(now){
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      for(const k in attrsTo){
+        const v = attrsFrom[k] + (attrsTo[k] - attrsFrom[k]) * eased;
+        el.setAttribute(k, v);
+      }
+      if(t < 1) requestAnimationFrame(step);
+      else if(onDone) onDone();
+    }
+    requestAnimationFrame(step);
+  }
+
+  function previewOn(){ if(!transferred) clOuterOrbit.classList.add('target-highlight'); }
+  function previewOff(){ clOuterOrbit.classList.remove('target-highlight'); }
+  naElectron.addEventListener('mouseenter', previewOn);
+  naElectron.addEventListener('mouseleave', previewOff);
+  naElectron.addEventListener('focus', previewOn);
+  naElectron.addEventListener('blur', previewOff);
+
+  function activateElectron(){
+    if(transferred) return;
+    transferred = true;
+    previewOff();
+    naElectron.classList.remove('pulsing', 'clickable');
+    naElectron.removeAttribute('tabindex');
+    naElectron.style.cursor = 'default';
+    hint.classList.add('hidden');
+    if(window.Sounds) window.Sounds.playTick();
+
+    naElectron.style.transition = 'r .16s ease';
+    naElectron.setAttribute('r', ELECTRON_R + 3);
+    setTimeout(() => {
+      naElectron.style.transition = '';
+      naElectron.setAttribute('r', ELECTRON_R);
+      completeTransfer();
+    }, 170);
+  }
+  naElectron.addEventListener('click', activateElectron);
+  naElectron.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); activateElectron(); }
+  });
+
+  function completeTransfer(){
+    const newPositions = electronPositions(CL.cx, CL.cy, SHELL_RADII[2], 8);
+
+    for(let i=0;i<7;i++){
+      const el = document.getElementById('cl-e-2-' + i);
+      const from = { cx: parseFloat(el.getAttribute('cx')), cy: parseFloat(el.getAttribute('cy')) };
+      tween(el, from, { cx:newPositions[i].x, cy:newPositions[i].y }, 500);
+    }
+    naElectron.id = 'cl-e-2-7';
+    naElectron.setAttribute('data-atom', 'cl');
+    clGroup.appendChild(naElectron);
+    const fromMoved = { cx: parseFloat(naElectron.getAttribute('cx')), cy: parseFloat(naElectron.getAttribute('cy')) };
+    tween(naElectron, fromMoved, { cx:newPositions[7].x, cy:newPositions[7].y }, 500, () => {
+      naElectron.classList.remove('clickable');
+    });
+
+    naOuterOrbit.style.transition = 'opacity .5s ease';
+    naOuterOrbit.style.opacity = '0';
+
+    // تحوّل بصري: الصوديوم يصغر (أيون موجب Na⁺ نصف قطره الأيوني أصغر من
+    // الذرّة المتعادلة)، والكلور يكبر أكثر نسبيًا (أيون سالب Cl⁻ نصف قطره
+    // الأيوني أكبر من الذرّة المتعادلة) — تقريبي لأغراض بصرية فقط، لا يمثّل
+    // محاكاة فيزيائية دقيقة لمسافة الرابطة (خارج نطاق منهج الصف التاسع)
+    requestAnimationFrame(() => {
+      naGroup.style.transform = 'scale(0.88) translateX(18px)';
+      clGroup.style.transform = 'scale(1.10) translateX(-10px)';
+    });
+
+    naCharge.textContent = '+';
+    clCharge.textContent = '−';
+    setTimeout(() => {
+      naCharge.style.transition = 'opacity .5s ease';
+      clCharge.style.transition = 'opacity .5s ease';
+      naCharge.style.opacity = '1';
+      clCharge.style.opacity = '1';
+    }, 250);
+
+    if(window.Sounds) window.Sounds.playSnap();
+    if(window.XP) window.XP.award(10);
+    setTimeout(() => {
+      successTag.classList.add('show');
+    }, 400);
+  }
+
+})();
+</script>
+
+<script src="../../shared/sounds/sounds.js"></script>
+<script src="../../shared/faheem-widget/faheem.js"></script>
+<script src="../../shared/template-boilerplate/template.js"></script>
+<script src="../../shared/identity/footer.js"></script>
+</body>
+</html>
