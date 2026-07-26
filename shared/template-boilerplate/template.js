@@ -127,25 +127,41 @@
   // (مثال: سؤال إجابة مكتوبة يُطابَق يدويًا بكود الدرس)
   window.XP = { award: awardXP };
 
-  // ---------- 1) شريط التقدّم + الظهور التدريجي عند التمرير ----------
-  var seenStations = new Set();
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(!entry.isIntersecting) return;
-      entry.target.classList.add('in-view');
-      var dot = document.querySelector('.progress-dot[data-target="'+entry.target.id+'"]');
-      if(dot && !dot.classList.contains('active')){
-        dot.classList.add('active');
-        if(!seenStations.has(entry.target.id)){
-          seenStations.add(entry.target.id);
-          if(window.Sounds) window.Sounds.playChime();
-          awardXP(XP_STATION);
-        }
-      }
-    });
-  }, {threshold:0, rootMargin:'0px 0px -12% 0px'});
-  document.querySelectorAll('.station[id^="station-"]').forEach(function(s){ io.observe(s); });
+// ---------- 1) شريط التقدّم + الظهور التدريجي عند التمرير ----------
+// ملاحظة إصلاح (يوليو 2026): الذاكرة المؤقتة وحدها لا تكفي لمنع تكرار
+// منح النقاط — فهي تُصفَّر مع كل إعادة تحميل، بينما رقم XP نفسه يبقى
+// محفوظًا دائمًا بـlocalStorage. لهذا نحفظ أيضًا قائمة المحطات التي
+// أُعطيت نقاطها فعليًا، بنفس مفتاح مسار الصفحة، ونتحقق منها بدل
+// الاعتماد على الذاكرة المؤقتة وحدها.
+var STATIONS_KEY = 'fouadEduLabXPStations:' + location.pathname;
+var awardedStations = new Set();
+try{
+  var storedStations = JSON.parse(localStorage.getItem(STATIONS_KEY) || '[]');
+  awardedStations = new Set(storedStations);
+}catch(e){ /* قد يُحجب localStorage ببعض السياقات — نكمل بالذاكرة فقط */ }
 
+function persistAwardedStations(){
+  try{ localStorage.setItem(STATIONS_KEY, JSON.stringify(Array.from(awardedStations))); }catch(e){ /* تجاهل */ }
+}
+
+var io = new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(!entry.isIntersecting) return;
+    entry.target.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="'+entry.target.id+'"]');
+    if(dot && !dot.classList.contains('active')){
+      dot.classList.add('active');
+      if(!awardedStations.has(entry.target.id)){
+        awardedStations.add(entry.target.id);
+        persistAwardedStations();
+        if(window.Sounds) window.Sounds.playChime();
+        awardXP(XP_STATION);
+      }
+    }
+  });
+}, {threshold:0, rootMargin:'0px 0px -12% 0px'});
+document.querySelectorAll('.station[id^="station-"]').forEach(function(s){ io.observe(s); });
+   
   // ---------- 2) تظليل الخيار المختار داخل كل مجموعة أسئلة ----------
   document.querySelectorAll('.quiz-options').forEach(function(group){
     group.querySelectorAll('.quiz-option').forEach(function(opt){
