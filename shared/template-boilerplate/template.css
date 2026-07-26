@@ -355,3 +355,37 @@ footer.site-footer{
   font-size:13px;
   padding:32px 16px 40px;
 }
+
+/* ===== صندوق أهداف الدرس (نمط بديل: حدّ + عنوان + قائمة نقطية) =====
+   يُستخدم داخل header.hero بدل .objectives عند الرغبة بنمط أكثر
+   إيجازًا. بنية مرجعية:
+
+     <div class="objectives-box">
+       <h3>في نهاية هذا الدرس سوف تتمكن من أن:</h3>
+       <ul>
+         <li>...</li>
+       </ul>
+     </div> */
+.objectives-box{
+     background:rgba(255,255,255,.03);
+     border:1px solid var(--border);
+     border-radius:16px;
+     padding:16px 22px;
+     text-align:right;
+     max-width:640px;
+     margin:0 auto;
+}
+.objectives-box h3{
+     font-family:'Cairo',sans-serif;
+     color:var(--turquoise);
+     font-weight:800;
+     font-size:clamp(14px,2.4vw,16px);
+     margin:0 0 8px;
+}
+.objectives-box ul{
+     margin:0;
+     padding-inline-start:20px;
+     font-size:clamp(13px,2.2vw,15px);
+     color:var(--ink-dim);
+     line-height:1.9;
+}
