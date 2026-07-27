@@ -7,162 +7,91 @@
 
      • كل محطة:      <section class="station" id="station-N">
      • شريط التقدّم:  <div class="progress-dot" data-target="station-N">
-     • عدّاد XP:      <div class="xp-counter" id="xpCounter"> (اختياري،
-                      يُوضع كأول عنصر داخل .progress-track — راجع مثال
-                      كامل بتعليق CSS المقابل في template.css)
      • مجموعة سؤال:  <div class="quiz-options"><label class="quiz-option">...
      • شرائح السحب:  <div class="chip" data-value="...">  داخل .chips-pool
      • خانات الإفلات: <div class="slot" data-answer="...">
 
-   يوفّر أربع آليات عامة:
+   يوفّر ثلاث آليات عامة:
 
-     1) نظام نقاط الخبرة (XP): عدّاد ظاهر بالترويسة يتصاعد تلقائيًا
-        عند أي تفاعل ناجح عام — وصول محطة جديدة، مطابقة سحب صحيحة،
-        أو اختيار صحيح بسؤال متعدد الخيارات (صنف .correct) — مع تأثير
-        "‎+رقم‎" منبثق ونبضة خفيفة على العدّاد. يُخزَّن بذاكرة المتصفح
-        الدائمة (localStorage) لكل درس على حدة (المفتاح مبني على مسار
-        الصفحة): يبقى محفوظًا عبر إعادة التحميل، وعبر إغلاق التبويب
-        بالكامل، وحتى عند العودة من نشاط خارجي بتبويب جديد (مثل أزرار
-        "مختبر افتراضي" ذات target="_blank") — لأن localStorage مشترك
-        بين كل تبويبات نفس النطاق (khakha717fbh.github.io)، بعكس
-        sessionStorage المحصور بتبويب واحد فقط. يبدأ من صفر تلقائيًا
-        فقط عند الانتقال لدرس مختلف (مسار صفحة مختلف). لا خصم أبدًا،
-        ولا علاقة له بعلامة الشهادة أو الشارات — تحفيز بصري بحت. متاح
-        أيضًا كـ API عام لأي منطق تصحيح خاص بمحتوى الدرس (مثال: سؤال
-        إجابة مكتوبة يُحكَّم يدويًا بكود الدرس) عبر:
+     1) ظهور تدريجي لكل محطة عند وصولها بالتمرير + تفعيل نقطة
+        التقدّم المقابلة + نغمة انتقال مرة واحدة لكل محطة
 
-          window.XP.award(المقدار)   // مثال: window.XP.award(5)
+     2) تظليل الخيار المُختار داخل كل مجموعة أسئلة (مستقل بين
+        المجموعات لو الدرس فيه أكثر من سؤال). منطق التحقّق من
+        صحة الإجابة يبقى دائمًا بكود الدرس نفسه.
 
-     2) ظهور تدريجي لكل محطة عند وصولها بالتمرير + تفعيل نقطة
-        التقدّم المقابلة + نغمة إنجاز مرة واحدة لكل محطة + نقاط خبرة
+     3) محرّك سحب وإفلات عام (Pointer Events) لأي .chip داخل
+        أي .chips-pool، يُطابق ضد أي .slot بنفس data-answer
 
-     3) تظليل الخيار المُختار داخل كل مجموعة أسئلة (مستقل بين
-        المجموعات لو الدرس فيه أكثر من سؤال)، مع رصد تلقائي لأي
-        خيار يُصنَّف .correct بكود الدرس لمكافأة نقاط خبرة دون أي
-        كود إضافي مطلوب بالدرس نفسه
+   ---------------------------------------------------------
+   تغيير جوهري (يوليو 2026) — نقاط الخبرة خرجت من هذا الملف
+   ---------------------------------------------------------
+   كان هذا الملف يحتوي محرّك XP كاملًا، وكان يمنح النقاط بطريقتين
+   أُلغيتا بالكامل:
 
-     4) محرّك سحب وإفلات عام (Pointer Events) لأي .chip داخل
-        أي .chips-pool، يُطابق ضد أي .slot بنفس data-answer، مع
-        نقاط خبرة عند كل مطابقة صحيحة
+     • 10 نقاط لكل محطة بمجرّد التمرير فوقها. عمليًا كان 91% من
+       نقاط lesson-01 و75% من نقاط lesson-03 تُكتسب بالتمرير دون
+       قراءة حرف — أي أن المؤشّر كان يعكس التمرير لا التعلّم.
 
-   منطق التحقق من صحة الإجابة (أي سؤال هو الصحيح) يبقى دائمًا
-   بكود الدرس نفسه — هذا الملف لا يعرف شيئًا عن محتوى المادة.
-   نظام XP يراقب فقط اصطلاحات أصناف CSS عامة (.correct) سبق
-   تعريفها بـtemplate.css، لا محتوى مادة فعلي.
+     • رصد تلقائي لأي عنصر يأخذ صنف .correct. هذا يمنح النقاط على
+       الحدث البصري لا الحدث التربوي: أي درس يُبرز الإجابة الصحيحة
+       كتغذية راجعة كان سيكافئ الطالب لأنه أخطأ.
 
-   يُحمَّل بعد shared/sounds/sounds.js (لتفعيل الصوت، اختياري)
-   وقبل </body> مباشرة:
+   النقاط الآن تُطلَب صراحةً من كود الدرس عبر الوحدة المشتركة
+   shared/xp-system/xp.js، بمُعرّف فريد محفوظ يمنع التكرار حتى
+   بعد إعادة تحميل الصفحة.
 
+   ---------------------------------------------------------
+   ترتيب التحميل — قبل </body> مباشرة
+   ---------------------------------------------------------
      <script src="[مسار نسبي]/shared/sounds/sounds.js"></script>
+     <script src="[مسار نسبي]/shared/xp-system/xp.js"></script>
      <script src="[مسار نسبي]/shared/faheem-widget/faheem.js"></script>
      <script src="[مسار نسبي]/shared/template-boilerplate/template.js"></script>
+
+   يعمل هذا الملف حتى لو غاب xp.js (السحب والإفلات يشتغل بلا
+   نقاط) — لا يتوقّف ولا يرمي خطأ.
    ========================================================= */
 (function(){
 
-  // ---------- 0) نظام نقاط الخبرة (XP) ----------
-  var XP_STATION = 10;       // أول وصول لكل محطة
-  var XP_QUIZ_CORRECT = 5;   // كل خيار اختيار من متعدد يُصنَّف .correct
-  var XP_SLOT_CORRECT = 5;   // كل مطابقة سحب/إفلات صحيحة
+  // مساعد آمن: لا يفترض وجود xp.js
+  function claimXP(id, points, reason){
+    if(window.XP && window.XP.claim) window.XP.claim(id, points, reason);
+  }
+  function pts(name, fallback){
+    return (window.XP && window.XP.POINTS && window.XP.POINTS[name]) || fallback;
+  }
 
-  var XP_KEY = 'fouadEduLabXP:' + location.pathname;
-  var xpValueEl = document.getElementById('xpValue');
-  var xpCounterEl = document.getElementById('xpCounter');
-  var xpAnimFrame = null;
-  var currentXP = 0;
-
+  /* تنظيف لمرّة واحدة: مفاتيح محرّك XP القديم بقيت في متصفّحات
+     الطلاب بعد إلغائه. إزالتها تمنع خلط رصيد قديم مبني على التمرير
+     برصيد جديد مبني على التفكير. */
   try{
-    currentXP = parseInt(localStorage.getItem(XP_KEY) || '0', 10) || 0;
-  }catch(e){ /* قد يُحجب localStorage ببعض السياقات (وضع التصفّح الخاص
-                مثلًا) — نكمل بالذاكرة فقط دون توقف الصفحة */ }
+    localStorage.removeItem('fouadEduLabXP:' + location.pathname);
+    localStorage.removeItem('fouadEduLabXPStations:' + location.pathname);
+  }catch(e){ /* قد يُحجب localStorage (تصفّح خاص) — تجاهل */ }
 
-  if(xpValueEl) xpValueEl.textContent = currentXP;
-
-  function persistXP(){
-    try{ localStorage.setItem(XP_KEY, currentXP); }catch(e){ /* تجاهل */ }
-  }
-
-  function animateXPTo(target){
-    if(!xpValueEl) return;
-    if(xpAnimFrame) cancelAnimationFrame(xpAnimFrame);
-    var from = parseInt(xpValueEl.textContent, 10) || 0;
-    var start = null;
-    var duration = 400;
-    function step(ts){
-      if(!start) start = ts;
-      var progress = Math.min((ts - start) / duration, 1);
-      xpValueEl.textContent = Math.round(from + (target - from) * progress);
-      if(progress < 1){
-        xpAnimFrame = requestAnimationFrame(step);
-      } else {
-        xpAnimFrame = null;
+  // ---------- 1) شريط التقدّم + الظهور التدريجي عند التمرير ----------
+  // لا نقاط هنا إطلاقًا — النقطة المضاءة والنغمة إشارة موضع فقط.
+  var chimedStations = new Set();
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting) return;
+      entry.target.classList.add('in-view');
+      var dot = document.querySelector('.progress-dot[data-target="'+entry.target.id+'"]');
+      if(dot && !dot.classList.contains('active')){
+        dot.classList.add('active');
+        if(!chimedStations.has(entry.target.id)){
+          chimedStations.add(entry.target.id);
+          if(window.Sounds) window.Sounds.playChime();
+        }
       }
-    }
-    xpAnimFrame = requestAnimationFrame(step);
-  }
+    });
+  }, {threshold:0, rootMargin:'0px 0px -12% 0px'});
+  document.querySelectorAll('.station[id^="station-"]').forEach(function(s){ io.observe(s); });
 
-  function showXPPopup(amount){
-    if(!xpCounterEl) return;
-    var pop = document.createElement('span');
-    pop.className = 'xp-popup';
-    pop.textContent = '+' + amount;
-    xpCounterEl.appendChild(pop);
-    setTimeout(function(){ pop.remove(); }, 900);
-  }
-
-  function awardXP(amount){
-    amount = Math.round(amount);
-    if(!amount || amount <= 0) return;
-    currentXP += amount;
-    persistXP();
-    animateXPTo(currentXP);
-    showXPPopup(amount);
-    if(xpCounterEl){
-      xpCounterEl.classList.remove('xp-bump');
-      void xpCounterEl.offsetWidth; // إعادة تشغيل الحركة عند تكرارها بسرعة
-      xpCounterEl.classList.add('xp-bump');
-    }
-  }
-
-  // API عام لأي كود درس يحتاج مكافأة XP لمنطق تصحيح خاص به
-  // (مثال: سؤال إجابة مكتوبة يُطابَق يدويًا بكود الدرس)
-  window.XP = { award: awardXP };
-
-// ---------- 1) شريط التقدّم + الظهور التدريجي عند التمرير ----------
-// ملاحظة إصلاح (يوليو 2026): الذاكرة المؤقتة وحدها لا تكفي لمنع تكرار
-// منح النقاط — فهي تُصفَّر مع كل إعادة تحميل، بينما رقم XP نفسه يبقى
-// محفوظًا دائمًا بـlocalStorage. لهذا نحفظ أيضًا قائمة المحطات التي
-// أُعطيت نقاطها فعليًا، بنفس مفتاح مسار الصفحة، ونتحقق منها بدل
-// الاعتماد على الذاكرة المؤقتة وحدها.
-var STATIONS_KEY = 'fouadEduLabXPStations:' + location.pathname;
-var awardedStations = new Set();
-try{
-  var storedStations = JSON.parse(localStorage.getItem(STATIONS_KEY) || '[]');
-  awardedStations = new Set(storedStations);
-}catch(e){ /* قد يُحجب localStorage ببعض السياقات — نكمل بالذاكرة فقط */ }
-
-function persistAwardedStations(){
-  try{ localStorage.setItem(STATIONS_KEY, JSON.stringify(Array.from(awardedStations))); }catch(e){ /* تجاهل */ }
-}
-
-var io = new IntersectionObserver(function(entries){
-  entries.forEach(function(entry){
-    if(!entry.isIntersecting) return;
-    entry.target.classList.add('in-view');
-    var dot = document.querySelector('.progress-dot[data-target="'+entry.target.id+'"]');
-    if(dot && !dot.classList.contains('active')){
-      dot.classList.add('active');
-      if(!awardedStations.has(entry.target.id)){
-        awardedStations.add(entry.target.id);
-        persistAwardedStations();
-        if(window.Sounds) window.Sounds.playChime();
-        awardXP(XP_STATION);
-      }
-    }
-  });
-}, {threshold:0, rootMargin:'0px 0px -12% 0px'});
-document.querySelectorAll('.station[id^="station-"]').forEach(function(s){ io.observe(s); });
-   
   // ---------- 2) تظليل الخيار المختار داخل كل مجموعة أسئلة ----------
+  // عرض فقط. لا يمنح نقاطًا ولا يحكم على الصواب — ذلك بكود الدرس،
+  // الذي ينادي XP.claim بنفسه عند إجابة صحيحة.
   document.querySelectorAll('.quiz-options').forEach(function(group){
     group.querySelectorAll('.quiz-option').forEach(function(opt){
       opt.addEventListener('click', function(){
@@ -172,23 +101,18 @@ document.querySelectorAll('.station[id^="station-"]').forEach(function(s){ io.ob
     });
   });
 
-  // رصد تلقائي لأي خيار يُصنَّف .correct (بكود الدرس) لمكافأة XP —
-  // لا يعرف هذا الملف شيئًا عن سبب الصحة، فقط يراقب اصطلاح CSS عام
-  // سبق تعريفه بـtemplate.css (.quiz-option.correct)
-  var awardedOptions = new WeakSet();
-  var quizXPObserver = new MutationObserver(function(mutations){
-    mutations.forEach(function(m){
-      var el = m.target;
-      if(el.nodeType === 1 && el.classList && el.classList.contains('quiz-option') &&
-         el.classList.contains('correct') && !awardedOptions.has(el)){
-        awardedOptions.add(el);
-        awardXP(XP_QUIZ_CORRECT);
-      }
-    });
-  });
-  quizXPObserver.observe(document.body, {attributes:true, attributeFilter:['class'], subtree:true});
-
   // ---------- 3) محرّك السحب والإفلات العام ----------
+  /* مُعرّف ثابت لكل خانة، تُبنى مرّة عند التحميل بترتيب ورودها في
+     الصفحة. الدروس ملفات HTML ثابتة، فالترتيب لا يتغيّر، والمُعرّف
+     يبقى صالحًا عبر إعادة التحميل — وهذا ما يمنع تكرار كسب النقاط.
+     يمكن لأي درس تثبيت مُعرّفه بنفسه عبر data-xp-id على الخانة. */
+  var slotEls = document.querySelectorAll('.slot');
+  slotEls.forEach(function(slot, i){
+    if(!slot.dataset.xpId){
+      slot.dataset.xpId = slot.id ? ('slot-' + slot.id) : ('slot-' + (i + 1));
+    }
+  });
+
   var dragEl = null, startX = 0, startY = 0, origParent = null, origNext = null;
 
   document.querySelectorAll('.chips-pool .chip').forEach(function(chip){
@@ -238,7 +162,9 @@ document.querySelectorAll('.station[id^="station-"]').forEach(function(s){ io.ob
         chip.classList.add('placed');
         origParent.insertBefore(chip, origNext);
         if(window.Sounds) window.Sounds.playSnap();
-        awardXP(XP_SLOT_CORRECT);
+        // سبب المكسب قابل للتخصيص بالدرس عبر data-xp-reason على الخانة
+        claimXP(slot.dataset.xpId, pts('MATCH', 5),
+                slot.dataset.xpReason || 'مطابقة صحيحة');
       } else {
         chip.style.position = '';
         chip.style.left = '';
