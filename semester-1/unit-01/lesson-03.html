@@ -125,7 +125,10 @@
     transition:opacity .4s ease;
   }
   #hint.hidden{opacity:0; pointer-events:none;}
-  #success-tag{
+  /* .success-tag: صنف عام (لا معرّف) لأنه صار يُستخدم بمحطتين — وسم
+     "تم نقل الإلكترون" بمحطة 2، ووسم "تحدٍّ مكتمل" بمحطة 1 — يبقى
+     محليًا بهذا الملف لأنه تصميم بصري خاص بمادة هذا الدرس تحديدًا. */
+  .success-tag{
     margin-top:18px;
     display:inline-flex;
     align-items:center;
@@ -142,13 +145,72 @@
     transform:translateY(6px);
     transition:opacity .5s ease, transform .5s ease;
   }
-  #success-tag.show{opacity:1; transform:translateY(0);}
+  .success-tag.show{opacity:1; transform:translateY(0);}
   .stage-note{
     text-align:center;
     color:var(--ink-dim);
     font-size:.85rem;
     margin:0 0 14px;
   }
+  /* ============ بطاقة واحدة مركزية (محطة 1) ============
+     facts-grid الأصلي بـtemplate.css مصمَّم لعدة بطاقات متساوية العرض
+     (auto-fit)؛ ببطاقة واحدة فقط يتمدد العنصر ليملأ العرض كاملًا بشكل
+     غير متناسق. هذا المعدِّل المحلي يقيّد عرضها ويوسّطها، دون المساس
+     بتنسيق facts-grid العام المستخدم بدروس أخرى بعدة بطاقات. */
+  .facts-grid.single-card{
+    grid-template-columns:none;
+    max-width:260px;
+    margin:16px auto;
+  }
+  /* ============ تسلسل أسئلة الاستكشاف (محطة 2 فقط) ============
+     9 خطوات، سؤال واحد ظاهر بأي لحظة (باقي الخطوات hidden وتُكشف
+     تباعًا بالسكربت). عمدًا بلا لون أحمر أو اهتزاز عند الخطأ (خلاف
+     .quiz-option.incorrect العام) — الطابع هنا استكشافي منخفض التوتر
+     لا تقييمي، فالتلميح اللطيف بديل عن أي إشارة خطأ حادة. */
+  .explore-step{
+    margin-top:22px;
+    padding-top:18px;
+    border-top:1px dashed var(--border);
+  }
+  .explore-step:first-child{ margin-top:26px; border-top:none; padding-top:0; }
+  .explore-q{
+    font-weight:700;
+    color:var(--ink);
+    margin:0 0 12px;
+    font-size:clamp(14px,2.4vw,16px);
+  }
+  .explore-answer-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .explore-input{
+    flex:1 1 140px;
+    min-width:100px;
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:11px 20px;
+    color:var(--ink);
+    font-family:'Tajawal', sans-serif;
+    font-size:15px;
+    text-align:center;
+  }
+  .explore-input:focus{
+    outline:none;
+    border-color:var(--turquoise);
+    box-shadow:0 0 0 3px var(--turquoise-faint);
+  }
+  .explore-input:disabled{
+    opacity:.7;
+  }
+  .explore-feedback{
+    margin-top:10px;
+    font-size:.88rem;
+    min-height:20px;
+  }
+  .explore-feedback.is-correct{ color:var(--turquoise); font-weight:700; }
+  .explore-feedback.is-hint{ color:var(--ink-dim); }
 </style>
 </head>
 <body>
@@ -189,28 +251,19 @@
 
   <!-- ===================== محطة 1: التنشيط ===================== -->
   <section class="station" id="station-1">
-    <div class="station-label">المحطة الأولى · التنشيط</div>
-    <h2>كيف يجتمع فلزٌّ خطير وغازٌ سامّ ليكوّنا ملح الطعام؟</h2>
-    <p class="station-tagline">تأمّل هذا التناقض قبل أن تكتشف السبب</p>
+    <div class="station-label">المحطة الأولى</div>
+    <h2>تحدي البداية</h2>
 
-    <p>الصوديوم فلزّ يتفاعل بعنف فور ملامسته الماء، والكلور غاز سامّ خطير — لكن اتحادهما معًا ينتج مادة نتناولها يوميًا بأمان تام: ملح الطعام (كلوريد الصوديوم). كيف يحدث هذا التحوّل الجذري؟</p>
+    <p>يتكوّن ملح الطعام من عنصر شديد التفاعل هو الصوديوم، وعنصر آخر سامّ وخطير هو الكلور — ومع ذلك يتحدان معًا لتكوين مادة آمنة تماماً نستخدمها يوميًا.</p>
 
-    <div class="facts-grid">
+    <div class="facts-grid single-card">
       <div class="fact-card">
-        <div class="term">🧂 كلوريد الصوديوم</div>
-        <p>ملح الطعام — مادة آمنة تمامًا، نتناولها يوميًا.</p>
-      </div>
-      <div class="fact-card">
-        <div class="term">⚡ الصوديوم (Na) النقي</div>
-        <p>فلزّ يتفاعل بعنف فور ملامسته للماء.</p>
-      </div>
-      <div class="fact-card">
-        <div class="term">☠️ غاز الكلور (Cl₂)</div>
-        <p>غاز سامّ وخطير بشكله النقي.</p>
+        <div class="term">🧂 NaCl</div>
+        <p>ذرة صوديوم + ذرة كلور</p>
       </div>
     </div>
 
-    <p>🤔 برأيك، ماذا يحدث فعليًا على مستوى الذرّات عندما يلتقي الصوديوم بالكلور؟</p>
+    <p>🤔 برأيك، ما الذي يحدث عندما تلتقي ذرة الصوديوم بذرة الكلور؟</p>
     <div class="quiz-options" id="engagePredictOptions">
       <label class="quiz-option">
         <input type="radio" name="engagePredict" value="none">
@@ -225,24 +278,117 @@
         تمتزجان فقط دون أي تغيّر حقيقي في تركيبهما
       </label>
     </div>
-    <p id="engagePredictFeedback" hidden>إجابة تستحق التأمّل! تابع إلى المحطة التالية لتكتشف بنفسك ما يحدث فعليًا، إلكترونًا بإلكترون. 👇</p>
+    <p id="engagePredictFeedback" hidden>سجّلت موقفك! تابع إلى المحطة التالية لتتحقّق بنفسك، إلكترونًا بإلكترون 👇</p>
+    <div id="engageSuccessTag" class="success-tag">✓ تحدٍّ مكتمل</div>
   </section>
 
   <!-- ===================== محطة 2: استكشاف (نقل الإلكترون) ===================== -->
   <section class="station" id="station-2">
-    <div class="station-label">المحطة الثانية · الاستكشاف</div>
-    <h2>ماذا يحدث لو التقت هاتان الذرّتان؟</h2>
-    <p class="stage-note">صوديوم (Na) على اليسار — كلور (Cl) على اليمين</p>
+    <div class="station-label">المحطة الثانية</div>
+    <h2>الاستكشاف</h2>
+    <p class="station-tagline">ادرس الشكل التالي ثم أجب عن الأسئلة الآتية</p>
 
     <div id="stage-wrap">
       <svg id="stage" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg"></svg>
     </div>
 
-    <p class="levels-caption">درجة التركوازي حول كل ذرّة تختلف بين مدار وآخر — كلما اشتدّ اللون ابتعدنا عن النواة وزاد مستوى الطاقة</p>
+    <div id="explore-sequence">
 
-    <div style="text-align:center;">
-      <div id="hint">👆 انقر على الإلكترون المتوهج</div>
-      <div id="success-tag">✓ تم نقل الإلكترون</div>
+      <!-- سؤال 1 — إجابة مكتوبة -->
+      <div class="explore-step" id="explore-1" data-step="1">
+        <p class="explore-q">بالنظر إلى ذرّة الصوديوم، كم عدد الإلكترونات في مستوى طاقتها الخارجي؟</p>
+        <div class="explore-answer-row">
+          <input type="text" inputmode="numeric" autocomplete="off" class="explore-input" id="explore-input-1" aria-label="إجابتك">
+          <button type="button" class="btn explore-check" data-step="1">تحقّق</button>
+        </div>
+        <p class="explore-feedback" id="explore-feedback-1" hidden></p>
+      </div>
+
+      <!-- سؤال 2 — إجابة مكتوبة -->
+      <div class="explore-step" id="explore-2" data-step="2" hidden>
+        <p class="explore-q">بالنظر إلى ذرّة الكلور، كم إلكترونًا تحتاج في مستواها الخارجي لتصل إلى حالة الاستقرار؟</p>
+        <div class="explore-answer-row">
+          <input type="text" inputmode="numeric" autocomplete="off" class="explore-input" id="explore-input-2" aria-label="إجابتك">
+          <button type="button" class="btn explore-check" data-step="2">تحقّق</button>
+        </div>
+        <p class="explore-feedback" id="explore-feedback-2" hidden></p>
+      </div>
+
+      <!-- سؤال 3 — اختيار ثنائي -->
+      <div class="explore-step" id="explore-3" data-step="3" hidden>
+        <p class="explore-q">أيّهما أسهل لذرّة الصوديوم للوصول إلى حالة الاستقرار؟</p>
+        <div class="quiz-options" data-step="3">
+          <label class="quiz-option"><input type="radio" name="explore3" value="wrong">أن تكتسب سبعة إلكترونات إضافية</label>
+          <label class="quiz-option"><input type="radio" name="explore3" value="correct">أن تفقد إلكترونها الوحيد في المستوى الخارجي</label>
+        </div>
+        <p class="explore-feedback" id="explore-feedback-3" hidden></p>
+      </div>
+
+      <!-- سؤال 4 — اختيار من متعدد -->
+      <div class="explore-step" id="explore-4" data-step="4" hidden>
+        <p class="explore-q">إذا قرّرت ذرّة الصوديوم التخلّص من إلكترونها الخارجي، وأرادت ذرّة الكلور الحصول على إلكترون واحد، فما السيناريو المتوقّع حدوثه بينهما؟</p>
+        <div class="quiz-options" data-step="4">
+          <label class="quiz-option"><input type="radio" name="explore4" value="wrong1">تتشارك الذرّتان هذا الإلكترون فيما بينهما</label>
+          <label class="quiz-option"><input type="radio" name="explore4" value="wrong2">يبقى الإلكترون في مكانه ولا يحدث تفاعل</label>
+          <label class="quiz-option"><input type="radio" name="explore4" value="correct">ينتقل الإلكترون بالكامل من الصوديوم إلى الكلور</label>
+          <label class="quiz-option"><input type="radio" name="explore4" value="wrong3">تتبادل الذرّتان الإلكترون ذهابًا وإيابًا باستمرار</label>
+        </div>
+        <p class="explore-feedback" id="explore-feedback-4" hidden></p>
+      </div>
+
+      <!-- سؤال 5 — توقّع شحنة الصوديوم -->
+      <div class="explore-step" id="explore-5" data-step="5" hidden>
+        <p class="explore-q">بعد أن تفقد ذرّة الصوديوم إلكترونها، ماذا تتوقّع أن تصبح شحنتها الكلية؟</p>
+        <div class="quiz-options" data-step="5">
+          <label class="quiz-option"><input type="radio" name="explore5" value="correct">موجبة</label>
+          <label class="quiz-option"><input type="radio" name="explore5" value="wrong1">سالبة</label>
+          <label class="quiz-option"><input type="radio" name="explore5" value="wrong2">متعادلة</label>
+        </div>
+        <p class="explore-feedback" id="explore-feedback-5" hidden></p>
+      </div>
+
+      <!-- سؤال 6 — توقّع شحنة الكلور -->
+      <div class="explore-step" id="explore-6" data-step="6" hidden>
+        <p class="explore-q">بعد أن تكتسب ذرّة الكلور هذا الإلكترون، ما الشحنة الجديدة التي ستظهر عليها؟</p>
+        <div class="quiz-options" data-step="6">
+          <label class="quiz-option"><input type="radio" name="explore6" value="wrong1">موجبة</label>
+          <label class="quiz-option"><input type="radio" name="explore6" value="correct">سالبة</label>
+          <label class="quiz-option"><input type="radio" name="explore6" value="wrong2">متعادلة</label>
+        </div>
+        <p class="explore-feedback" id="explore-feedback-6" hidden></p>
+      </div>
+
+      <!-- خطوة 7 — النقر الفعلي لمشاهدة الانتقال (تحقّق من توقّعي 5 و6) -->
+      <div class="explore-step" id="explore-7" data-step="7" hidden>
+        <p class="explore-q">الآن، تحقّق من توقّعك: انقر على الإلكترون المتوهج بالرسم أعلاه لتشاهد المسار الذي سيسلكه.</p>
+        <div style="text-align:center;">
+          <div id="hint">👆 انقر على الإلكترون المتوهج</div>
+          <div id="success-tag" class="success-tag">✓ تم نقل الإلكترون</div>
+        </div>
+      </div>
+
+      <!-- سؤال 8 — التجاذب بين الأيونين -->
+      <div class="explore-step" id="explore-8" data-step="8" hidden>
+        <p class="explore-q">ما الذي سيحدث بين "أيون الصوديوم الموجب" و"أيون الكلوريد السالب" نتيجة اختلاف شحنتيهما؟</p>
+        <div class="quiz-options" data-step="8">
+          <label class="quiz-option"><input type="radio" name="explore8" value="wrong1">تنافر</label>
+          <label class="quiz-option"><input type="radio" name="explore8" value="correct">تجاذب</label>
+          <label class="quiz-option"><input type="radio" name="explore8" value="wrong2">لا يحدث أي تأثير بينهما</label>
+        </div>
+        <p class="explore-feedback" id="explore-feedback-8" hidden></p>
+      </div>
+
+      <!-- سؤال 9 — الشحنة الكلية للمركّب -->
+      <div class="explore-step" id="explore-9" data-step="9" hidden>
+        <p class="explore-q">هل تعتقد أن الشحنة الكلية لمركّب "كلوريد الصوديوم" الناتج ستكون موجبة أم سالبة أم متعادلة؟</p>
+        <div class="quiz-options" data-step="9">
+          <label class="quiz-option"><input type="radio" name="explore9" value="correct">متعادلة</label>
+          <label class="quiz-option"><input type="radio" name="explore9" value="wrong1">موجبة</label>
+          <label class="quiz-option"><input type="radio" name="explore9" value="wrong2">سالبة</label>
+        </div>
+        <p class="explore-feedback" id="explore-feedback-9" hidden></p>
+      </div>
+
     </div>
   </section>
 
@@ -289,15 +435,27 @@
    منطق محطة 1 فقط (سؤال توقّع غير مُقيَّم) — لا كشف لإجابة
    صحيحة/خاطئة هنا عمدًا (القاعدة الحرجة: لا تفسير قبل محاولة
    الطالب الاستكشافية بمحطة 2). الاختيار نفسه يُبرَز بصريًا
-   تلقائيًا عبر template.js (صنف .selected)، هذا السكربت فقط
-   يكشف رسالة التأمّل المشتركة بعد أي اختيار.
+   تلقائيًا عبر template.js (صنف .selected). هذا السكربت يكشف
+   رسالة التأمّل ووسم "تحدٍّ مكتمل" بعد أي اختيار — احتفاء
+   باتخاذ موقف واضح قبل رؤية الحقيقة، لا بصحة الاختيار نفسه.
+
+   نقاط الخبرة هنا (3 نقاط، فئة PREDICT) تُمنح على المشاركة في
+   التوقّع لا على صوابه — أي توقّع، صحيحًا كان أو خاطئًا، يكسبها.
+   هذا متّسق مع سياسة المنصة: XP يرافق النشاط ويكافئ التفكير،
+   بينما الشارات والعتبات (مشارك/متمكن/متميز) تخصّ التقييم
+   الختامي وحده.
    ========================================================== */
 (function(){
   "use strict";
   const feedback = document.getElementById('engagePredictFeedback');
+  const badge = document.getElementById('engageSuccessTag');
   document.querySelectorAll('input[name="engagePredict"]').forEach(function(radio){
     radio.addEventListener('change', function(){
       feedback.hidden = false;
+      if(window.Sounds) window.Sounds.playChime();
+      if(badge) badge.classList.add('show');
+      if(window.XP) window.XP.claim('l3-engage-predict', window.XP.POINTS.PREDICT,
+                                    'سجّلتَ توقّعك قبل الاستكشاف');
     }, { once: true });
   });
 })();
@@ -307,9 +465,9 @@
 /* ==========================================================
    منطق محطة 2 فقط (نقل الإلكترون Na → Cl) — خاص بمحتوى هذا
    الدرس، لا يتكرر بأي درس آخر. يستخدم window.Sounds (من
-   shared/sounds/sounds.js) و window.XP (من shared/template-
-   boilerplate/template.js)، لذا يجب أن يُحمَّل هذا السكربت
-   بعد تحميل الصفحة لهذين السكربتين (موضعه أدناه يضمن ذلك).
+   shared/sounds/sounds.js) و window.XP (من shared/xp-system/
+   xp.js). كل نداءات XP هنا داخل معالجات أحداث تقع بعد اكتمال
+   تحميل الصفحة، فترتيب الوسوم أدناه آمن.
    ========================================================== */
 (function(){
   "use strict";
@@ -386,11 +544,10 @@
   renderAtom(CL, 'cl');
   renderAtom(NA, 'na');
 
+  // الإلكترون يُرسَم من البداية، لكن لا يصبح قابلًا للنقر (clickable/pulsing)
+  // إلا بعد اجتياز الطالب لأسئلة 1-6 عبر unlockElectron() بالأسفل — بلا ذلك
+  // كان يمكن تجاوز الأسئلة والنقر مباشرة بلا أي تفكير فعلي
   const naElectron = document.getElementById('na-e-2-0');
-  naElectron.classList.add('clickable', 'pulsing');
-  naElectron.setAttribute('tabindex', '0');
-  naElectron.setAttribute('role', 'button');
-  naElectron.setAttribute('aria-label', 'انقل الإلكترون من الصوديوم إلى الكلور');
 
   const clOuterOrbit = document.getElementById('clOrbit2');
   const naOuterOrbit = document.getElementById('naOrbit2');
@@ -400,6 +557,16 @@
   const clCharge = document.getElementById('clCharge');
 
   let transferred = false;
+  let unlocked = false;
+
+  function unlockElectron(){
+    if(unlocked) return;
+    unlocked = true;
+    naElectron.classList.add('clickable', 'pulsing');
+    naElectron.setAttribute('tabindex', '0');
+    naElectron.setAttribute('role', 'button');
+    naElectron.setAttribute('aria-label', 'انقل الإلكترون من الصوديوم إلى الكلور');
+  }
 
   function tween(el, attrsFrom, attrsTo, duration, onDone){
     if(reduceMotion) duration = 1;
@@ -417,7 +584,7 @@
     requestAnimationFrame(step);
   }
 
-  function previewOn(){ if(!transferred) clOuterOrbit.classList.add('target-highlight'); }
+  function previewOn(){ if(unlocked && !transferred) clOuterOrbit.classList.add('target-highlight'); }
   function previewOff(){ clOuterOrbit.classList.remove('target-highlight'); }
   naElectron.addEventListener('mouseenter', previewOn);
   naElectron.addEventListener('mouseleave', previewOff);
@@ -425,7 +592,7 @@
   naElectron.addEventListener('blur', previewOff);
 
   function activateElectron(){
-    if(transferred) return;
+    if(!unlocked || transferred) return;
     transferred = true;
     previewOff();
     naElectron.classList.remove('pulsing', 'clickable');
@@ -485,16 +652,120 @@
     }, 250);
 
     if(window.Sounds) window.Sounds.playSnap();
-    if(window.XP) window.XP.award(10);
+    if(window.XP) window.XP.claim('l3-na-cl-transfer', window.XP.POINTS.TASK,
+                                  'نقلتَ الإلكترون بنفسك وكوّنت الرابطة');
     setTimeout(() => {
       successTag.classList.add('show');
-    }, 400);
+      showStep(8);
+    }, 700);
   }
+
+  /* ==========================================================
+     تسلسل أسئلة الاستكشاف (9 خطوات) — خطوة واحدة ظاهرة بأي لحظة.
+     أسئلة 1-2: إجابة مكتوبة، تصحيح لطيف بمحاولات غير محدودة (لا
+     رفض حاد). أسئلة 3-6 و8-9: اختيار من متعدد؛ الاختيار الخاطئ
+     يعرض تلميحًا لطيفًا فقط (بلا .incorrect الأحمر المهتزّ — لا
+     يناسب طابع الاستكشاف منخفض التوتر). خطوة 7 مُعالَجة أعلاه
+     (نقر الإلكترون).
+
+     نقاط الخبرة تُطلَب هنا صراحةً بـXP.claim عند كل إجابة صحيحة.
+     سابقًا كان القالب العام يرصد صنف .correct تلقائيًا ويمنح
+     النقاط، وأُلغي ذلك (يوليو 2026) لأنه يكافئ الحدث البصري لا
+     التربوي: أي درس يُبرز الإجابة الصحيحة كتغذية راجعة كان
+     سيكافئ الطالب لأنه أخطأ. كل مُعرّف فريد ومحفوظ، فلا تتكرر
+     النقاط بإعادة تحميل الصفحة.
+     ========================================================== */
+  const TEXT_EXPECTED = { 1: '1', 2: '1' };
+  const TEXT_HINTS = {
+    1: 'انظر بعناية لعدد النقاط (الإلكترونات) بالمدار الخارجي لذرّة الصوديوم بالرسم أعلاه',
+    2: 'عُد إلكترونات الكلور الحالية بالمدار الخارجي بالرسم، ثم احسب كم إلكترونًا ينقصها لتصل إلى 8'
+  };
+  const CHOICE_HINTS = {
+    3: 'فكّر: هل الأسهل فقد شيء واحد صغير أم اكتساب سبعة أشياء دفعة واحدة؟',
+    4: 'تذكّر: في الرابطة الأيونية لا يُشارَك الإلكترون بين الذرّتين — بل ينتقل بالكامل من ذرّة إلى أخرى',
+    5: 'فكّر في عدد البروتونات الموجبة بالنواة مقارنة بعدد الإلكترونات المتبقية بعد فقدان إلكترون',
+    6: 'فكّر في عدد الإلكترونات السالبة الآن مقارنة بعدد البروتونات الموجبة بعد اكتساب إلكترون إضافي',
+    8: 'تذكّر القاعدة الأساسية بالكهرباء الساكنة: الشحنات المتضادّة تتجاذب، والمتشابهة تتنافر',
+    9: 'احسب: شحنة موجبة واحدة (+1) مع شحنة سالبة واحدة (−1) — ما ناتج جمعهما؟'
+  };
+  // سبب المكسب كما يراه الطالب — مرتبط بالمهارة لا بالسؤال
+  const XP_REASONS = {
+    1: 'استنتجتَ العدد من الرسم بنفسك',
+    2: 'حسبتَ ما ينقص الكلور بنفسك',
+    3: 'وازنتَ بين مسارين واخترتَ الأوفر',
+    4: 'ميّزتَ النقل الكامل عن المشاركة',
+    5: 'توقّعتَ شحنة الأيون الموجب',
+    6: 'توقّعتَ شحنة الأيون السالب',
+    8: 'طبّقتَ قاعدة تجاذب الشحنات',
+    9: 'جمعتَ الشحنتين ووصلتَ للتعادل'
+  };
+
+  function showStep(n){
+    const el = document.getElementById('explore-' + n);
+    if(!el) return;
+    el.hidden = false;
+    if(n === 7) unlockElectron();
+    if(el.scrollIntoView) el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest' });
+  }
+
+  // أسئلة الإجابة المكتوبة (1، 2) — إنتاج غير مُعان، فئة PRODUCE
+  document.querySelectorAll('.explore-check').forEach(function(btn){
+    const step = btn.getAttribute('data-step');
+    const input = document.getElementById('explore-input-' + step);
+    const feedback = document.getElementById('explore-feedback-' + step);
+    function check(){
+      const val = input.value.trim();
+      feedback.hidden = false;
+      if(val === TEXT_EXPECTED[step]){
+        feedback.textContent = '✓ صحيح!';
+        feedback.className = 'explore-feedback is-correct';
+        input.disabled = true;
+        btn.disabled = true;
+        if(window.Sounds) window.Sounds.playSnap();
+        if(window.XP) window.XP.claim('l3-explore-q' + step, window.XP.POINTS.PRODUCE,
+                                      XP_REASONS[step]);
+        setTimeout(function(){ showStep(parseInt(step, 10) + 1); }, 500);
+      } else {
+        feedback.textContent = '💡 ' + TEXT_HINTS[step];
+        feedback.className = 'explore-feedback is-hint';
+        if(window.Sounds) window.Sounds.playWrong();
+      }
+    }
+    btn.addEventListener('click', check);
+    input.addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){ e.preventDefault(); check(); }
+    });
+  });
+
+  // أسئلة الاختيار من متعدد (3، 4، 5، 6، 8، 9) — فئة MCQ
+  document.querySelectorAll('.quiz-options[data-step]').forEach(function(group){
+    const step = group.getAttribute('data-step');
+    const feedback = document.getElementById('explore-feedback-' + step);
+    group.querySelectorAll('input[type="radio"]').forEach(function(radio){
+      radio.addEventListener('change', function(){
+        feedback.hidden = false;
+        if(radio.value === 'correct'){
+          radio.closest('.quiz-option').classList.add('correct');
+          feedback.textContent = '✓ صحيح!';
+          feedback.className = 'explore-feedback is-correct';
+          if(window.Sounds) window.Sounds.playSnap();
+          if(window.XP) window.XP.claim('l3-explore-q' + step, window.XP.POINTS.MCQ,
+                                        XP_REASONS[step]);
+          setTimeout(function(){ showStep(parseInt(step, 10) + 1); }, 500);
+        } else {
+          feedback.textContent = '💡 ' + CHOICE_HINTS[step];
+          feedback.className = 'explore-feedback is-hint';
+          if(window.Sounds) window.Sounds.playWrong();
+        }
+      });
+    });
+  });
 
 })();
 </script>
 
 <script src="../../shared/sounds/sounds.js"></script>
+<script src="../../shared/xp-system/xp.js"></script>
 <script src="../../shared/faheem-widget/faheem.js"></script>
 <script src="../../shared/template-boilerplate/template.js"></script>
 <script src="../../shared/identity/footer.js"></script>
