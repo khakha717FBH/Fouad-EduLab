@@ -64,7 +64,8 @@
   .step-seg{position:relative;flex:1;min-width:10px;height:8px;border-radius:999px;background:rgba(255,255,255,.08);border:none;padding:0;cursor:pointer;overflow:hidden;transition:box-shadow .3s ease;}
   .step-seg-fill{position:absolute;inset:0;width:0%;background:linear-gradient(90deg,var(--turquoise),#8fe9d8);border-radius:999px;transition:width .5s ease;}
   .step-seg.active{box-shadow:0 0 6px var(--turquoise);}
-  .xp-pill{background:var(--navy-darker);border:1.5px solid var(--turquoise-soft);color:var(--turquoise);padding:6px 14px;border-radius:999px;font-weight:800;font-size:.78rem;white-space:nowrap;}
+  .xp-pill{display:inline-flex;align-items:center;gap:6px;background:var(--navy-darker);border:1.5px solid var(--turquoise-soft);color:var(--turquoise);padding:6px 14px;border-radius:999px;font-weight:800;font-size:.78rem;white-space:nowrap;}
+  .xp-pill svg{width:14px;height:14px;flex-shrink:0;}
   @media (max-width:640px){ .top-bar .brand span.brand-text{display:none;} }
 
   /* ===== شريط المسار التنقّلي (الرئيسية ← الفصل ← الوحدة ← الدرس) ===== */
@@ -479,7 +480,7 @@
     <button class="step-seg" data-station="elaborate" title="المحطة الرابعة — دراسة الحالة" onclick="document.getElementById('st-elaborate').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
     <button class="step-seg" data-station="evaluate" title="المحطة الأخيرة — التقييم الختامي" onclick="document.getElementById('st-evaluate').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
   </div>
-  <span class="xp-pill">⚡ <span id="xpValue">0</span> XP</span>
+  <span class="xp-pill" id="xpCounter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg><span id="xpValue">0</span> XP</span>
 </div>
 
 <div class="page-wrap">
@@ -961,10 +962,14 @@ function sndError(){ tone(300,220,.25,.08,'sawtooth'); }
 /* ==================================================================
    الحالة والتقدّم — لا تراجع أبدًا، بلا شارات أثناء الأنشطة
    ================================================================== */
+/* نقاط الخبرة لم تعد جزءًا من حالة هذا الملف — انتقلت بالكامل إلى
+   الوحدة المشتركة shared/xp-system/xp.js (يوليو 2026). سبب النقل:
+   كان لهذا الدرس محرّك XP خاص به لا يحفظ شيئًا، فيضيع رصيد الطالب
+   كاملًا بأي إعادة تحميل أو عند العودة من تبويب خارجي.
+   حُذف أيضًا جدول الأوزان (engage:5 … evaluate:20): كان يُحسب ولا
+   يُقرأ في أي مكان، وشرائح التقدّم متساوية العرض بقرار مقصود. */
 const state = {
-  xp:0,
   stationProgress:{engage:0,explore1:0,explore2:0,explore3:0,explain3:0,checkin:0,valency:0,elaborate:0,evaluate:0},
-  weights:{engage:5,explore1:6,explore2:7,explore3:15,explain3:12,checkin:5,valency:18,elaborate:12,evaluate:20},
   exercises:{}
 };
 const checklist = {
@@ -986,28 +991,35 @@ const FINAL_EVAL_TOTAL = 7;
 let studentName = '';
 const LESSON_TITLE = 'كيف تُصنّف العناصر وتُحدد الصيغ الكيميائية؟';
 
-function ensureEx(id){ if(!state.exercises[id]) state.exercises[id]={attempts:0,completedCount:0,hintUsed:false}; return state.exercises[id]; }
-function markAttempt(id){ ensureEx(id).attempts++; }
-
-function awardXP(id, base){
-  const ex = ensureEx(id);
-  const mult = ex.completedCount===0 ? 1 : Math.max(.2, 1/(ex.completedCount+1));
-  const gained = Math.max(1, Math.round(base*mult));
-  state.xp += gained;
-  ex.completedCount++;
-  updateXPDisplay();
-  return gained;
+function ensureEx(id){ if(!state.exercises[id]) state.exercises[id]={attempts:0}; return state.exercises[id]; }
+function markAttempt(id){
+  ensureEx(id).attempts++;
+  // تُسجَّل المحاولة في المحرّك المشترك أيضًا كي تعرف مكافأة التلميح
+  // ما إذا كان التلميح طُلب قبل أي محاولة أم بعدها
+  if(window.XP) window.XP.attempt(id);
 }
+
+/* الواجهة الوحيدة لمنح النقاط: مُعرّف فريد + فئة من جدول المنصة +
+   سبب يراه الطالب. المُعرّف محفوظ بذاكرة المتصفح، فلا تتكرّر النقاط
+   بإعادة تحميل الصفحة، ولا تضيع عند العودة من تبويب خارجي. */
+function claimXP(id, points, reason){
+  if(window.XP) window.XP.claim(id, points, reason);
+}
+function P(name){
+  return (window.XP && window.XP.POINTS && window.XP.POINTS[name]) || 5;
+}
+function totalXP(){ return window.XP ? window.XP.total() : 0; }
+
 function toggleHint(id, boxId){
   const box=document.getElementById(boxId);
   if(!box) return;
   box.hidden=!box.hidden;
   sndClick();
-  const ex=ensureEx(id);
-  if(ex.attempts===0 && !ex.hintUsed){ ex.hintUsed=true; state.xp+=2; updateXPDisplay(); }
+  // تُمنح مرّة واحدة، وفقط إن طُلب التلميح قبل أي محاولة — المحرّك
+  // المشترك يتكفّل بالشرطين
+  if(window.XP) window.XP.hint(id, 'طلبتَ التلميح قبل المحاولة — بداية ذكية');
 }
 function revealModel(id){ const el=document.getElementById(id); if(el){ el.hidden=!el.hidden; sndClick(); } }
-function updateXPDisplay(){ document.getElementById('xpValue').textContent = state.xp; }
 
 function markDone(station,key){ checklist[station][key]=true; updateStation(station); }
 
@@ -1024,13 +1036,7 @@ function updateStation(station){
     showToast(STATION_LABELS[station] + ' — اكتملت! 🎉');
   }
 }
-let maxProgress = 0;
-function recomputeProgress(){
-  let total=0;
-  for(const k in state.weights){ total += (state.stationProgress[k]/100)*state.weights[k]; }
-  maxProgress = Math.max(maxProgress, total);
-  renderProgressBar();
-}
+function recomputeProgress(){ renderProgressBar(); }
 function renderProgressBar(){
   Object.keys(state.stationProgress).forEach(k=>{
     const seg=document.querySelector('.step-seg[data-station="'+k+'"]');
@@ -1184,7 +1190,6 @@ function selectEngageChallenge(idx){
   sndClick();
 
   engageTriedIdx.add(idx);
-  awardXP('engageChallenge', 6);
   checkEngageProgress();
 }
 
@@ -1196,6 +1201,7 @@ function checkEngageProgress(){
   if(engageTriedIdx.size >= ENGAGE_CHALLENGE_OPTIONS.length && costCard && costCard.hidden){
     costCard.hidden = false;
     markDone('engage','challenge');
+    claimXP('l2-engage-explore', P('TASK'), 'جرّبتَ كل الفرضيات قبل الحكم');
   }
 }
 
@@ -1226,7 +1232,13 @@ function selectMC(id, idx, correctIdx, station, key){
     if(rightBtn) rightBtn.classList.add('correct');
   }
   const fb=wrap.querySelector('.fb');
-  if(correct){ if(fb) fb.textContent='إجابة صحيحة ✓'; sndSuccess(); awardXP(id,6); }
+  // التقييم الختامي بلا XP عمدًا: مكافأته الشارة والشهادة، وخلط
+  // "رصيد التعلّم" بـ"الدرجة" يُربك الطالب
+  if(correct){
+    if(fb) fb.textContent='إجابة صحيحة ✓';
+    sndSuccess();
+    if(station!=='evaluate') claimXP('l2-'+id, P('MCQ'), 'إجابة صحيحة');
+  }
   else { if(fb) fb.textContent='الإجابة الصحيحة موضّحة بالتحديد الأخضر.'; sndError(); }
   if(station) markDone(station,key);
   if(station==='engage') checkEngageProgress();
@@ -1400,7 +1412,7 @@ function handleTrackClick(el, containerEl){
       updatePeriodTrackUI();
       if(periodTrackIdx>=PERIOD3_SEQ.length){
         markDone('explore2','trackPeriod');
-        awardXP('trackPeriod', 10);
+        claimXP('l2-track-period', P('TASK'), 'تتبّعتَ الدورة عبر الجدول كاملة');
         revealPeriodCard();
         groupLabelsRevealed = true;
         renderPeriodicTable('ptablePatterns');
@@ -1421,7 +1433,7 @@ function handleTrackClick(el, containerEl){
     updateGroupTrackUI();
     if(groupTrackDone.size>=GROUP1_SEQ.length){
       markDone('explore2','trackGroup');
-      awardXP('trackGroup', 10);
+      claimXP('l2-track-group', P('TASK'), 'تتبّعتَ المجموعة عبر الجدول كاملة');
       revealGroupCard();
     }
   }
@@ -1479,7 +1491,7 @@ function checkMetalPrediction(idx){
     if(rightBtn) rightBtn.classList.add('correct');
   }
   const fb = wrap.querySelector('.fb');
-  if(correct){ fb.textContent='إجابة صحيحة ✓ لاحظ التصنيف الحقيقي على الجدول أعلاه الآن.'; sndSuccess(); awardXP('predictMetal',6); }
+  if(correct){ fb.textContent='إجابة صحيحة ✓ لاحظ التصنيف الحقيقي على الجدول أعلاه الآن.'; sndSuccess(); claimXP('l2-predict-metal', P('PREDICT'), 'سجّلتَ توقّعك قبل الكشف'); }
   else { fb.textContent='الإجابة الصحيحة موضّحة بالتحديد الأخضر — قارنها بالتصنيف الحقيقي الذي ظهر على الجدول أعلاه.'; sndError(); }
   markDone('explore1','predict');
   revealClassification();
@@ -1600,7 +1612,7 @@ function checkBuilderConfirm(){
     fb.innerHTML = 'أحسنت! التوزيع الإلكتروني الصحيح لذرّة '+el.name+': <b dir="ltr">'+config+'</b> — استخدمتَ <b dir="ltr">'+shellsUsed+'</b> مستويات طاقة، وهذا العنصر يقع في الدورة <b dir="ltr">'+el.period+'</b> 👀';
     fb.className = 'fb fb-correct';
     builtSet.add(builderState.z);
-    awardXP('build-'+builderState.z, 5);
+    claimXP('l2-build-'+builderState.z, P('PRODUCE'), 'بنيتَ التوزيع الإلكتروني بنفسك');
     if(builtSet.size>=3){
       markDone('explore3','build');
       const afterBuild = document.getElementById('explore3AfterBuild');
@@ -1641,7 +1653,7 @@ function checkGroupPattern(){
   if(li===correct && na===correct){
     fb.textContent='صحيح! كلاهما إلكترون واحد في المستوى الأخير — لأنّهما في نفس المجموعة (1)، رغم اختلاف عدد المستويات الكلي بينهما.';
     fb.className='fb fb-correct';
-    sndSuccess(); awardXP('groupPattern',10); markDone('explore3','groupPattern');
+    sndSuccess(); claimXP('l2-pattern-group', P('PATTERN'), 'استنتجتَ نمط المجموعة'); markDone('explore3','groupPattern');
     checkGroupPeriodSynthesis();
   } else {
     fb.textContent='أحد الرقمين غير دقيق — عد إلى رسمي الذرّتين أعلاه، وركّز على المستوى الأبعد عن النواة فقط.';
@@ -1675,7 +1687,7 @@ function checkPeriodPattern(){
   if(na===correct && cl===correct){
     fb.textContent='صحيح! كلاهما 3 مستويات طاقة — لأنّهما في نفس الدورة (3)، رغم اختلاف عدد إلكترونات مستواهما الأخير.';
     fb.className='fb fb-correct';
-    sndSuccess(); awardXP('periodPattern',10); markDone('explore3','periodPattern');
+    sndSuccess(); claimXP('l2-pattern-period', P('PATTERN'), 'استنتجتَ نمط الدورة'); markDone('explore3','periodPattern');
     checkGroupPeriodSynthesis();
   } else {
     fb.textContent='أحد الرقمين غير دقيق — عد إلى رسمي الذرّتين أعلاه، وعُدّ كل الحلقات لا الحلقة الأخيرة فقط.';
@@ -1763,7 +1775,7 @@ function selectMatchCard(btn, sym, type){
     matchSelected = null;
     matchMatchedCount++;
     sndSuccess();
-    awardXP('matchGame-'+sym, 5);
+    claimXP('l2-match-'+sym, P('MATCH'), 'مطابقة صحيحة');
     if(matchMatchedCount>=MATCH_GAME_SYMS.length){
       markDone('explore3','matchGame');
       const fb=document.getElementById('fb-matchGame');
@@ -1835,7 +1847,8 @@ function checkChallenge(id){
   if(countVal===ch.count && signEl && signEl.value===ch.sign){
     fb.textContent='أحسنت! إجابة صحيحة ✓'; fb.className='fb fb-correct';
     sndSuccess();
-    awardXP(id, ch.isBonus?8:6);
+    claimXP('l2-'+id, ch.isBonus ? P('BONUS') : P('PRODUCE'),
+            ch.isBonus ? 'أنجزتَ تحديًا إثرائيًا' : 'حدّدتَ شحنة الأيون بنفسك');
     if(!ch.isBonus) markDone('explain3', id);
     card.classList.add('done');
   } else {
@@ -1854,7 +1867,7 @@ function updateCheckinSummaryIfComplete(){
   if(c.tq1 && c.tq2 && c.tq3){
     const summary=document.getElementById('checkinSummary');
     summary.hidden=false;
-    summary.innerHTML = '<p>🎉 أحسنت! أجبت بشكل صحيح عن '+checkinCorrect+' من 3 أسئلة، ورصيدك الآن '+state.xp+' نقطة خبرة.</p>';
+    summary.innerHTML = '<p>🎉 أحسنت! أجبت بشكل صحيح عن '+checkinCorrect+' من 3 أسئلة، ورصيدك الآن '+totalXP()+' نقطة خبرة.</p>';
     sndTransition();
   }
 }
@@ -1904,7 +1917,7 @@ function selectEq3(idx){
     wrap.querySelectorAll('.mc-option').forEach(b=>b.disabled=true);
     chosen.classList.add('correct');
     sndSuccess();
-    awardXP('eq3',6);
+    claimXP('l2-eq3', P('MCQ'), 'ربطتَ الاستقرار بأقرب غاز نبيل');
     markDone('explain3','eq3');
   } else {
     chosen.disabled = true;
@@ -2024,7 +2037,7 @@ function handleValencyNumPick(btn){
     });
     fb.textContent='صحيح ✓'; fb.className='fb vd-val-fb fb-correct';
     sndSuccess();
-    awardXP('valTek_'+i+'_'+role, 6);
+    claimXP('l2-val-tek-'+i+'-'+role, P('MCQ'), 'حدّدتَ التكافؤ من موقع العنصر');
     if(st.determinedA!==null && st.determinedB!==null){ syncValencySwapRow(i); sndTransition(); }
   } else {
     fb.textContent='حاول مجددًا — هل هذه الذرّة فلز يفقد إلكترونات، أم لا فلز يحتاج الوصول لثمانية؟';
@@ -2072,7 +2085,7 @@ function onValencySlotInput(e){
     setTimeout(()=>inp.classList.remove('vd-pop'),400);
     if(slotId==='A') st.slotADone=true; else st.slotBDone=true;
     sndSuccess();
-    awardXP('valSwap_'+i+'_'+slotId, 6);
+    claimXP('l2-val-swap-'+i+'-'+slotId, P('PRODUCE'), 'طبّقتَ التبديل المتقاطع');
     if(st.slotADone && st.slotBDone){
       st.subA = st.determinedB;
       st.subB = st.determinedA;
@@ -2119,7 +2132,7 @@ function handleValencySimplifyAnswer(btn){
     st.simplifyAnswered=true;
     document.querySelectorAll('#valencyDivArea .pill-btn').forEach(b=>b.disabled=true);
     sndSuccess();
-    awardXP('valDiv_'+i, 6);
+    claimXP('l2-val-div-'+i, P('MCQ'), 'حكمتَ على إمكانية التبسيط');
     if(correctAnswer==='ممكنة'){
       hintEl.textContent='صحيح — اضغط بطاقة القسمة لتبسيط الصيغة.';
       hintEl.className='fb vd-hint fb-correct';
@@ -2187,7 +2200,7 @@ function checkValencyFormulaInput(btn){
   const val = normFormula(input.value);
   if(val===target){
     sndSuccess();
-    awardXP('valFormula_'+i, 10);
+    claimXP('l2-val-formula-'+i, P('PRODUCE'), 'كتبتَ الصيغة الكيميائية كاملة');
     finalizeValencyCompound(i);
   } else {
     const fb = document.getElementById('valencyFormulaFb'+i);
@@ -2273,7 +2286,7 @@ function submitShortAnswer(id, station, key){
   fb.className = 'fb '+(correct?'fb-correct':'fb-wrong');
   input.disabled = true;
   input.nextElementSibling.disabled = true;
-  if(correct){ sndSuccess(); finalEvalCorrect++; awardXP(id,6); } else { sndError(); }
+  if(correct){ sndSuccess(); finalEvalCorrect++; } else { sndError(); }
   markDone(station,key);
   checkEvaluateComplete();
 }
@@ -2336,6 +2349,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 </script>
 
 <!-- وحدة الشهادة المشتركة — تحقن نفسها تلقائيًا (الأنماط، بنية الشهادة، والزر) -->
+<script src="../../shared/xp-system/xp.js"></script>
 <script src="../../shared/certificate-system/certificate.js"></script>
 <script src="../../shared/identity/footer.js"></script>
 </body>
