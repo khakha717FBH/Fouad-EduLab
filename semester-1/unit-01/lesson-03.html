@@ -314,6 +314,165 @@
   }
   #peerCorrectStep{margin-top:18px;}
   .peer-input{text-align:right;}
+
+  /* ============ محطة 3: الشريط النموذجي المجرّد ============
+     نموذج بصري بلا أسماء عناصر، تُضاء لوحته رقم N لحظة نجاح الخانة
+     رقم N. الطالب يبني النموذج بيده بدل أن يُعطى له جاهزًا.
+
+     قرار مقصود (يوليو 2026): النقطة على حافة الدائرة في اللوحة الأولى
+     تمثّل الإلكترون الخارجي. هذا تمهيد بصري لطريقة النقاط والصلبان
+     في المحطة القادمة — استثناء واعٍ لقاعدة "لا يظهر مفهوم قبل محطته"،
+     مبرّره أنه تمثيل لما شاهده الطالب متحرّكًا في المحطة الثانية،
+     لا مفهوم جديد. */
+  #modelStrip{
+    margin:22px 0 4px;
+    width:100%;
+  }
+  #modelStrip svg{
+    width:100%;
+    height:auto;
+    display:block;
+  }
+  .mp-atom{
+    fill:none;
+    stroke:var(--ink-dim);
+    stroke-width:1.2;
+    opacity:.22;
+    transition:opacity .45s ease, stroke .45s ease;
+  }
+  .mp.on .mp-atom{opacity:1;}
+  .mp-num{
+    fill:var(--ink-dim);
+    font-size:12px;
+    font-weight:700;
+    opacity:.45;
+    transition:opacity .45s ease;
+  }
+  .mp.on .mp-num{opacity:1; fill:var(--turquoise);}
+  /* كل ما يحمل معنى مفاهيميًا يبقى غير مرئي حتى تُضاء لوحته —
+     فلا يقرأ الطالب خطوة لم يرتّبها بعد */
+  .mp-mark, .mp-cap{
+    opacity:0;
+    transition:opacity .45s ease;
+  }
+  .mp.on .mp-mark, .mp.on .mp-cap{opacity:1;}
+  .mp-cap{
+    fill:var(--ink-dim);
+    font-size:11.5px;
+    font-weight:600;
+  }
+  .mp-e{fill:var(--turquoise);}
+  .mp-e-gap{fill:none; stroke:var(--ink-dim); stroke-width:1; stroke-dasharray:2 2;}
+  .mp-pos{stroke:var(--turquoise); fill:none; stroke-width:1.6;}
+  .mp-neg{stroke:var(--coral); fill:none; stroke-width:1.6;}
+  .mp-sign-pos{fill:var(--turquoise); font-size:15px; font-weight:800;}
+  .mp-sign-neg{fill:var(--coral); font-size:15px; font-weight:800;}
+  .mp-arrow{stroke:var(--turquoise); stroke-width:1.2; fill:none;}
+  .mp-pull{stroke:var(--ink-dim); stroke-width:1.2; fill:none;}
+  @media (prefers-reduced-motion: reduce){
+    .mp-atom, .mp-mark, .mp-cap, .mp-num{transition:none;}
+  }
+
+  /* ============ محطة 3: بطاقة المصطلحات عند الطلب ============
+     التعريفات لم تُحذف، بل خرجت من مسار القراءة الإجباري. من بناها
+     بنفسه في المحطة الثانية لا يحتاج قراءتها؛ ومن احتاجها يفتحها.
+     تمايز داخل الواجهة الواحدة لا نسخة مبسّطة. */
+  .terms-box{
+    margin:18px 0 4px;
+    border:1px solid var(--turquoise-soft);
+    border-radius:14px;
+    background:var(--turquoise-faint);
+    padding:0 16px;
+  }
+  .terms-box > summary{
+    cursor:pointer;
+    list-style:none;
+    padding:12px 0;
+    color:var(--turquoise);
+    font-weight:700;
+    font-size:.9rem;
+  }
+  .terms-box > summary::-webkit-details-marker{display:none;}
+  .terms-box > summary::after{content:' ▾'; font-size:.8em;}
+  .terms-box[open] > summary::after{content:' ▴';}
+  .terms-box .facts-grid{margin:0 0 16px;}
+
+  /* ============ محطة 3: توقّع محطة 4 ============ */
+  #mgPredict{
+    margin-top:20px;
+    border-inline-start:2px solid var(--coral);
+    padding-inline-start:14px;
+  }
+  #mgPredictSaved{
+    color:var(--turquoise);
+    font-weight:700;
+    font-size:.88rem;
+  }
+  .model-answer{
+    margin-top:10px;
+    border:1px dashed var(--turquoise-soft);
+    border-radius:12px;
+    padding:12px 14px;
+    font-size:.9rem;
+    line-height:1.8;
+  }
+  /* ============ تسليم بين المحطات ============
+     يظهر فقط بعد إنجاز آخر نشاط في المحطة — لو عُرض منذ البداية
+     لصار طريقًا للتخطّي بدل جسر بين محطتين. */
+  .station-handoff{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+    margin-top:26px;
+    text-align:center;
+  }
+  .handoff-q{
+    color:var(--ink-dim);
+    font-size:clamp(13px,2.2vw,15px);
+    line-height:1.9;
+    max-width:52ch;
+    margin:0;
+  }
+  .pill-link{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    border:1.5px solid var(--turquoise);
+    color:var(--turquoise);
+    background:transparent;
+    border-radius:999px;
+    padding:10px 26px;
+    font-family:inherit;
+    font-weight:700;
+    font-size:.9rem;
+    text-decoration:none;
+    cursor:pointer;
+    transition:background .25s ease, color .25s ease, box-shadow .25s ease;
+  }
+  .pill-link:hover{
+    background:var(--turquoise);
+    color:var(--navy-dark);
+    box-shadow:0 0 16px var(--turquoise-soft);
+  }
+  .pill-link:focus-visible{outline:2px solid var(--coral); outline-offset:3px;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .pill-link{transition:none;}
+  }
+
+  .link-btn{
+    background:none;
+    border:none;
+    color:var(--ink-dim);
+    text-decoration:underline;
+    cursor:pointer;
+    font-family:inherit;
+    font-size:.84rem;
+    padding:6px 0;
+  }
+  .link-btn:hover{color:var(--turquoise);}
 </style>
 </head>
 <body>
@@ -383,6 +542,10 @@
     </div>
     <p id="engagePredictFeedback" hidden>سجّلت موقفك! تابع إلى المحطة التالية لتتحقّق بنفسك، إلكترونًا بإلكترون 👇</p>
     <div id="engageSuccessTag" class="success-tag">✓ تحدٍّ مكتمل</div>
+    <!-- النصّ أعلاه كان يعد بسهم إلى أسفل بلا وجهة — هذا هو الزرّ الناقص -->
+    <div id="engageHandoff" class="station-handoff" hidden>
+      <a class="pill-link" href="#station-2">تابع إلى الاستكشاف ↓</a>
+    </div>
   </section>
 
   <!-- ===================== محطة 2: استكشاف (نقل الإلكترون) ===================== -->
@@ -492,6 +655,16 @@
         <p class="explore-feedback" id="explore-feedback-9" hidden></p>
       </div>
 
+      <!-- ===== تسليم المحطة الثانية =====
+           المعرّف explore-10 مقصود: محرّك التسلسل يستدعي showStep(n+1)
+           بعد كل إجابة صحيحة، فيكشف هذه الكتلة تلقائيًا بعد السؤال
+           التاسع بلا سطر منطق إضافي. لا نقاط هنا — لا إنتاج فيه. -->
+      <div id="explore-10" class="station-handoff" hidden>
+        <div class="success-tag show">✓ أكملتَ الاستكشاف</div>
+        <p class="handoff-q">شاهدتَ ما حدث بين ذرّتين بعينهما. فهل هذا خاصّ بالصوديوم والكلور، أم قاعدة تتكرّر؟</p>
+        <a class="pill-link" href="#station-3">تابع إلى التفسير ↓</a>
+      </div>
+
     </div>
   </section>
 
@@ -501,13 +674,13 @@
     <h2>التفسير</h2>
     <p class="station-tagline">لماذا تنقل الذرّات إلكتروناتها؟</p>
 
-    <p>نقلتَ إلكترونًا بين ذرّتين بعينهما. لكن هل ما حدث خاصّ بالصوديوم والكلور وحدهما، أم أنه قاعدة تتكرّر مع عناصر أخرى؟ رتّب ما حدث كخطوات عامّة لا تذكر اسم أي عنصر.</p>
+    <p>ما شاهدته له ترتيب سببي. رتّبه كخطوات عامّة لا تذكر اسم أي عنصر.</p>
 
-    <!-- ===== نشاط أ: ترتيب القاعدة العامة (محرّك الشرائح المشترك بـtemplate.js) =====
+    <!-- ===== جرعة 1: التعميم — ترتيب القاعدة العامة (محرّك الشرائح المشترك بـtemplate.js) =====
          الشرائح والخانات يجب أن تكون موجودة في DOM منذ التحميل (لا تُحقن
          لاحقًا) لأن المحرّك المشترك يقرأها مرّة واحدة عند التحميل. -->
     <div id="chain-activity">
-      <p class="chain-instruction">اسحب كل خطوة إلى موضعها الصحيح. <b>انتبه:</b> ليست كل الشرائح جزءًا من القاعدة.</p>
+      <p class="chain-instruction">اسحب كل خطوة إلى موضعها — أو انقر الشريحة ثم انقر مكانها. <b>انتبه:</b> ليست كل الشرائح جزءًا من القاعدة.</p>
 
       <div class="chips-pool" id="chain-pool">
         <div class="chip" data-value="تتحوّل الذرّتان إلى أيون موجب وأيون سالب">تتحوّل الذرّتان إلى أيون موجب وأيون سالب</div>
@@ -540,35 +713,114 @@
       </div>
     </div>
 
-    <!-- ===== الكشف: لا يظهر إلا بعد اكتمال الترتيب (تسمية علمية لما اكتشفه الطالب) ===== -->
+    <!-- ===== النموذج المجرّد: يُبنى لوحةً لوحةً مع كل خطوة ينجح الطالب في ترتيبها =====
+         بلا أسماء عناصر بقصد: هدف المحطة التجريد من الحالة الخاصة (صوديوم/كلور)،
+         وأي رسم باسم عنصر يعيد الطالب إليها ويهدم التعميم.
+
+         الاتجاه من اليسار لليمين، والذرّة التي تفقد (فتصير أيونًا موجبًا) على
+         اليسار دائمًا — مطابقةً للرسم المتحرّك في المحطة الثانية (الصوديوم
+         يسارًا والكلور يمينًا) ولترتيب كتابة الصيغة NaCl. قاعدة المنصة:
+         الرسوم من اليسار لليمين حتى داخل صفحة RTL. -->
+    <div id="modelStrip" aria-label="نموذج مجرّد لخطوات تكوّن الرابطة الأيونية، يُبنى مع ترتيبك">
+      <svg viewBox="0 0 680 190" role="img" xmlns="http://www.w3.org/2000/svg">
+        <title>النموذج المجرّد للرابطة الأيونية</title>
+        <desc>أربع لوحات: ذرّة تفقد وذرّة تحتاج، ثم انتقال كامل للإلكترون، ثم أيون موجب وأيون سالب، ثم تجاذب بينهما. تُضاء كل لوحة عند ترتيب خطوتها.</desc>
+
+        <g class="mp" id="mp-1">
+          <circle class="mp-atom" cx="87" cy="76" r="24"/>
+          <circle class="mp-atom" cx="152" cy="76" r="24"/>
+          <g class="mp-mark">
+            <circle class="mp-e" cx="87" cy="48" r="4.5"/>
+            <circle class="mp-e-gap" cx="152" cy="48" r="4.5"/>
+          </g>
+          <text class="mp-cap" x="119" y="130" text-anchor="middle">ذرّة تفقد وأخرى تحتاج</text>
+          <text class="mp-num" x="119" y="160" text-anchor="middle">1</text>
+        </g>
+
+        <g class="mp" id="mp-2">
+          <circle class="mp-atom" cx="240" cy="76" r="24"/>
+          <circle class="mp-atom" cx="305" cy="76" r="24"/>
+          <g class="mp-mark">
+            <circle class="mp-e" cx="272" cy="48" r="4.5"/>
+            <path class="mp-arrow" d="M248 48 L297 48"/>
+            <path class="mp-arrow" d="M291 43 L297 48 L291 53"/>
+          </g>
+          <text class="mp-cap" x="272" y="130" text-anchor="middle">انتقال كامل</text>
+          <text class="mp-num" x="272" y="160" text-anchor="middle">2</text>
+        </g>
+
+        <g class="mp" id="mp-3">
+          <circle class="mp-atom" cx="400" cy="76" r="24"/>
+          <circle class="mp-atom" cx="465" cy="76" r="24"/>
+          <g class="mp-mark">
+            <circle class="mp-pos" cx="400" cy="76" r="24"/>
+            <circle class="mp-neg" cx="465" cy="76" r="24"/>
+            <text class="mp-sign-pos" x="400" y="82" text-anchor="middle">+</text>
+            <text class="mp-sign-neg" x="465" y="82" text-anchor="middle">−</text>
+          </g>
+          <text class="mp-cap" x="432" y="130" text-anchor="middle">أيونان متضادّان</text>
+          <text class="mp-num" x="432" y="160" text-anchor="middle">3</text>
+        </g>
+
+        <g class="mp" id="mp-4">
+          <circle class="mp-atom" cx="560" cy="76" r="24"/>
+          <circle class="mp-atom" cx="625" cy="76" r="24"/>
+          <g class="mp-mark">
+            <circle class="mp-pos" cx="560" cy="76" r="24"/>
+            <circle class="mp-neg" cx="625" cy="76" r="24"/>
+            <text class="mp-sign-pos" x="560" y="82" text-anchor="middle">+</text>
+            <text class="mp-sign-neg" x="625" y="82" text-anchor="middle">−</text>
+            <path class="mp-pull" d="M534 40 L578 40"/>
+            <path class="mp-pull" d="M572 35 L578 40 L572 45"/>
+            <path class="mp-pull" d="M651 40 L607 40"/>
+            <path class="mp-pull" d="M613 35 L607 40 L613 45"/>
+          </g>
+          <text class="mp-cap" x="592" y="130" text-anchor="middle">تجاذب</text>
+          <text class="mp-num" x="592" y="160" text-anchor="middle">4</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- ===== الكشف: لا يظهر إلا بعد اكتمال الترتيب ===== -->
     <div id="explainReveal" hidden>
-      <div class="reveal-tag">✓ هذه هي القاعدة — وهذه أسماؤها العلمية</div>
+      <div class="reveal-tag">✓ هذا ما بنيته — واسمه العلمي الرابطة الأيونية</div>
 
-      <p>ما رتّبتَه للتو ينطبق على أي زوج عناصر لا على الصوديوم والكلور وحدهما. والسبب أن غالبية الذرّات تميل إلى توزيع إلكتروني يشبه أقرب غاز نبيل لها، بامتلاك 8 إلكترونات في مستوى الطاقة الأخير — وتُعرف هذه الميول باسم <b>قاعدة الثمانية</b>. لتحقيق ذلك، تفقد بعض الذرّات إلكتروناتها الخارجية القليلة، بينما تكتسب ذرّات أخرى ما ينقصها.</p>
+      <p>ما رتّبتَه ينطبق على أي زوج عناصر، لا على الصوديوم والكلور وحدهما.</p>
 
-      <div class="facts-grid">
-        <div class="fact-card">
-          <div class="term">قاعدة الثمانية</div>
-          <p>ميل ذرّات العناصر للوصول إلى توزيع إلكتروني مشابه لأقرب غاز نبيل، غالبًا بامتلاك 8 إلكترونات في المستوى الأخير.</p>
+      <!-- ===== جرعة 2: الدافع — لماذا تنتقل الإلكترونات أصلًا؟ ===== -->
+      <p>لكن لماذا تفقد ذرّة وتكتسب أخرى أصلًا؟ لأن الذرّات تميل إلى توزيع إلكتروني يشبه أقرب غاز نبيل لها — غالبًا بامتلاك 8 إلكترونات في المستوى الأخير. تُعرف هذه الميول باسم <b>قاعدة الثمانية</b>.</p>
+
+      <div id="octet-check">
+        <p class="explore-q">في ذرّة الكبريت 6 إلكترونات في المستوى الأخير. للوصول إلى 8، أيّهما أسهل عليها؟</p>
+        <div class="quiz-options" id="octetOptions">
+          <label class="quiz-option"><input type="radio" name="octet" value="lose">أن تفقد إلكتروناتها الستّة</label>
+          <label class="quiz-option"><input type="radio" name="octet" value="share">أن تتشارك إلكتروناتها مع ذرّة أخرى</label>
+          <label class="quiz-option"><input type="radio" name="octet" value="correct">أن تكتسب إلكترونين</label>
         </div>
-        <div class="fact-card">
-          <div class="term">أيون موجب</div>
-          <p>ذرّة فقدت إلكترونًا واحدًا أو أكثر، فأصبح عدد بروتوناتها أكبر من عدد إلكتروناتها — كما حدث مع ذرّة الصوديوم.</p>
-        </div>
-        <div class="fact-card">
-          <div class="term">أيون سالب</div>
-          <p>ذرّة اكتسبت إلكترونًا واحدًا أو أكثر، فأصبح عدد إلكتروناتها أكبر من عدد بروتوناتها — كما حدث مع ذرّة الكلور.</p>
-        </div>
-        <div class="fact-card">
-          <div class="term">الرابطة الأيونية</div>
-          <p>تجاذب كهروستاتيكي ينشأ بين أيون موجب وأيون سالب بعد نقل كامل للإلكترون بينهما — وليست خيطًا ماديًا، وليست مشاركة للإلكترونات.</p>
-        </div>
+        <p class="explore-feedback" id="octetFeedback" hidden></p>
       </div>
 
-      <p>بهذا، تحوّلت ذرّة الصوديوم المتعادلة إلى أيون موجب <span dir="ltr">(Na⁺)</span>، وذرّة الكلور المتعادلة إلى أيون سالب <span dir="ltr">(Cl⁻)</span> — وتجاذب الأيونان المتضادّان في الشحنة، مكوّنَين معًا الرابطة الأيونية التي شاهدتها.</p>
+      <!-- التعريفات عند الطلب لا في مسار القراءة الإجباري -->
+      <details class="terms-box">
+        <summary>المصطلحات — افتحها إن احتجتها</summary>
+        <div class="facts-grid">
+          <div class="fact-card">
+            <div class="term">أيون موجب</div>
+            <p>ذرّة فقدت إلكترونًا واحدًا أو أكثر، فصار عدد بروتوناتها أكبر من عدد إلكتروناتها.</p>
+          </div>
+          <div class="fact-card">
+            <div class="term">أيون سالب</div>
+            <p>ذرّة اكتسبت إلكترونًا واحدًا أو أكثر، فصار عدد إلكتروناتها أكبر من عدد بروتوناتها.</p>
+          </div>
+          <div class="fact-card">
+            <div class="term">الرابطة الأيونية</div>
+            <p>تجاذب كهروستاتيكي بين أيون موجب وأيون سالب بعد نقل كامل للإلكترون — ليست خيطًا ماديًا، وليست مشاركة.</p>
+          </div>
+        </div>
+      </details>
 
-      <!-- ===== نشاط ب: تشخيص تفسير زميل ===== -->
-      <div id="peer-activity">
+      <!-- ===== جرعة 3: الدقة — تشخيص تفسير زميل ثم تصحيحه ===== -->
+      <div id="peer-activity" hidden>
         <p class="peer-lead">قرأ زميلك ما تعلّمتَه، ثم كتب هذا التفسير. جملة واحدة منه فقط خاطئة — أيّها؟</p>
 
         <div class="peer-card">
@@ -591,13 +843,22 @@
             <button type="button" class="btn" id="peerCorrectCheck">تحقّق</button>
           </div>
           <p class="explore-feedback" id="peerCorrectFeedback" hidden></p>
+          <!-- مخرج نجاة: لا يُترك الطالب في حلقة تلميحات مغلقة -->
+          <button type="button" class="link-btn" id="peerShowModel" hidden>أرني إجابة نموذجية</button>
+          <div class="model-answer" id="peerModelAnswer" hidden></div>
         </div>
       </div>
 
+      <!-- ===== بذرة المحطة القادمة: تنبّؤ مفتوح لا يُكشف هنا ===== -->
       <div id="station3Closing" hidden>
-        <p>لكن هل يقتصر الأمر على ذرّتين فقط تلتقيان وتنفصلان عن بقية المادة؟ 👀 ستكتشف الإجابة في محطة قادمة.</p>
-
-        <p>والآن، ماذا لو كان العنصر الآخر يحتاج أكثر من إلكترون واحد ليصل للاستقرار؟ في المحطة القادمة ستبني بنفسك رابطات أيونية جديدة، تبدأ بسيطة كهذه، ثم تزداد تعقيدًا تدريجيًا.</p>
+        <div id="mgPredict">
+          <p class="explore-q">ذرّة المغنيسيوم تفقد إلكترونين لا واحدًا. برأيك، كم ذرّة كلور تحتاج لتستقبلهما؟</p>
+          <div class="explore-answer-row">
+            <input type="text" autocomplete="off" class="explore-input" id="mgPredictInput" aria-label="توقّعك">
+            <button type="button" class="btn" id="mgPredictSave">احفظ توقّعي</button>
+          </div>
+          <p id="mgPredictSaved" hidden>✓ حُفظ توقّعك. ستتحقّق منه بنفسك في المحطة القادمة.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -628,6 +889,8 @@
       feedback.hidden = false;
       if(window.Sounds) window.Sounds.playChime();
       if(badge) badge.classList.add('show');
+      var handoff = document.getElementById('engageHandoff');
+      if(handoff) handoff.hidden = false;
       if(window.XP) window.XP.claim('l3-engage-predict', window.XP.POINTS.PREDICT,
                                     'سجّلتَ توقّعك قبل الاستكشاف');
     }, { once: true });
@@ -940,19 +1203,20 @@
 
 <script>
 /* ==========================================================
-   منطق محطة 3 فقط (التفسير) — تنظيم وصياغة لا اكتشاف جديد.
+   محطة 3 — منطق التفسير
+   ----------------------------------------------------------
+   بنية "الجرعات" (يوليو 2026): المحطة كانت تحمل أربعة أهداف
+   تعليمية في شاشة واحدة، و200 كلمة شرح تصل الطالب مباشرة بعد
+   تسعة أسئلة متتابعة في المحطة الثانية — أي أثقل جرعة قراءة
+   في أضعف لحظة انتباه. أُعيدت إلى ثلاث جرعات، لكل واحدة هدف
+   واحد وتفاعل يفتح ما بعده:
 
-   نشاط أ (ترتيب القاعدة العامة) يعتمد كليًا على محرّك السحب
-   والإفلات المشترك في template.js: هو من يطابق الشريحة بالخانة،
-   ويشغّل الصوت، ويمنح النقاط عبر data-xp-id و data-xp-reason
-   المثبّتين في HTML. لا يُعاد بناء أي من ذلك هنا. وظيفة هذا
-   السكربت ثلاثة أشياء فقط:
-     1) مراقبة اكتمال الخانات الأربع لكشف كتلة التفسير بعدها
-        (قاعدة المنصة: التفسير بعد المحاولة لا قبلها).
-     2) تحويل المشتّتين من طريق مسدود إلى تلميح سقراطي بصيغة
-        سؤال — بلا تقرير الإجابة، فالخطأ نفسه موضوع نشاط ب.
-     3) تشغيل نشاط ب (تشخيص جملة الزميل الخاطئة ثم تصحيحها
-        كتابةً بإنتاج حرّ).
+     1) التعميم   — ترتيب القاعدة (يفتح الكشف)
+     2) الدافع    — قاعدة الثمانية + سؤال تحقّق (يفتح التشخيص)
+     3) الدقة     — تشخيص خطأ الزميل ثم تصحيحه (يفتح التوقّع)
+
+   ويرافق الجرعة الأولى نموذج بصري مجرّد تُضاء لوحته رقم N عند
+   نجاح الخانة رقم N — فيبنيه الطالب بيده بدل أن يُعطى له.
 
    المراقبة تتم بـ MutationObserver على صنف الخانة لا بالاستماع
    لأحداث المؤشّر — فلا يعتمد السلوك على ترتيب تسجيل المستمعين
@@ -961,14 +1225,34 @@
 (function(){
   "use strict";
 
-  /* ---------- 1) كشف كتلة التفسير بعد اكتمال الترتيب ---------- */
+  function prefersReducedMotion(){
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+  function claim(id, points, reason){
+    if(window.XP && window.XP.claim) window.XP.claim(id, points, reason);
+  }
+  function pts(name, fallback){
+    return (window.XP && window.XP.POINTS && window.XP.POINTS[name]) || fallback;
+  }
+
+  /* ---------- 1) الجرعة الأولى: الترتيب، النموذج، الكشف ---------- */
   var chainSlots = Array.prototype.slice.call(
     document.querySelectorAll('#chain-activity .chain-slot')
   );
   var reveal = document.getElementById('explainReveal');
   var revealed = false;
 
+  // إضاءة لوحة النموذج المقابلة لكل خانة نجحت
+  function syncModelStrip(){
+    chainSlots.forEach(function(slot, i){
+      if(!slot.classList.contains('correct')) return;
+      var panel = document.getElementById('mp-' + (i + 1));
+      if(panel && !panel.classList.contains('on')) panel.classList.add('on');
+    });
+  }
+
   function checkChainComplete(){
+    syncModelStrip();
     if(revealed) return;
     var done = chainSlots.every(function(s){ return s.classList.contains('correct'); });
     if(!done) return;
@@ -980,18 +1264,12 @@
     }
   }
 
-  function prefersReducedMotion(){
-    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  }
-
   if(chainSlots.length && reveal && typeof MutationObserver !== 'undefined'){
     var slotObserver = new MutationObserver(checkChainComplete);
     chainSlots.forEach(function(s){
       slotObserver.observe(s, { attributes: true, attributeFilter: ['class'] });
     });
   }
-  // احتياط: إن كانت الخانات مكتملة أصلًا (لا يحدث عمليًا لأن الخانات
-  // لا تُستعاد بعد إعادة التحميل، لكنه يحمي من أي تغيير مستقبلي)
   checkChainComplete();
 
   /* ---------- 2) تلميح المشتّتين ---------- */
@@ -1005,7 +1283,8 @@
     var chip = document.getElementById(id);
     if(!chip || !chainHint || typeof MutationObserver === 'undefined') return;
     var obs = new MutationObserver(function(){
-      // المحرّك المشترك يضيف صنف shake عند محاولة إفلات غير مطابقة
+      // المحرّك المشترك يضيف صنف shake عند محاولة إفلات غير مطابقة،
+      // في مسار السحب ومسار النقر معًا
       if(chip.classList.contains('shake')){
         chainHint.textContent = '💡 ' + DISTRACTOR_HINTS[id];
         chainHint.hidden = false;
@@ -1014,7 +1293,42 @@
     obs.observe(chip, { attributes: true, attributeFilter: ['class'] });
   });
 
-  /* ---------- 3) نشاط ب: تشخيص جملة الزميل ---------- */
+  /* ---------- 3) الجرعة الثانية: قاعدة الثمانية ----------
+     الكبريت لا الليثيوم بقصد: الليثيوم يستقرّ بإلكترونين (توزيع
+     الهيليوم) لا بثمانية، فسؤاله يناقض النصّ الذي قرأه الطالب
+     للتوّ. الكبريت يكسب إلكترونين ليكمل ثمانية — مطابق للقاعدة،
+     ويُظهر "أكثر من إلكترون واحد" في جهة الاكتساب، فلا يستبق
+     توقّع المغنيسيوم في جهة الفقد. */
+  var octetGroup = document.getElementById('octetOptions');
+  var octetFeedback = document.getElementById('octetFeedback');
+  var peerActivity = document.getElementById('peer-activity');
+
+  var OCTET_HINTS = {
+    lose:  'أعِد الحساب: فقدُ ستّة إلكترونات أم اكتسابُ اثنين — أيّهما أقلّ جهدًا على الذرّة؟',
+    share: 'المشاركة نوع آخر من الترابط ستدرسه لاحقًا. هنا الذرّات تنقل الإلكترونات نقلًا كاملًا — فكم تحتاج الكبريت لتكمل ثمانية؟'
+  };
+
+  if(octetGroup && peerActivity){
+    octetGroup.querySelectorAll('input[type="radio"]').forEach(function(radio){
+      radio.addEventListener('change', function(){
+        octetFeedback.hidden = false;
+        if(radio.value === 'correct'){
+          radio.closest('.quiz-option').classList.add('correct');
+          octetFeedback.textContent = '✓ صحيح — 6 + 2 = 8، فاكتساب إلكترونين أقصر طريق للاستقرار.';
+          octetFeedback.className = 'explore-feedback is-correct';
+          if(window.Sounds) window.Sounds.playSnap();
+          claim('l3-octet-check', pts('MCQ', 5), 'طبّقتَ قاعدة الثمانية على عنصر جديد');
+          peerActivity.hidden = false;
+        } else {
+          octetFeedback.textContent = '💡 ' + OCTET_HINTS[radio.value];
+          octetFeedback.className = 'explore-feedback is-hint';
+          if(window.Sounds) window.Sounds.playWrong();
+        }
+      });
+    });
+  }
+
+  /* ---------- 4) الجرعة الثالثة: تشخيص جملة الزميل ---------- */
   var diagGroup = document.getElementById('peerDiagnose');
   var diagFeedback = document.getElementById('peerDiagFeedback');
   var correctStep = document.getElementById('peerCorrectStep');
@@ -1033,8 +1347,7 @@
           diagFeedback.textContent = '✓ صحيح — الخطأ في الجملة الثانية.';
           diagFeedback.className = 'explore-feedback is-correct';
           if(window.Sounds) window.Sounds.playSnap();
-          if(window.XP) window.XP.claim('l3-explain-diagnose', window.XP.POINTS.MCQ,
-                                        'اكتشفتَ الخطأ في تفسير زميلك');
+          claim('l3-explain-diagnose', pts('MCQ', 5), 'اكتشفتَ الخطأ في تفسير زميلك');
           correctStep.hidden = false;
         } else {
           diagFeedback.textContent = '💡 ' + DIAG_HINTS[radio.value];
@@ -1045,8 +1358,8 @@
     });
   }
 
-  /* ---------- 4) نشاط ب: تصحيح الجملة كتابةً ---------- */
-  /* تطبيع عربي متسامح: حذف التشكيل والتطويل، وتوحيد الهمزات والألف
+  /* ---------- 5) تصحيح الجملة كتابةً ----------
+     تطبيع عربي متسامح: حذف التشكيل والتطويل، وتوحيد الهمزات والألف
      المقصورة والتاء المربوطة، وتوحيد المسافات وإزالة الترقيم — حتى
      لا تُرفض إجابة صحيحة لفرق إملائي لا يغيّر المعنى العلمي. */
   function normalizeAr(str){
@@ -1069,32 +1382,61 @@
 
   /* تُقبل الإجابة بأحد مسارين صحيحين:
      (أ) تنصّ على أن البروتونات لم تتغيّر، أو
-     (ب) تنصّ على أن عدد الإلكترونات هو الذي نقص.
-     الصياغة حرّة تمامًا؛ المطلوب وجود المفهوم لا نصّ بعينه. */
-  var PROTON_WORDS  = ['بروتون'];
-  var UNCHANGED     = ['لم يتغير','لا يتغير','لم تتغير','لا تتغير','ثابت','ثابته','كما هو','كما هي','لم يتاثر','لا يتاثر','لم ينقص'];
-  var ELECTRON_WORDS= ['الكترون'];
-  var DECREASED     = ['نقص','نقصت','قل','قلت','اقل','فقد','فقدت','خسر','خسرت','انتقل','انتقلت','غادر','غادرت','تركت','ترك','خرج','خرجت','فقدان'];
+     (ب) تنصّ على أن عدد الإلكترونات نقص أو تغيّر.
+
+     إصلاح (يوليو 2026): كانت القائمة تشترط فعل نقصان صريح، فتُرفض
+     إجابة صحيحة تمامًا مثل "فتغيّر عدد إلكتروناتها، ولذلك صارت
+     شحنتها موجبة" لأن الفعل "تغيّر" لم يكن مقبولًا. أُضيفت أفعال
+     التغيّر، مع حارس نفي يمنع قبول العكس ("لم يتغيّر عدد
+     الإلكترونات") — وهذه الجملة تبقى مرفوضة لأنها خطأ فعلي. */
+  var PROTON_WORDS   = ['بروتون'];
+  var UNCHANGED      = ['لم يتغير','لا يتغير','لم تتغير','لا تتغير','ثابت','ثابته','كما هو','كما هي','لم يتاثر','لا يتاثر','لم ينقص'];
+  var ELECTRON_WORDS = ['الكترون'];
+  var CHANGED        = ['نقص','نقصت','قل','قلت','اقل','فقد','فقدت','خسر','خسرت','انتقل','انتقلت','غادر','غادرت','تركت','ترك','خرج','خرجت','فقدان','تغير','تغيرت','يتغير','اختلف','اختلفت','تبدل','تبدلت','نقصان'];
+  var NEGATIONS      = ['لم','لا','ما','غير','ليس','لن'];
+
+  // النفي يُفحص ككلمة مستقلّة لا كجزء من كلمة: "غير" داخل "تغيّر"
+  // ليست نفيًا، وكانت تُسقط إجابات صحيحة تمامًا قبل هذا الإصلاح.
+  function hasNegationWord(text){
+    return text.split(' ').some(function(tok){ return NEGATIONS.indexOf(tok) !== -1; });
+  }
 
   function isAcceptable(raw){
     var t = normalizeAr(raw);
     if(t.length < 3) return false;
-    var protonPath   = hasAny(t, PROTON_WORDS)   && hasAny(t, UNCHANGED);
-    var electronPath = hasAny(t, ELECTRON_WORDS) && hasAny(t, DECREASED);
-    return protonPath || electronPath;
+    var protonPath = hasAny(t, PROTON_WORDS) && hasAny(t, UNCHANGED);
+    if(protonPath) return true;
+    // مسار الإلكترون يسقط إن كانت الجملة منفية، لأن "لم يتغيّر عدد
+    // الإلكترونات" عكس الصواب تمامًا
+    if(hasNegationWord(t)) return false;
+    return hasAny(t, ELECTRON_WORDS) && hasAny(t, CHANGED);
   }
 
-  var pcInput = document.getElementById('peerCorrectInput');
-  var pcBtn = document.getElementById('peerCorrectCheck');
-  var pcFeedback = document.getElementById('peerCorrectFeedback');
-  var closing = document.getElementById('station3Closing');
+  var pcInput   = document.getElementById('peerCorrectInput');
+  var pcBtn     = document.getElementById('peerCorrectCheck');
+  var pcFeedback= document.getElementById('peerCorrectFeedback');
+  var pcShow    = document.getElementById('peerShowModel');
+  var pcModel   = document.getElementById('peerModelAnswer');
+  var closing   = document.getElementById('station3Closing');
+
+  var MODEL_TEXT = 'إجابة نموذجية: «عدد البروتونات لم يتغيّر إطلاقًا؛ الذي نقص هو عدد الإلكترونات، فصار عدد البروتونات أكبر، فظهرت الشحنة الموجبة.» قارنها بما كتبت — أين اختلفتما؟';
 
   var PEER_HINTS = [
     'فكّر: ما الجسيم الذي غادر الذرّة فعلًا؟ وهل يستطيع البروتون مغادرة النواة في تفاعل كيميائي؟',
     'البروتونات في النواة والإلكترونات حولها. أيّهما تحرّك في ما شاهدته؟ وماذا صار عدده بعد الحركة؟',
     'اكتب جملة تذكر فيها الإلكترونات وما حدث لعددها بعد أن غادر أحدها الذرّة.'
   ];
-  var hintIndex = 0;
+  var attempts = 0;
+
+  function unlockClosing(){
+    if(closing) closing.hidden = false;
+  }
+
+  function lockInput(){
+    if(pcInput) pcInput.disabled = true;
+    if(pcBtn) pcBtn.disabled = true;
+    if(pcShow) pcShow.hidden = true;
+  }
 
   if(pcBtn && pcInput){
     var checkCorrection = function(){
@@ -1103,22 +1445,58 @@
       if(isAcceptable(val)){
         pcFeedback.textContent = '✓ صحيح — عدد البروتونات لم يتغيّر إطلاقًا؛ الذي نقص هو عدد الإلكترونات، فزاد عدد البروتونات عليها فظهرت الشحنة الموجبة.';
         pcFeedback.className = 'explore-feedback is-correct';
-        pcInput.disabled = true;
-        pcBtn.disabled = true;
+        lockInput();
         if(window.Sounds) window.Sounds.playSnap();
-        if(window.XP) window.XP.claim('l3-explain-correction', window.XP.POINTS.PRODUCE,
-                                      'صحّحتَ الخطأ المفاهيمي بكلماتك');
-        if(closing) closing.hidden = false;
+        claim('l3-explain-correction', pts('PRODUCE', 8), 'صحّحتَ الخطأ المفاهيمي بكلماتك');
+        unlockClosing();
       } else {
-        pcFeedback.textContent = '💡 ' + PEER_HINTS[Math.min(hintIndex, PEER_HINTS.length - 1)];
+        attempts++;
+        pcFeedback.textContent = '💡 ' + PEER_HINTS[Math.min(attempts - 1, PEER_HINTS.length - 1)];
         pcFeedback.className = 'explore-feedback is-hint';
-        hintIndex++;
         if(window.Sounds) window.Sounds.playWrong();
+        // مخرج نجاة بعد محاولتين: قاعدة منصّة عامة — لا يُحبَس طالب
+        // في حلقة تلميحات لا نهاية لها بسبب صياغة لم يتوقّعها المصحّح
+        if(attempts >= 2 && pcShow) pcShow.hidden = false;
       }
     };
     pcBtn.addEventListener('click', checkCorrection);
     pcInput.addEventListener('keydown', function(e){
       if(e.key === 'Enter'){ e.preventDefault(); checkCorrection(); }
+    });
+  }
+
+  if(pcShow && pcModel){
+    pcShow.addEventListener('click', function(){
+      pcModel.textContent = MODEL_TEXT;
+      pcModel.hidden = false;
+      if(pcFeedback) pcFeedback.hidden = true;
+      lockInput();
+      // نصف نقاط الإنتاج: راجع النموذج وقارن، ولم ينتج بنفسه
+      claim('l3-explain-correction', Math.round(pts('PRODUCE', 8) / 2), 'راجعتَ الإجابة النموذجية وقارنتها بإجابتك');
+      unlockClosing();
+    });
+  }
+
+  /* ---------- 6) بذرة المحطة القادمة ----------
+     تنبّؤ مفتوح: يُحفظ ولا يُصحَّح هنا إطلاقًا. الكشف في المحطة
+     القادمة حين يبني الطالب MgCl₂ بنفسه ويقارن بما توقّعه. */
+  var mgInput = document.getElementById('mgPredictInput');
+  var mgBtn   = document.getElementById('mgPredictSave');
+  var mgSaved = document.getElementById('mgPredictSaved');
+
+  if(mgBtn && mgInput){
+    mgBtn.addEventListener('click', function(){
+      var val = mgInput.value.trim();
+      if(!val) return;
+      try{ localStorage.setItem('l3MgPrediction', val); }catch(e){ /* تصفّح خاص */ }
+      mgInput.disabled = true;
+      mgBtn.disabled = true;
+      if(mgSaved) mgSaved.hidden = false;
+      if(window.Sounds) window.Sounds.playSnap();
+      claim('l3-mg-predict', pts('PREDICT', 3), 'سجّلتَ توقّعك قبل التحقّق منه');
+    });
+    mgInput.addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){ e.preventDefault(); mgBtn.click(); }
     });
   }
 
