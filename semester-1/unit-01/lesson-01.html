@@ -226,22 +226,22 @@
 
     <div class="particle-cards">
       <div class="particle-card">
-        <div class="slot name-slot" data-answer="البروتون">اسم الجسيم</div>
+        <div class="slot name-slot" data-answer="البروتون" data-xp-id="l1-slot-p-name" data-xp-reason="حدّدتَ اسم الجسيم">اسم الجسيم</div>
         <div class="ball ball-p">p</div>
-        <div class="prop-row">الشحنة: <span class="slot inline-slot" data-answer="موجبة">؟</span></div>
-        <div class="prop-row">الكتلة: <span class="slot inline-slot" data-answer="1">؟</span></div>
+        <div class="prop-row">الشحنة: <span class="slot inline-slot" data-answer="موجبة" data-xp-id="l1-slot-p-charge" data-xp-reason="حدّدتَ شحنة الجسيم">؟</span></div>
+        <div class="prop-row">الكتلة: <span class="slot inline-slot" data-answer="1" data-xp-id="l1-slot-p-mass" data-xp-reason="حدّدتَ كتلته النسبية">؟</span></div>
       </div>
       <div class="particle-card">
-        <div class="slot name-slot" data-answer="النيوترون">اسم الجسيم</div>
+        <div class="slot name-slot" data-answer="النيوترون" data-xp-id="l1-slot-n-name" data-xp-reason="حدّدتَ اسم الجسيم">اسم الجسيم</div>
         <div class="ball ball-n">n</div>
-        <div class="prop-row">الشحنة: <span class="slot inline-slot" data-answer="متعادلة">؟</span></div>
-        <div class="prop-row">الكتلة: <span class="slot inline-slot" data-answer="1">؟</span></div>
+        <div class="prop-row">الشحنة: <span class="slot inline-slot" data-answer="متعادلة" data-xp-id="l1-slot-n-charge" data-xp-reason="حدّدتَ شحنة الجسيم">؟</span></div>
+        <div class="prop-row">الكتلة: <span class="slot inline-slot" data-answer="1" data-xp-id="l1-slot-n-mass" data-xp-reason="حدّدتَ كتلته النسبية">؟</span></div>
       </div>
       <div class="particle-card">
-        <div class="slot name-slot" data-answer="الإلكترون">اسم الجسيم</div>
+        <div class="slot name-slot" data-answer="الإلكترون" data-xp-id="l1-slot-e-name" data-xp-reason="حدّدتَ اسم الجسيم">اسم الجسيم</div>
         <div class="ball ball-e">e</div>
-        <div class="prop-row">الشحنة: <span class="slot inline-slot" data-answer="سالبة">؟</span></div>
-        <div class="prop-row">الكتلة: <span class="slot inline-slot" data-answer="1/1836">؟</span></div>
+        <div class="prop-row">الشحنة: <span class="slot inline-slot" data-answer="سالبة" data-xp-id="l1-slot-e-charge" data-xp-reason="حدّدتَ شحنة الجسيم">؟</span></div>
+        <div class="prop-row">الكتلة: <span class="slot inline-slot" data-answer="1/1836" data-xp-id="l1-slot-e-mass" data-xp-reason="حدّدتَ كتلته النسبية">؟</span></div>
       </div>
     </div>
     <p style="font-size:13px;color:var(--ink-dim);margin-top:10px;">ملاحظة: حجوم الجسيمات غير متناسبة فعليًا؛ الإلكترون أصغر بكثير من البروتون والنيوترون.</p>
@@ -552,6 +552,8 @@
       feedback.textContent = 'إجابة صحيحة — الذرة تحتوي دائمًا على البروتونات والإلكترونات والنيوترونات مهما تغير حجمها';
       feedback.className = 'quiz-feedback correct';
       if(window.Sounds) window.Sounds.playSnap();
+      if(window.XP) window.XP.claim('l1-q1', window.XP.POINTS.MCQ,
+                                    'ميّزتَ مكوّنات الذرّة الثلاثة');
     } else {
       chosenLabel.classList.add('incorrect');
       feedback.textContent = 'حاول مرة أخرى — فكّر في مكونات الذرة الثلاثة معًا';
@@ -595,6 +597,8 @@
       feedback.textContent = 'ممتاز! الأعداد الثلاثة صحيحة';
       feedback.className = 'nuclide-feedback correct';
       if(window.Sounds) window.Sounds.playSnap();
+      if(window.XP) window.XP.claim('l1-nuclide-' + Z + '-' + A, window.XP.POINTS.PRODUCE,
+                                    'حسبتَ جسيمات الذرّة المتعادلة بنفسك');
     } else {
       feedback.textContent = 'راجع الحقول المظللة بالمرجاني وحاول مرة أخرى';
       feedback.className = 'nuclide-feedback incorrect';
@@ -641,6 +645,11 @@
         : 'صحيح! لاحظ أن البروتونات والنيوترونات لم تتغيّرا — الشحنة غيّرت عدد الإلكترونات فقط';
       feedback.className = 'nuclide-feedback correct';
       if(window.Sounds) window.Sounds.playSnap();
+      if(window.XP) window.XP.claim('l1-ion-' + Z + '-' + A + '-' + charge,
+                                    window.XP.POINTS.PRODUCE,
+                                    charge === 0
+                                      ? 'أثبتّ توازن الذرّة المتعادلة'
+                                      : 'حسبتَ جسيمات الأيون بعد تغيّر الشحنة');
     } else {
       feedback.textContent = 'راجع الحقول المظللة بالمرجاني وحاول مرة أخرى';
       feedback.className = 'nuclide-feedback incorrect';
@@ -652,6 +661,7 @@
 
 
 <script src="../../shared/sounds/sounds.js"></script>
+<script src="../../shared/xp-system/xp.js"></script>
 <script src="../../shared/faheem-widget/faheem.js"></script>
 <script src="../../shared/template-boilerplate/template.js"></script>
 </body>
