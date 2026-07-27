@@ -13,7 +13,7 @@
   الدرس 3 — مختبر فؤاد التعليمي
   "كيف تتكوّن الروابط الأيونية؟"
   ⚠️ ملف قيد البناء التدريجي: المحطات 1 (التنشيط) و2 (الاستكشاف) و3
-  (التفسير) فقط جاهزة حتى الآن، من أصل 7 محطات مخطَّطة (Engage → Explore
+  (التفسير التفاعلي) فقط جاهزة حتى الآن، من أصل 7 محطات مخطَّطة (Engage → Explore
   → Explain → Elaborate×3 → Evaluate). محطات التوسّع والتقييم لم تُبنَ
   بعد — ستُضاف لاحقًا بنفس هذا الملف.
   شهادة الإنجاز (Certificate.finish) لا تُربَط إلا عند بناء محطة
@@ -211,6 +211,109 @@
   }
   .explore-feedback.is-correct{ color:var(--turquoise); font-weight:700; }
   .explore-feedback.is-hint{ color:var(--ink-dim); }
+
+  /* ============ محطة 3 فقط: ترتيب القاعدة العامة + تشخيص تفسير الزميل ============
+     أنماط محلية لأنها بنية محتوى خاصة بهذا الدرس. المحرّك نفسه (السحب
+     والإفلات ومنح النقاط) مشترك بالكامل من template.js ولا يُعاد بناؤه هنا؛
+     ما يلي تعديلات عرض فقط فوق .chip و.slot العامّين. */
+  .chain-instruction{
+    font-size:clamp(13px,2.2vw,15px);
+    margin:18px 0 0;
+  }
+  #chain-pool .chip{
+    font-size:clamp(12px,2.1vw,13.5px);
+    padding:9px 16px;
+    max-width:100%;
+  }
+  .chain-hint{
+    color:var(--ink-dim);
+    font-size:.86rem;
+    margin:0 0 16px;
+    border-inline-start:2px solid var(--turquoise-soft);
+    padding-inline-start:12px;
+  }
+  .chain-rows{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:6px;
+  }
+  .chain-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .chain-num{
+    flex:0 0 auto;
+    width:26px; height:26px;
+    border-radius:50%;
+    border:1px solid var(--turquoise);
+    color:var(--turquoise);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:13px;
+  }
+  /* الخانة هنا سطر كامل لا كبسولة صغيرة، لأن نص الخطوة جملة لا كلمة */
+  .slot.chain-slot{
+    flex:1 1 auto;
+    min-width:0;
+    min-height:40px;
+    border-radius:14px;
+    padding:10px 16px;
+    font-size:clamp(12px,2.1vw,13.5px);
+    line-height:1.6;
+    display:flex;
+    align-items:center;
+  }
+
+  /* ===== الكشف بعد اكتمال الترتيب ===== */
+  [hidden]{display:none !important;} /* يتجاوز display:flex/grid المحلي على العناصر المخفية */
+  .reveal-tag{
+    display:inline-block;
+    margin:26px 0 4px;
+    color:var(--turquoise);
+    font-weight:700;
+    font-size:.9rem;
+  }
+
+  /* ===== نشاط ب: تفسير الزميل ===== */
+  #peer-activity{
+    margin-top:26px;
+    padding-top:20px;
+    border-top:1px dashed var(--border);
+  }
+  .peer-lead{
+    font-weight:700;
+    color:var(--ink);
+    font-size:clamp(14px,2.4vw,16px);
+    margin:0 0 12px;
+  }
+  .peer-card{
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:14px 18px;
+    margin-bottom:16px;
+  }
+  .peer-line{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    color:var(--ink-dim);
+    font-size:clamp(13px,2.2vw,15px);
+    line-height:1.9;
+  }
+  .peer-num{
+    flex:0 0 auto;
+    width:22px; height:22px;
+    margin-top:6px;
+    border-radius:50%;
+    background:rgba(20,200,168,.12);
+    color:var(--turquoise);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:12px;
+  }
+  #peerCorrectStep{margin-top:18px;}
+  .peer-input{text-align:right;}
 </style>
 </head>
 <body>
@@ -394,38 +497,109 @@
 
   <!-- ===================== محطة 3: التفسير ===================== -->
   <section class="station" id="station-3">
-    <div class="station-label">المحطة الثالثة · التفسير</div>
-    <h2>لماذا تنقل الذرّات إلكتروناتها؟</h2>
-    <p class="station-tagline">كيف تصل الذرّات إلى حالة الاستقرار؟</p>
+    <div class="station-label">المحطة الثالثة</div>
+    <h2>التفسير</h2>
+    <p class="station-tagline">لماذا تنقل الذرّات إلكتروناتها؟</p>
 
-    <p>في المحطة السابقة، نقلت بنفسك إلكترونًا من ذرّة الصوديوم إلى ذرّة الكلور. لكن لماذا فعلت الذرّتان ذلك بالتحديد؟</p>
+    <p>نقلتَ إلكترونًا بين ذرّتين بعينهما. لكن هل ما حدث خاصّ بالصوديوم والكلور وحدهما، أم أنه قاعدة تتكرّر مع عناصر أخرى؟ رتّب ما حدث كخطوات عامّة لا تذكر اسم أي عنصر.</p>
 
-    <p>تميل غالبية ذرّات العناصر إلى الوصول لحالة استقرار تُشبه أقرب غاز نبيل لها، بامتلاك 8 إلكترونات في مستوى الطاقة الأخير — تُعرف هذه الميول باسم <b>قاعدة الثمانية</b>. لتحقيق ذلك، تفقد بعض الذرّات إلكتروناتها الخارجية القليلة، بينما تكتسب ذرّات أخرى الإلكترونات التي تنقصها.</p>
+    <!-- ===== نشاط أ: ترتيب القاعدة العامة (محرّك الشرائح المشترك بـtemplate.js) =====
+         الشرائح والخانات يجب أن تكون موجودة في DOM منذ التحميل (لا تُحقن
+         لاحقًا) لأن المحرّك المشترك يقرأها مرّة واحدة عند التحميل. -->
+    <div id="chain-activity">
+      <p class="chain-instruction">اسحب كل خطوة إلى موضعها الصحيح. <b>انتبه:</b> ليست كل الشرائح جزءًا من القاعدة.</p>
 
-    <div class="facts-grid">
-      <div class="fact-card">
-        <div class="term">قاعدة الثمانية</div>
-        <p>ميل ذرّات العناصر للوصول إلى توزيع إلكتروني مشابه لأقرب غاز نبيل، غالبًا بامتلاك 8 إلكترونات في المستوى الأخير.</p>
+      <div class="chips-pool" id="chain-pool">
+        <div class="chip" data-value="تتحوّل الذرّتان إلى أيون موجب وأيون سالب">تتحوّل الذرّتان إلى أيون موجب وأيون سالب</div>
+        <div class="chip" id="chip-share" data-value="تتشارك الذرّتان الإلكترونات">تتشارك الذرّتان الإلكترونات</div>
+        <div class="chip" data-value="ذرّة تفقد إلكتروناتها بسهولة تلتقي ذرّة تحتاجها">ذرّة تفقد إلكتروناتها بسهولة تلتقي ذرّة تحتاجها</div>
+        <div class="chip" data-value="ينشأ تجاذب بين الشحنتين المتضادّتين">ينشأ تجاذب بين الشحنتين المتضادّتين</div>
+        <div class="chip" id="chip-proton" data-value="يتغيّر عدد البروتونات">يتغيّر عدد البروتونات</div>
+        <div class="chip" data-value="تنتقل الإلكترونات انتقالًا كاملًا">تنتقل الإلكترونات انتقالًا كاملًا</div>
       </div>
-      <div class="fact-card">
-        <div class="term">أيون موجب</div>
-        <p>ذرّة فقدت إلكترونًا واحدًا أو أكثر، فأصبح عدد بروتوناتها أكبر من عدد إلكتروناتها — كما حدث مع ذرّة الصوديوم.</p>
-      </div>
-      <div class="fact-card">
-        <div class="term">أيون سالب</div>
-        <p>ذرّة اكتسبت إلكترونًا واحدًا أو أكثر، فأصبح عدد إلكتروناتها أكبر من عدد بروتوناتها — كما حدث مع ذرّة الكلور.</p>
-      </div>
-      <div class="fact-card">
-        <div class="term">الرابطة الأيونية</div>
-        <p>تجاذب كهروستاتيكي ينشأ بين أيون موجب وأيون سالب بعد نقل كامل للإلكترون بينهما — وليست خيطًا ماديًا، وليست مشاركة للإلكترونات.</p>
+
+      <p class="chain-hint" id="chainHint" hidden></p>
+
+      <div class="chain-rows">
+        <div class="chain-row">
+          <span class="chain-num">1</span>
+          <span class="slot chain-slot" data-xp-id="l3-chain-1" data-xp-reason="حدّدتَ نقطة بداية القاعدة" data-answer="ذرّة تفقد إلكتروناتها بسهولة تلتقي ذرّة تحتاجها">الخطوة الأولى</span>
+        </div>
+        <div class="chain-row">
+          <span class="chain-num">2</span>
+          <span class="slot chain-slot" data-xp-id="l3-chain-2" data-xp-reason="رتّبتَ خطوة الانتقال الكامل" data-answer="تنتقل الإلكترونات انتقالًا كاملًا">الخطوة الثانية</span>
+        </div>
+        <div class="chain-row">
+          <span class="chain-num">3</span>
+          <span class="slot chain-slot" data-xp-id="l3-chain-3" data-xp-reason="ربطتَ الانتقال بتكوّن الأيونات" data-answer="تتحوّل الذرّتان إلى أيون موجب وأيون سالب">الخطوة الثالثة</span>
+        </div>
+        <div class="chain-row">
+          <span class="chain-num">4</span>
+          <span class="slot chain-slot" data-xp-id="l3-chain-4" data-xp-reason="أنهيتَ القاعدة بسبب الترابط" data-answer="ينشأ تجاذب بين الشحنتين المتضادّتين">الخطوة الرابعة</span>
+        </div>
       </div>
     </div>
 
-    <p>بهذا، تحوّلت ذرّة الصوديوم المتعادلة إلى أيون موجب (Na⁺)، وذرّة الكلور المتعادلة إلى أيون سالب (Cl⁻) — وتجاذب الأيونان المتضادّان في الشحنة، مكوّنَين معًا الرابطة الأيونية التي شاهدتها.</p>
+    <!-- ===== الكشف: لا يظهر إلا بعد اكتمال الترتيب (تسمية علمية لما اكتشفه الطالب) ===== -->
+    <div id="explainReveal" hidden>
+      <div class="reveal-tag">✓ هذه هي القاعدة — وهذه أسماؤها العلمية</div>
 
-    <p>لكن هل يقتصر الأمر على ذرّتين فقط تلتقيان وتنفصلان عن بقية المادة؟ 👀 ستكتشف الإجابة في محطة قادمة.</p>
+      <p>ما رتّبتَه للتو ينطبق على أي زوج عناصر لا على الصوديوم والكلور وحدهما. والسبب أن غالبية الذرّات تميل إلى توزيع إلكتروني يشبه أقرب غاز نبيل لها، بامتلاك 8 إلكترونات في مستوى الطاقة الأخير — وتُعرف هذه الميول باسم <b>قاعدة الثمانية</b>. لتحقيق ذلك، تفقد بعض الذرّات إلكتروناتها الخارجية القليلة، بينما تكتسب ذرّات أخرى ما ينقصها.</p>
 
-    <p>والآن، ماذا لو كان العنصر الآخر يحتاج أكثر من إلكترون واحد ليصل للاستقرار؟ في المحطة القادمة ستبني بنفسك رابطات أيونية جديدة، تبدأ بسيطة كهذه، ثم تزداد تعقيدًا تدريجيًا.</p>
+      <div class="facts-grid">
+        <div class="fact-card">
+          <div class="term">قاعدة الثمانية</div>
+          <p>ميل ذرّات العناصر للوصول إلى توزيع إلكتروني مشابه لأقرب غاز نبيل، غالبًا بامتلاك 8 إلكترونات في المستوى الأخير.</p>
+        </div>
+        <div class="fact-card">
+          <div class="term">أيون موجب</div>
+          <p>ذرّة فقدت إلكترونًا واحدًا أو أكثر، فأصبح عدد بروتوناتها أكبر من عدد إلكتروناتها — كما حدث مع ذرّة الصوديوم.</p>
+        </div>
+        <div class="fact-card">
+          <div class="term">أيون سالب</div>
+          <p>ذرّة اكتسبت إلكترونًا واحدًا أو أكثر، فأصبح عدد إلكتروناتها أكبر من عدد بروتوناتها — كما حدث مع ذرّة الكلور.</p>
+        </div>
+        <div class="fact-card">
+          <div class="term">الرابطة الأيونية</div>
+          <p>تجاذب كهروستاتيكي ينشأ بين أيون موجب وأيون سالب بعد نقل كامل للإلكترون بينهما — وليست خيطًا ماديًا، وليست مشاركة للإلكترونات.</p>
+        </div>
+      </div>
+
+      <p>بهذا، تحوّلت ذرّة الصوديوم المتعادلة إلى أيون موجب <span dir="ltr">(Na⁺)</span>، وذرّة الكلور المتعادلة إلى أيون سالب <span dir="ltr">(Cl⁻)</span> — وتجاذب الأيونان المتضادّان في الشحنة، مكوّنَين معًا الرابطة الأيونية التي شاهدتها.</p>
+
+      <!-- ===== نشاط ب: تشخيص تفسير زميل ===== -->
+      <div id="peer-activity">
+        <p class="peer-lead">قرأ زميلك ما تعلّمتَه، ثم كتب هذا التفسير. جملة واحدة منه فقط خاطئة — أيّها؟</p>
+
+        <div class="peer-card">
+          <div class="peer-line"><span class="peer-num">1</span> فقدت ذرّة الصوديوم إلكترونًا واحدًا من مستواها الأخير.</div>
+          <div class="peer-line"><span class="peer-num">2</span> فتغيّر عدد بروتوناتها، ولذلك صارت شحنتها موجبة.</div>
+          <div class="peer-line"><span class="peer-num">3</span> فتجاذبت مع أيون الكلوريد السالب مكوّنةً رابطة أيونية.</div>
+        </div>
+
+        <div class="quiz-options" id="peerDiagnose">
+          <label class="quiz-option"><input type="radio" name="peerDiag" value="wrong1">الجملة الأولى</label>
+          <label class="quiz-option"><input type="radio" name="peerDiag" value="correct">الجملة الثانية</label>
+          <label class="quiz-option"><input type="radio" name="peerDiag" value="wrong2">الجملة الثالثة</label>
+        </div>
+        <p class="explore-feedback" id="peerDiagFeedback" hidden></p>
+
+        <div id="peerCorrectStep" hidden>
+          <p class="explore-q">أحسنت. الآن صحّح الجملة الثانية بكلماتك أنت: ما الذي تغيّر فعلًا في ذرّة الصوديوم؟</p>
+          <div class="explore-answer-row">
+            <input type="text" autocomplete="off" class="explore-input peer-input" id="peerCorrectInput" aria-label="تصحيحك">
+            <button type="button" class="btn" id="peerCorrectCheck">تحقّق</button>
+          </div>
+          <p class="explore-feedback" id="peerCorrectFeedback" hidden></p>
+        </div>
+      </div>
+
+      <div id="station3Closing" hidden>
+        <p>لكن هل يقتصر الأمر على ذرّتين فقط تلتقيان وتنفصلان عن بقية المادة؟ 👀 ستكتشف الإجابة في محطة قادمة.</p>
+
+        <p>والآن، ماذا لو كان العنصر الآخر يحتاج أكثر من إلكترون واحد ليصل للاستقرار؟ في المحطة القادمة ستبني بنفسك رابطات أيونية جديدة، تبدأ بسيطة كهذه، ثم تزداد تعقيدًا تدريجيًا.</p>
+      </div>
+    </div>
   </section>
 
 </main>
@@ -760,6 +934,193 @@
       });
     });
   });
+
+})();
+</script>
+
+<script>
+/* ==========================================================
+   منطق محطة 3 فقط (التفسير) — تنظيم وصياغة لا اكتشاف جديد.
+
+   نشاط أ (ترتيب القاعدة العامة) يعتمد كليًا على محرّك السحب
+   والإفلات المشترك في template.js: هو من يطابق الشريحة بالخانة،
+   ويشغّل الصوت، ويمنح النقاط عبر data-xp-id و data-xp-reason
+   المثبّتين في HTML. لا يُعاد بناء أي من ذلك هنا. وظيفة هذا
+   السكربت ثلاثة أشياء فقط:
+     1) مراقبة اكتمال الخانات الأربع لكشف كتلة التفسير بعدها
+        (قاعدة المنصة: التفسير بعد المحاولة لا قبلها).
+     2) تحويل المشتّتين من طريق مسدود إلى تلميح سقراطي بصيغة
+        سؤال — بلا تقرير الإجابة، فالخطأ نفسه موضوع نشاط ب.
+     3) تشغيل نشاط ب (تشخيص جملة الزميل الخاطئة ثم تصحيحها
+        كتابةً بإنتاج حرّ).
+
+   المراقبة تتم بـ MutationObserver على صنف الخانة لا بالاستماع
+   لأحداث المؤشّر — فلا يعتمد السلوك على ترتيب تسجيل المستمعين
+   بين هذا السكربت والمحرّك المشترك المحمّل بعده.
+   ========================================================== */
+(function(){
+  "use strict";
+
+  /* ---------- 1) كشف كتلة التفسير بعد اكتمال الترتيب ---------- */
+  var chainSlots = Array.prototype.slice.call(
+    document.querySelectorAll('#chain-activity .chain-slot')
+  );
+  var reveal = document.getElementById('explainReveal');
+  var revealed = false;
+
+  function checkChainComplete(){
+    if(revealed) return;
+    var done = chainSlots.every(function(s){ return s.classList.contains('correct'); });
+    if(!done) return;
+    revealed = true;
+    reveal.hidden = false;
+    if(window.Sounds) window.Sounds.playChime();
+    if(reveal.scrollIntoView){
+      reveal.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'nearest' });
+    }
+  }
+
+  function prefersReducedMotion(){
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  if(chainSlots.length && reveal && typeof MutationObserver !== 'undefined'){
+    var slotObserver = new MutationObserver(checkChainComplete);
+    chainSlots.forEach(function(s){
+      slotObserver.observe(s, { attributes: true, attributeFilter: ['class'] });
+    });
+  }
+  // احتياط: إن كانت الخانات مكتملة أصلًا (لا يحدث عمليًا لأن الخانات
+  // لا تُستعاد بعد إعادة التحميل، لكنه يحمي من أي تغيير مستقبلي)
+  checkChainComplete();
+
+  /* ---------- 2) تلميح المشتّتين ---------- */
+  var chainHint = document.getElementById('chainHint');
+  var DISTRACTOR_HINTS = {
+    'chip-share':  'هذه الجملة تصف نوعًا آخر من الترابط ستدرسه لاحقًا. في ما شاهدته بالمحطة السابقة: هل بقي الإلكترون بين الذرّتين، أم غادر إحداهما تمامًا؟',
+    'chip-proton': 'هل غادر البروتون النواة في ما شاهدته، أم غادر جسيم آخر؟'
+  };
+
+  Object.keys(DISTRACTOR_HINTS).forEach(function(id){
+    var chip = document.getElementById(id);
+    if(!chip || !chainHint || typeof MutationObserver === 'undefined') return;
+    var obs = new MutationObserver(function(){
+      // المحرّك المشترك يضيف صنف shake عند محاولة إفلات غير مطابقة
+      if(chip.classList.contains('shake')){
+        chainHint.textContent = '💡 ' + DISTRACTOR_HINTS[id];
+        chainHint.hidden = false;
+      }
+    });
+    obs.observe(chip, { attributes: true, attributeFilter: ['class'] });
+  });
+
+  /* ---------- 3) نشاط ب: تشخيص جملة الزميل ---------- */
+  var diagGroup = document.getElementById('peerDiagnose');
+  var diagFeedback = document.getElementById('peerDiagFeedback');
+  var correctStep = document.getElementById('peerCorrectStep');
+
+  var DIAG_HINTS = {
+    wrong1: 'أعِد قراءة هذه الجملة: هل يخالف فقدُ إلكترون واحد من المستوى الأخير ما شاهدته بنفسك؟',
+    wrong2: 'هذه الجملة تصف التجاذب بين شحنتين متضادّتين — هل يخالف ذلك القاعدة التي رتّبتها؟'
+  };
+
+  if(diagGroup){
+    diagGroup.querySelectorAll('input[type="radio"]').forEach(function(radio){
+      radio.addEventListener('change', function(){
+        diagFeedback.hidden = false;
+        if(radio.value === 'correct'){
+          radio.closest('.quiz-option').classList.add('correct');
+          diagFeedback.textContent = '✓ صحيح — الخطأ في الجملة الثانية.';
+          diagFeedback.className = 'explore-feedback is-correct';
+          if(window.Sounds) window.Sounds.playSnap();
+          if(window.XP) window.XP.claim('l3-explain-diagnose', window.XP.POINTS.MCQ,
+                                        'اكتشفتَ الخطأ في تفسير زميلك');
+          correctStep.hidden = false;
+        } else {
+          diagFeedback.textContent = '💡 ' + DIAG_HINTS[radio.value];
+          diagFeedback.className = 'explore-feedback is-hint';
+          if(window.Sounds) window.Sounds.playWrong();
+        }
+      });
+    });
+  }
+
+  /* ---------- 4) نشاط ب: تصحيح الجملة كتابةً ---------- */
+  /* تطبيع عربي متسامح: حذف التشكيل والتطويل، وتوحيد الهمزات والألف
+     المقصورة والتاء المربوطة، وتوحيد المسافات وإزالة الترقيم — حتى
+     لا تُرفض إجابة صحيحة لفرق إملائي لا يغيّر المعنى العلمي. */
+  function normalizeAr(str){
+    return String(str)
+      .replace(/[\u064B-\u0652\u0670\u0640]/g, '')
+      .replace(/[أإآٱ]/g, 'ا')
+      .replace(/ى/g, 'ي')
+      .replace(/ؤ/g, 'و')
+      .replace(/ئ/g, 'ي')
+      .replace(/ة/g, 'ه')
+      .replace(/[^\u0621-\u064A0-9\s]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toLowerCase();
+  }
+
+  function hasAny(text, list){
+    return list.some(function(w){ return text.indexOf(w) !== -1; });
+  }
+
+  /* تُقبل الإجابة بأحد مسارين صحيحين:
+     (أ) تنصّ على أن البروتونات لم تتغيّر، أو
+     (ب) تنصّ على أن عدد الإلكترونات هو الذي نقص.
+     الصياغة حرّة تمامًا؛ المطلوب وجود المفهوم لا نصّ بعينه. */
+  var PROTON_WORDS  = ['بروتون'];
+  var UNCHANGED     = ['لم يتغير','لا يتغير','لم تتغير','لا تتغير','ثابت','ثابته','كما هو','كما هي','لم يتاثر','لا يتاثر','لم ينقص'];
+  var ELECTRON_WORDS= ['الكترون'];
+  var DECREASED     = ['نقص','نقصت','قل','قلت','اقل','فقد','فقدت','خسر','خسرت','انتقل','انتقلت','غادر','غادرت','تركت','ترك','خرج','خرجت','فقدان'];
+
+  function isAcceptable(raw){
+    var t = normalizeAr(raw);
+    if(t.length < 3) return false;
+    var protonPath   = hasAny(t, PROTON_WORDS)   && hasAny(t, UNCHANGED);
+    var electronPath = hasAny(t, ELECTRON_WORDS) && hasAny(t, DECREASED);
+    return protonPath || electronPath;
+  }
+
+  var pcInput = document.getElementById('peerCorrectInput');
+  var pcBtn = document.getElementById('peerCorrectCheck');
+  var pcFeedback = document.getElementById('peerCorrectFeedback');
+  var closing = document.getElementById('station3Closing');
+
+  var PEER_HINTS = [
+    'فكّر: ما الجسيم الذي غادر الذرّة فعلًا؟ وهل يستطيع البروتون مغادرة النواة في تفاعل كيميائي؟',
+    'البروتونات في النواة والإلكترونات حولها. أيّهما تحرّك في ما شاهدته؟ وماذا صار عدده بعد الحركة؟',
+    'اكتب جملة تذكر فيها الإلكترونات وما حدث لعددها بعد أن غادر أحدها الذرّة.'
+  ];
+  var hintIndex = 0;
+
+  if(pcBtn && pcInput){
+    var checkCorrection = function(){
+      var val = pcInput.value.trim();
+      pcFeedback.hidden = false;
+      if(isAcceptable(val)){
+        pcFeedback.textContent = '✓ صحيح — عدد البروتونات لم يتغيّر إطلاقًا؛ الذي نقص هو عدد الإلكترونات، فزاد عدد البروتونات عليها فظهرت الشحنة الموجبة.';
+        pcFeedback.className = 'explore-feedback is-correct';
+        pcInput.disabled = true;
+        pcBtn.disabled = true;
+        if(window.Sounds) window.Sounds.playSnap();
+        if(window.XP) window.XP.claim('l3-explain-correction', window.XP.POINTS.PRODUCE,
+                                      'صحّحتَ الخطأ المفاهيمي بكلماتك');
+        if(closing) closing.hidden = false;
+      } else {
+        pcFeedback.textContent = '💡 ' + PEER_HINTS[Math.min(hintIndex, PEER_HINTS.length - 1)];
+        pcFeedback.className = 'explore-feedback is-hint';
+        hintIndex++;
+        if(window.Sounds) window.Sounds.playWrong();
+      }
+    };
+    pcBtn.addEventListener('click', checkCorrection);
+    pcInput.addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){ e.preventDefault(); checkCorrection(); }
+    });
+  }
 
 })();
 </script>
