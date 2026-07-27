@@ -297,19 +297,45 @@ header.hero h1{
   transition:box-shadow .2s, opacity .2s;
 }
 .chip:hover{box-shadow:0 0 12px var(--turquoise-soft);}
+.chip:focus-visible{outline:2px solid var(--coral);outline-offset:3px;}
 .chip.dragging{
   position:fixed;
   z-index:999;
-  opacity:.9;
+  opacity:.92;
   pointer-events:none;
+  cursor:grabbing;
   box-shadow:0 0 18px var(--turquoise-soft);
 }
-.chip.placed{
-  opacity:0;
-  pointer-events:none;
-  position:absolute;
+/* الرقاقة مختارة بالنقر، بانتظار اختيار خانة */
+.chip.selected{
+  background:var(--turquoise);
+  color:var(--navy-dark);
+  box-shadow:0 0 14px var(--turquoise-soft);
 }
+/* display:none لا opacity:0 — النسخة السابقة كانت تُبقي العنصر
+   بإحداثيات fixed محسوبة ثم تجعله absolute، فينتج عنصر شبح بموضع
+   خاطئ قد يولّد مساحة تمرير زائدة. الفراغ المتروك يعالجه .chip-ghost
+   بانكماش متدرّج بدل اختفاء مفاجئ. */
+.chip.placed{display:none;}
 .chip.shake{animation:tplShakeX .4s ease;}
+
+/* حاجز مكان الرقاقة أثناء السحب: يمنع قفز باقي الرقاقات لحظة
+   الرفع، ثم ينكمش بانسياب عند نجاح المطابقة */
+.chip-ghost{
+  display:inline-block;
+  flex:0 0 auto;
+  box-sizing:border-box;
+  border:1px dashed var(--border);
+  border-radius:999px;
+  background:transparent;
+  pointer-events:none;
+  transition:width .26s ease, margin .26s ease, opacity .26s ease;
+}
+.chip-ghost.collapsing{
+  width:0 !important;
+  opacity:0;
+  margin-inline-start:-10px; /* يبتلع فجوة gap المتبقية في المسبح */
+}
 
 .slot{
   display:inline-block;
@@ -335,6 +361,16 @@ header.hero h1{
   border-color:var(--turquoise);
   box-shadow:0 0 10px var(--turquoise-soft);
 }
+/* خانة صالحة كهدف بعد اختيار رقاقة بالنقر. تمييز هادئ بلا حركة:
+   ستّ من خانات درس 01 عبارة عن <span> داخل جملة جارية، والنبض
+   فيها يعني نبض كلمات وسط نصّ مقروء. */
+.slot.targetable{
+  border-style:solid;
+  border-color:var(--turquoise-soft);
+  color:var(--turquoise);
+}
+.slot:focus-visible{outline:2px solid var(--coral);outline-offset:2px;}
+.slot.correct{cursor:default;}
 
 /* ===== حركات مشتركة للتغذية الراجعة ===== */
 @keyframes tplPopIn{
@@ -388,4 +424,11 @@ footer.site-footer{
      font-size:clamp(13px,2.2vw,15px);
      color:var(--ink-dim);
      line-height:1.9;
+}
+
+/* ===== احترام تفضيل تقليل الحركة (نظام التشغيل) ===== */
+@media (prefers-reduced-motion: reduce){
+  .chip-ghost{transition:none;}
+  .chip.shake{animation:none;}
+  .slot.correct{animation:none;}
 }
