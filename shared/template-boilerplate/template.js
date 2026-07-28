@@ -14,7 +14,9 @@
    يوفّر ثلاث آليات عامة:
 
      1) ظهور تدريجي لكل محطة عند وصولها بالتمرير + تفعيل نقطة
-        التقدّم المقابلة + نغمة انتقال مرة واحدة لكل محطة
+        التقدّم المقابلة + نغمة انتقال مرة واحدة لكل محطة، ومعها
+        عدّاد «المحطة X من N» يُحقن تلقائيًا في شريط التقدّم —
+        مقامه مشتقّ من عدد النقاط، فلا يُكتب رقم في أي درس
 
      2) تظليل الخيار المُختار داخل كل مجموعة أسئلة (مستقل بين
         المجموعات لو الدرس فيه أكثر من سؤال). منطق التحقّق من
@@ -139,6 +141,75 @@
     });
   }, {threshold:0, rootMargin:'0px 0px -12% 0px'});
   document.querySelectorAll('.station[id^="station-"]').forEach(function(s){ io.observe(s); });
+
+  /* ---------- 1b) عدّاد المحطات «المحطة X من N» ----------
+
+     يُحقن تلقائيًا داخل .progress-track — لا يحتاج الدرس أي وسم.
+
+     لماذا المقام مشتقّ لا مكتوب؟ الرقم المكتوب يدويًا رقمٌ يُنسى
+     تحديثه: لو نُسخ هيكل درس من سبع محطات إلى درس من ستّ، عرض
+     «6 من 7» بلا خطأ ظاهر يفضحه. الاشتقاق يجعل هذا مستحيلًا.
+
+     ولماذا من النقاط لا من .station؟ لأن النقاط هي العقد المعلن
+     للطالب. المحطة المشطورة داخليًا (مثل station-2b في درس 03)
+     عنصر station بلا نقطة عمدًا — فلا تُحسب محطةً ثامنة، ويبقى
+     الطالب فيها قارئًا «المحطة 2».
+
+     دلالة الرقم: أين أنت الآن (يتبع أعلى محطة مرئية، ويتراجع لو
+     رجع الطالب للمراجعة). النقاط تحمل الدلالة الأخرى: ما بلغته
+     (تُضاء ولا تنطفئ). الاثنان معًا لا يتكرران. */
+  var track = document.querySelector('.progress-track');
+  var dots  = track ? track.querySelectorAll('.progress-dot') : [];
+
+  if(track && dots.length){
+    var dotIndex = {};                 // station-id  ->  رقم المحطة (يبدأ من 1)
+    Array.prototype.forEach.call(dots, function(d, i){
+      if(d.dataset.target) dotIndex[d.dataset.target] = i + 1;
+    });
+
+    var counter = document.createElement('div');
+    counter.className = 'station-counter';
+    counter.id = 'stationCounter';
+    counter.setAttribute('aria-live', 'polite');
+    counter.innerHTML =
+      '<span class="sc-word">المحطة</span>' +
+      '<span class="sc-now">1</span>' +
+      '<span class="sc-sep">من</span>' +
+      '<span class="sc-total">' + dots.length + '</span>';
+    track.appendChild(counter);
+
+    var nowEl = counter.querySelector('.sc-now');
+    var shown = 1;
+
+    /* مجموعة المحطات المرئية حاليًا: الرقم المعروض هو أصغرها —
+       أي أعلى محطة مرئية على الشاشة، لا آخر ما دخل نطاق الرصد.
+       بدون ذلك يقفز الرقم للأمام بمجرّد أن تطلّ حافة المحطة
+       التالية أسفل الشاشة والطالب ما زال يقرأ الحالية. */
+    var visible = new Set();
+
+    function render(){
+      var min = 0;
+      visible.forEach(function(id){
+        var n = dotIndex[id];
+        if(n && (!min || n < min)) min = n;
+      });
+      if(!min || min === shown) return;   // المحطة بلا نقطة (مرحلة داخلية) لا تغيّر الرقم
+      shown = min;
+      nowEl.textContent = min;
+    }
+
+    var counterIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting) visible.add(entry.target.id);
+        else visible.delete(entry.target.id);
+      });
+      render();
+    }, {threshold:0, rootMargin:'0px 0px -12% 0px'});
+
+    document.querySelectorAll('.station[id^="station-"]').forEach(function(s){
+      counterIO.observe(s);
+    });
+  }
 
   // ---------- 2) تظليل الخيار المختار داخل كل مجموعة أسئلة ----------
   // عرض فقط. لا يمنح نقاطًا ولا يحكم على الصواب — ذلك بكود الدرس،

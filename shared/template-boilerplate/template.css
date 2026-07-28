@@ -130,6 +130,46 @@ header.hero h1{
 .xp-counter svg{width:15px;height:15px;flex-shrink:0;}
 .xp-counter .xp-label{color:var(--ink-dim);font-weight:600;font-size:11px;}
 
+/* عدّاد المحطات «المحطة X من N» — يحقنه template.js تلقائيًا داخل
+   .progress-track، فلا يُكتب في HTML الدرس إطلاقًا.
+
+   مطلق التموضع على الطرف المقابل لعدّاد XP كي تبقى النقاط في وسط
+   الشريط بالضبط. وبلا حدّ ولا خلفية عمدًا: عدّاد XP هو الحبّة
+   التركوازية الوحيدة في الشريط لأنه مكافأة، وهذا الرقم توجيهٌ
+   هادئ لا مكافأة — حبّتان متجاورتان تتنازعان النظر بلا داعٍ. */
+.station-counter{
+  position:absolute;
+  inset-inline-end:14px;
+  top:50%;
+  transform:translateY(-50%);
+  display:inline-flex;
+  align-items:baseline;
+  gap:5px;
+  font-family:'Tajawal', sans-serif;
+  font-weight:600;
+  font-size:12px;
+  color:var(--ink-dim);
+  white-space:nowrap;
+  pointer-events:none;
+  user-select:none;
+}
+.station-counter .sc-now{
+  color:var(--ink);
+  font-weight:800;
+  font-size:13px;
+  transition:color .3s;
+}
+.station-counter .sc-total{font-weight:700;}
+
+/* على الشاشات الضيّقة تتزاحم حبّة XP والنقاط والعدّاد في شريط واحد،
+   فيتقلّص العدّاد إلى «3 / 7» — المعنى محفوظ والمساحة تكفي */
+@media (max-width:560px){
+  .station-counter{gap:3px; font-size:11px;}
+  .station-counter .sc-word,
+  .station-counter .sc-sep{display:none;}
+  .station-counter .sc-total::before{content:'/'; margin-inline-end:3px; opacity:.6;}
+}
+
 @keyframes xpBump{
   0%{transform:translateY(-50%) scale(1);}
   40%{transform:translateY(-50%) scale(1.12); box-shadow:0 0 14px var(--turquoise-soft);}
