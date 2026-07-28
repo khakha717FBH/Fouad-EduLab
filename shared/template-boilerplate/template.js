@@ -76,6 +76,35 @@
                  'ومن تبويب Network بحثًا عن خطأ 404 لهذا الملف.');
   });
 
+  /* ---------------------------------------------------------
+     حارس هرم الأزرار (يوليو 2026)
+     ---------------------------------------------------------
+     قاعدة الهرم: زر ممتلئ واحد لكل محطة، وهو زر الانتقال. لو ظهر
+     اثنان انقلب الهرم ضوضاءً. المحدِّد في template.css يمنع وقوع
+     الخطأ خارج .station-handoff؛ وهذا الحارس يعالج ما ندر داخلها:
+     يُبقي الأول ويهبّط الباقي إلى الدرجة الثانية، ويطبع تفصيلًا
+     بشاشة المطوّر (F12). الطالب لا يرى شيئًا، والصفحة لا تنكسر.
+
+     تنبيه للمطوّر: الحارس يصلح الشكل، فقد يخفي الخطأ عنك إن لم
+     تفتح الطرفية. لذا اختبار jsdom قبل التسليم يبقى ضروريًا —
+     هو الوحيد الذي يخبرك أنت لا المتصفّح. */
+  window.addEventListener('load', function(){
+    document.querySelectorAll('.station').forEach(function(station){
+      var primaries = station.querySelectorAll('.station-handoff .station-next:not(.demoted)');
+      if(primaries.length < 2) return;
+      var names = [];
+      for(var i = 1; i < primaries.length; i++){
+        primaries[i].classList.add('demoted');
+        names.push('"' + (primaries[i].textContent || '').trim() + '"');
+      }
+      console.warn('%c[مختبر فؤاد] هرم الأزرار: ' + (station.id || 'محطة بلا معرّف') +
+        ' فيها ' + primaries.length + ' أزرار ممتلئة. أُبقي الأول وهُبّط: ' + names.join(' و') + '.',
+        'background:#ff6b4a;color:#131c30;font-weight:bold;padding:3px 8px;border-radius:4px;');
+      console.warn('القاعدة: صنف station-next لزر الانتقال بين المحطات وحده. ' +
+                   'أزرار الفعل داخل المهمة تأخذ btn أو pill-link.');
+    });
+  });
+
   // مساعد آمن: لا يفترض وجود xp.js
   function claimXP(id, points, reason){
     if(window.XP && window.XP.claim) window.XP.claim(id, points, reason);
