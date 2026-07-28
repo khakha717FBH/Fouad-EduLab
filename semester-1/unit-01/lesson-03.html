@@ -223,6 +223,13 @@
     font-size:15px;
     text-align:center;
   }
+  /* النائب يحمل معلومة مخفيّة: مفتاح Enter يعمل في كل حقول الدرس،
+     وكان لا يعرفه أحد. خافت عمدًا كي لا يُقرأ جزءًا من السؤال. */
+  .explore-input::placeholder{
+    color:var(--ink-dim);
+    opacity:.55;
+    font-size:.86em;
+  }
   .explore-input:focus{
     outline:none;
     border-color:var(--turquoise);
@@ -699,7 +706,7 @@
       <div class="explore-step" id="explore-1" data-step="1">
         <p class="explore-q">بالنظر إلى ذرّة الصوديوم، كم عدد الإلكترونات في مستوى طاقتها الخارجي؟</p>
         <div class="explore-answer-row">
-          <input type="text" inputmode="numeric" autocomplete="off" class="explore-input" id="explore-input-1" aria-label="إجابتك">
+          <input type="text" inputmode="numeric" autocomplete="off" class="explore-input" id="explore-input-1" aria-label="إجابتك" placeholder="الرقم ثم Enter">
           <button type="button" class="btn explore-check" data-step="1">تحقّق</button>
         </div>
         <p class="explore-feedback" id="explore-feedback-1" hidden></p>
@@ -709,7 +716,7 @@
       <div class="explore-step" id="explore-2" data-step="2" hidden>
         <p class="explore-q">بالنظر إلى ذرّة الكلور، كم إلكترونًا تحتاج في مستواها الخارجي لتصل إلى حالة الاستقرار؟</p>
         <div class="explore-answer-row">
-          <input type="text" inputmode="numeric" autocomplete="off" class="explore-input" id="explore-input-2" aria-label="إجابتك">
+          <input type="text" inputmode="numeric" autocomplete="off" class="explore-input" id="explore-input-2" aria-label="إجابتك" placeholder="الرقم ثم Enter">
           <button type="button" class="btn explore-check" data-step="2">تحقّق</button>
         </div>
         <p class="explore-feedback" id="explore-feedback-2" hidden></p>
@@ -860,17 +867,28 @@
          الشرائح والخانات يجب أن تكون موجودة في DOM منذ التحميل (لا تُحقن
          لاحقًا) لأن المحرّك المشترك يقرأها مرّة واحدة عند التحميل.
 
-         ترتيب الكتل مقصود (يوليو 2026): الخانات أوّلًا ثم بِركة الشرائح
-         تحتها. الجُمل العلمية كاملة الصياغة تجعل البِركة أطول كتلة في
-         المحطة (~290px)؛ لو بقيت فوق الخانات لدفعتها إلى أسفل الشاشة.
-         وبنزولها تبقى الخانات في أعلى مجال النظر، والمسافة من الشريحة
-         إلى أقرب خانة قصيرة دائمًا.
+         ترتيب الكتل: الشرائح أوّلًا ثم الخانات تحتها — "هذه القطع، وهذا
+         موضعها"، وهو ترتيب القراءة الطبيعي ونظير المحطة 2 (المشهد أعلى
+         والعمل أسفله). كانت البِركة قد نزلت أسفل الخانات لمنع طولها من
+         دفع شريط النموذج خارج الشاشة، وزال ذلك السبب بتفكيك الشريط إلى
+         لوحات داخل الصفوف.
 
          ولوحة النموذج لم تعد شريطًا واحدًا أسفل النشاط، بل لوحة داخل كل
          صفّ: فيقع الإفلات والتوهّج في السطر نفسه وتحت النظرة نفسها مهما
          طالت الصفحة. الشريط الكامل محفوظ لكتلة الكشف. -->
     <div id="chain-activity">
       <p class="chain-instruction">اسحب كل خطوة إلى موضعها — أو <b>انقر الشريحة ثم انقر الخانة</b> إن كان أيسر لك. <b>انتبه:</b> ليست كل الشرائح جزءًا من القاعدة.</p>
+
+      <div class="chips-pool" id="chain-pool">
+        <div class="chip" data-value="تتحوّل الذرّتان إلى أيون موجب وأيون سالب">تتحوّل الذرّتان إلى أيون موجب وأيون سالب</div>
+        <div class="chip" id="chip-share" data-value="تتشارك الذرّتان الإلكترونات">تتشارك الذرّتان الإلكترونات</div>
+        <div class="chip" data-value="ذرّة تفقد إلكتروناتها بسهولة تلتقي ذرّة تحتاجها">ذرّة تفقد إلكتروناتها بسهولة تلتقي ذرّة تحتاجها</div>
+        <div class="chip" data-value="ينشأ تجاذب بين الشحنتين المتضادّتين">ينشأ تجاذب بين الشحنتين المتضادّتين</div>
+        <div class="chip" id="chip-proton" data-value="يتغيّر عدد البروتونات">يتغيّر عدد البروتونات</div>
+        <div class="chip" data-value="تنتقل الإلكترونات انتقالًا كاملًا">تنتقل الإلكترونات انتقالًا كاملًا</div>
+      </div>
+
+      <p class="chain-hint" id="chainHint" hidden></p>
 
       <div class="chain-rows">
         <div class="chain-row">
@@ -931,18 +949,20 @@
           </svg>
         </div>
       </div>
+    </div>
 
-      <p class="chain-hint" id="chainHint" hidden></p>
+    <!-- ===== جسر: اكتمال الترتيب ← الكشف =====
+         كان الكشف يظهر تلقائيًا مع scrollIntoView لحظة نجاح الخانة
+         الرابعة، فتُسحب عين الطالب بعيدًا في اللحظة نفسها التي تُضاء
+         فيها لوحته الأخيرة — فلا يراها. والقاعدة عندنا أن الطالب هو
+         من يطلب الكشف لا الصفحة من تفرضه.
 
-      <p class="pool-label">الشرائح المتاحة:</p>
-      <div class="chips-pool" id="chain-pool">
-        <div class="chip" data-value="تتحوّل الذرّتان إلى أيون موجب وأيون سالب">تتحوّل الذرّتان إلى أيون موجب وأيون سالب</div>
-        <div class="chip" id="chip-share" data-value="تتشارك الذرّتان الإلكترونات">تتشارك الذرّتان الإلكترونات</div>
-        <div class="chip" data-value="ذرّة تفقد إلكتروناتها بسهولة تلتقي ذرّة تحتاجها">ذرّة تفقد إلكتروناتها بسهولة تلتقي ذرّة تحتاجها</div>
-        <div class="chip" data-value="ينشأ تجاذب بين الشحنتين المتضادّتين">ينشأ تجاذب بين الشحنتين المتضادّتين</div>
-        <div class="chip" id="chip-proton" data-value="يتغيّر عدد البروتونات">يتغيّر عدد البروتونات</div>
-        <div class="chip" data-value="تنتقل الإلكترونات انتقالًا كاملًا">تنتقل الإلكترونات انتقالًا كاملًا</div>
-      </div>
+         الزرّ محدَّد لا ممتلئ: الدرجة الأولى (الممتلئة) محجوزة لما
+         ينقل الطالب إلى محطة جديدة، وهذا جسر داخل المحطة نفسها. -->
+    <div id="chainBridge" class="station-handoff" hidden>
+      <div class="success-tag show">✓ اكتمل الترتيب</div>
+      <p class="handoff-q">بنيتَ النموذج خطوةً خطوة. تأمّل اللوحات الأربع أعلاه، ثم اطلب الخلاصة حين تجهز.</p>
+      <button type="button" class="btn" id="openChainReveal">اعرض ما بنيتُه ↓</button>
     </div>
 
     <!-- ===== الكشف: لا يظهر إلا بعد اكتمال الترتيب ===== -->
@@ -1024,8 +1044,11 @@
 
       <p>ما رتّبتَه ينطبق على أي زوج عناصر، لا على الصوديوم والكلور وحدهما.</p>
 
-      <!-- ===== جرعة 2: الدافع — لماذا تنتقل الإلكترونات أصلًا؟ ===== -->
-      <p>لكن لماذا تفقد ذرّة وتكتسب أخرى أصلًا؟ لأن الذرّات تميل إلى توزيع إلكتروني يشبه أقرب غاز نبيل لها — غالبًا بامتلاك 8 إلكترونات في المستوى الأخير. تُعرف هذه الميول باسم <b>قاعدة الثمانية</b>.</p>
+      <!-- ===== جرعة 2: الدافع =====
+           حُذفت هنا فقرة شارحة ("لأن الذرّات تميل إلى توزيع يشبه أقرب
+           غاز نبيل…"): الطالب بنى هذه الفكرة بنفسه في المحطة 2 (كم
+           يحتاج الكلور؟ أيّهما أسهل على الصوديوم؟)، وإعادتها نصًّا
+           تسلبه ملكية استنتاجه. السؤال وحده صار الجرعة. -->
 
       <div id="octet-check">
         <p class="explore-q">في ذرّة الكبريت 6 إلكترونات في المستوى الأخير. للوصول إلى 8، أيّهما أسهل عليها؟</p>
@@ -1076,7 +1099,7 @@
         <div id="peerCorrectStep" hidden>
           <p class="explore-q">أحسنت. الآن صحّح الجملة الثانية بكلماتك أنت: ما الذي تغيّر فعلًا في ذرّة الصوديوم؟</p>
           <div class="explore-answer-row">
-            <input type="text" autocomplete="off" class="explore-input peer-input" id="peerCorrectInput" aria-label="تصحيحك">
+            <input type="text" autocomplete="off" class="explore-input peer-input" id="peerCorrectInput" aria-label="تصحيحك" placeholder="اكتب تصحيحك ثم Enter">
             <button type="button" class="btn" id="peerCorrectCheck">تحقّق</button>
           </div>
           <p class="explore-feedback" id="peerCorrectFeedback" hidden></p>
@@ -1091,7 +1114,7 @@
         <div id="mgPredict">
           <p class="explore-q">ذرّة المغنيسيوم تفقد إلكترونين لا واحدًا. برأيك، كم ذرّة كلور تحتاج لتستقبلهما؟</p>
           <div class="explore-answer-row">
-            <input type="text" autocomplete="off" class="explore-input" id="mgPredictInput" aria-label="توقّعك">
+            <input type="text" autocomplete="off" class="explore-input" id="mgPredictInput" aria-label="توقّعك" placeholder="اكتب توقّعك ثم Enter">
             <button type="button" class="btn" id="mgPredictSave">احفظ توقّعي</button>
           </div>
           <p id="mgPredictSaved" hidden>✓ حُفظ توقّعك. ستتحقّق منه بنفسك في المحطة القادمة.</p>
@@ -1672,7 +1695,7 @@
    واحد وتفاعل يفتح ما بعده:
 
      1) التعميم   — ترتيب القاعدة (يفتح الكشف)
-     2) الدافع    — قاعدة الثمانية + سؤال تحقّق (يفتح التشخيص)
+     2) الدافع    — سؤال تعميم على عنصر جديد (يفتح التشخيص)
      3) الدقة     — تشخيص خطأ الزميل ثم تصحيحه (يفتح التوقّع)
 
    ويرافق الجرعة الأولى نموذج بصري مجرّد تُضاء لوحته رقم N عند
@@ -1706,13 +1729,27 @@
   // اللوحات صارت أربعًا مستقلّة (mp-row-N) لا شريطًا واحدًا: الالتصاق
   // بموضع اليد أهمّ أثناء البناء من رؤية السلسلة متّصلة، والشريط الكامل
   // يظهر مضاءً داخل كتلة الكشف حيث تُطلب رؤية السلسلة وحدةً.
+  var lastCorrectCount = 0;
+
   function syncModelStrip(){
+    var count = 0;
     chainSlots.forEach(function(slot, i){
       if(!slot.classList.contains('correct')) return;
+      count++;
       var panel = document.getElementById('mp-row-' + (i + 1));
       if(panel && !panel.classList.contains('on')) panel.classList.add('on');
     });
+    // التلميح يزول بزوال سببه: أي خانة تنجح بعده تُلغيه، فلا يبقى
+    // تصحيحٌ معلّق فوق عمل صحيح مكتمل
+    if(count > lastCorrectCount){
+      var hint = document.getElementById('chainHint');
+      if(hint && !hint.hidden){ hint.hidden = true; hint.textContent = ''; }
+    }
+    lastCorrectCount = count;
   }
+
+  var chainBridge = document.getElementById('chainBridge');
+  var openReveal  = document.getElementById('openChainReveal');
 
   function checkChainComplete(){
     syncModelStrip();
@@ -1720,11 +1757,19 @@
     var done = chainSlots.every(function(s){ return s.classList.contains('correct'); });
     if(!done) return;
     revealed = true;
-    reveal.hidden = false;
+    // لا كشف ولا تمرير هنا: تظهر وقفة فقط، والطالب يفتح الكشف حين يجهز
+    if(chainBridge) chainBridge.hidden = false;
     if(window.Sounds) window.Sounds.playChime();
-    if(reveal.scrollIntoView){
-      reveal.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'nearest' });
-    }
+  }
+
+  if(openReveal){
+    openReveal.addEventListener('click', function(){
+      reveal.hidden = false;
+      if(chainBridge) chainBridge.hidden = true;
+      if(reveal.scrollIntoView){
+        reveal.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+      }
+    });
   }
 
   if(chainSlots.length && reveal && typeof MutationObserver !== 'undefined'){
@@ -1756,7 +1801,7 @@
     obs.observe(chip, { attributes: true, attributeFilter: ['class'] });
   });
 
-  /* ---------- 3) الجرعة الثانية: قاعدة الثمانية ----------
+  /* ---------- 3) الجرعة الثانية: التعميم على عنصر جديد ----------
      الكبريت لا الليثيوم بقصد: الليثيوم يستقرّ بإلكترونين (توزيع
      الهيليوم) لا بثمانية، فسؤاله يناقض النصّ الذي قرأه الطالب
      للتوّ. الكبريت يكسب إلكترونين ليكمل ثمانية — مطابق للقاعدة،
@@ -1780,7 +1825,7 @@
           octetFeedback.textContent = '✓ صحيح — 6 + 2 = 8، فاكتساب إلكترونين أقصر طريق للاستقرار.';
           octetFeedback.className = 'explore-feedback is-correct';
           if(window.Sounds) window.Sounds.playSnap();
-          claim('l3-octet-check', pts('MCQ', 5), 'طبّقتَ قاعدة الثمانية على عنصر جديد');
+          claim('l3-octet-check', pts('MCQ', 5), 'طبّقتَ الفكرة على عنصر جديد');
           peerActivity.hidden = false;
         } else {
           octetFeedback.textContent = '💡 ' + OCTET_HINTS[radio.value];
