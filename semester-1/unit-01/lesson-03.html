@@ -24,22 +24,35 @@
   /* ============ أنماط خاصة بمحتوى محطة 2 فقط (رسم الذرّتين والتفاعل) ============
      لا تُنقَل هذه الأنماط إلى template.css المشترك لأنها خاصة بمادة هذا
      الدرس تحديدًا (نموذج بور)، لا هيكلًا عامًا يصلح لأي درس آخر. */
+  /* المشهد ملتصق أعلى الشاشة طوال المحطة الثانية: أسئلتها التسعة كلها
+     تسأل عن الرسم، وكان الطالب مضطرًّا للصعود والهبوط مع كل سؤال. الآن
+     تمرّ الأسئلة تحته وهو ثابت — يتنبّأ وهو يراه، ويرى نتيجة تنبّؤه فورًا.
+     الارتفاع مقيّد بنسبة من الشاشة كي لا يبتلع المشهد الجوال العمودي
+     فلا يبقى للسؤال إلا شريط ضيّق. */
   #stage-wrap{
     width:100%;
     max-width:920px;
     margin:0 auto;
-    background:rgba(255,255,255,0.02);
+    background:var(--navy-darker);
     border:1px solid rgba(20,200,168,0.15);
     border-radius:22px;
     padding:10px;
-    position:relative;
+    position:sticky;
+    top:8px;
+    z-index:5;
   }
   svg#stage{
     width:100%;
     height:auto;
+    max-height:45vh;
     display:block;
     touch-action:none; /* يمنع تمرير الصفحة أثناء التفاعل داخل المشهد فقط */
     -webkit-tap-highlight-color:transparent;
+  }
+  /* الالتصاق يفترض متصفحًا يدعمه؛ القديم يعرضه عاديًا بلا كسر */
+  @supports not (position: sticky){
+    #stage-wrap{ position:relative; }
+    svg#stage{ max-height:none; }
   }
   .nucleus{fill:var(--navy-darker); stroke:var(--turquoise-soft); stroke-width:1.5;}
   .nucleus-label{
@@ -1074,9 +1087,15 @@
     // الذرّة المتعادلة)، والكلور يكبر أكثر نسبيًا (أيون سالب Cl⁻ نصف قطره
     // الأيوني أكبر من الذرّة المتعادلة) — تقريبي لأغراض بصرية فقط، لا يمثّل
     // محاكاة فيزيائية دقيقة لمسافة الرابطة (خارج نطاق منهج الصف التاسع)
+    /* المرحلة الأولى: الشحنتان والحجمان فقط — بلا اقتراب.
+       الأيون الموجب نصف قطره أصغر من الذرّة المتعادلة، والسالب أكبر،
+       وهذه نتيجة مباشرة لفقد الإلكترون واكتسابه فمكانها مع الشحنتين.
+       أمّا التقارب فمؤجَّل: السؤال الثامن يسأل "ما الذي سيحدث نتيجة
+       اختلاف شحنتيهما؟" بصيغة المستقبل — فلو تقاربتا الآن لفقد السؤال
+       معناه، ولصار التجاذب مشهدًا عابرًا بدل أن يكون جواب تنبّؤ. */
     requestAnimationFrame(() => {
-      naGroup.style.transform = 'scale(0.88) translateX(18px)';
-      clGroup.style.transform = 'scale(1.10) translateX(-10px)';
+      naGroup.style.transform = 'scale(0.88)';
+      clGroup.style.transform = 'scale(1.10)';
     });
 
     naCharge.textContent = '+';
@@ -1091,10 +1110,32 @@
     if(window.Sounds) window.Sounds.playSnap();
     if(window.XP) window.XP.claim('l3-na-cl-transfer', window.XP.POINTS.TASK,
                                   'نقلتَ الإلكترون بنفسك وكوّنت الرابطة');
+    /* كان الكشف يقع بعد 700 مللي من بدء التحوّل، بينما تنتهي الحركة
+       عند 750 (ظهور الشحنتين) — فتنزل الصفحة قبل أن يرى الطالب نتيجة
+       ما فعله، وهي غرض المحطة كلّه. الآن ننتظر اكتمال الحركة ثم نترك
+       سكونًا يتأمّل فيه Na⁺ و Cl⁻ مستقرّين. من فعّل تقليل الحركة تتمّ
+       عنده الحركة فورًا، فالانتظار الطويل يصير جمودًا بلا معنى. */
+    const settleDelay = reduceMotion ? 600 : 2330;
     setTimeout(() => {
       successTag.classList.add('show');
       showStep(8);
-    }, 700);
+    }, settleDelay);
+  }
+
+  /* المرحلة الثانية: التجاذب — تُستدعى فقط بعد أن يتنبّأ الطالب بالجواب
+     الصحيح في السؤال الثامن. حركة أبطأ وأوضح من الأولى لأنها تقع وحدها
+     بلا تغيّرات أخرى تزاحمها، والمشهد ملتصق أعلى الشاشة فيراها الطالب
+     تحدث أمامه لحظة إجابته. */
+  function attractIons(){
+    if(!transferred) return;
+    naGroup.style.transition = reduceMotion ? 'transform .01s linear'
+                                            : 'transform 1.1s cubic-bezier(.34,1.2,.4,1)';
+    clGroup.style.transition = naGroup.style.transition;
+    requestAnimationFrame(() => {
+      naGroup.style.transform = 'scale(0.88) translateX(52px)';
+      clGroup.style.transform = 'scale(1.10) translateX(-38px)';
+    });
+    if(window.Sounds) setTimeout(function(){ window.Sounds.playChime(); }, reduceMotion ? 0 : 700);
   }
 
   /* ==========================================================
@@ -1137,6 +1178,8 @@
     9: 'جمعتَ الشحنتين ووصلتَ للتعادل'
   };
 
+  /* التمرير التلقائي آمن هنا: المشهد ملتصق أعلى الشاشة ولا يغادرها،
+     فالتمرير يجلب السؤال التالي تحته بدل أن يسحب عين الطالب عنه. */
   function showStep(n){
     const el = document.getElementById('explore-' + n);
     if(!el) return;
@@ -1188,7 +1231,11 @@
           if(window.Sounds) window.Sounds.playSnap();
           if(window.XP) window.XP.claim('l3-explore-q' + step, window.XP.POINTS.MCQ,
                                         XP_REASONS[step]);
-          setTimeout(function(){ showStep(parseInt(step, 10) + 1); }, 500);
+          // السؤال الثامن هو تنبّؤ بالتجاذب — تنفيذه بصريًا هو جوابه،
+          // ونمهله ليكتمل قبل كشف السؤال التالي
+          var nextDelay = 500;
+          if(step === '8'){ attractIons(); nextDelay = reduceMotion ? 500 : 1500; }
+          setTimeout(function(){ showStep(parseInt(step, 10) + 1); }, nextDelay);
         } else {
           feedback.textContent = '💡 ' + CHOICE_HINTS[step];
           feedback.className = 'explore-feedback is-hint';
