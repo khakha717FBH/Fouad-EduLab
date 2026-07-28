@@ -368,7 +368,7 @@
      ما يلي تعديلات عرض فقط فوق .chip و.slot العامّين. */
   .chain-instruction{
     font-size:clamp(13px,2.2vw,15px);
-    margin:18px 0 0;
+    margin:18px 0 14px;
   }
   #chain-pool .chip{
     font-size:clamp(12px,2.1vw,13.5px);
@@ -385,13 +385,37 @@
   .chain-rows{
     display:flex;
     flex-direction:column;
-    gap:10px;
+    gap:12px;
     margin-bottom:6px;
   }
   .chain-row{
     display:flex;
     align-items:center;
     gap:10px;
+  }
+  /* لوحة الخطوة داخل صفّها: التغذية الراجعة تقع في السطر نفسه، فلا
+     يحتاج الطالب إلى تمرير ليرى أثر ما فعله. عرض ثابت بالبكسل لا نسبة،
+     كي لا تتغيّر مساحة الجملة بتغيّر طول النصّ. */
+  .mp-mini{
+    flex:0 0 auto;
+    width:68px;
+    height:auto;
+    display:block;
+  }
+  /* الحدود والرموز مرسومة بمقياس الشريط الكبير؛ داخل إطار 68px تصبح
+     شعرية غير مرئية — لذا تُغلَّظ هنا وحدها بلا مساس بالشريط الكامل */
+  .mp-mini .mp-atom{stroke-width:2.4;}
+  .mp-mini .mp-pos, .mp-mini .mp-neg{stroke-width:3;}
+  .mp-mini .mp-arrow, .mp-mini .mp-pull{stroke-width:2.4;}
+  .mp-mini .mp-e-gap{stroke-width:2;}
+  .mp-mini .mp-sign-pos, .mp-mini .mp-sign-neg{font-size:30px;}
+  @media (max-width:400px){
+    .mp-mini{width:56px;}
+  }
+  .pool-label{
+    color:var(--ink-dim);
+    font-size:.82rem;
+    margin:16px 0 -6px;
   }
   .chain-num{
     flex:0 0 auto;
@@ -475,8 +499,13 @@
      مبرّره أنه تمثيل لما شاهده الطالب متحرّكًا في المحطة الثانية،
      لا مفهوم جديد. */
   #modelStrip{
-    margin:22px 0 4px;
+    margin:6px 0 18px;
     width:100%;
+  }
+  .reveal-model-cap{
+    color:var(--ink-dim);
+    font-size:.86rem;
+    margin:14px 0 0;
   }
   #modelStrip svg{
     width:100%;
@@ -568,63 +597,17 @@
   }
   /* ============ تسليم بين المحطات ============
      يظهر فقط بعد إنجاز آخر نشاط في المحطة — لو عُرض منذ البداية
-     لصار طريقًا للتخطّي بدل جسر بين محطتين. */
-  .station-handoff{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:12px;
-    margin-top:26px;
-    text-align:center;
-  }
-  .handoff-q{
-    color:var(--ink-dim);
-    font-size:clamp(13px,2.2vw,15px);
-    line-height:1.9;
-    max-width:52ch;
-    margin:0;
-  }
-  .pill-link{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    border:1.5px solid var(--turquoise);
-    color:var(--turquoise);
-    background:transparent;
-    border-radius:999px;
-    padding:10px 26px;
-    font-family:inherit;
-    font-weight:700;
-    font-size:.9rem;
-    text-decoration:none;
-    cursor:pointer;
-    transition:background .25s ease, color .25s ease, box-shadow .25s ease;
-  }
-  .pill-link:hover{
-    background:var(--turquoise);
-    color:var(--navy-dark);
-    box-shadow:0 0 16px var(--turquoise-soft);
-  }
-  .pill-link:focus-visible{outline:2px solid var(--coral); outline-offset:3px;}
+     لصار طريقًا للتخطّي بدل جسر بين محطتين.
+
+     أنماط .station-handoff و.handoff-q و.station-next و.link-btn
+     انتقلت كلها إلى shared/template-boilerplate/template.css ضمن
+     هرم الأزرار الثلاثي، فترثها كل الدروس. لا تُعاد كتابتها هنا. */
   html{scroll-behavior:smooth;}
   /* المحطة الهدف لا تلتصق بحافة الشاشة تمامًا عند القفز إليها */
   .station{ scroll-margin-top:14px; }
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
-    .pill-link{transition:none;}
   }
-
-  .link-btn{
-    background:none;
-    border:none;
-    color:var(--ink-dim);
-    text-decoration:underline;
-    cursor:pointer;
-    font-family:inherit;
-    font-size:.84rem;
-    padding:6px 0;
-  }
-  .link-btn:hover{color:var(--turquoise);}
 </style>
 </head>
 <body>
@@ -696,7 +679,7 @@
     <div id="engageSuccessTag" class="success-tag">✓ تحدٍّ مكتمل</div>
     <!-- النصّ أعلاه كان يعد بسهم إلى أسفل بلا وجهة — هذا هو الزرّ الناقص -->
     <div id="engageHandoff" class="station-handoff" hidden>
-      <a class="pill-link" href="#station-2">تابع إلى الاستكشاف ↓</a>
+      <a class="station-next" href="#station-2">تابع إلى الاستكشاف ↓</a>
     </div>
   </section>
 
@@ -784,7 +767,7 @@
       <div id="phase1-bridge" class="station-handoff" hidden>
         <div class="success-tag show">✓ توقّعتَ الشحنتين</div>
         <p class="handoff-q">توقّعتَ ما ستصير عليه كل ذرّة بعد انتقال الإلكترون. لم يبقَ إلا أن تراه يحدث.</p>
-        <button type="button" class="pill-link" id="openPhase2">لنرَ إن صحّ توقّعك ↓</button>
+        <button type="button" class="station-next" id="openPhase2">لنرَ إن صحّ توقّعك ↓</button>
       </div>
 
     </div>
@@ -856,7 +839,7 @@
       <div id="explore-10" class="station-handoff" hidden>
         <div class="success-tag show">✓ أكملتَ الاستكشاف</div>
         <p class="handoff-q">شاهدتَ ما حدث بين ذرّتين بعينهما. فهل هذا خاصّ بالصوديوم والكلور، أم قاعدة تتكرّر؟</p>
-        <a class="pill-link" href="#station-3">تابع إلى التفسير ↓</a>
+        <a class="station-next" href="#station-3">تابع إلى التفسير ↓</a>
       </div>
 
     </div>
@@ -873,9 +856,85 @@
     <!-- ===== جرعة 1: التعميم — ترتيب القاعدة العامة (محرّك الشرائح المشترك بـtemplate.js) =====
          الشرائح والخانات يجب أن تكون موجودة في DOM منذ التحميل (لا تُحقن
          لاحقًا) لأن المحرّك المشترك يقرأها مرّة واحدة عند التحميل. -->
-    <div id="chain-activity">
-      <p class="chain-instruction">اسحب كل خطوة إلى موضعها — أو انقر الشريحة ثم انقر مكانها. <b>انتبه:</b> ليست كل الشرائح جزءًا من القاعدة.</p>
+    <!-- ===== جرعة 1: التعميم — ترتيب القاعدة العامة (محرّك الشرائح المشترك بـtemplate.js) =====
+         الشرائح والخانات يجب أن تكون موجودة في DOM منذ التحميل (لا تُحقن
+         لاحقًا) لأن المحرّك المشترك يقرأها مرّة واحدة عند التحميل.
 
+         ترتيب الكتل مقصود (يوليو 2026): الخانات أوّلًا ثم بِركة الشرائح
+         تحتها. الجُمل العلمية كاملة الصياغة تجعل البِركة أطول كتلة في
+         المحطة (~290px)؛ لو بقيت فوق الخانات لدفعتها إلى أسفل الشاشة.
+         وبنزولها تبقى الخانات في أعلى مجال النظر، والمسافة من الشريحة
+         إلى أقرب خانة قصيرة دائمًا.
+
+         ولوحة النموذج لم تعد شريطًا واحدًا أسفل النشاط، بل لوحة داخل كل
+         صفّ: فيقع الإفلات والتوهّج في السطر نفسه وتحت النظرة نفسها مهما
+         طالت الصفحة. الشريط الكامل محفوظ لكتلة الكشف. -->
+    <div id="chain-activity">
+      <p class="chain-instruction">اسحب كل خطوة إلى موضعها — أو <b>انقر الشريحة ثم انقر الخانة</b> إن كان أيسر لك. <b>انتبه:</b> ليست كل الشرائح جزءًا من القاعدة.</p>
+
+      <div class="chain-rows">
+        <div class="chain-row">
+          <span class="chain-num">1</span>
+          <span class="slot chain-slot" data-xp-id="l3-chain-1" data-xp-reason="حدّدتَ نقطة بداية القاعدة" data-answer="ذرّة تفقد إلكتروناتها بسهولة تلتقي ذرّة تحتاجها">الخطوة الأولى</span>
+          <svg class="mp mp-mini" id="mp-row-1" viewBox="0 0 160 108" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <circle class="mp-atom" cx="50" cy="64" r="22"/>
+            <circle class="mp-atom" cx="112" cy="64" r="22"/>
+            <g class="mp-mark">
+              <circle class="mp-e" cx="50" cy="34" r="5"/>
+              <circle class="mp-e-gap" cx="112" cy="34" r="5"/>
+            </g>
+          </svg>
+        </div>
+        <div class="chain-row">
+          <span class="chain-num">2</span>
+          <span class="slot chain-slot" data-xp-id="l3-chain-2" data-xp-reason="رتّبتَ خطوة الانتقال الكامل" data-answer="تنتقل الإلكترونات انتقالًا كاملًا">الخطوة الثانية</span>
+          <svg class="mp mp-mini" id="mp-row-2" viewBox="0 0 160 108" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <circle class="mp-atom" cx="50" cy="64" r="22"/>
+            <circle class="mp-atom" cx="112" cy="64" r="22"/>
+            <g class="mp-mark">
+              <circle class="mp-e" cx="81" cy="34" r="5"/>
+              <path class="mp-arrow" d="M58 34 L104 34"/>
+              <path class="mp-arrow" d="M98 29 L104 34 L98 39"/>
+            </g>
+          </svg>
+        </div>
+        <div class="chain-row">
+          <span class="chain-num">3</span>
+          <span class="slot chain-slot" data-xp-id="l3-chain-3" data-xp-reason="ربطتَ الانتقال بتكوّن الأيونات" data-answer="تتحوّل الذرّتان إلى أيون موجب وأيون سالب">الخطوة الثالثة</span>
+          <svg class="mp mp-mini" id="mp-row-3" viewBox="0 0 160 108" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <circle class="mp-atom" cx="50" cy="64" r="22"/>
+            <circle class="mp-atom" cx="112" cy="64" r="22"/>
+            <g class="mp-mark">
+              <circle class="mp-pos" cx="50" cy="64" r="22"/>
+              <circle class="mp-neg" cx="112" cy="64" r="22"/>
+              <text class="mp-sign-pos" x="50" y="72" text-anchor="middle">+</text>
+              <text class="mp-sign-neg" x="112" y="72" text-anchor="middle">−</text>
+            </g>
+          </svg>
+        </div>
+        <div class="chain-row">
+          <span class="chain-num">4</span>
+          <span class="slot chain-slot" data-xp-id="l3-chain-4" data-xp-reason="أنهيتَ القاعدة بسبب الترابط" data-answer="ينشأ تجاذب بين الشحنتين المتضادّتين">الخطوة الرابعة</span>
+          <svg class="mp mp-mini" id="mp-row-4" viewBox="0 0 160 108" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <circle class="mp-atom" cx="50" cy="64" r="22"/>
+            <circle class="mp-atom" cx="112" cy="64" r="22"/>
+            <g class="mp-mark">
+              <circle class="mp-pos" cx="50" cy="64" r="22"/>
+              <circle class="mp-neg" cx="112" cy="64" r="22"/>
+              <text class="mp-sign-pos" x="50" y="72" text-anchor="middle">+</text>
+              <text class="mp-sign-neg" x="112" y="72" text-anchor="middle">−</text>
+              <path class="mp-pull" d="M24 26 L68 26"/>
+              <path class="mp-pull" d="M62 21 L68 26 L62 31"/>
+              <path class="mp-pull" d="M138 26 L94 26"/>
+              <path class="mp-pull" d="M100 21 L94 26 L100 31"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <p class="chain-hint" id="chainHint" hidden></p>
+
+      <p class="pool-label">الشرائح المتاحة:</p>
       <div class="chips-pool" id="chain-pool">
         <div class="chip" data-value="تتحوّل الذرّتان إلى أيون موجب وأيون سالب">تتحوّل الذرّتان إلى أيون موجب وأيون سالب</div>
         <div class="chip" id="chip-share" data-value="تتشارك الذرّتان الإلكترونات">تتشارك الذرّتان الإلكترونات</div>
@@ -884,100 +943,84 @@
         <div class="chip" id="chip-proton" data-value="يتغيّر عدد البروتونات">يتغيّر عدد البروتونات</div>
         <div class="chip" data-value="تنتقل الإلكترونات انتقالًا كاملًا">تنتقل الإلكترونات انتقالًا كاملًا</div>
       </div>
-
-      <p class="chain-hint" id="chainHint" hidden></p>
-
-      <div class="chain-rows">
-        <div class="chain-row">
-          <span class="chain-num">1</span>
-          <span class="slot chain-slot" data-xp-id="l3-chain-1" data-xp-reason="حدّدتَ نقطة بداية القاعدة" data-answer="ذرّة تفقد إلكتروناتها بسهولة تلتقي ذرّة تحتاجها">الخطوة الأولى</span>
-        </div>
-        <div class="chain-row">
-          <span class="chain-num">2</span>
-          <span class="slot chain-slot" data-xp-id="l3-chain-2" data-xp-reason="رتّبتَ خطوة الانتقال الكامل" data-answer="تنتقل الإلكترونات انتقالًا كاملًا">الخطوة الثانية</span>
-        </div>
-        <div class="chain-row">
-          <span class="chain-num">3</span>
-          <span class="slot chain-slot" data-xp-id="l3-chain-3" data-xp-reason="ربطتَ الانتقال بتكوّن الأيونات" data-answer="تتحوّل الذرّتان إلى أيون موجب وأيون سالب">الخطوة الثالثة</span>
-        </div>
-        <div class="chain-row">
-          <span class="chain-num">4</span>
-          <span class="slot chain-slot" data-xp-id="l3-chain-4" data-xp-reason="أنهيتَ القاعدة بسبب الترابط" data-answer="ينشأ تجاذب بين الشحنتين المتضادّتين">الخطوة الرابعة</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== النموذج المجرّد: يُبنى لوحةً لوحةً مع كل خطوة ينجح الطالب في ترتيبها =====
-         بلا أسماء عناصر بقصد: هدف المحطة التجريد من الحالة الخاصة (صوديوم/كلور)،
-         وأي رسم باسم عنصر يعيد الطالب إليها ويهدم التعميم.
-
-         الاتجاه من اليسار لليمين، والذرّة التي تفقد (فتصير أيونًا موجبًا) على
-         اليسار دائمًا — مطابقةً للرسم المتحرّك في المحطة الثانية (الصوديوم
-         يسارًا والكلور يمينًا) ولترتيب كتابة الصيغة NaCl. قاعدة المنصة:
-         الرسوم من اليسار لليمين حتى داخل صفحة RTL. -->
-    <div id="modelStrip" aria-label="نموذج مجرّد لخطوات تكوّن الرابطة الأيونية، يُبنى مع ترتيبك">
-      <svg viewBox="0 0 680 190" role="img" xmlns="http://www.w3.org/2000/svg">
-        <title>النموذج المجرّد للرابطة الأيونية</title>
-        <desc>أربع لوحات: ذرّة تفقد وذرّة تحتاج، ثم انتقال كامل للإلكترون، ثم أيون موجب وأيون سالب، ثم تجاذب بينهما. تُضاء كل لوحة عند ترتيب خطوتها.</desc>
-
-        <g class="mp" id="mp-1">
-          <circle class="mp-atom" cx="87" cy="76" r="24"/>
-          <circle class="mp-atom" cx="152" cy="76" r="24"/>
-          <g class="mp-mark">
-            <circle class="mp-e" cx="87" cy="48" r="4.5"/>
-            <circle class="mp-e-gap" cx="152" cy="48" r="4.5"/>
-          </g>
-          <text class="mp-cap" x="119" y="130" text-anchor="middle">ذرّة تفقد وأخرى تحتاج</text>
-          <text class="mp-num" x="119" y="160" text-anchor="middle">1</text>
-        </g>
-
-        <g class="mp" id="mp-2">
-          <circle class="mp-atom" cx="240" cy="76" r="24"/>
-          <circle class="mp-atom" cx="305" cy="76" r="24"/>
-          <g class="mp-mark">
-            <circle class="mp-e" cx="272" cy="48" r="4.5"/>
-            <path class="mp-arrow" d="M248 48 L297 48"/>
-            <path class="mp-arrow" d="M291 43 L297 48 L291 53"/>
-          </g>
-          <text class="mp-cap" x="272" y="130" text-anchor="middle">انتقال كامل</text>
-          <text class="mp-num" x="272" y="160" text-anchor="middle">2</text>
-        </g>
-
-        <g class="mp" id="mp-3">
-          <circle class="mp-atom" cx="400" cy="76" r="24"/>
-          <circle class="mp-atom" cx="465" cy="76" r="24"/>
-          <g class="mp-mark">
-            <circle class="mp-pos" cx="400" cy="76" r="24"/>
-            <circle class="mp-neg" cx="465" cy="76" r="24"/>
-            <text class="mp-sign-pos" x="400" y="82" text-anchor="middle">+</text>
-            <text class="mp-sign-neg" x="465" y="82" text-anchor="middle">−</text>
-          </g>
-          <text class="mp-cap" x="432" y="130" text-anchor="middle">أيونان متضادّان</text>
-          <text class="mp-num" x="432" y="160" text-anchor="middle">3</text>
-        </g>
-
-        <g class="mp" id="mp-4">
-          <circle class="mp-atom" cx="560" cy="76" r="24"/>
-          <circle class="mp-atom" cx="625" cy="76" r="24"/>
-          <g class="mp-mark">
-            <circle class="mp-pos" cx="560" cy="76" r="24"/>
-            <circle class="mp-neg" cx="625" cy="76" r="24"/>
-            <text class="mp-sign-pos" x="560" y="82" text-anchor="middle">+</text>
-            <text class="mp-sign-neg" x="625" y="82" text-anchor="middle">−</text>
-            <path class="mp-pull" d="M534 40 L578 40"/>
-            <path class="mp-pull" d="M572 35 L578 40 L572 45"/>
-            <path class="mp-pull" d="M651 40 L607 40"/>
-            <path class="mp-pull" d="M613 35 L607 40 L613 45"/>
-          </g>
-          <text class="mp-cap" x="592" y="130" text-anchor="middle">تجاذب</text>
-          <text class="mp-num" x="592" y="160" text-anchor="middle">4</text>
-        </g>
-      </svg>
     </div>
 
     <!-- ===== الكشف: لا يظهر إلا بعد اكتمال الترتيب ===== -->
     <div id="explainReveal" hidden>
       <div class="reveal-tag">✓ هذا ما بنيته — واسمه العلمي الرابطة الأيونية</div>
+
+      <p class="reveal-model-cap">النموذج الذي بنيتَه، خطوة خطوة:</p>
+      <!-- ===== النموذج المجرّد كاملًا — لا يظهر إلا داخل الكشف =====
+           أثناء البناء يرى الطالب لوحة كل خطوة داخل صفّها (mp-row-N) فتلتصق
+           التغذية الراجعة بموضع يده. وهنا فقط، بعد اكتمال الترتيب، يُجمع
+           الشريط كاملًا: رؤية السلسلة وحدةً واحدة مطلوبة للتعميم لا للترتيب.
+
+           بلا أسماء عناصر بقصد: هدف المحطة التجريد من الحالة الخاصة (صوديوم/كلور)،
+           وأي رسم باسم عنصر يعيد الطالب إليها ويهدم التعميم.
+
+           الاتجاه من اليسار لليمين، والذرّة التي تفقد (فتصير أيونًا موجبًا) على
+           اليسار دائمًا — مطابقةً للرسم المتحرّك في المحطة الثانية (الصوديوم
+           يسارًا والكلور يمينًا) ولترتيب كتابة الصيغة NaCl. قاعدة المنصة:
+           الرسوم من اليسار لليمين حتى داخل صفحة RTL. -->
+      <div id="modelStrip" aria-label="النموذج المجرّد الكامل لخطوات تكوّن الرابطة الأيونية">
+        <svg viewBox="0 0 680 190" role="img" xmlns="http://www.w3.org/2000/svg">
+          <title>النموذج المجرّد للرابطة الأيونية</title>
+          <desc>أربع لوحات متتابعة: ذرّة تفقد وذرّة تحتاج، ثم انتقال كامل للإلكترون، ثم أيون موجب وأيون سالب، ثم تجاذب بينهما.</desc>
+
+          <g class="mp on" id="mp-1">
+            <circle class="mp-atom" cx="87" cy="76" r="24"/>
+            <circle class="mp-atom" cx="152" cy="76" r="24"/>
+            <g class="mp-mark">
+              <circle class="mp-e" cx="87" cy="48" r="4.5"/>
+              <circle class="mp-e-gap" cx="152" cy="48" r="4.5"/>
+            </g>
+            <text class="mp-cap" x="119" y="130" text-anchor="middle">ذرّة تفقد وأخرى تحتاج</text>
+            <text class="mp-num" x="119" y="160" text-anchor="middle">1</text>
+          </g>
+
+          <g class="mp on" id="mp-2">
+            <circle class="mp-atom" cx="240" cy="76" r="24"/>
+            <circle class="mp-atom" cx="305" cy="76" r="24"/>
+            <g class="mp-mark">
+              <circle class="mp-e" cx="272" cy="48" r="4.5"/>
+              <path class="mp-arrow" d="M248 48 L297 48"/>
+              <path class="mp-arrow" d="M291 43 L297 48 L291 53"/>
+            </g>
+            <text class="mp-cap" x="272" y="130" text-anchor="middle">انتقال كامل</text>
+            <text class="mp-num" x="272" y="160" text-anchor="middle">2</text>
+          </g>
+
+          <g class="mp on" id="mp-3">
+            <circle class="mp-atom" cx="400" cy="76" r="24"/>
+            <circle class="mp-atom" cx="465" cy="76" r="24"/>
+            <g class="mp-mark">
+              <circle class="mp-pos" cx="400" cy="76" r="24"/>
+              <circle class="mp-neg" cx="465" cy="76" r="24"/>
+              <text class="mp-sign-pos" x="400" y="82" text-anchor="middle">+</text>
+              <text class="mp-sign-neg" x="465" y="82" text-anchor="middle">−</text>
+            </g>
+            <text class="mp-cap" x="432" y="130" text-anchor="middle">أيونان متضادّان</text>
+            <text class="mp-num" x="432" y="160" text-anchor="middle">3</text>
+          </g>
+
+          <g class="mp on" id="mp-4">
+            <circle class="mp-atom" cx="560" cy="76" r="24"/>
+            <circle class="mp-atom" cx="625" cy="76" r="24"/>
+            <g class="mp-mark">
+              <circle class="mp-pos" cx="560" cy="76" r="24"/>
+              <circle class="mp-neg" cx="625" cy="76" r="24"/>
+              <text class="mp-sign-pos" x="560" y="82" text-anchor="middle">+</text>
+              <text class="mp-sign-neg" x="625" y="82" text-anchor="middle">−</text>
+              <path class="mp-pull" d="M534 40 L578 40"/>
+              <path class="mp-pull" d="M572 35 L578 40 L572 45"/>
+              <path class="mp-pull" d="M651 40 L607 40"/>
+              <path class="mp-pull" d="M613 35 L607 40 L613 45"/>
+            </g>
+            <text class="mp-cap" x="592" y="130" text-anchor="middle">تجاذب</text>
+            <text class="mp-num" x="592" y="160" text-anchor="middle">4</text>
+          </g>
+        </svg>
+      </div>
 
       <p>ما رتّبتَه ينطبق على أي زوج عناصر، لا على الصوديوم والكلور وحدهما.</p>
 
@@ -1659,11 +1702,14 @@
   var reveal = document.getElementById('explainReveal');
   var revealed = false;
 
-  // إضاءة لوحة النموذج المقابلة لكل خانة نجحت
+  // إضاءة لوحة الخطوة داخل صفّها لحظة نجاح خانتها.
+  // اللوحات صارت أربعًا مستقلّة (mp-row-N) لا شريطًا واحدًا: الالتصاق
+  // بموضع اليد أهمّ أثناء البناء من رؤية السلسلة متّصلة، والشريط الكامل
+  // يظهر مضاءً داخل كتلة الكشف حيث تُطلب رؤية السلسلة وحدةً.
   function syncModelStrip(){
     chainSlots.forEach(function(slot, i){
       if(!slot.classList.contains('correct')) return;
-      var panel = document.getElementById('mp-' + (i + 1));
+      var panel = document.getElementById('mp-row-' + (i + 1));
       if(panel && !panel.classList.contains('on')) panel.classList.add('on');
     });
   }
@@ -1945,7 +1991,7 @@
   function reduced(){
     return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
-  document.querySelectorAll('a.pill-link[href^="#"]').forEach(function(link){
+  document.querySelectorAll('a.station-next[href^="#"]').forEach(function(link){
     link.addEventListener('click', function(e){
       var id = link.getAttribute('href').slice(1);
       var target = document.getElementById(id);
