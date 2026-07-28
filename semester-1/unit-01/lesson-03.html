@@ -609,6 +609,131 @@
      أنماط .station-handoff و.handoff-q و.station-next و.link-btn
      انتقلت كلها إلى shared/template-boilerplate/template.css ضمن
      هرم الأزرار الثلاثي، فترثها كل الدروس. لا تُعاد كتابتها هنا. */
+  /* ============ محطة 4: الإنتاج المتدرّج ============ */
+
+  /* استدعاء تنبّؤ المحطة 3 — يُعرض ولا يُحكم عليه. الحكم يصنعه
+     الطالب بيده بعد البناء، لا سطرٌ يخبره أنه أخطأ قبل أن يبني. */
+  .recall-box{
+    margin:22px auto 0;
+    max-width:920px;
+    border:1px dashed var(--turquoise-soft);
+    border-radius:16px;
+    padding:14px 18px;
+    font-size:.92rem;
+    line-height:1.9;
+    color:var(--ink-dim);
+  }
+  .recall-box b{color:var(--ink); font-weight:800;}
+
+  .sub-h{
+    max-width:920px;
+    margin:30px auto 12px;
+    font-family:'Cairo', sans-serif;
+    font-size:1rem;
+    font-weight:700;
+    color:var(--turquoise);
+  }
+  .stage-note{
+    max-width:920px;
+    margin:12px auto 0;
+    font-size:.92rem;
+    color:var(--ink-dim);
+    line-height:1.9;
+  }
+  .dose{
+    max-width:920px;
+    margin:16px auto 0;
+    font-size:.95rem;
+    line-height:2;
+  }
+
+  /* رسالة العجز — نبرة هادئة لا خطأ. الطالب لم يخطئ حين نقر:
+     نقرُه هو ما كشف أن الكلور لا يتّسع، وذلك هو المطلوب منه. */
+  .impasse-msg{
+    max-width:920px;
+    margin:14px auto 0;
+    border-inline-start:3px solid var(--coral);
+    background:rgba(255,107,74,.06);
+    border-radius:0 12px 12px 0;
+    padding:12px 16px;
+    font-size:.93rem;
+    line-height:1.9;
+    color:var(--ink);
+  }
+
+  /* اهتزاز محدود في مكانه: يقول "لا مكان" لا "معطّل".
+     ولا يتحرّك الإلكترون نحو الكلور ثم يرتدّ، لأن الارتداد
+     يوحي بدفعٍ من الكلور لا وجود له فيزيائيًا. */
+  @keyframes eNudge{
+    0%,100%{ transform:translateX(0); }
+    22%{ transform:translateX(5px); }
+    46%{ transform:translateX(-5px); }
+    70%{ transform:translateX(3px); }
+  }
+  .electron.nudge{
+    transform-box:fill-box;
+    transform-origin:center;
+    animation:eNudge .5s ease;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .electron.nudge{ animation:none; }
+  }
+
+  .formula-label{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:26px;
+    fill:var(--turquoise);
+    pointer-events:none;
+    user-select:none;
+    opacity:0;
+    transition:opacity .6s ease;
+  }
+  .formula-label.show{ opacity:1; }
+
+  /* سطر ملخّص للسؤال بعد الإجابة — طيٌّ مبسّط مستقلّ عن محرّك
+     الطيّ في المحطة 2 (ذاك مربوط بـ .explore-seq وحدها) */
+  .q-folded{
+    display:flex;
+    gap:8px;
+    align-items:baseline;
+    font-size:.88rem;
+    color:var(--ink-dim);
+    margin-top:10px;
+  }
+  .q-folded b{color:var(--turquoise); font-weight:700;}
+
+  #station-4 .quiz-options{ margin-top:14px; }
+  #station-4 .explore-q{ max-width:920px; margin-inline:auto; }
+
+  /* بطاقة النموذج بجوار سؤال التسمية: النمط والفراغ في نظرة واحدة */
+  .pattern-card{
+    max-width:920px;
+    margin:18px auto 0;
+    background:var(--navy-darker);
+    border:1px solid var(--turquoise-soft);
+    border-radius:14px;
+    padding:12px 18px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .pattern-row{
+    font-size:.95rem;
+    font-weight:700;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .pattern-row span[dir="ltr"]{
+    color:var(--turquoise);
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+  }
+  .pattern-row.is-blank{ color:var(--ink-dim); }
+  .pattern-row.is-blank span[dir="ltr"]{ color:var(--coral); }
+
   html{scroll-behavior:smooth;}
   /* المحطة الهدف لا تلتصق بحافة الشاشة تمامًا عند القفز إليها */
   .station{ scroll-margin-top:14px; }
@@ -637,6 +762,7 @@
   <div class="progress-dot" data-target="station-1"></div>
   <div class="progress-dot" data-target="station-2"></div>
   <div class="progress-dot" data-target="station-3"></div>
+  <div class="progress-dot" data-target="station-4"></div>
 </div>
 
 <header class="hero">
@@ -1119,6 +1245,121 @@
           </div>
           <p id="mgPredictSaved" hidden>✓ حُفظ توقّعك. ستتحقّق منه بنفسك في المحطة القادمة.</p>
         </div>
+
+        <!-- ===== جسر المحطة 3 ← 4 =====
+             أُضيف الآن لأن المحطة 4 صارت مبنية. الدرجة الأولى في هرم
+             الأزرار (station-next داخل .station-handoff) — وهو أول زرّ
+             ممتلئ في هذه المحطة، فيبقى جسر «اعرض ما بنيتُه» أعلاه في
+             الدرجة الثانية ولا يتزاحمان. -->
+        <div id="toStation4" class="station-handoff" hidden>
+          <p class="handoff-q">توقّعتَ عددًا. الآن ابنِ المركّب بيدك وانظر أيوافق توقّعك أم لا.</p>
+          <a class="station-next" href="#station-4">لنبنِ مركّب المغنيسيوم ↓</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 4: التوسيع الأول =====================
+       الهدف: ينتقل الطالب من مشاهدة انتقال إلكترون واحد بين ذرّتين إلى
+       إنتاج تمثيل لحالة لا يكفي فيها إلكترون واحد ولا ذرّتان.
+
+       الخطأ المستهدَف: تعميم 1:1 الذي زرعته المحطة 2 بلا قصد (ذرّة +
+       ذرّة = مركّب). صحيح في NaCl وحدها، وهو مصدر MgCl و CaO₂ وأمثالهما.
+       المحطة كلّها موضع كسر هذا التعميم.
+
+       لماذا LiF أولًا وهي 1:1 أيضًا؟ لأنها لا تُقيَّم إطلاقًا: نقرة
+       واحدة بلا سؤال ولا نقاط. غرضها أن يتعرّف الطالب على الواجهة
+       فتكون كل مفاجأته في MgCl₂ مفاجأةً علمية لا مفاجأة تفاعل. ولو
+       قُيّمت لثبّتت التعميم قبل كسره. -->
+  <section class="station" id="station-4">
+    <div class="station-label">المحطة الرابعة</div>
+    <h2>متى لا تكفي ذرّة واحدة؟</h2>
+    <p class="station-tagline">ابنِ المركّب بيدك، ثم قارنه بما توقّعته</p>
+
+    <div class="recall-box" id="mgRecall"></div>
+
+    <h3 class="sub-h">أولًا: ليثيوم وفلور</h3>
+    <div class="stage-wrap">
+      <svg id="stage4a" class="stage" viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+    <p class="stage-note" id="lifNote">انقر إلكترون التكافؤ (المرجاني) في ذرّة الليثيوم.</p>
+
+    <div id="lifDone" hidden>
+      <p class="dose">
+        إلكترون واحد كفى. ذرّة لذرّة — وما يربط الأيونين <b>رابطة أيونية</b>.
+      </p>
+      <div class="station-handoff">
+        <button type="button" class="btn" id="toMgStage">والآن المغنيسيوم ↓</button>
+      </div>
+    </div>
+
+    <div id="mgBlock" hidden>
+      <h3 class="sub-h">ثانيًا: مغنيسيوم وكلور</h3>
+      <div class="stage-wrap">
+        <svg id="stage4b" class="stage" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <p class="stage-note" id="mgNote">في مستوى المغنيسيوم الخارجي إلكترونان. انقر أحدهما.</p>
+
+      <p class="impasse-msg" id="impasse" hidden>
+        مستوى الكلور الخارجي اكتمل بثمانية إلكترونات. لا مكان لهذا الإلكترون.
+      </p>
+
+      <div id="mgQ" hidden>
+        <p class="explore-q">الإلكترون الثاني لم يجد مكانًا. ما الحلّ؟</p>
+        <div class="quiz-options" id="mgOptions">
+          <label class="quiz-option"><input type="radio" name="mgSolve" value="w1">يشترك المغنيسيوم والكلور في هذا الإلكترون</label>
+          <label class="quiz-option"><input type="radio" name="mgSolve" value="w2">يبقى الإلكترون في المغنيسيوم، وتكون الصيغة <span dir="ltr">MgCl</span></label>
+          <label class="quiz-option"><input type="radio" name="mgSolve" value="ok">ذرّة كلور أخرى تستقبله</label>
+        </div>
+        <p class="explore-feedback" id="mgFeedback" hidden></p>
+        <button type="button" class="link-btn" id="mgHintBtn">أعطني تلميحًا</button>
+        <!-- مخرج نجاة: لا تُترك حلقة محاولات بلا باب خروج -->
+        <button type="button" class="link-btn" id="mgShowModel" hidden>أرني الإجابة</button>
+        <div class="model-answer" id="mgModel" hidden></div>
+      </div>
+
+      <div id="mgQFolded" class="q-folded" hidden></div>
+
+      <div id="addWrap" class="station-handoff" hidden>
+        <button type="button" class="btn" id="addCl">أضف ذرّة كلور أخرى</button>
+      </div>
+
+      <div id="mgReveal" hidden>
+        <p class="dose">
+          المغنيسيوم أعطى <b>2</b>. وكل ذرّة كلور تقبل <b>1</b>. فاحتاج <b>2</b> من الكلور.<br>
+          ليس لأن قاعدةً تقول ذلك، بل لأن الإلكترونات لا يبقى منها فائض ولا نقص.
+        </p>
+        <p class="dose" id="mgCompare"></p>
+
+        <!-- تسمية المركّب: تعميم يصنعه الطالب لا اسم يتلقّاه.
+             نموذج فلوريد الليثيوم عُرض في التسخين، فالمطلوب هنا نقل
+             النمط لا استرجاعه. ولذلك إنتاج (كتابة) لا تعرّف (اختيار). -->
+        <div id="nameBlock">
+          <!-- النموذج يعيش عند لحظة استعماله لا عند لحظة تكوّنه: كان اسم
+               فلوريد الليثيوم يُعرض في ذيل التسخين، فيفصله عن هذا السؤال
+               مسارٌ طويل (عجز ← سؤال ← إضافة ← بناء) ويصير ذكرى باهتة
+               تُطلَب من الذاكرة. هنا يراه الطالب والفراغ في نظرة واحدة. -->
+          <div class="pattern-card">
+            <div class="pattern-row"><span dir="ltr">Li + F</span> ← فلوريد الليثيوم</div>
+            <div class="pattern-row is-blank"><span dir="ltr">Mg + Cl</span> ← ؟</div>
+          </div>
+          <p class="explore-q">فما اسم المركّب الذي بنيتَه أنت؟</p>
+          <div class="explore-answer-row">
+            <input type="text" autocomplete="off" class="explore-input" id="nameInput"
+                   aria-label="اسم المركّب" placeholder="اكتب الاسم ثم Enter">
+            <button type="button" class="btn" id="nameCheck">تحقّق</button>
+          </div>
+          <p class="explore-feedback" id="nameFeedback" hidden></p>
+          <!-- مخرج نجاة إلزامي لكل إجابة قصيرة تُصحَّح بكلمات مفتاحية -->
+          <button type="button" class="link-btn" id="nameShowModel" hidden>أرني الإجابة</button>
+          <div class="model-answer" id="nameModel" hidden></div>
+        </div>
+
+        <p class="dose" id="mgClosing" hidden>
+          إذن ما بنيتَه رابطتان أيونيتان في مركّب <b>كلوريد المغنيسيوم</b>
+          <span dir="ltr">(MgCl<sub>2</sub>)</span> — أيون مغنيسيوم موجب واحد،
+          وأيونا كلور سالبان.
+        </p>
       </div>
     </div>
   </section>
@@ -1995,11 +2236,19 @@
   if(mgBtn && mgInput){
     mgBtn.addEventListener('click', function(){
       var val = mgInput.value.trim();
-      if(!val) return;
+      /* حقل فارغ: لا نصمت. الصمت هنا يوقف الطالب بلا سبب مفهوم،
+         وهذا التنبّؤ لا يُصحَّح أصلًا فلا معنى للتردّد فيه. */
+      if(!val){
+        mgInput.setAttribute('placeholder', 'خمّن ولو تخمينًا — لن يُصحَّح هنا');
+        mgInput.focus();
+        return;
+      }
       try{ localStorage.setItem('l3MgPrediction', val); }catch(e){ /* تصفّح خاص */ }
       mgInput.disabled = true;
       mgBtn.disabled = true;
       if(mgSaved) mgSaved.hidden = false;
+      var h4 = document.getElementById('toStation4');
+      if(h4) h4.hidden = false;
       if(window.Sounds) window.Sounds.playSnap();
       claim('l3-mg-predict', pts('PREDICT', 3), 'سجّلتَ توقّعك قبل التحقّق منه');
     });
@@ -2007,6 +2256,556 @@
       if(e.key === 'Enter'){ e.preventDefault(); mgBtn.click(); }
     });
   }
+
+})();
+</script>
+
+<script>
+/* ==========================================================
+   منطق محطة 4 — الإنتاج المتدرّج (LiF ثم MgCl₂)
+   ----------------------------------------------------------
+   خاص بهذا الدرس. يستخدم window.Sounds و window.XP، وكلاهما
+   قد يغيب فلا يتعطّل شيء (كل النداءات محروسة).
+
+   الأيون الموجب على اليسار دائمًا في المشهدين، مطابقةً لصيغة
+   MgCl₂ ولحركة المحطة 2 — اتساق الاتجاه عبر المحطات جزء من
+   المعنى لا تفصيل تنسيق.
+   ========================================================== */
+(function(){
+  "use strict";
+
+  var svgA = document.getElementById('stage4a');
+  var svgB = document.getElementById('stage4b');
+  if(!svgA || !svgB) return;
+
+  var reduceMotion = window.matchMedia &&
+                     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var NS = 'http://www.w3.org/2000/svg';
+  var ELECTRON_R = 6.5, VALENCE_R = 8.5;
+
+  function el(tag, attrs){
+    var n = document.createElementNS(NS, tag);
+    for(var k in attrs) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+  function ring(cx, cy, r, count, startDeg){
+    if(startDeg === undefined) startDeg = -90;
+    var pts = [];
+    for(var i=0;i<count;i++){
+      var a = (startDeg + i*(360/count)) * Math.PI/180;
+      pts.push({ x: cx + r*Math.cos(a), y: cy + r*Math.sin(a) });
+    }
+    return pts;
+  }
+  function tween(node, from, to, ms, done){
+    if(reduceMotion) ms = 1;
+    var t0 = performance.now();
+    function step(now){
+      var t = Math.min(1, (now - t0)/ms);
+      var e = 1 - Math.pow(1 - t, 3);
+      for(var k in to) node.setAttribute(k, from[k] + (to[k]-from[k])*e);
+      if(t < 1) requestAnimationFrame(step);
+      else if(done) done();
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* راسم ذرّة عام: عدد المستويات مشتقّ من cfg.shells لا مثبّت على
+     ثلاثة — الليثيوم والفلور مستويان، والمغنيسيوم والكلور ثلاثة. */
+  function renderAtom(cfg, prefix, radii, target){
+    var g = el('g', { id: prefix + 'Group', 'class': 'atom-group' });
+    g.style.transformOrigin = cfg.cx + 'px ' + cfg.cy + 'px';
+
+    g.appendChild(el('circle', { cx:cfg.cx, cy:cfg.cy, r:26, 'class':'nucleus' }));
+    var nl = el('text', { x:cfg.cx, y:cfg.cy+4, 'class':'nucleus-label', 'text-anchor':'middle' });
+    nl.textContent = '+' + cfg.z;
+    g.appendChild(nl);
+
+    var outerR = radii[cfg.shells.length - 1];
+
+    /* موضع الرمز: فوق الذرّة افتراضيًا (يصلح للذرّات المتجاورة أفقيًا).
+       أمّا حين تتراصّ الذرّات رأسيًا — كذرّتَي الكلور في MgCl₂ — فرمز
+       السفلى يقع داخل مدارات العليا. فيُنقل الرمز إلى الجانب الخارجي
+       لكل ذرّة، حيث لا يمرّ في مسار ذرّة أخرى بأي وضع. */
+    var side = cfg.labelSide || 'top';
+    var sx, sy, anchor, chargeDX;
+    if(side === 'left'){
+      /* فُرجة 52 لا 34: الرمز على اليسار تتلوه شحنته يمينه — أي في
+         اتجاه الدائرة — فيحتاج مساحة الرمز والشحنة معًا، لا الرمز وحده. */
+      sx = cfg.cx - (outerR + 52); sy = cfg.cy + 6; anchor = 'end';  chargeDX = 22;
+    }else if(side === 'right'){
+      sx = cfg.cx + (outerR + 34); sy = cfg.cy + 6; anchor = 'start'; chargeDX = 24;
+    }else{
+      sx = cfg.cx; sy = cfg.cy - (outerR + 35); anchor = 'middle'; chargeDX = 26;
+    }
+
+    var sym = el('text', { x:sx, y:sy, 'class':'element-label', 'text-anchor':anchor });
+    sym.textContent = cfg.label;
+    g.appendChild(sym);
+
+    /* رمز الشحنة معزول باتجاه LTR: «2+» داخل صفحة RTL يُعرَض معكوسًا
+       بلا هذا العزل، فيقرأ الطالب «+2» — وهي كتابة غير صحيحة للشحنة.
+       ويرتفع 18 وحدة لا 14: عند 14 يلامس أعلى حروف الرمز فيبدو ملتصقًا
+       به لا مرفوعًا فوقه. */
+    var ch = el('text', {
+      x: sx + chargeDX, y: sy - 18, 'class':'ion-charge',
+      id: prefix + 'Charge', 'text-anchor':'middle', direction:'ltr'
+    });
+    ch.style.unicodeBidi = 'isolate';
+    g.appendChild(ch);
+
+    cfg.shells.forEach(function(count, si){
+      var r = radii[si];
+      g.appendChild(el('circle', {
+        cx:cfg.cx, cy:cfg.cy, r:r, 'class':'orbit orbit-shell-' + si,
+        id: prefix + 'Orbit' + si
+      }));
+      ring(cfg.cx, cfg.cy, r, count).forEach(function(p, i){
+        g.appendChild(el('circle', {
+          cx:p.x, cy:p.y, r:ELECTRON_R, 'class':'electron',
+          id: prefix + '-e-' + si + '-' + i
+        }));
+      });
+    });
+
+    target.appendChild(g);
+    return g;
+  }
+
+  function makeValence(node){
+    node.classList.add('valence');
+    node.setAttribute('r', VALENCE_R);
+  }
+  function makeClickable(node, label){
+    node.classList.add('clickable', 'pulsing');
+    node.setAttribute('tabindex', '0');
+    node.setAttribute('role', 'button');
+    node.setAttribute('aria-label', label);
+  }
+  function unclick(node){
+    node.classList.remove('clickable', 'pulsing');
+    node.removeAttribute('tabindex');
+    node.style.cursor = 'default';
+  }
+  function onActivate(node, fn){
+    node.addEventListener('click', fn);
+    node.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); fn(); }
+    });
+  }
+  function formula(svg, text, x, y){
+    var t = el('text', { x:x, y:y, 'class':'formula-label', 'text-anchor':'middle', direction:'ltr' });
+    t.style.unicodeBidi = 'isolate';
+    t.textContent = text;
+    svg.appendChild(t);
+    return t;
+  }
+
+  /* ---------- استدعاء تنبّؤ المحطة 3 ----------
+     يُعرض حرفيًا بلا حكم. ولو غاب (تخطّاه الطالب أو تصفّح خاص)
+     فلا إشارة إلى غيابه إطلاقًا — لا لوم على ما لم يُطلب منه. */
+  var predicted = null;
+  try{ predicted = localStorage.getItem('l3MgPrediction'); }catch(e){ predicted = null; }
+  var recall = document.getElementById('mgRecall');
+  if(predicted && predicted.trim()){
+    predicted = predicted.trim();
+    recall.innerHTML = 'في المحطة السابقة توقّعتَ أن عدد ذرّات الكلور اللازمة للتفاعل ' +
+                       'مع المغنيسيوم هو: <b></b><br>' +
+                       'ستبني الآن هذا المركّب بيدك. ابدأ بمثال أبسط، ثم تحقّق من توقّعك.';
+    recall.querySelector('b').textContent = predicted;
+  }else{
+    recall.textContent = 'ستبني هنا مركّب المغنيسيوم والكلور بيدك، وترى كم ذرّة يلزم من كلٍّ منهما. ' +
+                         'ابدأ بمثال أبسط أولًا.';
+  }
+
+  /* ================= المشهد الأول: LiF (بلا تقييم) ================= */
+  var R2 = [42, 86];
+  var LI = { cx:250, cy:210, label:'Li', z:3,  shells:[2,1] };
+  var F  = { cx:650, cy:210, label:'F',  z:9,  shells:[2,7] };
+
+  renderAtom(F,  'f',  R2, svgA);
+  renderAtom(LI, 'li', R2, svgA);
+
+  var liE = document.getElementById('li-e-1-0');
+  makeValence(liE);
+  makeClickable(liE, 'انقل الإلكترون من الليثيوم إلى الفلور');
+
+  var lifFormula = formula(svgA, 'LiF', 450, 395);
+  var lifDone = false;
+
+  onActivate(liE, function(){
+    if(lifDone) return;
+    lifDone = true;
+    unclick(liE);
+    if(window.Sounds) window.Sounds.playTick();
+
+    var dest = ring(F.cx, F.cy, R2[1], 8);
+    for(var i=0;i<7;i++){
+      var e = document.getElementById('f-e-1-' + i);
+      tween(e, { cx:+e.getAttribute('cx'), cy:+e.getAttribute('cy') },
+               { cx:dest[i].x, cy:dest[i].y }, 500);
+    }
+    document.getElementById('fGroup').appendChild(liE);
+    tween(liE, { cx:+liE.getAttribute('cx'), cy:+liE.getAttribute('cy') },
+              { cx:dest[7].x, cy:dest[7].y }, 500);
+
+    var liOuter = document.getElementById('liOrbit1');
+    liOuter.style.transition = 'opacity .5s ease';
+    liOuter.style.opacity = '0';
+
+    var liG = document.getElementById('liGroup'), fG = document.getElementById('fGroup');
+    var liCh = document.getElementById('liCharge'), fCh = document.getElementById('fCharge');
+    liCh.textContent = '+';  fCh.textContent = '−';
+
+    setTimeout(function(){
+      liCh.style.transition = fCh.style.transition = 'opacity .5s ease';
+      liCh.style.opacity = fCh.style.opacity = '1';
+      /* الإزاحة قبل التحجيم كي تبقى بالوحدات الأصلية بلا حساب معكوس.
+         تُغلق الفجوة حتى يتبقّى ~20 وحدة: تجاور بلا تداخل مستويين —
+         والتداخل تمثيلٌ للرابطة التساهمية لا الأيونية. */
+      liG.style.transform = 'translateX(120px) scale(0.86)';
+      fG.style.transform  = 'translateX(-90px) scale(1.10)';
+      lifFormula.classList.add('show');
+      if(window.Sounds) window.Sounds.playChime();
+    }, reduceMotion ? 20 : 560);
+
+    document.getElementById('lifNote').textContent =
+      'الليثيوم صار أيونًا موجبًا، والفلور أيونًا سالبًا، فتجاذبا وارتبطا.';
+    setTimeout(function(){
+      document.getElementById('lifDone').hidden = false;
+    }, reduceMotion ? 200 : 1600);
+  });
+
+  /* جسر داخل المحطة (الدرجة الثانية في هرم الأزرار: لا ينقل إلى
+     محطة أخرى). وقفة بزرّ لا كشف تلقائي — الطالب هو من يطلب. */
+  document.getElementById('toMgStage').addEventListener('click', function(){
+    var block = document.getElementById('mgBlock');
+    block.hidden = false;
+    document.getElementById('lifDone').hidden = true;
+    if(window.Sounds) window.Sounds.playSnap();
+    if(block.scrollIntoView){
+      block.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block:'start' });
+    }
+  });
+
+  /* ================= المشهد الثاني: MgCl₂ ================= */
+  /* الرموز على الجوانب الخارجية لا فوق الذرّات: الكلوران يتراصّان
+     رأسيًا، فرمز فوق أيّهما يقع داخل مدارات الآخر (عيب مرصود عيانًا).
+     والمسافة بين الكلورين 340 وحدة تُبقي بينهما فرجة بعد التحجيم. */
+  var R3 = [42, 76, 112];
+  var MG  = { cx:230, cy:300, label:'Mg', z:12, shells:[2,8,2], labelSide:'left'  };
+  var CL1 = { cx:670, cy:300, label:'Cl', z:17, shells:[2,8,7], labelSide:'right' };
+  var CL2 = { cx:670, cy:470, label:'Cl', z:17, shells:[2,8,7], labelSide:'right' };
+
+  var cl1G = renderAtom(CL1, 'c1', R3, svgB);
+  var mgG  = renderAtom(MG,  'mg', R3, svgB);
+
+  var mgE1 = document.getElementById('mg-e-2-0');
+  var mgE2 = document.getElementById('mg-e-2-1');
+  makeValence(mgE1); makeValence(mgE2);
+
+  /* الزاوية السفلى اليسرى لا وسط الأسفل: الكلور السفلي ينزل نحو الوسط
+     بعد التجاذب فيقع فوق صيغة موضوعة هناك (عيب مرصود عيانًا). وهذه
+     الزاوية تُخليها الذرّات كلّها بعد التجاذب. */
+  var mgFormula = formula(svgB, 'MgCl2', 120, 560);
+  mgFormula.setAttribute('text-anchor', 'start');
+  /* MgCl₂ — الرقم منخفض. نبنيه بـ tspan لا برمز يونيكود، فبعض
+     الخطوط العربية لا تحمل «₂» فيظهر مربّعًا فارغًا. */
+  mgFormula.textContent = 'MgCl';
+  var sub = el('tspan', { dy:8, 'font-size':'19' });
+  sub.textContent = '2';
+  mgFormula.appendChild(sub);
+
+  var mgNote   = document.getElementById('mgNote');
+  var impasse  = document.getElementById('impasse');
+  var mgQ      = document.getElementById('mgQ');
+  var mgQFold  = document.getElementById('mgQFolded');
+  var addWrap  = document.getElementById('addWrap');
+  var mgReveal = document.getElementById('mgReveal');
+
+  var firstDone = false, secondDone = false, questionOpen = false, cl2Group = null;
+
+  function fillCl(prefix, movingElectron, cb){
+    var cfg = (prefix === 'c1') ? CL1 : CL2;
+    var dest = ring(cfg.cx, cfg.cy, R3[2], 8);
+    for(var i=0;i<7;i++){
+      var e = document.getElementById(prefix + '-e-2-' + i);
+      tween(e, { cx:+e.getAttribute('cx'), cy:+e.getAttribute('cy') },
+               { cx:dest[i].x, cy:dest[i].y }, 500);
+    }
+    document.getElementById(prefix + 'Group').appendChild(movingElectron);
+    tween(movingElectron,
+          { cx:+movingElectron.getAttribute('cx'), cy:+movingElectron.getAttribute('cy') },
+          { cx:dest[7].x, cy:dest[7].y }, 500, cb);
+    var ch = document.getElementById(prefix + 'Charge');
+    ch.textContent = '−';
+    setTimeout(function(){
+      ch.style.transition = 'opacity .5s ease';
+      ch.style.opacity = '1';
+    }, reduceMotion ? 20 : 420);
+  }
+
+  makeClickable(mgE1, 'انقل الإلكترون الأول من المغنيسيوم إلى الكلور');
+
+  onActivate(mgE1, function(){
+    if(firstDone) return;
+    firstDone = true;
+    unclick(mgE1);
+    if(window.Sounds) window.Sounds.playTick();
+    fillCl('c1', mgE1);
+    mgNote.textContent = 'اكتمل الكلور بثمانية. بقي في المغنيسيوم إلكترون واحد — انقره.';
+    setTimeout(function(){
+      makeClickable(mgE2, 'حاول نقل الإلكترون الثاني');
+    }, reduceMotion ? 100 : 700);
+  });
+
+  /* قلب المحطة: النقرة التي لا تنجح. الإلكترون يهتزّ في مكانه
+     ويعود — «لا مكان» لا «معطّل». ولا يُعرض الحلّ هنا: يُسأل
+     الطالب أولًا، لأن من ينفّذ حلًّا معروضًا لم يستنتجه. */
+  onActivate(mgE2, function(){
+    if(!firstDone || secondDone) return;
+    if(questionOpen){                      // نقرة ثانية على المسدود
+      mgE2.classList.remove('nudge');
+      void mgE2.getBoundingClientRect();
+      mgE2.classList.add('nudge');
+      return;
+    }
+    questionOpen = true;
+    mgE2.classList.add('nudge');
+    if(window.Sounds) window.Sounds.playWrong();
+    impasse.hidden = false;
+
+    /* وقفة قبل السؤال: لحظة العجز نفسها هي الدرس، ولو لحق بها
+       السؤال فورًا لابتلعها. من فعّل تقليل الحركة لا ينتظر. */
+    setTimeout(function(){
+      mgQ.hidden = false;
+    }, reduceMotion ? 150 : 1500);
+  });
+
+  /* ---------- السؤال المفصلي — العنصر المُقيَّم الوحيد ---------- */
+  var EX = 'l3-mg-solve';
+  var wrongCount = 0, solved = false;
+  var fb        = document.getElementById('mgFeedback');
+  var hintBtn   = document.getElementById('mgHintBtn');
+  var modelBtn  = document.getElementById('mgShowModel');
+  var modelBox  = document.getElementById('mgModel');
+
+  var HINTS = {
+    w1: 'التشارك في إلكترون شيء آخر ستدرسه لاحقًا. هنا الإلكترون ينتقل انتقالًا كاملًا — فمن يستقبله؟',
+    w2: 'لو بقي الإلكترون في المغنيسيوم، فهل بلغ المغنيسيوم استقراره؟ وكم إلكترونًا كان عليه أن يفقد؟'
+  };
+
+  function lockOptions(){
+    mgOptionsInputs.forEach(function(r){ r.disabled = true; });
+  }
+  var mgOptionsInputs = Array.prototype.slice.call(
+    document.querySelectorAll('input[name="mgSolve"]'));
+
+  function succeed(points, reason){
+    solved = true;
+    lockOptions();
+    if(window.Sounds) window.Sounds.playChime();
+    if(window.XP) window.XP.claim('l3-mg-insight', points, reason);
+
+    // طيّ السؤال إلى سطر ملخّص كي لا يزاحم المشهد على الشاشة
+    setTimeout(function(){
+      mgQ.hidden = true;
+      mgQFold.hidden = false;
+      mgQFold.innerHTML = '<span>الحلّ:</span> <b>ذرّة كلور أخرى تستقبله</b>';
+      addWrap.hidden = false;
+    }, reduceMotion ? 200 : 1200);
+  }
+
+  mgOptionsInputs.forEach(function(radio){
+    radio.addEventListener('change', function(){
+      if(solved) return;
+      if(window.XP && window.XP.attempt) window.XP.attempt(EX);
+      hintBtn.hidden = true;
+
+      if(radio.value === 'ok'){
+        fb.hidden = false;
+        fb.className = 'explore-feedback is-correct';
+        fb.textContent = '✓ بالضبط. إلكترونان يحتاجان مستقبِلَين.';
+        modelBtn.hidden = true;
+        succeed(window.XP ? window.XP.POINTS.PATTERN : 12,
+                'استنتجتَ أن الإلكترون الثاني يحتاج ذرّة أخرى');
+      }else{
+        wrongCount++;
+        if(window.Sounds) window.Sounds.playWrong();
+        fb.hidden = false;
+        fb.className = 'explore-feedback is-hint';
+        fb.textContent = HINTS[radio.value];
+        radio.checked = false;
+        var lbl = radio.closest('.quiz-option');
+        if(lbl) lbl.classList.remove('selected');
+        if(wrongCount >= 2) modelBtn.hidden = false;   // مخرج النجاة
+      }
+    });
+  });
+
+  hintBtn.addEventListener('click', function(){
+    hintBtn.hidden = true;
+    fb.hidden = false;
+    fb.className = 'explore-feedback is-hint';
+    fb.textContent = 'كم إلكترونًا يلزم كلَّ ذرّة كلور لتكتمل؟ وكم إلكترونًا لدى المغنيسيوم ليعطيه؟';
+    if(window.XP && window.XP.hint) window.XP.hint(EX);
+  });
+
+  modelBtn.addEventListener('click', function(){
+    if(solved) return;
+    modelBtn.hidden = true;
+    modelBox.hidden = false;
+    modelBox.textContent = 'كل ذرّة كلور تحتاج إلكترونًا واحدًا فقط لتكتمل. ' +
+      'والمغنيسيوم يعطي اثنين. فلا بدّ من ذرّة كلور ثانية تستقبل الإلكترون الآخر.';
+    fb.hidden = true;
+    var okRadio = document.querySelector('input[name="mgSolve"][value="ok"]');
+    if(okRadio){
+      okRadio.checked = true;
+      var lbl = okRadio.closest('.quiz-option');
+      if(lbl) lbl.classList.add('selected');
+    }
+    succeed(6, 'رأيتَ الإجابة النموذجية بعد محاولتين — نصف النقاط');
+  });
+
+  /* ---------- الإضافة والإكمال ---------- */
+  document.getElementById('addCl').addEventListener('click', function(){
+    if(secondDone) return;
+    secondDone = true;
+    addWrap.hidden = true;
+    impasse.hidden = true;                 // التلميح يزول بزوال سببه
+    mgE2.classList.remove('nudge');
+    unclick(mgE2);
+    if(window.Sounds) window.Sounds.playSnap();
+
+    // الكلور الأول ينزاح ليفسح مكانًا، والثاني يظهر بعده
+    cl1G.style.transform = 'translateY(-170px)';
+
+    setTimeout(function(){
+      cl2Group = renderAtom(CL2, 'c2', R3, svgB);
+      cl2Group.style.opacity = '0';
+      cl2Group.style.transition = 'opacity .5s ease, transform .55s cubic-bezier(.22,1,.36,1)';
+      requestAnimationFrame(function(){ cl2Group.style.opacity = '1'; });
+
+      setTimeout(function(){
+        fillCl('c2', mgE2, function(){
+          var mgCh = document.getElementById('mgCharge');
+          mgCh.textContent = '2+';
+          mgCh.style.transition = 'opacity .5s ease';
+          mgCh.style.opacity = '1';
+
+          setTimeout(function(){
+            mgG.style.transform  = 'scale(0.86)';
+            cl1G.style.transform = 'translate(-240px, -142px) scale(1.08)';
+            cl2Group.style.transform = 'translate(-240px, -28px) scale(1.08)';
+            /* بعد انتهاء الحركة لا أثناءها: الصيغة نتيجةٌ لا مرافقة،
+               ولو ظهرت والذرّات في الطريق لبدت وسمًا على مشهد لم يستقرّ. */
+            setTimeout(function(){
+              mgFormula.classList.add('show');
+            }, reduceMotion ? 20 : 1150);
+            if(window.Sounds) window.Sounds.playChime();
+          }, reduceMotion ? 20 : 500);
+
+          mgNote.textContent = 'أيون مغنيسيوم موجب بشحنة 2، وأيونا كلور سالبان — بنسبة 1 : 2.';
+
+          setTimeout(function(){
+            if(window.XP) window.XP.claim('l3-mgcl2-build', window.XP.POINTS.PRODUCE,
+                                          'بنيتَ MgCl₂ بنفسك');
+            mgReveal.hidden = false;
+            var cmp = document.getElementById('mgCompare');
+            if(predicted && predicted.trim()){
+              cmp.innerHTML = 'توقّعتَ: <b></b> — وبنيتَ ذرّتَي كلور.';
+              cmp.querySelector('b').textContent = predicted;
+            }else{
+              cmp.textContent = 'ذرّة مغنيسيوم واحدة، وذرّتا كلور.';
+            }
+          }, reduceMotion ? 400 : 2200);
+        });
+      }, reduceMotion ? 100 : 620);
+    }, reduceMotion ? 50 : 580);
+  });
+
+  /* ---------- تسمية المركّب: إجابة قصيرة مصحَّحة بكلمات مفتاحية ----------
+     التطبيع يتجاهل ما لا يغيّر المعنى العلمي: التشكيل، صور الألف
+     والياء والتاء المربوطة، «ال» التعريف، والمسافات. ويقبل تهجّيات
+     المغنيسيوم الشائعة كلّها (ماغنيسيوم، مغنسيوم…).
+     ومعه مخرج نجاة بعد محاولتين — قاعدة منصّية لا استثناء. */
+  var nameTries = 0, nameDone = false;
+  var nameInput = document.getElementById('nameInput');
+  var nameFb    = document.getElementById('nameFeedback');
+  var nameModel = document.getElementById('nameModel');
+  var nameModelBtn = document.getElementById('nameShowModel');
+  var nameBtn   = document.getElementById('nameCheck');
+  var mgClosing = document.getElementById('mgClosing');
+
+  function normalize(t){
+    return String(t)
+      .replace(/[\u064B-\u0652\u0640]/g, '')   // تشكيل وتطويل
+      .replace(/[أإآٱ]/g, 'ا')
+      .replace(/ى/g, 'ي')
+      .replace(/ة/g, 'ه')
+      .replace(/ال/g, '')
+      .replace(/\s+/g, '')
+      .toLowerCase();
+  }
+
+  function finishNaming(points, reason){
+    nameDone = true;
+    nameInput.disabled = true;
+    nameBtn.disabled = true;
+    nameModelBtn.hidden = true;
+    if(window.Sounds) window.Sounds.playChime();
+    if(window.XP) window.XP.claim('l3-mgcl2-name', points, reason);
+    mgClosing.hidden = false;
+  }
+
+  function checkName(){
+    if(nameDone) return;
+    var v = normalize(nameInput.value);
+    if(!v){
+      nameInput.setAttribute('placeholder', 'اكتب الاسم كما في نموذج الليثيوم');
+      nameInput.focus();
+      return;
+    }
+    if(window.XP && window.XP.attempt) window.XP.attempt('l3-name');
+    nameTries++;
+
+    var hasChloride = v.indexOf('كلوريد') !== -1;
+    var hasMetal    = /(مغنيسيوم|مغنسيوم|ماغنيسيوم|ماغنسيوم|مغنيزيوم)/.test(v);
+
+    if(hasChloride && hasMetal){
+      nameFb.hidden = false;
+      nameFb.className = 'explore-feedback is-correct';
+      nameFb.textContent = '✓ كلوريد المغنيسيوم.';
+      finishNaming(window.XP ? window.XP.POINTS.PRODUCE : 8,
+                   'سمّيتَ المركّب بنقل النمط من فلوريد الليثيوم');
+      return;
+    }
+
+    if(window.Sounds) window.Sounds.playWrong();
+    nameFb.hidden = false;
+    nameFb.className = 'explore-feedback is-hint';
+    if(!hasChloride && hasMetal){
+      nameFb.textContent = 'اللافلزّ يُذكر أولًا ويتغيّر آخره: الفلور صار «فلوريد»، فماذا يصير الكلور؟';
+    }else if(hasChloride && !hasMetal){
+      nameFb.textContent = 'بقي الفلزّ. في «فلوريد الليثيوم» جاء اسم الفلزّ بعده — فما فلزّ مركّبك؟';
+    }else{
+      nameFb.textContent = 'انظر إلى نموذج الليثيوم: اسم اللافلزّ معدّلًا، ثم اسم الفلزّ. طبّقه على عنصريك.';
+    }
+    if(nameTries >= 2) nameModelBtn.hidden = false;
+  }
+
+  nameBtn.addEventListener('click', checkName);
+  nameInput.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){ e.preventDefault(); checkName(); }
+  });
+
+  nameModelBtn.addEventListener('click', function(){
+    if(nameDone) return;
+    nameFb.hidden = true;
+    nameModel.hidden = false;
+    nameModel.textContent = 'اسم المركّب: كلوريد المغنيسيوم. اسم اللافلزّ أولًا بصيغة «…يد»، ثم اسم الفلزّ.';
+    finishNaming(4, 'رأيتَ الإجابة النموذجية بعد محاولتين — نصف النقاط');
+  });
 
 })();
 </script>
