@@ -24,12 +24,14 @@
   /* ============ أنماط خاصة بمحتوى محطة 2 فقط (رسم الذرّتين والتفاعل) ============
      لا تُنقَل هذه الأنماط إلى template.css المشترك لأنها خاصة بمادة هذا
      الدرس تحديدًا (نموذج بور)، لا هيكلًا عامًا يصلح لأي درس آخر. */
-  /* المشهد ملتصق أعلى الشاشة طوال المحطة الثانية: أسئلتها التسعة كلها
-     تسأل عن الرسم، وكان الطالب مضطرًّا للصعود والهبوط مع كل سؤال. الآن
-     تمرّ الأسئلة تحته وهو ثابت — يتنبّأ وهو يراه، ويرى نتيجة تنبّؤه فورًا.
-     الارتفاع مقيّد بنسبة من الشاشة كي لا يبتلع المشهد الجوال العمودي
-     فلا يبقى للسؤال إلا شريط ضيّق. */
-  #stage-wrap{
+  /* المشهد في التدفّق الطبيعي بحجمه الكامل — بلا التصاق وبلا سقف ارتفاع.
+     كان ملتصقًا أعلى الشاشة (position:sticky) لأن الأسئلة التسعة كانت
+     تتراكم مفتوحةً فتدفعه خارج الشاشة، لكن الالتصاق عالج العَرَض لا السبب
+     وأنتج منطقَي حركة في مساحة واحدة: مشهد مثبَّت ومحتوى ينزلق خلفه.
+     السبب الحقيقي كان تضخّم كومة الأسئلة، وقد عولج بطيّ السؤال المُجاب
+     إلى سطر واحد (انظر .step-summary أدناه) — فالمشهد لا يغادر الشاشة
+     أصلًا، ويستعيد حجمه الطبيعي على الجوال. */
+  .stage-wrap{
     width:100%;
     max-width:920px;
     margin:0 auto;
@@ -37,22 +39,12 @@
     border:1px solid rgba(20,200,168,0.15);
     border-radius:22px;
     padding:10px;
-    position:sticky;
-    top:8px;
-    z-index:5;
   }
-  svg#stage{
+  svg.stage{
     width:100%;
     height:auto;
-    max-height:45vh;
     display:block;
-    touch-action:none; /* يمنع تمرير الصفحة أثناء التفاعل داخل المشهد فقط */
     -webkit-tap-highlight-color:transparent;
-  }
-  /* الالتصاق يفترض متصفحًا يدعمه؛ القديم يعرضه عاديًا بلا كسر */
-  @supports not (position: sticky){
-    #stage-wrap{ position:relative; }
-    svg#stage{ max-height:none; }
   }
   .nucleus{fill:var(--navy-darker); stroke:var(--turquoise-soft); stroke-width:1.5;}
   .nucleus-label{
@@ -100,8 +92,41 @@
     margin:14px auto 0;
   }
   .electron{ fill:var(--turquoise); }
+
+  /* ============ إلكترون التكافؤ المرجاني (المرحلة الثانية فقط) ============
+     لا يظهر في المرحلة الأولى عمدًا: السؤال الأول يطلب عدّ إلكترونات
+     المستوى الخارجي، والثالث يطلب الموازنة بين فقد واحد واكتساب سبعة —
+     فلو مُيّز الإلكترون لونيًّا لصار الجوابان معطًى بصريًّا لا استنتاجًا.
+     يظهر عند فتح المرحلة الثانية تصديقًا لاستنتاج الطالب لا استباقًا له.
+
+     ويبقى مرجانيًّا بعد الانتقال داخل مستوى الكلور: لولا ذلك لذاب بين
+     سبعة إلكترونات متطابقة وضاع أثره، فيصير "الانتقال" كلمة لا مشاهدة.
+     وهو تمهيد مباشر لتمثيل النقاط والصلبان في محطة التوسيع.
+
+     UDL: اللون وحده لا يحمل المعنى — يرافقه فرق قطر طفيف، فإشارتان لا
+     واحدة لمن لا يميّز المرجاني عن التركوازي بوضوح.
+
+     وقناتان منفصلتان لا تختلطان: المرجاني = هويّة هذا الإلكترون (دائم)،
+     والنبض والتوهّج = دعوة النقر (مؤقّت يزول بعد النقر). */
+  .electron.valence{ fill:var(--coral); }
+  @keyframes pulse-valence{
+    0%,100%{ r:8.5; opacity:1; }
+    50%{ r:10.2; opacity:.75; }
+  }
+  .electron.valence.pulsing{ animation:pulse-valence 1.6s ease-in-out infinite; }
+  .electron.valence.clickable{ filter:drop-shadow(0 0 6px rgba(255,107,74,.65)); }
+  .electron.valence.clickable:hover{ filter:drop-shadow(0 0 10px var(--coral)); }
+  @media (prefers-reduced-motion: reduce){
+    .electron.valence.pulsing{ animation:none; }
+  }
+  /* touch-action:none كان مطبَّقًا على المشهد كلّه. طالما كان المشهد ملتصقًا
+     لم يظهر أثره، أمّا وقد عاد إلى تدفّق القراءة فأي محاولة تمرير بإصبع
+     يمرّ فوق المشهد كانت ستجمّد الصفحة على الجوال فيظنّ الطالب الدرس معطّلًا.
+     الآن محصور في الإلكترون القابل للنقر وحده — وهو العنصر الوحيد الذي
+     يحتاج منع التمرير أثناء التفاعل معه. */
   .electron.clickable{
     cursor:pointer;
+    touch-action:none;
     filter:drop-shadow(0 0 5px var(--turquoise-soft));
     transform-box:fill-box;
     transform-origin:center;
@@ -127,17 +152,6 @@
   @media (prefers-reduced-motion: reduce){
     .atom-group{ transition:transform .01s linear; }
   }
-  #hint{
-    margin-top:18px;
-    font-size:.85rem;
-    color:var(--ink-dim);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:6px;
-    transition:opacity .4s ease;
-  }
-  #hint.hidden{opacity:0; pointer-events:none;}
   /* .success-tag: صنف عام (لا معرّف) لأنه صار يُستخدم بمحطتين — وسم
      "تم نقل الإلكترون" بمحطة 2، ووسم "تحدٍّ مكتمل" بمحطة 1 — يبقى
      محليًا بهذا الملف لأنه تصميم بصري خاص بمادة هذا الدرس تحديدًا. */
@@ -217,6 +231,42 @@
   .explore-input:disabled{
     opacity:.7;
   }
+  /* ============ خيارات في صفّ أفقي (السؤال الثامن) ============
+     المحرّك المشترك يصفّ الخيارات عموديًّا كامل العرض، وهو الصواب لخيارات
+     من جملة. لكن خيارات السؤال الثامن كلمة واحدة، وثلاثة أسطر كاملة كانت
+     تُنزل السؤال 260 بكسل تحت المشهد — فيجيب الطالب والرسم خارج شاشته،
+     فتقع حركة التجاذب وهي جواب السؤال دون أن يراها أحد.
+
+     الصفّ الأفقي يوفّر ~130 بكسل فيبقى المشهد والسؤال في إطار واحد.
+     ولو ضاقت الشاشة جدًّا يلتفّ الصفّ سطرين بدل أن يفيض. */
+  .quiz-options.options-row{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+  }
+  .quiz-options.options-row .quiz-option{
+    flex:1 1 auto;
+    justify-content:center;
+    padding:11px 16px;
+    white-space:nowrap;
+  }
+  /* الزرّ الدائري يزاحم كلمة قصيرة في مساحة ضيّقة، لكنه لا يُحذف بـ
+     display:none — ذلك يُخرجه من ترتيب التركيز فيتعذّر اختياره بلوحة
+     المفاتيح. يُخفى بصريًّا فقط ويبقى قابلًا للتركيز ولقارئ الشاشة،
+     وحالة الاختيار يعبّر عنها إطار البطاقة من template.css. */
+  .quiz-options.options-row .quiz-option input[type="radio"]{
+    position:absolute;
+    width:1px; height:1px;
+    opacity:0;
+    margin:0;
+    pointer-events:none;
+  }
+  .quiz-options.options-row .quiz-option:has(input:focus-visible){
+    outline:2px solid var(--coral);
+    outline-offset:2px;
+  }
+
   .explore-feedback{
     margin-top:10px;
     font-size:.88rem;
@@ -224,6 +274,93 @@
   }
   .explore-feedback.is-correct{ color:var(--turquoise); font-weight:700; }
   .explore-feedback.is-hint{ color:var(--ink-dim); }
+
+  /* ============ طيّ السؤال المُجاب (محطة 2 فقط) ============
+     السؤال المُجاب لا يُحذف بل يُطوى إلى سطر واحد يحمل رقمه وخلاصته
+     وإجابته — فيبقى موجودًا ومقروءًا، وتقرأ السطور التسعة معًا كسلسلة
+     استدلال الطالب. نقرة تعيد فتحه كاملًا للمراجعة، ونقرة تطويه.
+     السطر زرّ حقيقي لا div: يستجيب للوحة المفاتيح ويعلن حالته
+     لقارئ الشاشة عبر aria-expanded. */
+  .step-summary{
+    display:none;
+    width:100%;
+    align-items:center;
+    gap:10px;
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:8px 12px 8px 16px;
+    font-family:'Tajawal', sans-serif;
+    font-size:clamp(12px,2.1vw,14px);
+    color:var(--ink-dim);
+    text-align:right;
+    cursor:pointer;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .explore-step.is-answered > .step-summary{ display:flex; }
+  .step-summary:hover{
+    border-color:var(--turquoise-soft);
+    background:rgba(20,200,168,.05);
+  }
+  .step-summary:focus-visible{
+    outline:2px solid var(--coral);
+    outline-offset:2px;
+  }
+  .step-num{
+    flex:0 0 auto;
+    width:22px; height:22px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:var(--turquoise-faint);
+    border:1px solid var(--turquoise-soft);
+    color:var(--turquoise);
+    font-weight:700;
+    font-size:11px;
+  }
+  .step-gist{
+    flex:1 1 auto;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .step-recap{
+    flex:0 0 auto;
+    color:var(--turquoise);
+    font-weight:700;
+    max-width:45%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .step-caret{
+    flex:0 0 auto;
+    width:12px; height:12px;
+    color:var(--ink-dim);
+    transition:transform .25s ease;
+  }
+  .explore-step.is-answered:not(.is-folded) .step-caret{ transform:rotate(180deg); }
+
+  /* الجسم يُطوى بارتفاع محسوب في الجافاسكربت (لا max-height تخمينية)
+     فتنساب الحركة مهما اختلفت أطوال الأسئلة */
+  .step-body{
+    overflow:hidden;
+    transition:max-height .32s ease, opacity .22s ease;
+  }
+  .explore-step.is-answered > .step-body{ margin-top:12px; }
+  .explore-step.is-folded > .step-body{ opacity:0; }
+  @media (prefers-reduced-motion: reduce){
+    .step-body{ transition:none; }
+    .step-caret{ transition:none; }
+  }
+  /* المسافات تتقلّص مع الطيّ كي تُقرأ السطور كسلسلة متّصلة لا كبنود متباعدة */
+  .explore-step.is-folded{
+    margin-top:8px;
+    padding-top:0;
+    border-top:none;
+  }
 
   /* ============ محطة 3 فقط: ترتيب القاعدة العامة + تشخيص تفسير الزميل ============
      أنماط محلية لأنها بنية محتوى خاصة بهذا الدرس. المحرّك نفسه (السحب
@@ -470,6 +607,8 @@
   }
   .pill-link:focus-visible{outline:2px solid var(--coral); outline-offset:3px;}
   html{scroll-behavior:smooth;}
+  /* المحطة الهدف لا تلتصق بحافة الشاشة تمامًا عند القفز إليها */
+  .station{ scroll-margin-top:14px; }
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
     .pill-link{transition:none;}
@@ -563,15 +702,15 @@
 
   <!-- ===================== محطة 2: استكشاف (نقل الإلكترون) ===================== -->
   <section class="station" id="station-2">
-    <div class="station-label">المحطة الثانية</div>
+    <div class="station-label">المحطة الثانية · المرحلة الأولى</div>
     <h2>الاستكشاف</h2>
     <p class="station-tagline">ادرس الشكل التالي ثم أجب عن الأسئلة الآتية</p>
 
-    <div id="stage-wrap">
-      <svg id="stage" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div class="stage-wrap">
+      <svg id="stage1" class="stage" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg"></svg>
     </div>
 
-    <div id="explore-sequence">
+    <div class="explore-seq" id="explore-sequence">
 
       <!-- سؤال 1 — إجابة مكتوبة -->
       <div class="explore-step" id="explore-1" data-step="1">
@@ -637,22 +776,64 @@
         <p class="explore-feedback" id="explore-feedback-6" hidden></p>
       </div>
 
-      <!-- خطوة 7 — النقر الفعلي لمشاهدة الانتقال (تحقّق من توقّعي 5 و6) -->
-      <div class="explore-step" id="explore-7" data-step="7" hidden>
-        <p class="explore-q">الآن، تحقّق من توقّعك: انقر على الإلكترون المتوهج بالرسم أعلاه لتشاهد المسار الذي سيسلكه.</p>
-        <div style="text-align:center;">
-          <div id="hint">👆 انقر على الإلكترون المتوهج</div>
-          <div id="success-tag" class="success-tag">✓ تم نقل الإلكترون</div>
-        </div>
+
+      <!-- ===== جسر المرحلة الأولى ← الثانية =====
+           السؤالان 5 و6 تنبّؤان بالشحنتين بلا كشف. المرحلة الأولى تُغلَق
+           على التنبّؤ، والثانية تفتح بالتحقّق منه — والزرّ هو الوقفة التي
+           تفصل بينهما، فيكون الطالب هو من يطلب الكشف لا الصفحة من تفرضه. -->
+      <div id="phase1-bridge" class="station-handoff" hidden>
+        <div class="success-tag show">✓ توقّعتَ الشحنتين</div>
+        <p class="handoff-q">توقّعتَ ما ستصير عليه كل ذرّة بعد انتقال الإلكترون. لم يبقَ إلا أن تراه يحدث.</p>
+        <button type="button" class="pill-link" id="openPhase2">لنرَ إن صحّ توقّعك ↓</button>
       </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== محطة 2 · المرحلة الثانية: لحظة الانتقال =====================
+       مرحلة داخلية لا محطة مستقلة: البنية التربوية سبع محطات، والمعرّف
+       station-2b مقصود — template.js يراقب كل .station[id^="station-"] لكنه
+       لا يجد له نقطة في شريط التقدّم فلا يزيد العدّ.
+
+       سبب الشقّ: الأسئلة 1–6 قراءة نموذج ساكن، و7–9 مشاهدة حدث يقع فيه.
+       حدّان إدراكيان مختلفان. وكانت الأسئلة الثلاثة الأخيرة — وهي ذروة
+       الدرس — مدفونة في ذيل تمرير طويل، فيصل إليها الطالب والرسم خارج
+       شاشته تمامًا.
+
+       نموذج ثانٍ مرسوم لا منقول: لو نقلنا المشهد الواحد لبقيت المرحلة
+       الأولى بحاوية فارغة، فلو عاد الطالب لمراجعة سطوره المطويّة وجد
+       استدلالًا بلا الرسم الذي بُني عليه. والرسم الثاني آمن هنا تحديدًا
+       لأن لا شيء تغيّر في المرحلة الأولى — النموذجان متطابقان حالةً لا
+       شكلًا فقط. -->
+  <section class="station" id="station-2b" hidden>
+    <div class="station-label">المحطة الثانية · المرحلة الثانية</div>
+    <h2>لحظة الانتقال</h2>
+    <p class="station-tagline">الذرّتان نفسهما — انقر على إلكترون التكافؤ في ذرّة الصوديوم أدناه</p>
+
+    <div class="stage-wrap">
+      <svg id="stage2" class="stage" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+
+    <div class="explore-seq" id="explore-sequence-2">
+      <!-- ===== خطوة 7 — النقر الفعلي لمشاهدة الانتقال =====
+           جسمها فارغ إلا من وسم النجاح، والتعليمة انتقلت إلى العنوان
+           الفرعي فوق المشهد. السبب: أي نصّ مقروء تحت المشهد يفرض على
+           الطالب حركة معكوسة — يقرأ تحته، ثم يصعد لينقر، ثم يهبط ليجد
+           السؤال الثامن. وبإخلائها يقع النقر والانتقال والتجاذب في إطار
+           واحد بلا تمرير.
+
+           ولا تُحذف الخطوة نفسها: حذفها يترك فجوة في ترقيم سلسلة
+           الاستدلال المطويّة (…6 · 8 · 9) تبدو للطالب عطلًا، ويُسقط
+           أهمّ حدث في المحطة من سجلّ ما أنجزه. -->
+      <div class="explore-step" id="explore-7" data-step="7" hidden></div>
 
       <!-- سؤال 8 — التجاذب بين الأيونين -->
       <div class="explore-step" id="explore-8" data-step="8" hidden>
-        <p class="explore-q">ما الذي سيحدث بين "أيون الصوديوم الموجب" و"أيون الكلوريد السالب" نتيجة اختلاف شحنتيهما؟</p>
-        <div class="quiz-options" data-step="8">
+        <p class="explore-q">ماذا سيحدث بينهما نتيجة اختلاف شحنتيهما؟</p>
+        <div class="quiz-options options-row" data-step="8">
           <label class="quiz-option"><input type="radio" name="explore8" value="wrong1">تنافر</label>
           <label class="quiz-option"><input type="radio" name="explore8" value="correct">تجاذب</label>
-          <label class="quiz-option"><input type="radio" name="explore8" value="wrong2">لا يحدث أي تأثير بينهما</label>
+          <label class="quiz-option"><input type="radio" name="explore8" value="wrong2">لا تأثير بينهما</label>
         </div>
         <p class="explore-feedback" id="explore-feedback-8" hidden></p>
       </div>
@@ -922,9 +1103,8 @@
 (function(){
   "use strict";
 
-  const svg = document.getElementById('stage');
-  const hint = document.getElementById('hint');
-  const successTag = document.getElementById('success-tag');
+  const svgP2 = document.getElementById('stage2');   // المشهد التفاعلي (المرحلة الثانية)
+  const svgP1 = document.getElementById('stage1');   // المشهد الساكن (المرحلة الأولى)
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // الصوديوم (سيصبح أيونًا موجبًا) على اليسار، الكلور (سيصبح أيونًا سالبًا)
@@ -951,7 +1131,7 @@
     return pts;
   }
 
-  function renderAtom(cfg, prefix){
+  function renderAtom(cfg, prefix, target){
     const g = svgEl('g', { id: prefix + 'Group', class:'atom-group' });
     g.style.transformOrigin = cfg.cx + 'px ' + cfg.cy + 'px';
 
@@ -987,24 +1167,36 @@
       });
     });
 
-    svg.appendChild(g);
+    target.appendChild(g);
     return g;
   }
 
-  renderAtom(CL, 'cl');
-  renderAtom(NA, 'na');
+  /* مشهد المرحلة الأولى — ساكن تمامًا: لا إلكترون قابل للنقر، ولا لون
+     مرجاني، ولا touch-action. يبقى معروضًا في مرحلته كي يجد الطالب رسمه
+     في مكانه إن عاد لمراجعة سطوره المطويّة. */
+  renderAtom(CL, 'p1cl', svgP1);
+  renderAtom(NA, 'p1na', svgP1);
+
+  renderAtom(CL, 'p2cl', svgP2);
+  renderAtom(NA, 'p2na', svgP2);
 
   // الإلكترون يُرسَم من البداية، لكن لا يصبح قابلًا للنقر (clickable/pulsing)
   // إلا بعد اجتياز الطالب لأسئلة 1-6 عبر unlockElectron() بالأسفل — بلا ذلك
   // كان يمكن تجاوز الأسئلة والنقر مباشرة بلا أي تفكير فعلي
-  const naElectron = document.getElementById('na-e-2-0');
+  const naElectron = document.getElementById('p2na-e-2-0');
+  /* إلكترون التكافؤ في المرحلة الثانية: مرجاني وأكبر قليلًا. القطر يُضبط
+     هنا لا في CSS كي لا تعيد الحركات (النبض وارتداد النقر) ضبطه إلى
+     القطر الافتراضي فيفقد إشارة الحجم. */
+  const VALENCE_R = 8.5;
+  naElectron.classList.add('valence');
+  naElectron.setAttribute('r', VALENCE_R);
 
-  const clOuterOrbit = document.getElementById('clOrbit2');
-  const naOuterOrbit = document.getElementById('naOrbit2');
-  const naGroup = document.getElementById('naGroup');
-  const clGroup = document.getElementById('clGroup');
-  const naCharge = document.getElementById('naCharge');
-  const clCharge = document.getElementById('clCharge');
+  const clOuterOrbit = document.getElementById('p2clOrbit2');
+  const naOuterOrbit = document.getElementById('p2naOrbit2');
+  const naGroup = document.getElementById('p2naGroup');
+  const clGroup = document.getElementById('p2clGroup');
+  const naCharge = document.getElementById('p2naCharge');
+  const clCharge = document.getElementById('p2clCharge');
 
   let transferred = false;
   let unlocked = false;
@@ -1048,14 +1240,13 @@
     naElectron.classList.remove('pulsing', 'clickable');
     naElectron.removeAttribute('tabindex');
     naElectron.style.cursor = 'default';
-    hint.classList.add('hidden');
     if(window.Sounds) window.Sounds.playTick();
 
     naElectron.style.transition = 'r .16s ease';
-    naElectron.setAttribute('r', ELECTRON_R + 3);
+    naElectron.setAttribute('r', VALENCE_R + 3);
     setTimeout(() => {
       naElectron.style.transition = '';
-      naElectron.setAttribute('r', ELECTRON_R);
+      naElectron.setAttribute('r', VALENCE_R);
       completeTransfer();
     }, 170);
   }
@@ -1068,11 +1259,11 @@
     const newPositions = electronPositions(CL.cx, CL.cy, SHELL_RADII[2], 8);
 
     for(let i=0;i<7;i++){
-      const el = document.getElementById('cl-e-2-' + i);
+      const el = document.getElementById('p2cl-e-2-' + i);
       const from = { cx: parseFloat(el.getAttribute('cx')), cy: parseFloat(el.getAttribute('cy')) };
       tween(el, from, { cx:newPositions[i].x, cy:newPositions[i].y }, 500);
     }
-    naElectron.id = 'cl-e-2-7';
+    naElectron.id = 'p2cl-e-2-7';
     naElectron.setAttribute('data-atom', 'cl');
     clGroup.appendChild(naElectron);
     const fromMoved = { cx: parseFloat(naElectron.getAttribute('cx')), cy: parseFloat(naElectron.getAttribute('cy')) };
@@ -1117,23 +1308,38 @@
        عنده الحركة فورًا، فالانتظار الطويل يصير جمودًا بلا معنى. */
     const settleDelay = reduceMotion ? 600 : 2330;
     setTimeout(() => {
-      successTag.classList.add('show');
-      showStep(8);
+      /* مهلة طيّ قصيرة هنا خلافًا لبقية الأسئلة: تغذية هذا السؤال بصرية
+         وقعت أثناء الحركة نفسها، والسكون الطويل قبلها (settleDelay) أدّى
+         دور القراءة. مهلة كاملة إضافية كانت ستصير جمودًا. */
+      advance(7, 0, reduceMotion ? 250 : 700);
     }, settleDelay);
   }
 
   /* المرحلة الثانية: التجاذب — تُستدعى فقط بعد أن يتنبّأ الطالب بالجواب
      الصحيح في السؤال الثامن. حركة أبطأ وأوضح من الأولى لأنها تقع وحدها
-     بلا تغيّرات أخرى تزاحمها، والمشهد ملتصق أعلى الشاشة فيراها الطالب
-     تحدث أمامه لحظة إجابته. */
+     بلا تغيّرات أخرى تزاحمها، والمشهد يبقى قريبًا من السؤال لأن ما سبقه
+     مطويّ في سطور رفيعة — فيراها الطالب تحدث أمامه لحظة إجابته. */
   function attractIons(){
     if(!transferred) return;
     naGroup.style.transition = reduceMotion ? 'transform .01s linear'
                                             : 'transform 1.1s cubic-bezier(.34,1.2,.4,1)';
     clGroup.style.transition = naGroup.style.transition;
     requestAnimationFrame(() => {
-      naGroup.style.transform = 'scale(0.88) translateX(52px)';
-      clGroup.style.transform = 'scale(1.10) translateX(-38px)';
+      /* الإزاحة تُضرَب في المقياس لأن التحجيم يسبقها في قائمة التحويل:
+         scale(0.88) translateX(145px) → إزاحة فعلية 128 وحدة (لا 145).
+         القيم السابقة (52 و38) كانت تُغلق 35% فقط من الفجوة البالغة 250
+         وحدة، فتبقى بين الأيونين مساحة أوسع من نصف قطر الكلور نفسه —
+         فيرى الطالب ذرّتين متباعدتين تحرّكتا قليلًا لا أيونين ارتبطا.
+         الآن تُغلَق 93% منها: 128 + 104 = 232 وحدة.
+
+         ويبقى فاصل ~18 وحدة عمدًا ولا يُلغى: تداخل المستويين الخارجيين
+         يعني بصريًا تشارك سُحُب الإلكترونات، وذلك تمثيل الرابطة
+         التساهمية لا الأيونية. الأيونان هنا متجاوران متلامسان لا متداخلان.
+
+         والصوديوم يتحرّك أكثر من الكلور لأنه صار الأصغر بعد فقد إلكترونه
+         — إشارة صحيحة في ذاتها لا مجرّد توزيع للمسافة. */
+      naGroup.style.transform = 'scale(0.88) translateX(145px)';
+      clGroup.style.transform = 'scale(1.10) translateX(-95px)';
     });
     if(window.Sounds) setTimeout(function(){ window.Sounds.playChime(); }, reduceMotion ? 0 : 700);
   }
@@ -1178,14 +1384,174 @@
     9: 'جمعتَ الشحنتين ووصلتَ للتعادل'
   };
 
-  /* التمرير التلقائي آمن هنا: المشهد ملتصق أعلى الشاشة ولا يغادرها،
-     فالتمرير يجلب السؤال التالي تحته بدل أن يسحب عين الطالب عنه. */
-  function showStep(n){
+  /* ==========================================================
+     طيّ السؤال المُجاب
+     ----------------------------------------------------------
+     كانت showStep تكشف السؤال التالي ولا تخفي السابق، فتتراكم
+     تسعة أسئلة مفتوحة بنصوصها وخياراتها وتغذيتها الراجعة، ويُدفع
+     المشهد خارج الشاشة تمامًا عند السؤال الخامس فما بعده.
+     الآن يُطوى السؤال المُجاب إلى سطر واحد يحمل رقمه وخلاصته
+     وإجابته — فيبقى محفوظًا ومقروءًا لا محذوفًا، وتُقرأ السطور
+     معًا كسلسلة استدلال الطالب من أوّلها.
+
+     خلاصة كل سؤال مكتوبة هنا لا في الوسوم، اتّساقًا مع XP_REASONS
+     أعلاه. الإجابة المعروضة هي الصحيحة دائمًا لأن الطيّ لا يقع إلا
+     بعد إجابة صحيحة.
+     ========================================================== */
+  const STEP_RECAP = {
+    1: { gist:'إلكترونات الصوديوم الأخيرة', ans:'1' },
+    2: { gist:'ما يحتاجه الكلور',           ans:'1' },
+    3: { gist:'الأسهل للصوديوم',            ans:'يفقد إلكترونًا' },
+    4: { gist:'ما يحدث بين الذرّتين',        ans:'انتقال كامل' },
+    5: { gist:'شحنة الصوديوم بعد الفقد',     ans:'موجبة' },
+    6: { gist:'شحنة الكلور بعد الاكتساب',    ans:'سالبة' },
+    7: { gist:'نقل الإلكترون',              ans:'تم' },
+    8: { gist:'بين الأيونين',               ans:'تجاذب' },
+    9: { gist:'شحنة كلوريد الصوديوم',        ans:'متعادلة' }
+  };
+
+  const FOLD_DELAY = reduceMotion ? 400 : 1250; // مهلة قراءة التغذية الراجعة قبل الطيّ
+  const FOLD_ANIM  = reduceMotion ? 0   : 340;  // زمن انسياب الطيّ قبل كشف التالي
+
+  const CARET_SVG = '<svg class="step-caret" viewBox="0 0 24 24" fill="none" ' +
+    'stroke="currentColor" stroke-width="2.5" stroke-linecap="round" ' +
+    'stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+
+  /* كل سؤال يُغلَّف جسمه في .step-body ويُسبَق بزرّ الخلاصة. يتمّ هذا في
+     الجافاسكربت لا في الوسوم كي تبقى الوسوم نظيفة، ولأن نصّ الإجابة لا
+     يُعرف إلا بعد أن يجيب الطالب. كل البحث في الملف يتمّ بالمعرّفات أو
+     querySelectorAll فلا يتأثّر بإضافة طبقة تغليف. */
+  const stepEls = {};
+  document.querySelectorAll('.explore-seq .explore-step').forEach(function(step){
+    const n = parseInt(step.getAttribute('data-step'), 10);
+    const body = document.createElement('div');
+    body.className = 'step-body';
+    while(step.firstChild) body.appendChild(step.firstChild);
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'step-summary';
+    btn.setAttribute('aria-expanded', 'true');
+    btn.setAttribute('aria-controls', 'explore-body-' + n);
+    const recap = STEP_RECAP[n] || { gist:'', ans:'' };
+    btn.innerHTML =
+      '<span class="step-num">' + n + '</span>' +
+      '<span class="step-gist"></span>' +
+      '<span class="step-recap"></span>' + CARET_SVG;
+    btn.querySelector('.step-gist').textContent = recap.gist;
+    btn.querySelector('.step-recap').textContent = recap.ans;
+
+    body.id = 'explore-body-' + n;
+    step.appendChild(btn);
+    step.appendChild(body);
+    stepEls[n] = { step: step, body: body, btn: btn };
+
+    btn.addEventListener('click', function(){
+      if(step.classList.contains('is-folded')) expandStep(n);
+      else foldStep(n);
+    });
+  });
+
+  function setLabel(n){
+    const o = stepEls[n]; if(!o) return;
+    const folded = o.step.classList.contains('is-folded');
+    o.btn.setAttribute('aria-expanded', folded ? 'false' : 'true');
+    o.btn.setAttribute('aria-label',
+      (folded ? 'افتح السؤال ' : 'اطوِ السؤال ') + n + ' للمراجعة');
+  }
+
+  /* الطيّ والفتح يحسبان الارتفاع الفعلي لحظتها بدل قيمة max-height
+     تخمينية — فتعمل الحركة مع أي طول سؤال وأي عرض شاشة. */
+  function foldStep(n){
+    const o = stepEls[n]; if(!o || o.step.classList.contains('is-folded')) return;
+    o.step.classList.add('is-answered');
+    if(reduceMotion){
+      o.body.style.maxHeight = '0px';
+      o.step.classList.add('is-folded');
+      setLabel(n);
+      return;
+    }
+    o.body.style.maxHeight = o.body.scrollHeight + 'px';
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        o.body.style.maxHeight = '0px';
+        o.step.classList.add('is-folded');
+        setLabel(n);
+      });
+    });
+  }
+
+  /* فتح سؤال قديم لا يطوي السؤال الحالي — الأرجح أن الطالب يفتحه
+     ليقارنه بما بين يديه، فطيّ الحالي يهزم غرض الفتح.
+     وأي سؤال يُفتح للمراجعة يبقى معطّلًا: لا تعديل للإجابة بعد
+     احتساب نقاطها، وإلا بدا النظام مكسورًا حين لا تُمنح النقاط مرّتين. */
+  function expandStep(n){
+    const o = stepEls[n]; if(!o) return;
+    o.step.classList.remove('is-folded');
+    setLabel(n);
+    if(reduceMotion){ o.body.style.maxHeight = 'none'; return; }
+    o.body.style.maxHeight = o.body.scrollHeight + 'px';
+    setTimeout(function(){
+      if(!o.step.classList.contains('is-folded')) o.body.style.maxHeight = 'none';
+    }, 340);
+  }
+
+  /* التمرير بـ block:'nearest' لا يحرّك الصفحة إلا إن خرج السؤال فعلًا
+     عن الشاشة — ومع الطيّ يبقى المشهد والسؤال معًا في الإطار غالبًا. */
+  function revealStep(n, noScroll){
     const el = document.getElementById('explore-' + n);
     if(!el) return;
     el.hidden = false;
-    if(n === 7) unlockElectron();
-    if(el.scrollIntoView) el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest' });
+    if(!noScroll && el.scrollIntoView){
+      el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest' });
+    }
+  }
+
+  /* السؤال السابع يعيش في المرحلة الثانية المخفيّة، فلا يُكشف مباشرة:
+     يظهر الجسر بدلًا منه، والطالب هو من يفتح المرحلة بضغطه. */
+  function showStep(n){
+    if(n === 7){
+      const b = document.getElementById('phase1-bridge');
+      if(!b) return;
+      b.hidden = false;
+      if(b.scrollIntoView) b.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest' });
+      return;
+    }
+    revealStep(n);
+  }
+
+  const phase2 = document.getElementById('station-2b');
+  const openBtn = document.getElementById('openPhase2');
+  if(openBtn && phase2){
+    openBtn.addEventListener('click', function(){
+      if(!phase2.hidden) return;
+      phase2.hidden = false;
+      /* .station تبدأ opacity:0 ولا تظهر إلا بإضافة .in-view من
+         IntersectionObserver في template.js. نضيفها فورًا بأنفسنا: لو تأخّر
+         المراقب أو لم يعمل، لوجد الطالب نفسه أمام مساحة فارغة بعد الضغط. */
+      phase2.classList.add('in-view');
+      openBtn.disabled = true;
+      openBtn.textContent = '✓ فُتحت المرحلة الثانية';
+      /* الكشف بلا تمرير داخلي: نمرّر إلى رأس المرحلة كي يقع المشهد أعلى
+         الشاشة والسؤال تحته مباشرة — وهو غرض الشقّ كلّه. */
+      revealStep(7, true);
+      unlockElectron();
+      if(window.Sounds) window.Sounds.playChime();
+      if(phase2.scrollIntoView){
+        phase2.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      }
+    });
+  }
+
+  /* التسلسل بعد إجابة صحيحة: يقرأ التغذية الراجعة ← يُطوى سؤاله إلى
+     سطر ← يُكشف التالي في المساحة المتحرّرة تحت المشهد مباشرة.
+     الطيّ قبل الكشف لا بعده كي تكون الحركة واحدة متّصلة لا حركتين. */
+  function advance(n, extraDelay, holdMs){
+    const hold = (typeof holdMs === 'number') ? holdMs : FOLD_DELAY;
+    setTimeout(function(){
+      foldStep(n);
+      setTimeout(function(){ showStep(n + 1); }, FOLD_ANIM);
+    }, (extraDelay || 0) + hold);
   }
 
   // أسئلة الإجابة المكتوبة (1، 2) — إنتاج غير مُعان، فئة PRODUCE
@@ -1204,7 +1570,7 @@
         if(window.Sounds) window.Sounds.playSnap();
         if(window.XP) window.XP.claim('l3-explore-q' + step, window.XP.POINTS.PRODUCE,
                                       XP_REASONS[step]);
-        setTimeout(function(){ showStep(parseInt(step, 10) + 1); }, 500);
+        advance(parseInt(step, 10));
       } else {
         feedback.textContent = '💡 ' + TEXT_HINTS[step];
         feedback.className = 'explore-feedback is-hint';
@@ -1231,11 +1597,15 @@
           if(window.Sounds) window.Sounds.playSnap();
           if(window.XP) window.XP.claim('l3-explore-q' + step, window.XP.POINTS.MCQ,
                                         XP_REASONS[step]);
+          /* تُقفل الخيارات فور الإجابة الصحيحة: النقاط احتُسبت، ولو بقيت
+             مفتوحة لأمكن تغيير الإجابة لاحقًا (خصوصًا بعد إعادة فتح
+             السؤال للمراجعة) فتظهر تغذية "خطأ" على سؤال سبق أن نجح فيه. */
+          group.querySelectorAll('input[type="radio"]').forEach(function(r){ r.disabled = true; });
           // السؤال الثامن هو تنبّؤ بالتجاذب — تنفيذه بصريًا هو جوابه،
-          // ونمهله ليكتمل قبل كشف السؤال التالي
-          var nextDelay = 500;
-          if(step === '8'){ attractIons(); nextDelay = reduceMotion ? 500 : 1500; }
-          setTimeout(function(){ showStep(parseInt(step, 10) + 1); }, nextDelay);
+          // فنمهل حركة التجاذب لتكتمل قبل أن يُطوى السؤال
+          var extra = 0;
+          if(step === '8'){ attractIons(); extra = reduceMotion ? 0 : 900; }
+          advance(parseInt(step, 10), extra);
         } else {
           feedback.textContent = '💡 ' + CHOICE_HINTS[step];
           feedback.className = 'explore-feedback is-hint';
@@ -1547,6 +1917,50 @@
     });
   }
 
+})();
+</script>
+
+<script>
+/* ==========================================================
+   أزرار الانتقال بين المحطات — تنقّل صريح لا مرساة أصلية
+   ----------------------------------------------------------
+   كانت الأزرار روابط <a href="#station-N"> تعتمد على تنقّل
+   المرساة في المتصفّح. الوسوم سليمة (الهدف موجود ومفرد وغير
+   مخفيّ ولا شيء يغطّيه)، لكن نجاح هذا المسار يتوقّف على ثلاثة
+   أمور معًا: أن ينفّذ المتصفّح القفزة، وأن يطلق
+   IntersectionObserver صنف .in-view للمحطة الهدف، وأن يقع ذلك
+   قبل أن يحكم الطالب بأن "الزرّ لا يعمل".
+
+   وإن تخلّف أيّها ظهرت النتيجة نفسها بالضبط: لا شيء يحدث —
+   لأن .station تبدأ بـ opacity:0، فالقفز إلى محطة لم تُوسَم
+   بـ .in-view يُنزل الطالب على مساحة فارغة تمامًا، وهو ما لا
+   يفرّقه أحد عن زرّ معطّل.
+
+   فنؤدّي الثلاثة بأنفسنا صراحةً: نُظهر الهدف، ونضيء نقطته في
+   شريط التقدّم، ثم نمرّر إليه بـ scrollIntoView. ونحدّث شريط
+   العنوان بـ replaceState لا بتنقّل، فلا يتنازع مسارَا التمرير.
+   ========================================================== */
+(function(){
+  "use strict";
+  function reduced(){
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+  document.querySelectorAll('a.pill-link[href^="#"]').forEach(function(link){
+    link.addEventListener('click', function(e){
+      var id = link.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if(!target) return;               // هدف مفقود: اترك السلوك الافتراضي
+      e.preventDefault();
+      target.hidden = false;
+      target.classList.add('in-view');
+      var dot = document.querySelector('.progress-dot[data-target="' + id + '"]');
+      if(dot) dot.classList.add('active');
+      if(target.scrollIntoView){
+        target.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
+      }
+      try{ history.replaceState(null, '', '#' + id); }catch(err){ /* قد يُمنع على file:// */ }
+    });
+  });
 })();
 </script>
 
