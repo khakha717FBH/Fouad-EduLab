@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مختبر الشبكة البلّوريّة العملاقة | مختبر فؤاد التعليمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/identity/identity.css">
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  مختبر افتراضي — الشبكة البلّوريّة العملاقة (كلوريد الصوديوم)
+  مرتبط بالمحطة 5 من الدرس 3، ويُفتح منها بزرّ ويعود إليها بزرّ.
+
+  لماذا صفحة مستقلّة لا كتلة داخل الدرس؟ لأن المسرح ثلاثي الأبعاد
+  يحتاج شاشة كاملة بلا تمرير رأسي. والتمرير هو ما كان يُخرج الرسم من
+  شاشة الطالب ويجعل المحطة تبدو مزدحمة. سياسة المنصة تمنع iframe
+  لأنشطة فؤاد الخاصة: رابط صفحة كاملة وزرّ عودة داخل كودها.
+
+  ولا نظام XP هنا عمدًا: رصيد النقاط مرتبط بمسار الصفحة، فما يُكسب
+  هنا لا يظهر في الدرس. والأنظف مفاهيميًا أن يكون المختبر مساحة
+  تجريب حرّة بلا حساب، وتُمنح النقاط في المحطة على ما فهمه الطالب.
+
+  الاعتمادية الوحيدة المضافة: three.js (r128) من نطاق واحد.
+  كلفتها معزولة في هذه الصفحة ولا تُبطئ الدرس. ولا تُضاف غيرها:
+  كل الأيقونات SVG داخل الملف، ولا مكتبة أيقونات خارجية.
+  ═══════════════════════════════════════════════════════════════════
+-->
+<style>
+  /* .btn يعرّف display:inline-flex فيتغلّب على السمة hidden، فتظهر
+     أزرارٌ يُفترض أن تنتظر دورها. المزلق موثّق: تجاوز [hidden] يحتاج
+     !important. وفحص الخاصيّة hidden وحده لا يكشفه — الفحص الصحيح
+     على display المحسوب. */
+  [hidden]{ display:none !important; }
+
+  html, body{
+    height:100%;
+    overflow:hidden;
+    overscroll-behavior:none;
+  }
+  body{
+    display:flex;
+    flex-direction:column;
+    background:linear-gradient(180deg, var(--navy-dark), var(--navy-darker));
+  }
+
+  /* ============ الرأس ============ */
+  .lab-head{
+    flex:0 0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px clamp(12px,3vw,24px);
+    background:rgba(11,17,32,.72);
+    border-bottom:1px solid var(--turquoise-soft);
+    z-index:5;
+  }
+  .lab-brand{display:flex; align-items:center; gap:10px; min-width:0;}
+  .lab-brand svg{width:26px; height:26px; flex-shrink:0; color:var(--turquoise);}
+  .lab-brand h1{
+    font-size:clamp(.95rem,2.6vw,1.15rem);
+    margin:0;
+    color:var(--ink);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .lab-brand span{
+    font-size:.76rem;
+    color:var(--ink-dim);
+    white-space:nowrap;
+  }
+  @media (max-width:620px){ .lab-brand span{display:none;} }
+
+  /* زرّ العودة: ظاهر دائمًا في الرأس، فلا يحتاج الطالب أن يبحث عن
+     طريق الرجوع ولا أن يستعمل زرّ المتصفّح. */
+  .back-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    background:var(--navy-darker);
+    border:1.5px solid var(--turquoise);
+    color:var(--turquoise);
+    font-family:'Tajawal',sans-serif;
+    font-weight:700;
+    font-size:.86rem;
+    padding:9px 18px;
+    border-radius:999px;
+    text-decoration:none;
+    white-space:nowrap;
+    transition:background .25s ease, color .25s ease, box-shadow .25s ease;
+  }
+  .back-btn:hover{
+    background:var(--turquoise);
+    color:var(--navy-darker);
+    box-shadow:0 0 16px var(--turquoise-soft);
+  }
+  .back-btn svg{width:15px; height:15px;}
+
+  /* ============ شريط المراحل ============ */
+  .stage-nav{
+    flex:0 0 auto;
+    display:flex;
+    gap:8px;
+    padding:10px clamp(12px,3vw,24px);
+    overflow-x:auto;
+    scrollbar-width:none;
+    background:rgba(11,17,32,.45);
+    border-bottom:1px solid rgba(20,200,168,.14);
+  }
+  .stage-nav::-webkit-scrollbar{display:none;}
+  .stage-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:transparent;
+    border:1.5px solid rgba(20,200,168,.28);
+    color:var(--ink-dim);
+    font-family:'Tajawal',sans-serif;
+    font-weight:700;
+    font-size:.83rem;
+    padding:8px 16px;
+    border-radius:999px;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:all .22s ease;
+  }
+  .stage-btn:hover{ border-color:var(--turquoise); color:var(--ink); }
+  .stage-btn.active{
+    background:var(--turquoise);
+    border-color:var(--turquoise);
+    color:var(--navy-darker);
+  }
+  .stage-btn .num{
+    display:inline-grid;
+    place-items:center;
+    width:19px; height:19px;
+    border-radius:50%;
+    background:rgba(20,200,168,.16);
+    font-size:.74rem;
+    font-weight:800;
+  }
+  .stage-btn.active .num{ background:rgba(11,17,32,.22); }
+  .stage-btn:focus-visible{ outline:2px solid var(--coral); outline-offset:2px; }
+
+  /* ============ جسم المختبر ============ */
+  .lab-body{
+    flex:1 1 auto;
+    display:flex;
+    min-height:0;
+    position:relative;
+  }
+  #canvas-wrap{
+    flex:1 1 auto;
+    position:relative;
+    min-width:0;
+    min-height:0;
+    touch-action:none;   /* الدوران بالإصبع داخل المسرح وحده */
+  }
+  #canvas-wrap canvas{display:block; width:100%; height:100%;}
+
+  .legend{
+    position:absolute;
+    inset-inline-start:14px;
+    bottom:14px;
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+    background:rgba(11,17,32,.72);
+    border:1px solid rgba(20,200,168,.2);
+    border-radius:12px;
+    padding:9px 13px;
+    font-size:.8rem;
+    color:var(--ink-dim);
+    pointer-events:none;
+  }
+  .legend div{display:flex; align-items:center; gap:8px;}
+  .legend i{ display:inline-block; border-radius:50%; }
+  .legend i.k-na{ width:11px; height:11px; background:#14C8A8; }
+  .legend i.k-cl{ width:18px; height:18px; background:#B6C6DA; }
+
+  /* ============ لوحة التعليمات ============ */
+  .panel{
+    flex:0 0 clamp(280px, 27vw, 360px);
+    background:rgba(11,17,32,.72);
+    border-inline-start:1px solid var(--turquoise-soft);
+    padding:18px;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .panel p{
+    margin:0;
+    color:var(--ink);
+    font-size:.9rem;
+    line-height:1.85;
+    color:var(--ink-dim);
+  }
+  .panel p b{color:var(--ink); font-weight:800;}
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    width:100%;
+    background:var(--navy-darker);
+    border:1.5px solid var(--turquoise);
+    color:var(--turquoise);
+    font-family:'Tajawal',sans-serif;
+    font-weight:700;
+    font-size:.88rem;
+    padding:11px 18px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:background .25s ease, color .25s ease, box-shadow .25s ease;
+  }
+  .btn:hover{ background:var(--turquoise); color:var(--navy-darker); box-shadow:0 0 16px var(--turquoise-soft); }
+  .btn:active{ transform:scale(.98); }
+  .btn:disabled{ opacity:.45; cursor:default; transform:none; box-shadow:none; }
+  .btn:disabled:hover{ background:var(--navy-darker); color:var(--turquoise); }
+  .btn.filled{ background:var(--turquoise); color:var(--navy-darker); }
+  .btn.filled:hover{ box-shadow:0 0 20px var(--turquoise-soft); }
+  .btn:focus-visible{ outline:2px solid var(--coral); outline-offset:2px; }
+  .btn svg{width:15px; height:15px;}
+
+  /* بطاقتا اختيار الأيون */
+  .ion-pick{display:flex; gap:10px;}
+  .ion-card{
+    flex:1;
+    background:rgba(255,255,255,.03);
+    border:1.5px solid rgba(20,200,168,.22);
+    border-radius:14px;
+    padding:12px 8px;
+    text-align:center;
+    cursor:pointer;
+    transition:all .2s ease;
+  }
+  .ion-card:hover{ border-color:var(--turquoise); }
+  /* رمز الأيون بلون كرته في المشهد: الربط بين البطاقة وما يظهر
+     أمام الطالب يقع بالعين قبل القراءة. */
+  .ion-card .sym{
+    font-family:'Cairo',sans-serif;
+    font-weight:800;
+    font-size:1.25rem;
+  }
+  #cardNa .sym{ color:#14C8A8; }
+  #cardCl .sym{ color:#8FA6C4; }
+  .ion-card .nm{ font-size:.75rem; color:var(--ink-dim); }
+  .ion-card.on{
+    border-color:var(--turquoise);
+    background:var(--turquoise-faint);
+    box-shadow:0 0 0 3px var(--turquoise-faint);
+  }
+  .ion-card:focus-visible{ outline:2px solid var(--coral); outline-offset:2px; }
+
+  /* رسالة داخل اللوحة: نبرة هادئة، ليست حكمًا على الطالب */
+  .msg{
+    border-inline-start:3px solid var(--turquoise);
+    background:rgba(20,200,168,.06);
+    border-radius:0 12px 12px 0;
+    padding:10px 14px;
+    font-size:.85rem;
+    line-height:1.8;
+    color:var(--ink);
+  }
+  .msg.warn{
+    border-inline-start-color:var(--coral);
+    background:rgba(255,107,74,.07);
+  }
+
+  .counter{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    background:var(--navy-darker);
+    border:1.5px solid var(--turquoise);
+    border-radius:999px;
+    padding:10px 16px;
+    font-family:'Cairo',sans-serif;
+    font-weight:800;
+    color:var(--turquoise);
+    font-size:.95rem;
+  }
+  .counter .n{
+    display:inline-grid;
+    place-items:center;
+    min-width:26px; height:26px;
+    border-radius:50%;
+    background:var(--turquoise);
+    color:var(--navy-darker);
+  }
+
+  .toggle-row{display:flex; gap:8px;}
+  .toggle-row .btn{font-size:.82rem; padding:9px 10px;}
+
+  /* على الشاشات الضيّقة: اللوحة تنزل تحت المسرح بدل أن تأكل عرضه */
+  @media (max-width:820px){
+    .lab-body{flex-direction:column;}
+    #canvas-wrap{flex:1 1 52%; min-height:230px;}
+    .panel{
+      flex:1 1 48%;
+      border-inline-start:none;
+      border-top:1px solid var(--turquoise-soft);
+      padding:14px;
+    }
+    .legend{inset-inline-start:10px; bottom:10px; padding:7px 10px; font-size:.74rem;}
+  }
+
+  /* ============ رسالة تعذّر WebGL ============
+     لا شاشة سوداء صامتة: نشرح، ونعطي مخرجًا، ونُبقي زرّ العودة. */
+  .no-webgl{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    text-align:center;
+    padding:30px 22px;
+    height:100%;
+  }
+  .no-webgl.show{display:flex;}
+  .no-webgl svg{width:52px; height:52px; color:var(--coral);}
+  .no-webgl h3{margin:0; font-size:1.05rem; color:var(--ink);}
+  .no-webgl p{max-width:440px; font-size:.9rem; color:var(--ink-dim); line-height:1.9;}
+  .no-webgl .back-btn{margin-top:6px;}
+</style>
+</head>
+<body>
+
+<header class="lab-head">
+  <div class="lab-brand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+      <circle cx="12" cy="12" r="2.6"/>
+      <ellipse cx="12" cy="12" rx="10" ry="4.4"/>
+      <ellipse cx="12" cy="12" rx="10" ry="4.4" transform="rotate(60 12 12)"/>
+      <ellipse cx="12" cy="12" rx="10" ry="4.4" transform="rotate(120 12 12)"/>
+    </svg>
+    <h1>مختبر الشبكة البلّوريّة العملاقة</h1>
+    <span>مختبر فؤاد التعليمي</span>
+  </div>
+  <a class="back-btn" href="lesson-03.html#station-5">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
+    </svg>
+    العودة إلى الدرس
+  </a>
+</header>
+
+<nav class="stage-nav" id="stageNav" aria-label="مراحل المختبر">
+  <button type="button" class="stage-btn active" data-stage="1">
+    <span class="num">1</span> ابنِ نمطك
+  </button>
+  <button type="button" class="stage-btn" data-stage="2">
+    <span class="num">2</span> كرّر نمطك
+  </button>
+  <button type="button" class="stage-btn" data-stage="3">
+    <span class="num">3</span> مَن يحيط بمن؟
+  </button>
+</nav>
+
+<div class="lab-body" id="labBody">
+  <div id="canvas-wrap">
+    <div class="legend">
+      <div><i class="k-na"></i><span dir="ltr">Na⁺</span>&nbsp;أيون صوديوم موجب</div>
+      <div><i class="k-cl"></i><span dir="ltr">Cl⁻</span>&nbsp;أيون كلوريد سالب</div>
+    </div>
+  </div>
+
+  <aside class="panel" id="panel">
+    <!-- المرحلة 1 -->
+    <section id="p1">
+      <p>اختر أيونًا، ثم انقر أيَّ أيون في المشهد ليلتصق به.</p>
+      <div class="ion-pick">
+        <div class="ion-card on" id="cardNa" role="button" tabindex="0" data-ion="Na">
+          <div class="sym" dir="ltr">Na⁺</div>
+          <div class="nm">صوديوم موجب</div>
+        </div>
+        <div class="ion-card" id="cardCl" role="button" tabindex="0" data-ion="Cl">
+          <div class="sym" dir="ltr">Cl⁻</div>
+          <div class="nm">كلوريد سالب</div>
+        </div>
+      </div>
+      <div class="msg" id="msg1" hidden></div>
+      <button type="button" class="btn" id="btnReset1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+        ابدأ من جديد
+      </button>
+      <button type="button" class="btn filled" id="btnToStage2" hidden>
+        ماذا لو زاد عدد الأيونات؟ ↓
+      </button>
+    </section>
+
+    <!-- المرحلة 2 -->
+    <section id="p2" hidden>
+      <!-- بلا سؤال هنا: السؤال طُرح على زرّ الانتقال في المرحلة السابقة
+           («وماذا لو زاد عددها؟»)، وإعادته جوابٌ عن سؤال لم يُنسَ بعد.
+           ولا يُذكر مصطلح الشبكة البلّورية إلا في الرسالة التي تلي
+           الضغط: الاسم بعد رؤية المسمّى لا قبلها. -->
+      <div class="msg" id="msg2" hidden></div>
+      <button type="button" class="btn" id="btnSpin">إيقاف الدوران</button>
+      <div id="reprBlock" hidden>
+        <div class="toggle-row">
+          <button type="button" class="btn" id="btnFill">كرات متلامسة</button>
+          <button type="button" class="btn filled" id="btnStick">كرات وعصيّ</button>
+        </div>
+        <div class="msg" id="msgRepr" style="margin-top:10px;">بدّل بين الصورتين وانظر الفرق.</div>
+      </div>
+      <button type="button" class="btn filled" id="btnToStage3" hidden>
+        فكم أيونًا يحيط بأيون واحد؟ ↓
+      </button>
+    </section>
+
+    <!-- المرحلة 3 -->
+    <section id="p3" hidden>
+      <p>انقر أيونات الكلوريد التي تحيط بأيون الصوديوم المتوهّج.</p>
+      <div class="counter">أيونات الكلوريد المحيطة: <span class="n" id="foundCount">0</span></div>
+      <!-- محكّ يملكه الطالب: بدونه ينقر ثلاثة ويظنّ أنه أتمّ، فيغادر
+           قبل الاستنتاج. وهو يقول له «ناقص» ولا يقول له «كم» — فيبقى
+           العدد شيئًا يستخرجه لا شيئًا يُملى عليه. -->
+      <button type="button" class="btn" id="btnDone" hidden>وجدتُها كلّها</button>
+      <div class="msg" id="msg3" hidden></div>
+      <button type="button" class="btn" id="btnRecenter">أعِد التركيز</button>
+      <a class="btn filled" id="btnBackToLesson" href="lesson-03.html#station-5" hidden>
+        العودة إلى الدرس ↩
+      </a>
+    </section>
+  </aside>
+
+  <!-- بديل تعذّر WebGL -->
+  <div class="no-webgl" id="noWebgl">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <path d="M12 9v4"/><path d="M12 17h.01"/>
+      <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>
+    </svg>
+    <h3>هذا المختبر يحتاج رسومًا ثلاثية الأبعاد</h3>
+    <p>
+      متصفّحك الحالي أو جهازك لا يدعمها. جرّب متصفّحًا آخر أو جهازًا أحدث —
+      وإن تعذّر ذلك فلا تقلق: المحطة الخامسة في الدرس تشرح الفكرة كاملةً،
+      وأسئلتها لا تشترط دخول المختبر.
+    </p>
+    <a class="back-btn" href="lesson-03.html#station-5">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
+      </svg>
+      العودة إلى الدرس
+    </a>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   منطق الشبكة — مستقلّ تمامًا عن محرّك الرسم
+   ---------------------------------------------------------
+   فُصل عمدًا: كل قاعدة علمية هنا قابلة للاختبار الآلي بلا
+   متصفّح ولا WebGL، ولا يختلط الصواب العلمي بتفاصيل العرض.
+   ========================================================= */
+window.LatticeLogic = (function(){
+  "use strict";
+
+  var DIRS = [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]];
+
+  function key(x, y, z){ return x + ',' + y + ',' + z; }
+  function parse(k){ return k.split(',').map(Number); }
+
+  /* قاعدة التناوب في كلوريد الصوديوم: مجموع الإحداثيات زوجيًا
+     يعني أيونًا موجبًا، وفرديًا يعني سالبًا. فلا يجاور أيونٌ
+     إلا نظيره المخالف في الشحنة — وهو ما سيكتشفه الطالب بيده
+     حين يحاول المخالفة. */
+  function ionAt(x, y, z){
+    return (((x + y + z) % 2) + 2) % 2 === 0 ? 'Na' : 'Cl';
+  }
+
+  function neighbors(x, y, z){
+    return DIRS.map(function(d){ return [x+d[0], y+d[1], z+d[2]]; });
+  }
+
+  function isAdjacent(a, b){
+    return Math.abs(a[0]-b[0]) + Math.abs(a[1]-b[1]) + Math.abs(a[2]-b[2]) === 1;
+  }
+
+  /* المواضع الفارغة الملامسة لما بُني: هذه وحدها ما يُعرض للطالب
+     قابلًا للنقر، فتُطابق التعليمةُ السلوك. */
+  function openSlots(state){
+    var out = {}, k;
+    for(k in state){
+      if(!state.hasOwnProperty(k)) continue;
+      var c = parse(k);
+      neighbors(c[0], c[1], c[2]).forEach(function(n){
+        var nk = key(n[0], n[1], n[2]);
+        if(!state[nk]) out[nk] = n;
+      });
+    }
+    return Object.keys(out).map(function(k2){ return out[k2]; });
+  }
+
+  /* الرفض سببه التنافر لا قاعدة اعتباطية: الموضع يرفض الأيون
+     إن كان يلامس أيونًا من نوعه. */
+  function canPlace(state, slot, type){
+    var ns = neighbors(slot[0], slot[1], slot[2]);
+    for(var i = 0; i < ns.length; i++){
+      if(state[key(ns[i][0], ns[i][1], ns[i][2])] === type) return false;
+    }
+    return true;
+  }
+
+  function cubeCells(size){
+    var half = Math.floor(size / 2), out = [];
+    for(var x = -half; x <= half; x++){
+      for(var y = -half; y <= half; y++){
+        for(var z = -half; z <= half; z++){ out.push([x, y, z]); }
+      }
+    }
+    return out;
+  }
+
+  function bondPairs(cells){
+    var out = [];
+    for(var i = 0; i < cells.length; i++){
+      for(var j = i + 1; j < cells.length; j++){
+        if(isAdjacent(cells[i], cells[j])) out.push([cells[i], cells[j]]);
+      }
+    }
+    return out;
+  }
+
+  return {
+    DIRS: DIRS, key: key, parse: parse, ionAt: ionAt,
+    neighbors: neighbors, isAdjacent: isAdjacent,
+    openSlots: openSlots, canPlace: canPlace,
+    cubeCells: cubeCells, bondPairs: bondPairs,
+    LAB_DONE_KEY: 'l3LabDone'
+  };
+})();
+</script>
+
+<!-- النطاق واحد للملفّين: jsdelivr يعكس بنية حزمة npm فيضمن أن مسار
+     OrbitControls موجود بالنسخة نفسها. الخلط بين مستضيفَين يخاطر
+     بنسختين متفاوتتين أو بمسار غير موجود على أحدهما. -->
+<!-- صوت المنصة نفسه المستعمل في كل الدروس — ملف مشترك لا اعتمادية
+     خارجية جديدة، وغيابه هنا يجعل المختبر يبدو صفحةً من موقع آخر. -->
+<script src="../../shared/sounds/sounds.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+<script>
+/* =========================================================
+   محرّك المشهد — يستهلك LatticeLogic ولا يعيد تعريف قواعده
+   ========================================================= */
+(function(){
+  "use strict";
+
+  var L = window.LatticeLogic;
+
+  /* فحص الدعم قبل أي شيء: شاشة سوداء صامتة أسوأ من رسالة صريحة. */
+  function webglOK(){
+    try{
+      var c = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext &&
+                (c.getContext('webgl') || c.getContext('experimental-webgl')));
+    }catch(e){ return false; }
+  }
+  if(typeof THREE === 'undefined' || !webglOK()){
+    document.getElementById('canvas-wrap').style.display = 'none';
+    document.getElementById('panel').style.display = 'none';
+    document.getElementById('stageNav').style.display = 'none';
+    document.getElementById('noWebgl').classList.add('show');
+    return;
+  }
+
+  /* ---------- ثوابت ---------- */
+  var SPACING  = 2.0;
+  /* في وضع الكرات المتلامسة يساوي مجموع نصفَي القطر المسافةَ بين
+     المركزين تمامًا، فتتلامس فعلًا. والنسبة بينهما تقارب النسبة
+     الحقيقية لأيونَي الصوديوم والكلوريد. */
+  var R_FILL   = { Na: 0.72, Cl: 1.28 };
+  var R_STICK  = { Na: 0.34, Cl: 0.60 };
+  var C_NA     = 0x14C8A8;
+  var C_CL     = 0x8FA6C4;
+  var C_CORAL  = 0xFF6B4A;
+
+  var scene, camera, renderer, controls, raycaster, pointer;
+  var ionGroup, bondGroup;
+  var ionMeshes = [], bondMeshes = [];
+  var spinning = true;
+  /* يبدأ بنموذج الكرة والعصا — وهو ما بنى به الطالب في المرحلة
+     الأولى. تبديل التمثيل تحته عند الانتقال يقطع الصلة بين ما بناه
+     وما يراه، ويجعل الفرق بين النموذجين مفروضًا لا مكتشَفًا. يبدّله
+     هو بزرّه ليرى الفرق بنفسه. */
+  var repr = 'stick';
+  var stage = 1;
+
+  /* ---------- التهيئة ---------- */
+  var wrap = document.getElementById('canvas-wrap');
+
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(45, 1, 0.1, 300);
+  camera.position.set(6, 5, 9);
+
+  renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  wrap.appendChild(renderer.domElement);
+
+  /* لو تعذّر تحميل OrbitControls وحده، لا ينهار المختبر: يبقى المشهد
+     يدور تلقائيًا ويظلّ النقر عاملًا، ويُخفى سطر «اسحب لتدوير». */
+  if(typeof THREE.OrbitControls === 'function'){
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.08;
+    controls.minDistance = 3;
+    controls.maxDistance = 26;
+  }else{
+    controls = { target:new THREE.Vector3(), update:function(){
+      camera.lookAt(this.target);
+    } };
+    spinning = true;   // بلا تحكّم يدويّ يبقى الدوران التلقائي وحده
+  }
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.72));
+  var key1 = new THREE.DirectionalLight(0xffffff, 0.85);
+  key1.position.set(8, 14, 10);
+  scene.add(key1);
+  var rim = new THREE.PointLight(0x14C8A8, 0.5, 40);
+  rim.position.set(-12, -8, -10);
+  scene.add(rim);
+
+  ionGroup  = new THREE.Group();
+  bondGroup = new THREE.Group();
+  scene.add(ionGroup, bondGroup);
+
+  raycaster = new THREE.Raycaster();
+  pointer   = new THREE.Vector2();
+
+  function resize(){
+    var w = wrap.clientWidth, h = wrap.clientHeight;
+    if(!w || !h) return;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h, false);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  var reduceMotion = window.matchMedia &&
+                     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduceMotion) spinning = false;
+
+  function animate(){
+    requestAnimationFrame(animate);
+    var freeSpin = (typeof THREE.OrbitControls !== 'function');
+    if(spinning && (stage === 2 || freeSpin)){
+      ionGroup.rotation.y += 0.0035;
+      bondGroup.rotation.y = ionGroup.rotation.y;
+    }
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  /* ---------- إدارة الذاكرة ----------
+     الإزالة من المشهد وحدها لا تحرّر ذاكرة الرسوم: مع كل إعادة
+     بناء يتراكم ما سبق حتى يثقل الجهاز — وأثره على الجوال حقيقي. */
+  function disposeGroup(group, list){
+    list.forEach(function(m){
+      group.remove(m);
+      if(m.geometry) m.geometry.dispose();
+      if(m.material) m.material.dispose();
+    });
+    list.length = 0;
+  }
+  function clearAll(){
+    disposeGroup(ionGroup, ionMeshes);
+    disposeGroup(bondGroup, bondMeshes);
+    ionGroup.rotation.y = 0;
+    bondGroup.rotation.y = 0;
+  }
+
+  /* ---------- بناء العناصر ---------- */
+  function ionMaterial(type){
+    /* الكلوريد أكبر حجمًا، فلو كان لامعًا أيضًا طغى على المشهد وابتلع
+       الموجب الأصغر. يُخفَّض لمعانه ويُعمَّق لونه فيتوازن الحضور. */
+    var isNa = type === 'Na';
+    return new THREE.MeshStandardMaterial({
+      color: isNa ? C_NA : C_CL,
+      roughness: isNa ? 0.34 : 0.58,
+      metalness: isNa ? 0.14 : 0.04,
+      emissive: isNa ? 0x063f35 : 0x101828,
+      emissiveIntensity: isNa ? 0.55 : 0.3
+    });
+  }
+
+  /* المرحلتان الأولى والثالثة بنموذج الكرة والعصا دائمًا: الكرات
+     المتلامسة تُظهر التراصّ لكنها تُخفي البنية، فيبدو ما يبنيه
+     الطالب كتلةً عائمة لا ترتيبًا. والمبدّل يخصّ المرحلة الثانية
+     وحدها حيث التراصّ نفسه هو المقصود. */
+  function activeRepr(){ return stage === 2 ? repr : 'stick'; }
+
+  function addIon(cell, type){
+    var r = (activeRepr() === 'fill' ? R_FILL : R_STICK)[type];
+    var geo = new THREE.SphereGeometry(r, 26, 18);
+    var mesh = new THREE.Mesh(geo, ionMaterial(type));
+    mesh.position.set(cell[0]*SPACING, cell[1]*SPACING, cell[2]*SPACING);
+    mesh.userData = { cell: cell, type: type, role: 'ion' };
+    ionGroup.add(mesh);
+    ionMeshes.push(mesh);
+    return mesh;
+  }
+
+
+  function addBond(a, b){
+    var p1 = new THREE.Vector3(a[0]*SPACING, a[1]*SPACING, a[2]*SPACING);
+    var p2 = new THREE.Vector3(b[0]*SPACING, b[1]*SPACING, b[2]*SPACING);
+    var geo = new THREE.CylinderGeometry(0.055, 0.055, p1.distanceTo(p2), 10);
+    var mat = new THREE.MeshStandardMaterial({
+      color:0x9fb0c9, transparent:true, opacity:0.42, roughness:0.7
+    });
+    var mesh = new THREE.Mesh(geo, mat);
+    mesh.position.copy(p1).add(p2).multiplyScalar(0.5);
+    mesh.quaternion.setFromUnitVectors(
+      new THREE.Vector3(0,1,0), p2.clone().sub(p1).normalize());
+    bondGroup.add(mesh);
+    bondMeshes.push(mesh);
+  }
+
+  /* ---------- الحالة ---------- */
+  var state = {};                 // "x,y,z" -> 'Na' | 'Cl'
+  var selected = 'Na';
+  var grown = false;
+  var userPattern = null;     // نمط الطالب قبل التكرار
+  var found = {};                 // جيران اكتُشفوا في المرحلة 3
+  var centerNeighbors = [];
+
+  function stateCells(){
+    return Object.keys(state).map(L.parse);
+  }
+
+  /* ---------- المرحلة 1 ---------- */
+  function setupStage1(keepState){
+    clearAll();
+    if(!keepState){
+      state = {};
+      state[L.key(0,0,0)] = 'Na';
+      state[L.key(1,0,0)] = 'Cl';
+    }else if(userPattern){
+      // الرجوع إلى المرحلة الأولى يعيد نمطه هو، لا الشبكة الكاملة
+      state = JSON.parse(JSON.stringify(userPattern));
+    }
+    rebuildCurrent();
+    updateBuiltCount();
+    camera.position.set(4.5, 3.6, 6.5);
+    controls.target.set(1, 0, 0);
+    controls.update();
+  }
+
+  /* لا عدّاد للأيونات المبنيّة: الرقم لا يعني شيئًا للطالب، والمشهد
+     أمامه. يُستعمل داخليًا فقط لكشف زرّ المرحلة التالية. */
+  function updateBuiltCount(){
+    document.getElementById('btnToStage2').hidden = Object.keys(state).length < 6;
+  }
+
+  function say(id, text, warn){
+    var el = document.getElementById(id);
+    el.hidden = false;
+    el.className = warn ? 'msg warn' : 'msg';
+    el.textContent = text;
+  }
+
+  function attachTo(mesh){
+    var host = mesh.userData.cell, hostType = mesh.userData.type;
+    if(selected === hostType){
+      nudge(mesh);
+      if(window.Sounds) window.Sounds.playWrong();
+      say('msg1', selected === 'Na'
+        ? 'موجبٌ لا يلتصق بموجب — الشحنتان المتماثلتان تتنافران.'
+        : 'سالبٌ لا يلتصق بسالب — الشحنتان المتماثلتان تتنافران.', true);
+      return;
+    }
+    var slot = nearestOpenSlot(host);
+    if(!slot) return;                       // محاطٌ من كل جهاته
+    state[L.key(slot[0], slot[1], slot[2])] = selected;
+    rebuildCurrent();
+    if(window.Sounds) window.Sounds.playSnap();
+    updateBuiltCount();
+    document.getElementById('msg1').hidden = true;   // النجاح يراه الطالب، فلا يُخبَر به
+  }
+
+  /* الطالب ينقر أيونًا ولا يختار جهة. البحث عن وجهٍ بعينه يفرض عليه
+     أن يدير النموذج ويتحرّى موضعًا صالحًا، وهي خطوة إجرائية لا تعلّم
+     شيئًا. والموضع يُختار أقرب ما يكون إلى عينه فيظهر أمامه لا خلف
+     النموذج.
+
+     ولا يضيع بهذا اكتشاف التنافر: الشبكة تناوبية حتمًا، فكلُّ موضع
+     يجاور أيونًا موجبًا لا يقبل إلا سالبًا. أي أنّ القبول والرفض
+     يتبعان نوع الأيون المختار وحده لا موضعه — وهذا يجعل القاعدة
+     شفافة للطالب: لا يلتصق بالموجب إلا سالب. */
+  function nearestOpenSlot(cell){
+    var best = null, bestD = Infinity;
+    L.neighbors(cell[0], cell[1], cell[2]).forEach(function(n){
+      if(state[L.key(n[0], n[1], n[2])]) return;
+      var dx = n[0]*SPACING - camera.position.x;
+      var dy = n[1]*SPACING - camera.position.y;
+      var dz = n[2]*SPACING - camera.position.z;
+      var d = dx*dx + dy*dy + dz*dz;
+      if(d < bestD){ bestD = d; best = n; }
+    });
+    return best;
+  }
+
+  function nudge(mesh){
+    if(reduceMotion) return;
+    var base = mesh.position.clone(), t = 0;
+    var iv = setInterval(function(){
+      t++;
+      mesh.position.x = base.x + Math.sin(t * 1.6) * 0.14;
+      if(t > 12){ clearInterval(iv); mesh.position.copy(base); }
+    }, 22);
+  }
+
+  /* ---------- المرحلة 2 ---------- */
+  /* لا زرّ للتكرار هنا. الطالب أقرّ بالفعل حين ضغط «وماذا لو زاد
+     عددها؟»، فزرٌّ ثانٍ للشيء نفسه استئذانٌ مكرّر. يرى نمطه لحظةً
+     ثم يتكاثر أمامه — والحركة تقول ما كان الزرّ يقوله. */
+  function setupStage2(){
+    // نمط الطالب باقٍ في المشهد حتى يضغط التكرار — يراه ولا يحتاج من يخبره
+    if(grown){
+      state = {};
+      L.cubeCells(3).forEach(function(c){
+        state[L.key(c[0],c[1],c[2])] = L.ionAt(c[0],c[1],c[2]);
+      });
+      rebuildCurrent();
+    }else{
+      rebuildCurrent();                      // نمطه كما بناه
+      setTimeout(growLattice, reduceMotion ? 0 : 700);
+    }
+    camera.position.set(6.5, 5, 9);
+    controls.target.set(0, 0, 0);
+    controls.update();
+  }
+
+  function growLattice(){
+    if(!grown) userPattern = JSON.parse(JSON.stringify(state));
+    grown = true;
+    clearAll();
+    state = {};
+    var cells = L.cubeCells(3);
+    cells.forEach(function(c){
+      var t = L.ionAt(c[0], c[1], c[2]);
+      state[L.key(c[0], c[1], c[2])] = t;
+      addIon(c, t);
+    });
+    if(repr === 'stick') L.bondPairs(cells).forEach(function(p){ addBond(p[0], p[1]); });
+    /* المضارع لا الماضي ولا «سوف»: يصلح جوابًا لـ«ماذا لو زاد عدد
+       الأيونات؟» ووصفًا لما يقع أمام عين الطالب في اللحظة نفسها.
+       و«سوف» تنصّ على المستقبل فتصطدم بمشهدٍ قد وقع، ولا تصحّ إلا
+       لو عُرضت الرسالة قبل التكاثر — وذلك يسمّي الشبكة قبل رؤيتها. */
+    say('msg2', 'يتشكّل تركيب ضخم اسمه الشبكة البلّوريّة العملاقة. ليس فيها عدد محدّد من الأيونات: كلّما زاد عددها زاد حجم البلورة.', false);
+    document.getElementById('reprBlock').hidden = false;
+    document.getElementById('btnToStage3').hidden = false;
+  }
+
+  function setRepr(mode){
+    repr = mode;
+    document.getElementById('btnFill').classList.toggle('filled', mode === 'fill');
+    document.getElementById('btnStick').classList.toggle('filled', mode === 'stick');
+    /* استعارة «السقالة» حُذفت: تفترض على الطالب صورةً ليست في المشهد،
+       وهو الخطأ نفسه الذي رُفض فيه «يطفو وحده». الجملة تصف ما يراه. */
+    document.getElementById('msgRepr').textContent = (mode === 'stick')
+      ? 'العصيّ تُبيّن اتجاه الترتيب، وليست روابط بين زوجين.'
+      : 'هكذا تتراصّ الأيونات فعلًا: متلامسة بلا فراغ بينها.';
+    rebuildCurrent();
+  }
+
+  /* إعادة البناء تحفظ التقدّم: الجيران المكتشفون في المرحلة 3 لا
+     يضيعون بتبديل التمثيل. */
+  function rebuildCurrent(){
+    var cells = stateCells();
+    clearAll();
+    if(activeRepr() === 'stick'){
+      L.bondPairs(cells).forEach(function(p){ addBond(p[0], p[1]); });
+    }
+    cells.forEach(function(c){ addIon(c, state[L.key(c[0],c[1],c[2])]); });
+    if(stage === 3) markCenter();
+  }
+
+  /* ---------- المرحلة 3 ---------- */
+  /* سبعة أيونات لا سبعة وعشرون. المحاولة الأولى خفّتت غير الجيران
+     ليُمكن النقر على المدفون، فامتلأ المشهد أشباحًا متراكبة ابتلعت
+     الأيون المركزي وهو الأصغر أصلًا. والعزل الحقيقي أوضح من التخفيت:
+     المركز وجيرانه الستّة وحدهم، وستّ عصيّ تُظهر الاتجاهات الثلاثة
+     ذهابًا وإيابًا. */
+  /* النموذج كامل لا معزول. سبعة أيونات وحدها تُعطي الجواب ولا تدع
+     الطالب يستنتجه: العدد يُستنتج حين يرى أيونًا داخل شبكةٍ ويتتبّع
+     ما يتّصل به. ونموذج الكرة والعصا هو ما يجعل ذلك ممكنًا — الكرات
+     المتلامسة تدفن الداخل، وهذه تفتحه. */
+  function setupStage3(){
+    if(!grown) growLattice();
+    centerNeighbors = L.neighbors(0, 0, 0);
+    found = {};
+    rebuildCurrent();
+    document.getElementById('foundCount').textContent = '0';
+    document.getElementById('msg3').hidden = true;
+    document.getElementById('btnDone').hidden = true;
+    document.getElementById('btnBackToLesson').hidden = true;
+    recenter();
+  }
+
+  /* الأيون المركزي يتوهّج مرجانيًا: نقطة الانطلاق الوحيدة في شبكة
+     متكرّرة، وبدونها لا يعرف الطالب أين يبدأ. */
+  function markCenter(){
+    ionMeshes.forEach(function(m){
+      var c = m.userData.cell;
+      if(c[0] === 0 && c[1] === 0 && c[2] === 0){
+        m.material.color.setHex(C_CORAL);
+        m.material.emissive.setHex(0x7a2412);
+        m.material.emissiveIntensity = 0.95;
+        m.material.needsUpdate = true;
+      }else if(found[L.key(c[0], c[1], c[2])]){
+        m.material.emissive.setHex(C_NA);
+        m.material.emissiveIntensity = 0.9;
+        m.material.needsUpdate = true;
+      }
+    });
+  }
+
+  function recenter(){
+    camera.position.set(2.2, 3.4, 7.6);
+    controls.target.set(0, 0, 0);
+    controls.update();
+  }
+
+  function tapIon(mesh){
+    var c = mesh.userData.cell;
+    if(!L.isAdjacent(c, [0,0,0])) return;
+    var k = L.key(c[0], c[1], c[2]);
+    if(found[k]) return;
+    found[k] = true;
+    mesh.material.emissive.setHex(C_NA);
+    mesh.material.emissiveIntensity = 0.9;
+    mesh.material.needsUpdate = true;
+    if(window.Sounds) window.Sounds.playTick();
+    var n = Object.keys(found).length;
+    document.getElementById('foundCount').textContent = n;
+    document.getElementById('btnDone').hidden = (n === 0);
+    if(n === centerNeighbors.length){
+      say('msg3', 'ستّة. يحيط بكلِّ أيون صوديوم ستّةُ أيونات كلوريد، ويحيط بكلِّ أيون كلوريد ستّةُ أيونات صوديوم — الترتيب نفسه من الجهتين.', false);
+      document.getElementById('btnDone').hidden = true;
+      document.getElementById('btnBackToLesson').hidden = false;
+      if(window.Sounds) window.Sounds.playChime();
+      try{ localStorage.setItem(L.LAB_DONE_KEY, '1'); }catch(e){ /* تصفّح خاص */ }
+    }
+    // ولا رسالة أثناء العدّ: العدّاد يتقدّم أمامه، وذلك كافٍ
+  }
+
+  /* ---------- النقر ---------- */
+  var downAt = null;
+  renderer.domElement.addEventListener('pointerdown', function(e){
+    downAt = { x:e.clientX, y:e.clientY };
+  });
+  renderer.domElement.addEventListener('pointerup', function(e){
+    if(!downAt) return;
+    // سحبٌ للتدوير ليس نقرًا: بلا هذا الفرق يضع الطالب أيونًا كلّما أدار
+    var moved = Math.abs(e.clientX - downAt.x) + Math.abs(e.clientY - downAt.y);
+    downAt = null;
+    if(moved > 8) return;
+
+    var rect = renderer.domElement.getBoundingClientRect();
+    pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    raycaster.setFromCamera(pointer, camera);
+
+    if(stage === 1){
+      var hits = raycaster.intersectObjects(ionMeshes, false);
+      if(hits.length) attachTo(hits[0].object);
+    }else if(stage === 3){
+      var hit3 = raycaster.intersectObjects(ionMeshes, false);
+      if(hit3.length) tapIon(hit3[0].object);
+    }
+  });
+
+  /* ---------- التنقّل بين المراحل ---------- */
+  function switchStage(n){
+    stage = n;
+    document.querySelectorAll('.stage-btn').forEach(function(b){
+      b.classList.toggle('active', +b.dataset.stage === n);
+    });
+    document.getElementById('p1').hidden = n !== 1;
+    document.getElementById('p2').hidden = n !== 2;
+    document.getElementById('p3').hidden = n !== 3;
+    if(n === 1) setupStage1(true);
+    if(n === 2) setupStage2();
+    if(n === 3) setupStage3();
+    resize();
+  }
+
+  document.querySelectorAll('.stage-btn').forEach(function(b){
+    b.addEventListener('click', function(){ switchStage(+b.dataset.stage); });
+  });
+
+  document.querySelectorAll('.ion-card').forEach(function(card){
+    function choose(){
+      selected = card.dataset.ion;
+      document.querySelectorAll('.ion-card').forEach(function(c){
+        c.classList.toggle('on', c === card);
+      });
+    }
+    card.addEventListener('click', choose);
+    card.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); choose(); }
+    });
+  });
+
+  document.getElementById('btnReset1').addEventListener('click', function(){
+    grown = false;
+    userPattern = null;
+    document.getElementById('msg1').hidden = true;
+    setupStage1(false);
+  });
+  document.getElementById('btnToStage2').addEventListener('click', function(){ switchStage(2); });
+  document.getElementById('btnToStage3').addEventListener('click', function(){ switchStage(3); });
+  document.getElementById('btnSpin').addEventListener('click', function(){
+    spinning = !spinning;
+    this.textContent = spinning ? 'إيقاف الدوران' : 'تشغيل الدوران';
+  });
+  document.getElementById('btnFill').addEventListener('click', function(){ setRepr('fill'); });
+  document.getElementById('btnStick').addEventListener('click', function(){ setRepr('stick'); });
+  document.getElementById('btnRecenter').addEventListener('click', recenter);
+
+  /* «ناقص» لا «بقي كذا»: الجواب يبقى ما يستخرجه الطالب من الشبكة،
+     والمحكّ يمنعه فقط من مغادرة التجربة وهو يظنّها تمّت. */
+  document.getElementById('btnDone').addEventListener('click', function(){
+    if(Object.keys(found).length === centerNeighbors.length) return;
+    say('msg3', 'ما زال منها ما هو مختبئ. أدِر المشهد وانظر خلف الأيون المتوهّج وأمامه.', true);
+    if(window.Sounds) window.Sounds.playWrong();
+  });
+
+  setupStage1(false);
+})();
+</script>
+</body>
+</html>
