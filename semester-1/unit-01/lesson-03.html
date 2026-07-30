@@ -763,6 +763,7 @@
   <div class="progress-dot" data-target="station-2"></div>
   <div class="progress-dot" data-target="station-3"></div>
   <div class="progress-dot" data-target="station-4"></div>
+  <div class="progress-dot" data-target="station-5"></div>
 </div>
 
 <header class="hero">
@@ -1372,6 +1373,100 @@
           <span dir="ltr">(MgCl<sub>2</sub>)</span> — أيون مغنيسيوم موجب واحد،
           وأيونا كلور سالبان.
         </p>
+
+        <!-- تسليم المحطة الرابعة: يظهر مع الخلاصة لا قبلها، فلا يُدعى
+             الطالب إلى المحطة التالية وهو لم يسمِّ مركّبه بعد. -->
+        <div class="station-handoff" id="toStation5" hidden>
+          <a class="station-next" href="#station-5">تابع إلى حبّة الملح ↓</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 5: الشبكة البلورية العملاقة =====================
+       هدفها: يستنتج الطالب أن المركّب الأيوني شبكة ممتدّة لا جزيئات منفصلة،
+       ويقرأ الرقم في الصيغة نسبةً لا عددًا داخل وحدة. والخطأ المستهدَف ما
+       زرعته المحطة 4 بلا قصد: أن MgCl2 «وحدة» مغلقة ذات ثلاث ذرّات.
+
+       الملاحظة والتأمّل يقعان في المختبر (صفحة كاملة، لا iframe)، والأسئلة
+       بعد العودة — لأن جواب سؤال العدّ عدٌّ بصري لا استنتاج، فظهوره قبل
+       المختبر يدعو للتخمين ويُبطل قيمة المختبر.
+
+       ولا يُذكر مصطلح «الشبكة البلّورية» في هذه المحطة قبل المختبر —
+       لا في وصف المحطة ولا على زرّ المختبر: المصطلح قبل مسمّاه حملٌ
+       زائد. الطالب يقابله داخل المختبر (عنوانه ورسالته بعد التكاثر)،
+       والسؤال 2 هنا يثبّته بمطابقة الاسم بوصفه.
+
+       بلا شطر إلى مرحلتين، فنقطة تقدّم واحدة. وبلا طيّ للأسئلة: الطيّ في
+       المحطتين 2 و3 استثناء غرضه تحرير مساحة لرؤية المسرح، ولا مسرح هنا.
+       ثلاثة عناصر تحت سقف الكثافة (أربعة). ===================== -->
+  <section class="station" id="station-5">
+    <div class="station-label">المحطة الخامسة</div>
+    <h2>حبّة الملح من الداخل</h2>
+
+    <p class="dose">
+      لو أخذتَ حبّة ملح طعام وكبّرتَها ملايين المرّات، فما الذي ستراه؟<br>
+      افتح المختبر لترى.
+    </p>
+
+    <!-- توصية تقنية بحتة: مساحة الشاشة ودقّة السحب والمعالجة الرسومية.
+         ليست حكمًا على مستعمل الهاتف، ولا تُصاغ بما يوحي بذلك. -->
+    <p class="stage-note">يُفضَّل فتح المختبر على حاسوب: المشهد ثلاثي الأبعاد يحتاج مساحة شاشة أوسع لتدويره بالسحب.</p>
+
+    <!-- الدرجة الأولى (ممتلئ) والزرّ الممتلئ الوحيد في المحطة. يشير إلى
+         ملف لا شظيّة، فلا يختطفه معالج a.station-next[href^="#"] — مقصود. -->
+    <div class="station-handoff">
+      <a class="station-next" href="lab-03-lattice.html">افتح المختبر ↗</a>
+    </div>
+
+    <!-- مخرج نجاة (الدرجة الثالثة): التخزين يضيع في التصفّح الخاص وبمسح
+         بيانات الموقع وبتبديل الجهاز. ومنعُ الطالب الصادق لحمايةٍ من
+         المتحايل مقايضةٌ خاسرة — والثمن المقبول أنه يخسر جواب سؤال العدّ. -->
+    <button type="button" class="link-btn" id="latticeEscape" hidden>زرتَ المختبر ولم تظهر الأسئلة؟ أظهرها</button>
+
+    <div id="latticeQuestions" hidden>
+      <p class="dose">ثلاثة أسئلة على ما رأيته.</p>
+
+      <!-- لا data-step على أي مجموعة هنا: محرّك الاستكشاف المتتابع في
+           المحطة 2 يلتقط .quiz-options[data-step] تحديدًا، فالسمة
+           data-lat تُبقي هذه الأسئلة خارج نطاقه. -->
+      <div id="lat-q1">
+        <p class="explore-q">كم أيون صوديوم يحيط بأيون كلوريد واحد داخل الشبكة؟</p>
+        <div class="quiz-options" data-lat="lat1">
+          <label class="quiz-option"><input type="radio" name="lat1" value="w2">2</label>
+          <label class="quiz-option"><input type="radio" name="lat1" value="w4">4</label>
+          <label class="quiz-option"><input type="radio" name="lat1" value="correct">6</label>
+          <label class="quiz-option"><input type="radio" name="lat1" value="w8">8</label>
+        </div>
+        <p class="explore-feedback" id="fb-lat1" hidden></p>
+      </div>
+
+      <div id="lat-q2">
+        <p class="explore-q">ما رأيتَه عند التكبير يُسمّى…</p>
+        <div class="quiz-options" data-lat="lat2">
+          <label class="quiz-option"><input type="radio" name="lat2" value="correct">الشبكة البلورية العملاقة — ترتيب منتظم ممتد يتبادل فيه الأيون الموجب والأيون السالب</label>
+          <label class="quiz-option"><input type="radio" name="lat2" value="w1">جزيئات كلوريد الصوديوم — وحدات منفصلة، كل وحدة أيون صوديوم مع أيون كلوريد</label>
+          <label class="quiz-option"><input type="radio" name="lat2" value="w2">هيكل كلوريد الصوديوم — إطار خارجي يحمل الأيونات داخله</label>
+          <label class="quiz-option"><input type="radio" name="lat2" value="w3">بلورة كلوريد الصوديوم — كتلة صلبة لا ترتيب منتظم داخلها</label>
+        </div>
+        <p class="explore-feedback" id="fb-lat2" hidden></p>
+      </div>
+
+      <div id="lat-q3">
+        <p class="explore-q">في حبّة الملح ملايين الأيونات. فما الذي يقوله الرقم 2 في صيغة <span dir="ltr">MgCl<sub>2</sub></span>؟</p>
+        <div class="quiz-options" data-lat="lat3">
+          <label class="quiz-option"><input type="radio" name="lat3" value="w1">البلورة مبنيّة من وحدات، كل وحدة فيها أيون مغنيسيوم وأيونا كلوريد</label>
+          <label class="quiz-option"><input type="radio" name="lat3" value="w2">في البلورة أيون مغنيسيوم واحد وأيونا كلوريد فقط</label>
+          <label class="quiz-option"><input type="radio" name="lat3" value="w3">حجم أيون الكلوريد ضعف حجم أيون المغنيسيوم</label>
+          <label class="quiz-option"><input type="radio" name="lat3" value="correct">في الشبكة كلها، لكل أيون مغنيسيوم واحد يوجد أيونا كلوريد</label>
+        </div>
+        <p class="explore-feedback" id="fb-lat3" hidden></p>
+      </div>
+
+      <!-- بلا سؤال جسر ولا زرّ ممتلئ: المحطة 6 غير مبنيّة، وسؤال جسر بلا
+           زرّ طريقٌ مسدود يقرأه الطالب عطلًا. يُضاف مع بناء المحطة 6. -->
+      <div id="latticeDone" hidden>
+        <div class="success-tag show">✓ أكملتَ المحطة</div>
       </div>
     </div>
   </section>
@@ -2768,6 +2863,8 @@
     if(window.Sounds) window.Sounds.playChime();
     if(window.XP) window.XP.claim('l3-mgcl2-name', points, reason);
     mgClosing.hidden = false;
+    var toS5 = document.getElementById('toStation5');
+    if(toS5) toS5.hidden = false;
   }
 
   function checkName(){
@@ -2862,6 +2959,168 @@
       }
       try{ history.replaceState(null, '', '#' + id); }catch(err){ /* قد يُمنع على file:// */ }
     });
+  });
+})();
+</script>
+
+<script>
+/* ==========================================================
+   منطق المحطة 5 — الشبكة البلورية العملاقة
+   ----------------------------------------------------------
+   ثلاثة أسئلة اختيار من متعدد، 5 نقاط لكلٍّ على سلّم MCQ (لا
+   اجتهاد في التسعير خارج السلّم). لا نقاط للتمرير ولا خصم عند
+   الخطأ — الخطأ تلميحٌ لإعادة المحاولة.
+
+   تلميحات السؤال الأول خاصّة بكل مشتّت لأن مشتّتاته أخطاء مختلفة
+   الجذور: 2 تفكيرُ الوحدة المنفصلة، و4 عدُّ مستوى واحد ونسيان
+   الأعلى والأسفل، و8 عدد زوايا المكعّب لا الأيونات الملامسة.
+   تلميح واحد لا يخاطب إلا واحدًا منها.
+   ========================================================== */
+(function(){
+  "use strict";
+
+  var LAB_DONE_KEY = 'l3LabDone';   // يكتبه lab-03-lattice.html عند اكتمال العدّ
+  var qWrap     = document.getElementById('latticeQuestions');
+  var escapeBtn = document.getElementById('latticeEscape');
+  var doneTag   = document.getElementById('latticeDone');
+  if(!qWrap) return;
+
+  function labDone(){
+    try{ return localStorage.getItem(LAB_DONE_KEY) === '1'; }
+    catch(e){ return false; }      // التخزين محجوب (تصفّح خاص) — يتولّاه مخرج النجاة
+  }
+
+  function showQuestions(){
+    qWrap.hidden = false;
+    if(escapeBtn) escapeBtn.hidden = true;
+  }
+
+  if(labDone()){
+    showQuestions();
+  } else if(escapeBtn){
+    escapeBtn.hidden = false;
+    escapeBtn.addEventListener('click', showQuestions);
+  }
+
+  var HINTS = {
+    lat1: {
+      w2: 'انظر إلى أيون واحد في المختبر: كم عصًا خرجت منه إلى أيونات مجاورة؟',
+      w4: 'عددتَ ما حوله في مستوى واحد. وللشبكة أعلى وأسفل أيضًا.',
+      w8: '8 عدد زوايا المكعّب، والسؤال عن الأيونات الملامسة لا عن زوايا الشكل.'
+    },
+    lat2: { any: 'انظر إلى وصف كل خيار لا إلى اسمه — أيّ وصف يطابق ما بنيتَه في المختبر؟' },
+    lat3: { any: 'الرقم في الصيغة يقارن عددًا بعدد. فبين ملايين الأيونات، ما الذي يبقى ثابتًا؟' }
+  };
+
+  // سبب المكسب كما يراه الطالب — مرتبط بالمهارة لا بالسؤال
+  var REASONS = {
+    lat1: 'عددتَ الأيونات المحيطة بنفسك',
+    lat2: 'طابقتَ الاسم بوصفه لا بلفظه',
+    lat3: 'قرأتَ الرقم نسبةً لا عددًا'
+  };
+
+  // مُعرّفات ثابتة فريدة: تمنع كسب النقاط مرّتين بعد إعادة التحميل
+  var XP_IDS = { lat1: 'l3-lat-q1', lat2: 'l3-lat-q2', lat3: 'l3-lat-q3' };
+
+  var NAMES = ['lat1', 'lat2', 'lat3'];
+  var solved = {};
+
+  function allSolved(){
+    for(var i = 0; i < NAMES.length; i++){
+      if(!solved[NAMES[i]]) return false;
+    }
+    return true;
+  }
+
+  NAMES.forEach(function(name){
+    var group = document.querySelector('.quiz-options[data-lat="' + name + '"]');
+    var fb    = document.getElementById('fb-' + name);
+    if(!group || !fb) return;
+
+    var radios = group.querySelectorAll('input[type="radio"]');
+    radios.forEach(function(radio){
+      radio.addEventListener('change', function(){
+        if(solved[name]) return;
+        fb.hidden = false;
+
+        if(radio.value === 'correct'){
+          solved[name] = true;
+          var opt = radio.closest('.quiz-option');
+          if(opt) opt.classList.add('correct');
+          fb.textContent = '✓ صحيح!';
+          fb.className = 'explore-feedback is-correct';
+          if(window.Sounds) window.Sounds.playSnap();
+          if(window.XP){
+            var pts = (window.XP.POINTS && window.XP.POINTS.MCQ) || 5;
+            window.XP.claim(XP_IDS[name], pts, REASONS[name]);
+          }
+          /* تُقفل الخيارات فور الإجابة الصحيحة: النقاط احتُسبت، وبقاؤها
+             مفتوحة يدعو إلى تبديل إجابة صحيحة بخاطئة بلا معنى تربوي. */
+          radios.forEach(function(r){ r.disabled = true; });
+
+          if(allSolved() && doneTag){
+            doneTag.hidden = false;
+            if(window.Sounds) window.Sounds.playChime();
+          }
+        } else {
+          var hints = HINTS[name] || {};
+          fb.textContent = '💡 ' + (hints[radio.value] || hints.any || '');
+          fb.className = 'explore-feedback is-hint';
+          if(window.Sounds) window.Sounds.playWrong();
+        }
+      });
+    });
+  });
+})();
+</script>
+
+<script>
+/* ==========================================================
+   الدخول من الخارج بالـhash — العودة من المختبر
+   ----------------------------------------------------------
+   المختبر يعود إلى lesson-03.html#station-5. وتنقّل المرساة
+   وحده لا يكفي: .station تبدأ بـopacity:0، فالقفز إلى محطة لم
+   تُوسَم بـ.in-view يُنزل الطالب على مساحة فارغة تمامًا. نؤدّي
+   الثلاثة صراحةً كما في معالج أزرار الانتقال.
+
+   الوصول مفتوح بلا فحص أي مُعرّف XP: فتح المحطات السابقة لا
+   يكشف شيئًا لأنها أنشطة لا نصوص — الطالب القافز يجدها مفتوحة
+   وفارغة من عمله. والمنع يشتري حمايةً موجودة أصلًا بثمن طالبٍ
+   صادق محبوس خلف تخزين ضائع.
+
+   ولا نرفع hidden عن محطة كانت مخفيّة أصلًا (station-2b): مسرحها
+   يُرسَم عند فتحه بزرّ الجسر لا عند التحميل، فكشفه من هنا يُظهر
+   مسرحًا فارغًا. الهدف نفسه وحده يُرفع عنه hidden.
+   ========================================================== */
+(function(){
+  "use strict";
+  function reduced(){
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+  function activate(sec){
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + sec.id + '"]');
+    if(dot) dot.classList.add('active');
+  }
+  window.addEventListener('load', function(){
+    var id = (location.hash || '').replace(/^#/, '');
+    if(!/^station-[A-Za-z0-9_-]+$/.test(id)) return;
+    var target = document.getElementById(id);
+    if(!target || !target.classList.contains('station')) return;
+
+    var all = Array.prototype.slice.call(document.querySelectorAll('.station'));
+    var idx = all.indexOf(target);
+    if(idx < 0) return;
+
+    all.slice(0, idx).forEach(function(sec){
+      if(!sec.hidden) activate(sec);     // المخفيّة أصلًا تبقى مخفيّة
+    });
+    target.hidden = false;
+    activate(target);
+
+    if(target.scrollIntoView){
+      target.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
+    }
   });
 })();
 </script>
