@@ -78,6 +78,13 @@
   .orbit-shell-0{ stroke:rgba(20,200,168,.22); stroke-width:1.3; }
   .orbit-shell-1{ stroke:rgba(20,200,168,.52); stroke-width:1.5; }
   .orbit-shell-2{ stroke:rgba(20,200,168,.88); stroke-width:1.9; }
+  /* المستوى الرابع: لم تعرف المنصّة ذرّةً بأربعة مستويات قبل الكالسيوم
+     (المحطة 6)، فكان هذا الصنف يُولَّد في الـDOM بلا قاعدة CSS تقابله —
+     فالمدار موجود وغير مرئي. القاعدة المستفادة: صنفٌ يولّده JS ولم
+     يُعرَّف في CSS يمرّ من كل اختبار منطقي، لأن الاختبار يسأل «هل
+     العنصر موجود؟» لا «هل هو مرئي؟». والتدرّج يمتدّ كما بُني: كل
+     مستوى أوضح من الذي قبله. */
+  .orbit-shell-3{ stroke:rgba(20,200,168,1); stroke-width:2.2; }
   .orbit.target-highlight{
     stroke:var(--turquoise);
     stroke-width:2.2;
@@ -706,6 +713,13 @@
   #station-4 .quiz-options{ margin-top:14px; }
   #station-4 .explore-q{ max-width:920px; margin-inline:auto; }
 
+  /* فرجة قبل كل كتلة تحقّق في المحطة 6: كان السؤال يلتصق بالخلاصة
+     التي تحته بـ12px فقط، فلا تُخبر العينُ الطالبَ أن المحاكاة انتهت
+     وبدأ سؤالٌ عنها — والحدّ بين «ما بنيتَه» و«فيمَ تختلف» حدُّ نشاطٍ
+     لا حدُّ سطر. وتنطبق على السؤالين معًا: سؤال النمط يظهر تحت رسالة
+     «✓ صحيح!» فيلتصق بها بالقدر نفسه. */
+  #caoCompare, #caoPattern{ margin-top:30px; }
+
   /* بطاقة النموذج بجوار سؤال التسمية: النمط والفراغ في نظرة واحدة */
   .pattern-card{
     max-width:920px;
@@ -764,6 +778,7 @@
   <div class="progress-dot" data-target="station-3"></div>
   <div class="progress-dot" data-target="station-4"></div>
   <div class="progress-dot" data-target="station-5"></div>
+  <div class="progress-dot" data-target="station-6"></div>
 </div>
 
 <header class="hero">
@@ -1416,7 +1431,7 @@
     <!-- الدرجة الأولى (ممتلئ) والزرّ الممتلئ الوحيد في المحطة. يشير إلى
          ملف لا شظيّة، فلا يختطفه معالج a.station-next[href^="#"] — مقصود. -->
     <div class="station-handoff">
-      <a class="station-next" href="lab-03-lattice.html">افتح المختبر ↗</a>
+      <a class="station-next" id="labOpenBtn" href="lab-03-lattice.html">افتح المختبر ↗</a>
     </div>
 
     <!-- مخرج نجاة (الدرجة الثالثة): التخزين يضيع في التصفّح الخاص وبمسح
@@ -1463,11 +1478,116 @@
         <p class="explore-feedback" id="fb-lat3" hidden></p>
       </div>
 
-      <!-- بلا سؤال جسر ولا زرّ ممتلئ: المحطة 6 غير مبنيّة، وسؤال جسر بلا
-           زرّ طريقٌ مسدود يقرأه الطالب عطلًا. يُضاف مع بناء المحطة 6. -->
+      <!-- زرّ ممتلئ واحد ظاهر في كل لحظة: زرّ المختبر يحمل الشكل الممتلئ
+           حتى تُحلّ الأسئلة الثلاثة، ثم يتبادل الزرّان الوزن — المختبر يبقى
+           متاحًا للمراجعة بالدرجة الثانية (لا يُخفى: قد يعود الطالب ليعدّ
+           مرّة أخرى)، والطريق يصير المحطة السادسة.
+
+           ويبدأ هذا الزرّ بـ.demoted لا بلا صنف: صنف station-next يجب أن
+           يكون في الوسم من البداية كي يربطه معالج التنقّل عند التحميل
+           (يُربط بـquerySelectorAll لحظةَ التنفيذ، فصنفٌ يُضاف لاحقًا لا
+           يُربط)؛ و.demoted يمنع اجتماع ممتلئين قبل حلّ الأسئلة. -->
       <div id="latticeDone" hidden>
         <div class="success-tag show">✓ أكملتَ المحطة</div>
+        <div class="station-handoff">
+          <a class="station-next demoted" id="toStation6" href="#station-6">تابع إلى الجسر ↓</a>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 6: أكسيد الكالسيوم =====================
+       توسيع 3. هدفها المفاهيمي واحد: كسر التعميم الصامت الذي بنته
+       المحطات السابقة بلا قصد — أن كل ذرّة لافلزّية تستقبل إلكترونًا
+       واحدًا، والنسبة وحدها هي ما يتغيّر. الكلور والفلور استقبلا 1،
+       فجاء الأكسجين يستقبل 2 — فتصير النسبة 1:1 بشحنتين لا بشحنة.
+
+       والسياق (الأسمنت وجسور الدوحة) سياقٌ لا موضوع: يُفتح بسطرين
+       ويُغلق بسطر. جدول الكتاب (الصيغة، نوع الرابطة، التمثيل النقطي،
+       رسم الشبكة) لا يُنقل إلى الشاشة عمدًا — كلّه بُني هنا بأدوات
+       أفضل من القلم، فإكماله على الورق بيد الطالب هو التقاطع الصحيح
+       بين المنصة والكتاب لا تكرارًا له.
+
+       ولا سؤال تسمية: نمط «فلوريد الليثيوم ← كلوريد المغنيسيوم» في
+       المحطة 4 هو ما يسمّي هذا المركّب، فطلبه ثانيةً استرجاع.
+
+       والسؤال الأخير (الفلزّ واللافلزّ) موضعه هنا لا في التقييم: أمثلته
+       الأربعة لم تكتمل إلا بهذه المحطة. سؤالٌ يُستنتج مرّة، ثم يُقيَّم
+       في التقييم على مثال لم يُبنَ — فيصير تطبيقًا لا استرجاعًا.
+       ===================================================================== -->
+  <section class="station" id="station-6">
+    <div class="station-label">المحطة السادسة</div>
+    <h2>ما المادة التي يعتمد عليها المهندسون في بناء الجسور؟</h2>
+
+    <p class="dose">
+      يعتمد المهندسون في الدوحة على الخرسانة والأسمنت في بناء الجسور، والمكوّن
+      الأساسي في الأسمنت مركّبٌ أيوني: أكسيد الكالسيوم.
+    </p>
+
+    <!-- بلا سؤال تنبّؤ ولا زرّ جسر (حُذفا بقرار فؤاد، 30 يوليو): التنبّؤ
+         الحقيقي وقع في المحطة 3 («كم ذرّة كلور؟») وأدّى دوره، وتكرار
+         الشكل نفسه هنا يحوّله من أداة إلى روتين يقرأه الطالب حشوًا
+         فيتخطّاه. وسقط معه زرّ الجسر تبعًا: وظيفته الوحيدة كانت منع
+         البناء قبل التنبّؤ، فصار نقرةً بلا قرار خلفها.
+         والنقلة المفاهيمية لا تُفقَد — سؤال المقارنة أدناه يحملها. -->
+    <p class="dose">
+      يمثّل الشكل الآتي ذرّتي كالسيوم وأكسجين. انقر إلكترون التكافؤ (المرجاني)
+      في ذرّة الكالسيوم.
+    </p>
+
+    <!-- المسرح داخل .stage-wrap كبقيّة مسارح الدرس: كان بلا إطار فبدا
+         غريبًا عن المحطات الأخرى (عيب تماثل مرصود عيانًا). -->
+    <div class="stage-wrap">
+      <svg id="stage6" class="stage" viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+
+    <p class="stage-note" id="caoNote" hidden></p>
+
+    <!-- الخلاصة تسمّي المركّب ولا تُعيد الشحنات: رسالة الحركة أعلاه
+         ذكرتهما، وإعادتهما هنا كانت أصل الحشو المرصود. -->
+    <div id="caoBuilt" hidden>
+      <p class="dose">
+        ما بنيتَه أكسيد الكالسيوم <span dir="ltr">CaO</span> — ذرّةً لذرّة،
+        والمنقول إلكترونان.
+      </p>
+    </div>
+
+    <div id="caoCompare" hidden>
+      <p class="explore-q">
+        فيمَ تختلف الرابطة الأيونية في أكسيد الكالسيوم عن الرابطة الأيونية في
+        كلوريد الصوديوم؟
+      </p>
+      <div class="quiz-options" data-cao="cmp">
+        <label class="quiz-option"><input type="radio" name="caoCmp" value="w1">لا يوجد اختلاف جوهري: كلٌّ منهما أيون موجب مع أيون سالب بنسبة 1:1</label>
+        <label class="quiz-option"><input type="radio" name="caoCmp" value="correct">في أكسيد الكالسيوم يُنقل إلكترونان لا إلكترون واحد، مع أن النسبة تبقى 1:1</label>
+        <label class="quiz-option"><input type="radio" name="caoCmp" value="w2">في أكسيد الكالسيوم يشترك الأيونان في الإلكترونات بدل أن تُنقل</label>
+        <label class="quiz-option"><input type="radio" name="caoCmp" value="w3">في أكسيد الكالسيوم النسبة 1:2 لأن شحنة كل أيون 2</label>
+      </div>
+      <p class="explore-feedback" id="fb-caoCmp" hidden></p>
+    </div>
+
+    <!-- اكتشاف نمط لا اختيار: أمثلته الثمانية بناها الطالب بيده في هذا
+         الدرس، وأربع حالات على كل جانب تكفي لتعميم. ولذلك PATTERN لا MCQ. -->
+    <div id="caoPattern" hidden>
+      <p class="explore-q">
+        انظر إلى ما بنيتَه في هذا الدرس: الصوديوم والليثيوم والمغنيسيوم والكالسيوم
+        فقدت إلكترونات، والكلور والفلور والأكسجين كسبتها. فأيّ عبارة تصف هذا؟
+      </p>
+      <div class="quiz-options" data-cao="pat">
+        <label class="quiz-option"><input type="radio" name="caoPat" value="w1">الرابطة الأيونية تحدث بين عنصرين من المجموعة نفسها</label>
+        <label class="quiz-option"><input type="radio" name="caoPat" value="w2">الرابطة الأيونية تحدث بين فلزّين</label>
+        <label class="quiz-option"><input type="radio" name="caoPat" value="correct">الرابطة الأيونية تحدث بين فلزّ يفقد إلكتروناته ولافلزّ يكسبها</label>
+        <label class="quiz-option"><input type="radio" name="caoPat" value="w3">الرابطة الأيونية تحدث بين لافلزّين يتبادلان إلكتروناتهما</label>
+      </div>
+      <p class="explore-feedback" id="fb-caoPat" hidden></p>
+    </div>
+
+    <!-- بلا زرّ تسليم: المحطة 7 (التقييم) غير مبنيّة، وزرٌّ إلى محطة
+         غير موجودة طريقٌ مسدود يقرأه الطالب عطلًا. يُضاف مع بنائها. -->
+    <!-- بلا سطر ختامي: صار تكرارًا حرفيًا للمقدّمة بعد أن فُتح السياق
+         فيها صريحًا. -->
+    <div id="caoDone" hidden>
+      <div class="success-tag show">✓ أكملتَ المحطة</div>
     </div>
   </section>
 
@@ -3060,11 +3180,326 @@
 
           if(allSolved() && doneTag){
             doneTag.hidden = false;
+            /* تبادل وزن الزرّين: المختبر أدّى دوره فينزل إلى الدرجة
+               الثانية، وزرّ المحطة السادسة يصعد إلى الأولى. فيبقى
+               الممتلئ واحدًا في كل لحظة كما تقتضي قاعدة الهرم. */
+            var labBtn  = document.getElementById('labOpenBtn');
+            var nextBtn = document.getElementById('toStation6');
+            if(labBtn)  labBtn.classList.add('demoted');
+            if(nextBtn) nextBtn.classList.remove('demoted');
             if(window.Sounds) window.Sounds.playChime();
           }
         } else {
           var hints = HINTS[name] || {};
           fb.textContent = '💡 ' + (hints[radio.value] || hints.any || '');
+          fb.className = 'explore-feedback is-hint';
+          if(window.Sounds) window.Sounds.playWrong();
+        }
+      });
+    });
+  });
+})();
+</script>
+
+<script>
+/* ==========================================================
+   منطق المحطة 6 — أكسيد الكالسيوم (CaO)
+   ----------------------------------------------------------
+   الدوال المساعدة (el / ring / tween / renderAtom / …) مكرّرة عن
+   سكربت المحطة 4 عن قصد ولم تُرفَع إلى نطاق مشترك: رفعها يعني فتح
+   منطقٍ عاملٍ ومُختبَرًا من أجل أناقةٍ ستُقطَّر على أي حال في
+   shared/template-boilerplate/lesson-template.html. الثمن ~70 سطرًا
+   مكرّرة، والمقابل صفر خطر انحدار على المحطة 4.
+
+   ولا تنبّؤ هنا ولا جسر: المحطة تطبيق نمطٍ بناه الطالب أربع مرّات،
+   والدخول المباشر أخفّ من طبقة سؤالٍ تسبق مشهدًا هو نفسه الجواب.
+   فنقاط المحطة 17 (5 + 12) ولا يُرفع سعر سؤال لتعويض الفارق.
+
+   والفروق البنيوية عن المحطة 4 ثلاثة:
+   - أربعة مستويات للكالسيوم (2,8,8,2) — أول ذرّة بأربعة في الدرس،
+     فمصفوفة الأنصاف أربع قيم، والذرّتان متفاوتتا الحجم أول مرّة.
+   - الأكسجين يستقبل إلكترونين لا واحدًا: مقاعد المستوى الخارجي
+     تُحسب لثمانية من أول نقلة، ويُشغَل المقعد السابع ثم الثامن.
+   - الشحنة تظهر بعد اكتمال النقلتين لا بعد كل واحدة: 2+ و 2− هما
+     الحالة النهائية، وإظهار 1+ وسطًا يمثّل حالة لا وجود لها.
+
+   والسمة data-cao سمةُ نطاقٍ ثالثة: data-step يلتقطه محرّك
+   الاستكشاف المتتابع في المحطة 2 على الصفحة كلها، وdata-lat
+   للمحطة 5.
+   ========================================================== */
+(function(){
+  "use strict";
+
+  var svg = document.getElementById('stage6');
+  if(!svg) return;
+
+  var reduceMotion = window.matchMedia &&
+                     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var NS = 'http://www.w3.org/2000/svg';
+  var ELECTRON_R = 6.5, VALENCE_R = 8.5;
+
+  function el(tag, attrs){
+    var n = document.createElementNS(NS, tag);
+    for(var k in attrs) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+  function ring(cx, cy, r, count, startDeg){
+    if(startDeg === undefined) startDeg = -90;
+    var pts = [];
+    for(var i=0;i<count;i++){
+      var a = (startDeg + i*(360/count)) * Math.PI/180;
+      pts.push({ x: cx + r*Math.cos(a), y: cy + r*Math.sin(a) });
+    }
+    return pts;
+  }
+  function tween(node, from, to, ms, done){
+    if(reduceMotion) ms = 1;
+    var t0 = performance.now();
+    function step(now){
+      var t = Math.min(1, (now - t0)/ms);
+      var e = 1 - Math.pow(1 - t, 3);
+      for(var k in to) node.setAttribute(k, from[k] + (to[k]-from[k])*e);
+      if(t < 1) requestAnimationFrame(step);
+      else if(done) done();
+    }
+    requestAnimationFrame(step);
+  }
+
+  function renderAtom(cfg, prefix, radii, target){
+    var g = el('g', { id: prefix + 'Group', 'class': 'atom-group' });
+    g.style.transformOrigin = cfg.cx + 'px ' + cfg.cy + 'px';
+
+    g.appendChild(el('circle', { cx:cfg.cx, cy:cfg.cy, r:26, 'class':'nucleus' }));
+    var nl = el('text', { x:cfg.cx, y:cfg.cy+4, 'class':'nucleus-label', 'text-anchor':'middle' });
+    nl.textContent = '+' + cfg.z;
+    g.appendChild(nl);
+
+    var outerR = radii[cfg.shells.length - 1];
+
+    /* الرمز فوق الذرّة: الذرّتان متجاورتان أفقيًا هنا (كـLiF)، فلا يقع
+       رمز إحداهما في مدارات الأخرى بأي وضع — والجانب الخارجي إنما
+       لزم في MgCl₂ لأن الكلورين يتراصّان رأسيًا. */
+    var sx = cfg.cx, sy = cfg.cy - (outerR + 35);
+    var sym = el('text', { x:sx, y:sy, 'class':'element-label', 'text-anchor':'middle' });
+    sym.textContent = cfg.label;
+    g.appendChild(sym);
+
+    /* «2+» داخل صفحة RTL تُعرَض «+2» بلا عزل صريح، وهي كتابة غير
+       صحيحة للشحنة. */
+    var ch = el('text', {
+      x: sx + 26, y: sy - 18, 'class':'ion-charge',
+      id: prefix + 'Charge', 'text-anchor':'middle', direction:'ltr'
+    });
+    ch.style.unicodeBidi = 'isolate';
+    g.appendChild(ch);
+
+    cfg.shells.forEach(function(count, si){
+      var r = radii[si];
+      g.appendChild(el('circle', {
+        cx:cfg.cx, cy:cfg.cy, r:r, 'class':'orbit orbit-shell-' + si,
+        id: prefix + 'Orbit' + si
+      }));
+      ring(cfg.cx, cfg.cy, r, count).forEach(function(p, i){
+        g.appendChild(el('circle', {
+          cx:p.x, cy:p.y, r:ELECTRON_R, 'class':'electron',
+          id: prefix + '-e-' + si + '-' + i
+        }));
+      });
+    });
+
+    target.appendChild(g);
+    return g;
+  }
+
+  function makeValence(node){
+    node.classList.add('valence');
+    node.setAttribute('r', VALENCE_R);
+  }
+  function makeClickable(node, label){
+    node.classList.add('clickable', 'pulsing');
+    node.setAttribute('tabindex', '0');
+    node.setAttribute('role', 'button');
+    node.setAttribute('aria-label', label);
+  }
+  function unclick(node){
+    node.classList.remove('clickable', 'pulsing');
+    node.removeAttribute('tabindex');
+    node.style.cursor = 'default';
+  }
+  function onActivate(node, fn){
+    node.addEventListener('click', fn);
+    node.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); fn(); }
+    });
+  }
+  function pts(name, fallback){
+    return (window.XP && window.XP.POINTS && window.XP.POINTS[name]) || fallback;
+  }
+  function claim(id, points, reason){
+    if(window.XP && window.XP.claim) window.XP.claim(id, points, reason);
+  }
+
+  /* ================= المسرح ================= */
+  /* الأيون الموجب على اليسار دائمًا — اتساق الاتجاه عبر المحطات جزء
+     من المعنى لا تفصيل تنسيق. */
+  var R_CA = [40, 68, 96, 124];
+  var R_OX = [42, 96];
+  var CA = { cx:260, cy:300, label:'Ca', z:20, shells:[2,8,8,2] };
+  var OX = { cx:700, cy:300, label:'O',  z:8,  shells:[2,6] };
+
+  /* الأكسجين أولًا: الإلكترون المنقول يُضاف إلى مجموعة الهدف، فلو
+     رُسمت مجموعته لاحقًا غطّت الإلكترون القادم. */
+  var oxG = renderAtom(OX, 'ox', R_OX, svg);
+  var caG = renderAtom(CA, 'ca', R_CA, svg);
+
+  var caE1 = document.getElementById('ca-e-3-0');
+  var caE2 = document.getElementById('ca-e-3-1');
+  makeValence(caE1); makeValence(caE2);
+
+  var caoFormula = el('text', { x:490, y:520, 'class':'formula-label',
+                                'text-anchor':'middle', direction:'ltr' });
+  caoFormula.style.unicodeBidi = 'isolate';
+  caoFormula.textContent = 'CaO';
+  svg.appendChild(caoFormula);
+
+  var note      = document.getElementById('caoNote');
+  var builtBox  = document.getElementById('caoBuilt');
+  var cmpBox    = document.getElementById('caoCompare');
+  var patBox    = document.getElementById('caoPattern');
+  var doneBox   = document.getElementById('caoDone');
+
+  var firstDone = false, secondDone = false;
+
+  /* مقاعد المستوى الخارجي للأكسجين تُحسب لثمانية من أول نقلة: الستة
+     الأصلية تتباعد لتفتح مقعدين، فيُشغَل السابع ثم الثامن. */
+  var OX_SEATS = ring(OX.cx, OX.cy, R_OX[1], 8);
+
+  function seatIncoming(node, seatIndex, cb){
+    document.getElementById('oxGroup').appendChild(node);
+    tween(node, { cx:+node.getAttribute('cx'), cy:+node.getAttribute('cy') },
+                { cx:OX_SEATS[seatIndex].x, cy:OX_SEATS[seatIndex].y }, 500, cb);
+  }
+
+  /* الإلكترون الأول قابل للنقر منذ ظهور المحطة: التوجيه مكتوب فوق
+     المسرح، فلا طبقة تفصل الطالب عن أول فعل. */
+  makeClickable(caE1, 'انقل الإلكترون الأول من الكالسيوم إلى الأكسجين');
+
+  /* ================= النقلة الأولى ================= */
+  onActivate(caE1, function(){
+    if(firstDone) return;
+    firstDone = true;
+    unclick(caE1);
+    if(window.Sounds) window.Sounds.playTick();
+
+    for(var i=0;i<6;i++){
+      var e = document.getElementById('ox-e-1-' + i);
+      tween(e, { cx:+e.getAttribute('cx'), cy:+e.getAttribute('cy') },
+               { cx:OX_SEATS[i].x, cy:OX_SEATS[i].y }, 500);
+    }
+    seatIncoming(caE1, 6);
+
+    note.hidden = false;
+    note.textContent = 'انتقل إلكترون، ولم يكتمل الأكسجين بعد: صار فيه سبعة. ' +
+                       'وبقي في الكالسيوم إلكترون واحد — انقره.';
+    setTimeout(function(){
+      makeClickable(caE2, 'انقل الإلكترون الثاني من الكالسيوم إلى الأكسجين');
+    }, reduceMotion ? 100 : 700);
+  });
+
+  /* ================= النقلة الثانية ================= */
+  onActivate(caE2, function(){
+    if(!firstDone || secondDone) return;
+    secondDone = true;
+    unclick(caE2);
+    if(window.Sounds) window.Sounds.playTick();
+
+    seatIncoming(caE2, 7);
+
+    /* المستوى الرابع للكالسيوم صار فارغًا فيُخفى — كما أُخفي مستوى
+       الليثيوم الخارجي في المحطة 4. مدارٌ فارغ مرسوم يُقرأ مكانًا
+       ينتظر إلكترونًا. */
+    var caOuter = document.getElementById('caOrbit3');
+    caOuter.style.transition = 'opacity .5s ease';
+    caOuter.style.opacity = '0';
+
+    var caCh = document.getElementById('caCharge');
+    var oxCh = document.getElementById('oxCharge');
+    caCh.textContent = '2+';
+    oxCh.textContent = '2−';
+
+    setTimeout(function(){
+      caCh.style.transition = oxCh.style.transition = 'opacity .5s ease';
+      caCh.style.opacity = oxCh.style.opacity = '1';
+      /* تُغلق الفجوة حتى تتبقّى ~19 وحدة: تجاور بلا تداخل مستويين،
+         والتداخل تمثيلٌ للرابطة التساهمية لا الأيونية. */
+      caG.style.transform = 'translateX(115px) scale(0.86)';
+      oxG.style.transform = 'translateX(-95px) scale(1.10)';
+      caoFormula.classList.add('show');
+      if(window.Sounds) window.Sounds.playChime();
+    }, reduceMotion ? 20 : 560);
+
+    note.textContent = 'اكتمل الأكسجين بثمانية، فصار الكالسيوم أيونًا موجبًا شحنته 2، ' +
+                       'والأكسجين أيونًا سالبًا شحنته 2 — فتجاذبا وارتبطا.';
+
+    setTimeout(function(){
+      builtBox.hidden = false;
+      cmpBox.hidden = false;
+    }, reduceMotion ? 200 : 1700);
+  });
+
+  /* ================= السؤالان ================= */
+  var HINTS = {
+    cmp: {
+      w1: 'عُدّ الإلكترونات التي عبرت في مسرحك الآن، ثم عُدّها في الصوديوم والكلور.',
+      w2: 'انظر إلى مستوى الكالسيوم الخارجي بعد النقل: هل بقي فيه شيء يُشترَك فيه؟',
+      w3: 'إلى كم ذرّة أكسجين سلّم الكالسيوم إلكترونيه؟'
+    },
+    pat: {
+      w1: 'الصوديوم والمغنيسيوم والكالسيوم ليست في مجموعة واحدة، ومع ذلك سلكت السلوك نفسه.',
+      w2: 'الكلور والفلور والأكسجين — أيّها فلزّ؟',
+      w3: 'من فقد الإلكترونات في مسارحك: الكلور أم الصوديوم؟'
+    }
+  };
+  var REASONS = {
+    cmp: 'قارنتَ رابطتين بعدد الإلكترونات المنقولة لا بالنسبة',
+    pat: 'استخرجتَ القاعدة من أمثلة بنيتَها كلّها بيدك'
+  };
+  var XP_IDS   = { cmp: 'l3-cao-compare', pat: 'l3-cao-pattern' };
+  var XP_KIND  = { cmp: ['MCQ', 5], pat: ['PATTERN', 12] };
+  var solved   = {};
+
+  ['cmp', 'pat'].forEach(function(key){
+    var group = document.querySelector('.quiz-options[data-cao="' + key + '"]');
+    var fb    = document.getElementById(key === 'cmp' ? 'fb-caoCmp' : 'fb-caoPat');
+    if(!group || !fb) return;
+
+    var radios = group.querySelectorAll('input[type="radio"]');
+    radios.forEach(function(radio){
+      radio.addEventListener('change', function(){
+        if(solved[key]) return;
+        fb.hidden = false;
+
+        if(radio.value === 'correct'){
+          solved[key] = true;
+          var opt = radio.closest('.quiz-option');
+          if(opt) opt.classList.add('correct');
+          fb.textContent = '✓ صحيح!';
+          fb.className = 'explore-feedback is-correct';
+          if(window.Sounds) window.Sounds.playSnap();
+          claim(XP_IDS[key], pts(XP_KIND[key][0], XP_KIND[key][1]), REASONS[key]);
+          radios.forEach(function(r){ r.disabled = true; });
+
+          /* السؤالان بالتتابع لا معًا: أربعة عناصر ظاهرة في وقت واحد
+             هو سقف الكثافة، والتتابع يُبقيها ثلاثة. */
+          if(key === 'cmp'){
+            patBox.hidden = false;
+          }else{
+            doneBox.hidden = false;
+            if(window.Sounds) window.Sounds.playChime();
+          }
+        }else{
+          var hints = HINTS[key] || {};
+          fb.textContent = '💡 ' + (hints[radio.value] || '');
           fb.className = 'explore-feedback is-hint';
           if(window.Sounds) window.Sounds.playWrong();
         }
