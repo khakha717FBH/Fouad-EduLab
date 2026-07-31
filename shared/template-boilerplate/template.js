@@ -11,7 +11,7 @@
      • شرائح السحب:  <div class="chip" data-value="...">  داخل .chips-pool
      • خانات الإفلات: <div class="slot" data-answer="...">
 
-   يوفّر ثلاث آليات عامة:
+   يوفّر أربع آليات عامة:
 
      1) ظهور تدريجي لكل محطة عند وصولها بالتمرير + تفعيل نقطة
         التقدّم المقابلة + نغمة انتقال مرة واحدة لكل محطة، ومعها
@@ -27,6 +27,11 @@
         ومعه طريق ثانٍ مكافئ: نقر الرقاقة ثم نقر الخانة (يعمل
         باللمس وبالفأرة وبلوحة المفاتيح). لا يحتاج الدرس أي إعداد
         إضافي: الطريقان يعملان على نفس الوسوم أعلاه.
+
+     4) محرّكات الأسئلة المشتركة window.Quiz — أسئلة الاختيار في
+        محطات التدريب (Quiz.practice)، والإجابة القصيرة بمخرج
+        نجاتها (Quiz.short)، ومحطة التقييم كاملةً حتى نداء
+        Certificate.finish (Quiz.evaluate). تفصيلها في قسمها.
 
    ---------------------------------------------------------
    تغيير جوهري (يوليو 2026) — نقاط الخبرة خرجت من هذا الملف
@@ -228,6 +233,487 @@
     });
   });
 
+  /* ==========================================================
+     4) محرّكات الأسئلة المشتركة — window.Quiz  (ترقية أغسطس 2026)
+     ----------------------------------------------------------
+     رُقّيت من درس 03 بعد أن تكرّرت فيه أربع نسخ من محرّك واحد.
+     ثلاثة محرّكات لا أكثر، والقاعدة الحاكمة: المحرّك آلة تفاعل لا
+     محتوى مادة. كل ما يخصّ العلم — نصّ السؤال، المشتّت، التلميح،
+     سبب النقاط — يبقى في الدرس. وكل ما يخصّ السلوك — الإقفال،
+     التغذية، النقاط، مخرج النجاة — يعيش هنا.
+
+     والمحرّك باب لا سور: أي درس يحتاج سلوكًا خاصًّا يكتبه بنفسه
+     ولا يقاتل المشترك. ولذلك يستقبل كل محرّك دوالّ ربط (onSolved،
+     onAllSolved) يضع فيها الدرس إيقاعه الخاص: الطيّ، كشف صندوق،
+     تبديل وزن زرّ، فتح مرحلة.
+
+     ---------- اصطلاح الوسم ----------
+     مجموعة الخيارات:  <div class="quiz-options" data-q="اسم-فريد">
+     التغذية الراجعة:  <p class="explore-feedback" id="fb-اسم-فريد" hidden>
+
+     السمة data-q واحدة للمنصّة كلها، وقيمتها فريدة داخل الصفحة.
+     ولذلك لا يمشّط المحرّك الصفحة بحثًا عن أسئلة: الدرس يسلّمه
+     أسماء أسئلته. وهذا ما أنهى تصادم سمات النطاق الأربع في درس 03
+     (data-step / data-lat / data-cao / data-ev).
+
+     ---------- أين يعيش النصّ العربي ----------
+     في كائن واحد أعلى سكربت الدرس، لا موزّعًا على سمات HTML.
+     السبب: التلميحات خريطة ذات بعدين (سؤال × مشتّت) وجملها كاملة،
+     فحشرها في سمات يُفقد الوسمَ قابلية القراءة ويُفقد المراجعةَ
+     النصّية قبل الكود معناها — وهي قاعدة العمل الأولى.
+     ========================================================== */
+
+  /* ---------- تطبيع عربي متسامح ----------
+     يحذف التشكيل والتطويل، ويوحّد الهمزات والألف المقصورة والتاء
+     المربوطة، ويزيل الترقيم ويوحّد المسافات. الغرض واحد: ألّا
+     تُرفض إجابة صحيحة علميًا لفرق إملائي لا يغيّر المعنى. */
+  function normalizeAr(str){
+    return String(str == null ? '' : str)
+      .replace(/[\u064B-\u0652\u0670\u0640]/g, '')
+      .replace(/[أإآٱ]/g, 'ا')
+      .replace(/ى/g, 'ي')
+      .replace(/ؤ/g, 'و')
+      .replace(/ئ/g, 'ي')
+      .replace(/ة/g, 'ه')
+      .replace(/[^\u0621-\u064A0-9\s]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toLowerCase();
+  }
+
+  /* ---------- تطبيع صيغة كيميائية ----------
+     يقبل K₂O و K2O و k 2 o. رفضُ فهمٍ صحيح لسبب كتابيّ ليس تقييمًا. */
+  function normalizeFormula(str){
+    return String(str == null ? '' : str)
+      .replace(/[\u2080-\u2089]/g, function(c){
+        return String.fromCharCode(c.charCodeAt(0) - 0x2080 + 48);
+      })
+      .replace(/[\s.,\-_]/g, '')
+      .toLowerCase();
+  }
+
+  /* ---------- بناء مصحّح من وصف ----------
+     spec.paths مسارات قبولٍ بديلة؛ يكفي تحقّق واحد منها.
+     كل مسار: all — قوائم كلمات، يجب أن يتحقّق من كل قائمة عنصرٌ
+     واحد على الأقل (أي: و بين القوائم، أو داخل القائمة).
+     rejectTokens — كلمات نفي تُفحص ككلمات مستقلّة لا كأجزاء من
+     كلمات: «غير» داخل «تغيّر» ليست نفيًا. وجود إحداها يُسقط المسار.
+
+     مثال: قبول «نقص عدد الإلكترونات» و«البروتونات لم تتغيّر» معًا،
+     ورفض «لم يتغيّر عدد الإلكترونات» لأنها عكس الصواب. */
+  function buildMatcher(spec){
+    if(typeof spec === 'function') return spec;
+    var paths = (spec && spec.paths) || [];
+    return function(normalized){
+      if(!normalized || normalized.length < (spec.minLength || 3)) return false;
+      var tokens = normalized.split(' ');
+      for(var i = 0; i < paths.length; i++){
+        var p = paths[i];
+        var okPath = true;
+        if(p.rejectTokens && p.rejectTokens.some(function(t){ return tokens.indexOf(t) !== -1; })){
+          okPath = false;
+        }
+        if(okPath && p.all){
+          for(var g = 0; g < p.all.length; g++){
+            var group = p.all[g];
+            var hit = group.some(function(word){
+              /* فحص بالسلوك لا بالنوع: instanceof يفشل عبر النطاقات
+                 (تعبير نمطي أُنشئ في نافذة أخرى ليس RegExp هنا). */
+              if(word && typeof word.test === 'function') return word.test(normalized);
+              return normalized.indexOf(word) !== -1;
+            });
+            if(!hit){ okPath = false; break; }
+          }
+        }
+        if(okPath) return true;
+      }
+      return false;
+    };
+  }
+
+  function el(id){ return id ? document.getElementById(id) : null; }
+  function groupOf(name){ return document.querySelector('.quiz-options[data-q="' + name + '"]'); }
+  function setFb(node, kind, txt){
+    if(!node) return;
+    node.hidden = false;
+    node.textContent = txt;
+    node.className = 'explore-feedback ' + (kind === 'correct' ? 'is-correct' : 'is-hint');
+  }
+  function sound(fn){ if(window.Sounds && window.Sounds[fn]) window.Sounds[fn](); }
+
+  // أسماء الأسئلة المسجَّلة — لتشخيص سؤال في الوسم بلا إعداد
+  var registered = {};
+
+  /* ==========================================================
+     Quiz.practice — أسئلة اختيار في محطات التدريب والاستكشاف
+     ----------------------------------------------------------
+     السلوك: محاولات غير محدودة، والخطأ تلميحٌ لا وسمٌ أحمر (طابع
+     الاستكشاف منخفض التوتر). الإقفال يقع عند الإجابة الصحيحة لا
+     قبلها، فلا تُبدَّل إجابة صحيحة بخاطئة عند المراجعة.
+
+     questions: { اسم: { xpId, xp, points, reason, hints, fb, correctText } }
+       xp      — اسم من سلّم XP: MCQ · MATCH · PATTERN · PREDICT · BONUS…
+       points  — يتجاوز السلّم عند الحاجة (نادر؛ الأصل الالتزام بالسلّم)
+       hints   — { قيمة_المشتّت: 'تلميح', any: 'تلميح احتياطي' }
+       fb      — مُعرّف عنصر التغذية إن خالف اصطلاح fb-الاسم
+
+     hooks: { onSolved(name), onAllSolved(), onWrong(name, value) }
+     ========================================================== */
+  function practice(questions, hooks){
+    hooks = hooks || {};
+    var names = Object.keys(questions || {});
+    var solved = {};
+
+    function allSolved(){
+      return names.every(function(n){ return solved[n]; });
+    }
+
+    names.forEach(function(name){
+      registered[name] = true;
+      var q     = questions[name] || {};
+      var group = groupOf(name);
+      var fb    = el(q.fb || ('fb-' + name));
+      if(!group){
+        console.warn('[مختبر فؤاد] سؤال مسجَّل بلا وسم: data-q="' + name + '" غير موجود.');
+        return;
+      }
+
+      var radios = group.querySelectorAll('input[type="radio"]');
+      radios.forEach(function(radio){
+        radio.addEventListener('change', function(){
+          if(solved[name]) return;
+
+          if(radio.value === 'correct'){
+            solved[name] = true;
+            var opt = radio.closest('.quiz-option');
+            if(opt) opt.classList.add('correct');
+            setFb(fb, 'correct', q.correctText || '✓ صحيح!');
+            sound('playSnap');
+            if(q.xpId) claimXP(q.xpId, q.points || pts(q.xp || 'MCQ', 5), q.reason || '');
+            radios.forEach(function(r){ r.disabled = true; });
+            if(hooks.onSolved) hooks.onSolved(name);
+            if(allSolved() && hooks.onAllSolved) hooks.onAllSolved();
+          }else{
+            var hints = q.hints || {};
+            setFb(fb, 'hint', '💡 ' + (hints[radio.value] || hints.any || ''));
+            sound('playWrong');
+            if(hooks.onWrong) hooks.onWrong(name, radio.value);
+          }
+        });
+      });
+    });
+
+    return {
+      isSolved: function(n){ return !!solved[n]; },
+      allSolved: allSolved
+    };
+  }
+
+  /* ==========================================================
+     Quiz.short — إجابة قصيرة مكتوبة، ومعها مخرج النجاة
+     ----------------------------------------------------------
+     مخرج النجاة ليس خيارًا: بعد محاولتين يظهر زرّ الإجابة النموذجية
+     ويمنح نصف النقاط. السبب قاعدة منصّية: مصحّح الكلمات المفتاحية
+     مهما اتّسع يبقى قابلًا لأن تفوته صياغةٌ صحيحة، فلا يجوز أن
+     يُحبَس طالب في حلقة تلميحات لا نهاية لها.
+
+     cfg:
+       input, button, feedback           — مُعرّفات العناصر (إلزامية)
+       modelBtn, model                   — زرّ النموذج وصندوقه (إلزاميان)
+       accept                            — دالّة(مطبَّع, خام) أو وصف paths
+       normalize: 'ar' | 'formula' | دالّة
+       hints                             — مصفوفة تُستهلك بالتدرّج، أو
+                                           دالّة(مطبَّع, محاولة) ترجع نصًّا
+       modelText                         — نصّ الإجابة النموذجية
+       xpId, xp, reason, modelReason     — النقاط وأسبابها
+       escapeAfter                       — افتراضيًا 2
+       onDone(viaModel)                  — إيقاع الدرس بعد الإتمام
+     ========================================================== */
+  function short(cfg){
+    cfg = cfg || {};
+    var input    = el(cfg.input);
+    var button   = el(cfg.button);
+    var fb       = el(cfg.feedback);
+    var modelBtn = el(cfg.modelBtn);
+    var modelBox = el(cfg.model);
+    if(!input || !button){
+      console.warn('[مختبر فؤاد] إجابة قصيرة بلا حقل أو زرّ: ' + cfg.input);
+      return;
+    }
+    if(!modelBtn || !modelBox){
+      console.warn('%c[مختبر فؤاد] إجابة قصيرة بلا مخرج نجاة: ' + cfg.input +
+        ' — القاعدة تقضي بزرّ إجابة نموذجية بعد محاولتين.',
+        'background:#ff6b4a;color:#131c30;font-weight:bold;padding:3px 8px;border-radius:4px;');
+    }
+
+    var norm = cfg.normalize === 'formula' ? normalizeFormula
+             : (typeof cfg.normalize === 'function' ? cfg.normalize : normalizeAr);
+    var matches = buildMatcher(cfg.accept);
+    var after = typeof cfg.escapeAfter === 'number' ? cfg.escapeAfter : 2;
+    var tries = 0, done = false;
+
+    function lock(){
+      done = true;
+      input.disabled = true;
+      button.disabled = true;
+      if(modelBtn) modelBtn.hidden = true;
+    }
+
+    function hintFor(value){
+      if(typeof cfg.hints === 'function') return cfg.hints(value, tries);
+      var list = cfg.hints || [];
+      return list[Math.min(tries - 1, list.length - 1)] || '';
+    }
+
+    function check(){
+      if(done) return;
+      var raw = (input.value || '').trim();
+      if(!raw){
+        setFb(fb, 'hint', '💡 ' + (cfg.emptyText || 'اكتب إجابتك أولًا.'));
+        input.focus();
+        return;
+      }
+      if(window.XP && window.XP.attempt && cfg.xpId) window.XP.attempt(cfg.xpId);
+      tries++;
+
+      if(matches(norm(raw), raw)){
+        setFb(fb, 'correct', cfg.correctText || '✓ صحيح!');
+        lock();
+        sound('playSnap');
+        if(cfg.xpId) claimXP(cfg.xpId, cfg.points || pts(cfg.xp || 'PRODUCE', 8), cfg.reason || '');
+        if(cfg.onDone) cfg.onDone(false);
+        return;
+      }
+
+      setFb(fb, 'hint', '💡 ' + hintFor(norm(raw)));
+      sound('playWrong');
+      if(tries >= after && modelBtn) modelBtn.hidden = false;
+    }
+
+    button.addEventListener('click', check);
+    input.addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){ e.preventDefault(); check(); }
+    });
+
+    if(modelBtn && modelBox){
+      modelBtn.addEventListener('click', function(){
+        if(done) return;
+        if(fb) fb.hidden = true;
+        modelBox.hidden = false;
+        modelBox.textContent = cfg.modelText || '';
+        lock();
+        var full = cfg.points || pts(cfg.xp || 'PRODUCE', 8);
+        if(cfg.xpId) claimXP(cfg.xpId, Math.round(full / 2),
+                             cfg.modelReason || 'راجعتَ الإجابة النموذجية وقارنتها بإجابتك');
+        if(cfg.onDone) cfg.onDone(true);
+      });
+    }
+  }
+
+  /* ==========================================================
+     Quiz.evaluate — محطة التقييم كاملةً حتى الشهادة
+     ----------------------------------------------------------
+     ما يميّزها عن محطات التدريب، وهو سبب فصلها محرّكًا مستقلًّا:
+
+       • بوابة اسم قبل ظهور الأسئلة، والحقل يبقى قابلًا للتصحيح
+         حتى التسليم (الاسم يُقرأ لحظة التسليم لا لحظة البدء).
+       • محاولة واحدة: الإقفال فور أول اختيار أيًّا كان — هذا تقييم
+         لا تدريب.
+       • عند الخطأ يُوسَم اختيار الطالب ويُضاء الصحيح معه ومعهما
+         سطر يشرح لماذا: آخر لحظة تعلّم، والطالب في بيته بلا معلّم.
+       • بلا XP إطلاقًا: مكافأتها الشارة والشهادة.
+
+     وربط الشهادة داخل المحرّك لا داخل الدرس: من يبني محطة تقييم
+     على هذا المحرّك لا يستطيع بناءها بلا شهادة. القاعدة صارت
+     بنيوية لا تذكُّرية.
+
+     cfg:
+       title      — عنوان الدرس كما يُطبع في الشهادة (بلا «الدرس رقم»)
+       questions  — مصفوفة مرتّبة:
+                    { name, why }                       اختيار من متعدد
+                    { name, type:'text', input, button, feedback,
+                      answer, normalize, why }          إجابة مكتوبة
+       ids        — تجاوز الاصطلاح عند الحاجة
+       badges     — سلّم الشارات (الافتراضي سلّم المنصّة)
+     ========================================================== */
+  var DEFAULT_BADGES = [
+    { min: 80, label: 'متميز' },
+    { min: 65, label: 'متمكن' },
+    { min: 0,  label: 'مشارك' }
+  ];
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+    });
+  }
+
+  function evaluate(cfg){
+    cfg = cfg || {};
+    var ids = cfg.ids || {};
+    var nameInput = el(ids.name    || 'evalName');
+    var startBtn  = el(ids.start   || 'evalStart');
+    var nameFb    = el(ids.nameFb  || 'evalNameFb');
+    var qWrap     = el(ids.wrap    || 'evalQuestions');
+    var summary   = el(ids.summary || 'evalSummary');
+    if(!nameInput || !startBtn || !qWrap || !summary){
+      console.warn('[مختبر فؤاد] محطة تقييم ناقصة العناصر — لم تُفعَّل.');
+      return;
+    }
+
+    var list   = cfg.questions || [];
+    var TOTAL  = list.length;
+    var badges = cfg.badges || DEFAULT_BADGES;
+    var answered = 0, correctCount = 0, finished = false;
+
+    function badgeOf(p){
+      for(var i = 0; i < badges.length; i++){ if(p >= badges[i].min) return badges[i].label; }
+      return badges[badges.length - 1].label;
+    }
+
+    function start(){
+      var v = (nameInput.value || '').trim();
+      if(!v){
+        setFb(nameFb, 'hint', '💡 ' + (cfg.nameEmptyText || 'اكتب اسمك أولًا لتُطبع الشهادة باسمك.'));
+        nameInput.focus();
+        return;
+      }
+      if(nameFb) nameFb.hidden = true;
+      qWrap.hidden = false;
+      startBtn.disabled = true;
+      startBtn.textContent = cfg.startedText || 'التقييم جارٍ';
+      sound('playSnap');
+    }
+    startBtn.addEventListener('click', start);
+    nameInput.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' && !startBtn.disabled) start();
+    });
+
+    function register(isCorrect){
+      answered++;
+      if(isCorrect) correctCount++;
+      if(answered >= TOTAL) finish();
+    }
+
+    list.forEach(function(q){
+      if(q.type === 'text'){
+        var input  = el(q.input);
+        var button = el(q.button);
+        var fb     = el(q.feedback || ('fb-' + q.name));
+        if(!input || !button) return;
+        var norm = q.normalize === 'ar' ? normalizeAr
+                 : (typeof q.normalize === 'function' ? q.normalize : normalizeFormula);
+        var used = false;
+        var check = function(){
+          if(used || button.disabled) return;
+          var v = (input.value || '').trim();
+          if(!v){
+            setFb(fb, 'hint', '💡 ' + (q.emptyText || 'اكتب إجابتك أولًا.'));
+            return;
+          }
+          used = true;
+          /* محاولة واحدة كبقية الأسئلة، ومخرج نجاته كشفُ الصواب فورًا:
+             لا معنى لحلقة تلميحات في تقييم لا إعادة فيه. */
+          var okAns = norm(v) === norm(q.answer);
+          input.disabled = true;
+          button.disabled = true;
+          if(okAns){
+            setFb(fb, 'correct', cfg.correctText || '✓ صحيح');
+            sound('playSnap');
+          }else{
+            setFb(fb, 'hint', '✗ ' + (q.why || ''));
+            sound('playWrong');
+          }
+          register(okAns);
+        };
+        button.addEventListener('click', check);
+        input.addEventListener('keydown', function(e){
+          if(e.key === 'Enter'){ e.preventDefault(); check(); }
+        });
+        return;
+      }
+
+      registered[q.name] = true;
+      var group = groupOf(q.name);
+      var fbEl  = el(q.feedback || ('fb-' + q.name));
+      if(!group) return;
+      var radios = group.querySelectorAll('input[type="radio"]');
+      radios.forEach(function(radio){
+        radio.addEventListener('change', function(){
+          if(radio.disabled) return;
+          radios.forEach(function(r){ r.disabled = true; });   // الإقفال فور أول اختيار
+
+          var okAns = radio.value === 'correct';
+          var opt = radio.closest('.quiz-option');
+          if(okAns){
+            if(opt) opt.classList.add('correct');
+            setFb(fbEl, 'correct', cfg.correctText || '✓ صحيح');
+            sound('playSnap');
+          }else{
+            if(opt) opt.classList.add('incorrect');
+            var right = group.querySelector('input[value="correct"]');
+            if(right && right.closest('.quiz-option')) right.closest('.quiz-option').classList.add('correct');
+            setFb(fbEl, 'hint', '✗ ' + (q.why || ''));
+            sound('playWrong');
+          }
+          register(okAns);
+        });
+      });
+    });
+
+    function finish(){
+      if(finished) return;
+      finished = true;
+
+      var percent = Math.round(correctCount / TOTAL * 100);
+      var badge   = badgeOf(percent);
+      var student = (nameInput.value || '').trim() || 'الطالب';
+      nameInput.disabled = true;
+
+      summary.hidden = false;
+      summary.innerHTML = cfg.summaryHtml
+        ? cfg.summaryHtml(student, correctCount, TOTAL, percent, badge)
+        : ('<div class="eval-score"><span dir="ltr">' + percent + '%</span></div>' +
+           '<p class="eval-line">أنهيتَ الدرس يا <b>' + escapeHtml(student) + '</b> بـ ' +
+             correctCount + ' من ' + TOTAL + ' — ومستواك <b>' + badge + '</b>.</p>' +
+           '<p class="eval-line dim">شهادتك جاهزة أدناه: يمكنك عرضها وطباعتها أو تحميلها.</p>');
+
+      sound('playChime');
+      if(cfg.onFinish) cfg.onFinish(percent, correctCount, TOTAL, student);
+
+      /* الشهادة إلزامية بكل تقييم. عنوان الدرس بلا بادئة «الدرس رقم». */
+      if(window.Certificate && window.Certificate.finish){
+        window.Certificate.finish(student, cfg.title, percent);
+      }else{
+        console.warn('[مختبر فؤاد] certificate.js لم يُحمّل: التقييم انتهى بلا شهادة.');
+      }
+    }
+  }
+
+  /* تشخيص للمطوّر لا يراه الطالب: سؤال في الوسم بلا تسجيل في الدرس
+     يبقى صامتًا تمامًا — لا نقاط ولا تغذية — وهذا أسوأ من عطل ظاهر. */
+  window.addEventListener('load', function(){
+    var orphans = [];
+    document.querySelectorAll('.quiz-options[data-q]').forEach(function(g){
+      var n = g.getAttribute('data-q');
+      if(!registered[n]) orphans.push(n);
+    });
+    if(orphans.length){
+      console.warn('%c[مختبر فؤاد] أسئلة في الوسم بلا تسجيل: ' + orphans.join(' · ') +
+        '. لن تعمل ولن تمنح نقاطًا.',
+        'background:#ff6b4a;color:#131c30;font-weight:bold;padding:3px 8px;border-radius:4px;');
+    }
+  });
+
+  window.Quiz = {
+    practice: practice,
+    short: short,
+    evaluate: evaluate,
+    normalizeAr: normalizeAr,
+    normalizeFormula: normalizeFormula,
+    matcher: buildMatcher
+  };
+
   // ---------- 3) محرّك السحب والإفلات + النقر للاختيار ----------
   /* مُعرّف ثابت لكل خانة، تُبنى مرّة عند التحميل بترتيب ورودها في
      الصفحة. الدروس ملفات HTML ثابتة، فالترتيب لا يتغيّر، والمُعرّف
@@ -241,6 +727,9 @@
   });
 
   var chipEls = document.querySelectorAll('.chips-pool .chip');
+  /* تحذير لمن يضيف آلية جديدة لهذا الملف: هذا خروج مبكّر من الدالّة
+     المغلّفة كلها، لا من محرّك السحب وحده. فأي كود يُكتب بعده لن يعمل
+     في درس بلا شرائح سحب. ضَع أي إضافة جديدة قبل هذا السطر. */
   if(!chipEls.length) return;
 
   /* ---------------------------------------------------------
@@ -501,5 +990,7 @@
     if(document.hidden) cancelDrag();
   });
   document.addEventListener('pointercancel', cancelDrag);
+
+
 
 })();
