@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>صفحة فحص لمحرّكات Quiz</title>
+</head>
+<body>
+
+<div class="progress-track">
+  <div class="progress-dot" data-target="station-1"></div>
+  <div class="progress-dot" data-target="station-2"></div>
+</div>
+
+<section class="station" id="station-1">
+  <!-- سؤال اختيار عادي -->
+  <div class="quiz-options" data-q="demo1">
+    <label class="quiz-option"><input type="radio" name="demo1" value="w1">مشتّت أول</label>
+    <label class="quiz-option"><input type="radio" name="demo1" value="correct">الصحيح</label>
+    <label class="quiz-option"><input type="radio" name="demo1" value="w2">مشتّت ثانٍ</label>
+  </div>
+  <p class="explore-feedback" id="fb-demo1" hidden></p>
+
+  <!-- سؤال ثانٍ بمُعرّف تغذية مخالف للاصطلاح -->
+  <div class="quiz-options" data-q="demo2">
+    <label class="quiz-option"><input type="radio" name="demo2" value="correct">الصحيح</label>
+    <label class="quiz-option"><input type="radio" name="demo2" value="w1">مشتّت</label>
+  </div>
+  <p class="explore-feedback" id="custom-fb-2" hidden></p>
+
+  <!-- سؤال في الوسم بلا تسجيل: يجب أن يُبلَّغ عنه -->
+  <div class="quiz-options" data-q="orphan">
+    <label class="quiz-option"><input type="radio" name="orphan" value="correct">الصحيح</label>
+  </div>
+  <p class="explore-feedback" id="fb-orphan" hidden></p>
+
+  <!-- إجابة قصيرة كاملة بمخرج نجاتها -->
+  <input type="text" id="shortInput">
+  <button type="button" id="shortBtn">تحقّق</button>
+  <p class="explore-feedback" id="shortFb" hidden></p>
+  <button type="button" id="shortModelBtn" hidden>أرني إجابة نموذجية</button>
+  <div class="model-answer" id="shortModel" hidden></div>
+
+  <!-- إجابة قصيرة بلا مخرج نجاة: يجب أن تُبلَّغ كخرق للقاعدة -->
+  <input type="text" id="badInput">
+  <button type="button" id="badBtn">تحقّق</button>
+  <p class="explore-feedback" id="badFb" hidden></p>
+</section>
+
+<section class="station" id="station-2">
+  <div class="name-gate">
+    <input type="text" id="evalName">
+    <button type="button" id="evalStart">ابدأ</button>
+    <p class="explore-feedback" id="evalNameFb" hidden></p>
+  </div>
+
+  <div id="evalQuestions" hidden>
+    <div class="quiz-options" data-q="q1">
+      <label class="quiz-option"><input type="radio" name="q1" value="correct">صحيح</label>
+      <label class="quiz-option"><input type="radio" name="q1" value="w1">خطأ</label>
+    </div>
+    <p class="explore-feedback" id="fb-q1" hidden></p>
+
+    <div class="quiz-options" data-q="q2">
+      <label class="quiz-option"><input type="radio" name="q2" value="w1">خطأ</label>
+      <label class="quiz-option"><input type="radio" name="q2" value="correct">صحيح</label>
+    </div>
+    <p class="explore-feedback" id="fb-q2" hidden></p>
+
+    <input type="text" id="q3Input">
+    <button type="button" id="q3Btn">تحقّق</button>
+    <p class="explore-feedback" id="fb-q3" hidden></p>
+
+    <div class="quiz-options" data-q="q4">
+      <label class="quiz-option"><input type="radio" name="q4" value="correct">صحيح</label>
+      <label class="quiz-option"><input type="radio" name="q4" value="w1">خطأ</label>
+    </div>
+    <p class="explore-feedback" id="fb-q4" hidden></p>
+  </div>
+
+  <div class="eval-summary" id="evalSummary" hidden></div>
+  <div id="certTriggerSlot"></div>
+</section>
+
+<script src="../../shared/sounds/sounds.js"></script>
+<script src="../../shared/xp-system/xp.js"></script>
+<script src="../../shared/template-boilerplate/template.js"></script>
+</body>
+</html>
