@@ -12,12 +12,11 @@
   ═══════════════════════════════════════════════════════════════════
   الدرس 3 — مختبر فؤاد التعليمي
   "كيف تتكوّن الروابط الأيونية؟"
-  ⚠️ ملف قيد البناء التدريجي: المحطات 1 (التنشيط) و2 (الاستكشاف) و3
-  (التفسير التفاعلي) فقط جاهزة حتى الآن، من أصل 7 محطات مخطَّطة (Engage → Explore
-  → Explain → Elaborate×3 → Evaluate). محطات التوسّع والتقييم لم تُبنَ
-  بعد — ستُضاف لاحقًا بنفس هذا الملف.
-  شهادة الإنجاز (Certificate.finish) لا تُربَط إلا عند بناء محطة
-  التقييم الختامي فعليًا — غير مطلوبة بهذه المرحلة.
+  الدرس مكتمل: سبع محطات معلنة (Engage → Explore → Explain → Elaborate×3
+  → Evaluate)، والمحطة 2 مشطورة إلى مرحلتين داخليتين (station-2 و
+  station-2b) بلا نقطة تقدّم مستقلّة — فنقاط شريط التقدّم سبع لا ثمان،
+  وعدّاد المحطات المحقون من template.js يشتقّ مقامه منها فيقول «من 7».
+  شهادة الإنجاز مربوطة في المحطة 7 (Certificate.finish).
   ═══════════════════════════════════════════════════════════════════
 -->
 <style>
@@ -748,6 +747,143 @@
   .pattern-row.is-blank{ color:var(--ink-dim); }
   .pattern-row.is-blank span[dir="ltr"]{ color:var(--coral); }
 
+  /* ============ محطة 7: التقييم الختامي ============
+     أنماط خاصّة بهذه المحطة وحدها ولا تُرفع إلى template.css: بنية
+     التقييم (بوابة الاسم، بطاقة السؤال، بطاقات المعطيات، لوحة النتيجة)
+     تُقطَّر إلى lesson-template.html حين يُبنى، لا قبله. */
+
+  /* شريط المراجعة — الدرجة الثالثة بصريًا: يُرى حين يُبحث عنه ولا
+     يزاحم الأسئلة. المراجعة أثناء تقييم منزلي غير ممنوعة أصلًا،
+     والأمان هنا تصميم تحفيزي لا قيد تقني. */
+  .review-strip{
+    font-size:.85rem;
+    color:var(--ink-dim);
+    line-height:2.1;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(20,200,168,.14);
+    border-radius:14px;
+    padding:10px 16px;
+    margin:16px 0 6px;
+  }
+  .review-strip a{color:var(--turquoise); text-decoration:none; font-weight:700;}
+  .review-strip a:hover{text-decoration:underline;}
+
+  .name-gate{
+    margin-top:20px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(20,200,168,.2);
+    border-radius:16px;
+    padding:16px 18px;
+  }
+  .name-gate label{
+    display:block;
+    font-size:.9rem;
+    color:var(--ink);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .name-gate .gate-note{
+    font-size:.78rem;
+    color:var(--ink-dim);
+    margin:10px 0 0;
+  }
+
+  .eval-q{
+    border-top:1px solid rgba(255,255,255,.06);
+    margin-top:26px;
+    padding-top:22px;
+  }
+  .eval-q.first{border-top:none; margin-top:18px; padding-top:0;}
+  .q-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    background:rgba(20,200,168,.12);
+    border:1px solid var(--turquoise-soft);
+    color:var(--turquoise);
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:.8rem;
+    margin-inline-end:8px;
+    flex-shrink:0;
+  }
+
+  /* بطاقات المعطيات: كل سؤال يطلب عدّ إلكترونات يحمل معطاه معه،
+     وإلا قِيس الحفظ لا الفهم. */
+  .given-row{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 12px;}
+  .given-chip{
+    font-size:.8rem;
+    color:var(--ink-dim);
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(20,200,168,.18);
+    border-radius:999px;
+    padding:5px 12px;
+  }
+  .given-chip b{color:var(--turquoise); font-family:'Cairo', sans-serif; font-weight:800;}
+
+  /* الرسمان في السؤال 5: الكتاب لا يسمّي النموذجين (درسهما الطالب في
+     الصف الثامن)، فالسؤال لا يستدعي مصطلحًا — كل ما يحتاجه أمام عينه.
+     والألوان ألوان المختبر نفسها لا ألوان الكتاب: الطالب رأى الصورتين
+     هناك، وتبديل اللون يقطع الصلة بما رآه. */
+  .repr-figs{display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin:14px 0 10px;}
+  .repr-fig{
+    background:var(--navy-darker);
+    border:1px solid rgba(20,200,168,.15);
+    border-radius:16px;
+    padding:12px;
+    width:190px;
+    max-width:100%;
+  }
+  .repr-fig svg{width:100%; height:auto; display:block;}
+  .repr-cap{
+    text-align:center;
+    font-size:.85rem;
+    font-weight:700;
+    color:var(--ink);
+    margin:10px 0 0;
+  }
+  .repr-legend{
+    display:flex;
+    gap:16px;
+    justify-content:center;
+    font-size:.8rem;
+    color:var(--ink-dim);
+    margin:0 0 14px;
+  }
+  .repr-legend i{
+    width:11px;
+    height:11px;
+    border-radius:50%;
+    display:inline-block;
+    margin-inline-end:6px;
+  }
+
+  .eval-summary{
+    margin-top:30px;
+    background:rgba(20,200,168,.06);
+    border:1px solid var(--turquoise-soft);
+    border-radius:18px;
+    padding:20px 18px;
+    text-align:center;
+  }
+  .eval-score{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:2.1rem;
+    color:var(--turquoise);
+    line-height:1.2;
+  }
+  .eval-line{margin:10px 0 0; font-size:.95rem; color:var(--ink); line-height:1.9;}
+  .eval-line b{color:var(--turquoise); font-weight:800;}
+  .eval-line.dim{color:var(--ink-dim); font-size:.85rem;}
+
+  /* خانة زرّ الشهادة: بدونها تحقن الوحدة زرّها عائمًا ثابتًا أسفل
+     الشاشة فيصطدم بزرّ فهيم. */
+  #certTriggerSlot{display:flex; justify-content:center; margin-top:18px;}
+
   html{scroll-behavior:smooth;}
   /* المحطة الهدف لا تلتصق بحافة الشاشة تمامًا عند القفز إليها */
   .station{ scroll-margin-top:14px; }
@@ -779,6 +915,7 @@
   <div class="progress-dot" data-target="station-4"></div>
   <div class="progress-dot" data-target="station-5"></div>
   <div class="progress-dot" data-target="station-6"></div>
+  <div class="progress-dot" data-target="station-7"></div>
 </div>
 
 <header class="hero">
@@ -1582,13 +1719,260 @@
       <p class="explore-feedback" id="fb-caoPat" hidden></p>
     </div>
 
-    <!-- بلا زرّ تسليم: المحطة 7 (التقييم) غير مبنيّة، وزرٌّ إلى محطة
-         غير موجودة طريقٌ مسدود يقرأه الطالب عطلًا. يُضاف مع بنائها. -->
     <!-- بلا سطر ختامي: صار تكرارًا حرفيًا للمقدّمة بعد أن فُتح السياق
-         فيها صريحًا. -->
+         فيها صريحًا. زرّ التسليم أُضيف مع بناء المحطة 7، وهو الممتلئ
+         الوحيد في هذه المحطة. -->
     <div id="caoDone" hidden>
       <div class="success-tag show">✓ أكملتَ المحطة</div>
+      <div class="station-handoff">
+        <a class="station-next" href="#station-7">تابع إلى التقييم ↓</a>
+      </div>
     </div>
+  </section>
+
+  <!-- ===================== محطة 7: التقييم الختامي =====================
+       Evaluate. عشرة أسئلة، محاولة واحدة لكلّ سؤال، تصحيح فوري ثم إقفال
+       — نمط محطة التقييم في lesson-02 نفسه، فلا شكلان لشيء واحد على
+       المنصّة.
+
+       بلا XP إطلاقًا: مكافأة هذه المحطة الشارةُ والشهادة، وهي الإنجاز
+       الجوهري الذي بُني كل ما قبله لأجله. وإضافة نقاط هنا تجعل الشهادة
+       سطرًا في سلّم بدل أن تكون نهايته.
+
+       وبلا زرّ ممتلئ: لا محطة بعدها، والدرجة الأولى تعني الانتقال إلى
+       محطة أخرى لا غير.
+
+       التغذية الراجعة تكشف الإجابة الصحيحة عند الخطأ ولا تكتفي بـ«خطأ»:
+       هذه آخر لحظة تعلّم في الدرس، والطالب في بيته بلا معلّم يشرح له
+       خطأه بعد التسليم.
+
+       ثلاثة أسئلة بمعطياتها (العدد الذرّي) لأنها تطلب عدّ إلكترونات —
+       بدونها يُقاس الحفظ لا الفهم. والسؤال 5 يحمل رسميه معه للسبب نفسه:
+       الكتاب لا يسمّي طريقتَي التمثيل (درسهما الطالب في الصف الثامن)،
+       فالسؤال يعرض الصورتين ولا يستدعي مصطلحًا.
+
+       سمة النطاق هنا data-ev: data-step لمحرّك الاستكشاف المتتابع في
+       المحطة 2 (يلتقطه على الصفحة كلها)، وdata-lat للمحطة 5،
+       وdata-cao للمحطة 6.
+       ===================================================================== -->
+  <section class="station" id="station-7">
+    <div class="station-label">المحطة السابعة</div>
+    <h2>التقييم الختامي</h2>
+
+    <p class="dose">
+      هذا تقييم الدرس كاملًا. لكل سؤال محاولة واحدة، وبعد آخر سؤال تظهر
+      شهادتك.
+    </p>
+
+    <p class="review-strip">
+      عالق في سؤال؟ راجع قبل أن تجيب:
+      <a href="#station-2">انتقال الإلكترون</a> ·
+      <a href="#station-3">لماذا تنقل الذرّات إلكتروناتها</a> ·
+      <a href="#station-4">متى لا تكفي ذرّة واحدة</a> ·
+      <a href="#station-5">حبّة الملح من الداخل</a>
+    </p>
+
+    <!-- بوابة الاسم تبقى مفتوحة للتعديل حتى ظهور النتيجة: الاسم يُقرأ
+         لحظة التسليم لا لحظة البدء، فلا يُحبس الطالب خلف خطأ إملائي في
+         اسمه أوّلَ الطريق. -->
+    <div class="name-gate" id="evalGate">
+      <label for="evalName">اكتب اسمك لتظهر شهادتك باسمك</label>
+      <div class="explore-answer-row">
+        <input type="text" class="explore-input peer-input" id="evalName" autocomplete="off" placeholder="مثال: سارة أحمد">
+        <button type="button" class="btn" id="evalStart">ابدأ التقييم</button>
+      </div>
+      <p class="gate-note">يمكنك تصحيح اسمك ما دام التقييم جاريًا.</p>
+      <p class="explore-feedback" id="evalNameFb" hidden></p>
+    </div>
+
+    <div id="evalQuestions" hidden>
+
+      <div class="eval-q first" id="ev-q1">
+        <p class="explore-q"><span class="q-num">1</span>في مستوى الطاقة الخارجي لذرّة البوتاسيوم إلكترون واحد. ما أسهل طريق لها إلى الاستقرار؟</p>
+        <div class="given-row">
+          <span class="given-chip"><b dir="ltr">K</b> — العدد الذرّي: 19</span>
+        </div>
+        <div class="quiz-options" data-ev="ev1">
+          <label class="quiz-option"><input type="radio" name="ev1" value="w1">أن تكتسب سبعة إلكترونات</label>
+          <label class="quiz-option"><input type="radio" name="ev1" value="correct">أن تفقد إلكترونها الخارجي الوحيد</label>
+          <label class="quiz-option"><input type="radio" name="ev1" value="w2">أن تشارك إلكترونها مع ذرّة أخرى</label>
+          <label class="quiz-option"><input type="radio" name="ev1" value="w3">لا تحتاج إلى تغيّر لأنها مستقرّة أصلًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-ev1" hidden></p>
+      </div>
+
+      <div class="eval-q" id="ev-q2">
+        <p class="explore-q"><span class="q-num">2</span>فقدت ذرّة الكالسيوم إلكترونيها الخارجيين. ما شحنة الأيون الناتج؟</p>
+        <div class="given-row">
+          <span class="given-chip"><b dir="ltr">Ca</b> — العدد الذرّي: 20</span>
+        </div>
+        <div class="quiz-options" data-ev="ev2">
+          <label class="quiz-option"><input type="radio" name="ev2" value="w1"><span dir="ltr">1+</span></label>
+          <label class="quiz-option"><input type="radio" name="ev2" value="w2"><span dir="ltr">2−</span></label>
+          <label class="quiz-option"><input type="radio" name="ev2" value="w3">متعادلة</label>
+          <label class="quiz-option"><input type="radio" name="ev2" value="correct"><span dir="ltr">2+</span></label>
+        </div>
+        <p class="explore-feedback" id="fb-ev2" hidden></p>
+      </div>
+
+      <div class="eval-q" id="ev-q3">
+        <p class="explore-q"><span class="q-num">3</span>أيّ زوج من العناصر يُتوقَّع أن تنشأ بينهما رابطة أيونية؟</p>
+        <div class="given-row">
+          <span class="given-chip"><b dir="ltr">O</b> — 8</span>
+          <span class="given-chip"><b dir="ltr">Ne</b> — 10</span>
+          <span class="given-chip"><b dir="ltr">Na</b> — 11</span>
+          <span class="given-chip"><b dir="ltr">Mg</b> — 12</span>
+          <span class="given-chip"><b dir="ltr">Cl</b> — 17</span>
+          <span class="given-chip"><b dir="ltr">K</b> — 19</span>
+        </div>
+        <div class="quiz-options" data-ev="ev3">
+          <label class="quiz-option"><input type="radio" name="ev3" value="w1">الأكسجين والكلور</label>
+          <label class="quiz-option"><input type="radio" name="ev3" value="w2">الصوديوم والبوتاسيوم</label>
+          <label class="quiz-option"><input type="radio" name="ev3" value="correct">المغنيسيوم والأكسجين</label>
+          <label class="quiz-option"><input type="radio" name="ev3" value="w3">النيون والصوديوم</label>
+        </div>
+        <p class="explore-feedback" id="fb-ev3" hidden></p>
+      </div>
+
+      <div class="eval-q" id="ev-q4">
+        <p class="explore-q"><span class="q-num">4</span>يفقد البوتاسيوم إلكترونًا واحدًا، ويحتاج الأكسجين إلكترونين. اكتب الصيغة الكيميائية للمركّب الناتج.</p>
+        <div class="given-row">
+          <span class="given-chip"><b dir="ltr">K</b> — العدد الذرّي: 19</span>
+          <span class="given-chip"><b dir="ltr">O</b> — العدد الذرّي: 8</span>
+        </div>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="ev4Input" dir="ltr" autocomplete="off" placeholder="مثال: X2Y3" aria-label="الصيغة الكيميائية">
+          <button type="button" class="btn" id="ev4Check">تحقّق</button>
+        </div>
+        <p class="explore-feedback" id="fb-ev4" hidden></p>
+      </div>
+
+      <div class="eval-q" id="ev-q5">
+        <p class="explore-q"><span class="q-num">5</span>أمامك طريقتان لتمثيل شبكة كلوريد الصوديوم. ما الذي <b>لا</b> تُظهره الطريقة الأولى (الكرات والعصيّ)؟</p>
+
+        <div class="repr-legend">
+          <span><i style="background:#14C8A8"></i><span dir="ltr">Na⁺</span></span>
+          <span><i style="background:#8FA6C4"></i><span dir="ltr">Cl⁻</span></span>
+        </div>
+
+        <div class="repr-figs">
+          <div class="repr-fig">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="تمثيل الشبكة بكرات صغيرة تصل بينها عصيّ">
+      <line x1="40" y1="40" x2="100" y2="40" stroke="#7d8ca3" stroke-width="4" stroke-linecap="round"/>
+      <line x1="100" y1="40" x2="160" y2="40" stroke="#7d8ca3" stroke-width="4" stroke-linecap="round"/>
+      <line x1="40" y1="100" x2="100" y2="100" stroke="#7d8ca3" stroke-width="4" stroke-linecap="round"/>
+      <line x1="100" y1="100" x2="160" y2="100" stroke="#7d8ca3" stroke-width="4" stroke-linecap="round"/>
+      <line x1="40" y1="160" x2="100" y2="160" stroke="#7d8ca3" stroke-width="4" stroke-linecap="round"/>
+      <line x1="100" y1="160" x2="160" y2="160" stroke="#7d8ca3" stroke-width="4" stroke-linecap="round"/>
+      <line x1="40" y1="40" x2="40" y2="100" stroke="#7d8ca3" stroke-width="4" stroke-linecap="round"/>
+      <line x1="40" y1="100" x2="40" y2="160" stroke="#7d8ca3" stroke-width="4" stroke-linecap="round"/>
+      <line x1="100" y1="40" x2="100" y2="100" stroke="#7d8ca3" stroke-width="4" stroke-linecap="round"/>
+      <line x1="100" y1="100" x2="100" y2="160" stroke="#7d8ca3" stroke-width="4" stroke-linecap="round"/>
+      <line x1="160" y1="40" x2="160" y2="100" stroke="#7d8ca3" stroke-width="4" stroke-linecap="round"/>
+      <line x1="160" y1="100" x2="160" y2="160" stroke="#7d8ca3" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="100" cy="40" r="17" fill="#8FA6C4"/>
+      <circle cx="40" cy="100" r="17" fill="#8FA6C4"/>
+      <circle cx="160" cy="100" r="17" fill="#8FA6C4"/>
+      <circle cx="100" cy="160" r="17" fill="#8FA6C4"/>
+      <circle cx="40" cy="40" r="10" fill="#14C8A8"/>
+      <circle cx="160" cy="40" r="10" fill="#14C8A8"/>
+      <circle cx="100" cy="100" r="10" fill="#14C8A8"/>
+      <circle cx="40" cy="160" r="10" fill="#14C8A8"/>
+      <circle cx="160" cy="160" r="10" fill="#14C8A8"/>
+            </svg>
+            <p class="repr-cap">الطريقة الأولى — كرات وعصيّ</p>
+          </div>
+          <div class="repr-fig">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="تمثيل الشبكة بكرات متلامسة بلا فراغ بينها">
+      <circle cx="100" cy="40" r="38" fill="#8FA6C4"/>
+      <circle cx="40" cy="100" r="38" fill="#8FA6C4"/>
+      <circle cx="160" cy="100" r="38" fill="#8FA6C4"/>
+      <circle cx="100" cy="160" r="38" fill="#8FA6C4"/>
+      <circle cx="40" cy="40" r="22" fill="#14C8A8"/>
+      <circle cx="160" cy="40" r="22" fill="#14C8A8"/>
+      <circle cx="100" cy="100" r="22" fill="#14C8A8"/>
+      <circle cx="40" cy="160" r="22" fill="#14C8A8"/>
+      <circle cx="160" cy="160" r="22" fill="#14C8A8"/>
+            </svg>
+            <p class="repr-cap">الطريقة الثانية — كرات متلامسة</p>
+          </div>
+        </div>
+
+        <div class="quiz-options" data-ev="ev5">
+          <label class="quiz-option"><input type="radio" name="ev5" value="correct">أحجام الأيونات وتراصّها بلا فراغ</label>
+          <label class="quiz-option"><input type="radio" name="ev5" value="w1">تناوب الأيون الموجب والأيون السالب</label>
+          <label class="quiz-option"><input type="radio" name="ev5" value="w2">عدد الأيونات المحيطة بكل أيون</label>
+          <label class="quiz-option"><input type="radio" name="ev5" value="w3">امتداد الترتيب في الاتجاهات الثلاثة</label>
+        </div>
+        <p class="explore-feedback" id="fb-ev5" hidden></p>
+      </div>
+
+      <div class="eval-q" id="ev-q6">
+        <p class="explore-q"><span class="q-num">6</span>ما الذي يُبقي أيونات الشبكة البلورية متماسكة في مواضعها؟</p>
+        <div class="quiz-options" data-ev="ev6">
+          <label class="quiz-option"><input type="radio" name="ev6" value="w1">مشاركة الإلكترونات بين الأيونات المتجاورة</label>
+          <label class="quiz-option"><input type="radio" name="ev6" value="w2">انتقال الإلكترونات ذهابًا وإيابًا بلا توقّف</label>
+          <label class="quiz-option"><input type="radio" name="ev6" value="w3">تراصّ الأيونات لتقارب أحجامها</label>
+          <label class="quiz-option"><input type="radio" name="ev6" value="correct">تجاذب كهربائي ساكن بين أيونات متضادّة الشحنة</label>
+        </div>
+        <p class="explore-feedback" id="fb-ev6" hidden></p>
+      </div>
+
+      <div class="eval-q" id="ev-q7">
+        <p class="explore-q"><span class="q-num">7</span>في حبّة ملح الطعام، أيّ وصف أصحّ؟</p>
+        <div class="quiz-options" data-ev="ev7">
+          <label class="quiz-option"><input type="radio" name="ev7" value="w1">ملايين الجزيئات المنفصلة، كل أيون صوديوم مع أيون كلوريد خاصّ به</label>
+          <label class="quiz-option"><input type="radio" name="ev7" value="w2">أيونات موزّعة عشوائيًا بلا انتظام</label>
+          <label class="quiz-option"><input type="radio" name="ev7" value="correct">ترتيب منتظم ممتدّ يحيط بكل أيون فيه ستّة أيونات من النوع المقابل</label>
+          <label class="quiz-option"><input type="radio" name="ev7" value="w3">إطار صلب من الصوديوم تستقرّ داخله أيونات الكلوريد</label>
+        </div>
+        <p class="explore-feedback" id="fb-ev7" hidden></p>
+      </div>
+
+      <div class="eval-q" id="ev-q8">
+        <p class="explore-q"><span class="q-num">8</span>صيغة كلوريد الكالسيوم <span dir="ltr">CaCl<sub>2</sub></span>. ما نسبة عدد أيونات الكالسيوم إلى عدد أيونات الكلوريد في الشبكة كلها؟</p>
+        <div class="quiz-options" data-ev="ev8">
+          <label class="quiz-option"><input type="radio" name="ev8" value="w1"><span dir="ltr">1 : 1</span></label>
+          <label class="quiz-option"><input type="radio" name="ev8" value="correct"><span dir="ltr">1 : 2</span></label>
+          <label class="quiz-option"><input type="radio" name="ev8" value="w2"><span dir="ltr">2 : 1</span></label>
+          <label class="quiz-option"><input type="radio" name="ev8" value="w3"><span dir="ltr">1 : 3</span></label>
+        </div>
+        <p class="explore-feedback" id="fb-ev8" hidden></p>
+      </div>
+
+      <div class="eval-q" id="ev-q9">
+        <p class="explore-q"><span class="q-num">9</span>في أكسيد الكالسيوم <span dir="ltr">CaO</span>، ما الذي يحدث بين الذرّتين؟</p>
+        <div class="given-row">
+          <span class="given-chip"><b dir="ltr">Ca</b> — العدد الذرّي: 20</span>
+          <span class="given-chip"><b dir="ltr">O</b> — العدد الذرّي: 8</span>
+        </div>
+        <div class="quiz-options" data-ev="ev9">
+          <label class="quiz-option"><input type="radio" name="ev9" value="correct">ينتقل إلكترونان من الكالسيوم إلى الأكسجين</label>
+          <label class="quiz-option"><input type="radio" name="ev9" value="w1">ينتقل إلكترونان من الأكسجين إلى الكالسيوم</label>
+          <label class="quiz-option"><input type="radio" name="ev9" value="w2">ينتقل إلكترون واحد من الكالسيوم إلى الأكسجين</label>
+          <label class="quiz-option"><input type="radio" name="ev9" value="w3">يتشاركان إلكترونين اثنين</label>
+        </div>
+        <p class="explore-feedback" id="fb-ev9" hidden></p>
+      </div>
+
+      <div class="eval-q" id="ev-q10">
+        <p class="explore-q"><span class="q-num">10</span>لماذا يكون ملح الطعام آمنًا مع أن الصوديوم فلزّ شديد التفاعل والكلور غاز سامّ؟</p>
+        <div class="quiz-options" data-ev="ev10">
+          <label class="quiz-option"><input type="radio" name="ev10" value="w1">لأن الكميّة المستخدمة من الملح صغيرة جدًا</label>
+          <label class="quiz-option"><input type="radio" name="ev10" value="correct">لأن الذرّتين صارتا أيونات، وخصائص الأيون غير خصائص الذرّة</label>
+          <label class="quiz-option"><input type="radio" name="ev10" value="w2">لأن خطر كلٍّ منهما يلغي خطر الآخر</label>
+          <label class="quiz-option"><input type="radio" name="ev10" value="w3">لأنهما احتفظتا بخصائصهما لكنّهما التصقتا فتعطّل تفاعلهما</label>
+        </div>
+        <p class="explore-feedback" id="fb-ev10" hidden></p>
+      </div>
+
+    </div>
+
+    <div class="eval-summary" id="evalSummary" hidden></div>
+
+    <!-- خانة زرّ الشهادة: certificate.js يبحث عن هذا المعرّف، وإن لم
+         يجده حقن زرّه عائمًا ثابتًا في زاوية الشاشة فوق زرّ فهيم. -->
+    <div id="certTriggerSlot"></div>
   </section>
 
 </main>
@@ -3509,6 +3893,216 @@
 })();
 </script>
 
+
+<script>
+/* ==========================================================
+   منطق المحطة 7 — التقييم الختامي
+   ----------------------------------------------------------
+   عشرة أسئلة × 10 نقاط = 100، فتقع عتبتا الشارة على حدّ نظيف:
+   متمكن = 7 صحيحة، متميز = 8. لا كسور ولا تقريب يخفي فارقًا.
+
+   محاولة واحدة لكل سؤال: تُقفل المجموعة فور أول اختيار (لا فور
+   الإجابة الصحيحة كما في محطات الاستكشاف) — هذا تقييم لا تدريب.
+   وعند الخطأ يُوسَم اختيار الطالب بـincorrect ويُضاء الصحيح
+   بـcorrect: آخر لحظة تعلّم في الدرس، والطالب في بيته بلا معلّم
+   يشرح له بعد التسليم.
+
+   بلا XP: مكافأة المحطة الشارةُ والشهادة. ولا نداء واحد لـwindow.XP
+   في هذا السكربت كلّه — بقصد.
+
+   السؤال 4 (إجابة قصيرة) مخرجُ نجاته كشفُ الصيغة الصحيحة فور الخطأ،
+   إذ لا معنى لحلقة تلميحات في تقييم بمحاولة واحدة. ومنظّم الصيغة
+   يتسامح مع الأرقام المنخفضة (K₂O) والمسافات وحالة الأحرف، فلا
+   تُرفض إجابة صحيحة لسبب كتابيّ.
+   ========================================================== */
+(function(){
+  "use strict";
+
+  var gate      = document.getElementById('evalGate');
+  var nameInput = document.getElementById('evalName');
+  var startBtn  = document.getElementById('evalStart');
+  var nameFb    = document.getElementById('evalNameFb');
+  var qWrap     = document.getElementById('evalQuestions');
+  var summary   = document.getElementById('evalSummary');
+  if(!qWrap || !startBtn || !nameInput || !summary) return;
+
+  var LESSON_TITLE = 'كيف تتكوّن الروابط الأيونية؟';
+  var TOTAL = 10;
+
+  var answered = 0, correctCount = 0, finished = false;
+
+  /* ---------- بوابة الاسم ---------- */
+  function startEval(){
+    var v = (nameInput.value || '').trim();
+    if(!v){
+      nameFb.hidden = false;
+      nameFb.textContent = '💡 اكتب اسمك أولًا لتُطبع الشهادة باسمك.';
+      nameFb.className = 'explore-feedback is-hint';
+      nameInput.focus();
+      return;
+    }
+    nameFb.hidden = true;
+    qWrap.hidden = false;
+    startBtn.disabled = true;
+    startBtn.textContent = 'التقييم جارٍ';
+    if(window.Sounds) window.Sounds.playSnap();
+  }
+
+  startBtn.addEventListener('click', startEval);
+  nameInput.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && !startBtn.disabled) startEval();
+  });
+
+  /* ---------- تصحيح أسئلة الاختيار ---------- */
+  /* رسالة الخطأ تخاطب المفهوم لا الحرف: تقول لماذا الصحيح صحيح،
+     والخيار الصحيح مضاء أمام الطالب في الوقت نفسه. */
+  var WHY = {
+    ev1:  'فقدُ إلكترون واحد أقصر طريق إلى الاستقرار من اكتساب سبعة.',
+    ev2:  'كل إلكترون مفقود يترك شحنة موجبة واحدة، وقد فُقد إلكترونان.',
+    ev3:  'الرابطة الأيونية بين فلزّ يفقد ولافلزّ يكسب — والمغنيسيوم فلزّ والأكسجين لافلزّ.',
+    ev5:  'العصيّ تفتح داخل الشبكة فتُظهر الترتيب وعدد الجيران، لكنها تصغّر الكرات فتُخفي الأحجام والتراصّ.',
+    ev6:  'الشحنتان المتضادّتان تتجاذبان، وهذا التجاذب نفسه هو ما يثبّت كل أيون في موضعه.',
+    ev7:  'لا جزيء منفصلًا في البلورة: كل أيون محاط بستّة من النوع المقابل في ترتيب ممتدّ.',
+    ev8:  'الرقم في الصيغة يقول نسبةً في الشبكة كلها: لكل أيون كالسيوم أيونا كلوريد.',
+    ev9:  'الكالسيوم يفقد إلكترونين والأكسجين يستقبلهما — انتقالٌ كامل من الفلزّ إلى اللافلزّ.',
+    ev10: 'الأيون ليس الذرّة: تغيّر عدد الإلكترونات غيّر الخصائص كلها.'
+  };
+
+  var MCQ = ['ev1','ev2','ev3','ev5','ev6','ev7','ev8','ev9','ev10'];
+
+  function register(isCorrect){
+    answered++;
+    if(isCorrect) correctCount++;
+    if(answered >= TOTAL) finish();
+  }
+
+  MCQ.forEach(function(name){
+    var group = document.querySelector('.quiz-options[data-ev="' + name + '"]');
+    var fb    = document.getElementById('fb-' + name);
+    if(!group || !fb) return;
+
+    var radios = group.querySelectorAll('input[type="radio"]');
+    radios.forEach(function(radio){
+      radio.addEventListener('change', function(){
+        if(radio.disabled) return;
+        /* محاولة واحدة: الإقفال يقع فور أول اختيار أيًّا كان. */
+        radios.forEach(function(r){ r.disabled = true; });
+
+        var ok  = radio.value === 'correct';
+        var opt = radio.closest('.quiz-option');
+        fb.hidden = false;
+
+        if(ok){
+          if(opt) opt.classList.add('correct');
+          fb.textContent = '✓ صحيح';
+          fb.className = 'explore-feedback is-correct';
+          if(window.Sounds) window.Sounds.playSnap();
+        }else{
+          if(opt) opt.classList.add('incorrect');
+          var right = group.querySelector('input[value="correct"]');
+          if(right){
+            var rightOpt = right.closest('.quiz-option');
+            if(rightOpt) rightOpt.classList.add('correct');
+          }
+          fb.textContent = '✗ ' + (WHY[name] || '');
+          fb.className = 'explore-feedback is-hint';
+          if(window.Sounds) window.Sounds.playWrong();
+        }
+        register(ok);
+      });
+    });
+  });
+
+  /* ---------- السؤال 4: صيغة مكتوبة ---------- */
+  var f4in  = document.getElementById('ev4Input');
+  var f4btn = document.getElementById('ev4Check');
+  var f4fb  = document.getElementById('fb-ev4');
+
+  /* يقبل K2O و K₂O و k 2 o وما شابه. الرفض لسبب كتابيّ رفضٌ لفهمٍ صحيح. */
+  function normFormula(s){
+    return String(s || '')
+      .replace(/[\u2080-\u2089]/g, function(c){
+        return String.fromCharCode(c.charCodeAt(0) - 0x2080 + 48);
+      })
+      .replace(/[\s.,\-_]/g, '')
+      .toLowerCase();
+  }
+
+  function check4(){
+    if(!f4in || !f4btn || f4btn.disabled) return;
+    var v = (f4in.value || '').trim();
+    f4fb.hidden = false;
+    if(!v){
+      f4fb.textContent = '💡 اكتب الصيغة أولًا.';
+      f4fb.className = 'explore-feedback is-hint';
+      return;
+    }
+
+    var ok = normFormula(v) === 'k2o';
+    f4in.disabled = true;
+    f4btn.disabled = true;
+
+    if(ok){
+      f4fb.textContent = '✓ صحيح';
+      f4fb.className = 'explore-feedback is-correct';
+      if(window.Sounds) window.Sounds.playSnap();
+    }else{
+      f4fb.textContent = '✗ الإجابة الصحيحة: K2O — البوتاسيوم يعطي إلكترونًا واحدًا، والأكسجين يحتاج اثنين، فتلزم ذرّتا بوتاسيوم لذرّة أكسجين واحدة.';
+      f4fb.className = 'explore-feedback is-hint';
+      if(window.Sounds) window.Sounds.playWrong();
+    }
+    register(ok);
+  }
+
+  if(f4btn) f4btn.addEventListener('click', check4);
+  if(f4in) f4in.addEventListener('keydown', function(e){
+    if(e.key === 'Enter') check4();
+  });
+
+  /* ---------- النتيجة والشهادة ---------- */
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+    });
+  }
+
+  /* عتبات الشارة نفسها التي تحسبها وحدة الشهادة — تُكرَّر هنا لعرضها
+     للطالب في سطر الخلاصة، ولا تُمرَّر إليها: الوحدة تحسبها من العلامة. */
+  function badgeOf(p){
+    if(p >= 80) return 'متميز';
+    if(p >= 65) return 'متمكن';
+    return 'مشارك';
+  }
+
+  function finish(){
+    if(finished) return;
+    finished = true;
+
+    var percent = Math.round(correctCount / TOTAL * 100);
+    var badge   = badgeOf(percent);
+    var name    = (nameInput.value || '').trim() || 'الطالب';
+
+    nameInput.disabled = true;
+
+    summary.hidden = false;
+    summary.innerHTML =
+      '<div class="eval-score"><span dir="ltr">' + percent + '%</span></div>' +
+      '<p class="eval-line">أنهيتَ الدرس يا <b>' + escapeHtml(name) + '</b> بـ ' +
+        correctCount + ' من ' + TOTAL + ' — ومستواك <b>' + badge + '</b>.</p>' +
+      '<p class="eval-line dim">شهادتك جاهزة أدناه: يمكنك عرضها وطباعتها أو تحميلها.</p>';
+
+    if(window.Sounds) window.Sounds.playChime();
+
+    /* الشهادة إلزامية بكل تقييم. عنوان الدرس بلا بادئة «الدرس رقم». */
+    if(window.Certificate && window.Certificate.finish){
+      window.Certificate.finish(name, LESSON_TITLE, percent);
+    }else{
+      console.warn('[مختبر فؤاد] certificate.js لم يُحمّل: التقييم انتهى بلا شهادة.');
+    }
+  }
+})();
+</script>
+
 <script>
 /* ==========================================================
    الدخول من الخارج بالـhash — العودة من المختبر
@@ -3564,6 +4158,7 @@
 <script src="../../shared/xp-system/xp.js"></script>
 <script src="../../shared/faheem-widget/faheem.js"></script>
 <script src="../../shared/template-boilerplate/template.js"></script>
+<script src="../../shared/certificate-system/certificate.js"></script>
 <script src="../../shared/identity/footer.js"></script>
 </body>
 </html>
