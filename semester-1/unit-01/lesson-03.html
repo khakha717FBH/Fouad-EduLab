@@ -1004,7 +1004,7 @@
       <!-- سؤال 3 — اختيار ثنائي -->
       <div class="explore-step" id="explore-3" data-step="3" hidden>
         <p class="explore-q">أيّهما أسهل لذرّة الصوديوم للوصول إلى حالة الاستقرار؟</p>
-        <div class="quiz-options" data-step="3">
+        <div class="quiz-options" data-q="explore3">
           <label class="quiz-option"><input type="radio" name="explore3" value="wrong">أن تكتسب سبعة إلكترونات إضافية</label>
           <label class="quiz-option"><input type="radio" name="explore3" value="correct">أن تفقد إلكترونها الوحيد في المستوى الخارجي</label>
         </div>
@@ -1014,7 +1014,7 @@
       <!-- سؤال 4 — اختيار من متعدد -->
       <div class="explore-step" id="explore-4" data-step="4" hidden>
         <p class="explore-q">إذا قرّرت ذرّة الصوديوم التخلّص من إلكترونها الخارجي، وأرادت ذرّة الكلور الحصول على إلكترون واحد، فما السيناريو المتوقّع حدوثه بينهما؟</p>
-        <div class="quiz-options" data-step="4">
+        <div class="quiz-options" data-q="explore4">
           <label class="quiz-option"><input type="radio" name="explore4" value="wrong1">تتشارك الذرّتان هذا الإلكترون فيما بينهما</label>
           <label class="quiz-option"><input type="radio" name="explore4" value="wrong2">يبقى الإلكترون في مكانه ولا يحدث تفاعل</label>
           <label class="quiz-option"><input type="radio" name="explore4" value="correct">ينتقل الإلكترون بالكامل من الصوديوم إلى الكلور</label>
@@ -1026,7 +1026,7 @@
       <!-- سؤال 5 — توقّع شحنة الصوديوم -->
       <div class="explore-step" id="explore-5" data-step="5" hidden>
         <p class="explore-q">بعد أن تفقد ذرّة الصوديوم إلكترونها، ماذا تتوقّع أن تصبح شحنتها الكلية؟</p>
-        <div class="quiz-options" data-step="5">
+        <div class="quiz-options" data-q="explore5">
           <label class="quiz-option"><input type="radio" name="explore5" value="correct">موجبة</label>
           <label class="quiz-option"><input type="radio" name="explore5" value="wrong1">سالبة</label>
           <label class="quiz-option"><input type="radio" name="explore5" value="wrong2">متعادلة</label>
@@ -1037,7 +1037,7 @@
       <!-- سؤال 6 — توقّع شحنة الكلور -->
       <div class="explore-step" id="explore-6" data-step="6" hidden>
         <p class="explore-q">بعد أن تكتسب ذرّة الكلور هذا الإلكترون، ما الشحنة الجديدة التي ستظهر عليها؟</p>
-        <div class="quiz-options" data-step="6">
+        <div class="quiz-options" data-q="explore6">
           <label class="quiz-option"><input type="radio" name="explore6" value="wrong1">موجبة</label>
           <label class="quiz-option"><input type="radio" name="explore6" value="correct">سالبة</label>
           <label class="quiz-option"><input type="radio" name="explore6" value="wrong2">متعادلة</label>
@@ -1099,7 +1099,7 @@
       <!-- سؤال 8 — التجاذب بين الأيونين -->
       <div class="explore-step" id="explore-8" data-step="8" hidden>
         <p class="explore-q">ماذا سيحدث بينهما نتيجة اختلاف شحنتيهما؟</p>
-        <div class="quiz-options options-row" data-step="8">
+        <div class="quiz-options options-row" data-q="explore8">
           <label class="quiz-option"><input type="radio" name="explore8" value="wrong1">تنافر</label>
           <label class="quiz-option"><input type="radio" name="explore8" value="correct">تجاذب</label>
           <label class="quiz-option"><input type="radio" name="explore8" value="wrong2">لا تأثير بينهما</label>
@@ -1110,7 +1110,7 @@
       <!-- سؤال 9 — الشحنة الكلية للمركّب -->
       <div class="explore-step" id="explore-9" data-step="9" hidden>
         <p class="explore-q">هل تعتقد أن الشحنة الكلية لمركّب "كلوريد الصوديوم" الناتج ستكون موجبة أم سالبة أم متعادلة؟</p>
-        <div class="quiz-options" data-step="9">
+        <div class="quiz-options" data-q="explore9">
           <label class="quiz-option"><input type="radio" name="explore9" value="correct">متعادلة</label>
           <label class="quiz-option"><input type="radio" name="explore9" value="wrong1">موجبة</label>
           <label class="quiz-option"><input type="radio" name="explore9" value="wrong2">سالبة</label>
@@ -1335,7 +1335,7 @@
 
       <div id="octet-check">
         <p class="explore-q">في ذرّة الكبريت 6 إلكترونات في المستوى الأخير. للوصول إلى 8، أيّهما أسهل عليها؟</p>
-        <div class="quiz-options" id="octetOptions">
+        <div class="quiz-options" id="octetOptions" data-q="octet">
           <label class="quiz-option"><input type="radio" name="octet" value="lose">أن تفقد إلكتروناتها الستّة</label>
           <label class="quiz-option"><input type="radio" name="octet" value="share">أن تتشارك إلكتروناتها مع ذرّة أخرى</label>
           <label class="quiz-option"><input type="radio" name="octet" value="correct">أن تكتسب إلكترونين</label>
@@ -1380,7 +1380,7 @@
           <div class="peer-line"><span class="peer-num">3</span> فتجاذبت مع أيون الكلوريد السالب مكوّنةً رابطة أيونية.</div>
         </div>
 
-        <div class="quiz-options" id="peerDiagnose">
+        <div class="quiz-options" id="peerDiagnose" data-q="peer-diagnose">
           <label class="quiz-option"><input type="radio" name="peerDiag" value="wrong1">الجملة الأولى</label>
           <label class="quiz-option"><input type="radio" name="peerDiag" value="correct">الجملة الثانية</label>
           <label class="quiz-option"><input type="radio" name="peerDiag" value="wrong2">الجملة الثالثة</label>
@@ -1579,12 +1579,12 @@
     <div id="latticeQuestions" hidden>
       <p class="dose">ثلاثة أسئلة على ما رأيته.</p>
 
-      <!-- لا data-step على أي مجموعة هنا: محرّك الاستكشاف المتتابع في
-           المحطة 2 يلتقط .quiz-options[data-step] تحديدًا، فالسمة
-           data-lat تُبقي هذه الأسئلة خارج نطاقه. -->
+      <!-- سمة النطاق موحّدة في المنصّة كلها: data-q بقيمة فريدة داخل
+           الصفحة. المحرّك المشترك لا يمشّط الصفحة بحثًا عن أسئلة —
+           الدرس يسلّمه أسماءها — فلا تصادم بين محطة وأخرى. -->
       <div id="lat-q1">
         <p class="explore-q">كم أيون صوديوم يحيط بأيون كلوريد واحد داخل الشبكة؟</p>
-        <div class="quiz-options" data-lat="lat1">
+        <div class="quiz-options" data-q="lat1">
           <label class="quiz-option"><input type="radio" name="lat1" value="w2">2</label>
           <label class="quiz-option"><input type="radio" name="lat1" value="w4">4</label>
           <label class="quiz-option"><input type="radio" name="lat1" value="correct">6</label>
@@ -1595,7 +1595,7 @@
 
       <div id="lat-q2">
         <p class="explore-q">ما رأيتَه عند التكبير يُسمّى…</p>
-        <div class="quiz-options" data-lat="lat2">
+        <div class="quiz-options" data-q="lat2">
           <label class="quiz-option"><input type="radio" name="lat2" value="correct">الشبكة البلورية العملاقة — ترتيب منتظم ممتد يتبادل فيه الأيون الموجب والأيون السالب</label>
           <label class="quiz-option"><input type="radio" name="lat2" value="w1">جزيئات كلوريد الصوديوم — وحدات منفصلة، كل وحدة أيون صوديوم مع أيون كلوريد</label>
           <label class="quiz-option"><input type="radio" name="lat2" value="w2">هيكل كلوريد الصوديوم — إطار خارجي يحمل الأيونات داخله</label>
@@ -1606,7 +1606,7 @@
 
       <div id="lat-q3">
         <p class="explore-q">في حبّة الملح ملايين الأيونات. فما الذي يقوله الرقم 2 في صيغة <span dir="ltr">MgCl<sub>2</sub></span>؟</p>
-        <div class="quiz-options" data-lat="lat3">
+        <div class="quiz-options" data-q="lat3">
           <label class="quiz-option"><input type="radio" name="lat3" value="w1">البلورة مبنيّة من وحدات، كل وحدة فيها أيون مغنيسيوم وأيونا كلوريد</label>
           <label class="quiz-option"><input type="radio" name="lat3" value="w2">في البلورة أيون مغنيسيوم واحد وأيونا كلوريد فقط</label>
           <label class="quiz-option"><input type="radio" name="lat3" value="w3">حجم أيون الكلوريد ضعف حجم أيون المغنيسيوم</label>
@@ -1694,7 +1694,7 @@
         فيمَ تختلف الرابطة الأيونية في أكسيد الكالسيوم عن الرابطة الأيونية في
         كلوريد الصوديوم؟
       </p>
-      <div class="quiz-options" data-cao="cmp">
+      <div class="quiz-options" data-q="cao-cmp">
         <label class="quiz-option"><input type="radio" name="caoCmp" value="w1">لا يوجد اختلاف جوهري: كلٌّ منهما أيون موجب مع أيون سالب بنسبة 1:1</label>
         <label class="quiz-option"><input type="radio" name="caoCmp" value="correct">في أكسيد الكالسيوم يُنقل إلكترونان لا إلكترون واحد، مع أن النسبة تبقى 1:1</label>
         <label class="quiz-option"><input type="radio" name="caoCmp" value="w2">في أكسيد الكالسيوم يشترك الأيونان في الإلكترونات بدل أن تُنقل</label>
@@ -1710,7 +1710,7 @@
         انظر إلى ما بنيتَه في هذا الدرس: الصوديوم والليثيوم والمغنيسيوم والكالسيوم
         فقدت إلكترونات، والكلور والفلور والأكسجين كسبتها. فأيّ عبارة تصف هذا؟
       </p>
-      <div class="quiz-options" data-cao="pat">
+      <div class="quiz-options" data-q="cao-pat">
         <label class="quiz-option"><input type="radio" name="caoPat" value="w1">الرابطة الأيونية تحدث بين عنصرين من المجموعة نفسها</label>
         <label class="quiz-option"><input type="radio" name="caoPat" value="w2">الرابطة الأيونية تحدث بين فلزّين</label>
         <label class="quiz-option"><input type="radio" name="caoPat" value="correct">الرابطة الأيونية تحدث بين فلزّ يفقد إلكتروناته ولافلزّ يكسبها</label>
@@ -1751,9 +1751,8 @@
        الكتاب لا يسمّي طريقتَي التمثيل (درسهما الطالب في الصف الثامن)،
        فالسؤال يعرض الصورتين ولا يستدعي مصطلحًا.
 
-       سمة النطاق هنا data-ev: data-step لمحرّك الاستكشاف المتتابع في
-       المحطة 2 (يلتقطه على الصفحة كلها)، وdata-lat للمحطة 5،
-       وdata-cao للمحطة 6.
+       أسماء أسئلة التقييم ev1…ev10، وسمة النطاق data-q كبقية
+       أسئلة المنصّة.
        ===================================================================== -->
   <section class="station" id="station-7">
     <div class="station-label">المحطة السابعة</div>
@@ -1792,7 +1791,7 @@
         <div class="given-row">
           <span class="given-chip"><b dir="ltr">K</b> — العدد الذرّي: 19</span>
         </div>
-        <div class="quiz-options" data-ev="ev1">
+        <div class="quiz-options" data-q="ev1">
           <label class="quiz-option"><input type="radio" name="ev1" value="w1">أن تكتسب سبعة إلكترونات</label>
           <label class="quiz-option"><input type="radio" name="ev1" value="correct">أن تفقد إلكترونها الخارجي الوحيد</label>
           <label class="quiz-option"><input type="radio" name="ev1" value="w2">أن تشارك إلكترونها مع ذرّة أخرى</label>
@@ -1806,7 +1805,7 @@
         <div class="given-row">
           <span class="given-chip"><b dir="ltr">Ca</b> — العدد الذرّي: 20</span>
         </div>
-        <div class="quiz-options" data-ev="ev2">
+        <div class="quiz-options" data-q="ev2">
           <label class="quiz-option"><input type="radio" name="ev2" value="w1"><span dir="ltr">1+</span></label>
           <label class="quiz-option"><input type="radio" name="ev2" value="w2"><span dir="ltr">2−</span></label>
           <label class="quiz-option"><input type="radio" name="ev2" value="w3">متعادلة</label>
@@ -1825,7 +1824,7 @@
           <span class="given-chip"><b dir="ltr">Cl</b> — 17</span>
           <span class="given-chip"><b dir="ltr">K</b> — 19</span>
         </div>
-        <div class="quiz-options" data-ev="ev3">
+        <div class="quiz-options" data-q="ev3">
           <label class="quiz-option"><input type="radio" name="ev3" value="w1">الأكسجين والكلور</label>
           <label class="quiz-option"><input type="radio" name="ev3" value="w2">الصوديوم والبوتاسيوم</label>
           <label class="quiz-option"><input type="radio" name="ev3" value="correct">المغنيسيوم والأكسجين</label>
@@ -1898,7 +1897,7 @@
           </div>
         </div>
 
-        <div class="quiz-options" data-ev="ev5">
+        <div class="quiz-options" data-q="ev5">
           <label class="quiz-option"><input type="radio" name="ev5" value="correct">أحجام الأيونات وتراصّها بلا فراغ</label>
           <label class="quiz-option"><input type="radio" name="ev5" value="w1">تناوب الأيون الموجب والأيون السالب</label>
           <label class="quiz-option"><input type="radio" name="ev5" value="w2">عدد الأيونات المحيطة بكل أيون</label>
@@ -1909,7 +1908,7 @@
 
       <div class="eval-q" id="ev-q6">
         <p class="explore-q"><span class="q-num">6</span>ما الذي يُبقي أيونات الشبكة البلورية متماسكة في مواضعها؟</p>
-        <div class="quiz-options" data-ev="ev6">
+        <div class="quiz-options" data-q="ev6">
           <label class="quiz-option"><input type="radio" name="ev6" value="w1">مشاركة الإلكترونات بين الأيونات المتجاورة</label>
           <label class="quiz-option"><input type="radio" name="ev6" value="w2">انتقال الإلكترونات ذهابًا وإيابًا بلا توقّف</label>
           <label class="quiz-option"><input type="radio" name="ev6" value="w3">تراصّ الأيونات لتقارب أحجامها</label>
@@ -1920,7 +1919,7 @@
 
       <div class="eval-q" id="ev-q7">
         <p class="explore-q"><span class="q-num">7</span>في حبّة ملح الطعام، أيّ وصف أصحّ؟</p>
-        <div class="quiz-options" data-ev="ev7">
+        <div class="quiz-options" data-q="ev7">
           <label class="quiz-option"><input type="radio" name="ev7" value="w1">ملايين الجزيئات المنفصلة، كل أيون صوديوم مع أيون كلوريد خاصّ به</label>
           <label class="quiz-option"><input type="radio" name="ev7" value="w2">أيونات موزّعة عشوائيًا بلا انتظام</label>
           <label class="quiz-option"><input type="radio" name="ev7" value="correct">ترتيب منتظم ممتدّ يحيط بكل أيون فيه ستّة أيونات من النوع المقابل</label>
@@ -1931,7 +1930,7 @@
 
       <div class="eval-q" id="ev-q8">
         <p class="explore-q"><span class="q-num">8</span>صيغة كلوريد الكالسيوم <span dir="ltr">CaCl<sub>2</sub></span>. ما نسبة عدد أيونات الكالسيوم إلى عدد أيونات الكلوريد في الشبكة كلها؟</p>
-        <div class="quiz-options" data-ev="ev8">
+        <div class="quiz-options" data-q="ev8">
           <label class="quiz-option"><input type="radio" name="ev8" value="w1"><span dir="ltr">1 : 1</span></label>
           <label class="quiz-option"><input type="radio" name="ev8" value="correct"><span dir="ltr">1 : 2</span></label>
           <label class="quiz-option"><input type="radio" name="ev8" value="w2"><span dir="ltr">2 : 1</span></label>
@@ -1946,7 +1945,7 @@
           <span class="given-chip"><b dir="ltr">Ca</b> — العدد الذرّي: 20</span>
           <span class="given-chip"><b dir="ltr">O</b> — العدد الذرّي: 8</span>
         </div>
-        <div class="quiz-options" data-ev="ev9">
+        <div class="quiz-options" data-q="ev9">
           <label class="quiz-option"><input type="radio" name="ev9" value="correct">ينتقل إلكترونان من الكالسيوم إلى الأكسجين</label>
           <label class="quiz-option"><input type="radio" name="ev9" value="w1">ينتقل إلكترونان من الأكسجين إلى الكالسيوم</label>
           <label class="quiz-option"><input type="radio" name="ev9" value="w2">ينتقل إلكترون واحد من الكالسيوم إلى الأكسجين</label>
@@ -1957,7 +1956,7 @@
 
       <div class="eval-q" id="ev-q10">
         <p class="explore-q"><span class="q-num">10</span>لماذا يكون ملح الطعام آمنًا مع أن الصوديوم فلزّ شديد التفاعل والكلور غاز سامّ؟</p>
-        <div class="quiz-options" data-ev="ev10">
+        <div class="quiz-options" data-q="ev10">
           <label class="quiz-option"><input type="radio" name="ev10" value="w1">لأن الكميّة المستخدمة من الملح صغيرة جدًا</label>
           <label class="quiz-option"><input type="radio" name="ev10" value="correct">لأن الذرّتين صارتا أيونات، وخصائص الأيون غير خصائص الذرّة</label>
           <label class="quiz-option"><input type="radio" name="ev10" value="w2">لأن خطر كلٍّ منهما يلغي خطر الآخر</label>
@@ -1976,6 +1975,18 @@
   </section>
 
 </main>
+
+<!-- ============================================================
+     الوحدات المشتركة تسبق سكربتات الدرس: الدرس ينادي محرّكات
+     window.Quiz من template.js، فيجب أن تكون محمّلة قبله.
+     الترتيب المنصوص عليه محفوظ كما هو.
+     ============================================================ -->
+<script src="../../shared/sounds/sounds.js"></script>
+<script src="../../shared/xp-system/xp.js"></script>
+<script src="../../shared/faheem-widget/faheem.js"></script>
+<script src="../../shared/template-boilerplate/template.js"></script>
+<script src="../../shared/certificate-system/certificate.js"></script>
+<script src="../../shared/identity/footer.js"></script>
 
 <script>
 /* ==========================================================
@@ -2501,36 +2512,30 @@
     });
   });
 
-  // أسئلة الاختيار من متعدد (3، 4، 5، 6، 8، 9) — فئة MCQ
-  document.querySelectorAll('.quiz-options[data-step]').forEach(function(group){
-    const step = group.getAttribute('data-step');
-    const feedback = document.getElementById('explore-feedback-' + step);
-    group.querySelectorAll('input[type="radio"]').forEach(function(radio){
-      radio.addEventListener('change', function(){
-        feedback.hidden = false;
-        if(radio.value === 'correct'){
-          radio.closest('.quiz-option').classList.add('correct');
-          feedback.textContent = '✓ صحيح!';
-          feedback.className = 'explore-feedback is-correct';
-          if(window.Sounds) window.Sounds.playSnap();
-          if(window.XP) window.XP.claim('l3-explore-q' + step, window.XP.POINTS.MCQ,
-                                        XP_REASONS[step]);
-          /* تُقفل الخيارات فور الإجابة الصحيحة: النقاط احتُسبت، ولو بقيت
-             مفتوحة لأمكن تغيير الإجابة لاحقًا (خصوصًا بعد إعادة فتح
-             السؤال للمراجعة) فتظهر تغذية "خطأ" على سؤال سبق أن نجح فيه. */
-          group.querySelectorAll('input[type="radio"]').forEach(function(r){ r.disabled = true; });
-          // السؤال الثامن هو تنبّؤ بالتجاذب — تنفيذه بصريًا هو جوابه،
-          // فنمهل حركة التجاذب لتكتمل قبل أن يُطوى السؤال
-          var extra = 0;
-          if(step === '8'){ attractIons(); extra = reduceMotion ? 0 : 900; }
-          advance(parseInt(step, 10), extra);
-        } else {
-          feedback.textContent = '💡 ' + CHOICE_HINTS[step];
-          feedback.className = 'explore-feedback is-hint';
-          if(window.Sounds) window.Sounds.playWrong();
-        }
-      });
-    });
+  /* أسئلة الاختيار من متعدد (3، 4، 5، 6، 8، 9) — فئة MCQ.
+     المحرّك المشترك يتولّى الوسم والتغذية والنقاط والإقفال؛ والدرس
+     يضع في onSolved إيقاعه الخاص وحده: الطيّ ثم كشف السؤال التالي. */
+  const MCQ_STEPS = [3, 4, 5, 6, 8, 9];
+  const mcqSpec = {};
+  MCQ_STEPS.forEach(function(n){
+    mcqSpec['explore' + n] = {
+      xpId:  'l3-explore-q' + n,
+      xp:    'MCQ',
+      reason: XP_REASONS[n],
+      fb:    'explore-feedback-' + n,
+      hints: { any: CHOICE_HINTS[n] }
+    };
+  });
+
+  window.Quiz.practice(mcqSpec, {
+    onSolved: function(name){
+      const n = parseInt(name.replace('explore', ''), 10);
+      // السؤال الثامن تنبّؤ بالتجاذب — تنفيذه بصريًا هو جوابه، فنُمهل
+      // حركة التجاذب لتكتمل قبل أن يُطوى السؤال
+      let extra = 0;
+      if(n === 8){ attractIons(); extra = reduceMotion ? 0 : 900; }
+      advance(n, extra);
+    }
   });
 
 })();
@@ -2659,8 +2664,6 @@
      للتوّ. الكبريت يكسب إلكترونين ليكمل ثمانية — مطابق للقاعدة،
      ويُظهر "أكثر من إلكترون واحد" في جهة الاكتساب، فلا يستبق
      توقّع المغنيسيوم في جهة الفقد. */
-  var octetGroup = document.getElementById('octetOptions');
-  var octetFeedback = document.getElementById('octetFeedback');
   var peerActivity = document.getElementById('peer-activity');
 
   var OCTET_HINTS = {
@@ -2668,29 +2671,7 @@
     share: 'المشاركة نوع آخر من الترابط ستدرسه لاحقًا. هنا الذرّات تنقل الإلكترونات نقلًا كاملًا — فكم تحتاج الكبريت لتكمل ثمانية؟'
   };
 
-  if(octetGroup && peerActivity){
-    octetGroup.querySelectorAll('input[type="radio"]').forEach(function(radio){
-      radio.addEventListener('change', function(){
-        octetFeedback.hidden = false;
-        if(radio.value === 'correct'){
-          radio.closest('.quiz-option').classList.add('correct');
-          octetFeedback.textContent = '✓ صحيح — 6 + 2 = 8، فاكتساب إلكترونين أقصر طريق للاستقرار.';
-          octetFeedback.className = 'explore-feedback is-correct';
-          if(window.Sounds) window.Sounds.playSnap();
-          claim('l3-octet-check', pts('MCQ', 5), 'طبّقتَ الفكرة على عنصر جديد');
-          peerActivity.hidden = false;
-        } else {
-          octetFeedback.textContent = '💡 ' + OCTET_HINTS[radio.value];
-          octetFeedback.className = 'explore-feedback is-hint';
-          if(window.Sounds) window.Sounds.playWrong();
-        }
-      });
-    });
-  }
-
   /* ---------- 4) الجرعة الثالثة: تشخيص جملة الزميل ---------- */
-  var diagGroup = document.getElementById('peerDiagnose');
-  var diagFeedback = document.getElementById('peerDiagFeedback');
   var correctStep = document.getElementById('peerCorrectStep');
 
   var DIAG_HINTS = {
@@ -2698,144 +2679,80 @@
     wrong2: 'هذه الجملة تصف التجاذب بين شحنتين متضادّتين — هل يخالف ذلك القاعدة التي رتّبتها؟'
   };
 
-  if(diagGroup){
-    diagGroup.querySelectorAll('input[type="radio"]').forEach(function(radio){
-      radio.addEventListener('change', function(){
-        diagFeedback.hidden = false;
-        if(radio.value === 'correct'){
-          radio.closest('.quiz-option').classList.add('correct');
-          diagFeedback.textContent = '✓ صحيح — الخطأ في الجملة الثانية.';
-          diagFeedback.className = 'explore-feedback is-correct';
-          if(window.Sounds) window.Sounds.playSnap();
-          claim('l3-explain-diagnose', pts('MCQ', 5), 'اكتشفتَ الخطأ في تفسير زميلك');
-          correctStep.hidden = false;
-        } else {
-          diagFeedback.textContent = '💡 ' + DIAG_HINTS[radio.value];
-          diagFeedback.className = 'explore-feedback is-hint';
-          if(window.Sounds) window.Sounds.playWrong();
-        }
-      });
-    });
-  }
+  /* السؤالان أعلاه اختيارٌ من متعدد خالص، فمحرّكهما مشترك. والدرس
+     لا يضع فيه إلا إيقاعه: كلٌّ منهما يكشف ما بعده. */
+  window.Quiz.practice({
+    'octet': {
+      xpId: 'l3-octet-check', xp: 'MCQ',
+      reason: 'طبّقتَ الفكرة على عنصر جديد',
+      fb: 'octetFeedback',
+      correctText: '✓ صحيح — 6 + 2 = 8، فاكتساب إلكترونين أقصر طريق للاستقرار.',
+      hints: OCTET_HINTS
+    },
+    'peer-diagnose': {
+      xpId: 'l3-explain-diagnose', xp: 'MCQ',
+      reason: 'اكتشفتَ الخطأ في تفسير زميلك',
+      fb: 'peerDiagFeedback',
+      correctText: '✓ صحيح — الخطأ في الجملة الثانية.',
+      hints: DIAG_HINTS
+    }
+  }, {
+    onSolved: function(name){
+      if(name === 'octet' && peerActivity) peerActivity.hidden = false;
+      if(name === 'peer-diagnose' && correctStep) correctStep.hidden = false;
+    }
+  });
 
   /* ---------- 5) تصحيح الجملة كتابةً ----------
-     تطبيع عربي متسامح: حذف التشكيل والتطويل، وتوحيد الهمزات والألف
-     المقصورة والتاء المربوطة، وتوحيد المسافات وإزالة الترقيم — حتى
-     لا تُرفض إجابة صحيحة لفرق إملائي لا يغيّر المعنى العلمي. */
-  function normalizeAr(str){
-    return String(str)
-      .replace(/[\u064B-\u0652\u0670\u0640]/g, '')
-      .replace(/[أإآٱ]/g, 'ا')
-      .replace(/ى/g, 'ي')
-      .replace(/ؤ/g, 'و')
-      .replace(/ئ/g, 'ي')
-      .replace(/ة/g, 'ه')
-      .replace(/[^\u0621-\u064A0-9\s]/g, ' ')
-      .replace(/\s+/g, ' ')
-      .trim()
-      .toLowerCase();
-  }
+     المصحّح وصفٌ لا كود: مساران للقبول، ومعهما حارس نفي.
 
-  function hasAny(text, list){
-    return list.some(function(w){ return text.indexOf(w) !== -1; });
-  }
-
-  /* تُقبل الإجابة بأحد مسارين صحيحين:
-     (أ) تنصّ على أن البروتونات لم تتغيّر، أو
+     (أ) تنصّ الإجابة على أن البروتونات لم تتغيّر، أو
      (ب) تنصّ على أن عدد الإلكترونات نقص أو تغيّر.
 
-     إصلاح (يوليو 2026): كانت القائمة تشترط فعل نقصان صريح، فتُرفض
-     إجابة صحيحة تمامًا مثل "فتغيّر عدد إلكتروناتها، ولذلك صارت
-     شحنتها موجبة" لأن الفعل "تغيّر" لم يكن مقبولًا. أُضيفت أفعال
-     التغيّر، مع حارس نفي يمنع قبول العكس ("لم يتغيّر عدد
-     الإلكترونات") — وهذه الجملة تبقى مرفوضة لأنها خطأ فعلي. */
+     وأفعال التغيّر مقبولة لا أفعال النقصان وحدها: «فتغيّر عدد
+     إلكتروناتها» إجابة صحيحة تمامًا. وحارس النفي يفحص «لم/لا/ما»
+     ككلمات مستقلّة لا كأجزاء من كلمات — «غير» داخل «تغيّر» ليست
+     نفيًا — فتبقى «لم يتغيّر عدد الإلكترونات» مرفوضة لأنها خطأ فعلي.
+
+     ومخرج النجاة يأتي من المحرّك المشترك: بعد محاولتين يظهر زرّ
+     الإجابة النموذجية بنصف النقاط. */
   var PROTON_WORDS   = ['بروتون'];
   var UNCHANGED      = ['لم يتغير','لا يتغير','لم تتغير','لا تتغير','ثابت','ثابته','كما هو','كما هي','لم يتاثر','لا يتاثر','لم ينقص'];
   var ELECTRON_WORDS = ['الكترون'];
   var CHANGED        = ['نقص','نقصت','قل','قلت','اقل','فقد','فقدت','خسر','خسرت','انتقل','انتقلت','غادر','غادرت','تركت','ترك','خرج','خرجت','فقدان','تغير','تغيرت','يتغير','اختلف','اختلفت','تبدل','تبدلت','نقصان'];
   var NEGATIONS      = ['لم','لا','ما','غير','ليس','لن'];
 
-  // النفي يُفحص ككلمة مستقلّة لا كجزء من كلمة: "غير" داخل "تغيّر"
-  // ليست نفيًا، وكانت تُسقط إجابات صحيحة تمامًا قبل هذا الإصلاح.
-  function hasNegationWord(text){
-    return text.split(' ').some(function(tok){ return NEGATIONS.indexOf(tok) !== -1; });
-  }
+  var closing = document.getElementById('station3Closing');
 
-  function isAcceptable(raw){
-    var t = normalizeAr(raw);
-    if(t.length < 3) return false;
-    var protonPath = hasAny(t, PROTON_WORDS) && hasAny(t, UNCHANGED);
-    if(protonPath) return true;
-    // مسار الإلكترون يسقط إن كانت الجملة منفية، لأن "لم يتغيّر عدد
-    // الإلكترونات" عكس الصواب تمامًا
-    if(hasNegationWord(t)) return false;
-    return hasAny(t, ELECTRON_WORDS) && hasAny(t, CHANGED);
-  }
+  window.Quiz.short({
+    input:    'peerCorrectInput',
+    button:   'peerCorrectCheck',
+    feedback: 'peerCorrectFeedback',
+    modelBtn: 'peerShowModel',
+    model:    'peerModelAnswer',
 
-  var pcInput   = document.getElementById('peerCorrectInput');
-  var pcBtn     = document.getElementById('peerCorrectCheck');
-  var pcFeedback= document.getElementById('peerCorrectFeedback');
-  var pcShow    = document.getElementById('peerShowModel');
-  var pcModel   = document.getElementById('peerModelAnswer');
-  var closing   = document.getElementById('station3Closing');
+    accept: { paths: [
+      { all: [PROTON_WORDS, UNCHANGED] },
+      { all: [ELECTRON_WORDS, CHANGED], rejectTokens: NEGATIONS }
+    ] },
 
-  var MODEL_TEXT = 'إجابة نموذجية: «عدد البروتونات لم يتغيّر إطلاقًا؛ الذي نقص هو عدد الإلكترونات، فصار عدد البروتونات أكبر، فظهرت الشحنة الموجبة.» قارنها بما كتبت — أين اختلفتما؟';
+    correctText: '✓ صحيح — عدد البروتونات لم يتغيّر إطلاقًا؛ الذي نقص هو عدد الإلكترونات، فزاد عدد البروتونات عليها فظهرت الشحنة الموجبة.',
 
-  var PEER_HINTS = [
-    'فكّر: ما الجسيم الذي غادر الذرّة فعلًا؟ وهل يستطيع البروتون مغادرة النواة في تفاعل كيميائي؟',
-    'البروتونات في النواة والإلكترونات حولها. أيّهما تحرّك في ما شاهدته؟ وماذا صار عدده بعد الحركة؟',
-    'اكتب جملة تذكر فيها الإلكترونات وما حدث لعددها بعد أن غادر أحدها الذرّة.'
-  ];
-  var attempts = 0;
+    hints: [
+      'فكّر: ما الجسيم الذي غادر الذرّة فعلًا؟ وهل يستطيع البروتون مغادرة النواة في تفاعل كيميائي؟',
+      'البروتونات في النواة والإلكترونات حولها. أيّهما تحرّك في ما شاهدته؟ وماذا صار عدده بعد الحركة؟',
+      'اكتب جملة تذكر فيها الإلكترونات وما حدث لعددها بعد أن غادر أحدها الذرّة.'
+    ],
 
-  function unlockClosing(){
-    if(closing) closing.hidden = false;
-  }
+    modelText: 'إجابة نموذجية: «عدد البروتونات لم يتغيّر إطلاقًا؛ الذي نقص هو عدد الإلكترونات، فصار عدد البروتونات أكبر، فظهرت الشحنة الموجبة.» قارنها بما كتبت — أين اختلفتما؟',
 
-  function lockInput(){
-    if(pcInput) pcInput.disabled = true;
-    if(pcBtn) pcBtn.disabled = true;
-    if(pcShow) pcShow.hidden = true;
-  }
+    xpId:        'l3-explain-correction',
+    xp:          'PRODUCE',
+    reason:      'صحّحتَ الخطأ المفاهيمي بكلماتك',
+    modelReason: 'راجعتَ الإجابة النموذجية وقارنتها بإجابتك',
 
-  if(pcBtn && pcInput){
-    var checkCorrection = function(){
-      var val = pcInput.value.trim();
-      pcFeedback.hidden = false;
-      if(isAcceptable(val)){
-        pcFeedback.textContent = '✓ صحيح — عدد البروتونات لم يتغيّر إطلاقًا؛ الذي نقص هو عدد الإلكترونات، فزاد عدد البروتونات عليها فظهرت الشحنة الموجبة.';
-        pcFeedback.className = 'explore-feedback is-correct';
-        lockInput();
-        if(window.Sounds) window.Sounds.playSnap();
-        claim('l3-explain-correction', pts('PRODUCE', 8), 'صحّحتَ الخطأ المفاهيمي بكلماتك');
-        unlockClosing();
-      } else {
-        attempts++;
-        pcFeedback.textContent = '💡 ' + PEER_HINTS[Math.min(attempts - 1, PEER_HINTS.length - 1)];
-        pcFeedback.className = 'explore-feedback is-hint';
-        if(window.Sounds) window.Sounds.playWrong();
-        // مخرج نجاة بعد محاولتين: قاعدة منصّة عامة — لا يُحبَس طالب
-        // في حلقة تلميحات لا نهاية لها بسبب صياغة لم يتوقّعها المصحّح
-        if(attempts >= 2 && pcShow) pcShow.hidden = false;
-      }
-    };
-    pcBtn.addEventListener('click', checkCorrection);
-    pcInput.addEventListener('keydown', function(e){
-      if(e.key === 'Enter'){ e.preventDefault(); checkCorrection(); }
-    });
-  }
-
-  if(pcShow && pcModel){
-    pcShow.addEventListener('click', function(){
-      pcModel.textContent = MODEL_TEXT;
-      pcModel.hidden = false;
-      if(pcFeedback) pcFeedback.hidden = true;
-      lockInput();
-      // نصف نقاط الإنتاج: راجع النموذج وقارن، ولم ينتج بنفسه
-      claim('l3-explain-correction', Math.round(pts('PRODUCE', 8) / 2), 'راجعتَ الإجابة النموذجية وقارنتها بإجابتك');
-      unlockClosing();
-    });
-  }
+    onDone: function(){ if(closing) closing.hidden = false; }
+  });
 
   /* ---------- 6) بذرة المحطة القادمة ----------
      تنبّؤ مفتوح: يُحفظ ولا يُصحَّح هنا إطلاقًا. الكشف في المحطة
@@ -3340,84 +3257,56 @@
      والياء والتاء المربوطة، «ال» التعريف، والمسافات. ويقبل تهجّيات
      المغنيسيوم الشائعة كلّها (ماغنيسيوم، مغنسيوم…).
      ومعه مخرج نجاة بعد محاولتين — قاعدة منصّية لا استثناء. */
-  var nameTries = 0, nameDone = false;
-  var nameInput = document.getElementById('nameInput');
-  var nameFb    = document.getElementById('nameFeedback');
-  var nameModel = document.getElementById('nameModel');
-  var nameModelBtn = document.getElementById('nameShowModel');
-  var nameBtn   = document.getElementById('nameCheck');
-  var mgClosing = document.getElementById('mgClosing');
+  /* تسمية المركّب: مصحّح مرن يقبل «كلوريد» مع أي تهجٍّ شائع
+     للمغنيسيوم، ومعه مخرج نجاة من المحرّك المشترك بعد محاولتين.
+     والتلميح يخاطب ما نقص تحديدًا لا يقول «خطأ» فحسب. */
+  var MAGNESIUM = [/مغنيسيوم|مغنسيوم|ماغنيسيوم|ماغنسيوم|مغنيزيوم/];
+  var CHLORIDE  = ['كلوريد'];
 
-  function normalize(t){
-    return String(t)
-      .replace(/[\u064B-\u0652\u0640]/g, '')   // تشكيل وتطويل
-      .replace(/[أإآٱ]/g, 'ا')
-      .replace(/ى/g, 'ي')
-      .replace(/ة/g, 'ه')
-      .replace(/ال/g, '')
-      .replace(/\s+/g, '')
-      .toLowerCase();
-  }
-
-  function finishNaming(points, reason){
-    nameDone = true;
-    nameInput.disabled = true;
-    nameBtn.disabled = true;
-    nameModelBtn.hidden = true;
-    if(window.Sounds) window.Sounds.playChime();
-    if(window.XP) window.XP.claim('l3-mgcl2-name', points, reason);
-    mgClosing.hidden = false;
-    var toS5 = document.getElementById('toStation5');
-    if(toS5) toS5.hidden = false;
-  }
-
-  function checkName(){
-    if(nameDone) return;
-    var v = normalize(nameInput.value);
-    if(!v){
-      nameInput.setAttribute('placeholder', 'اكتب الاسم كما في نموذج الليثيوم');
-      nameInput.focus();
-      return;
-    }
-    if(window.XP && window.XP.attempt) window.XP.attempt('l3-name');
-    nameTries++;
-
-    var hasChloride = v.indexOf('كلوريد') !== -1;
-    var hasMetal    = /(مغنيسيوم|مغنسيوم|ماغنيسيوم|ماغنسيوم|مغنيزيوم)/.test(v);
-
-    if(hasChloride && hasMetal){
-      nameFb.hidden = false;
-      nameFb.className = 'explore-feedback is-correct';
-      nameFb.textContent = '✓ كلوريد المغنيسيوم.';
-      finishNaming(window.XP ? window.XP.POINTS.PRODUCE : 8,
-                   'سمّيتَ المركّب بنقل النمط من فلوريد الليثيوم');
-      return;
-    }
-
-    if(window.Sounds) window.Sounds.playWrong();
-    nameFb.hidden = false;
-    nameFb.className = 'explore-feedback is-hint';
+  function nameHint(v){
+    var hasChloride = CHLORIDE.some(function(w){ return v.indexOf(w) !== -1; });
+    var hasMetal    = MAGNESIUM[0].test(v);
     if(!hasChloride && hasMetal){
-      nameFb.textContent = 'اللافلزّ يُذكر أولًا ويتغيّر آخره: الفلور صار «فلوريد»، فماذا يصير الكلور؟';
-    }else if(hasChloride && !hasMetal){
-      nameFb.textContent = 'بقي الفلزّ. في «فلوريد الليثيوم» جاء اسم الفلزّ بعده — فما فلزّ مركّبك؟';
-    }else{
-      nameFb.textContent = 'انظر إلى نموذج الليثيوم: اسم اللافلزّ معدّلًا، ثم اسم الفلزّ. طبّقه على عنصريك.';
+      return 'اللافلزّ يُذكر أولًا ويتغيّر آخره: الفلور صار «فلوريد»، فماذا يصير الكلور؟';
     }
-    if(nameTries >= 2) nameModelBtn.hidden = false;
+    if(hasChloride && !hasMetal){
+      return 'بقي الفلزّ. في «فلوريد الليثيوم» جاء اسم الفلزّ بعده — فما فلزّ مركّبك؟';
+    }
+    return 'انظر إلى نموذج الليثيوم: اسم اللافلزّ معدّلًا، ثم اسم الفلزّ. طبّقه على عنصريك.';
   }
 
-  nameBtn.addEventListener('click', checkName);
-  nameInput.addEventListener('keydown', function(e){
-    if(e.key === 'Enter'){ e.preventDefault(); checkName(); }
-  });
+  window.Quiz.short({
+    input:    'nameInput',
+    button:   'nameCheck',
+    feedback: 'nameFeedback',
+    modelBtn: 'nameShowModel',
+    model:    'nameModel',
 
-  nameModelBtn.addEventListener('click', function(){
-    if(nameDone) return;
-    nameFb.hidden = true;
-    nameModel.hidden = false;
-    nameModel.textContent = 'اسم المركّب: كلوريد المغنيسيوم. اسم اللافلزّ أولًا بصيغة «…يد»، ثم اسم الفلزّ.';
-    finishNaming(4, 'رأيتَ الإجابة النموذجية بعد محاولتين — نصف النقاط');
+    /* التطبيع هنا يحذف «ال» التعريف زيادةً على التطبيع العام، كي
+       تُقبل «كلوريد المغنيسيوم» و«كلوريد مغنيسيوم» سواءً. */
+    normalize: function(t){
+      return window.Quiz.normalizeAr(t).replace(/ال/g, '').replace(/\s+/g, '');
+    },
+
+    accept: { paths: [ { all: [CHLORIDE, MAGNESIUM] } ] },
+
+    correctText: '✓ كلوريد المغنيسيوم.',
+    hints: function(v){ return nameHint(v); },
+    modelText: 'اسم المركّب: كلوريد المغنيسيوم. اسم اللافلزّ أولًا بصيغة «…يد»، ثم اسم الفلزّ.',
+    emptyText: 'اكتب الاسم كما في نموذج الليثيوم.',
+
+    xpId:        'l3-mgcl2-name',
+    xp:          'PRODUCE',
+    reason:      'سمّيتَ المركّب بنقل النمط من فلوريد الليثيوم',
+    modelReason: 'رأيتَ الإجابة النموذجية بعد محاولتين — نصف النقاط',
+
+    onDone: function(){
+      var mgClosing = document.getElementById('mgClosing');
+      var toS5 = document.getElementById('toStation5');
+      if(mgClosing) mgClosing.hidden = false;
+      if(toS5) toS5.hidden = false;
+      if(window.Sounds) window.Sounds.playChime();
+    }
   });
 
 })();
@@ -3526,62 +3415,25 @@
   // مُعرّفات ثابتة فريدة: تمنع كسب النقاط مرّتين بعد إعادة التحميل
   var XP_IDS = { lat1: 'l3-lat-q1', lat2: 'l3-lat-q2', lat3: 'l3-lat-q3' };
 
-  var NAMES = ['lat1', 'lat2', 'lat3'];
-  var solved = {};
-
-  function allSolved(){
-    for(var i = 0; i < NAMES.length; i++){
-      if(!solved[NAMES[i]]) return false;
+  window.Quiz.practice({
+    lat1: { xpId: XP_IDS.lat1, xp: 'MCQ', reason: REASONS.lat1, hints: HINTS.lat1 },
+    lat2: { xpId: XP_IDS.lat2, xp: 'MCQ', reason: REASONS.lat2, hints: HINTS.lat2 },
+    lat3: { xpId: XP_IDS.lat3, xp: 'MCQ', reason: REASONS.lat3, hints: HINTS.lat3 }
+  }, {
+    onAllSolved: function(){
+      if(!doneTag) return;
+      doneTag.hidden = false;
+      /* تبادل وزن الزرّين: المختبر أدّى دوره فينزل إلى الدرجة الثانية،
+         وزرّ المحطة السادسة يصعد إلى الأولى. فيبقى الممتلئ واحدًا في
+         كل لحظة كما تقتضي قاعدة الهرم. */
+      var labBtn  = document.getElementById('labOpenBtn');
+      var nextBtn = document.getElementById('toStation6');
+      if(labBtn)  labBtn.classList.add('demoted');
+      if(nextBtn) nextBtn.classList.remove('demoted');
+      if(window.Sounds) window.Sounds.playChime();
     }
-    return true;
-  }
-
-  NAMES.forEach(function(name){
-    var group = document.querySelector('.quiz-options[data-lat="' + name + '"]');
-    var fb    = document.getElementById('fb-' + name);
-    if(!group || !fb) return;
-
-    var radios = group.querySelectorAll('input[type="radio"]');
-    radios.forEach(function(radio){
-      radio.addEventListener('change', function(){
-        if(solved[name]) return;
-        fb.hidden = false;
-
-        if(radio.value === 'correct'){
-          solved[name] = true;
-          var opt = radio.closest('.quiz-option');
-          if(opt) opt.classList.add('correct');
-          fb.textContent = '✓ صحيح!';
-          fb.className = 'explore-feedback is-correct';
-          if(window.Sounds) window.Sounds.playSnap();
-          if(window.XP){
-            var pts = (window.XP.POINTS && window.XP.POINTS.MCQ) || 5;
-            window.XP.claim(XP_IDS[name], pts, REASONS[name]);
-          }
-          /* تُقفل الخيارات فور الإجابة الصحيحة: النقاط احتُسبت، وبقاؤها
-             مفتوحة يدعو إلى تبديل إجابة صحيحة بخاطئة بلا معنى تربوي. */
-          radios.forEach(function(r){ r.disabled = true; });
-
-          if(allSolved() && doneTag){
-            doneTag.hidden = false;
-            /* تبادل وزن الزرّين: المختبر أدّى دوره فينزل إلى الدرجة
-               الثانية، وزرّ المحطة السادسة يصعد إلى الأولى. فيبقى
-               الممتلئ واحدًا في كل لحظة كما تقتضي قاعدة الهرم. */
-            var labBtn  = document.getElementById('labOpenBtn');
-            var nextBtn = document.getElementById('toStation6');
-            if(labBtn)  labBtn.classList.add('demoted');
-            if(nextBtn) nextBtn.classList.remove('demoted');
-            if(window.Sounds) window.Sounds.playChime();
-          }
-        } else {
-          var hints = HINTS[name] || {};
-          fb.textContent = '💡 ' + (hints[radio.value] || hints.any || '');
-          fb.className = 'explore-feedback is-hint';
-          if(window.Sounds) window.Sounds.playWrong();
-        }
-      });
-    });
   });
+
 })();
 </script>
 
@@ -3607,9 +3459,8 @@
    - الشحنة تظهر بعد اكتمال النقلتين لا بعد كل واحدة: 2+ و 2− هما
      الحالة النهائية، وإظهار 1+ وسطًا يمثّل حالة لا وجود لها.
 
-   والسمة data-cao سمةُ نطاقٍ ثالثة: data-step يلتقطه محرّك
-   الاستكشاف المتتابع في المحطة 2 على الصفحة كلها، وdata-lat
-   للمحطة 5.
+   وأسئلة المحطة مسمّاة cao-cmp و cao-pat على سمة النطاق الموحّدة
+   data-q.
    ========================================================== */
 (function(){
   "use strict";
@@ -3716,13 +3567,6 @@
       if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); fn(); }
     });
   }
-  function pts(name, fallback){
-    return (window.XP && window.XP.POINTS && window.XP.POINTS[name]) || fallback;
-  }
-  function claim(id, points, reason){
-    if(window.XP && window.XP.claim) window.XP.claim(id, points, reason);
-  }
-
   /* ================= المسرح ================= */
   /* الأيون الموجب على اليسار دائمًا — اتساق الاتجاه عبر المحطات جزء
      من المعنى لا تفصيل تنسيق. */
@@ -3849,47 +3693,25 @@
     pat: 'استخرجتَ القاعدة من أمثلة بنيتَها كلّها بيدك'
   };
   var XP_IDS   = { cmp: 'l3-cao-compare', pat: 'l3-cao-pattern' };
-  var XP_KIND  = { cmp: ['MCQ', 5], pat: ['PATTERN', 12] };
-  var solved   = {};
 
-  ['cmp', 'pat'].forEach(function(key){
-    var group = document.querySelector('.quiz-options[data-cao="' + key + '"]');
-    var fb    = document.getElementById(key === 'cmp' ? 'fb-caoCmp' : 'fb-caoPat');
-    if(!group || !fb) return;
-
-    var radios = group.querySelectorAll('input[type="radio"]');
-    radios.forEach(function(radio){
-      radio.addEventListener('change', function(){
-        if(solved[key]) return;
-        fb.hidden = false;
-
-        if(radio.value === 'correct'){
-          solved[key] = true;
-          var opt = radio.closest('.quiz-option');
-          if(opt) opt.classList.add('correct');
-          fb.textContent = '✓ صحيح!';
-          fb.className = 'explore-feedback is-correct';
-          if(window.Sounds) window.Sounds.playSnap();
-          claim(XP_IDS[key], pts(XP_KIND[key][0], XP_KIND[key][1]), REASONS[key]);
-          radios.forEach(function(r){ r.disabled = true; });
-
-          /* السؤالان بالتتابع لا معًا: أربعة عناصر ظاهرة في وقت واحد
-             هو سقف الكثافة، والتتابع يُبقيها ثلاثة. */
-          if(key === 'cmp'){
-            patBox.hidden = false;
-          }else{
-            doneBox.hidden = false;
-            if(window.Sounds) window.Sounds.playChime();
-          }
-        }else{
-          var hints = HINTS[key] || {};
-          fb.textContent = '💡 ' + (hints[radio.value] || '');
-          fb.className = 'explore-feedback is-hint';
-          if(window.Sounds) window.Sounds.playWrong();
-        }
-      });
-    });
+  window.Quiz.practice({
+    'cao-cmp': { xpId: XP_IDS.cmp, xp: 'MCQ',     reason: REASONS.cmp,
+                 fb: 'fb-caoCmp', hints: HINTS.cmp },
+    'cao-pat': { xpId: XP_IDS.pat, xp: 'PATTERN', reason: REASONS.pat,
+                 fb: 'fb-caoPat', hints: HINTS.pat }
+  }, {
+    onSolved: function(name){
+      /* السؤالان بالتتابع لا معًا: أربعة عناصر ظاهرة في وقت واحد هو
+         سقف الكثافة، والتتابع يُبقيها ثلاثة. */
+      if(name === 'cao-cmp'){
+        patBox.hidden = false;
+      }else{
+        doneBox.hidden = false;
+        if(window.Sounds) window.Sounds.playChime();
+      }
+    }
   });
+
 })();
 </script>
 
@@ -3918,188 +3740,47 @@
 (function(){
   "use strict";
 
-  var gate      = document.getElementById('evalGate');
-  var nameInput = document.getElementById('evalName');
-  var startBtn  = document.getElementById('evalStart');
-  var nameFb    = document.getElementById('evalNameFb');
-  var qWrap     = document.getElementById('evalQuestions');
-  var summary   = document.getElementById('evalSummary');
-  if(!qWrap || !startBtn || !nameInput || !summary) return;
+  /* محطة التقييم كاملةً على المحرّك المشترك: بوابة الاسم، والمحاولة
+     الواحدة، ووسمُ خطأ الطالب مع إضاءة الصحيح وسطرِ «لماذا»، ثم
+     النسبة والشارة ونداء الشهادة. الدرس لا يقدّم إلا محتواه.
 
-  var LESSON_TITLE = 'كيف تتكوّن الروابط الأيونية؟';
-  var TOTAL = 10;
+     عشرة أسئلة × 10 نقاط = 100، فتقع عتبتا الشارة على حدّ نظيف:
+     متمكن = 7 صحيحة، متميز = 8. لا كسور ولا تقريب يخفي فارقًا.
 
-  var answered = 0, correctCount = 0, finished = false;
+     وبلا XP: مكافأة المحطة الشارةُ والشهادة — والمحرّك لا يمنح
+     نقاطًا في هذا الوضع أصلًا. */
 
-  /* ---------- بوابة الاسم ---------- */
-  function startEval(){
-    var v = (nameInput.value || '').trim();
-    if(!v){
-      nameFb.hidden = false;
-      nameFb.textContent = '💡 اكتب اسمك أولًا لتُطبع الشهادة باسمك.';
-      nameFb.className = 'explore-feedback is-hint';
-      nameInput.focus();
-      return;
-    }
-    nameFb.hidden = true;
-    qWrap.hidden = false;
-    startBtn.disabled = true;
-    startBtn.textContent = 'التقييم جارٍ';
-    if(window.Sounds) window.Sounds.playSnap();
+  if(!window.Quiz || !window.Quiz.evaluate){
+    console.warn('[مختبر فؤاد] template.js لم يُحمّل: محطة التقييم معطّلة.');
+    return;
   }
 
-  startBtn.addEventListener('click', startEval);
-  nameInput.addEventListener('keydown', function(e){
-    if(e.key === 'Enter' && !startBtn.disabled) startEval();
+  window.Quiz.evaluate({
+    title: 'كيف تتكوّن الروابط الأيونية؟',
+    questions: [
+      { name: 'ev1',  why: 'فقدُ إلكترون واحد أقصر طريق إلى الاستقرار من اكتساب سبعة.' },
+      { name: 'ev2',  why: 'كل إلكترون مفقود يترك شحنة موجبة واحدة، وقد فُقد إلكترونان.' },
+      { name: 'ev3',  why: 'الرابطة الأيونية بين فلزّ يفقد ولافلزّ يكسب — والمغنيسيوم فلزّ والأكسجين لافلزّ.' },
+
+      /* السؤال الرابع إجابة مكتوبة، ومخرج نجاته كشفُ الصيغة الصحيحة
+         فور الخطأ: لا معنى لحلقة تلميحات في تقييم بمحاولة واحدة.
+         ومنظّم الصيغة يتسامح مع الأرقام المنخفضة (K₂O) والمسافات
+         وحالة الأحرف، فلا تُرفض إجابة صحيحة لسبب كتابيّ. */
+      { name: 'ev4',  type: 'text',
+        input: 'ev4Input', button: 'ev4Check', feedback: 'fb-ev4',
+        answer: 'K2O',
+        emptyText: 'اكتب الصيغة أولًا.',
+        why: 'الإجابة الصحيحة: K2O — البوتاسيوم يعطي إلكترونًا واحدًا، والأكسجين يحتاج اثنين، فتلزم ذرّتا بوتاسيوم لذرّة أكسجين واحدة.' },
+
+      { name: 'ev5',  why: 'العصيّ تفتح داخل الشبكة فتُظهر الترتيب وعدد الجيران، لكنها تصغّر الكرات فتُخفي الأحجام والتراصّ.' },
+      { name: 'ev6',  why: 'الشحنتان المتضادّتان تتجاذبان، وهذا التجاذب نفسه هو ما يثبّت كل أيون في موضعه.' },
+      { name: 'ev7',  why: 'لا جزيء منفصلًا في البلورة: كل أيون محاط بستّة من النوع المقابل في ترتيب ممتدّ.' },
+      { name: 'ev8',  why: 'الرقم في الصيغة يقول نسبةً في الشبكة كلها: لكل أيون كالسيوم أيونا كلوريد.' },
+      { name: 'ev9',  why: 'الكالسيوم يفقد إلكترونين والأكسجين يستقبلهما — انتقالٌ كامل من الفلزّ إلى اللافلزّ.' },
+      { name: 'ev10', why: 'الأيون ليس الذرّة: تغيّر عدد الإلكترونات غيّر الخصائص كلها.' }
+    ]
   });
 
-  /* ---------- تصحيح أسئلة الاختيار ---------- */
-  /* رسالة الخطأ تخاطب المفهوم لا الحرف: تقول لماذا الصحيح صحيح،
-     والخيار الصحيح مضاء أمام الطالب في الوقت نفسه. */
-  var WHY = {
-    ev1:  'فقدُ إلكترون واحد أقصر طريق إلى الاستقرار من اكتساب سبعة.',
-    ev2:  'كل إلكترون مفقود يترك شحنة موجبة واحدة، وقد فُقد إلكترونان.',
-    ev3:  'الرابطة الأيونية بين فلزّ يفقد ولافلزّ يكسب — والمغنيسيوم فلزّ والأكسجين لافلزّ.',
-    ev5:  'العصيّ تفتح داخل الشبكة فتُظهر الترتيب وعدد الجيران، لكنها تصغّر الكرات فتُخفي الأحجام والتراصّ.',
-    ev6:  'الشحنتان المتضادّتان تتجاذبان، وهذا التجاذب نفسه هو ما يثبّت كل أيون في موضعه.',
-    ev7:  'لا جزيء منفصلًا في البلورة: كل أيون محاط بستّة من النوع المقابل في ترتيب ممتدّ.',
-    ev8:  'الرقم في الصيغة يقول نسبةً في الشبكة كلها: لكل أيون كالسيوم أيونا كلوريد.',
-    ev9:  'الكالسيوم يفقد إلكترونين والأكسجين يستقبلهما — انتقالٌ كامل من الفلزّ إلى اللافلزّ.',
-    ev10: 'الأيون ليس الذرّة: تغيّر عدد الإلكترونات غيّر الخصائص كلها.'
-  };
-
-  var MCQ = ['ev1','ev2','ev3','ev5','ev6','ev7','ev8','ev9','ev10'];
-
-  function register(isCorrect){
-    answered++;
-    if(isCorrect) correctCount++;
-    if(answered >= TOTAL) finish();
-  }
-
-  MCQ.forEach(function(name){
-    var group = document.querySelector('.quiz-options[data-ev="' + name + '"]');
-    var fb    = document.getElementById('fb-' + name);
-    if(!group || !fb) return;
-
-    var radios = group.querySelectorAll('input[type="radio"]');
-    radios.forEach(function(radio){
-      radio.addEventListener('change', function(){
-        if(radio.disabled) return;
-        /* محاولة واحدة: الإقفال يقع فور أول اختيار أيًّا كان. */
-        radios.forEach(function(r){ r.disabled = true; });
-
-        var ok  = radio.value === 'correct';
-        var opt = radio.closest('.quiz-option');
-        fb.hidden = false;
-
-        if(ok){
-          if(opt) opt.classList.add('correct');
-          fb.textContent = '✓ صحيح';
-          fb.className = 'explore-feedback is-correct';
-          if(window.Sounds) window.Sounds.playSnap();
-        }else{
-          if(opt) opt.classList.add('incorrect');
-          var right = group.querySelector('input[value="correct"]');
-          if(right){
-            var rightOpt = right.closest('.quiz-option');
-            if(rightOpt) rightOpt.classList.add('correct');
-          }
-          fb.textContent = '✗ ' + (WHY[name] || '');
-          fb.className = 'explore-feedback is-hint';
-          if(window.Sounds) window.Sounds.playWrong();
-        }
-        register(ok);
-      });
-    });
-  });
-
-  /* ---------- السؤال 4: صيغة مكتوبة ---------- */
-  var f4in  = document.getElementById('ev4Input');
-  var f4btn = document.getElementById('ev4Check');
-  var f4fb  = document.getElementById('fb-ev4');
-
-  /* يقبل K2O و K₂O و k 2 o وما شابه. الرفض لسبب كتابيّ رفضٌ لفهمٍ صحيح. */
-  function normFormula(s){
-    return String(s || '')
-      .replace(/[\u2080-\u2089]/g, function(c){
-        return String.fromCharCode(c.charCodeAt(0) - 0x2080 + 48);
-      })
-      .replace(/[\s.,\-_]/g, '')
-      .toLowerCase();
-  }
-
-  function check4(){
-    if(!f4in || !f4btn || f4btn.disabled) return;
-    var v = (f4in.value || '').trim();
-    f4fb.hidden = false;
-    if(!v){
-      f4fb.textContent = '💡 اكتب الصيغة أولًا.';
-      f4fb.className = 'explore-feedback is-hint';
-      return;
-    }
-
-    var ok = normFormula(v) === 'k2o';
-    f4in.disabled = true;
-    f4btn.disabled = true;
-
-    if(ok){
-      f4fb.textContent = '✓ صحيح';
-      f4fb.className = 'explore-feedback is-correct';
-      if(window.Sounds) window.Sounds.playSnap();
-    }else{
-      f4fb.textContent = '✗ الإجابة الصحيحة: K2O — البوتاسيوم يعطي إلكترونًا واحدًا، والأكسجين يحتاج اثنين، فتلزم ذرّتا بوتاسيوم لذرّة أكسجين واحدة.';
-      f4fb.className = 'explore-feedback is-hint';
-      if(window.Sounds) window.Sounds.playWrong();
-    }
-    register(ok);
-  }
-
-  if(f4btn) f4btn.addEventListener('click', check4);
-  if(f4in) f4in.addEventListener('keydown', function(e){
-    if(e.key === 'Enter') check4();
-  });
-
-  /* ---------- النتيجة والشهادة ---------- */
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, function(c){
-      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
-    });
-  }
-
-  /* عتبات الشارة نفسها التي تحسبها وحدة الشهادة — تُكرَّر هنا لعرضها
-     للطالب في سطر الخلاصة، ولا تُمرَّر إليها: الوحدة تحسبها من العلامة. */
-  function badgeOf(p){
-    if(p >= 80) return 'متميز';
-    if(p >= 65) return 'متمكن';
-    return 'مشارك';
-  }
-
-  function finish(){
-    if(finished) return;
-    finished = true;
-
-    var percent = Math.round(correctCount / TOTAL * 100);
-    var badge   = badgeOf(percent);
-    var name    = (nameInput.value || '').trim() || 'الطالب';
-
-    nameInput.disabled = true;
-
-    summary.hidden = false;
-    summary.innerHTML =
-      '<div class="eval-score"><span dir="ltr">' + percent + '%</span></div>' +
-      '<p class="eval-line">أنهيتَ الدرس يا <b>' + escapeHtml(name) + '</b> بـ ' +
-        correctCount + ' من ' + TOTAL + ' — ومستواك <b>' + badge + '</b>.</p>' +
-      '<p class="eval-line dim">شهادتك جاهزة أدناه: يمكنك عرضها وطباعتها أو تحميلها.</p>';
-
-    if(window.Sounds) window.Sounds.playChime();
-
-    /* الشهادة إلزامية بكل تقييم. عنوان الدرس بلا بادئة «الدرس رقم». */
-    if(window.Certificate && window.Certificate.finish){
-      window.Certificate.finish(name, LESSON_TITLE, percent);
-    }else{
-      console.warn('[مختبر فؤاد] certificate.js لم يُحمّل: التقييم انتهى بلا شهادة.');
-    }
-  }
 })();
 </script>
 
@@ -4154,11 +3835,5 @@
 })();
 </script>
 
-<script src="../../shared/sounds/sounds.js"></script>
-<script src="../../shared/xp-system/xp.js"></script>
-<script src="../../shared/faheem-widget/faheem.js"></script>
-<script src="../../shared/template-boilerplate/template.js"></script>
-<script src="../../shared/certificate-system/certificate.js"></script>
-<script src="../../shared/identity/footer.js"></script>
 </body>
 </html>
