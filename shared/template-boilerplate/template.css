@@ -594,3 +594,34 @@ footer.site-footer{
 @media (prefers-reduced-motion: reduce){
   .station-handoff .station-next{transition:none;}
 }
+
+/* ==========================================================
+   أنماط ما يكتبه محرّك الأسئلة المشترك (إضافة أغسطس 2026)
+   ----------------------------------------------------------
+   window.Quiz يكتب هذه الأصناف بنفسه: .explore-feedback مع
+   .is-correct / .is-hint في كل تغذية راجعة، و.eval-score و
+   .eval-line في بطاقة نتيجة التقييم. وكانت أنماطها تعيش داخل
+   درس 03 وحده، فأي درس جديد يربط المشترك ويكتب أسئلته صحيحة
+   تخرج رسائله بلا لون ولا تمييز — عطلٌ صامت لا يطبع خطأ.
+
+   المحرّك يشحن أنماطه معه الآن. والقواعد مطابقة لما كان في
+   درس 03 حرفيًا، فلا يتغيّر شيء في مظهره.
+   ========================================================== */
+.explore-feedback{
+  margin-top:10px;
+  font-size:.88rem;
+  min-height:20px;
+}
+.explore-feedback.is-correct{color:var(--turquoise); font-weight:700;}
+.explore-feedback.is-hint{color:var(--ink-dim);}
+
+.eval-score{
+  font-family:'Cairo', sans-serif;
+  font-weight:800;
+  font-size:2.1rem;
+  color:var(--turquoise);
+  line-height:1.2;
+}
+.eval-line{margin:10px 0 0; font-size:.95rem; color:var(--ink); line-height:1.9;}
+.eval-line b{color:var(--turquoise); font-weight:800;}
+.eval-line.dim{color:var(--ink-dim); font-size:.85rem;}
