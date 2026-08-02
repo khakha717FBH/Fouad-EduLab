@@ -53,7 +53,27 @@ function installShims(w, reduceMotion) {
     this.takeRecords = function () { return []; };
   };
   if (!w.HTMLElement.prototype.scrollIntoView) w.HTMLElement.prototype.scrollIntoView = function () {};
+  if (!w.Element.prototype.scrollIntoView) w.Element.prototype.scrollIntoView = function () {};
   w.scrollTo = function () {};
+}
+
+/* تخزين قابل للنقل بين نسختَي jsdom.
+   كل نسخة jsdom لها localStorage مستقلّ، فمحاكاة «إعادة تحميل
+   الصفحة» تحتاج نقل التخزين يدويًا — وإلا ظهر فشلٌ وهمي في اختبار
+   «لا كسب مزدوج». والحقن يقع في beforeParse لا بعده، لأن xp.js
+   يقرأ التخزين لحظة تحميله أثناء التحليل. */
+function installStorage(w, store) {
+  Object.defineProperty(w, 'localStorage', {
+    configurable: true,
+    value: {
+      getItem: k => (Object.prototype.hasOwnProperty.call(store, k) ? store[k] : null),
+      setItem: (k, v) => { store[k] = String(v); },
+      removeItem: k => { delete store[k]; },
+      clear: () => { Object.keys(store).forEach(k => delete store[k]); },
+      key: i => Object.keys(store)[i] || null,
+      get length() { return Object.keys(store).length; }
+    }
+  });
 }
 
 async function loadLesson(relPath, opts) {
@@ -65,12 +85,15 @@ async function loadLesson(relPath, opts) {
 
   const raw = fs.readFileSync(path.join(ROOT, relPath), 'utf8');
   const dom = new JSDOM(inlineShared(raw, relPath), {
-    url: BASE + relPath,
+    url: BASE + relPath + (opts.hash || ''),   // hash: محاكاة الدخول من الخارج بمرساة
     contentType: 'text/html',
     runScripts: 'dangerously',
     pretendToBeVisual: true,
     virtualConsole: vc,
-    beforeParse: function (w) { installShims(w, opts.reduceMotion); }
+    beforeParse: function (w) {
+      installShims(w, opts.reduceMotion);
+      if (opts.storage) installStorage(w, opts.storage);
+    }
   });
   const w = dom.window;
 
@@ -134,4 +157,19 @@ function visible(doc, id) {
   return !!el && !el.hidden;
 }
 
-module.exports = { loadLesson, tick, choose, type, click, text, visible, groupByName };
+/* اختيار رقاقة بمسار لوحة المفاتيح: محرّك الرقاقات يربط الاختيار
+   بـpointerup لا بـclick، ومسار لوحة المفاتيح هو نفسه «انقر لتختار»
+   الكوني المتاح لكل طالب — فاختباره يختبر طريقًا حقيقيًا. */
+function selectChip(chip) {
+  const W = chip.ownerDocument.defaultView;
+  chip.dispatchEvent(new W.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+}
+
+// نقر على عنصر (لا على مُعرّف) — يلزم لعناصر SVG بلا id
+function clickNode(node) {
+  const W = node.ownerDocument.defaultView;
+  node.dispatchEvent(new W.MouseEvent('click', { bubbles: true }));
+  return node;
+}
+
+module.exports = { loadLesson, tick, choose, type, click, clickNode, text, visible, groupByName, selectChip };
