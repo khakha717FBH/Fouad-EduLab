@@ -1,0 +1,2464 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدرس 4 — كيف تتكوّن الروابط التساهمية؟ | مختبر فؤاد التعليمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/identity/identity.css">
+<link rel="stylesheet" href="../../shared/template-boilerplate/template.css">
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  الدرس 4 — مختبر فؤاد التعليمي
+  "كيف تتكوّن الروابط التساهمية؟"
+
+  سبع محطات معلنة وسبع نقاط تقدّم (Engage → Explore → Explain →
+  Elaborate×3 → Evaluate). عدّاد المحطات المحقون من template.js يشتقّ
+  مقامه من عدد النقاط فيقول «من 7».
+
+  ترتيب الوسوم: وسوم shared/ الستّة تسبق سكربتات الدرس الداخلية —
+  الدرس ينادي window.Quiz لحظة التحميل، فوجب أن يكون template.js
+  محمّلًا قبله. لا تنسخ ترتيب درس 01 (هو لا ينادي Quiz).
+
+  قرارات بصرية حاكمة في هذا الدرس:
+    • النقاط (●) والصلبان (×) كلاهما تركوازي، والفرق في الشكل لا في
+      اللون — فيبقى المرجاني محجوزًا للزوج المشترك وحده، وهو قلب الدرس.
+    • عدّادا المحطة 2 لا يظهران أثناء البناء: ظهورهما يكتب «8» على
+      الشاشة قبل أن يُسأل الطالب عنها. يظهران بعد إجابته مع حركة
+      العدّ المزدوج — تأكيدٌ لاستنتاجه لا مصدرٌ له.
+    • الاهتزاز محجوز لما هو «ممنوع» (الهيدروجين الرابع في الأمونيا).
+      حالة الأكسجين بعد الزوج الأول ناقصة لا ممنوعة، فلا اهتزاز فيها.
+  ═══════════════════════════════════════════════════════════════════
+-->
+<style>
+  /* ============ منع سحب التحديث من تصفير XP ============ */
+  html, body{ overscroll-behavior-y:contain; }
+
+  /* ============ مسرح الجزيء ============
+     أنماط خاصة بمادة هذا الدرس (تمثيل النقاط والصلبان)، لا هيكلًا
+     عامًا — فلا تُنقَل إلى template.css. */
+  .stage-wrap{
+    width:100%;
+    max-width:920px;
+    margin:0 auto;
+    background:var(--navy-darker);
+    border:1px solid rgba(20,200,168,0.15);
+    border-radius:22px;
+    padding:10px;
+  }
+  svg.stage{
+    width:100%;
+    height:auto;
+    display:block;
+    -webkit-tap-highlight-color:transparent;
+  }
+  /* النواة تحمل رمز العنصر لا رقمه: الرمز داخل الدائرة يقول للطالب
+     لمن هذه الذرّة بنظرة، كما في رسم الكتاب. */
+  .nucleus{fill:#2a3550; stroke:var(--turquoise-soft); stroke-width:1.5;}
+  .nucleus-label{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:17px;
+    fill:var(--ink);
+    pointer-events:none;
+    user-select:none;
+  }
+  .element-label{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:22px;
+    fill:var(--ink);
+    pointer-events:none;
+    user-select:none;
+  }
+  .orbit{ fill:none; stroke-dasharray:2 5; }
+  .orbit-shell-0{ stroke:rgba(20,200,168,.22); stroke-width:1.3; }
+  .orbit-shell-1{ stroke:rgba(20,200,168,.52); stroke-width:1.5; }
+  .orbit-shell-2{ stroke:rgba(20,200,168,.88); stroke-width:1.9; }
+  .orbit-shell-3{ stroke:rgba(20,200,168,1); stroke-width:2.2; }
+
+  /* ============ علامة الإلكترون: نقطة أو صليب ============
+     الصليب خطّان مرسومان (path) لا حرف «×» نصّي: بعض الخطوط العربية
+     لا تحمل الرمز بشكل موحّد، وسياق RTL يزيح النصّ داخل SVG. الخطّان
+     مستقلّان عن الخطّ تمامًا وعن اتجاه الكتابة.
+
+     العلامة داخل مجموعتين: .epos تحمل الموضع (transform) فتُحرَّك،
+     و.emark تحمل الشكل — فلا يتصادم تحريك الموضع مع أي تحويل آخر. */
+  .epos{ transition:none; }
+  .edot{ fill:var(--turquoise); }
+  .ecross{
+    fill:none;
+    stroke:var(--turquoise);
+    stroke-width:2.6;
+    stroke-linecap:round;
+  }
+  /* المرجاني للزوج المشترك وحده — وهو التمييز الوحيد الذي يحمله اللون
+     في هذا الدرس. UDL: يرافقه انتقال الموضع إلى المنتصف، فإشارتان. */
+  .epos.shared .edot{ fill:var(--coral); }
+  .epos.shared .ecross{ stroke:var(--coral); }
+
+  .ehalo{ fill:none; }
+  .epos.clickable{ cursor:pointer; touch-action:none; }
+  .epos.clickable .ehalo{ fill:rgba(20,200,168,.16); }
+  .epos.clickable:hover .ehalo{ fill:rgba(20,200,168,.32); }
+  .epos.clickable:focus-visible{ outline:2px solid var(--coral); outline-offset:3px; }
+  @keyframes haloPulse{
+    0%,100%{ r:13; opacity:.9; }
+    50%{ r:16; opacity:.45; }
+  }
+  .epos.clickable .ehalo{ animation:haloPulse 1.7s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce){
+    .epos.clickable .ehalo{ animation:none; }
+  }
+
+  /* ============ ذرّة قابلة للنقر (الهيدروجين في المحطة 6) ============ */
+  .h-atom{ cursor:pointer; touch-action:none; }
+  .h-atom .h-ring{ fill:none; stroke:rgba(20,200,168,.6); stroke-width:1.6; stroke-dasharray:2 5; }
+  .h-atom .nucleus{ fill:#2a3550; }
+  .h-atom .nucleus-label{ font-size:14px; }
+  .h-atom.bonded{ cursor:default; }
+  .h-atom.dim .h-ring{ stroke:rgba(159,176,201,.3); }
+  .h-atom.dim .element-label{ fill:var(--ink-dim); }
+  @keyframes shakeInPlace{
+    0%,100%{ transform:translateX(0); }
+    20%{ transform:translateX(-5px); }
+    40%{ transform:translateX(5px); }
+    60%{ transform:translateX(-3px); }
+    80%{ transform:translateX(3px); }
+  }
+  .h-atom.shaking{ animation:shakeInPlace .42s ease-in-out; }
+  @media (prefers-reduced-motion: reduce){
+    .h-atom.shaking{ animation:none; }
+  }
+
+  /* ============ عدّاد إلكترونات المستوى الخارجي ============
+     يظهر في المحطة 2 بعد إجابة سؤال العدّ لا قبله، وفي المحطة 4 حيًّا
+     (القاعدة صارت معلومة عند الطالب هناك، فلا إفشاء). */
+  .ecount{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:19px;
+    fill:var(--turquoise);
+    pointer-events:none;
+    user-select:none;
+    opacity:0;
+    transition:opacity .4s ease;
+  }
+  .ecount.show{ opacity:1; }
+  .ecount-cap{
+    font-family:'Tajawal', sans-serif;
+    font-size:11px;
+    fill:var(--ink-dim);
+    pointer-events:none;
+    user-select:none;
+    opacity:0;
+    transition:opacity .4s ease;
+  }
+  .ecount-cap.show{ opacity:1; }
+  /* طوق العدّ المزدوج: يحيط بمستوى ذرّة واحدة ويشمل الزوج المشترك
+     معها، ثم ينتقل إلى الذرّة الأخرى ويشمل الزوج نفسه. هذه هي الحركة
+     التي لا يملكها القلم. */
+  .count-lasso{
+    fill:none;
+    stroke:var(--coral);
+    stroke-width:2.6;
+    stroke-dasharray:6 4;
+    opacity:0;
+    transition:opacity .35s ease;
+  }
+  .count-lasso.show{ opacity:1; }
+
+  .formula-label{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:26px;
+    fill:var(--turquoise);
+    pointer-events:none;
+    user-select:none;
+    opacity:0;
+    transition:opacity .6s ease;
+  }
+  .formula-label.show{ opacity:1; }
+
+  /* ============ نموذج الكرات والعصيّ ============ */
+  .ball{ stroke:rgba(255,255,255,.14); stroke-width:1; }
+  .ball-c{ fill:#5a6b86; }
+  .ball-n{ fill:#4a7fb5; }
+  .ball-o{ fill:#c0533a; }
+  .ball-h{ fill:#dfe6ef; }
+  .ball-cl{ fill:#14C8A8; }
+  .stick{ stroke:#9fb0c9; stroke-width:9; stroke-linecap:round; }
+  .ball-label{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:15px;
+    fill:#131c30;
+    pointer-events:none;
+    user-select:none;
+  }
+  .ball-label.on-dark{ fill:var(--ink); }
+
+  /* ============ نصوص وبطاقات ============ */
+  .dose{
+    max-width:920px;
+    margin:16px auto 0;
+    font-size:.95rem;
+    line-height:2;
+  }
+  .sub-h{
+    max-width:920px;
+    margin:30px auto 12px;
+    font-family:'Cairo', sans-serif;
+    font-size:1rem;
+    font-weight:700;
+    color:var(--turquoise);
+  }
+  .stage-note{
+    max-width:920px;
+    margin:12px auto 0;
+    font-size:.92rem;
+    color:var(--ink-dim);
+    line-height:1.9;
+  }
+  .stage-note.act{
+    color:var(--ink);
+    border-inline-start:3px solid var(--turquoise);
+    padding-inline-start:12px;
+  }
+  .impasse-msg{
+    max-width:920px;
+    margin:14px auto 0;
+    border-inline-start:3px solid var(--coral);
+    padding-inline-start:12px;
+    font-size:.92rem;
+    line-height:1.9;
+    color:var(--ink);
+  }
+  .success-tag{
+    margin-top:18px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(20,200,168,.08);
+    border:1px solid var(--turquoise-soft);
+    color:var(--turquoise);
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:.9rem;
+    padding:9px 20px;
+    border-radius:999px;
+    opacity:0;
+    transform:translateY(6px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .success-tag.show{opacity:1; transform:translateY(0);}
+
+  .explore-q{
+    font-weight:700;
+    color:var(--ink);
+    margin:0 0 12px;
+    font-size:clamp(14px,2.4vw,16px);
+  }
+  .explore-step{
+    margin-top:26px;
+    padding-top:20px;
+    border-top:1px dashed var(--border);
+  }
+  .explore-step:first-of-type{ border-top:none; padding-top:0; }
+  .explore-answer-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .explore-input{
+    flex:1 1 140px;
+    min-width:100px;
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:11px 20px;
+    color:var(--ink);
+    font-family:'Tajawal', sans-serif;
+    font-size:15px;
+    text-align:center;
+  }
+  .explore-input::placeholder{ color:var(--ink-dim); opacity:.55; font-size:.86em; }
+  .explore-input:focus{
+    outline:none;
+    border-color:var(--turquoise);
+    box-shadow:0 0 0 3px var(--turquoise-faint);
+  }
+  .explore-input:disabled{ opacity:.7; }
+
+  .given-row{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 12px;}
+  .given-chip{
+    font-size:.8rem;
+    color:var(--ink-dim);
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(20,200,168,.18);
+    border-radius:999px;
+    padding:5px 12px;
+  }
+  .given-chip b{color:var(--turquoise); font-family:'Cairo', sans-serif; font-weight:800;}
+
+  .terms-box{
+    margin:18px 0 4px;
+    border:1px solid var(--turquoise-soft);
+    border-radius:14px;
+    background:var(--turquoise-faint);
+    padding:0 16px;
+  }
+  .terms-box > summary{
+    cursor:pointer;
+    list-style:none;
+    padding:12px 0;
+    color:var(--turquoise);
+    font-weight:700;
+    font-size:.9rem;
+  }
+  .terms-box > summary::-webkit-details-marker{display:none;}
+  .terms-box > summary::after{content:' ▾'; font-size:.8em;}
+  .terms-box[open] > summary::after{content:' ▴';}
+  .terms-box .facts-grid{margin:0 0 16px;}
+
+  /* بطاقة التسمية: تظهر بعد البناء لا قبله — التسمية تلحق البناء. */
+  .name-card{
+    max-width:920px;
+    margin:16px auto 0;
+    border:1px dashed var(--turquoise-soft);
+    border-radius:14px;
+    padding:12px 16px;
+    font-size:.92rem;
+    line-height:1.9;
+    background:rgba(20,200,168,.05);
+  }
+  .name-card b{color:var(--turquoise); font-weight:800;}
+
+  /* ============ جدول المحطة 5 ============
+     الأعمدة الثلاثة الأولى معروضة جاهزة، والطالب يملأ عمود «عدد
+     الروابط» وحده: هو العمود الذي يقود إلى النمط، والباقي مقدّمات
+     نسخُها لا يُعلّم شيئًا. */
+  .bond-table{
+    width:100%;
+    max-width:920px;
+    margin:18px auto 0;
+    border-collapse:collapse;
+    font-size:.88rem;
+  }
+  .bond-table th, .bond-table td{
+    border:1px solid rgba(20,200,168,.16);
+    padding:9px 8px;
+    text-align:center;
+  }
+  .bond-table th{
+    background:rgba(20,200,168,.08);
+    color:var(--turquoise);
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:.82rem;
+  }
+  .bond-table td[dir="ltr"]{ font-family:'Cairo', sans-serif; font-weight:700; }
+  .bond-table .slot{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:62px;
+    min-height:36px;
+  }
+  /* عمود مغطًّى: يبقى في الوسم ويظهر بعد اكتمال ما قبله */
+  .bond-table td .veiled{ font-family:'Cairo', sans-serif; font-weight:800; color:var(--turquoise); }
+
+  .h-note{
+    max-width:920px;
+    margin:12px auto 0;
+    font-size:.85rem;
+    color:var(--ink-dim);
+    border-inline-start:3px solid var(--turquoise-soft);
+    padding-inline-start:12px;
+    line-height:1.9;
+  }
+  .pool-label{
+    max-width:920px;
+    margin:18px auto 8px;
+    font-size:.85rem;
+    color:var(--ink-dim);
+  }
+
+  /* ============ نماذج المقارنة في سؤال الشكل ============ */
+  .repr-figs{display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin:14px 0 10px;}
+  .repr-fig{
+    flex:0 1 150px;
+    background:var(--navy-darker);
+    border:1px solid rgba(20,200,168,.15);
+    border-radius:16px;
+    padding:8px;
+  }
+  .repr-fig svg{width:100%; height:auto; display:block;}
+  .repr-cap{
+    text-align:center;
+    font-size:.8rem;
+    color:var(--ink-dim);
+    margin:6px 0 0;
+  }
+
+  /* ============ رسوم خيارات سؤال التقييم 2 ============
+     أربعة رسوم داخل خيارات الاختيار: المحرّك لا يبالي بمحتوى الوسم،
+     لكن تنسيق الخيار في template.css صفٌّ نصّي — فتُبنى شبكة هنا. */
+  .quiz-options.fig-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+    gap:10px;
+  }
+  .quiz-options.fig-grid .quiz-option{
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    padding:12px 10px;
+  }
+  .quiz-options.fig-grid .quiz-option svg{width:100%; height:auto; display:block; max-width:140px;}
+  .opt-letter{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    color:var(--turquoise);
+    font-size:.85rem;
+  }
+
+  /* ============ التقييم ============ */
+  .review-strip{
+    font-size:.85rem;
+    color:var(--ink-dim);
+    line-height:2.1;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(20,200,168,.14);
+    border-radius:14px;
+    padding:10px 16px;
+    margin:16px 0 6px;
+  }
+  .review-strip a{color:var(--turquoise); text-decoration:none; font-weight:700;}
+  .review-strip a:hover{text-decoration:underline;}
+
+  .name-gate{
+    margin-top:20px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(20,200,168,.2);
+    border-radius:16px;
+    padding:16px 18px;
+  }
+  .name-gate label{
+    display:block;
+    font-size:.9rem;
+    color:var(--ink);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .name-gate .gate-note{
+    font-size:.78rem;
+    color:var(--ink-dim);
+    margin:10px 0 0;
+  }
+  .eval-q{
+    border-top:1px solid rgba(255,255,255,.06);
+    margin-top:26px;
+    padding-top:22px;
+  }
+  .eval-q.first{border-top:none; margin-top:18px; padding-top:0;}
+  .q-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    background:rgba(20,200,168,.12);
+    border:1px solid var(--turquoise-soft);
+    color:var(--turquoise);
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:.8rem;
+    margin-inline-end:8px;
+    flex-shrink:0;
+  }
+  .eval-summary{
+    margin-top:30px;
+    background:rgba(20,200,168,.06);
+    border:1px solid var(--turquoise-soft);
+    border-radius:18px;
+    padding:20px 18px;
+    text-align:center;
+  }
+  #certTriggerSlot{display:flex; justify-content:center; margin-top:18px;}
+
+  .facts-grid.single-card{
+    grid-template-columns:none;
+    max-width:280px;
+    margin:16px auto;
+  }
+
+  /* تبديل الرسم/النموذج: صنف صريح لا سمة hidden — تجاوز [hidden]
+     يحتاج !important، والصنف أوضح داخل SVG. */
+  .is-off{ display:none !important; }
+
+  html{scroll-behavior:smooth;}
+  .station{ scroll-margin-top:14px; }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+  }
+</style>
+<body>
+
+<nav class="crumb">
+  <a href="../../index.html">الرئيسية</a> ›
+  <a href="../index.html">الفصل الأول</a> ›
+  <a href="index.html">الوحدة 1</a> ›
+  الدرس 4
+</nav>
+
+<div class="progress-track">
+  <div class="xp-counter" id="xpCounter">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+    <span id="xpValue">0</span>
+    <span class="xp-label">XP</span>
+  </div>
+  <!-- النقاط مخفيّة بصريًا في template.css ولا تُحذف من الوسم: منها
+       يُشتقّ مقام عدّاد المحطات، وبها تُعلَّق نغمة الوصول. -->
+  <div class="progress-dot" data-target="station-1"></div>
+  <div class="progress-dot" data-target="station-2"></div>
+  <div class="progress-dot" data-target="station-3"></div>
+  <div class="progress-dot" data-target="station-4"></div>
+  <div class="progress-dot" data-target="station-5"></div>
+  <div class="progress-dot" data-target="station-6"></div>
+  <div class="progress-dot" data-target="station-7"></div>
+</div>
+
+<header class="hero">
+  <div class="eyebrow">الوحدة 1 · الدرس 4</div>
+  <h1>كيف تتكوّن الروابط التساهمية؟</h1>
+  <div class="objectives-box">
+    <h3>في نهاية هذا الدرس سوف تتمكن من أن:</h3>
+    <ul>
+      <li>تصف كيف تتكوّن الرابطة التساهمية بين ذرّتين لافلزّيتين.</li>
+      <li>تميّز بين الرابطة الأحادية والثنائية والثلاثية.</li>
+      <li>تحدّد عدد الروابط التي يكوّنها العنصر من إلكترونات مستواه الخارجي.</li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===================== محطة 1: التنشيط — تنبّؤ ===================== -->
+  <section class="station" id="station-1">
+    <div class="station-label">المحطة الأولى</div>
+    <h2>أزمة في عالم الكلور</h2>
+    <p class="station-tagline">توقّع كيف تحلّ ذرّتا الكلور أزمتهما.</p>
+
+    <!-- مشهد ساكن: الذرّتان متباعدتان بلا تفاعل. الرسم هنا يهيّئ
+         المشهد ولا يُسأل عنه — والسؤال تنبّؤ لا يُصحَّح. -->
+    <div class="stage-wrap">
+      <svg id="stage1" class="stage" viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ذرّتا كلور متباعدتان، كلٌّ منهما بثلاثة مستويات طاقة"></svg>
+    </div>
+
+    <p class="dose">تخيّل أن لدينا ذرّتَي كلور تقتربان من بعضهما… كلتاهما من اللافلزات، وكلٌّ منهما تحتاج بشدّة إلى إلكترون واحد فقط للوصول إلى حالة أقرب غاز نبيل كي تستقرّ.</p>
+    <p class="dose">لا إحدى الذرّتين مستعدّة للتنازل عن إلكترونها وفقدانه، وفي نفس الوقت كلتاهما بحاجة للكسب!</p>
+
+    <div class="explore-step">
+      <p class="explore-q">برأيك… كيف يمكن لذرّتَي الكلور حلّ هذه الأزمة والارتباط معًا لتكوين جزيء غاز الكلور <span dir="ltr">(Cl<sub>2</sub>)</span>؟</p>
+      <!-- تنبّؤ لا يُصحَّح: لا قيمة correct في المجموعة، والمعالج خاصّ
+           بالدرس. المحرّك المشترك مبنيّ على وجود إجابة صحيحة، وهذا
+           السؤال بلا صواب وخطأ عمدًا. -->
+      <div class="quiz-options" id="predictOptions">
+        <label class="quiz-option"><input type="radio" name="l4predict" value="p1">ستُجبر إحداهما الأخرى على التخلّي عن إلكتروناتها (فقد وكسب)</label>
+        <label class="quiz-option"><input type="radio" name="l4predict" value="p2">ستنتظر كل ذرّة إلكترونًا حرًّا يأتيها من الهواء</label>
+        <label class="quiz-option"><input type="radio" name="l4predict" value="p3">ستتفاوضان على مشاركة زوج من الإلكترونات بينهما</label>
+        <label class="quiz-option"><input type="radio" name="l4predict" value="p4">ستتنافران ولن يحدث أي ارتباط</label>
+      </div>
+      <p class="explore-feedback" id="fb-predict" hidden></p>
+    </div>
+
+    <div id="predictDone" hidden>
+      <div class="success-tag show">✓ سُجِّل توقّعك</div>
+      <div class="station-handoff">
+        <a class="station-next" href="#station-2">شاهد ما يحدث ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 2: بناء جزيء الكلور ===================== -->
+  <section class="station" id="station-2">
+    <div class="station-label">المحطة الثانية</div>
+    <h2>بناء جزيء الكلور</h2>
+    <p class="station-tagline">لاحِظ التوزيع الإلكتروني لذرّة الكلور.</p>
+
+    <div class="given-row">
+      <span class="given-chip"><b dir="ltr">Cl</b> — العدد الذرّي: 17</span>
+    </div>
+
+    <div class="explore-step">
+      <p class="explore-q">استنادًا إلى التوزيع الإلكتروني لذرّة الكلور، كم عدد إلكترونات المستوى الخارجي؟</p>
+      <div class="quiz-options" data-q="cl-valence">
+        <label class="quiz-option"><input type="radio" name="clValence" value="w1">5</label>
+        <label class="quiz-option"><input type="radio" name="clValence" value="w2">8</label>
+        <label class="quiz-option"><input type="radio" name="clValence" value="correct">7</label>
+        <label class="quiz-option"><input type="radio" name="clValence" value="w3">17</label>
+      </div>
+      <p class="explore-feedback" id="fb-cl-valence" hidden></p>
+    </div>
+
+    <div class="explore-step" id="clNeedsStep" hidden>
+      <p class="explore-q">كم إلكترونًا تحتاج ذرّة الكلور ليكتمل مستواها الخارجي بثمانية إلكترونات فتستقرّ؟</p>
+      <div class="quiz-options" data-q="cl-needs">
+        <label class="quiz-option"><input type="radio" name="clNeeds" value="correct">1</label>
+        <label class="quiz-option"><input type="radio" name="clNeeds" value="w1">2</label>
+        <label class="quiz-option"><input type="radio" name="clNeeds" value="w2">7</label>
+        <label class="quiz-option"><input type="radio" name="clNeeds" value="w3">لا ينقصها شيء</label>
+      </div>
+      <p class="explore-feedback" id="fb-cl-needs" hidden></p>
+    </div>
+
+    <div id="clBuildBlock" hidden>
+      <p class="sub-h">ابنِ الزوج المشترك</p>
+      <p class="stage-note act" id="clGuide">انقر إلكترونًا واحدًا من المستوى الخارجي في كل ذرّة لتنقله إلى المنتصف.</p>
+      <div class="stage-wrap">
+        <svg id="stage2" class="stage" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ذرّتا كلور متجاورتان، إلكترونات المستوى الخارجي قابلة للنقر"></svg>
+      </div>
+      <p class="stage-note" id="clMsg" hidden></p>
+    </div>
+
+    <div class="explore-step" id="clCountStep" hidden>
+      <p class="explore-q">بعد تشكّل الزوج المشترك، كم أصبح عدد الإلكترونات المحسوبة للمستوى الخارجي للذرّة اليمنى؟</p>
+      <div class="quiz-options" data-q="cl-count">
+        <label class="quiz-option"><input type="radio" name="clCount" value="w1">6</label>
+        <label class="quiz-option"><input type="radio" name="clCount" value="correct">8</label>
+        <label class="quiz-option"><input type="radio" name="clCount" value="w2">7</label>
+        <label class="quiz-option"><input type="radio" name="clCount" value="w3">14</label>
+      </div>
+      <p class="explore-feedback" id="fb-cl-count" hidden></p>
+      <p class="dose" id="clCountLine" hidden>الإلكترونان في المنتصف محسوبان للذرّتين معًا.</p>
+    </div>
+
+    <div class="explore-step" id="whyShareStep" hidden>
+      <p class="explore-q">لماذا لم يحدث انتقال كلّي (فقد واكتساب) للإلكترونات بين ذرّتَي الكلور كما حدث في مركّب كلوريد الصوديوم؟</p>
+      <div class="quiz-options" data-q="why-share">
+        <label class="quiz-option"><input type="radio" name="whyShare" value="w1">لأن الذرّتين متماثلتان، والذرّات المتماثلة لا تتبادل الإلكترونات</label>
+        <label class="quiz-option"><input type="radio" name="whyShare" value="w2">لأن الكلور لا يكوّن أيونات في أي مركّب من مركّباته</label>
+        <label class="quiz-option"><input type="radio" name="whyShare" value="w3">لأن إلكترونات المستوى الخارجي مثبّتة في مواضعها ولا تنتقل</label>
+        <label class="quiz-option"><input type="radio" name="whyShare" value="correct">لأن الذرّتين لافلزّيتان، وكلتاهما تحتاج إلى كسب إلكترون ولا تميل إلى فقده</label>
+      </div>
+      <p class="explore-feedback" id="fb-why-share" hidden></p>
+    </div>
+
+    <div id="st2Done" hidden>
+      <div class="success-tag show">✓ أكملتَ المحطة</div>
+      <div class="station-handoff">
+        <a class="station-next" href="#station-3">مصطلحات الرابطة التساهمية ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 3: المصطلحات ===================== -->
+  <section class="station" id="station-3">
+    <div class="station-label">المحطة الثالثة</div>
+    <h2>مصطلحات الرابطة التساهمية</h2>
+    <p class="station-tagline">اقرأ المصطلحات، ثم طبّقها على مركّبات جديدة.</p>
+
+    <details class="terms-box" open>
+      <summary>صندوق المصطلحات</summary>
+      <div class="facts-grid">
+        <div class="fact-card">
+          <div class="term">الرابطة التساهمية</div>
+          <p>رابطة كيميائية بين ذرّتين لافلزّيتين، تتشاركان فيها الإلكترونات في مستوى الطاقة الخارجي، لتصل كل ذرّة إلى توزيع إلكتروني مشابه لأقرب غاز نبيل.</p>
+        </div>
+        <div class="fact-card">
+          <div class="term">زوج الإلكترونات المشترك</div>
+          <p>إلكترونان تتشاركهما الذرّتان، ويُحسبان لكلتيهما.</p>
+        </div>
+        <div class="fact-card">
+          <div class="term">الرابطة التساهمية الأحادية</div>
+          <p>رابطة تتشارك فيها الذرّتان زوجًا واحدًا من الإلكترونات.</p>
+        </div>
+      </div>
+    </details>
+
+    <p class="dose">ذرّتا الكلور المرتبطتان تكوّنان جزيئًا، صيغته <span dir="ltr">Cl<sub>2</sub></span>.</p>
+
+    <div class="explore-step">
+      <p class="explore-q">أيّ المركّبات الآتية روابطه تساهمية؟</p>
+      <div class="quiz-options" data-q="identify">
+        <label class="quiz-option"><input type="radio" name="identify" value="w1"><span dir="ltr">MgO</span></label>
+        <label class="quiz-option"><input type="radio" name="identify" value="w2"><span dir="ltr">KCl</span></label>
+        <label class="quiz-option"><input type="radio" name="identify" value="correct"><span dir="ltr">Br<sub>2</sub></span></label>
+        <label class="quiz-option"><input type="radio" name="identify" value="w3"><span dir="ltr">CaO</span></label>
+      </div>
+      <p class="explore-feedback" id="fb-identify" hidden></p>
+    </div>
+
+    <div id="st3Done" hidden>
+      <div class="success-tag show">✓ أكملتَ المحطة</div>
+      <div class="station-handoff">
+        <a class="station-next" href="#station-4">ذرّة ينقصها إلكترونان ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 4: أنواع الروابط التساهمية ===================== -->
+  <section class="station" id="station-4">
+    <div class="station-label">المحطة الرابعة</div>
+    <h2>أنواع الروابط التساهمية</h2>
+    <p class="station-tagline">تعرَّف على أنواع الروابط التساهمية.</p>
+
+    <div class="given-row">
+      <span class="given-chip"><b dir="ltr">O</b> — العدد الذرّي: 8</span>
+    </div>
+
+    <div class="explore-step">
+      <p class="explore-q">وزّع إلكترونات ذرّة الأكسجين. كم إلكترونًا تحتاج ليكتمل مستواها الخارجي بثمانية إلكترونات فتستقرّ؟</p>
+      <div class="quiz-options" data-q="o-needs">
+        <label class="quiz-option"><input type="radio" name="oNeeds" value="w1">6</label>
+        <label class="quiz-option"><input type="radio" name="oNeeds" value="w2">1</label>
+        <label class="quiz-option"><input type="radio" name="oNeeds" value="correct">2</label>
+        <label class="quiz-option"><input type="radio" name="oNeeds" value="w3">8</label>
+      </div>
+      <p class="explore-feedback" id="fb-o-needs" hidden></p>
+    </div>
+
+    <div id="o2Block" hidden>
+      <p class="sub-h">جزيء الأكسجين</p>
+      <p class="stage-note act">كوّن زوجًا مشتركًا بين ذرّتَي الأكسجين.</p>
+      <div class="stage-wrap">
+        <svg id="stage4o" class="stage" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ذرّتا أكسجين متجاورتان"></svg>
+      </div>
+      <p class="impasse-msg" id="o2Impasse" hidden></p>
+      <p class="stage-note" id="o2Msg" hidden></p>
+      <div class="name-card" id="o2Name" hidden>
+        <b>الرابطة التساهمية الثنائية:</b> رابطة تتشارك فيها الذرّتان زوجين من الإلكترونات.
+      </div>
+    </div>
+
+    <!-- سؤال مقارنة لا سؤال عدّ: وحدة القياس في الكتاب «زوج» لا
+         «إلكترون»، والمقارنة تمنع أن يُجاب بإعادة قراءة بطاقة
+         التسمية التي فوقه. -->
+    <div class="explore-step" id="cmpStep" hidden>
+      <p class="explore-q">قارن بين جزيء الكلور وجزيء الأكسجين. ما الذي اختلف بينهما؟</p>
+      <div class="quiz-options" data-q="cmp-pairs">
+        <label class="quiz-option"><input type="radio" name="cmpPairs" value="w1">عدد الذرّات في الجزيء</label>
+        <label class="quiz-option"><input type="radio" name="cmpPairs" value="correct">عدد الأزواج المشتركة بين الذرّتين</label>
+        <label class="quiz-option"><input type="radio" name="cmpPairs" value="w2">عدد مستويات الطاقة في كل ذرّة</label>
+        <label class="quiz-option"><input type="radio" name="cmpPairs" value="w3">نوع الذرّتين: فلز ولافلز</label>
+      </div>
+      <p class="explore-feedback" id="fb-cmp-pairs" hidden></p>
+    </div>
+
+    <div id="n2Block" hidden>
+      <p class="sub-h">جزيء النيتروجين</p>
+      <div class="given-row">
+        <span class="given-chip"><b dir="ltr">N</b> — العدد الذرّي: 7</span>
+      </div>
+      <p class="stage-note act">ذرّتا نيتروجين. كوّن الأزواج المشتركة حتى يكتمل المستوى الخارجي للذرّتين.</p>
+      <div class="stage-wrap">
+        <svg id="stage4n" class="stage" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ذرّتا نيتروجين متجاورتان"></svg>
+      </div>
+      <p class="stage-note" id="n2Msg" hidden></p>
+      <div class="name-card" id="n2Name" hidden>
+        <b>الرابطة التساهمية الثلاثية:</b> رابطة تتشارك فيها الذرّتان ثلاثة أزواج من الإلكترونات.
+      </div>
+    </div>
+
+    <!-- النماذج تظهر أسفل الزرّ لا في مسرح بعيد عن العين: سؤال العصا
+         يطلب مقارنة بين الأكسجين والنيتروجين، والمقارنة لا تقع إن كان
+         النموذجان في مسرحين متباعدين ويحتاج الطالب صعودًا وهبوطًا. -->
+    <div id="stickBlock" hidden>
+      <p class="sub-h">نموذج الكرات والعصيّ</p>
+      <p class="stage-note">هناك طريقة أخرى لتمثيل الجزيئين نفسيهما.</p>
+      <div style="text-align:center; margin-top:12px;">
+        <button type="button" class="btn" id="showModels4">اعرض نموذجَي الأكسجين والنيتروجين ↓</button>
+      </div>
+
+      <div id="models4" hidden>
+        <div class="repr-figs">
+          <div class="repr-fig">
+            <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نموذج الأكسجين: ذرّتان بينهما عصاتان">
+              <line class="stick" x1="46" y1="54" x2="94" y2="54"></line>
+              <line class="stick" x1="46" y1="66" x2="94" y2="66"></line>
+              <circle class="ball ball-o" cx="46" cy="60" r="22"></circle>
+              <circle class="ball ball-o" cx="94" cy="60" r="22"></circle>
+              <text class="ball-label on-dark" x="46" y="66" text-anchor="middle" direction="ltr">O</text>
+              <text class="ball-label on-dark" x="94" y="66" text-anchor="middle" direction="ltr">O</text>
+            </svg>
+            <p class="repr-cap"><span dir="ltr">O<sub>2</sub></span></p>
+          </div>
+          <div class="repr-fig">
+            <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نموذج النيتروجين: ذرّتان بينهما ثلاث عصيّ">
+              <line class="stick" x1="46" y1="48" x2="94" y2="48"></line>
+              <line class="stick" x1="46" y1="60" x2="94" y2="60"></line>
+              <line class="stick" x1="46" y1="72" x2="94" y2="72"></line>
+              <circle class="ball ball-n" cx="46" cy="60" r="22"></circle>
+              <circle class="ball ball-n" cx="94" cy="60" r="22"></circle>
+              <text class="ball-label on-dark" x="46" y="66" text-anchor="middle" direction="ltr">N</text>
+              <text class="ball-label on-dark" x="94" y="66" text-anchor="middle" direction="ltr">N</text>
+            </svg>
+            <p class="repr-cap"><span dir="ltr">N<sub>2</sub></span></p>
+          </div>
+        </div>
+
+        <div class="explore-step">
+          <p class="explore-q">اختفت النقاط في النموذج، وظهرت عصيّ. ماذا تمثّل العصا الواحدة؟</p>
+          <div class="quiz-options" data-q="stick">
+            <label class="quiz-option"><input type="radio" name="stickQ" value="w1">قضيبًا يمسك الذرّتين</label>
+            <label class="quiz-option"><input type="radio" name="stickQ" value="correct">زوجًا مشتركًا من الإلكترونات</label>
+            <label class="quiz-option"><input type="radio" name="stickQ" value="w2">إلكترونًا واحدًا مشتركًا</label>
+            <label class="quiz-option"><input type="radio" name="stickQ" value="w3">المسافة بين نواتَي الذرّتين</label>
+          </div>
+          <p class="explore-feedback" id="fb-stick" hidden></p>
+          <p class="dose" id="stickLine" hidden>النموذج يخفي الإلكترونات ويُظهر شكل الجزيء.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="st4Done" hidden>
+      <div class="success-tag show">✓ أكملتَ المحطة</div>
+      <div class="station-handoff">
+        <a class="station-next" href="#station-5">ابنِ جزيئات أخرى ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 5: بناء جزيئات العناصر الأربعة =====================
+       الجزيئات الأربعة كلها مبنيّة بيد الطالب، لأن جدول المحطة
+       التالية يُملأ ممّا بناه لا من قاعدة يحفظها.
+       ===================================================================== -->
+  <section class="station" id="station-5">
+    <div class="station-label">المحطة الخامسة</div>
+    <h2>ابنِ جزيئاتك</h2>
+    <p class="station-tagline">أربعة جزيئات، وكلٌّ منها يكشف شيئًا مختلفًا.</p>
+
+    <p class="sub-h">جزيء الهيدروجين</p>
+    <div class="given-row">
+      <span class="given-chip"><b dir="ltr">H</b> — العدد الذرّي: 1</span>
+    </div>
+    <p class="stage-note act">ذرّتا هيدروجين، لكل واحدة مستوى طاقة واحد فيه إلكترون. كوّن الزوج المشترك بينهما.</p>
+    <div class="stage-wrap">
+      <svg id="stage5h" class="stage" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ذرّتا هيدروجين متجاورتان"></svg>
+    </div>
+    <p class="stage-note" id="h2Msg" hidden></p>
+    <div class="name-card" id="h2Name" hidden>
+      مستوى الطاقة الأول يتّسع لإلكترونين اثنين فقط. فالهيدروجين يكتمل بإلكترونين لا بثمانية.
+    </div>
+
+    <div id="ch4Block" hidden>
+      <p class="sub-h">جزيء الميثان</p>
+      <div class="given-row">
+        <span class="given-chip"><b dir="ltr">C</b> — العدد الذرّي: 6</span>
+      </div>
+      <p class="stage-note act">ذرّة كربون وأربع ذرّات هيدروجين. اربط كل ذرّة هيدروجين بذرّة الكربون.</p>
+      <div class="stage-wrap">
+        <svg id="stage5c" class="stage" viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ذرّة كربون وأربع ذرّات هيدروجين في صفّ أسفل المشهد"></svg>
+      </div>
+      <p class="stage-note" id="ch4Msg" hidden></p>
+    </div>
+
+    <div id="nh3Block" hidden>
+      <p class="sub-h">جزيء الأمونيا</p>
+      <div class="given-row">
+        <span class="given-chip"><b dir="ltr">N</b> — العدد الذرّي: 7</span>
+      </div>
+      <p class="stage-note act">ذرّة نيتروجين وأربع ذرّات هيدروجين. اربط ذرّات الهيدروجين بذرّة النيتروجين.</p>
+      <div class="stage-wrap">
+        <svg id="stage5n" class="stage" viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ذرّة نيتروجين وأربع ذرّات هيدروجين"></svg>
+      </div>
+      <p class="impasse-msg" id="nh3Impasse" hidden></p>
+      <p class="stage-note" id="nh3Msg" hidden></p>
+    </div>
+
+    <div id="h2oBlock" hidden>
+      <p class="sub-h">جزيء الماء</p>
+      <div class="given-row">
+        <span class="given-chip"><b dir="ltr">O</b> — العدد الذرّي: 8</span>
+      </div>
+      <p class="stage-note act">الأكسجين كوّن رابطة ثنائية مع ذرّة أكسجين. اربطه الآن بذرّتَي هيدروجين.</p>
+      <div class="stage-wrap">
+        <svg id="stage5w" class="stage" viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ذرّة أكسجين وذرّتا هيدروجين"></svg>
+      </div>
+      <p class="stage-note" id="h2oMsg" hidden></p>
+    </div>
+
+    <div class="explore-step" id="sameNumStep" hidden>
+      <p class="explore-q">كوّن النيتروجين ثلاث روابط في <span dir="ltr">N<sub>2</sub></span>، وثلاث روابط في <span dir="ltr">NH<sub>3</sub></span>. ما الذي اختلف بين الجزيئين؟</p>
+      <div class="quiz-options" data-q="same-num">
+        <label class="quiz-option"><input type="radio" name="sameNum" value="w1">عدد الروابط التي كوّنتها ذرّة النيتروجين</label>
+        <label class="quiz-option"><input type="radio" name="sameNum" value="w2">تكافؤ النيتروجين في كل جزيء منهما</label>
+        <label class="quiz-option"><input type="radio" name="sameNum" value="correct">توزيع الروابط على عدد مختلف من الذرّات</label>
+        <label class="quiz-option"><input type="radio" name="sameNum" value="w3">عدد إلكترونات المستوى الخارجي للنيتروجين</label>
+      </div>
+      <p class="explore-feedback" id="fb-same-num" hidden></p>
+      <p class="dose" id="sameNumLine" hidden>النيتروجين يكوّن ثلاث روابط دائمًا: رابطة ثلاثية مع ذرّة نيتروجين واحدة، أو ثلاث روابط أحادية مع ثلاث ذرّات هيدروجين.</p>
+    </div>
+
+    <!-- النماذج بطاقات ثابتة أسفل الزرّ لا تبديلٌ في أربعة مسارح
+         متباعدة: الطالب لا يتتبّع «أنا في أي وضع الآن؟»، والأربعة
+         تُقارَن في نظرة واحدة. -->
+    <div id="modelBlock" hidden>
+      <p class="sub-h">نماذج جزيئاتك</p>
+      <p class="stage-note">بنيتَ أربعة جزيئات بالرسم النقطي. وهذه هي نفسها بنموذج الكرات والعصيّ.</p>
+      <div style="text-align:center; margin-top:12px;">
+        <button type="button" class="btn" id="showModels5">اعرض نماذج جزيئاتك الأربعة ↓</button>
+      </div>
+
+      <div id="models5" hidden>
+        <div class="repr-figs">
+          <div class="repr-fig">
+            <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نموذج الهيدروجين: ذرّتان بينهما عصا واحدة">
+              <line class="stick" x1="50" y1="60" x2="90" y2="60"></line>
+              <circle class="ball ball-h" cx="50" cy="60" r="19"></circle>
+              <circle class="ball ball-h" cx="90" cy="60" r="19"></circle>
+              <text class="ball-label" x="50" y="66" text-anchor="middle" direction="ltr">H</text>
+              <text class="ball-label" x="90" y="66" text-anchor="middle" direction="ltr">H</text>
+            </svg>
+            <p class="repr-cap"><span dir="ltr">H<sub>2</sub></span></p>
+          </div>
+          <div class="repr-fig">
+            <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نموذج الميثان: ذرّة كربون وأربع ذرّات هيدروجين في أربعة اتجاهات متعامدة">
+              <line class="stick" x1="70" y1="60" x2="70" y2="20"></line>
+              <line class="stick" x1="70" y1="60" x2="70" y2="100"></line>
+              <line class="stick" x1="70" y1="60" x2="26" y2="60"></line>
+              <line class="stick" x1="70" y1="60" x2="114" y2="60"></line>
+              <circle class="ball ball-h" cx="70" cy="20" r="13"></circle>
+              <circle class="ball ball-h" cx="70" cy="100" r="13"></circle>
+              <circle class="ball ball-h" cx="26" cy="60" r="13"></circle>
+              <circle class="ball ball-h" cx="114" cy="60" r="13"></circle>
+              <circle class="ball ball-c" cx="70" cy="60" r="24"></circle>
+              <text class="ball-label on-dark" x="70" y="66" text-anchor="middle" direction="ltr">C</text>
+            </svg>
+            <p class="repr-cap"><span dir="ltr">CH<sub>4</sub></span></p>
+          </div>
+          <div class="repr-fig">
+            <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نموذج الأمونيا: ذرّة نيتروجين في القمّة وثلاث ذرّات هيدروجين أسفلها">
+              <line class="stick" x1="70" y1="42" x2="24" y2="70"></line>
+              <line class="stick" x1="70" y1="42" x2="116" y2="70"></line>
+              <line class="stick" x1="70" y1="42" x2="70" y2="102"></line>
+              <circle class="ball ball-h" cx="24" cy="70" r="13"></circle>
+              <circle class="ball ball-h" cx="116" cy="70" r="13"></circle>
+              <circle class="ball ball-h" cx="70" cy="102" r="13"></circle>
+              <circle class="ball ball-n" cx="70" cy="42" r="24"></circle>
+              <text class="ball-label on-dark" x="70" y="48" text-anchor="middle" direction="ltr">N</text>
+            </svg>
+            <p class="repr-cap"><span dir="ltr">NH<sub>3</sub></span></p>
+          </div>
+          <div class="repr-fig">
+            <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نموذج الماء: ذرّة أكسجين وذرّتا هيدروجين تصنعان زاوية">
+              <line class="stick" x1="70" y1="44" x2="32" y2="88"></line>
+              <line class="stick" x1="70" y1="44" x2="108" y2="88"></line>
+              <circle class="ball ball-h" cx="32" cy="88" r="13"></circle>
+              <circle class="ball ball-h" cx="108" cy="88" r="13"></circle>
+              <circle class="ball ball-o" cx="70" cy="44" r="22"></circle>
+              <text class="ball-label on-dark" x="70" y="50" text-anchor="middle" direction="ltr">O</text>
+            </svg>
+            <p class="repr-cap"><span dir="ltr">H<sub>2</sub>O</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="st5Done" hidden>
+      <div class="facts-grid" style="margin-top:22px;">
+        <div class="fact-card">
+          <div class="term">الروابط التساهمية حولك</div>
+          <p>الميثان هو معظم الغاز الطبيعي، واحتياطات قطر منه من أكبر احتياطات العالم. وفي رأس عود الثقاب كبريت، وعند الإشعال تتكوّن روابط تساهمية بين ذرّات الكبريت وذرّات الأكسجين في الهواء.</p>
+        </div>
+      </div>
+      <div class="success-tag show">✓ أكملتَ المحطة</div>
+      <div class="station-handoff">
+        <a class="station-next" href="#station-6">كم رابطة يكوّن كل عنصر؟ ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 6: عدد الروابط والتكافؤ =====================
+       عمود «عدد الروابط» يُملأ ممّا بناه الطالب بيده في المحطة 5،
+       وعمود التكافؤ يبقى مغطًّى حتى يكتمل — فلو كُشف من البداية
+       لنُسخ منه العمود وسقط الاكتشاف كلّه.
+       ===================================================================== -->
+  <section class="station" id="station-6">
+    <div class="station-label">المحطة السادسة</div>
+    <h2>عدد الروابط والتكافؤ</h2>
+    <p class="station-tagline">أكمل الجدول ممّا بنيتَه بيدك.</p>
+
+    <p class="pool-label">اسحب الرقم إلى مكانه، أو انقر الرقم ثم انقر الخانة.</p>
+    <div class="chips-pool" id="bondPool">
+      <div class="chip" data-value="1">1</div>
+      <div class="chip" data-value="2">2</div>
+      <div class="chip" data-value="3">3</div>
+      <div class="chip" data-value="4">4</div>
+      <div class="chip" data-value="5">5</div>
+      <div class="chip" data-value="6">6</div>
+      <div class="chip" data-value="7">7</div>
+      <div class="chip" data-value="8">8</div>
+    </div>
+
+    <table class="bond-table">
+      <thead>
+        <tr>
+          <th>العنصر</th>
+          <th>التوزيع الإلكتروني</th>
+          <th>عدد الروابط التي كوّنها</th>
+          <th>التكافؤ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>الهيدروجين <span dir="ltr">H</span></td><td dir="ltr">1</td>
+          <td><span class="slot" id="slot-h" data-xp-id="l4-table-h" data-xp-reason="أكملتَ صفّ الهيدروجين" data-answer="1">؟</span></td>
+          <td dir="ltr"><span class="veiled" hidden>1</span></td>
+        </tr>
+        <tr>
+          <td>الأكسجين <span dir="ltr">O</span></td><td dir="ltr">2, 6</td>
+          <td><span class="slot" id="slot-o" data-xp-id="l4-table-o" data-xp-reason="أكملتَ صفّ الأكسجين" data-answer="2">؟</span></td>
+          <td dir="ltr"><span class="veiled" hidden>2</span></td>
+        </tr>
+        <tr>
+          <td>النيتروجين <span dir="ltr">N</span></td><td dir="ltr">2, 5</td>
+          <td><span class="slot" id="slot-n" data-xp-id="l4-table-n" data-xp-reason="أكملتَ صفّ النيتروجين" data-answer="3">؟</span></td>
+          <td dir="ltr"><span class="veiled" hidden>3</span></td>
+        </tr>
+        <tr>
+          <td>الكربون <span dir="ltr">C</span></td><td dir="ltr">2, 4</td>
+          <td><span class="slot" id="slot-c" data-xp-id="l4-table-c" data-xp-reason="أكملتَ صفّ الكربون" data-answer="4">؟</span></td>
+          <td dir="ltr"><span class="veiled" hidden>4</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="h-note" id="veilNote">عمود التكافؤ مغطًّى الآن. أكمل عمود الروابط أولًا ممّا بنيتَه في المحطة السابقة.</p>
+
+    <div class="explore-step" id="patternStep" hidden>
+      <p class="explore-q">انكشف عمود التكافؤ. ما العلاقة بين عدد الروابط التساهمية التي يكوّنها العنصر وتكافؤه؟</p>
+      <div class="quiz-options" data-q="valency">
+        <label class="quiz-option"><input type="radio" name="valencyQ" value="w1">عدد الروابط = ضعف التكافؤ</label>
+        <label class="quiz-option"><input type="radio" name="valencyQ" value="w2">عدد الروابط = عدد مستويات الطاقة في الذرّة</label>
+        <label class="quiz-option"><input type="radio" name="valencyQ" value="correct">عدد الروابط = التكافؤ</label>
+        <label class="quiz-option"><input type="radio" name="valencyQ" value="w3">لا توجد علاقة ثابتة بينهما</label>
+      </div>
+      <p class="explore-feedback" id="fb-valency" hidden></p>
+    </div>
+
+    <div class="explore-step" id="phosStep" hidden>
+      <div class="given-row">
+        <span class="given-chip"><b dir="ltr">P</b> — العدد الذرّي: 15</span>
+      </div>
+      <p class="explore-q">وزّع إلكترونات ذرّة الفوسفور. كم رابطة تساهمية يكوّنها؟</p>
+      <div class="quiz-options" data-q="phos">
+        <label class="quiz-option"><input type="radio" name="phosQ" value="w1">5</label>
+        <label class="quiz-option"><input type="radio" name="phosQ" value="correct">3</label>
+        <label class="quiz-option"><input type="radio" name="phosQ" value="w2">2</label>
+        <label class="quiz-option"><input type="radio" name="phosQ" value="w3">15</label>
+      </div>
+      <p class="explore-feedback" id="fb-phos" hidden></p>
+    </div>
+
+    <div id="shapeBlock" hidden>
+      <p class="sub-h">شكل الجزيء</p>
+      <p class="stage-note act">انظر إلى نماذج الجزيئات الأربعة التي بنيتَها.</p>
+
+      <div class="repr-figs">
+        <div class="repr-fig">
+          <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نموذج الميثان: ذرّة كربون وأربع ذرّات هيدروجين في أربعة اتجاهات متعامدة">
+            <line class="stick" x1="70" y1="60" x2="70" y2="20"></line>
+            <line class="stick" x1="70" y1="60" x2="70" y2="100"></line>
+            <line class="stick" x1="70" y1="60" x2="26" y2="60"></line>
+            <line class="stick" x1="70" y1="60" x2="114" y2="60"></line>
+            <circle class="ball ball-h" cx="70" cy="20" r="13"></circle>
+            <circle class="ball ball-h" cx="70" cy="100" r="13"></circle>
+            <circle class="ball ball-h" cx="26" cy="60" r="13"></circle>
+            <circle class="ball ball-h" cx="114" cy="60" r="13"></circle>
+            <circle class="ball ball-c" cx="70" cy="60" r="24"></circle>
+            <text class="ball-label on-dark" x="70" y="66" text-anchor="middle" direction="ltr">C</text>
+          </svg>
+          <p class="repr-cap"><span dir="ltr">CH<sub>4</sub></span></p>
+        </div>
+        <div class="repr-fig">
+          <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نموذج الأمونيا: ذرّة نيتروجين في القمّة وثلاث ذرّات هيدروجين أسفلها">
+            <line class="stick" x1="70" y1="42" x2="24" y2="70"></line>
+            <line class="stick" x1="70" y1="42" x2="116" y2="70"></line>
+            <line class="stick" x1="70" y1="42" x2="70" y2="102"></line>
+            <circle class="ball ball-h" cx="24" cy="70" r="13"></circle>
+            <circle class="ball ball-h" cx="116" cy="70" r="13"></circle>
+            <circle class="ball ball-h" cx="70" cy="102" r="13"></circle>
+            <circle class="ball ball-n" cx="70" cy="42" r="24"></circle>
+            <text class="ball-label on-dark" x="70" y="48" text-anchor="middle" direction="ltr">N</text>
+          </svg>
+          <p class="repr-cap"><span dir="ltr">NH<sub>3</sub></span></p>
+        </div>
+        <div class="repr-fig">
+          <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نموذج الماء: ذرّة أكسجين وذرّتا هيدروجين تصنعان زاوية">
+            <line class="stick" x1="70" y1="44" x2="32" y2="88"></line>
+            <line class="stick" x1="70" y1="44" x2="108" y2="88"></line>
+            <circle class="ball ball-h" cx="32" cy="88" r="13"></circle>
+            <circle class="ball ball-h" cx="108" cy="88" r="13"></circle>
+            <circle class="ball ball-o" cx="70" cy="44" r="22"></circle>
+            <text class="ball-label on-dark" x="70" y="50" text-anchor="middle" direction="ltr">O</text>
+          </svg>
+          <p class="repr-cap"><span dir="ltr">H<sub>2</sub>O</span></p>
+        </div>
+        <div class="repr-fig">
+          <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نموذج النيتروجين: ذرّتان بينهما ثلاث عصيّ على خطّ واحد">
+            <line class="stick" x1="46" y1="48" x2="94" y2="48"></line>
+            <line class="stick" x1="46" y1="60" x2="94" y2="60"></line>
+            <line class="stick" x1="46" y1="72" x2="94" y2="72"></line>
+            <circle class="ball ball-n" cx="46" cy="60" r="22"></circle>
+            <circle class="ball ball-n" cx="94" cy="60" r="22"></circle>
+            <text class="ball-label on-dark" x="46" y="66" text-anchor="middle" direction="ltr">N</text>
+            <text class="ball-label on-dark" x="94" y="66" text-anchor="middle" direction="ltr">N</text>
+          </svg>
+          <p class="repr-cap"><span dir="ltr">N<sub>2</sub></span></p>
+        </div>
+      </div>
+
+      <div class="explore-step">
+        <p class="explore-q">أيّ الجزيئات الآتية تقع ذرّاته على خطّ مستقيم؟</p>
+        <div class="quiz-options" data-q="shape">
+          <label class="quiz-option"><input type="radio" name="shapeQ" value="w1">الميثان <span dir="ltr">CH<sub>4</sub></span></label>
+          <label class="quiz-option"><input type="radio" name="shapeQ" value="w2">الأمونيا <span dir="ltr">NH<sub>3</sub></span></label>
+          <label class="quiz-option"><input type="radio" name="shapeQ" value="correct">النيتروجين <span dir="ltr">N<sub>2</sub></span></label>
+          <label class="quiz-option"><input type="radio" name="shapeQ" value="w3">الماء <span dir="ltr">H<sub>2</sub>O</span></label>
+        </div>
+        <p class="explore-feedback" id="fb-shape" hidden></p>
+      </div>
+    </div>
+
+    <div id="st6Done" hidden>
+      <div class="success-tag show">✓ أكملتَ المحطة</div>
+      <div class="station-handoff">
+        <a class="station-next" href="#station-7">إلى التقييم ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 7: التقييم الختامي =====================
+       عشرة أسئلة، محاولة واحدة لكل سؤال، والشهادة تُنادى من داخل
+       Quiz.evaluate — الدرس لا يكتب نداء Certificate.finish إطلاقًا.
+       وبلا XP: مكافأة المحطة الشارةُ والشهادة.
+       ===================================================================== -->
+  <section class="station" id="station-7">
+    <div class="station-label">المحطة السابعة</div>
+    <h2>تقييم الدرس</h2>
+    <p class="station-tagline">اكتب اسمك، ثم أجب عن عشرة أسئلة. لكل سؤال محاولة واحدة.</p>
+
+    <p class="review-strip">
+      عالق في سؤال؟ راجع قبل أن تجيب:
+      <a href="#station-2">بناء جزيء الكلور</a> ·
+      <a href="#station-3">مصطلحات الرابطة التساهمية</a> ·
+      <a href="#station-4">أنواع الروابط التساهمية</a> ·
+      <a href="#station-5">عدد الروابط</a> ·
+      <a href="#station-6">الميثان والأمونيا</a>
+    </p>
+
+    <div class="name-gate" id="evalGate">
+      <label for="evalName">اكتب اسمك كما تريده أن يظهر على الشهادة</label>
+      <div class="explore-answer-row">
+        <input type="text" class="explore-input" id="evalName" autocomplete="off" placeholder="مثال: سارة أحمد">
+        <button type="button" class="btn" id="evalStart">ابدأ التقييم</button>
+      </div>
+      <p class="gate-note">يمكنك تصحيح اسمك ما دام التقييم جاريًا.</p>
+      <p class="explore-feedback" id="evalNameFb" hidden></p>
+    </div>
+
+    <div id="evalQuestions" hidden>
+
+      <div class="eval-q first">
+        <p class="explore-q"><span class="q-num">1</span>ما الرابطة التساهمية؟</p>
+        <div class="quiz-options" data-q="ev1">
+          <label class="quiz-option"><input type="radio" name="ev1" value="w1">رابطة تنتقل فيها الإلكترونات من ذرّة إلى أخرى</label>
+          <label class="quiz-option"><input type="radio" name="ev1" value="w2">رابطة تتكوّن فيها الأيونات</label>
+          <label class="quiz-option"><input type="radio" name="ev1" value="correct">رابطة تتشارك فيها ذرّتان الإلكترونات</label>
+          <label class="quiz-option"><input type="radio" name="ev1" value="w3">رابطة تتشارك فيها ذرّتان البروتونات</label>
+        </div>
+        <p class="explore-feedback" id="fb-ev1" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">2</span>أيّ الرسوم الآتية يمثّل جزيء الماء تمثيلًا نقطيًا صحيحًا؟</p>
+        <div class="quiz-options fig-grid" data-q="ev2">
+          <label class="quiz-option">
+            <input type="radio" name="ev2" value="w1">
+            <span class="opt-letter">أ</span>
+            <svg viewBox="0 0 140 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="رسم أ: ذرّة أكسجين مرتبطة بذرّتَي هيدروجين برابطتين ثنائيتين">
+              <circle class="orbit orbit-shell-2" cx="70" cy="52" r="30"></circle>
+              <circle class="orbit orbit-shell-1" cx="34" cy="96" r="14"></circle>
+              <circle class="orbit orbit-shell-1" cx="106" cy="96" r="14"></circle>
+              <circle class="edot" cx="56" cy="26" r="4"></circle>
+              <circle class="edot" cx="64" cy="22" r="4"></circle>
+              <circle class="edot" cx="76" cy="22" r="4"></circle>
+              <circle class="edot" cx="84" cy="26" r="4"></circle>
+              <circle class="edot" cx="47" cy="68" r="4"></circle>
+              <circle class="edot" cx="47" cy="80" r="4"></circle>
+              <path class="ecross" d="M53 64L61 72M53 72L61 64" stroke-width="2.2"></path>
+              <path class="ecross" d="M53 76L61 84M53 84L61 76" stroke-width="2.2"></path>
+              <circle class="edot" cx="83" cy="68" r="4"></circle>
+              <circle class="edot" cx="83" cy="80" r="4"></circle>
+              <path class="ecross" d="M89 64L97 72M89 72L97 64" stroke-width="2.2"></path>
+              <path class="ecross" d="M89 76L97 84M89 84L97 76" stroke-width="2.2"></path>
+              <text class="element-label" x="70" y="60" text-anchor="middle" direction="ltr" style="font-size:18px">O</text>
+              <text class="element-label" x="34" y="102" text-anchor="middle" direction="ltr" style="font-size:13px">H</text>
+              <text class="element-label" x="106" y="102" text-anchor="middle" direction="ltr" style="font-size:13px">H</text>
+            </svg>
+          </label>
+          <label class="quiz-option">
+            <input type="radio" name="ev2" value="correct">
+            <span class="opt-letter">ب</span>
+            <svg viewBox="0 0 140 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="رسم ب: ذرّة أكسجين مرتبطة بذرّتَي هيدروجين برابطتين أحاديتين">
+              <circle class="orbit orbit-shell-2" cx="70" cy="52" r="30"></circle>
+              <circle class="orbit orbit-shell-1" cx="34" cy="96" r="14"></circle>
+              <circle class="orbit orbit-shell-1" cx="106" cy="96" r="14"></circle>
+              <circle class="edot" cx="56" cy="26" r="4"></circle>
+              <circle class="edot" cx="64" cy="22" r="4"></circle>
+              <circle class="edot" cx="76" cy="22" r="4"></circle>
+              <circle class="edot" cx="84" cy="26" r="4"></circle>
+              <circle class="edot" cx="47" cy="74" r="4"></circle>
+              <path class="ecross" d="M53 70L61 78M53 78L61 70" stroke-width="2.2"></path>
+              <circle class="edot" cx="83" cy="74" r="4"></circle>
+              <path class="ecross" d="M89 70L97 78M89 78L97 70" stroke-width="2.2"></path>
+              <text class="element-label" x="70" y="60" text-anchor="middle" direction="ltr" style="font-size:18px">O</text>
+              <text class="element-label" x="34" y="102" text-anchor="middle" direction="ltr" style="font-size:13px">H</text>
+              <text class="element-label" x="106" y="102" text-anchor="middle" direction="ltr" style="font-size:13px">H</text>
+            </svg>
+          </label>
+          <label class="quiz-option">
+            <input type="radio" name="ev2" value="w2">
+            <span class="opt-letter">ج</span>
+            <svg viewBox="0 0 140 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="رسم ج: ذرّة أكسجين مرتبطة بثلاث ذرّات هيدروجين">
+              <circle class="orbit orbit-shell-2" cx="70" cy="52" r="30"></circle>
+              <circle class="orbit orbit-shell-1" cx="30" cy="92" r="14"></circle>
+              <circle class="orbit orbit-shell-1" cx="110" cy="92" r="14"></circle>
+              <circle class="orbit orbit-shell-1" cx="70" cy="108" r="14"></circle>
+              <circle class="edot" cx="56" cy="26" r="4"></circle>
+              <circle class="edot" cx="64" cy="22" r="4"></circle>
+              <circle class="edot" cx="76" cy="22" r="4"></circle>
+              <circle class="edot" cx="84" cy="26" r="4"></circle>
+              <circle class="edot" cx="45" cy="72" r="4"></circle>
+              <path class="ecross" d="M51 68L59 76M51 76L59 68" stroke-width="2.2"></path>
+              <circle class="edot" cx="85" cy="72" r="4"></circle>
+              <path class="ecross" d="M91 68L99 76M91 76L99 68" stroke-width="2.2"></path>
+              <circle class="edot" cx="64" cy="86" r="4"></circle>
+              <path class="ecross" d="M72 82L80 90M72 90L80 82" stroke-width="2.2"></path>
+              <text class="element-label" x="70" y="58" text-anchor="middle" direction="ltr" style="font-size:18px">O</text>
+              <text class="element-label" x="30" y="98" text-anchor="middle" direction="ltr" style="font-size:13px">H</text>
+              <text class="element-label" x="110" y="98" text-anchor="middle" direction="ltr" style="font-size:13px">H</text>
+              <text class="element-label" x="70" y="114" text-anchor="middle" direction="ltr" style="font-size:13px">H</text>
+            </svg>
+          </label>
+          <label class="quiz-option">
+            <input type="radio" name="ev2" value="w3">
+            <span class="opt-letter">د</span>
+            <svg viewBox="0 0 140 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="رسم د: ذرّة أكسجين مرتبطة بذرّة هيدروجين واحدة">
+              <circle class="orbit orbit-shell-2" cx="70" cy="52" r="30"></circle>
+              <circle class="orbit orbit-shell-1" cx="70" cy="104" r="14"></circle>
+              <circle class="edot" cx="56" cy="26" r="4"></circle>
+              <circle class="edot" cx="64" cy="22" r="4"></circle>
+              <circle class="edot" cx="76" cy="22" r="4"></circle>
+              <circle class="edot" cx="84" cy="26" r="4"></circle>
+              <circle class="edot" cx="64" cy="80" r="4"></circle>
+              <path class="ecross" d="M72 76L80 84M72 84L80 76" stroke-width="2.2"></path>
+              <text class="element-label" x="70" y="58" text-anchor="middle" direction="ltr" style="font-size:18px">O</text>
+              <text class="element-label" x="70" y="110" text-anchor="middle" direction="ltr" style="font-size:13px">H</text>
+            </svg>
+          </label>
+        </div>
+        <p class="explore-feedback" id="fb-ev2" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">3</span>كم زوجًا من الإلكترونات مشترك في الرابطة الثنائية؟</p>
+        <div class="quiz-options" data-q="ev3">
+          <label class="quiz-option"><input type="radio" name="ev3" value="w1">1</label>
+          <label class="quiz-option"><input type="radio" name="ev3" value="correct">2</label>
+          <label class="quiz-option"><input type="radio" name="ev3" value="w2">3</label>
+          <label class="quiz-option"><input type="radio" name="ev3" value="w3">4</label>
+        </div>
+        <p class="explore-feedback" id="fb-ev3" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">4</span>كم رابطة تساهمية تكوّنها ذرّة الكربون مع ذرّات الهيدروجين؟</p>
+        <div class="given-row"><span class="given-chip"><b dir="ltr">C</b> — العدد الذرّي: 6</span></div>
+        <div class="quiz-options" data-q="ev4">
+          <label class="quiz-option"><input type="radio" name="ev4" value="w1">1</label>
+          <label class="quiz-option"><input type="radio" name="ev4" value="w2">2</label>
+          <label class="quiz-option"><input type="radio" name="ev4" value="w3">3</label>
+          <label class="quiz-option"><input type="radio" name="ev4" value="correct">4</label>
+        </div>
+        <p class="explore-feedback" id="fb-ev4" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">5</span>ذرّة الفلور عددها الذرّي 9. كم رابطة تساهمية تكوّن؟</p>
+        <div class="given-row"><span class="given-chip"><b dir="ltr">F</b> — العدد الذرّي: 9</span></div>
+        <div class="quiz-options" data-q="ev5">
+          <label class="quiz-option"><input type="radio" name="ev5" value="correct">1</label>
+          <label class="quiz-option"><input type="radio" name="ev5" value="w1">2</label>
+          <label class="quiz-option"><input type="radio" name="ev5" value="w2">7</label>
+          <label class="quiz-option"><input type="radio" name="ev5" value="w3">9</label>
+        </div>
+        <p class="explore-feedback" id="fb-ev5" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">6</span>ذرّة الكبريت عددها الذرّي 16. كم رابطة تساهمية تكوّن؟</p>
+        <div class="given-row"><span class="given-chip"><b dir="ltr">S</b> — العدد الذرّي: 16</span></div>
+        <div class="quiz-options" data-q="ev6">
+          <label class="quiz-option"><input type="radio" name="ev6" value="w1">6</label>
+          <label class="quiz-option"><input type="radio" name="ev6" value="w2">4</label>
+          <label class="quiz-option"><input type="radio" name="ev6" value="correct">2</label>
+          <label class="quiz-option"><input type="radio" name="ev6" value="w3">16</label>
+        </div>
+        <p class="explore-feedback" id="fb-ev6" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">7</span>كم إلكترونًا شاركت به ذرّة النيتروجين في روابط جزيء الأمونيا؟</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="ev7Input" autocomplete="off" placeholder="اكتب العدد ثم اضغط Enter">
+          <button type="button" class="btn" id="ev7Check">تحقّق</button>
+        </div>
+        <p class="explore-feedback" id="fb-ev7" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">8</span>في جزيء الكلور، كم إلكترونًا في المستوى الخارجي لذرّة كلور واحدة بعد تكوّن الرابطة؟</p>
+        <div class="quiz-options" data-q="ev8">
+          <label class="quiz-option"><input type="radio" name="ev8" value="correct">8</label>
+          <label class="quiz-option"><input type="radio" name="ev8" value="w1">7</label>
+          <label class="quiz-option"><input type="radio" name="ev8" value="w2">6</label>
+          <label class="quiz-option"><input type="radio" name="ev8" value="w3">14</label>
+        </div>
+        <p class="explore-feedback" id="fb-ev8" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">9</span>ما الذي يحدث للإلكترونات في الرابطة الأيونية ولا يحدث في الرابطة التساهمية؟</p>
+        <div class="quiz-options" data-q="ev9">
+          <label class="quiz-option"><input type="radio" name="ev9" value="w1">تدور حول النواة</label>
+          <label class="quiz-option"><input type="radio" name="ev9" value="w2">تتوزّع على مستويات الطاقة</label>
+          <label class="quiz-option"><input type="radio" name="ev9" value="w3">تصل إلى توزيع مشابه لغاز نبيل</label>
+          <label class="quiz-option"><input type="radio" name="ev9" value="correct">تنتقل من ذرّة إلى أخرى</label>
+        </div>
+        <p class="explore-feedback" id="fb-ev9" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">10</span>لماذا تتشارك ذرّتان لافلزّيتان الإلكترونات بدل انتقالها من إحداهما إلى الأخرى؟</p>
+        <div class="quiz-options" data-q="ev10">
+          <label class="quiz-option"><input type="radio" name="ev10" value="w1">لأن اللافلزات متماثلة في خواصّها فلا تتغلّب إحداها على الأخرى</label>
+          <label class="quiz-option"><input type="radio" name="ev10" value="correct">لأن كل ذرّة لافلزّية تحتاج إلى كسب إلكترون ولا تميل إلى فقده</label>
+          <label class="quiz-option"><input type="radio" name="ev10" value="w2">لأن إلكترونات المستوى الخارجي في اللافلزات مثبّتة لا تغادر مواضعها</label>
+          <label class="quiz-option"><input type="radio" name="ev10" value="w3">لأن اللافلزات لا تستطيع تكوين أيونات في أي مركّب كيميائي</label>
+        </div>
+        <p class="explore-feedback" id="fb-ev10" hidden></p>
+      </div>
+
+    </div>
+
+    <!-- خانة زرّ الشهادة إلزامية: بدونها تحقن الوحدة زرّها عائمًا في
+         زاوية الشاشة فيصطدم بزرّ فهيم. -->
+    <div class="eval-summary" id="evalSummary" hidden></div>
+    <div id="certTriggerSlot"></div>
+  </section>
+
+</main>
+
+<!-- ترتيب الوسوم المعتمد: الملفات المشتركة قبل سكربتات الدرس -->
+<script src="../../shared/sounds/sounds.js"></script>
+<script src="../../shared/xp-system/xp.js"></script>
+<script src="../../shared/faheem-widget/faheem.js"></script>
+<script src="../../shared/template-boilerplate/template.js"></script>
+<script src="../../shared/certificate-system/certificate.js"></script>
+<script src="../../shared/identity/footer.js"></script>
+
+<script>
+/* ==========================================================
+   درس 04 — المحرّك البصري ومنطق المحطات
+   ----------------------------------------------------------
+   أُعيد بناء الرسم بعد فحص بصري كشف أن المشهد الأول غير مقروء.
+   أربع قواعد تحكمه الآن، كلّها مأخوذة من رسم الكتاب:
+
+   1) التوزيع الإلكتروني كاملًا: كل المستويات بدوائرها، والرمز
+      داخل النواة لا فوق الذرّة. المستويات الداخلية ليست ضوضاء —
+      هي التوزيع الذي يقرؤه الطالب.
+
+   2) الإلكترونات في أزواج عند أربعة مواضع ثابتة (أعلى · أسفل ·
+      الجهة البعيدة · الجهة المواجهة) لا موزّعة بالتساوي. العين
+      تقرأ «زوج، زوج، زوج» فتعدّ بلا إحصاء. والتوزيع المتساوي —
+      وهو ما بُني أوّل مرّة — يجعلها نجومًا متناثرة.
+
+   3) الذرّتان مرسومتان متداخلتين من البداية كما في رسم الكتاب،
+      ولا تتحرّكان. (جُرّب تقاربهما عند الربط فرُفض: الحركة صعبة
+      الإصابة على شاشة الجوال، وتُربك أكثر ممّا تُفهم. والمشكلة
+      التي أُضيفت لأجلها — أن النقرة لا تُحرّك شيئًا يُرى — تُعالَج
+      في الجزيئات المتعدّدة ببِركة الهيدروجين، وفي الثنائية بانتقال
+      الإلكترون نفسه إلى الموضع المشترك.)
+
+   4) الزوج المشترك عمودٌ لا صفّ: النقطة فوق والصليب تحتها عند
+      الموضع نفسه. أفقيًّا كانت النقطة تبدو تابعة للذرّة اليسرى
+      والصليب لليمنى — وهو عكس معنى «محسوبان للذرّتين معًا».
+
+   5) والأزواج نفسها تتراصّ رأسيًّا لا جنبًا إلى جنب: الرابطة
+      الثلاثية ثلاثة أزواج فوق بعضها في عمود واحد. صفٌّ أفقي من
+      ثلاثة أزواج يُقرأ ستّ علامات متفرّقة لا ثلاثة أزواج.
+
+   6) والتداخل ضحل ثابت لا يتّسع بعدد الأزواج (فالعمود واحد مهما
+      كثرت): وهذا ما يُبقي المستوى الثاني لكل ذرّة خارج مجال
+      الأخرى — تقاطع المستويات الداخلية كان يُربك المشهد.
+
+   ويبقى المرجاني للزوج المشترك وحده، والعدّادان لا يظهران في
+   المحطة 2 إلا بعد إجابة الطالب — وإلا كتبا «8» على الشاشة قبل
+   أن يُسأل عنها.
+   ========================================================== */
+(function(){
+  "use strict";
+
+  var NS = 'http://www.w3.org/2000/svg';
+
+  function reduced(){
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+  function svgEl(tag, attrs){
+    var n = document.createElementNS(NS, tag);
+    for(var k in attrs){ if(attrs[k] !== undefined && attrs[k] !== null) n.setAttribute(k, attrs[k]); }
+    return n;
+  }
+  function sound(fn){ if(window.Sounds && window.Sounds[fn]) window.Sounds[fn](); }
+  function claim(id, name, reason){
+    if(!window.XP || !window.XP.claim) return;
+    var points = (window.XP.POINTS && window.XP.POINTS[name]) || 5;
+    window.XP.claim(id, points, reason);
+  }
+  function show(id){ var n = document.getElementById(id); if(n) n.hidden = false; }
+  function setText(id, txt){
+    var n = document.getElementById(id);
+    if(!n) return;
+    n.textContent = txt;
+    n.hidden = false;
+  }
+  /* الأرقام المنخفضة في الصيغ تُبنى بـ<sub> لا برمز يونيكود: بعض
+     الخطوط العربية لا تحمل «₂» فيظهر مربّعًا. */
+  function setHtml(id, html){
+    var n = document.getElementById(id);
+    if(!n) return;
+    n.innerHTML = html;
+    n.hidden = false;
+  }
+  function rad(deg){ return deg * Math.PI / 180; }
+
+  /* حركة عامّة: تُمرَّر دالّة تضع القيمة عند كل إطار، فتصلح لتحريك
+     علامة إلكترون وذرّة كاملة معًا بمنطق واحد. */
+  function animate(ms, apply, done){
+    if(reduced()) ms = 1;
+    var t0 = (window.performance && performance.now) ? performance.now() : Date.now();
+    function step(now){
+      var t = Math.min(1, (now - t0) / ms);
+      apply(1 - Math.pow(1 - t, 3));
+      if(t < 1){
+        if(window.requestAnimationFrame) requestAnimationFrame(step); else step(now + ms);
+      }else if(done){ done(); }
+    }
+    if(window.requestAnimationFrame) requestAnimationFrame(step);
+    else { apply(1); if(done) done(); }
+  }
+
+  /* علامة إلكترون: نقطة أو صليب مرسوم بخطّين — لا حرف «×» نصّي،
+     فالحرف يخضع لخطّ الصفحة ولاتجاه الكتابة والخطّان لا يخضعان. */
+  function marker(kind, x, y){
+    var g = svgEl('g', { 'class':'epos', transform:'translate(' + x + ',' + y + ')' });
+    g.appendChild(svgEl('circle', { 'class':'ehalo', r:13, cx:0, cy:0 }));
+    var mk = svgEl('g', { 'class':'emark' });
+    if(kind === 'cross'){
+      mk.appendChild(svgEl('path', { 'class':'ecross', d:'M-6 -6L6 6M-6 6L6 -6' }));
+    }else{
+      mk.appendChild(svgEl('circle', { 'class':'edot', r:6, cx:0, cy:0 }));
+    }
+    g.appendChild(mk);
+    g._pos = { x:x, y:y };
+    return g;
+  }
+  function place(node, x, y){
+    node._pos = { x:x, y:y };
+    node.setAttribute('transform', 'translate(' + x.toFixed(2) + ',' + y.toFixed(2) + ')');
+  }
+  function glide(node, to, ms, done){
+    var from = { x:node._pos.x, y:node._pos.y };
+    animate(ms, function(e){
+      place(node, from.x + (to.x - from.x) * e, from.y + (to.y - from.y) * e);
+    }, done);
+  }
+  function activate(node, label, fn){
+    node.classList.add('clickable');
+    node.setAttribute('tabindex', '0');
+    node.setAttribute('role', 'button');
+    node.setAttribute('aria-label', label);
+    if(node._bound) return;
+    node._bound = true;
+    node.addEventListener('click', function(){ if(node.classList.contains('clickable')) fn(); });
+    node.addEventListener('keydown', function(e){
+      if((e.key === 'Enter' || e.key === ' ') && node.classList.contains('clickable')){
+        e.preventDefault(); fn();
+      }
+    });
+  }
+  function deactivate(node){
+    node.classList.remove('clickable');
+    node.removeAttribute('tabindex');
+    node.removeAttribute('role');
+  }
+
+  /* ============================================================
+     مواضع الإلكترونات — القاعدة الثانية
+     ------------------------------------------------------------
+     أربعة مواضع ثابتة على كل مستوى. الموضع الواحد يحمل إلكترونًا
+     مفردًا أو زوجًا، والزوج ينفرج عموديًّا على نصف القطر.
+     ============================================================ */
+  var SPREAD = 11;
+
+  function spot(cx, cy, r, deg){
+    var a = rad(deg);
+    return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a), deg:deg };
+  }
+  // مركزا الزوج: ينفرجان عموديًّا على نصف القطر
+  function pairPoints(p, spread){
+    var a = rad(p.deg);
+    var px = -Math.sin(a), py = Math.cos(a);
+    var s = spread === undefined ? SPREAD : spread;
+    return [
+      { x: p.x + px * s, y: p.y + py * s },
+      { x: p.x - px * s, y: p.y - py * s }
+    ];
+  }
+
+  /* توزيع مستوى داخلي على المواضع: إفراد أولًا ثم إزدواج */
+  function innerLayout(count, cx, cy, r, order){
+    var out = [], singles = Math.min(count, 4), extra = count - singles;
+    for(var i = 0; i < singles; i++){
+      var p = spot(cx, cy, r, order[i]);
+      if(extra > 0){ out = out.concat(pairPoints(p)); extra--; }
+      else out.push({ x:p.x, y:p.y });
+    }
+    return out;
+  }
+
+  /* توزيع المستوى الخارجي: الجهة المواجهة تحمل الإلكترونات القابلة
+     للمشاركة (عددها = ما ينقص الذرّة)، والباقي أزواجٌ موضعها يُختار
+     بحيث يبقى المشهد متّزنًا حول محور الرابطة. */
+  var LONE_SPOTS = { 1:['far'], 2:['top','bottom'], 3:['top','bottom','far'] };
+
+  function outerLayout(valence, need, cx, cy, r, facingDeg){
+    var farDeg = facingDeg === 0 ? 180 : 0;
+    var map = { top:-90, bottom:90, far:farDeg, facing:facingDeg };
+    var share = [], lone = [];
+
+    // الجهة المواجهة: عدد المشاركة مصفوفًا عموديًّا
+    var fp = spot(cx, cy, r, facingDeg);
+    for(var i = 0; i < need; i++){
+      share.push({ x: fp.x, y: fp.y + (i - (need - 1) / 2) * 24 });
+    }
+    var pairs = (valence - need) / 2;
+    var spots = LONE_SPOTS[pairs] || [];
+    spots.forEach(function(key){
+      pairPoints(spot(cx, cy, r, map[key])).forEach(function(pt){ lone.push(pt); });
+    });
+    return { share:share, lone:lone };
+  }
+
+  /* ============================================================
+     راسم ذرّة — القاعدة الأولى: التوزيع كاملًا والرمز في النواة
+     ============================================================ */
+  function drawAtom(cfg, target){
+    var nodes = [], circles = [];
+    var radii = cfg.radii, R = radii[radii.length - 1];
+    var order = [-90, 90, (cfg.facing === 0 ? 180 : 0), cfg.facing];
+
+    radii.forEach(function(r, si){
+      var c = svgEl('circle', { cx:cfg.cx, cy:cfg.cy, r:r, 'class':'orbit orbit-shell-' + si });
+      circles.push(c);
+      target.appendChild(c);
+    });
+    var nuc = svgEl('circle', { cx:cfg.cx, cy:cfg.cy, r:24, 'class':'nucleus' });
+    circles.push(nuc);
+    target.appendChild(nuc);
+    var lbl = svgEl('text', { x:cfg.cx, y:cfg.cy + 6, 'class':'nucleus-label',
+                              'text-anchor':'middle', direction:'ltr' });
+    lbl.style.unicodeBidi = 'isolate';
+    lbl.textContent = cfg.symbol;
+    circles.push(lbl);
+    target.appendChild(lbl);
+
+    // المستويات الداخلية
+    var inner = cfg.shells.slice(0, cfg.shells.length - 1);
+    inner.forEach(function(count, si){
+      innerLayout(count, cfg.cx, cfg.cy, radii[si], order).forEach(function(pt){
+        var m = marker(cfg.marker, pt.x, pt.y);
+        m.querySelector('.ehalo').setAttribute('r', 0);
+        target.appendChild(m);
+        nodes.push(m);
+      });
+    });
+
+    // المستوى الخارجي
+    var valence = cfg.shells[cfg.shells.length - 1];
+    var lay = outerLayout(valence, cfg.need, cfg.cx, cfg.cy, R, cfg.facing);
+    var shareables = [];
+    lay.lone.forEach(function(pt){
+      var m = marker(cfg.marker, pt.x, pt.y);
+      m.querySelector('.ehalo').setAttribute('r', 0);
+      target.appendChild(m);
+      nodes.push(m);
+    });
+    lay.share.forEach(function(pt){
+      var m = marker(cfg.marker, pt.x, pt.y);
+      target.appendChild(m);
+      nodes.push(m);
+      shareables.push(m);
+    });
+
+    var atom = {
+      cx: cfg.cx, cy: cfg.cy, R: R,
+      marks: nodes, shell: circles, shareables: shareables,
+      /* تحريك الذرّة كلها: الدوائر بسمة cx، والعلامات بموضعها.
+         لا مجموعة مغلّفة كي يبقى حساب الموضع المطلق مباشرًا. */
+      moveTo: function(newCx, ms, done){
+        var startCx = atom.cx;
+        var starts = nodes.map(function(n){ return n._pos.x; });
+        animate(ms, function(e){
+          var dx = (newCx - startCx) * e;
+          circles.forEach(function(c){
+            if(c.tagName === 'text') c.setAttribute('x', startCx + dx);
+            else c.setAttribute('cx', startCx + dx);
+          });
+          nodes.forEach(function(n, i){ place(n, starts[i] + dx, n._pos.y); });
+          atom.cx = startCx + dx;
+        }, done);
+      }
+    };
+    return atom;
+  }
+
+  /* مشهد ساكن: ذرّتان متباعدتان بلا تفاعل ولا عدّاد ولا صيغة.
+     يُستعمل في محطة التنشيط حيث المطلوب تهيئة المشهد لا تشغيله. */
+  function idlePair(svgId, cfg){
+    var svg = document.getElementById(svgId);
+    if(!svg) return;
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var vb = (svg.getAttribute('viewBox') || '0 0 900 420').split(/\s+/);
+    var cy = (+vb[3]) / 2, midX = (+vb[2]) / 2;
+    var R = cfg.radii[cfg.radii.length - 1];
+    var apart = R + 30;
+    drawAtom({ cx:midX - apart, cy:cy, symbol:cfg.sym, shells:cfg.shells,
+               radii:cfg.radii, marker:'dot', facing:0, need:cfg.need }, svg);
+    drawAtom({ cx:midX + apart, cy:cy, symbol:cfg.sym, shells:cfg.shells,
+               radii:cfg.radii, marker:'cross', facing:180, need:cfg.need }, svg);
+  }
+
+  /* ============================================================
+     مسرح جزيء ثنائي الذرّة (Cl₂ · O₂ · N₂)
+     الذرّتان تبدآن متباعدتين وتتقاربان حتى التلامس عند أول زوج —
+     فيرى الطالب الارتباط يحدث لا يستنتجه من تغيّر لون.
+     ============================================================ */
+  function diatomic(opts){
+    var svg = document.getElementById(opts.svgId);
+    if(!svg) return null;
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+    var cy = 235, midX = 450;
+    var radii = opts.radii, R = radii[radii.length - 1];
+    var k = opts.pairs;
+    /* الأزواج في عمود واحد، فالتداخل يحتاج عرضًا ثابتًا لا يزيد
+       بعددها — ويزداد قليلًا بالارتفاع اللازم للأزواج المتراصّة. */
+    var PAIR_GAP = 24;   // بين النقطة والصليب داخل الزوج
+    var PAIR_STEP = 46;  // بين زوج وزوج
+    var half = 16 + (k - 1) * 3;
+    var cxL = midX - R + half, cxR = midX + R - half;
+
+    var dotsView = svgEl('g', { 'class':'dots-view' });
+    svg.appendChild(dotsView);
+
+    var left = drawAtom({
+      cx:cxL, cy:cy, symbol:opts.sym, shells:opts.shells, radii:radii,
+      marker:'dot', facing:0, need:k
+    }, dotsView);
+    var right = drawAtom({
+      cx:cxR, cy:cy, symbol:opts.sym, shells:opts.shells, radii:radii,
+      marker:'cross', facing:180, need:k
+    }, dotsView);
+
+    var lassoL = svgEl('circle', { cx:cxL, cy:cy, r:R + 14, 'class':'count-lasso' });
+    var lassoR = svgEl('circle', { cx:cxR, cy:cy, r:R + 14, 'class':'count-lasso' });
+    dotsView.appendChild(lassoL);
+    dotsView.appendChild(lassoR);
+
+    function counterAt(x){
+      var t = svgEl('text', { x:x, y:cy + R + 48, 'class':'ecount',
+                              'text-anchor':'middle', direction:'ltr' });
+      t.style.unicodeBidi = 'isolate';
+      dotsView.appendChild(t);
+      return t;
+    }
+    var cntL = counterAt(cxL), cntR = counterAt(cxR);
+    var capL = svgEl('text', { x:cxL, y:cy + R + 68, 'class':'ecount-cap', 'text-anchor':'middle' });
+    var capR = svgEl('text', { x:cxR, y:cy + R + 68, 'class':'ecount-cap', 'text-anchor':'middle' });
+    capL.textContent = 'إلكترونات المستوى الخارجي';
+    capR.textContent = 'إلكترونات المستوى الخارجي';
+    dotsView.appendChild(capL);
+    dotsView.appendChild(capR);
+
+    /* الصيغة الكيميائية: تظهر بعد اكتمال الرابطة لا قبلها — الصيغة
+       نتيجةٌ لا مرافقة. الرقم المنخفض بـtspan لا برمز يونيكود. */
+    var formula = svgEl('text', { x:130, y:78, 'class':'formula-label', direction:'ltr' });
+    formula.style.unicodeBidi = 'isolate';
+    formula.appendChild(svgEl('tspan', {}));
+    formula.firstChild.textContent = opts.sym;
+    var sub = svgEl('tspan', { dy:9, 'font-size':'0.66em' });
+    sub.textContent = '2';
+    formula.appendChild(sub);
+    dotsView.appendChild(formula);
+
+    var offered = { left:{}, right:{} }, donePairs = 0, busy = false;
+
+    /* الزوج عمود، والأزواج فوق بعضها: النقطة فوق والصليب تحتها،
+       فيُقرأ الزوج ملكًا للذرّتين معًا لا لواحدة منهما. */
+    function bondSlot(side, p){
+      var base = cy + (p - (k - 1) / 2) * PAIR_STEP;
+      return { x: midX, y: base + (side === 'left' ? -PAIR_GAP / 2 : PAIR_GAP / 2) };
+    }
+    function counts(){ return opts.valence + donePairs; }
+    function refresh(){
+      cntL.textContent = String(counts());
+      cntR.textContent = String(counts());
+    }
+    function showCounters(){
+      refresh();
+      [cntL, cntR, capL, capR].forEach(function(n){ n.classList.add('show'); });
+    }
+    refresh();
+    if(opts.liveCount) showCounters();
+
+    function settlePair(p, after){
+      var a = left.shareables[p], b = right.shareables[p];
+      a.classList.add('shared');
+      b.classList.add('shared');
+      glide(a, bondSlot('left', p), 420);
+      glide(b, bondSlot('right', p), 420, after);
+    }
+
+    function completePair(p){
+      donePairs++;
+      sound('playSnap');
+      if(opts.liveCount) refresh();
+      if(opts.onPair) opts.onPair(donePairs);
+      if(donePairs < k) openPair(donePairs);
+      else {
+        formula.classList.add('show');
+        if(opts.onComplete) opts.onComplete();
+      }
+    }
+
+    function tryClose(p){
+      if(!offered.left[p] || !offered.right[p]) return;
+      busy = true;
+      settlePair(p, function(){ busy = false; completePair(p); });
+    }
+
+    function openPair(p){
+      if(p >= k) return;
+      [['left', left], ['right', right]].forEach(function(pair){
+        var side = pair[0], atom = pair[1];
+        var node = atom.shareables[p];
+        if(!node || offered[side][p]) return;
+        activate(node, 'إلكترون في المستوى الخارجي — انقر لنقله إلى الموضع المشترك', function(){
+          if(busy) return;
+          deactivate(node);
+          offered[side][p] = true;
+          node.classList.add('shared');
+          sound('playTick');
+          if(!offered.left[p] || !offered.right[p]){
+            if(opts.onHalf) opts.onHalf(p);
+            return;
+          }
+          tryClose(p);
+        });
+      });
+    }
+
+    return {
+      start: function(){ openPair(0); },
+      showCounters: showCounters,
+      lassoSequence: function(after){
+        var wait = reduced() ? 60 : 1500;
+        showCounters();
+        lassoL.classList.add('show');
+        setTimeout(function(){
+          lassoL.classList.remove('show');
+          lassoR.classList.add('show');
+          setTimeout(function(){
+            lassoR.classList.remove('show');
+            if(after) after();
+          }, wait);
+        }, wait);
+      },
+    };
+  }
+
+  /* ============================================================
+     مسرح جزيء متعدّد الذرّات (CH₄ · NH₃ · H₂O)
+     ذرّات الهيدروجين تبدأ في صفّ جانبي وتطير إلى موضعها عند النقر.
+     والموضع المشغول بزوج لا يقبل ذرّة — فالحدّ يراه الطالب في الرسم
+     لا يقرأه في جملة.
+     ============================================================ */
+  function polyatomic(opts){
+    var svg = document.getElementById(opts.svgId);
+    if(!svg) return null;
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+    var cx = 450, cy = 230;
+    var radii = [40, 96], R = 96, hR = 30, dock = R + hR;
+    var SPOTS = [-90, 90, 180, 0];      // أعلى · أسفل · يسار · يمين
+
+    var dotsView = svgEl('g', { 'class':'dots-view' });
+    svg.appendChild(dotsView);
+
+    // الذرّة المركزية: مواضع الارتباط مفردة، والمواضع المشغولة أزواج
+    var bondSpots = opts.bondSpots;                     // زوايا الارتباط
+    var loneSpots = SPOTS.filter(function(d){ return bondSpots.indexOf(d) === -1; });
+
+    radii.forEach(function(r, si){
+      dotsView.appendChild(svgEl('circle', { cx:cx, cy:cy, r:r, 'class':'orbit orbit-shell-' + si }));
+    });
+    dotsView.appendChild(svgEl('circle', { cx:cx, cy:cy, r:24, 'class':'nucleus' }));
+    var cl = svgEl('text', { x:cx, y:cy + 6, 'class':'nucleus-label', 'text-anchor':'middle', direction:'ltr' });
+    cl.style.unicodeBidi = 'isolate';
+    cl.textContent = opts.sym;
+    dotsView.appendChild(cl);
+
+    // المستوى الداخلي (إلكترونان): أعلى وأسفل
+    innerLayout(2, cx, cy, radii[0], SPOTS).forEach(function(pt){
+      var m = marker('dot', pt.x, pt.y);
+      m.querySelector('.ehalo').setAttribute('r', 0);
+      dotsView.appendChild(m);
+    });
+
+    // أزواج المستوى الخارجي عند المواضع غير الرابطة
+    loneSpots.forEach(function(deg){
+      pairPoints(spot(cx, cy, R, deg)).forEach(function(pt){
+        var m = marker('dot', pt.x, pt.y);
+        m.querySelector('.ehalo').setAttribute('r', 0);
+        dotsView.appendChild(m);
+      });
+    });
+
+    // إلكترونات الارتباط المفردة
+    var freeElectrons = bondSpots.map(function(deg){
+      var p = spot(cx, cy, R, deg);
+      var m = marker('dot', p.x, p.y);
+      m.querySelector('.ehalo').setAttribute('r', 0);
+      dotsView.appendChild(m);
+      return { node:m, deg:deg, used:false };
+    });
+
+    // بِركة الهيدروجين: صفّ أسفل المشهد
+    var poolY = cy + R + 118;
+    var hydrogens = [];
+    var n = opts.hCount;
+    for(var i = 0; i < n; i++){
+      var hx = cx + (i - (n - 1) / 2) * 92;
+      var g = svgEl('g', { 'class':'h-atom' });
+      var ring = svgEl('circle', { cx:hx, cy:poolY, r:hR, 'class':'h-ring' });
+      var nucl = svgEl('circle', { cx:hx, cy:poolY, r:15, 'class':'nucleus' });
+      var t = svgEl('text', { x:hx, y:poolY + 5, 'class':'nucleus-label',
+                              'text-anchor':'middle', direction:'ltr' });
+      t.style.unicodeBidi = 'isolate';
+      t.textContent = 'H';
+      g.appendChild(ring); g.appendChild(nucl); g.appendChild(t);
+      var em = marker('cross', hx, poolY - hR);
+      em.querySelector('.ehalo').setAttribute('r', 0);
+      g.appendChild(em);
+      dotsView.appendChild(g);
+      hydrogens.push({ g:g, ring:ring, nuc:nucl, lbl:t, e:em, x:hx, y:poolY, bonded:false });
+    }
+
+    var used = 0, bonded = 0, busy = false;
+
+    function moveH(hy, tx, ty, ms, done){
+      var sx = hy.x, sy = hy.y;
+      var epos = { x:hy.e._pos.x, y:hy.e._pos.y };
+      animate(ms, function(e){
+        var nx = sx + (tx - sx) * e, ny = sy + (ty - sy) * e;
+        [hy.ring, hy.nuc].forEach(function(c){ c.setAttribute('cx', nx); c.setAttribute('cy', ny); });
+        hy.lbl.setAttribute('x', nx); hy.lbl.setAttribute('y', ny + 5);
+        place(hy.e, epos.x + (nx - sx), epos.y + (ny - sy));
+        hy.x = nx; hy.y = ny;
+      }, done);
+    }
+
+    function shake(hy){
+      hy.g.classList.remove('shaking');
+      void hy.g.getBoundingClientRect;
+      hy.g.classList.add('shaking');
+      setTimeout(function(){ hy.g.classList.remove('shaking'); }, 460);
+      sound('playWrong');
+      if(opts.onBlocked) opts.onBlocked();
+    }
+
+    hydrogens.forEach(function(hy){
+      hy.g.setAttribute('tabindex', '0');
+      hy.g.setAttribute('role', 'button');
+      hy.g.setAttribute('aria-label', 'ذرّة هيدروجين — انقر لربطها');
+      function act(){
+        if(hy.bonded || busy) return;
+        var slot = null;
+        for(var i = 0; i < freeElectrons.length; i++){
+          if(!freeElectrons[i].used){ slot = freeElectrons[i]; break; }
+        }
+        if(!slot){
+          // كل مواضع الارتباط شُغلت: الذرّة تندفع نحو موضع مشغول بزوج ثم ترتدّ
+          var blocked = loneSpots.length ? loneSpots[0] : SPOTS[0];
+          var bp = spot(cx, cy, R + hR, blocked);
+          busy = true;
+          var backX = hy.x, backY = hy.y;
+          moveH(hy, bp.x, bp.y, 380, function(){
+            shake(hy);
+            setTimeout(function(){
+              moveH(hy, backX, backY, 380, function(){
+                hy.g.classList.add('dim');
+                busy = false;
+              });
+            }, 420);
+          });
+          return;
+        }
+        busy = true;
+        slot.used = true;
+        used++;
+        hy.bonded = true;
+        hy.g.classList.add('bonded');
+        hy.g.removeAttribute('tabindex');
+        var dp = spot(cx, cy, dock, slot.deg);
+        sound('playTick');
+        moveH(hy, dp.x, dp.y, 620, function(){
+          // الزوج المشترك يستقرّ عند نقطة التلامس بين الدائرتين
+          var cp = spot(cx, cy, R, slot.deg);
+          var a = rad(slot.deg);
+          var px = -Math.sin(a), py = Math.cos(a);
+          slot.node.classList.add('shared');
+          hy.e.classList.add('shared');
+          glide(slot.node, { x: cp.x + px * 11, y: cp.y + py * 11 }, 380);
+          glide(hy.e, { x: cp.x - px * 11, y: cp.y - py * 11 }, 380, function(){
+            bonded++;
+            busy = false;
+            sound('playSnap');
+            if(opts.onBond) opts.onBond(bonded);
+            if(bonded >= bondSpots.length && opts.onComplete) opts.onComplete();
+          });
+        });
+      }
+      hy.g.addEventListener('click', act);
+      hy.g.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); act(); }
+      });
+    });
+
+    return {};
+  }
+
+  /* ==========================================================
+     المحطة 1 — التنبّؤ (لا يُصحَّح)
+     ========================================================== */
+  (function(){
+    idlePair('stage1', { sym:'Cl', shells:[2,8,7], radii:[38,68,120], need:1 });
+
+    var group = document.getElementById('predictOptions');
+    if(!group) return;
+    var fb = document.getElementById('fb-predict');
+    var radios = group.querySelectorAll('input[type="radio"]');
+    radios.forEach(function(r){
+      r.addEventListener('change', function(){
+        radios.forEach(function(x){ x.disabled = true; });
+        if(fb){
+          fb.hidden = false;
+          fb.className = 'explore-feedback is-hint';
+          fb.textContent = 'سُجِّل توقّعك. المحطة التالية تعرض ما يحدث فعلًا.';
+        }
+        claim('l4-predict', 'PREDICT', 'توقّعتَ قبل المشاهدة');
+        sound('playSnap');
+        show('predictDone');
+      });
+    });
+  })();
+
+  /* ==========================================================
+     المحطة 2 — بناء جزيء الكلور
+     ========================================================== */
+  var st2 = null;
+  (function(){
+    if(!window.Quiz || !window.Quiz.practice) return;
+
+    window.Quiz.practice({
+      'cl-valence': {
+        xpId:'l4-cl-valence', xp:'MCQ',
+        reason:'استخرجتَ إلكترونات المستوى الخارجي من التوزيع',
+        correctText:'✓ صحيح — سبعة إلكترونات في المستوى الخارجي.',
+        hints:{
+          w1:'انظر إلى المستوى الثالث في الرسم — وهو الأبعد عن النواة — وعُدّ ما عليه.',
+          w2:'8 هو العدد الذي تصل إليه الذرّة بعد الرابطة. والسؤال عن عددها قبل الرابطة.',
+          w3:'17 هو عدد إلكترونات الذرّة كلها على المستويات الثلاثة. والسؤال عن المستوى الخارجي وحده.',
+          any:'عُدّ ما على المستوى الأبعد عن النواة في الرسم.'
+        }
+      },
+      'cl-needs': {
+        xpId:'l4-cl-needs', xp:'MCQ', reason:'حدّدتَ نقص الذرّة',
+        hints:{
+          w1:'اطرح 7 من 8.',
+          w2:'7 هو ما تملكه الذرّة الآن. والسؤال عمّا تحتاجه ليكتمل.',
+          w3:'الغازات النبيلة وحدها مستواها الخارجي مكتمل. والكلور ليس غازًا نبيلًا.',
+          any:'اطرح عدد إلكترونات المستوى الخارجي من 8.'
+        }
+      }
+    }, {
+      onSolved: function(name){
+        if(name === 'cl-valence'){ show('clNeedsStep'); return; }
+        show('clBuildBlock');
+        st2 = diatomic({
+          svgId:'stage2', sym:'Cl', shells:[2,8,7], radii:[38,68,120],
+          valence:7, pairs:1, ballClass:'ball-cl', liveCount:false,
+          onHalf: function(){
+            setText('clMsg', 'انتقل إلكترون واحد. انقر إلكترون الذرّة الأخرى ليكتمل الزوج.');
+          },
+          onComplete: function(){
+            setText('clMsg', 'اكتمل زوج مشترك بين الذرّتين.');
+            claim('l4-cl-build', 'TASK', 'كوّنتَ زوجًا مشتركًا');
+            show('clCountStep');
+          }
+        });
+        if(st2) st2.start();
+      }
+    });
+
+    window.Quiz.practice({
+      'cl-count': {
+        xpId:'l4-cl-count-after', xp:'MCQ', reason:'عددتَ الزوج المشترك للذرّتين معًا',
+        hints:{
+          w1:'الذرّة لم تفقد إلكترونها. الإلكترون في المنتصف وما زال محسوبًا لها.',
+          w2:'7 هو عدد الإلكترونات قبل الرابطة. والزوج المشترك يُحسب للذرّة اليمنى أيضًا.',
+          w3:'14 هو مجموع إلكترونات المستوى الخارجي في الذرّتين. والسؤال عن ذرّة واحدة منهما.',
+          any:'عُدّ إلكترونات المستوى الخارجي للذرّة اليمنى، ومعها الزوج المشترك.'
+        }
+      }
+    }, {
+      onSolved: function(){
+        /* العدّادان يظهران الآن لا قبل الآن: تأكيدٌ لاستنتاج الطالب
+           لا مصدرٌ له. والطوق يمرّ على الذرّتين بالتتابع فيُرى
+           الزوجُ نفسه محسوبًا مرّتين. */
+        show('clCountLine');
+        if(st2){
+          st2.lassoSequence(function(){ show('whyShareStep'); });
+        }else{
+          show('whyShareStep');
+        }
+      }
+    });
+
+    window.Quiz.practice({
+      'why-share': {
+        xpId:'l4-why-not-transfer', xp:'MCQ', reason:'فسّرتَ سبب المشاركة',
+        hints:{
+          w1:'الكربون والهيدروجين مختلفان، ويتشاركان الإلكترونات في الميثان. فانظر إلى نوع العنصرين لا إلى تماثلهما.',
+          w2:'الكلور يكوّن أيونًا سالبًا مع الصوديوم. والسبب هنا في نوع العنصر المقابل.',
+          w3:'إلكترونات المستوى الخارجي هي نفسها التي انتقلت في الرابطة الأيونية.',
+          any:'الانتقال الكلّي يحتاج ذرّة تعطي وذرّة تأخذ. فمن يعطي هنا؟'
+        }
+      }
+    }, {
+      onSolved: function(){
+        show('st2Done');
+        sound('playChime');
+      }
+    });
+  })();
+
+  /* ==========================================================
+     المحطة 3 — المصطلحات وتطبيقها
+     ========================================================== */
+  (function(){
+    if(!window.Quiz || !window.Quiz.practice) return;
+    window.Quiz.practice({
+      'identify': {
+        xpId:'l4-identify', xp:'MCQ', reason:'طبّقتَ القاعدة على مركّبات جديدة',
+        hints:{
+          w1:'المغنيسيوم فلز. والرابطة التساهمية بين لافلزّين.',
+          w2:'البوتاسيوم فلز.',
+          w3:'الكالسيوم فلز.',
+          any:'الرابطة التساهمية بين لافلزّين. فابحث عن مركّب لا فلزّ فيه.'
+        }
+      }
+    }, {
+      onSolved: function(){ show('st3Done'); }
+    });
+  })();
+
+  /* ==========================================================
+     المحطة 4 — أنواع الروابط التساهمية
+     ========================================================== */
+  var st4o = null, st4n = null;
+  (function(){
+    if(!window.Quiz || !window.Quiz.practice) return;
+
+    window.Quiz.practice({
+      'o-needs': {
+        xpId:'l4-o-needs', xp:'MCQ', reason:'حدّدتَ ما تحتاجه ذرّة الأكسجين',
+        hints:{
+          w1:'6 هو عدد إلكترونات المستوى الخارجي. والسؤال عمّا تحتاجه ليكتمل.',
+          w2:'الكلور يحتاج واحدًا لأن إلكتروناته سبعة. وإلكترونات الأكسجين ستّة.',
+          w3:'8 هو العدد الذي يكتمل عنده المستوى. اطرح منه 6.',
+          any:'اطرح عدد إلكترونات المستوى الخارجي من 8.'
+        }
+      }
+    }, {
+      onSolved: function(){
+        show('o2Block');
+        st4o = diatomic({
+          svgId:'stage4o', sym:'O', shells:[2,6], radii:[42,130],
+          valence:6, pairs:2, ballClass:'ball-o', ballDark:true, liveCount:true,
+          onPair: function(n){
+            if(n === 1){
+              /* حالة ناقصة لا ممنوعة: رسالة وسؤال، بلا اهتزاز. */
+              setText('o2Impasse', 'المستوى الخارجي يحتاج 8. ماذا تفعل؟');
+            }
+          },
+          onComplete: function(){
+            var im = document.getElementById('o2Impasse');
+            if(im) im.hidden = true;
+            setText('o2Msg', 'الأكسجين احتاج زوجين مشتركين.');
+            show('o2Name');
+            show('cmpStep');
+            claim('l4-o2-build', 'PRODUCE', 'اكتشفتَ أن الأكسجين يحتاج زوجين');
+          }
+        });
+        if(st4o) st4o.start();
+      }
+    });
+
+    window.Quiz.practice({
+      'cmp-pairs': {
+        xpId:'l4-compare-pairs', xp:'MCQ', reason:'قارنتَ الجزيئين بوحدة الأزواج',
+        hints:{
+          w1:'الجزيئان كلاهما ذرّتان. عُدّ الأزواج في منتصف كلٍّ منهما.',
+          w2:'للكلور ثلاثة مستويات وللأكسجين مستويان، لكن هذا ليس ما يميّز نوع الرابطة.',
+          w3:'الكلور والأكسجين كلاهما لافلز، ولا فلزّ في أيٍّ من الجزيئين.',
+          any:'عُدّ الأزواج المشتركة في منتصف كل جزيء.'
+        }
+      }
+    }, {
+      onSolved: function(){
+        show('n2Block');
+        st4n = diatomic({
+          svgId:'stage4n', sym:'N', shells:[2,5], radii:[42,130],
+          valence:5, pairs:3, ballClass:'ball-n', ballDark:true, liveCount:true,
+          onComplete: function(){
+            setText('n2Msg', 'ثلاثة أزواج مشتركة بين الذرّتين.');
+            show('n2Name');
+            show('stickBlock');
+            claim('l4-n2-build', 'PRODUCE', 'بنيتَ ثلاثة أزواج مشتركة');
+          }
+        });
+        if(st4n) st4n.start();
+      }
+    });
+
+    /* جسر لا مبدّل: النماذج تُكشف أسفل الزرّ فتبقى الرسوم النقطية
+       فوقها للرجوع، ولا يحمل الطالب حالة «أنا في أي وضع الآن؟». */
+    var showModels4 = document.getElementById('showModels4');
+    if(showModels4){
+      showModels4.addEventListener('click', function(){
+        show('models4');
+        showModels4.disabled = true;
+        showModels4.classList.add('demoted');
+        sound('playTick');
+      });
+    }
+
+    window.Quiz.practice({
+      'stick': {
+        xpId:'l4-stick-meaning', xp:'MCQ', reason:'ترجمتَ الرسم النقطي إلى نموذج',
+        hints:{
+          w1:'لا يوجد جسم مادّي بين الذرّتين. عُدّ عصيّ النيتروجين، وعُدّ أزواجه المشتركة.',
+          w2:'لو كانت العصا إلكترونًا واحدًا لظهرت عصاتان في الكلور. وفي الكلور عصا واحدة.',
+          w3:'المسافة موجودة في كل الجزيئات. وعدد العصيّ يختلف من جزيء إلى آخر.',
+          any:'عُدّ عصيّ النيتروجين، وعُدّ أزواجه المشتركة.'
+        }
+      }
+    }, {
+      onSolved: function(){
+        show('stickLine');
+        show('st4Done');
+        sound('playChime');
+      }
+    });
+  })();
+
+  /* ==========================================================
+     المحطة 5 — بناء الجزيئات الأربعة
+     ----------------------------------------------------------
+     الهيدروجين أوّلها عمدًا: مستواه الأول يكتمل بإلكترونين لا
+     بثمانية، فيكسر التعميم في موضعه الطبيعي بدل سطر استثناء
+     يُقرأ تحت جدول.
+     ========================================================== */
+  (function(){
+    var st5h = null, ch4 = null, nh3 = null, h2o = null;
+
+    st5h = diatomic({
+      svgId:'stage5h', sym:'H', shells:[1], radii:[78],
+      valence:1, pairs:1, ballClass:'ball-h', liveCount:true,
+      onHalf: function(){
+        setText('h2Msg', 'انتقل إلكترون واحد. انقر إلكترون الذرّة الأخرى ليكتمل الزوج.');
+      },
+      onComplete: function(){
+        setHtml('h2Msg', '<span dir="ltr">H<sub>2</sub></span> — رابطة تساهمية أحادية، ولكل ذرّة الآن إلكترونان.');
+        show('h2Name');
+        show('ch4Block');
+        claim('l4-h2-build', 'PRODUCE', 'بنيتَ أبسط جزيء تساهمي');
+        sound('playChime');
+      }
+    });
+    if(st5h) st5h.start();
+
+    ch4 = polyatomic({
+      svgId:'stage5c', sym:'C', bondSpots:[-90, 180, 90, 0], hCount:4, ballClass:'ball-c',
+      /* الميثان كما في الشكل 1-27: أربع روابط متعامدة بأطوال متساوية */
+      modelSpots:[{deg:-90,len:1},{deg:0,len:1},{deg:90,len:1},{deg:180,len:1}],
+      onComplete: function(){
+        setHtml('ch4Msg', '<span dir="ltr">CH<sub>4</sub></span> — أربع روابط تساهمية أحادية.');
+        claim('l4-ch4-build', 'TASK', 'بنيتَ جزيء الميثان');
+        show('nh3Block');
+        sound('playChime');
+      }
+    });
+
+    nh3 = polyatomic({
+      svgId:'stage5n', sym:'N', bondSpots:[-90, 180, 90], hCount:4, ballClass:'ball-n',
+      /* الأمونيا كما في الشكل 1-28: هرمٌ بثلاث روابط ظاهرة */
+      modelSpots:[{deg:20,len:1},{deg:160,len:1},{deg:90,len:1}],
+      onBlocked: function(){
+        setText('nh3Impasse', 'المستوى الخارجي للنيتروجين اكتمل.');
+      },
+      onComplete: function(){
+        setHtml('nh3Msg', '<span dir="ltr">NH<sub>3</sub></span> — ثلاث روابط أحادية، ويبقى إلكترونان على ذرّة النيتروجين لا يشاركان في أي رابطة.');
+        claim('l4-nh3-build', 'PRODUCE', 'بنيتَ جزيء الأمونيا');
+        show('h2oBlock');
+        sound('playChime');
+      }
+    });
+
+    h2o = polyatomic({
+      svgId:'stage5w', sym:'O', bondSpots:[180, 0], hCount:2, ballClass:'ball-o',
+      modelSpots:[{deg:55,len:1},{deg:125,len:1}],
+      onComplete: function(){
+        setHtml('h2oMsg', '<span dir="ltr">H<sub>2</sub>O</span> — رابطتان أحاديتان. الأكسجين كوّن رابطتين هنا ورابطة ثنائية هناك، والعدد اثنان في الحالتين.');
+        claim('l4-h2o-build', 'PRODUCE', 'وزّعتَ روابط الأكسجين على ذرّتين');
+        show('sameNumStep');
+        sound('playChime');
+      }
+    });
+
+    var showModels5 = document.getElementById('showModels5');
+    if(showModels5){
+      showModels5.addEventListener('click', function(){
+        show('models5');
+        show('st5Done');
+        showModels5.disabled = true;
+        showModels5.classList.add('demoted');
+        sound('playChime');
+      });
+    }
+
+    if(!window.Quiz || !window.Quiz.practice) return;
+    window.Quiz.practice({
+      'same-num': {
+        xpId:'l4-same-number', xp:'MCQ', reason:'ميّزتَ بين عدد الروابط وتوزيعها',
+        hints:{
+          w1:'عدد الروابط ثلاث في الجزيئين. عُدّ الأزواج المشتركة في كل واحد منهما.',
+          w2:'التكافؤ عدد الروابط التي يكوّنها العنصر، وهو 3 في الحالتين.',
+          w3:'إلكترونات المستوى الخارجي للنيتروجين خمسة في الحالتين. والاختلاف في الذرّات المقابلة.',
+          any:'عدد الروابط واحد في الجزيئين. فانظر إلى عدد الذرّات التي وُزّعت عليها.'
+        }
+      }
+    }, {
+      onSolved: function(){
+        show('sameNumLine');
+        show('modelBlock');
+        sound('playChime');
+      }
+    });
+  })();
+
+  /* ==========================================================
+     المحطة 6 — عدد الروابط والتكافؤ
+     ----------------------------------------------------------
+     عمود التكافؤ مغطًّى حتى يكتمل عمود الروابط: لو كُشف من
+     البداية لنُسخ منه العمود وسقطت المطابقة التي هي الاكتشاف
+     كلّه. والاكتمال يُرصد بمراقب تغيّر الأصناف لا بنداء من
+     المحرّك — المحرّك المشترك آلة تفاعل لا منطق درس.
+     ========================================================== */
+  (function(){
+    var body = document.querySelector('.bond-table tbody');
+    if(!body) return;
+    var slots = body.querySelectorAll('.slot');
+    if(!slots.length) return;
+    var opened = false;
+
+    function check(){
+      if(opened) return;
+      var all = true;
+      slots.forEach(function(s){ if(!s.classList.contains('correct')) all = false; });
+      if(!all) return;
+      opened = true;
+      body.querySelectorAll('.veiled').forEach(function(n){ n.hidden = false; });
+      var note = document.getElementById('veilNote');
+      if(note) note.hidden = true;
+      show('patternStep');
+      sound('playChime');
+    }
+    if(window.MutationObserver){
+      var mo = new MutationObserver(check);
+      mo.observe(body, { attributes:true, subtree:true, attributeFilter:['class'] });
+    }
+    body.addEventListener('click', function(){ setTimeout(check, 60); });
+    setTimeout(check, 400);
+
+    if(!window.Quiz || !window.Quiz.practice) return;
+    window.Quiz.practice({
+      'valency': {
+        xpId:'l4-valency-relation', xp:'PATTERN', reason:'ربطتَ ما بنيتَه بيدك بالتكافؤ',
+        hints:{
+          w1:'تكافؤ الكربون 4، وقد كوّن أربع روابط لا ثماني.',
+          w2:'للكربون والنيتروجين والأكسجين مستويان لكل واحد. وأعداد روابطها مختلفة.',
+          w3:'قارن الرقمين في كل صفّ على حدة: هل تجدهما مختلفين في صفّ واحد؟',
+          any:'اقرأ الجدول صفًّا صفًّا، وقارن عمود الروابط بعمود التكافؤ.'
+        }
+      }
+    }, {
+      onSolved: function(){ show('phosStep'); }
+    });
+
+    window.Quiz.practice({
+      'phos': {
+        xpId:'l4-phosphorus', xp:'MCQ', reason:'طبّقتَ القاعدة على عنصر لم تبنِه',
+        hints:{
+          w1:'5 هو عدد إلكترونات المستوى الخارجي، وليس التكافؤ.',
+          w2:'أعد التوزيع: 2 ثم 8 ثم الباقي.',
+          w3:'15 هو عدد إلكترونات الذرّة كلها.',
+          any:'وزّع 15 إلكترونًا: 2 ثم 8 ثم الباقي، ثم اطرح الباقي من 8.'
+        }
+      }
+    }, {
+      onSolved: function(){ show('shapeBlock'); }
+    });
+
+    window.Quiz.practice({
+      'shape': {
+        xpId:'l4-shape', xp:'MCQ', reason:'وصفتَ شكل الجزيء من نموذجه',
+        hints:{
+          w1:'الميثان خمس ذرّات، وذرّات الهيدروجين موزّعة حول الكربون في أربعة اتجاهات.',
+          w2:'الأمونيا أربع ذرّات، والنيتروجين في قمّة هرم.',
+          w3:'ذرّتا الهيدروجين في الماء تصنعان زاوية مع ذرّة الأكسجين.',
+          any:'ابحث عن الجزيء الذي لا يحتمل شكله زاوية أصلًا.'
+        }
+      }
+    }, {
+      onSolved: function(){
+        show('st6Done');
+        sound('playChime');
+      }
+    });
+  })();
+
+  /* ==========================================================
+     المحطة 7 — التقييم كاملًا على المحرّك المشترك
+     الشهادة تُنادى من داخله، ولا نداء Certificate.finish هنا.
+     ========================================================== */
+  (function(){
+    if(!window.Quiz || !window.Quiz.evaluate){
+      console.warn('[مختبر فؤاد] template.js لم يُحمّل: محطة التقييم معطّلة.');
+      return;
+    }
+    /* منظّم يقبل الرقم والكلمة معًا: رفضُ «ثلاثة» لأن الطالب كتبها
+       حروفًا رفضٌ لفهم لا تقييمٌ له. */
+    function numAr(s){
+      var t = window.Quiz.normalizeAr(s);
+      var words = { 'صفر':'0','واحد':'1','اثنان':'2','اثنين':'2','ثلاثه':'3','ثلاث':'3',
+                    'اربعه':'4','اربع':'4','خمسه':'5','خمس':'5','سته':'6','ست':'6',
+                    'سبعه':'7','سبع':'7','ثمانيه':'8','ثماني':'8','ثمانيا':'8' };
+      t = t.replace(/\s*(الكترونات|الكترونا|الكترون)\s*/g, ' ').trim();
+      if(words[t]) return words[t];
+      var m = t.match(/[0-9]+/);
+      return m ? m[0] : t;
+    }
+
+    window.Quiz.evaluate({
+      title: 'كيف تتكوّن الروابط التساهمية؟',
+      questions: [
+        { name:'ev1', why:'انتقال الإلكترونات يكوّن رابطة أيونية. والبروتونات تبقى في النواة ولا تشارك في أي رابطة.' },
+        { name:'ev2', why:'ذرّة الأكسجين تكافؤها 2، فتكوّن رابطتين أحاديتين مع ذرّتَي هيدروجين.' },
+        { name:'ev3', why:'الرابطة الثنائية زوجان مشتركان، أي أربعة إلكترونات.' },
+        { name:'ev4', why:'إلكترونات المستوى الخارجي للكربون أربعة، وتكافؤه 4.' },
+        { name:'ev5', why:'إلكترونات المستوى الخارجي للفلور سبعة، و8 − 7 = 1.' },
+        { name:'ev6', why:'إلكترونات المستوى الخارجي للكبريت ستّة، و8 − 6 = 2.' },
+        { name:'ev7', type:'text',
+          input:'ev7Input', button:'ev7Check', feedback:'fb-ev7',
+          answer:'3', normalize:numAr,
+          emptyText:'اكتب العدد أولًا.',
+          why:'الإجابة الصحيحة: ثلاثة إلكترونات، واحد في كل رابطة أحادية.' },
+        { name:'ev8', why:'الزوج المشترك محسوب للذرّتين معًا، فيصير لكل ذرّة ثمانية.' },
+        { name:'ev9', why:'الانتقال يكوّن أيونات، وهو ما يحدث في الرابطة الأيونية وحدها.' },
+        { name:'ev10', why:'الانتقال يحتاج ذرّة تفقد وذرّة تكتسب. واللافلزّان كلاهما يكتسب.' }
+      ]
+    });
+  })();
+
+})();
+</script>
+
+<script>
+/* ==========================================================
+   الدخول من الخارج بالـhash
+   ----------------------------------------------------------
+   .station تبدأ بـopacity:0، فالقفز إلى مرساة لم تُوسَم بـin-view
+   يُنزل الطالب على مساحة فارغة. نؤدّي الثلاثة صراحةً: رفع hidden،
+   ثم in-view، ثم تفعيل نقطة التقدّم. والمحطات المخفيّة أصلًا تبقى
+   مخفيّة — كتلها تُبنى عند فتحها لا عند التحميل.
+   ========================================================== */
+(function(){
+  "use strict";
+  function reduced(){
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+  function activate(sec){
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + sec.id + '"]');
+    if(dot) dot.classList.add('active');
+  }
+  window.addEventListener('load', function(){
+    var id = (location.hash || '').replace(/^#/, '');
+    if(!/^station-[A-Za-z0-9_-]+$/.test(id)) return;
+    var target = document.getElementById(id);
+    if(!target || !target.classList.contains('station')) return;
+    var all = Array.prototype.slice.call(document.querySelectorAll('.station'));
+    var idx = all.indexOf(target);
+    if(idx < 0) return;
+    all.slice(0, idx).forEach(function(sec){ if(!sec.hidden) activate(sec); });
+    target.hidden = false;
+    activate(target);
+    if(target.scrollIntoView){
+      target.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block:'start' });
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
