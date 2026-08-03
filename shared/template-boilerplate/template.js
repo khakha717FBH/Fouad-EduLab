@@ -719,6 +719,68 @@
      الصفحة. الدروس ملفات HTML ثابتة، فالترتيب لا يتغيّر، والمُعرّف
      يبقى صالحًا عبر إعادة التحميل — وهذا ما يمنع تكرار كسب النقاط.
      يمكن لأي درس تثبيت مُعرّفه بنفسه عبر data-xp-id على الخانة. */
+  /* ---------- توسعة أغسطس 2026: التصنيف متعدّد إلى واحد ----------
+     خانة واحدة تقبل أكثر من رقاقة، وتلميح نصّي عند الوضع الخاطئ بدل
+     الاهتزاز وحده. الاثنتان إضافة خالصة لا إعادة كتابة: خانة بقيمة
+     واحدة في data-answer وبلا .slot-items تسلك حرفيًّا كما كانت،
+     ودرسا 03 و04 لا يتغيّر فيهما شيء.
+
+     الوسم:
+       <div class="slot cat-slot" id="s-x" data-answer="أ|ب">
+         <span class="slot-label">عنوان الخانة</span>
+         <span class="slot-items"></span>
+       </div>
+     السعة تُشتقّ من عدد القيم في data-answer، ويمكن تثبيتها بـdata-capacity.
+     والخانة لا تُقفل بصنف correct إلا عند امتلائها.
+
+     النقاط: المُعرّف من الرقاقة إن وُجد (data-xp-id) وإلا من الخانة.
+     فالوحدة في التصنيف هي الرقاقة — فعل الطالب — لا الخانة.
+
+     التلميحات تُسجَّل من الدرس، فالنصّ العربي يبقى في كائن واحد أعلى
+     سكربت الدرس لا موزّعًا على سمات:
+       Chips.hints({ 'قيمة الرقاقة|مُعرّف الخانة': 'نصّ', 'قيمة الرقاقة': 'احتياطي' });
+     ويظهر النصّ في .chips-feedback داخل أقرب سلف يحمل [data-chips]. */
+  var chipHints = {};
+  var chipDone  = {};
+  window.Chips = {
+    hints: function(map){
+      Object.keys(map || {}).forEach(function(k){ chipHints[k] = map[k]; });
+    },
+    /* نداء عند اكتمال كل خانات نشاط [data-chips="اسم"]. يحتاجه الدرس
+       لكشف سطر الخلاصة، ولمنح نقاط نشاط يُسعَّر ككلّ لا برقاقاته
+       (تحدٍّ اختياري مثلًا: رقاقاته data-xp-id="none" والنقاط هنا). */
+    onDone: function(name, fn){ chipDone[name] = fn; }
+  };
+
+  function slotAnswers(slot){ return (slot.dataset.answer || '').split('|'); }
+  function slotCapacity(slot){
+    return parseInt(slot.dataset.capacity, 10) || slotAnswers(slot).length;
+  }
+  function slotFilled(slot){ return parseInt(slot.dataset.filled, 10) || 0; }
+  function slotAccepts(slot, chip){
+    return slotAnswers(slot).indexOf(chip.dataset.value) >= 0;
+  }
+  function chipsFbOf(slot){
+    var wrap = slot && slot.closest ? slot.closest('[data-chips]') : null;
+    return wrap ? wrap.querySelector('.chips-feedback') : null;
+  }
+  function showChipHint(chip, slot){
+    var fb = chipsFbOf(slot);
+    if(!fb) return;
+    var txt = chipHints[chip.dataset.value + '|' + slot.id] ||
+              chipHints[chip.dataset.value] ||
+              slot.dataset.hint || '';
+    if(!txt) return;
+    fb.textContent = '💡 ' + txt;
+    fb.classList.add('is-hint');
+    fb.classList.remove('is-correct');
+    fb.hidden = false;
+  }
+  function clearChipHint(slot){
+    var fb = chipsFbOf(slot);
+    if(fb) fb.hidden = true;
+  }
+
   var slotEls = document.querySelectorAll('.slot');
   slotEls.forEach(function(slot, i){
     if(!slot.dataset.xpId){
@@ -822,20 +884,51 @@
 
   function placeChip(chip, slot){
     makeGhost(chip); // مسار النقر لا يمرّ بالسحب، فقد لا يوجد شبح بعد
-    slot.textContent = chip.dataset.value;
-    slot.classList.add('correct');
+    // خانة تصنيف: تُراكم الرقاقات داخل .slot-items ويبقى عنوانها ظاهرًا.
+    // خانة عادية: النصّ يحلّ محلّ المحتوى كما كان دائمًا.
+    var bucket = slot.querySelector ? slot.querySelector('.slot-items') : null;
+    if(bucket){
+      var item = document.createElement('span');
+      item.className = 'slot-item';
+      item.textContent = chip.dataset.value;
+      bucket.appendChild(item);
+    }else{
+      slot.textContent = chip.dataset.value;
+    }
+    var filled = slotFilled(slot) + 1;
+    slot.dataset.filled = filled;
     slot.classList.remove('dragover');
-    slot.removeAttribute('tabindex');
+    if(filled >= slotCapacity(slot)){
+      slot.classList.remove('partial');
+      slot.classList.add('correct');
+      slot.removeAttribute('tabindex');
+    }else{
+      slot.classList.add('partial');
+    }
     if(ghostEl && ghostEl.parentNode) ghostEl.parentNode.insertBefore(chip, ghostEl);
     clearChipStyles(chip);
     chip.classList.add('placed');
     chip.setAttribute('aria-hidden', 'true');
     chip.removeAttribute('tabindex');
     collapseGhost();
+    clearChipHint(slot);
     if(window.Sounds) window.Sounds.playSnap();
-    // سبب المكسب قابل للتخصيص بالدرس عبر data-xp-reason على الخانة
-    claimXP(slot.dataset.xpId, pts('MATCH', 5),
-            slot.dataset.xpReason || 'مطابقة صحيحة');
+    // سبب المكسب قابل للتخصيص بالدرس عبر data-xp-reason، والمُعرّف من
+    // الرقاقة إن وُجد — فخانة تسع رقاقتين تطلب ضعف العمل.
+    var xpId = chip.dataset.xpId || slot.dataset.xpId;
+    if(xpId !== 'none'){
+      claimXP(xpId, pts('MATCH', 5),
+              chip.dataset.xpReason || slot.dataset.xpReason || 'مطابقة صحيحة');
+    }
+    var wrap = slot.closest ? slot.closest('[data-chips]') : null;
+    if(wrap){
+      var pending = wrap.querySelectorAll('.slot:not(.correct)');
+      if(!pending.length && chipDone[wrap.dataset.chips]){
+        var fn = chipDone[wrap.dataset.chips];
+        chipDone[wrap.dataset.chips] = null;   // مرّة واحدة لا تتكرّر
+        fn();
+      }
+    }
   }
 
   // ----- حالة الاختيار بالنقر -----
@@ -871,20 +964,20 @@
     if(slot.classList.contains('correct')) return;
     var chip = selectedChip;
     clearSelection();
-    if(slot.dataset.answer === chip.dataset.value) placeChip(chip, slot);
-    else shakeChip(chip);
+    if(slotAccepts(slot, chip)) placeChip(chip, slot);
+    else { shakeChip(chip); showChipHint(chip, slot); }
   }
 
   // ----- إنهاء السحب: مسار واحد لكل النهايات -----
   function endDrag(chip, slot){
     dragEl = null;
     clearDragover();
-    if(slot && slot.dataset.answer === chip.dataset.value){
+    if(slot && slotAccepts(slot, chip)){
       placeChip(chip, slot);
       return;
     }
     returnChipToPool(chip);
-    if(slot) shakeChip(chip);
+    if(slot){ shakeChip(chip); showChipHint(chip, slot); }
   }
 
   // إلغاء: تُرجع كل شيء كما كان دون حكم على صواب أو خطأ

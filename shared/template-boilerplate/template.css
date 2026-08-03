@@ -438,6 +438,49 @@ header.hero h1{
 .slot:focus-visible{outline:2px solid var(--coral);outline-offset:2px;}
 .slot.correct{cursor:default;}
 
+/* ----- خانة التصنيف: تسع أكثر من رقاقة ويبقى عنوانها ظاهرًا -----
+   الحبّة الدوائية لا تصلح هنا: الخانة صارت صندوقًا يُقرأ عنوانه أولًا
+   ثم تتراكم فيه الرقاقات. ولذلك صنف صريح لا اشتقاق من البنية. */
+.cat-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));
+  gap:14px;
+  margin:14px 0 6px;
+}
+.cat-slot{
+  display:block;
+  border-radius:16px;
+  padding:12px 14px;
+  min-height:74px;
+  text-align:right;
+}
+.cat-slot .slot-label{
+  display:block;
+  color:var(--ink);
+  font-weight:700;
+  font-size:13px;
+  line-height:1.6;
+  margin-bottom:8px;
+}
+.cat-slot.correct .slot-label{color:var(--turquoise);}
+.cat-slot .slot-items{display:flex;flex-wrap:wrap;gap:8px;}
+.slot-item{
+  display:inline-block;
+  background:rgba(20,200,168,.12);
+  border:1px solid var(--turquoise);
+  color:var(--turquoise);
+  border-radius:999px;
+  padding:6px 14px;
+  font-size:13px;
+  font-weight:700;
+  animation:tplPopIn .3s ease;
+}
+/* خانة بدأت تمتلئ ولم تكتمل: تمييز هادئ يقول «ما زال فيها متّسع» */
+.slot.partial{
+  border-style:solid;
+  border-color:var(--turquoise-soft);
+}
+
 /* ===== حركات مشتركة للتغذية الراجعة ===== */
 @keyframes tplPopIn{
   0%{transform:scale(.82);}
@@ -497,6 +540,7 @@ footer.site-footer{
   .chip-ghost{transition:none;}
   .chip.shake{animation:none;}
   .slot.correct{animation:none;}
+  .slot-item{animation:none;}
 }
 
 /* =========================================================
