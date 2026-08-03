@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>صفحة فحص لخانة التصنيف</title>
+</head>
+<body>
+
+<div class="progress-track">
+  <div class="progress-dot" data-target="station-1"></div>
+</div>
+
+<section class="station" id="station-1">
+
+  <!-- نشاط تصنيف: ثلاث خانات، خانتان تسعان رقاقتين وواحدة رقاقة -->
+  <div data-chips="cats">
+    <div class="chips-pool">
+      <span class="chip" data-value="ألف" data-xp-id="c-alef">ألف</span>
+      <span class="chip" data-value="باء" data-xp-id="c-baa">باء</span>
+      <span class="chip" data-value="جيم" data-xp-id="c-jeem">جيم</span>
+      <span class="chip" data-value="دال" data-xp-id="c-dal">دال</span>
+      <span class="chip" data-value="هاء" data-xp-id="c-haa">هاء</span>
+    </div>
+
+    <div class="cat-grid">
+      <div class="slot cat-slot" id="cat-1" data-answer="ألف|باء">
+        <span class="slot-label">الأولى</span><span class="slot-items"></span>
+      </div>
+      <div class="slot cat-slot" id="cat-2" data-answer="جيم|دال">
+        <span class="slot-label">الثانية</span><span class="slot-items"></span>
+      </div>
+      <div class="slot cat-slot" id="cat-3" data-answer="هاء">
+        <span class="slot-label">الثالثة</span><span class="slot-items"></span>
+      </div>
+    </div>
+
+    <p class="explore-feedback chips-feedback" hidden></p>
+  </div>
+
+  <!-- نشاط ثانٍ: نقاطه للنشاط ككلّ لا لرقاقاته -->
+  <div data-chips="bonus">
+    <div class="chips-pool">
+      <span class="chip" data-value="واو" data-xp-id="none">واو</span>
+      <span class="chip" data-value="زاي" data-xp-id="none">زاي</span>
+    </div>
+    <div class="cat-grid">
+      <div class="slot cat-slot" id="bon-1" data-answer="واو|زاي">
+        <span class="slot-label">الوحيدة</span><span class="slot-items"></span>
+      </div>
+    </div>
+  </div>
+  <p id="bonusFlag" hidden>تمّ</p>
+
+  <!-- خانة قديمة الطراز: قيمة واحدة وبلا .slot-items ولا [data-chips] -->
+  <div class="chips-pool">
+    <span class="chip" data-value="قديم">قديم</span>
+  </div>
+  <span class="slot" id="legacy" data-answer="قديم"></span>
+
+</section>
+
+<script src="../../shared/sounds/sounds.js"></script>
+<script src="../../shared/xp-system/xp.js"></script>
+<script src="../../shared/template-boilerplate/template.js"></script>
+<script>
+  Chips.onDone('bonus', function(){
+    document.getElementById('bonusFlag').hidden = false;
+    XP.claim('bonus-whole', XP.POINTS.BONUS, 'تحدٍّ اختياري');
+  });
+  Chips.hints({
+    'ألف|cat-2': 'تلميح موجّه: ألف ليست هنا.',
+    'جيم': 'تلميح عامّ لجيم أينما وُضعت خطأً.'
+  });
+</script>
+</body>
+</html>
