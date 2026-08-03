@@ -7,9 +7,12 @@ const path = require('path');
 
 const SUITES = [
   'quiz-engines.test.js',   // المحرّكات المشتركة نفسها
+  'chips-multi.test.js',    // توسعة التصنيف متعدّد إلى واحد
   'lesson-03.test.js',      // الدرس المُهاجَر إليها
   'lesson-04.test.js',      // أول درس بُني على المحرّكات من أوّله
   'geometry-l4.test.js',    // فحص عددي للمسارح: ما لا يكشفه اختبار المنطق
+  'lesson-05.test.js',      // الرابطة الفلزّية — أول درس على محرّك التصنيف
+  'geometry-l5.test.js',    // فحص عددي لمسارح درس 05
   'lesson-01.test.js',      // انحدار: درس يرث template.js ولا يستعملها
   'lesson-02.test.js'       // حصانة: درس لا يربط المشترك أصلًا
 ];
