@@ -1,0 +1,2411 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدرس 5 — لماذا تُعدّ الفلزّات موصّلات جيّدة للحرارة والتيّار الكهربائي؟ | مختبر فؤاد التعليمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/identity/identity.css">
+<link rel="stylesheet" href="../../shared/template-boilerplate/template.css">
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  الدرس 5 — مختبر فؤاد التعليمي
+  "لماذا تُعدّ الفلزّات موصّلات جيّدة للحرارة والتيّار الكهربائي؟"
+
+  سبع محطات معلنة وسبع نقاط تقدّم (Engage → Explore → Explain →
+  Elaborate×3 → Evaluate). عدّاد المحطات المحقون من template.js يشتقّ
+  مقامه من عدد النقاط فيقول «من 7».
+
+  ترتيب الوسوم: وسوم shared/ الستّة تسبق سكربت الدرس — الدرس ينادي
+  window.Quiz وwindow.Chips لحظة التحميل.
+
+  قرارات بصرية حاكمة في هذا الدرس:
+    • اللون يحمل الفرق بين الجسيمين: الأيون تركوازي والإلكترون الحرّ
+      مرجاني. والمرجاني محجوز له وحده — فهو قلب الدرس كما كان الزوج
+      المشترك قلب الدرس 04.
+    • الذرّة تُرسم بمستوياتها كاملةً والرمز داخل النواة (لغة الدرس 04)،
+      ثم تنكمش إلى دائرة أيون عند فقد إلكترونها — وانكماشها نفسه هو
+      انتقال الطالب من نموذج الذرّة إلى نموذج الفلزّ.
+    • الإلكترون الحرّ لا يستقرّ عند ذرّة: حركته غير منتظمة بين الجميع،
+      وهي الفرق المرئي بين «انتقل» و«تحرّر».
+    • كل حركة تتوقّف تحت prefers-reduced-motion وحين تخرج المحطة من
+      الشاشة — بحر متحرّك دائمًا يستهلك بطارية الجوال بلا فائدة.
+    • الاهتزاز محجوز لما هو «ممنوع» لا لما هو «ناقص»: النقطة الرابعة
+      على الألومنيوم حالة ناقصة، فرسالة نصّية بلا اهتزاز.
+  ═══════════════════════════════════════════════════════════════════
+-->
+<style>
+  /* ============ منع سحب التحديث من تصفير XP ============ */
+  html, body{ overscroll-behavior-y:contain; }
+
+  /* ============ المسرح ============
+     أنماط خاصة بمادة هذا الدرس (الأيون وبحر الإلكترونات)، لا هيكلًا
+     عامًا — فلا تُنقَل إلى template.css. */
+  .stage-wrap{
+    width:100%;
+    max-width:920px;
+    margin:0 auto;
+    background:var(--navy-darker);
+    border:1px solid rgba(20,200,168,0.15);
+    border-radius:22px;
+    padding:10px;
+  }
+  svg.stage{
+    width:100%;
+    height:auto;
+    display:block;
+    -webkit-tap-highlight-color:transparent;
+  }
+
+  /* ---- الذرّة: لغة الدرس 04 نفسها، فالطالب يعرفها ---- */
+  .nucleus{fill:#2a3550; stroke:var(--turquoise-soft); stroke-width:1.5;}
+  .nucleus-label{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:17px;
+    fill:var(--ink);
+    pointer-events:none;
+    user-select:none;
+  }
+  .orbit{ fill:none; stroke-dasharray:2 5; }
+  .orbit-shell-0{ stroke:rgba(20,200,168,.22); stroke-width:1.3; }
+  .orbit-shell-1{ stroke:rgba(20,200,168,.52); stroke-width:1.5; }
+  .orbit-shell-2{ stroke:rgba(20,200,168,.88); stroke-width:1.9; }
+
+  /* ---- الإلكترون ---- */
+  .edot{ fill:var(--turquoise); }
+  .edot.free{ fill:var(--coral); }
+  .ehalo{ fill:none; }
+  .epos{ pointer-events:none; }
+  .epos.clickable{ cursor:pointer; touch-action:none; pointer-events:auto; }
+  .epos.clickable .ehalo{ fill:rgba(255,107,74,.18); }
+  .epos.clickable:hover .ehalo{ fill:rgba(255,107,74,.34); }
+  .epos.clickable:focus-visible{ outline:2px solid var(--coral); outline-offset:3px; }
+  @keyframes haloPulse{
+    0%,100%{ r:12; opacity:.9; }
+    50%{ r:15; opacity:.45; }
+  }
+  .epos.clickable .ehalo{ animation:haloPulse 1.7s ease-in-out infinite; }
+
+  /* ---- الأيون: دائرة أصغر تحمل إشارتها ---- */
+  .ion-body{ fill:#22314e; stroke:var(--turquoise); stroke-width:1.8; }
+  .ion-sign{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:15px;
+    fill:var(--turquoise);
+    pointer-events:none;
+    user-select:none;
+  }
+  .ion-symbol{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:13px;
+    fill:var(--ink-dim);
+    pointer-events:none;
+    user-select:none;
+  }
+
+  /* ---- بطاقة المعطى بجوار المسرح ---- */
+  .given-card{
+    display:inline-flex;
+    flex-wrap:wrap;
+    gap:6px 16px;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    max-width:920px;
+    margin:10px auto 0;
+    padding:9px 14px;
+    border:1px dashed rgba(20,200,168,.35);
+    border-radius:14px;
+    font-size:13px;
+    color:var(--ink-dim);
+  }
+  .given-card b{ color:var(--turquoise); font-weight:700; }
+
+  /* ---- رسالة المسرح: قناة نصّية أولى دائمًا ---- */
+  .stage-msg{
+    max-width:920px;
+    margin:10px auto 0;
+    min-height:22px;
+    text-align:center;
+    font-size:14px;
+    color:var(--ink-dim);
+    line-height:1.9;
+  }
+  .stage-msg.done{ color:var(--turquoise); font-weight:700; }
+
+  /* ---- أزرار تجربة داخل المسرح (الدرجة الثانية) ---- */
+  .try-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+    margin:14px auto 0;
+    max-width:920px;
+  }
+
+  /* ---- بطاقتا الشكلين في المحطة 3 ---- */
+  .figure-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:16px;
+    margin:16px 0 6px;
+  }
+  .figure-card{
+    background:var(--navy-darker);
+    border:1px solid rgba(20,200,168,.15);
+    border-radius:18px;
+    padding:12px;
+  }
+  .figure-card .fig-name{
+    color:var(--turquoise);
+    font-weight:700;
+    font-size:13px;
+    margin-bottom:8px;
+  }
+  .figure-card .fig-note{
+    font-size:12.5px;
+    color:var(--ink-dim);
+    line-height:1.85;
+    margin-top:8px;
+  }
+  .fig-callout{
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:12px;
+    fill:var(--ink);
+  }
+  .fig-leader{ stroke:var(--ink-dim); stroke-width:1; stroke-dasharray:2 3; }
+
+  /* ---- الكرات الفضّية في الشكل المجسّم ---- */
+  .sphere-body{ fill:url(#sphereGrad); stroke:rgba(255,255,255,.18); stroke-width:1; }
+
+  /* ---- السلك والبطارية ---- */
+  .wire-body{ fill:rgba(20,200,168,.05); stroke:rgba(20,200,168,.35); stroke-width:1.6; }
+  .battery-box{ fill:#22314e; stroke:var(--ink-dim); stroke-width:1.4; }
+  .battery-label{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:15px;
+    fill:var(--ink);
+  }
+  .heat-zone{ fill:url(#heatGrad); }
+  .panel-title{
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:13px;
+    fill:var(--ink-dim);
+  }
+  .plain-particle{ fill:#3d4a68; stroke:rgba(159,176,201,.45); stroke-width:1.2; }
+
+  /* ---- الصفّ المسحوب في محطة الانزلاق ---- */
+  .slide-row{ cursor:grab; touch-action:none; }
+  .slide-row.dragging{ cursor:grabbing; }
+  .slide-hint-arrow{ stroke:var(--coral); stroke-width:2; fill:none; stroke-linecap:round; }
+
+  @media (prefers-reduced-motion: reduce){
+    .epos.clickable .ehalo{ animation:none; }
+  }
+  /* ============ نصوص وبطاقات ============ */
+  .dose{
+    max-width:920px;
+    margin:16px auto 0;
+    font-size:.95rem;
+    line-height:2;
+  }
+  .sub-h{
+    max-width:920px;
+    margin:30px auto 12px;
+    font-family:'Cairo', sans-serif;
+    font-size:1rem;
+    font-weight:700;
+    color:var(--turquoise);
+  }
+  .stage-note{
+    max-width:920px;
+    margin:12px auto 0;
+    font-size:.92rem;
+    color:var(--ink-dim);
+    line-height:1.9;
+  }
+  .stage-note.act{
+    color:var(--ink);
+    border-inline-start:3px solid var(--turquoise);
+    padding-inline-start:12px;
+  }
+  .impasse-msg{
+    max-width:920px;
+    margin:14px auto 0;
+    border-inline-start:3px solid var(--coral);
+    padding-inline-start:12px;
+    font-size:.92rem;
+    line-height:1.9;
+    color:var(--ink);
+  }
+  .success-tag{
+    margin-top:18px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(20,200,168,.08);
+    border:1px solid var(--turquoise-soft);
+    color:var(--turquoise);
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:.9rem;
+    padding:9px 20px;
+    border-radius:999px;
+    opacity:0;
+    transform:translateY(6px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .success-tag.show{opacity:1; transform:translateY(0);}
+
+  .explore-q{
+    font-weight:700;
+    color:var(--ink);
+    margin:0 0 12px;
+    font-size:clamp(14px,2.4vw,16px);
+  }
+  .explore-step{
+    margin-top:26px;
+    padding-top:20px;
+    border-top:1px dashed var(--border);
+  }
+  .explore-step:first-of-type{ border-top:none; padding-top:0; }
+  .explore-answer-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .explore-input{
+    flex:1 1 140px;
+    min-width:100px;
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:11px 20px;
+    color:var(--ink);
+    font-family:'Tajawal', sans-serif;
+    font-size:15px;
+    text-align:center;
+  }
+  .explore-input::placeholder{ color:var(--ink-dim); opacity:.55; font-size:.86em; }
+  .explore-input:focus{
+    outline:none;
+    border-color:var(--turquoise);
+    box-shadow:0 0 0 3px var(--turquoise-faint);
+  }
+  .explore-input:disabled{ opacity:.7; }
+
+  .given-row{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 12px;}
+  .given-chip{
+    font-size:.8rem;
+    color:var(--ink-dim);
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(20,200,168,.18);
+    border-radius:999px;
+    padding:5px 12px;
+  }
+  .given-chip b{color:var(--turquoise); font-family:'Cairo', sans-serif; font-weight:800;}
+
+  .terms-box{
+    margin:18px 0 4px;
+    border:1px solid var(--turquoise-soft);
+    border-radius:14px;
+    background:var(--turquoise-faint);
+    padding:0 16px;
+  }
+  .terms-box > summary{
+    cursor:pointer;
+    list-style:none;
+    padding:12px 0;
+    color:var(--turquoise);
+    font-weight:700;
+    font-size:.9rem;
+  }
+  .terms-box > summary::-webkit-details-marker{display:none;}
+  .terms-box > summary::after{content:' ▾'; font-size:.8em;}
+  .terms-box[open] > summary::after{content:' ▴';}
+  .terms-box .facts-grid{margin:0 0 16px;}
+
+  /* بطاقة التسمية: تظهر بعد البناء لا قبله — التسمية تلحق البناء. */
+  .name-card{
+    max-width:920px;
+    margin:16px auto 0;
+    border:1px dashed var(--turquoise-soft);
+    border-radius:14px;
+    padding:12px 16px;
+    font-size:.92rem;
+    line-height:1.9;
+    background:rgba(20,200,168,.05);
+  }
+  .name-card b{color:var(--turquoise); font-weight:800;}
+
+
+  .pool-label{
+    max-width:920px;
+    margin:18px auto 8px;
+    font-size:.85rem;
+    color:var(--ink-dim);
+  }
+
+
+  /* ============ التقييم ============ */
+  .review-strip{
+    font-size:.85rem;
+    color:var(--ink-dim);
+    line-height:2.1;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(20,200,168,.14);
+    border-radius:14px;
+    padding:10px 16px;
+    margin:16px 0 6px;
+  }
+  .review-strip a{color:var(--turquoise); text-decoration:none; font-weight:700;}
+  .review-strip a:hover{text-decoration:underline;}
+
+  .name-gate{
+    margin-top:20px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(20,200,168,.2);
+    border-radius:16px;
+    padding:16px 18px;
+  }
+  .name-gate label{
+    display:block;
+    font-size:.9rem;
+    color:var(--ink);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .name-gate .gate-note{
+    font-size:.78rem;
+    color:var(--ink-dim);
+    margin:10px 0 0;
+  }
+  .eval-q{
+    border-top:1px solid rgba(255,255,255,.06);
+    margin-top:26px;
+    padding-top:22px;
+  }
+  .eval-q.first{border-top:none; margin-top:18px; padding-top:0;}
+  .q-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    background:rgba(20,200,168,.12);
+    border:1px solid var(--turquoise-soft);
+    color:var(--turquoise);
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:.8rem;
+    margin-inline-end:8px;
+    flex-shrink:0;
+  }
+  .eval-summary{
+    margin-top:30px;
+    background:rgba(20,200,168,.06);
+    border:1px solid var(--turquoise-soft);
+    border-radius:18px;
+    padding:20px 18px;
+    text-align:center;
+  }
+  #certTriggerSlot{display:flex; justify-content:center; margin-top:18px;}
+
+  .facts-grid.single-card{
+    grid-template-columns:none;
+    max-width:280px;
+    margin:16px auto;
+  }
+
+  /* تبديل الرسم/النموذج: صنف صريح لا سمة hidden — تجاوز [hidden]
+     يحتاج !important، والصنف أوضح داخل SVG. */
+  .is-off{ display:none !important; }
+
+  html{scroll-behavior:smooth;}
+  .station{ scroll-margin-top:14px; }
+
+  /* ============ أصناف صغيرة خاصّة بهذا الدرس ============ */
+  .fact-sub{ font-size:.84rem; color:var(--ink-dim); margin-top:6px; line-height:1.8; }
+  .fact-card.unknown{ border-color:rgba(255,107,74,.4); }
+  .big-q{ font-family:'Cairo', sans-serif; font-size:1.7rem; font-weight:800; color:var(--coral); }
+  .dose.strong-q{ font-weight:700; color:var(--turquoise); }
+  /* سطر المهمّة: يصف فعلًا متاحًا للطالب لحظة قراءته لا وعدًا مؤجّلًا */
+  .task-line{
+    max-width:920px;
+    margin:18px auto 10px;
+    border-inline-start:3px solid var(--turquoise);
+    padding-inline-start:12px;
+    font-size:.95rem;
+    line-height:1.95;
+    color:var(--ink);
+  }
+  .name-card h3{
+    margin:0 0 10px;
+    font-family:'Cairo', sans-serif;
+    font-size:1rem;
+    color:var(--turquoise);
+  }
+  .name-card p{ margin:0 0 10px; font-size:.93rem; line-height:2; }
+  .name-card p:last-child{ margin-bottom:0; }
+
+  /* ---- لوحات المحطة 5 وشبكة المحطة 6 ---- */
+  .battery.live .battery-box{ stroke:var(--turquoise); }
+  .heat-zone{ pointer-events:none; }
+  .slide-hint-arrow{ opacity:.8; }
+  .fig31-callouts{ transition:opacity .4s ease; }
+  .charge-badge{ pointer-events:none; }
+
+  /* حلقة تدلّ على موضع النقر ولا تلتقطه: النقر يقع على الذرّة كلّها،
+     وحلقة تلتقط النقر فوق منطقة قابلة للنقر تُنتج نقرةً لا تفعل شيئًا. */
+  .hint-halo{ pointer-events:none; }
+  .halo-ring{ fill:rgba(255,107,74,.20); stroke:var(--coral); stroke-width:1.2; }
+  @keyframes haloBreath{
+    0%,100%{ r:12; opacity:.95; }
+    50%{ r:15; opacity:.5; }
+  }
+  .halo-ring{ animation:haloBreath 1.7s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce){ .halo-ring{ animation:none; } }
+
+  /* حلقة التركيز على منطقة النقر: outline داخل SVG يرسم مربّعًا حول
+     الذرّة، فتُستبدل بحدّ دائري على الدائرة نفسها. */
+  .atom-hit{ cursor:pointer; touch-action:manipulation; }
+  .atom-hit:focus{ outline:none; }
+  .atom-hit:focus-visible{ stroke:var(--coral); stroke-width:2; stroke-dasharray:5 6; }
+
+  /* حكم المحاولة الفاشلة: يظهر تحت المسرح حيث عين الطالب لحظة الحركة،
+     وبوزن بصري يقول «قف» — لا سطرًا باهتًا أسفل الأزرار لا يُنتبه له. */
+  .stage-msg.impasse{
+    max-width:920px;
+    margin:12px auto 0;
+    border-inline-start:3px solid var(--coral);
+    padding:10px 14px;
+    text-align:start;
+    color:var(--ink);
+    font-weight:600;
+    background:rgba(255,107,74,.06);
+    border-radius:0 12px 12px 0;
+    animation:impasseIn .45s ease;
+  }
+  .stage-msg.impasse::before{
+    content:'✕ ';
+    color:var(--coral);
+    font-weight:800;
+  }
+  @keyframes impasseIn{
+    from{ opacity:0; transform:translateY(-6px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce){ .stage-msg.impasse{ animation:none; } }
+</style>
+</head>
+<body>
+
+<nav class="crumb">
+  <a href="../../index.html">الرئيسية</a> ›
+  <a href="../index.html">الفصل الأول</a> ›
+  <a href="index.html">الوحدة 1</a> ›
+  الدرس 5
+</nav>
+
+<div class="progress-track">
+  <div class="xp-counter" id="xpCounter">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+    <span id="xpValue">0</span>
+    <span class="xp-label">XP</span>
+  </div>
+  <!-- النقاط مخفيّة بصريًا في template.css ولا تُحذف من الوسم: منها
+       يُشتقّ مقام عدّاد المحطات، وبها تُعلَّق نغمة الوصول. -->
+  <div class="progress-dot" data-target="station-1"></div>
+  <div class="progress-dot" data-target="station-2"></div>
+  <div class="progress-dot" data-target="station-3"></div>
+  <div class="progress-dot" data-target="station-4"></div>
+  <div class="progress-dot" data-target="station-5"></div>
+  <div class="progress-dot" data-target="station-6"></div>
+  <div class="progress-dot" data-target="station-7"></div>
+</div>
+
+<header class="hero">
+  <div class="eyebrow">الوحدة 1 · الدرس 5</div>
+  <h1>لماذا تُعدّ الفلزّات موصّلات جيّدة للحرارة والتيّار الكهربائي؟</h1>
+  <div class="objectives-box">
+    <h3>في نهاية هذا الدرس سوف تتمكن من أن:</h3>
+    <ul>
+      <li>تصف الرابطة الفلزّية.</li>
+      <li>تشرح سبب كون الفلزّات موصّلات جيّدة للحرارة والتيّار الكهربائي.</li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===================== محطة 1: التنشيط ===================== -->
+  <section class="station" id="station-1">
+    <div class="station-label">المحطة الأولى</div>
+    <h2>فلزّ مع فلزّ… فماذا يحدث؟</h2>
+    <p class="station-tagline">تعرف رابطتين. وهذه حالة ثالثة لم تقابلها بعد.</p>
+
+    <div class="facts-grid">
+      <div class="fact-card">
+        <div class="term">كلوريد الصوديوم</div>
+        <div>فلز + لافلز</div>
+        <div class="fact-sub">رابطة أيونية — نقل إلكترونات</div>
+      </div>
+      <div class="fact-card">
+        <div class="term">جزيء الكلور</div>
+        <div>لافلز + لافلز</div>
+        <div class="fact-sub">رابطة تساهمية — مشاركة زوج</div>
+      </div>
+      <div class="fact-card unknown">
+        <div class="term">قطعة الألومنيوم</div>
+        <div>فلز + فلز</div>
+        <div class="fact-sub big-q">؟</div>
+      </div>
+    </div>
+
+    <p class="dose">جسم الطائرة النفاثة مصنوع من الألومنيوم. والألومنيوم قويّ وقابل للسحب، ومع ذلك كثافته منخفضة نسبيًّا.</p>
+    <p class="dose">وقطعة الألومنيوم كلّها ذرّات ألومنيوم — لا يوجد فيها لافلزّ واحد. فلا توجد ذرّة تأخذ الإلكترونات، ولا ذرّة تشارك في زوج.</p>
+    <p class="dose strong-q">فما الذي يمسك هذه الذرّات معًا إذًا؟</p>
+
+    <!-- 1-ج · التمثيل النقطي للألومنيوم: إنتاج لا تعرّف -->
+    <p class="task-line">ذرّة الألومنيوم في مستواها الخارجي ثلاثة إلكترونات. ارسم تمثيلها النقطي: انقر على المستوى الخارجي ثلاث مرّات.</p>
+    <div class="stage-wrap">
+      <svg id="stage1" class="stage" viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ذرّة ألومنيوم بثلاثة مستويات طاقة، مستواها الخارجي فارغ في انتظار رسم إلكتروناته"></svg>
+    </div>
+    <div class="given-card">
+      <span>الألومنيوم</span>
+      <span><b dir="ltr">Al</b></span>
+      <span>العدد الذرّي <b>13</b></span>
+      <span>التوزيع <b dir="ltr">2, 8, 3</b></span>
+    </div>
+    <p class="stage-msg" id="s1msg" aria-live="polite"></p>
+
+    <!-- 1-د · استكشاف حرّ: احتمالان لا يعملان.
+         لا صواب ولا خطأ في هذه الكتلة كلّها — ملاحظات لا أحكام. -->
+    <div id="s1explore" hidden>
+      <p class="dose">أمامك ذرّتا ألومنيوم. جرّب عليهما ما تعرفه.</p>
+      <div class="try-row">
+        <button type="button" class="btn" id="s1try1">جرّب النقل</button>
+        <button type="button" class="btn" id="s1try2">جرّب المشاركة</button>
+      </div>
+      <div class="try-row">
+        <button type="button" class="link-btn" id="s1reset" hidden>أعد الذرّتين كما كانتا</button>
+      </div>
+    </div>
+
+    <!-- 1-هـ · التنبّؤ: لا يُصحَّح، ولا قيمة correct في المجموعة -->
+    <div class="explore-step" id="s1predictBox" hidden>
+      <p class="explore-q">في رأيك، ماذا يحدث لإلكترونات المستوى الخارجي في ذرّات قطعة الألومنيوم؟</p>
+      <div class="quiz-options" id="predictOptions">
+        <label class="quiz-option"><input type="radio" name="l5predict" value="p1">تنتقل من ذرّة إلى ذرّة مجاورة فتصير إحداهما موجبة والأخرى سالبة</label>
+        <label class="quiz-option"><input type="radio" name="l5predict" value="p2">تبقى كلّ مجموعة إلكترونات حول ذرّتها كما هي بلا تغيير</label>
+        <label class="quiz-option"><input type="radio" name="l5predict" value="p3">تغادر ذرّاتها كلّها وتتحرّك في القطعة الفلزّية كلّها</label>
+        <label class="quiz-option"><input type="radio" name="l5predict" value="p4">تتشارك كلّ ذرّتين في ثلاثة أزواج كما في جزيء الكلور</label>
+      </div>
+      <p class="explore-feedback" id="fb-predict" hidden></p>
+    </div>
+
+    <div id="s1done" hidden>
+      <div class="success-tag show">✓ سُجِّل توقّعك</div>
+      <p class="dose">طائرات الخطوط الجوية القطرية، وألواح الألومنيوم التي تُصنع في قطالوم بمسيعيد — كلّها تعتمد على هذه الرابطة التي لم تسمّها بعد.</p>
+      <div class="station-handoff">
+        <a href="#station-2" class="station-next">لنرَ ما يحدث فعلًا ←</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 2: الاستكشاف ===================== -->
+  <section class="station" id="station-2" hidden>
+    <div class="station-label">المحطة الثانية</div>
+    <h2>الإلكترونات تغادر</h2>
+    <p class="station-tagline">ابدأ بأبسط فلزّ: الصوديوم، وله إلكترون واحد في مستواه الخارجي.</p>
+
+    <p class="task-line">أمامك ستّ ذرّات صوديوم متجاورة. انقر الإلكترون المرجاني في كلّ ذرّة، وتابع بعينك أين يذهب.</p>
+    <div class="stage-wrap">
+      <svg id="stage2" class="stage" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ستّ ذرّات صوديوم متجاورة، في كلٍّ منها إلكترون واحد في المستوى الخارجي"></svg>
+    </div>
+    <div class="given-card">
+      <span>الصوديوم</span>
+      <span><b dir="ltr">Na</b></span>
+      <span>العدد الذرّي <b>11</b></span>
+      <span>التوزيع <b dir="ltr">2, 8, 1</b></span>
+    </div>
+    <p class="stage-msg" id="s2msg" aria-live="polite"></p>
+
+    <!-- الأسئلة لا تظهر قبل البناء: الجواب على المسرح لا في النصّ -->
+    <div id="s2questions" hidden>
+
+      <div class="explore-step">
+        <p class="explore-q">ماذا صارت ذرّة الصوديوم بعد أن غادرها إلكترونها الخارجي؟</p>
+        <div class="quiz-options" data-q="naIon">
+          <label class="quiz-option"><input type="radio" name="naIon" value="w1">ذرّة صوديوم عادية بلا أي تغيير</label>
+          <label class="quiz-option"><input type="radio" name="naIon" value="correct">أيون صوديوم موجب الشحنة</label>
+          <label class="quiz-option"><input type="radio" name="naIon" value="w2">أيون صوديوم سالب الشحنة</label>
+          <label class="quiz-option"><input type="radio" name="naIon" value="w3">جزيء صوديوم مرتبط بجاره</label>
+        </div>
+        <p class="explore-feedback" id="fb-naIon" hidden></p>
+      </div>
+
+      <div class="explore-step">
+        <p class="explore-q">إلى أين ذهب الإلكترون الذي غادر ذرّة الصوديوم؟</p>
+        <div class="quiz-options" data-q="whereElectron">
+          <label class="quiz-option"><input type="radio" name="whereElectron" value="w1">انتقل إلى ذرّة الصوديوم المجاورة فصارت سالبة</label>
+          <label class="quiz-option"><input type="radio" name="whereElectron" value="w2">بقي يدور حول ذرّته من مسافة أبعد قليلًا</label>
+          <label class="quiz-option"><input type="radio" name="whereElectron" value="w3">خرج من قطعة الفلزّ إلى الهواء المحيط</label>
+          <label class="quiz-option"><input type="radio" name="whereElectron" value="correct">صار حرّ الحركة بين الأيونات كلّها ولا ينتمي إلى واحد منها</label>
+        </div>
+        <p class="explore-feedback" id="fb-whereElectron" hidden></p>
+      </div>
+
+      <div class="explore-step">
+        <p class="explore-q">قطعة الصوديوم على المسرح فيها ستّة أيونات موجبة. فهل شحنة القطعة كلّها موجبة؟</p>
+        <div class="quiz-options" data-q="neutral">
+          <label class="quiz-option"><input type="radio" name="neutral" value="w1">نعم، لأنها تحتوي على أيونات موجبة الشحنة</label>
+          <label class="quiz-option"><input type="radio" name="neutral" value="correct">لا، لأن عدد الإلكترونات السالبة يساوي عدد الشحنات الموجبة</label>
+          <label class="quiz-option"><input type="radio" name="neutral" value="w2">لا، لأن الأيونات تفقد شحنتها داخل القطعة الفلزّية</label>
+          <label class="quiz-option"><input type="radio" name="neutral" value="w3">نعم، لأن الإلكترونات غادرت قطعة الفلزّ كلّها</label>
+        </div>
+        <p class="explore-feedback" id="fb-neutral" hidden></p>
+      </div>
+
+      <!-- يُسأل قبل التسمية: الطالب يشرح تماسك القطعة بلغته قبل أن
+           يسمع «الرابطة الفلزّية». هذا أدقّ مواضع التسلسل في الدرس. -->
+      <div class="explore-step">
+        <p class="explore-q">كلّ الأيونات على المسرح موجبة، والشحنات المتشابهة تتنافر. فما الذي يمنع القطعة من التفكّك؟</p>
+        <div class="quiz-options" data-q="repulsion">
+          <label class="quiz-option"><input type="radio" name="repulsion" value="w1">الأيونات متباعدة بما يكفي فلا يظهر التنافر بينها</label>
+          <label class="quiz-option"><input type="radio" name="repulsion" value="w2">الأيونات تتبادل مواقعها باستمرار فلا يكتمل التنافر</label>
+          <label class="quiz-option"><input type="radio" name="repulsion" value="correct">تجاذب الأيونات الموجبة مع الإلكترونات السالبة المحيطة بها</label>
+          <label class="quiz-option"><input type="radio" name="repulsion" value="w3">نوى الذرّات تتجاذب فيما بينها فتمسك الشبكة معًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-repulsion" hidden></p>
+      </div>
+
+      <!-- 2-ج · التسمية تلحق البناء، وبجسر صريح لا كشف تلقائي -->
+      <div class="station-handoff" id="s2nameBridge" hidden>
+        <button type="button" class="btn" id="s2nameBtn">فما اسم ما بنيتَه؟</button>
+      </div>
+
+      <div id="s2nameCard" hidden>
+        <div class="name-card">
+          <h3>الروابط الفلزّية</h3>
+          <p>تُغادر الإلكترونات الخارجية ذرّات الفلزّ التي تشكّل قطعة فلزّية، وتتحرّك بحرّية عبر الشبكة البلّورية الفلزّية، مكوّنة <b>بحر الإلكترونات</b>. لا ترتبط هذه الإلكترونات بذرّات الفلزّ، لذلك تسمّى <b>إلكترونات حرّة الحركة</b>.</p>
+          <p>ويُطلق على التجاذب الكهربائي الساكن القويّ بين أيونات الفلزّ الموجبة الشحنة والإلكترونات السالبة الشحنة حرّة الحركة اسم <b>الرابطة الفلزّية</b>.</p>
+        </div>
+        <p class="dose">ما بنيتَه صفٌّ واحد. وفي قطعة الفلزّ الحقيقية تمتدّ الأيونات في شبكة بلّورية عملاقة، وبحر الإلكترونات يملؤها كلّها.</p>
+        <div class="station-handoff">
+          <a href="#station-3" class="station-next">كيف يرسم العلماء هذا؟ ←</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 3: نموذجان للفلزّ ===================== -->
+  <section class="station" id="station-3" hidden>
+    <div class="station-label">المحطة الثالثة</div>
+    <h2>نموذجان للفلزّ</h2>
+    <p class="station-tagline">رسمتَ الألومنيوم بالنقاط، وبنيتَ الصوديوم بمستوياته. وللفلزّ رسمان آخران.</p>
+
+    <p class="dose">ثلاث طرق مختلفة لرسم الشيء نفسه حتى الآن. فلماذا كلّ هذا التعدّد؟ الجواب في هذه المحطة.</p>
+
+    <div class="figure-grid">
+      <div class="figure-card">
+        <div class="fig-name">الشكل 1-30 — نموذج مجسّم</div>
+        <svg id="fig30" viewBox="0 0 380 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="كرات فضّية متراصّة في شبكة ثلاثية الأبعاد"></svg>
+        <p class="fig-note">الجسيمات الفلزّية في هذا النموذج مثبَّتة في مكانها بواسطة روابط فلزّية قوية.</p>
+      </div>
+      <div class="figure-card">
+        <div class="fig-name">الشكل 1-31 — رسم مسطّح</div>
+        <svg id="fig31" viewBox="0 0 380 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="صفوف من دوائر عليها إشارة موجب وبينها نقاط صغيرة عليها إشارة سالب"></svg>
+      </div>
+    </div>
+
+    <div class="explore-step">
+      <p class="explore-q">الكرات في الشكل 1-30 لا تحمل أي إشارة شحنة. فما نوع هذه الجسيمات؟</p>
+      <div class="quiz-options" data-q="greySpheres">
+        <label class="quiz-option"><input type="radio" name="greySpheres" value="w1">ذرّات فلزّ كاملة لم تفقد شيئًا من إلكتروناتها</label>
+        <label class="quiz-option"><input type="radio" name="greySpheres" value="correct">أيونات الفلزّ الموجبة، لأنها فقدت إلكتروناتها الخارجية</label>
+        <label class="quiz-option"><input type="radio" name="greySpheres" value="w2">جزيئات فلزّية تكوّنت بمشاركة أزواج إلكترونية</label>
+        <label class="quiz-option"><input type="radio" name="greySpheres" value="w3">أيونات الفلزّ السالبة، لأنها اكتسبت إلكترونات جديدة</label>
+      </div>
+      <p class="explore-feedback" id="fb-greySpheres" hidden></p>
+    </div>
+
+    <div id="s3after" hidden>
+      <p class="stage-note act">وهذه أسماء ما تراه في الشكل 1-31.</p>
+
+      <div class="explore-step">
+        <p class="explore-q">أمامك أربع خصائص للرابطة الفلزّية. ضع كلّ واحدة في المكان الذي يُظهرها بوضوح.</p>
+        <div data-chips="limits">
+          <div class="chips-pool">
+            <span class="chip" data-value="أيونات فلزّية موجبة الشحنة" data-xp-id="l5-lim-ions" data-xp-reason="حدّدتَ ما يُظهره الرسم المسطّح">أيونات فلزّية موجبة الشحنة</span>
+            <span class="chip" data-value="إلكترونات حرّة الحركة" data-xp-id="l5-lim-free" data-xp-reason="حدّدتَ ما يُظهره الرسم المسطّح">إلكترونات حرّة الحركة</span>
+            <span class="chip" data-value="شبكة بلّورية فلزّية ثلاثية الأبعاد" data-xp-id="l5-lim-lattice" data-xp-reason="ميّزتَ ما ينفرد به النموذج المجسّم">شبكة بلّورية فلزّية ثلاثية الأبعاد</span>
+            <span class="chip" data-value="التجاذب بين أيونات الفلزّ والإلكترونات الحرّة" data-xp-id="l5-lim-force" data-xp-reason="أدركتَ أن القوّة لا تُرسَم">التجاذب بين أيونات الفلزّ والإلكترونات الحرّة</span>
+          </div>
+          <div class="cat-grid">
+            <div class="slot cat-slot" id="lim-30" data-answer="شبكة بلّورية فلزّية ثلاثية الأبعاد">
+              <span class="slot-label">الشكل 1-30 — النموذج المجسّم</span><span class="slot-items"></span>
+            </div>
+            <div class="slot cat-slot" id="lim-31" data-answer="أيونات فلزّية موجبة الشحنة|إلكترونات حرّة الحركة">
+              <span class="slot-label">الشكل 1-31 — الرسم المسطّح</span><span class="slot-items"></span>
+            </div>
+            <div class="slot cat-slot" id="lim-none" data-answer="التجاذب بين أيونات الفلزّ والإلكترونات الحرّة">
+              <span class="slot-label">لا يُظهرها أيٌّ منهما</span><span class="slot-items"></span>
+            </div>
+          </div>
+          <p class="explore-feedback chips-feedback" hidden></p>
+        </div>
+      </div>
+
+      <div id="s3done" hidden>
+        <p class="dose strong-q">كلّ نموذج يُظهر جانبًا ويُخفي غيره. والتجاذب — وهو الرابطة نفسها — لا يظهر في أيٍّ منهما، لأنه قوّة لا جسيم. ولهذا يستعمل العلماء أكثر من نموذج للشيء الواحد.</p>
+        <div class="station-handoff">
+          <a href="#station-4" class="station-next">والآن إلى فلزّات أخرى ←</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 4: كم إلكترونًا يترك كلّ أيون؟ ===================== -->
+  <section class="station" id="station-4" hidden>
+    <div class="station-label">المحطة الرابعة</div>
+    <h2>كم إلكترونًا يترك كلّ أيون؟</h2>
+    <p class="station-tagline">الصوديوم يترك إلكترونًا واحدًا. فماذا عن النحاس والألومنيوم؟</p>
+
+    <p class="task-line">أمامك أربعة أيونات نحاس، رمز كلّ واحد منها <span dir="ltr">Cu<sup>2+</sup></span>. أضف إلى البحر عدد الإلكترونات الحرّة الذي يجعل القطعة متعادلة الشحنة.</p>
+    <div class="stage-wrap">
+      <svg id="stage4a" class="stage" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="أربعة أيونات نحاس داخل قطعة فلزّ، وبحرها فارغ"></svg>
+    </div>
+    <div class="try-row">
+      <button type="button" class="btn" id="s4aAdd">أضف إلكترونًا</button>
+      <button type="button" class="btn" id="s4aCheck">تحقّق من التعادل</button>
+      <button type="button" class="link-btn" id="s4aUndo">أزل الأخير</button>
+    </div>
+    <p class="stage-msg" id="s4amsg" aria-live="polite"></p>
+
+    <div id="s4b" hidden>
+      <div class="explore-step">
+        <p class="explore-q">إذا كانت قطعة من فلزّ النحاس تحتوي على 100 أيون نحاس موجب الشحنة، فما عدد الإلكترونات حرّة الحركة الموجودة في «بحر الإلكترونات»؟</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="cu100Input" placeholder="اكتب العدد" autocomplete="off">
+          <button type="button" class="btn" id="cu100Btn">تحقّق</button>
+        </div>
+        <p class="explore-feedback" id="fb-cu100" hidden></p>
+        <button type="button" class="link-btn" id="cu100ModelBtn" hidden>أرني الإجابة النموذجية</button>
+        <div class="name-card" id="cu100Model" hidden></div>
+      </div>
+    </div>
+
+    <div id="s4c" hidden>
+      <p class="task-line">والآن ثلاثة أيونات ألومنيوم، رمز كلّ واحد منها <span dir="ltr">Al<sup>3+</sup></span>. أضف الإلكترونات الحرّة حتى تتعادل القطعة.</p>
+      <div class="stage-wrap">
+        <svg id="stage4b" class="stage" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ثلاثة أيونات ألومنيوم داخل قطعة فلزّ، وبحرها فارغ"></svg>
+      </div>
+      <div class="try-row">
+        <button type="button" class="btn" id="s4cAdd">أضف إلكترونًا</button>
+        <button type="button" class="btn" id="s4cCheck">تحقّق من التعادل</button>
+        <button type="button" class="link-btn" id="s4cUndo">أزل الأخير</button>
+      </div>
+      <p class="stage-msg" id="s4cmsg" aria-live="polite"></p>
+    </div>
+
+    <div id="s4d" hidden>
+      <div class="explore-step">
+        <p class="explore-q">يُعدّ الألومنيوم موصّلًا جيّدًا للكهرباء، ويكوّن أيونات رمزها <span dir="ltr">Al<sup>3+</sup></span>. فإذا كانت قطعة من الفلزّ تحتوي على 100 أيون ألومنيوم موجب الشحنة، فما عدد الإلكترونات حرّة الحركة في «بحر الإلكترونات»؟</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="al100Input" placeholder="اكتب العدد" autocomplete="off">
+          <button type="button" class="btn" id="al100Btn">تحقّق</button>
+        </div>
+        <p class="explore-feedback" id="fb-al100" hidden></p>
+        <button type="button" class="link-btn" id="al100ModelBtn" hidden>أرني الإجابة النموذجية</button>
+        <div class="name-card" id="al100Model" hidden></div>
+      </div>
+    </div>
+
+    <div id="s4e" hidden>
+      <div class="explore-step">
+        <p class="explore-q">ما العلاقة بين شحنة أيون الفلزّ وعدد الإلكترونات التي يمنحها للبحر؟</p>
+        <div class="quiz-options" data-q="ratioPattern">
+          <label class="quiz-option"><input type="radio" name="ratioPattern" value="w1">العدد إلكترون واحد دائمًا مهما كانت شحنة الأيون</label>
+          <label class="quiz-option"><input type="radio" name="ratioPattern" value="correct">عدد الإلكترونات يساوي مقدار الشحنة الموجبة على الأيون</label>
+          <label class="quiz-option"><input type="radio" name="ratioPattern" value="w2">عدد الإلكترونات ضعف مقدار الشحنة على الأيون دائمًا</label>
+          <label class="quiz-option"><input type="radio" name="ratioPattern" value="w3">لا علاقة بينهما، والعدد يعتمد على حجم قطعة الفلزّ</label>
+        </div>
+        <p class="explore-feedback" id="fb-ratioPattern" hidden></p>
+      </div>
+
+      <div id="s4done" hidden>
+        <p class="dose">وهذا جواب سؤالك في البداية: ذرّة الألومنيوم تترك إلكتروناتها الثلاثة كلّها للبحر. لا نقل ولا مشاركة — بحرٌ يخصّ القطعة كلّها.</p>
+        <p class="dose">ولأن الألومنيوم يمنح ثلاثة إلكترونات لكلّ أيون، تُصنع منه أسلاك نقل الكهرباء الهوائية: يوصّل جيّدًا وهو أخفّ من النحاس.</p>
+        <div class="station-handoff">
+          <a href="#station-5" class="station-next">فكيف تحمل هذه الإلكترونات الكهرباء؟ ←</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 5: لماذا تُوصّل الفلزّات؟ ===================== -->
+  <section class="station" id="station-5" hidden>
+    <div class="station-label">المحطة الخامسة</div>
+    <h2>لماذا تُوصّل الفلزّات؟</h2>
+    <p class="station-tagline">إلكترونات تتحرّك بحرّية في قطعة الفلزّ. تابع ماذا تفعل.</p>
+
+    <div class="stage-wrap">
+      <svg id="stage5a" class="stage" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="سلك نحاسي فيه أيونات موجبة وإلكترونات حرّة، وبطارية عند طرفه"></svg>
+    </div>
+    <div class="try-row">
+      <button type="button" class="btn" id="s5connect">صِل البطارية</button>
+    </div>
+    <p class="stage-msg" id="s5amsg" aria-live="polite"></p>
+
+    <div class="explore-step">
+      <p class="explore-q">ما الذي يتحرّك حاملًا الشحنة الكهربائية عبر السلك؟</p>
+      <div class="quiz-options" data-q="whatMoves">
+        <label class="quiz-option"><input type="radio" name="whatMoves" value="w1">أيونات النحاس الموجبة تنتقل من طرف السلك إلى الطرف الآخر</label>
+        <label class="quiz-option"><input type="radio" name="whatMoves" value="correct">الإلكترونات حرّة الحركة الموجودة أصلًا داخل السلك</label>
+        <label class="quiz-option"><input type="radio" name="whatMoves" value="w2">إلكترونات تدخل من البطارية لتملأ السلك الخالي منها</label>
+        <label class="quiz-option"><input type="radio" name="whatMoves" value="w3">الأيونات الموجبة والإلكترونات معًا في الاتجاه نفسه</label>
+      </div>
+      <p class="explore-feedback" id="fb-whatMoves" hidden></p>
+    </div>
+
+    <div id="s5heat" hidden>
+      <p class="task-line">والآن الحرارة. سخّن الطرف الأيمن، وقارن ما يحدث في الفلزّ بما يحدث في مادة بلا إلكترونات حرّة.</p>
+      <div class="stage-wrap">
+        <svg id="stage5b" class="stage" viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="لوحان متجاوران: فلزّ فيه إلكترونات حرّة، ومادة بلا إلكترونات حرّة"></svg>
+      </div>
+      <div class="try-row">
+        <button type="button" class="btn" id="s5warm">سخّن الطرف الأيمن</button>
+      </div>
+      <p class="stage-msg" id="s5bmsg" aria-live="polite"></p>
+
+      <div class="explore-step">
+        <p class="explore-q">لماذا تنتقل الحرارة في الفلزّ أسرع منها في المواد الأخرى؟</p>
+        <div class="quiz-options" data-q="heat">
+          <label class="quiz-option"><input type="radio" name="heat" value="w1">لأن أيونات الفلزّ تنتقل حاملة الطاقة إلى الطرف البارد</label>
+          <label class="quiz-option"><input type="radio" name="heat" value="w2">لأن الفلزّ أصلب من غيره فتمرّ الطاقة خلاله بسهولة</label>
+          <label class="quiz-option"><input type="radio" name="heat" value="correct">لأن الإلكترونات حرّة الحركة تنقل الطاقة عبر القطعة كلّها</label>
+          <label class="quiz-option"><input type="radio" name="heat" value="w3">لأن الروابط الفلزّية قوية فتنقل الاهتزاز بين الجسيمات</label>
+        </div>
+        <p class="explore-feedback" id="fb-heat" hidden></p>
+      </div>
+    </div>
+
+    <div id="s5cook" hidden>
+      <div class="explore-step">
+        <p class="explore-q">اشرح لماذا يستغرق طهي الطعام وقتًا أطول لو لم تكن هناك إلكترونات حرّة الحركة في شبكة الفلزّ.</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="cookInput" placeholder="اكتب إجابتك" autocomplete="off">
+          <button type="button" class="btn" id="cookBtn">تحقّق</button>
+        </div>
+        <p class="explore-feedback" id="fb-cook" hidden></p>
+        <button type="button" class="link-btn" id="cookModelBtn" hidden>أرني الإجابة النموذجية</button>
+        <div class="name-card" id="cookModel" hidden></div>
+      </div>
+    </div>
+
+    <div id="s5uses" hidden>
+      <div class="explore-step">
+        <p class="explore-q">ضع كلّ استخدام في الخانة التي تصف الخاصيّة المهمّة فيه.</p>
+        <div data-chips="uses">
+          <div class="chips-pool">
+            <span class="chip" data-value="قاع القِدر على النار" data-xp-id="l5-use-pot" data-xp-reason="ربطتَ الخاصيّة باستخدامها">قاع القِدر على النار</span>
+            <span class="chip" data-value="صينية الفرن المعدنية" data-xp-id="l5-use-tray" data-xp-reason="ربطتَ الخاصيّة باستخدامها">صينية الفرن المعدنية</span>
+            <span class="chip" data-value="أسلاك التمديدات في المنزل" data-xp-id="l5-use-wire" data-xp-reason="ربطتَ الخاصيّة باستخدامها">أسلاك التمديدات في المنزل</span>
+            <span class="chip" data-value="الأجزاء المعدنية داخل المقبس" data-xp-id="l5-use-socket" data-xp-reason="ربطتَ الخاصيّة باستخدامها">الأجزاء المعدنية داخل المقبس</span>
+          </div>
+          <div class="cat-grid">
+            <div class="slot cat-slot" id="use-heat" data-answer="قاع القِدر على النار|صينية الفرن المعدنية">
+              <span class="slot-label">مهمّ فيه التوصيل الحراري</span><span class="slot-items"></span>
+            </div>
+            <div class="slot cat-slot" id="use-elec" data-answer="أسلاك التمديدات في المنزل|الأجزاء المعدنية داخل المقبس">
+              <span class="slot-label">مهمّ فيه التوصيل الكهربائي</span><span class="slot-items"></span>
+            </div>
+          </div>
+          <p class="explore-feedback chips-feedback" hidden></p>
+        </div>
+      </div>
+    </div>
+
+    <div id="s5sulfur" hidden>
+      <p class="dose">الخاصيّتان من سبب واحد — إلكترونات حرّة الحركة تحمل الطاقة الحرارية مرّة، والشحنة الكهربائية مرّة أخرى.</p>
+      <div class="explore-step">
+        <p class="explore-q">يمكن سحب بعض المواد إلى أسلاك رفيعة. فلو صنعنا سلكًا من الكبريت، لماذا لا يصلح للتمديدات الكهربائية؟</p>
+        <div class="quiz-options" data-q="sulfur">
+          <label class="quiz-option"><input type="radio" name="sulfur" value="w1">لأن الكبريت أضعف من النحاس فينكسر عند التمديد</label>
+          <label class="quiz-option"><input type="radio" name="sulfur" value="w2">لأن أيونات الكبريت سالبة الشحنة لا موجبة الشحنة</label>
+          <label class="quiz-option"><input type="radio" name="sulfur" value="correct">لأن الكبريت لافلزّ، لا يكوّن رابطة فلزّية ولا إلكترونات حرّة</label>
+          <label class="quiz-option"><input type="radio" name="sulfur" value="w3">لأن الكبريت يتفاعل مع الهواء بسرعة فيفقد التوصيل</label>
+        </div>
+        <p class="explore-feedback" id="fb-sulfur" hidden></p>
+      </div>
+
+      <div id="s5done" hidden>
+        <div class="station-handoff">
+          <a href="#station-6" class="station-next">وماذا عن بقيّة خصائص الفلزّات؟ ←</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 6: قويّة… لكنها تنثني ===================== -->
+  <section class="station" id="station-6" hidden>
+    <div class="station-label">المحطة السادسة</div>
+    <h2>قويّة… لكنها تنثني</h2>
+    <p class="station-tagline">الفلزّ صلب وينصهر عند درجة مرتفعة، ومع ذلك يُطرَق ويُسحَب. كيف يجتمع الأمران؟</p>
+
+    <p class="dose">الرابطة الفلزّية قوّة تجاذب قوية تمسك الشبكة كلّها. ولهذا تُعدّ الفلزّات مواد صلبة متماسكة، وتمتلك درجات انصهار مرتفعة — فكسر هذه الروابط يحتاج طاقة كبيرة.</p>
+
+    <div class="explore-step">
+      <p class="explore-q">يحتوي الصوديوم على إلكترون واحد في مستواه الخارجي فيكوّن <span dir="ltr">Na<sup>+</sup></span>، ويحتوي المغنيسيوم على إلكترونين فيكوّن <span dir="ltr">Mg<sup>2+</sup></span>. فأيّ الفلزّين روابطه الفلزّية أقوى؟</p>
+      <div class="quiz-options" data-q="naVsMg">
+        <label class="quiz-option"><input type="radio" name="naVsMg" value="w1">الصوديوم، لأن إلكترونه الوحيد يتحرّك بحرّية أكبر</label>
+        <label class="quiz-option"><input type="radio" name="naVsMg" value="correct">المغنيسيوم، لأن شحنة أيونه أكبر وإلكتروناته الحرّة أكثر</label>
+        <label class="quiz-option"><input type="radio" name="naVsMg" value="w2">متساويان، لأن كليهما فلزّ والرابطة الفلزّية نوع واحد</label>
+        <label class="quiz-option"><input type="radio" name="naVsMg" value="w3">الصوديوم، لأن أيونه الأصغر شحنة أسهل في التماسك</label>
+      </div>
+      <p class="explore-feedback" id="fb-naVsMg" hidden></p>
+    </div>
+
+    <div id="s6slide" hidden>
+      <p class="task-line">أمامك شبكة أيونات الفلزّ وبحرها. اسحب الصفّ العلوي جانبًا كما تفعل مطرقة الحدّاد.</p>
+      <div class="stage-wrap">
+        <svg id="stage6" class="stage" viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="شبكة من أيونات الفلزّ وبحر إلكتروناتها، وصفّها العلوي قابل للسحب"></svg>
+      </div>
+      <div class="try-row">
+        <button type="button" class="link-btn" id="s6keyboard">أو حرّك الصفّ من هنا</button>
+      </div>
+      <p class="stage-msg" id="s6msg" aria-live="polite"></p>
+
+      <div class="explore-step" id="s6q" hidden>
+        <p class="explore-q">لماذا يمكن طرق الفلزّ إلى صفيحة رقيقة دون أن يتشقّق؟</p>
+        <div class="quiz-options" data-q="malleable">
+          <label class="quiz-option"><input type="radio" name="malleable" value="w1">لأن الروابط الفلزّية تنكسر عند الطرق ثم تتكوّن من جديد</label>
+          <label class="quiz-option"><input type="radio" name="malleable" value="w2">لأن الفلزّ يلين عند الطرق فتعود الأيونات ذرّاتٍ كاملة</label>
+          <label class="quiz-option"><input type="radio" name="malleable" value="w3">لأن الإلكترونات الحرّة تدفع الأيونات إلى مواضعها الأصلية</label>
+          <label class="quiz-option"><input type="radio" name="malleable" value="correct">لأن الأيونات تنزلق فوق بعضها والبحر يظلّ محيطًا بها</label>
+        </div>
+        <p class="explore-feedback" id="fb-malleable" hidden></p>
+      </div>
+    </div>
+
+    <div id="s6table" hidden>
+      <div class="explore-step">
+        <p class="explore-q">أمامك ستّ خصائص للفلزّات، وثلاث بطاقات تفسير. ضع كلّ خاصيّة عند التفسير الذي يفسّرها.</p>
+        <div data-chips="props">
+          <div class="chips-pool">
+            <span class="chip" data-value="الصلابة" data-xp-id="l5-prop-hard" data-xp-reason="فسّرتَ خاصيّة بالرابطة">الصلابة</span>
+            <span class="chip" data-value="درجة الانصهار المرتفعة" data-xp-id="l5-prop-melt" data-xp-reason="فسّرتَ خاصيّة بالرابطة">درجة الانصهار المرتفعة</span>
+            <span class="chip" data-value="التوصيل الحراري" data-xp-id="l5-prop-heat" data-xp-reason="فسّرتَ خاصيّة بالرابطة">التوصيل الحراري</span>
+            <span class="chip" data-value="التوصيل الكهربائي" data-xp-id="l5-prop-elec" data-xp-reason="فسّرتَ خاصيّة بالرابطة">التوصيل الكهربائي</span>
+            <span class="chip" data-value="قابلية الطرق والسحب" data-xp-id="l5-prop-malle" data-xp-reason="فسّرتَ خاصيّة بالرابطة">قابلية الطرق والسحب</span>
+          </div>
+          <div class="cat-grid">
+            <div class="slot cat-slot" id="prop-strong" data-answer="الصلابة|درجة الانصهار المرتفعة">
+              <span class="slot-label">الروابط الفلزّية قوية جدًّا</span><span class="slot-items"></span>
+            </div>
+            <div class="slot cat-slot" id="prop-free" data-answer="التوصيل الحراري|التوصيل الكهربائي">
+              <span class="slot-label">الإلكترونات حرّة الحركة تنتقل في الشبكة كلّها</span><span class="slot-items"></span>
+            </div>
+            <div class="slot cat-slot" id="prop-slide" data-answer="قابلية الطرق والسحب">
+              <span class="slot-label">الأيونات الموجبة تنزلق فوق بعضها دون كسر الرابطة</span><span class="slot-items"></span>
+            </div>
+          </div>
+          <p class="explore-feedback chips-feedback" hidden></p>
+        </div>
+      </div>
+    </div>
+
+    <div id="s6bonus" hidden>
+      <p class="dose strong-q">ستّ خصائص للفلزّات، وثلاثة أسباب فقط — وكلّها ترجع إلى الرابطة الفلزّية نفسها.</p>
+
+      <div class="explore-step">
+        <p class="explore-q">تحدٍّ اختياري: أمامك أربعة عناصر. وزّع المواد على أنواع الروابط الثلاثة.</p>
+        <div class="given-card">
+          <span>الليثيوم والمغنيسيوم <b>فلزّان</b></span>
+          <span>الأكسجين والفلور <b>لافلزّان</b></span>
+        </div>
+        <div data-chips="trio">
+          <div class="chips-pool">
+            <span class="chip" data-value="Li₂O" data-xp-id="none"><span dir="ltr">Li<sub>2</sub>O</span></span>
+            <span class="chip" data-value="LiF" data-xp-id="none"><span dir="ltr">LiF</span></span>
+            <span class="chip" data-value="MgO" data-xp-id="none"><span dir="ltr">MgO</span></span>
+            <span class="chip" data-value="MgF₂" data-xp-id="none"><span dir="ltr">MgF<sub>2</sub></span></span>
+            <span class="chip" data-value="O₂" data-xp-id="none"><span dir="ltr">O<sub>2</sub></span></span>
+            <span class="chip" data-value="F₂" data-xp-id="none"><span dir="ltr">F<sub>2</sub></span></span>
+            <span class="chip" data-value="Li" data-xp-id="none"><span dir="ltr">Li</span></span>
+            <span class="chip" data-value="Mg" data-xp-id="none"><span dir="ltr">Mg</span></span>
+          </div>
+          <div class="cat-grid">
+            <div class="slot cat-slot" id="trio-ionic" data-answer="Li₂O|LiF|MgO|MgF₂">
+              <span class="slot-label">رابطة أيونية</span><span class="slot-items"></span>
+            </div>
+            <div class="slot cat-slot" id="trio-cov" data-answer="O₂|F₂">
+              <span class="slot-label">رابطة تساهمية</span><span class="slot-items"></span>
+            </div>
+            <div class="slot cat-slot" id="trio-metal" data-answer="Li|Mg">
+              <span class="slot-label">رابطة فلزّية</span><span class="slot-items"></span>
+            </div>
+          </div>
+          <p class="explore-feedback chips-feedback" hidden></p>
+        </div>
+      </div>
+
+      <div class="station-handoff">
+        <a href="#station-7" class="station-next">إلى التقييم الختامي ←</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 7: التقييم الختامي ===================== -->
+  <section class="station" id="station-7" hidden>
+    <div class="station-label">المحطة السابعة</div>
+    <h2>التقييم الختامي</h2>
+    <p class="station-tagline">عشرة أسئلة، ومحاولة واحدة لكلّ سؤال. وفي نهايتها شهادتك باسمك.</p>
+
+    <div class="name-gate">
+      <label for="evalName">اكتب اسمك كما تريده أن يظهر على الشهادة</label>
+      <input type="text" class="explore-input" id="evalName" placeholder="الاسم الكامل" autocomplete="off">
+      <button type="button" class="btn" id="evalStart">ابدأ التقييم</button>
+      <p class="explore-feedback" id="evalNameFb" hidden></p>
+      <p class="gate-note">هذا هو التقييم الختامي لهذا الدرس. لكلّ سؤال محاولة واحدة، وبعد آخر سؤال تظهر نتيجتك وشهادتك. خذ وقتك.</p>
+    </div>
+
+    <div id="evalQuestions" hidden>
+
+      <div class="eval-q first">
+        <p class="explore-q"><span class="q-num">1</span> ماذا تُسمّى جسيمات الفلزّ في قطعة فلزّية؟</p>
+        <div class="quiz-options" data-q="e1">
+          <label class="quiz-option"><input type="radio" name="e1" value="w1">بروتونات فلزّية موجبة الشحنة</label>
+          <label class="quiz-option"><input type="radio" name="e1" value="w2">جزيئات فلزّية متماسكة معًا</label>
+          <label class="quiz-option"><input type="radio" name="e1" value="correct">أيونات الفلزّ موجبة الشحنة</label>
+          <label class="quiz-option"><input type="radio" name="e1" value="w3">أيونات الفلزّ سالبة الشحنة</label>
+        </div>
+        <p class="explore-feedback" id="fb-e1" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">2</span> ما «بحر الإلكترونات»؟</p>
+        <div class="quiz-options" data-q="e2">
+          <label class="quiz-option"><input type="radio" name="e2" value="w1">الإلكترونات الموجودة داخل ذرّة الفلزّ الواحدة</label>
+          <label class="quiz-option"><input type="radio" name="e2" value="correct">الإلكترونات التي تتحرّك حرّة في الشبكة الفلزّية</label>
+          <label class="quiz-option"><input type="radio" name="e2" value="w2">التجاذب الكهربائي الساكن بين الجسيمات</label>
+          <label class="quiz-option"><input type="radio" name="e2" value="w3">أيونات الفلزّ الموجبة داخل الشبكة البلّورية</label>
+        </div>
+        <p class="explore-feedback" id="fb-e2" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">3</span> تُعرف الرابطة الفلزّية بأنها تجاذب كهربائي ساكن بين…</p>
+        <div class="quiz-options" data-q="e3">
+          <label class="quiz-option"><input type="radio" name="e3" value="w1">ذرّات الفلزّ وذرّات اللافلزّ المجاورة لها</label>
+          <label class="quiz-option"><input type="radio" name="e3" value="w2">نوى ذرّات الفلزّ وإلكتروناتها الداخلية</label>
+          <label class="quiz-option"><input type="radio" name="e3" value="w3">أيونات فلزّ موجبة وأيونات فلزّ سالبة</label>
+          <label class="quiz-option"><input type="radio" name="e3" value="correct">أيونات الفلزّ الموجبة والإلكترونات حرّة الحركة</label>
+        </div>
+        <p class="explore-feedback" id="fb-e3" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">4</span> لماذا تمتلك الفلزّات درجات انصهار مرتفعة؟</p>
+        <div class="quiz-options" data-q="e4">
+          <label class="quiz-option"><input type="radio" name="e4" value="correct">لحاجتها إلى طاقة كبيرة لكسر الروابط الفلزّية القوية</label>
+          <label class="quiz-option"><input type="radio" name="e4" value="w1">لأن الروابط الفلزّية روابط ضعيفة سهلة الكسر</label>
+          <label class="quiz-option"><input type="radio" name="e4" value="w2">لأن الفلزّات موصّلات جيّدة للحرارة فتمتصّها</label>
+          <label class="quiz-option"><input type="radio" name="e4" value="w3">لأن الفلزّات موصّلات رديئة للحرارة فتحتفظ بها</label>
+        </div>
+        <p class="explore-feedback" id="fb-e4" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">5</span> اشرح سبب توصيل الفلزّات للتيّار الكهربائي.</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="e5Input" placeholder="اكتب إجابتك" autocomplete="off">
+          <button type="button" class="btn" id="e5Btn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-e5" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">6</span> قطعة من فلزّ الخارصين تحتوي على 50 أيون <span dir="ltr">Zn<sup>2+</sup></span>. فما عدد الإلكترونات حرّة الحركة في بحر الإلكترونات؟</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="e6Input" placeholder="اكتب العدد" autocomplete="off">
+          <button type="button" class="btn" id="e6Btn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-e6" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">7</span> أيّ الفلزّين روابطه الفلزّية أقوى: الصوديوم الذي يكوّن <span dir="ltr">Na<sup>+</sup></span>، أم الألومنيوم الذي يكوّن <span dir="ltr">Al<sup>3+</sup></span>؟</p>
+        <div class="quiz-options" data-q="e7">
+          <label class="quiz-option"><input type="radio" name="e7" value="w1">الصوديوم، لأن إلكترونه الوحيد أسرع في الحركة</label>
+          <label class="quiz-option"><input type="radio" name="e7" value="correct">الألومنيوم، لأن شحنة أيونه أكبر وإلكتروناته الحرّة أكثر</label>
+          <label class="quiz-option"><input type="radio" name="e7" value="w2">متساويان، لأن كليهما فلزّ والرابطة نوع واحد</label>
+          <label class="quiz-option"><input type="radio" name="e7" value="w3">الصوديوم، لأن أيونه الأصغر شحنة أشدّ تماسكًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-e7" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">8</span> أيّ خصائص الرابطة الفلزّية لا يُظهرها بوضوح أيٌّ من النموذجين اللذين درستهما؟</p>
+        <div class="quiz-options" data-q="e8">
+          <label class="quiz-option"><input type="radio" name="e8" value="w1">أيونات الفلزّ الموجبة الشحنة</label>
+          <label class="quiz-option"><input type="radio" name="e8" value="w2">الشبكة البلّورية الثلاثية الأبعاد</label>
+          <label class="quiz-option"><input type="radio" name="e8" value="w3">الإلكترونات حرّة الحركة السالبة</label>
+          <label class="quiz-option"><input type="radio" name="e8" value="correct">التجاذب بين الأيونات والإلكترونات الحرّة</label>
+        </div>
+        <p class="explore-feedback" id="fb-e8" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">9</span> ما وجه الاختلاف بين الرابطة الفلزّية والرابطة الأيونية؟</p>
+        <div class="quiz-options" data-q="e9">
+          <label class="quiz-option"><input type="radio" name="e9" value="w1">الفلزّية قوية التجاذب والأيونية ضعيفة التجاذب</label>
+          <label class="quiz-option"><input type="radio" name="e9" value="w2">الفلزّية بين فلزّين والأيونية بين لافلزّين اثنين</label>
+          <label class="quiz-option"><input type="radio" name="e9" value="correct">في الفلزّ إلكترونات حرّة الحركة لا توجد في المركّب الأيوني</label>
+          <label class="quiz-option"><input type="radio" name="e9" value="w3">الفلزّية تحتوي أيونات موجبة والأيونية لا تحتوي أيونات</label>
+        </div>
+        <p class="explore-feedback" id="fb-e9" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">10</span> ما الذي يمسك ذرّات الألومنيوم معًا في جسم الطائرة؟</p>
+        <div class="quiz-options" data-q="e10">
+          <label class="quiz-option"><input type="radio" name="e10" value="correct">تجاذب أيونات الألومنيوم الموجبة مع بحر الإلكترونات</label>
+          <label class="quiz-option"><input type="radio" name="e10" value="w1">نقل الإلكترونات من ذرّة ألومنيوم إلى أخرى مجاورة</label>
+          <label class="quiz-option"><input type="radio" name="e10" value="w2">مشاركة كلّ ذرّتي ألومنيوم في ثلاثة أزواج إلكترونية</label>
+          <label class="quiz-option"><input type="radio" name="e10" value="w3">تجاذب نوى ذرّات الألومنيوم بعضها مع بعض مباشرة</label>
+        </div>
+        <p class="explore-feedback" id="fb-e10" hidden></p>
+      </div>
+    </div>
+
+    <div class="eval-summary" id="evalSummary" hidden></div>
+    <!-- إلزامي: بدونه تحقن وحدة الشهادة زرّها عائمًا فيصطدم بزرّ فهيم -->
+    <div id="certTriggerSlot"></div>
+  </section>
+
+</main>
+
+<!-- وسوم shared/ الستّة تسبق سكربت الدرس: الدرس ينادي Quiz وChips
+     لحظة التحميل، فوجب أن يكون template.js محمّلًا قبله. -->
+<script src="../../shared/sounds/sounds.js"></script>
+<script src="../../shared/xp-system/xp.js"></script>
+<script src="../../shared/faheem-widget/faheem.js"></script>
+<script src="../../shared/template-boilerplate/template.js"></script>
+<script src="../../shared/certificate-system/certificate.js"></script>
+<script src="../../shared/identity/footer.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   الدرس 5 — سكربت الدرس
+
+   بنية الملف:
+     T          — كل نصّ عربي يكتبه الجافاسكربت (تلميحات، أسطر صواب،
+                  إجابات نموذجية). النصّ في كائن واحد لا موزّعًا على
+                  سمات الوسم، فمستند المراجعة هو نفسه ما يُلصق هنا.
+     G          — أدوات SVG صغيرة مشتركة بين المسارح.
+     drawAtom   — راسم الذرّة بلغة الدرس 04 (مستويات كاملة + رمز في
+                  النواة). نسخة هذا الدرس ثالثة نسخة في المنصّة، وهي
+                  التي يُقطَّر منها الراسم المشترك بعد هذا الدرس.
+     Sea        — بحر الإلكترونات: حركة غير منتظمة تتوقّف عند خروج
+                  المحطة من الشاشة وتحت prefers-reduced-motion.
+     المحطات    — كل محطة في دالّة مستقلّة تُنادى مرّة عند التحميل.
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+/* ============ 1) النصوص ============ */
+var T = {
+  s1: {
+    fourth : 'المستوى الخارجي للألومنيوم فيه ثلاثة إلكترونات فقط.',
+    done   : 'هذا هو التمثيل النقطي لذرّة الألومنيوم. والآن — ماذا لو جاءت ذرّة ألومنيوم ثانية بجوارها؟',
+    transfer: 'لم ينجح النقل. الذرّتان كلتاهما ألومنيوم، فلماذا تأخذ إحداهما من الأخرى ولهما التركيب نفسه؟',
+    share   : 'ولم تنجح المشاركة أيضًا. كلّ ذرّة صار حولها ستّة إلكترونات، ولم يبلغ أيٌّ منهما ثمانية.',
+    predict : 'سجّلنا تنبّؤك. والمحطة التالية ستُريك ما يحدث فعلًا.'
+  },
+  s2: {
+    progress: function(n){ return n + ' من 6 ذرّات غادرها إلكترونها.'; },
+    done    : 'ستّة أيونات صوديوم موجبة، وستّة إلكترونات لا ينتمي أيٌّ منها إلى ذرّة بعينها.',
+    naIon: {
+      correct: 'الذرّة فقدت إلكترونًا سالبًا واحدًا، فصار عدد البروتونات الموجبة أكبر بواحد. هذا أيون الصوديوم الموجب.',
+      w1: 'انظر إلى الدائرة على الشاشة — هل ما زالت بلا إشارة؟',
+      w2: 'الذرّة فقدت جسيمًا سالبًا. فأيّ الشحنتين صار أكثر: الموجبة أم السالبة؟',
+      w3: 'الجزيء يتكوّن بمشاركة أزواج. هل ترى زوجًا مشتركًا على المسرح؟'
+    },
+    whereElectron: {
+      correct: 'هذا هو الفرق الجوهري. لا نقل ولا مشاركة — الإلكترون تركَ ذرّته ولم يرتبط بغيرها.',
+      w1: 'تفحّص الدوائر كلّها على المسرح. هل تحمل واحدة منها إشارة سالبة؟',
+      w2: 'تابع إلكترونًا واحدًا بعينك عشر ثوانٍ. هل يبقى قرب دائرة واحدة؟',
+      w3: 'لو خرج فعلًا لصارت القطعة مشحونة موجبة. هل يحدث هذا لملعقة معدنية؟'
+    },
+    neutral: {
+      correct: 'ستّ شحنات موجبة وستّة إلكترونات سالبة داخل القطعة نفسها. المجموع صفر — والقطعة متعادلة.',
+      w1: 'عُدّ الإشارات السالبة المتحرّكة على المسرح. كم عددها؟',
+      w2: 'الأيونات على المسرح ما زالت تحمل إشارة +. هل اختفت؟',
+      w3: 'الإلكترونات ما زالت داخل الإطار تتحرّك. هل غادرته؟'
+    },
+    repulsion: {
+      correct: 'الإلكترونات السالبة تملأ الفراغ بين الأيونات الموجبة وتحيط بكلّ واحد منها من كلّ جهة. فالتجاذب أقوى من التنافر، والقطعة متماسكة.',
+      w1: 'التنافر يضعف بالبُعد لكنه لا ينعدم. وما الذي يجذبها إذًا؟',
+      w2: 'تأمّل المسرح: الدوائر الموجبة ثابتة في مواضعها. المتحرّك غيرها.',
+      w3: 'النوى كلّها موجبة الشحنة. والموجب لا يجذب موجبًا.'
+    }
+  }
+};
+
+/* ============ 2) أدوات SVG ============ */
+var NS = 'http://www.w3.org/2000/svg';
+var G = {
+  el: function(tag, attrs){
+    var n = document.createElementNS(NS, tag);
+    if(attrs) Object.keys(attrs).forEach(function(k){ n.setAttribute(k, attrs[k]); });
+    return n;
+  },
+  add: function(parent, tag, attrs){
+    var n = G.el(tag, attrs);
+    parent.appendChild(n);
+    return n;
+  },
+  // نصّ داخل SVG في سياق RTL: الرموز والشحنات تحتاج عزلًا صريحًا
+  text: function(parent, str, attrs){
+    var n = G.add(parent, 'text', attrs || {});
+    n.setAttribute('text-anchor', n.getAttribute('text-anchor') || 'middle');
+    n.setAttribute('direction', 'ltr');
+    n.style.unicodeBidi = 'isolate';
+    n.textContent = str;
+    return n;
+  },
+  clear: function(node){ while(node.firstChild) node.removeChild(node.firstChild); },
+  reduced: function(){
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+};
+
+/* ============ 3) راسم الذرّة ============
+   مستويات كاملة، والرمز داخل النواة — لغة الدرس 04 نفسها فالطالب
+   يعرفها. الإلكترونات على المستوى الخارجي في المواضع الأربعة
+   الثابتة (أعلى · أسفل · يسار · يمين) فتُقرأ بالعين بلا إحصاء. */
+var SHELL_R = [26, 47, 68, 88];
+var ORDER   = [-90, 90, 180, 0];      // أعلى · أسفل · بعيد · مواجه
+
+function polar(cx, cy, r, deg){
+  var a = deg * Math.PI / 180;
+  return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
+}
+
+/* توزيع أي مستوى: المواضع الأربعة الثابتة أولًا (أعلى · أسفل ·
+   بعيد · مواجه)، ثم يُزاوَج كل موضع بالترتيب. فمستوى فيه ثمانية
+   يُقرأ «زوج، زوج، زوج، زوج» بلا إحصاء — وهو ما يفعله رسم الكتاب.
+   والتوزيع المتساوي حول الدائرة يجعلها نجومًا متناثرة، وقد جرّبناه
+   فأخرج مستويات غير منتظمة. */
+function shellPoints(count, cx, cy, r){
+  var pts = [];
+  for(var i = 0; i < 4 && pts.length < count; i++){
+    var k = Math.floor(count / 4) + (i < count % 4 ? 1 : 0);
+    if(!k) continue;
+    var ang  = ORDER[i];
+    var base = polar(cx, cy, r, ang);
+    var perp = polar(0, 0, 1, ang + 90);
+    for(var j = 0; j < k; j++){
+      var off = (j - (k - 1) / 2) * 13;
+      pts.push({ x: base.x + perp.x * off, y: base.y + perp.y * off });
+    }
+  }
+  return pts;
+}
+
+function electron(parent, x, y, cls){
+  var g = G.add(parent, 'g', { 'class': 'epos ' + (cls || '') });
+  g.setAttribute('transform', 'translate(' + x.toFixed(1) + ',' + y.toFixed(1) + ')');
+  G.add(g, 'circle', { 'class': 'ehalo', cx: 0, cy: 0, r: 0 });
+  G.add(g, 'circle', { 'class': 'edot' + (cls && cls.indexOf('free') >= 0 ? ' free' : ''), cx: 0, cy: 0, r: 4.5 });
+  return g;
+}
+
+/* حركة عامّة: تُمرَّر دالّة تضع القيمة عند كل إطار. تحت تقليل الحركة
+   تقع النتيجة فورًا — فالرسالة النصّية هي القناة الأولى دائمًا. */
+function animate(ms, apply, done){
+  if(G.reduced()) ms = 1;
+  var t0 = Date.now();
+  function step(){
+    var t = Math.min(1, (Date.now() - t0) / ms);
+    apply(1 - Math.pow(1 - t, 3));
+    if(t < 1) window.requestAnimationFrame(step);
+    else if(done) done();
+  }
+  window.requestAnimationFrame(step);
+}
+
+/* cfg: { cx, cy, shells:[..], symbol, outer:عدد الظاهر من الخارجي, outerClass } */
+function drawAtom(parent, cfg){
+  var g = G.add(parent, 'g', { 'class': 'atom' });
+  var inner = cfg.shells.slice(0, cfg.shells.length - 1);
+  var lastR = SHELL_R[cfg.shells.length - 1];
+
+  cfg.shells.forEach(function(_, si){
+    G.add(g, 'circle', {
+      cx: cfg.cx, cy: cfg.cy, r: SHELL_R[si],
+      'class': 'orbit orbit-shell-' + si
+    });
+  });
+  G.add(g, 'circle', { cx: cfg.cx, cy: cfg.cy, r: 24, 'class': 'nucleus' });
+  G.text(g, cfg.symbol, { x: cfg.cx, y: cfg.cy + 6, 'class': 'nucleus-label' });
+
+  inner.forEach(function(count, si){
+    shellPoints(count, cfg.cx, cfg.cy, SHELL_R[si]).forEach(function(p){
+      electron(g, p.x, p.y, '');
+    });
+  });
+
+  var outerCount = (typeof cfg.outer === 'number') ? cfg.outer
+                 : cfg.shells[cfg.shells.length - 1];
+  var outerNodes = [];
+  var outerLayer = G.add(g, 'g', { 'class': 'outer-layer' });
+  shellPoints(outerCount, cfg.cx, cfg.cy, lastR).forEach(function(p){
+    outerNodes.push(electron(outerLayer, p.x, p.y, cfg.outerClass || ''));
+  });
+
+  return { group: g, outerLayer: outerLayer, outer: outerNodes, r: lastR,
+           cx: cfg.cx, cy: cfg.cy };
+}
+
+/* أيون: دائرة أصغر تحمل إشارتها. الانكماش نفسه هو انتقال الطالب من
+   نموذج الذرّة إلى نموذج الفلزّ، فلا يُشرح نصًّا. */
+function drawIon(parent, cfg){
+  var g = G.add(parent, 'g', { 'class': 'ion' });
+  G.add(g, 'circle', { cx: cfg.cx, cy: cfg.cy, r: cfg.r || 26, 'class': 'ion-body' });
+  G.text(g, cfg.sign || '+', { x: cfg.cx, y: cfg.cy + 5.5, 'class': 'ion-sign' });
+  if(cfg.symbol){
+    G.text(g, cfg.symbol, { x: cfg.cx, y: cfg.cy + (cfg.r || 26) + 15, 'class': 'ion-symbol' });
+  }
+  return g;
+}
+
+/* ============ 4) بحر الإلكترونات ============
+   حركة غير منتظمة: كل إلكترون يمشي في اتجاه ويرتدّ عن حدود الإطار.
+   الحركة تتوقّف حين تخرج المحطة من الشاشة وتحت تقليل الحركة — بحرٌ
+   يتحرّك في محطة لا يراها أحد يستهلك بطارية الجوال بلا فائدة. */
+function Sea(svg, box, opts){
+  opts = opts || {};
+  var layer = G.add(svg, 'g', { 'class': 'sea-layer' });
+  var list = [], raf = null, running = false;
+  var speed = opts.speed || 0.55;
+  var drift = 0;                       // 0 = عشوائي، 1± = انجراف موجّه
+
+  function spawn(x, y){
+    var node = electron(layer, x, y, 'free');
+    var a = Math.random() * Math.PI * 2;
+    var e = { node: node, x: x, y: y,
+              vx: Math.cos(a) * speed, vy: Math.sin(a) * speed };
+    list.push(e);
+    return e;
+  }
+
+  function step(){
+    for(var i = 0; i < list.length; i++){
+      var e = list[i];
+      if(drift){
+        e.vx += drift * 0.05;
+        var cap = speed * 3.2;
+        if(e.vx > cap) e.vx = cap;
+        if(e.vx < -cap) e.vx = -cap;
+      }else{
+        // تغيير طفيف في الاتجاه: حركة غير منتظمة لا خطّ مستقيم
+        e.vx += (Math.random() - 0.5) * 0.12;
+        e.vy += (Math.random() - 0.5) * 0.12;
+        var sp = Math.sqrt(e.vx * e.vx + e.vy * e.vy) || 1;
+        e.vx = e.vx / sp * speed;
+        e.vy = e.vy / sp * speed;
+      }
+      e.x += e.vx; e.y += e.vy;
+      if(e.x < box.x){ e.x = box.x; e.vx = Math.abs(e.vx); }
+      if(e.x > box.x + box.w){ e.x = box.x + box.w; e.vx = -Math.abs(e.vx); }
+      if(e.y < box.y){ e.y = box.y; e.vy = Math.abs(e.vy); }
+      if(e.y > box.y + box.h){ e.y = box.y + box.h; e.vy = -Math.abs(e.vy); }
+      e.node.setAttribute('transform', 'translate(' + e.x.toFixed(1) + ',' + e.y.toFixed(1) + ')');
+    }
+    raf = window.requestAnimationFrame(step);
+  }
+
+  var api = {
+    spawn: spawn,
+    count: function(){ return list.length; },
+    remove: function(e){
+      var i = list.indexOf(e);
+      if(i < 0) return;
+      list.splice(i, 1);
+      if(e.node && e.node.parentNode) e.node.parentNode.removeChild(e.node);
+    },
+    setSpeed: function(v){ speed = v; },
+    setDrift: function(d){ drift = d; },
+    start: function(){
+      if(running || G.reduced()) return;
+      running = true;
+      raf = window.requestAnimationFrame(step);
+    },
+    stop: function(){
+      running = false;
+      if(raf) window.cancelAnimationFrame(raf);
+      raf = null;
+    },
+    layer: layer
+  };
+
+  // إيقاف تلقائي عند خروج المسرح من الشاشة
+  if(window.IntersectionObserver){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting) api.start(); else api.stop();
+      });
+    }, { threshold: 0 });
+    io.observe(svg);
+  }
+  return api;
+}
+
+/* ============ 5) المحطة 1 ============ */
+function station1(){
+  var svg = document.getElementById('stage1');
+  if(!svg) return;
+  var msg = document.getElementById('s1msg');
+  var explore = document.getElementById('s1explore');
+  var predictBox = document.getElementById('s1predictBox');
+  var resetBtn = document.getElementById('s1reset');
+
+  var LEFT = 250, RIGHT = 650, CY = 165, R = SHELL_R[2];
+  var placed = 0, atomA = null, busy = false;
+
+  function say(txt, done){
+    msg.textContent = txt || '';
+    msg.classList.toggle('done', !!done);
+  }
+
+  function readPos(n){
+    var t = /translate\((-?[\d.]+),(-?[\d.]+)\)/.exec(n.getAttribute('transform'));
+    return { x: parseFloat(t[1]), y: parseFloat(t[2]) };
+  }
+  function setPos(n, x, y){
+    n.setAttribute('transform', 'translate(' + x.toFixed(1) + ',' + y.toFixed(1) + ')');
+  }
+
+  function hitArea(cx, cy, onClick){
+    var hit = G.add(svg, 'circle', {
+      cx: cx, cy: cy, r: R + 16, fill: 'transparent', 'class': 'atom-hit'
+    });
+    hit.setAttribute('tabindex', '0');
+    hit.setAttribute('role', 'button');
+    hit.setAttribute('aria-label', 'أضف إلكترونًا إلى المستوى الخارجي للألومنيوم');
+    hit.addEventListener('click', onClick);
+    hit.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); onClick(); }
+    });
+    return hit;
+  }
+
+  // مرحلة الرسم: ذرّة واحدة بمستوى خارجي فارغ، والنقر يضيف إلكترونًا
+  function build(){
+    G.clear(svg);
+    atomA = drawAtom(svg, { cx: LEFT, cy: CY, shells: [2, 8, 3], symbol: 'Al', outer: 0 });
+    hitArea(LEFT, CY, addDot);
+    // حلقة تدلّ على موضع النقر ولا تلتقطه: النقر يقع على الذرّة كلّها
+    var p = polar(LEFT, CY, R, ORDER[0]);
+    var halo = G.add(svg, 'g', { 'class': 'hint-halo' });
+    halo.setAttribute('transform', 'translate(' + p.x.toFixed(1) + ',' + p.y.toFixed(1) + ')');
+    halo.setAttribute('id', 's1halo');
+    G.add(halo, 'circle', { cx: 0, cy: 0, r: 12, 'class': 'halo-ring' });
+  }
+
+  function addDot(){
+    // الحدّ يُبلَّغ به ولا يُسكَت عنه: طالبٌ ينقر رابعةً يستحقّ جوابًا
+    if(placed >= 3){ say(T.s1.fourth); return; }
+    placed++;
+    G.clear(atomA.outerLayer);
+    shellPoints(placed, LEFT, CY, R).forEach(function(p){
+      electron(atomA.outerLayer, p.x, p.y, '');
+    });
+    if(window.Sounds) window.Sounds.playTick();
+    if(placed < 3) return;
+
+    var halo = document.getElementById('s1halo');
+    if(halo && halo.parentNode) halo.parentNode.removeChild(halo);
+    svg.querySelectorAll('.atom-hit').forEach(function(n){ n.setAttribute('tabindex', '-1'); });
+    say(T.s1.done, true);
+    if(window.XP) window.XP.claim('l5-al-dots', window.XP.POINTS.PRODUCE,
+                                  'رسمتَ التمثيل النقطي للألومنيوم');
+    drawAtom(svg, { cx: RIGHT, cy: CY, shells: [2, 8, 3], symbol: 'Al', outer: 3 });
+    explore.hidden = false;
+    predictBox.hidden = false;
+  }
+
+  // الحالة الأولى للاستكشاف: ذرّتان منفصلتان بثلاثة إلكترونات لكلٍّ
+  function restore(){
+    G.clear(svg);
+    return [
+      drawAtom(svg, { cx: LEFT,  cy: CY, shells: [2, 8, 3], symbol: 'Al', outer: 3 }),
+      drawAtom(svg, { cx: RIGHT, cy: CY, shells: [2, 8, 3], symbol: 'Al', outer: 3 })
+    ];
+  }
+
+  /* الحكم يُكتب في رسالة المسرح نفسها: الطالب ينظر إلى الذرّتين لحظة
+     الحركة، فالسطر الذي تحتهما هو الذي يُقرأ. وسطرٌ أسفل الأزرار لا
+     يراه أحد. */
+  function setNote(txt){
+    msg.textContent = txt;
+    msg.className = 'stage-msg impasse';
+    resetBtn.hidden = false;
+  }
+
+  /* «جرّب النقل»: المحاولة تُرى وتفشل. الإلكترونات تندفع نحو الذرّة
+     الثانية ثم تُردّ إلى ذرّتها — فالذرّتان متماثلتان ولا سبب لأن
+     تأخذ إحداهما من الأخرى. ولو نجح النقل على الشاشة لانهدم غرض
+     المحطة كلّه: هذان احتمالان لا يعملان. */
+  function tryTransfer(){
+    if(busy) return;
+    busy = true;
+    var pair = restore();
+    var movers = pair[0].outer.slice();
+    var start = movers.map(readPos);
+    var aim = [-20, 0, 20].map(function(dy){
+      return { x: RIGHT - R - 14, y: CY + dy };
+    });
+    animate(650, function(k){
+      movers.forEach(function(n, i){
+        setPos(n, start[i].x + (aim[i].x - start[i].x) * k,
+                  start[i].y + (aim[i].y - start[i].y) * k);
+      });
+    }, function(){
+      // وقفة قصيرة عند الحدّ: لحظة الرفض تُرى قبل الارتداد
+      setTimeout(function(){
+        animate(520, function(k){
+          movers.forEach(function(n, i){
+            setPos(n, aim[i].x + (start[i].x - aim[i].x) * k,
+                      aim[i].y + (start[i].y - aim[i].y) * k);
+          });
+        }, function(){
+          setNote(T.s1.transfer);
+          if(window.Sounds) window.Sounds.playWrong();
+          busy = false;
+        });
+      }, G.reduced() ? 1 : 320);
+    });
+  }
+
+  /* «جرّب المشاركة»: الذرّتان تقتربان وتتكوّن الأزواج، ويُكتب الحكم
+     لحظة تكوّنها لا بعد زوالها — فالطالب يقرأ السبب والمشهد أمامه.
+     ثم ينفكّ الترتيب وتعودان، لأنه لا يثبت في الطبيعة. */
+  function tryShare(){
+    if(busy) return;
+    busy = true;
+    var pair = restore();
+    var mid = (LEFT + RIGHT) / 2;
+    var half = R - 15;                      // تداخل ضحل ثابت
+    var targetL = mid - half, targetR = mid + half;
+    var pairsG = null;
+
+    animate(700, function(k){
+      pair[0].group.setAttribute('transform', 'translate(' + ((targetL - LEFT) * k).toFixed(1) + ',0)');
+      pair[1].group.setAttribute('transform', 'translate(' + ((targetR - RIGHT) * k).toFixed(1) + ',0)');
+    }, function(){
+      // ثلاثة أزواج في عمود واحد، بتباعد يُقرأ «زوج، زوج، زوج»
+      pairsG = G.add(svg, 'g', { 'class': 'shared-pairs' });
+      [-34, 0, 34].forEach(function(dy){
+        electron(pairsG, mid, CY + dy - 8, '');
+        electron(pairsG, mid, CY + dy + 8, '');
+      });
+      setNote(T.s1.share);
+      if(window.Sounds) window.Sounds.playWrong();
+      setTimeout(function(){
+        if(pairsG && pairsG.parentNode) pairsG.parentNode.removeChild(pairsG);
+        animate(600, function(k){
+          pair[0].group.setAttribute('transform', 'translate(' + ((targetL - LEFT) * (1 - k)).toFixed(1) + ',0)');
+          pair[1].group.setAttribute('transform', 'translate(' + ((targetR - RIGHT) * (1 - k)).toFixed(1) + ',0)');
+        }, function(){ busy = false; });
+      }, G.reduced() ? 60 : 1600);
+    });
+  }
+
+  document.getElementById('s1try1').addEventListener('click', tryTransfer);
+  document.getElementById('s1try2').addEventListener('click', tryShare);
+  resetBtn.addEventListener('click', function(){
+    if(busy) return;
+    restore();
+    msg.textContent = '';
+    msg.className = 'stage-msg';
+    resetBtn.hidden = true;
+  });
+
+  // التنبّؤ: لا يُصحَّح، فمعالجه خاصّ بالدرس لا محرّك مشترك
+  var predictDone = false;
+  document.querySelectorAll('#predictOptions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(predictDone) return;
+      predictDone = true;
+      var fb = document.getElementById('fb-predict');
+      fb.textContent = T.s1.predict;
+      fb.className = 'explore-feedback is-hint';
+      fb.hidden = false;
+      document.getElementById('s1done').hidden = false;
+      if(window.Sounds) window.Sounds.playSnap();
+      if(window.XP) window.XP.claim('l5-predict', window.XP.POINTS.PREDICT, 'تنبّأتَ قبل الكشف');
+    });
+  });
+
+  build();
+}
+
+/* ============ 6) المحطة 2 ============ */
+function station2(){
+  var svg = document.getElementById('stage2');
+  if(!svg) return;
+  var msg = document.getElementById('s2msg');
+  var qBox = document.getElementById('s2questions');
+
+  /* إطار قطعة الصوديوم يُرسم أولًا: تلميحات الأسئلة تذكر «القطعة»
+     و«الإطار»، فوجب أن يكون لهما مصداق على الشاشة لا في الذهن. */
+  var BOX = { x: 130, y: 55, w: 640, h: 360 };
+  G.add(svg, 'rect', {
+    x: BOX.x, y: BOX.y, width: BOX.w, height: BOX.h, rx: 24,
+    fill: 'rgba(20,200,168,.03)', stroke: 'rgba(20,200,168,.28)',
+    'stroke-width': 1.4, 'stroke-dasharray': '6 5'
+  });
+  var lbl = G.text(svg, 'قطعة صوديوم', { x: BOX.x + BOX.w / 2, y: BOX.y - 10, 'class': 'panel-title' });
+  lbl.setAttribute('direction', 'rtl');
+
+  var spots = [];
+  [160, 330].forEach(function(y){
+    [250, 450, 650].forEach(function(x){ spots.push({ x: x, y: y }); });
+  });
+
+  var sea = Sea(svg, { x: BOX.x + 20, y: BOX.y + 15, w: BOX.w - 40, h: BOX.h - 30 }, { speed: 0.6 });
+  var freed = 0;
+
+  spots.forEach(function(p, i){
+    var holder = G.add(svg, 'g', { 'class': 'na-holder' });
+    var atom = drawAtom(holder, { cx: p.x, cy: p.y, shells: [2, 8, 1], symbol: 'Na', outer: 1 });
+    var e = atom.outer[0];
+    e.setAttribute('class', 'epos clickable');
+    e.querySelector('.edot').setAttribute('class', 'edot free');
+    e.querySelector('.ehalo').setAttribute('r', 12);
+    e.setAttribute('tabindex', '0');
+    e.setAttribute('role', 'button');
+    e.setAttribute('aria-label', 'حرّر إلكترون ذرّة الصوديوم رقم ' + (i + 1));
+
+    function release(){
+      if(holder.dataset.done) return;
+      holder.dataset.done = '1';
+      // الإلكترون يغادر ذرّته ولا يستقرّ عند أي ذرّة أخرى
+      if(e.parentNode) e.parentNode.removeChild(e);
+      sea.spawn(p.x, p.y - SHELL_R[2]);
+      G.clear(holder);
+      drawIon(holder, { cx: p.x, cy: p.y, r: 26, sign: '+', symbol: 'Na' });
+      freed++;
+      if(window.Sounds) window.Sounds.playSnap();
+      if(freed < 6){
+        msg.textContent = T.s2.progress(freed);
+      }else{
+        msg.textContent = T.s2.done;
+        msg.classList.add('done');
+        qBox.hidden = false;
+        if(window.XP) window.XP.claim('l5-build-sea', window.XP.POINTS.TASK,
+                                      'حرّرتَ إلكترونات الفلزّ وبنيتَ البحر');
+      }
+    }
+
+    e.addEventListener('click', release);
+    e.addEventListener('keydown', function(ev){
+      if(ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); release(); }
+    });
+  });
+
+  sea.start();
+
+  // الأسئلة الأربعة على المحرّك المشترك
+  var q = window.Quiz.practice({
+    naIon: { xpId: 'l5-na-ion', xp: 'MCQ', reason: 'تعرّفتَ على الأيون الموجب',
+             correctText: T.s2.naIon.correct, hints: T.s2.naIon },
+    whereElectron: { xpId: 'l5-where-electron', xp: 'MCQ', reason: 'ميّزتَ التحرّر عن الانتقال',
+             correctText: T.s2.whereElectron.correct, hints: T.s2.whereElectron },
+    neutral: { xpId: 'l5-neutral', xp: 'MCQ', reason: 'وازنتَ شحنة القطعة',
+             correctText: T.s2.neutral.correct, hints: T.s2.neutral },
+    repulsion: { xpId: 'l5-repulsion', xp: 'MCQ', reason: 'فسّرتَ تماسك القطعة',
+             correctText: T.s2.repulsion.correct, hints: T.s2.repulsion }
+  }, {
+    onAllSolved: function(){
+      document.getElementById('s2nameBridge').hidden = false;
+    }
+  });
+
+  // التسمية تلحق البناء، وبجسر صريح يضغطه الطالب
+  document.getElementById('s2nameBtn').addEventListener('click', function(){
+    document.getElementById('s2nameCard').hidden = false;
+    this.disabled = true;
+    this.classList.add('demoted');
+    if(window.Sounds) window.Sounds.playChime();
+  });
+
+  return q;
+}
+
+/* ============ التشغيل ============ */
+station1();
+station2();
+
+/* ══════════════════ نصوص المحطات 3–7 ══════════════════ */
+var T2 = {
+  s3: {
+    greySpheres: {
+      correct: 'النموذج المجسّم لا يرسم الشحنة، لكن الجسيمات فيه أيونات موجبة — لأن إلكتروناتها الخارجية صارت في البحر.',
+      w1: 'لو بقيت ذرّات كاملة، فأين بحر الإلكترونات الذي بنيتَه؟',
+      w2: 'جرّبتَ المشاركة في المحطة 1 على الألومنيوم. هل نجحت بين ذرّتي فلزّ؟',
+      w3: 'في قطعة فلزّ نقيّة، مِن أين تأتي الإلكترونات الزائدة؟'
+    },
+    hints: {
+      'التجاذب بين أيونات الفلزّ والإلكترونات الحرّة': 'ابحث في الرسم عن سهم أو خطّ يمثّل قوّة التجاذب. هل تجده؟',
+      'شبكة بلّورية فلزّية ثلاثية الأبعاد|lim-31': 'الشكل 1-31 مرسوم على ورقة مسطّحة. هل ترى فيه عمقًا؟'
+    }
+  },
+  s4: {
+    cuShort:  'الشحنات الموجبة أكثر من السالبة حتى الآن. أعد العدّ: كم شحنة موجبة على كلّ أيون؟',
+    cuLong:   'الإلكترونات صارت أكثر من الشحنات الموجبة، والقطعة ليست متعادلة.',
+    cuDone:   'أربعة أيونات × شحنتان لكلّ أيون = ثمانية إلكترونات في البحر. القطعة متعادلة.',
+    alShort:  'الشحنات الموجبة أكثر من السالبة حتى الآن. كم شحنة موجبة على أيون الألومنيوم؟',
+    alLong:   'الإلكترونات صارت أكثر من الشحنات الموجبة، والقطعة ليست متعادلة.',
+    alDone:   'ثلاثة أيونات × ثلاث شحنات = تسعة إلكترونات في البحر.',
+    cu100Hints: ['كلّ أيون نحاس رمزه Cu²⁺. فكم إلكترونًا تركَ كلّ واحد منها؟',
+                 'اضرب عدد الأيونات في عدد الإلكترونات التي يتركها الأيون الواحد.'],
+    cu100Model: '200 إلكترون. لأن كلّ أيون Cu²⁺ ترك إلكترونين، و100 × 2 = 200.',
+    al100Hints: ['الأيون Al³⁺ يحمل ثلاث شحنات موجبة. فكم إلكترونًا تركَ؟',
+                 'اضرب عدد الأيونات في عدد الإلكترونات التي يتركها الأيون الواحد.'],
+    al100Model: '300 إلكترون. لأن كلّ أيون Al³⁺ ترك ثلاثة إلكترونات، و100 × 3 = 300.',
+    pattern: {
+      correct: 'الشحنة الموجبة على الأيون هي بالضبط عدد الإلكترونات التي فقدها. فأيون شحنته 3+ ترك ثلاثة إلكترونات.',
+      w1: 'الصوديوم واحد والنحاس اثنان. فهل العدد ثابت؟',
+      w2: 'الأيون Cu²⁺ شحنته 2. فهل ترك أربعة إلكترونات أم اثنين؟',
+      w3: 'راجع الحالات الثلاث: Na⁺ و Cu²⁺ و Al³⁺. هل ترى نمطًا؟'
+    }
+  },
+  s5: {
+    connected: 'الإلكترونات الحرّة صارت تنجرف كلّها في اتجاه واحد. والأيونات الموجبة لم تغادر مواضعها.',
+    warmed:    'في الفلزّ حملت الإلكترونات الحرّة الطاقة إلى الطرف البارد بسرعة. وفي المادة الأخرى زحفت الطاقة من جسيم إلى جاره.',
+    whatMoves: {
+      correct: 'الإلكترونات موجودة في السلك من قبل. والبطارية لا تمنحه إلكترونات، بل تدفع ما فيه إلى الحركة في اتجاه واحد.',
+      w1: 'راقب الدوائر الموجبة على المسرح. هل غادرت مواضعها؟',
+      w2: 'السلك مليء بالإلكترونات الحرّة قبل وصل البطارية. راجع المسرح.',
+      w3: 'لو تحرّك النوعان معًا لتفكّكت الشبكة. ما الثابت وما المتحرّك؟'
+    },
+    heat: {
+      correct: 'في المادة الأخرى تنتقل الطاقة بالاهتزاز من جسيم إلى جاره فقط. وفي الفلزّ تحملها الإلكترونات الحرّة نفسها عبر القطعة كلّها، فتصل أسرع بكثير.',
+      w1: 'الأيونات مثبَّتة في الشبكة. هل رأيتها تنتقل؟',
+      w2: 'قارن المسرحين: ما الموجود في الأول ومفقود في الثاني؟',
+      w3: 'الاهتزاز موجود في المادتين. فما الذي يميّز الفلزّ عنها؟'
+    },
+    cookHints: ['ما الذي ينقل الحرارة في قاع القِدر من النار إلى الطعام؟',
+                'ولو اختفى هذا الناقل، فبأي طريقة تبقى الحرارة تنتقل؟ وهل هي أسرع أم أبطأ؟'],
+    cookModel: 'الإلكترونات حرّة الحركة تتحرّك في أجزاء الشبكة الفلزّية كلّها وتنقل الطاقة الحرارية بسرعة. وبدونها لا تنتقل الحرارة إلا بالاهتزاز البطيء بين الجسيمات، فيستغرق طهي الطعام وقتًا أطول.',
+    sulfur: {
+      correct: 'الكبريت لافلزّ. يكوّن روابط تساهمية مع اللافلزّات وروابط أيونية مع الفلزّات، لكنه لا يكوّن رابطة فلزّية — فلا يملك إلكترونات حرّة الحركة تحمل الشحنة الكهربائية.',
+      w1: 'لو قوّيناه، هل يصير موصّلًا؟ السؤال عن التوصيل لا عن القوّة.',
+      w2: 'في قطعة كبريت نقيّة لا توجد أيونات أصلًا. راجع نوع العنصر.',
+      w3: 'حتى لو حفظناه من الهواء، ما الذي سيحمل الشحنة داخله؟'
+    }
+  },
+  s6: {
+    naVsMg: {
+      correct: 'أيون المغنيسيوم يحمل شحنتين موجبتين، ويمنح إلكترونين للبحر. فالتجاذب بين الأيونات والإلكترونات في المغنيسيوم أقوى منه في الصوديوم.',
+      w1: 'حرّية الحركة واحدة في الفلزّين. قارن مقدار الشحنة والعدد.',
+      w2: 'النوع واحد لكن القوّة تتفاوت. ما الذي يختلف بينهما؟',
+      w3: 'التجاذب الكهربائي يقوى بزيادة الشحنة لا بنقصانها.'
+    },
+    slid: 'الأيونات غيّرت مواضعها، والإلكترونات الحرّة ما زالت تحيط بها كلّها. فالرابطة الفلزّية لم تنكسر.',
+    malleable: {
+      correct: 'الأيونات تنزلق فوق بعضها، والبحر يحيط بها في كلّ وضع. فلا تنكسر الرابطة، والقطعة تستطيل إلى سلك أو تُفرَد إلى صفيحة.',
+      w1: 'راقب البحر أثناء السحب. هل انقطع تجاذبه لحظة واحدة؟',
+      w2: 'الدوائر بقيت عليها إشارة + طوال الحركة. هل عادت ذرّات؟',
+      w3: 'لو أعادتها لما تغيّر شكل القطعة. لكن الشكل تغيّر فعلًا.'
+    },
+    propHints: {
+      'درجة الانصهار المرتفعة|prop-free': 'الانصهار يعني تفكيك الشبكة. فما الذي يمسكها: التجاذب أم حركة الإلكترونات؟',
+      'التوصيل الكهربائي|prop-strong': 'الروابط القوية موجودة في مواد كثيرة لا تُوصّل. فما الذي ينفرد به الفلزّ؟'
+    },
+    trioHints: {
+      'Li': 'الليثيوم عنصر فلزّ وحده لا مركّب. فأي رابطة تنشأ بين ذرّات فلزّ وفلزّ؟',
+      'O₂': 'الأكسجين لافلزّ، وهنا ذرّتا أكسجين معًا. راجع الدرس 4.',
+      'LiF': 'الليثيوم فلزّ والفلور لافلزّ. فأي رابطة بينهما؟'
+    },
+    trioDone: 'الرابطة الأيونية بين فلزّ ولافلزّ · التساهمية بين لافلزّين · الفلزّية بين ذرّات الفلزّات. ثلاث حالات، وقد عرفتَها كلّها الآن.'
+  },
+  eval: {
+    e1: 'ذرّات الفلزّ فقدت إلكتروناتها الخارجية إلى البحر، فصارت أيونات موجبة.',
+    e2: 'هي الإلكترونات التي غادرت ذرّاتها ولم ترتبط بأي منها.',
+    e3: 'الرابطة الفلزّية تجاذب بين أيونات الفلزّ الموجبة والإلكترونات حرّة الحركة.',
+    e4: 'كسر الروابط الفلزّية القوية يحتاج طاقة كبيرة، فترتفع درجة الانصهار.',
+    e5: 'تُعدّ الفلزّات موصّلات جيّدة للتيّار الكهربائي لأنها تحتوي على إلكترونات حرّة الحركة تتحرّك في أجزاء الشبكة البلّورية كلّها، فتحمل معها الشحنة الكهربائية.',
+    e6: '100 إلكترون، لأن كلّ أيون Zn²⁺ ترك إلكترونين.',
+    e7: 'أيون الألومنيوم يحمل ثلاث شحنات ويمنح ثلاثة إلكترونات، فتجاذبه بالبحر أقوى.',
+    e8: 'التجاذب قوّة لا جسيم، فلا يرسمه أيّ من النموذجين.',
+    e9: 'كلتاهما تجاذب كهربائي ساكن، وكلتاهما فيها أيونات. لكن الإلكترونات حرّة الحركة لا توجد إلا في الفلزّ.',
+    e10: 'أيونات الألومنيوم الموجبة يمسكها بحر الإلكترونات المحيط بها.'
+  }
+};
+
+/* ══════════════════ أدوات مشتركة للمحطات 3–7 ══════════════════ */
+
+// إطار قطعة الفلزّ: يعطي التلميحات التي تذكر «القطعة» و«الإطار» مصداقًا
+function pieceFrame(svg, box, label){
+  var g = G.add(svg, 'g', { 'class': 'piece-frame' });
+  G.add(g, 'rect', {
+    x: box.x, y: box.y, width: box.w, height: box.h, rx: 22,
+    fill: 'rgba(20,200,168,.03)', stroke: 'rgba(20,200,168,.28)',
+    'stroke-width': 1.4, 'stroke-dasharray': '6 5'
+  });
+  if(label){
+    var t = G.text(g, label, { x: box.x + box.w / 2, y: box.y - 8, 'class': 'panel-title' });
+    t.setAttribute('direction', 'rtl');
+  }
+  return g;
+}
+
+/* ══════════════════ المحطة 3 ══════════════════ */
+function station3(){
+  var f30 = document.getElementById('fig30');
+  var f31 = document.getElementById('fig31');
+  if(!f30 || !f31) return;
+
+  // الشكل 1-30: كرات متراصّة بلا إشارة شحنة وبلا إلكترونات ظاهرة
+  var defs = G.add(f30, 'defs');
+  var grad = G.add(defs, 'radialGradient', { id: 'sphereGrad', cx: '35%', cy: '30%', r: '75%' });
+  G.add(grad, 'stop', { offset: '0%',   'stop-color': '#dfe6ef' });
+  G.add(grad, 'stop', { offset: '55%',  'stop-color': '#9aa8bd' });
+  G.add(grad, 'stop', { offset: '100%', 'stop-color': '#5b6a85' });
+  for(var r = 0; r < 4; r++){
+    for(var c = 0; c < 5; c++){
+      var x = 55 + c * 68 + (r % 2 ? 34 : 0);
+      var y = 55 + r * 50;
+      if(x > 350) continue;
+      G.add(f30, 'circle', { cx: x, cy: y, r: 30, 'class': 'sphere-body' });
+    }
+  }
+
+  // الشكل 1-31: صفوف أيونات موجبة وبينها إلكترونات حرّة
+  var ionsG = G.add(f31, 'g', { 'class': 'fig31-ions' });
+  var seaG  = G.add(f31, 'g', { 'class': 'fig31-sea' });
+  for(var rr = 0; rr < 3; rr++){
+    for(var cc = 0; cc < 4; cc++){
+      var ix = 70 + cc * 80;
+      var iy = 60 + rr * 65;
+      drawIon(ionsG, { cx: ix, cy: iy, r: 22, sign: '+' });
+      // إلكترونان حرّان في الفراغ بين كل أيونين
+      electron(seaG, ix + 40, iy - 22, 'free');
+      electron(seaG, ix + 12, iy + 34, 'free');
+    }
+  }
+
+  // التسميات تنزلق إلى مواضعها بعد الإجابة الصحيحة — بلا نقاط
+  var callouts = G.add(f31, 'g', { 'class': 'fig31-callouts is-off' });
+  function callout(x, y, tx, ty, txt){
+    G.add(callouts, 'line', { x1: x, y1: y, x2: tx, y2: ty, 'class': 'fig-leader' });
+    var t = G.text(callouts, txt, { x: tx, y: ty - 6, 'class': 'fig-callout' });
+    t.setAttribute('direction', 'rtl');
+  }
+  callout(70, 60, 120, 26, 'أيونات الفلزّ');
+  callout(110, 94, 250, 232, 'إلكترونات حرّة الحركة');
+  callout(300, 190, 300, 240, 'شبكة بلّورية فلزّية');
+
+  window.Quiz.practice({
+    greySpheres: { xpId: 'l5-grey-spheres', xp: 'MCQ', reason: 'قرأتَ نموذجًا لا يرسم الشحنة',
+                   correctText: T2.s3.greySpheres.correct, hints: T2.s3.greySpheres }
+  }, {
+    onAllSolved: function(){
+      document.getElementById('s3after').hidden = false;
+      callouts.setAttribute('class', 'fig31-callouts');
+    }
+  });
+
+  window.Chips.hints(T2.s3.hints);
+  window.Chips.onDone('limits', function(){
+    document.getElementById('s3done').hidden = false;
+    if(window.Sounds) window.Sounds.playChime();
+  });
+}
+
+/* ══════════════════ المحطة 4 ══════════════════
+   العدّاد لا يسبق السؤال: عدد الإلكترونات المطلوب لا يُكتب على
+   الشاشة قبل أن يعدّ الطالب بنفسه. */
+function seaBuilder(cfg){
+  var svg = document.getElementById(cfg.svg);
+  if(!svg) return null;
+  var msg = document.getElementById(cfg.msg);
+  var box = { x: 150, y: 60, w: 600, h: 190 };
+  pieceFrame(svg, box, cfg.frameLabel);
+
+  cfg.ions.forEach(function(p){
+    drawIon(svg, { cx: p.x, cy: p.y, r: 30, sign: cfg.sign, symbol: cfg.symbol });
+  });
+
+  var sea = Sea(svg, { x: box.x + 24, y: box.y + 20, w: box.w - 48, h: box.h - 40 }, { speed: 0.5 });
+  var added = [];
+
+  function add(){
+    if(added.length >= 20) return;
+    var x = box.x + 40 + Math.random() * (box.w - 80);
+    var y = box.y + 30 + Math.random() * (box.h - 60);
+    added.push(sea.spawn(x, y));
+    if(window.Sounds) window.Sounds.playTick();
+    msg.textContent = '';
+    msg.classList.remove('done');
+  }
+  function undo(){
+    var e = added.pop();
+    if(!e) return;
+    sea.remove(e);
+    msg.textContent = '';
+    msg.classList.remove('done');
+  }
+  function check(){
+    var n = added.length;
+    if(n < cfg.need){ msg.textContent = cfg.textShort; msg.classList.remove('done'); return; }
+    if(n > cfg.need){ msg.textContent = cfg.textLong;  msg.classList.remove('done'); return; }
+    msg.textContent = cfg.textDone;
+    msg.classList.add('done');
+    document.getElementById(cfg.addBtn).disabled = true;
+    document.getElementById(cfg.undoBtn).hidden = true;
+    document.getElementById(cfg.checkBtn).disabled = true;
+    document.getElementById(cfg.checkBtn).classList.add('demoted');
+    if(window.Sounds) window.Sounds.playChime();
+    if(window.XP) window.XP.claim(cfg.xpId, window.XP.POINTS.PRODUCE, cfg.reason);
+    if(cfg.onDone) cfg.onDone();
+  }
+
+  document.getElementById(cfg.addBtn).addEventListener('click', add);
+  document.getElementById(cfg.undoBtn).addEventListener('click', undo);
+  document.getElementById(cfg.checkBtn).addEventListener('click', check);
+  sea.start();
+  return { add: add, check: check, count: function(){ return added.length; } };
+}
+
+function station4(){
+  if(!document.getElementById('stage4a')) return;
+
+  seaBuilder({
+    svg: 'stage4a', msg: 's4amsg', frameLabel: 'قطعة نحاس',
+    ions: [{ x: 260, y: 155 }, { x: 380, y: 155 }, { x: 500, y: 155 }, { x: 620, y: 155 }],
+    sign: '2+', symbol: 'Cu', need: 8,
+    addBtn: 's4aAdd', undoBtn: 's4aUndo', checkBtn: 's4aCheck',
+    textShort: T2.s4.cuShort, textLong: T2.s4.cuLong, textDone: T2.s4.cuDone,
+    xpId: 'l5-cu-build', reason: 'بنيتَ بحر النحاس متعادلًا',
+    onDone: function(){ document.getElementById('s4b').hidden = false; }
+  });
+
+  window.Quiz.short({
+    input: 'cu100Input', button: 'cu100Btn', feedback: 'fb-cu100',
+    modelBtn: 'cu100ModelBtn', model: 'cu100Model',
+    accept: function(v, raw){
+      return /(^|\D)200(\D|$)/.test(raw || v) || /ميتان|ميتين|ماتان|ماتين/.test(v);
+    },
+    hints: T2.s4.cu100Hints, modelText: T2.s4.cu100Model,
+    xpId: 'l5-cu-100', xp: 'MCQ', reason: 'حسبتَ عدد إلكترونات البحر',
+    modelReason: 'راجعتَ الإجابة النموذجية',
+    onDone: function(){ document.getElementById('s4c').hidden = false; }
+  });
+
+  seaBuilder({
+    svg: 'stage4b', msg: 's4cmsg', frameLabel: 'قطعة ألومنيوم',
+    ions: [{ x: 320, y: 155 }, { x: 450, y: 155 }, { x: 580, y: 155 }],
+    sign: '3+', symbol: 'Al', need: 9,
+    addBtn: 's4cAdd', undoBtn: 's4cUndo', checkBtn: 's4cCheck',
+    textShort: T2.s4.alShort, textLong: T2.s4.alLong, textDone: T2.s4.alDone,
+    xpId: 'l5-al-build', reason: 'بنيتَ بحر الألومنيوم متعادلًا',
+    onDone: function(){ document.getElementById('s4d').hidden = false; }
+  });
+
+  window.Quiz.short({
+    input: 'al100Input', button: 'al100Btn', feedback: 'fb-al100',
+    modelBtn: 'al100ModelBtn', model: 'al100Model',
+    accept: function(v, raw){
+      return /(^|\D)300(\D|$)/.test(raw || v) || /ثلاثميه|ثلاثمايه|ثلاثمئه/.test(v);
+    },
+    hints: T2.s4.al100Hints, modelText: T2.s4.al100Model,
+    xpId: 'l5-al-100', xp: 'MCQ', reason: 'طبّقتَ النسبة على شحنة أكبر',
+    modelReason: 'راجعتَ الإجابة النموذجية',
+    onDone: function(){ document.getElementById('s4e').hidden = false; }
+  });
+
+  window.Quiz.practice({
+    ratioPattern: { xpId: 'l5-ratio-pattern', xp: 'PATTERN', reason: 'اكتشفتَ العلاقة بين الشحنة وعدد الإلكترونات',
+                    correctText: T2.s4.pattern.correct, hints: T2.s4.pattern }
+  }, {
+    onAllSolved: function(){ document.getElementById('s4done').hidden = false; }
+  });
+}
+
+/* ══════════════════ المحطة 5 ══════════════════ */
+function station5(){
+  var svgA = document.getElementById('stage5a');
+  if(!svgA) return;
+
+  /* ---- التوصيل الكهربائي ---- */
+  var wire = { x: 200, y: 105, w: 620, h: 110 };
+  G.add(svgA, 'rect', { x: wire.x, y: wire.y, width: wire.w, height: wire.h,
+                        rx: 16, 'class': 'wire-body' });
+  var batt = G.add(svgA, 'g', { 'class': 'battery' });
+  G.add(batt, 'rect', { x: 62, y: 118, width: 104, height: 84, rx: 10, 'class': 'battery-box' });
+  G.text(batt, '+', { x: 92,  y: 168, 'class': 'battery-label' });
+  G.text(batt, '\u2212', { x: 136, y: 168, 'class': 'battery-label' });
+  G.add(svgA, 'line', { x1: 166, y1: 140, x2: 200, y2: 140, stroke: 'rgba(20,200,168,.45)', 'stroke-width': 2 });
+  G.add(svgA, 'line', { x1: 166, y1: 180, x2: 200, y2: 180, stroke: 'rgba(20,200,168,.45)', 'stroke-width': 2 });
+
+  var ionsA = G.add(svgA, 'g');
+  [0, 1].forEach(function(row){
+    for(var i = 0; i < 6; i++){
+      drawIon(ionsA, { cx: 250 + i * 100, cy: 135 + row * 50, r: 18, sign: '+' });
+    }
+  });
+  var seaA = Sea(svgA, { x: wire.x + 20, y: wire.y + 16, w: wire.w - 40, h: wire.h - 32 }, { speed: 0.5 });
+  for(var i = 0; i < 12; i++){
+    seaA.spawn(wire.x + 30 + Math.random() * (wire.w - 60),
+               wire.y + 25 + Math.random() * (wire.h - 50));
+  }
+  seaA.start();
+
+  document.getElementById('s5connect').addEventListener('click', function(){
+    seaA.setDrift(-1);                       // انجراف نحو الطرف الموجب
+    batt.setAttribute('class', 'battery live');
+    this.disabled = true;
+    this.classList.add('demoted');
+    var m = document.getElementById('s5amsg');
+    m.textContent = T2.s5.connected;
+    m.classList.add('done');
+    if(window.Sounds) window.Sounds.playChime();
+  });
+
+  window.Quiz.practice({
+    whatMoves: { xpId: 'l5-what-moves', xp: 'MCQ', reason: 'ميّزتَ ما يحمل الشحنة',
+                 correctText: T2.s5.whatMoves.correct, hints: T2.s5.whatMoves }
+  }, {
+    onAllSolved: function(){ document.getElementById('s5heat').hidden = false; heatStage(); }
+  });
+
+  /* ---- التوصيل الحراري: لوحان متجاوران ---- */
+  var heatBuilt = false;
+  function heatStage(){
+    if(heatBuilt) return;
+    heatBuilt = true;
+    var svgB = document.getElementById('stage5b');
+    var pane = [
+      { x: 470, y: 70, w: 380, h: 220, title: 'فلزّ — فيه إلكترونات حرّة' },
+      { x: 50,  y: 70, w: 380, h: 220, title: 'مادة أخرى — بلا إلكترونات حرّة' }
+    ];
+    var defs = G.add(svgB, 'defs');
+    var hg = G.add(defs, 'linearGradient', { id: 'heatGrad', x1: '1', y1: '0', x2: '0', y2: '0' });
+    G.add(hg, 'stop', { offset: '0%',   'stop-color': 'rgba(255,107,74,.55)' });
+    G.add(hg, 'stop', { offset: '100%', 'stop-color': 'rgba(255,107,74,0)' });
+
+    var metalParts = [], plainParts = [];
+    pane.forEach(function(p, idx){
+      G.add(svgB, 'rect', { x: p.x, y: p.y, width: p.w, height: p.h, rx: 18,
+                            fill: 'rgba(255,255,255,.02)', stroke: 'rgba(159,176,201,.25)',
+                            'stroke-width': 1.2 });
+      var t = G.text(svgB, p.title, { x: p.x + p.w / 2, y: p.y - 10, 'class': 'panel-title' });
+      t.setAttribute('direction', 'rtl');
+      var g = G.add(svgB, 'g');
+      for(var r = 0; r < 3; r++){
+        for(var c = 0; c < 5; c++){
+          var cx = p.x + 46 + c * 72, cy = p.y + 46 + r * 64;
+          if(idx === 0){
+            drawIon(g, { cx: cx, cy: cy, r: 16, sign: '+' });
+            metalParts.push({ x: cx, y: cy });
+          }else{
+            plainParts.push(G.add(g, 'circle', { cx: cx, cy: cy, r: 15, 'class': 'plain-particle' }));
+          }
+        }
+      }
+      if(idx === 0){
+        var s = Sea(svgB, { x: p.x + 16, y: p.y + 16, w: p.w - 32, h: p.h - 32 }, { speed: 0.5 });
+        for(var k = 0; k < 10; k++){
+          s.spawn(p.x + 30 + Math.random() * (p.w - 60), p.y + 30 + Math.random() * (p.h - 60));
+        }
+        s.start();
+        svgB._sea = s;
+      }
+      G.add(svgB, 'rect', { x: p.x + p.w - 60, y: p.y, width: 60, height: p.h, rx: 18,
+                            'class': 'heat-zone is-off', 'data-pane': idx });
+    });
+
+    document.getElementById('s5warm').addEventListener('click', function(){
+      this.disabled = true;
+      this.classList.add('demoted');
+      svgB.querySelectorAll('.heat-zone').forEach(function(z){
+        z.setAttribute('class', 'heat-zone');
+      });
+      if(svgB._sea) svgB._sea.setSpeed(1.35);
+      // الجبهة الحرارية: سريعة في الفلزّ، زاحفة من جار إلى جار في الأخرى
+      var start = Date.now();
+      var dur = G.reduced() ? 0 : 5200;
+      function frame(){
+        var t = dur ? Math.min(1, (Date.now() - start) / dur) : 1;
+        var reach = pane[1].x + pane[1].w - t * pane[1].w;
+        plainParts.forEach(function(n){
+          var on = (+n.getAttribute('cx')) >= reach;
+          n.setAttribute('fill', on ? 'rgba(255,107,74,.45)' : '#3d4a68');
+        });
+        if(t < 1) window.requestAnimationFrame(frame);
+        else{
+          var m = document.getElementById('s5bmsg');
+          m.textContent = T2.s5.warmed;
+          m.classList.add('done');
+        }
+      }
+      frame();
+    });
+  }
+
+  window.Quiz.practice({
+    heat: { xpId: 'l5-heat', xp: 'MCQ', reason: 'فسّرتَ التوصيل الحراري',
+            correctText: T2.s5.heat.correct, hints: T2.s5.heat }
+  }, {
+    onAllSolved: function(){ document.getElementById('s5cook').hidden = false; }
+  });
+
+  window.Quiz.short({
+    input: 'cookInput', button: 'cookBtn', feedback: 'fb-cook',
+    modelBtn: 'cookModelBtn', model: 'cookModel',
+    /* المطابقة بالجذور: «ببطء» و«فيطول» و«أبطأ» كلّها إجابات صحيحة،
+       ورفض إجابة صحيحة لسبب كتابيّ رفضٌ لفهم. */
+    accept: { paths: [ { all: [
+      ['حره', 'الحركه'],
+      ['تنقل', 'تحمل', 'ينقل', 'يحمل', 'نقل', 'انتقال', 'تنتقل'],
+      ['حرار', 'طاقه'],
+      ['بطء', 'بطي', 'طول', 'ابطا']
+    ] } ] },
+    normalize: 'ar',
+    hints: T2.s5.cookHints, modelText: T2.s5.cookModel,
+    xpId: 'l5-cooking', xp: 'PRODUCE', reason: 'شرحتَ دور الإلكترونات في نقل الحرارة',
+    modelReason: 'راجعتَ الإجابة النموذجية',
+    onDone: function(){ document.getElementById('s5uses').hidden = false; }
+  });
+
+  window.Chips.onDone('uses', function(){
+    document.getElementById('s5sulfur').hidden = false;
+    if(window.Sounds) window.Sounds.playChime();
+  });
+
+  window.Quiz.practice({
+    sulfur: { xpId: 'l5-sulfur', xp: 'PATTERN', reason: 'طبّقتَ شرط الرابطة الفلزّية على لافلزّ',
+              correctText: T2.s5.sulfur.correct, hints: T2.s5.sulfur }
+  }, {
+    onAllSolved: function(){ document.getElementById('s5done').hidden = false; }
+  });
+}
+
+/* ══════════════════ المحطة 6 ══════════════════ */
+function station6(){
+  if(!document.getElementById('stage6')) return;
+
+  window.Quiz.practice({
+    naVsMg: { xpId: 'l5-na-vs-mg', xp: 'PATTERN', reason: 'ربطتَ قوّة الرابطة بشحنة الأيون',
+              correctText: T2.s6.naVsMg.correct, hints: T2.s6.naVsMg }
+  }, {
+    onAllSolved: function(){ document.getElementById('s6slide').hidden = false; slideStage(); }
+  });
+
+  var built = false;
+  function slideStage(){
+    if(built) return;
+    built = true;
+    var svg = document.getElementById('stage6');
+    var box = { x: 130, y: 55, w: 640, h: 240 };
+    var frameG = pieceFrame(svg, box, 'قطعة فلزّ');
+    var frameRect = frameG.querySelector('rect');
+    var sea = Sea(svg, { x: box.x + 20, y: box.y + 16, w: box.w - 40, h: box.h - 32 }, { speed: 0.45 });
+    for(var k = 0; k < 14; k++){
+      sea.spawn(box.x + 30 + Math.random() * (box.w - 60),
+                box.y + 26 + Math.random() * (box.h - 52));
+    }
+
+    var rows = [];
+    for(var r = 0; r < 3; r++){
+      var g = G.add(svg, 'g', { 'class': r === 0 ? 'slide-row' : 'lattice-row' });
+      for(var c = 0; c < 5; c++){
+        drawIon(g, { cx: box.x + 80 + c * 120, cy: box.y + 52 + r * 68, r: 22, sign: '+' });
+      }
+      rows.push(g);
+    }
+    // البحر فوق الأيونات بصريًّا؟ لا — الأيونات أوضح فوق، والبحر خلفها
+    svg.insertBefore(sea.layer, rows[0]);
+    sea.start();
+
+    var top = rows[0];
+    G.add(svg, 'path', { d: 'M 640 40 L 700 40 M 686 32 L 700 40 L 686 48',
+                         'class': 'slide-hint-arrow' });
+
+    var dragging = false, startX = 0, offset = 0, done = false;
+    /* القطعة تستطيل مع الصفّ المنزلق ولا يخرج منها أيون: هذا نفسه
+       ما تفعله المطرقة — تُفرد القطعة ولا تكسر رابطتها. */
+    function apply(dx){
+      offset = Math.max(-90, Math.min(90, dx));
+      top.setAttribute('transform', 'translate(' + offset.toFixed(1) + ',0)');
+      var grow = Math.abs(offset);
+      frameRect.setAttribute('width', box.w + grow);
+      frameRect.setAttribute('x', box.x + (offset < 0 ? offset : 0));
+      if(!done && Math.abs(offset) >= 60) finish();
+    }
+    function finish(){
+      done = true;
+      var m = document.getElementById('s6msg');
+      m.textContent = T2.s6.slid;
+      m.classList.add('done');
+      document.getElementById('s6q').hidden = false;
+      document.getElementById('s6keyboard').hidden = true;
+      if(window.Sounds) window.Sounds.playChime();
+      if(window.XP) window.XP.claim('l5-slide', window.XP.POINTS.TASK, 'أزلقتَ صفّ الأيونات بلا كسر الرابطة');
+    }
+    top.addEventListener('pointerdown', function(e){
+      dragging = true; startX = e.clientX - offset;
+      top.classList.add('dragging');
+      try{ top.setPointerCapture(e.pointerId); }catch(err){}
+    });
+    top.addEventListener('pointermove', function(e){
+      if(!dragging) return;
+      apply(e.clientX - startX);
+    });
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function(ev){
+      top.addEventListener(ev, function(){ dragging = false; top.classList.remove('dragging'); });
+    });
+    // مسار كوني بديل للسحب — لا حلّ احتياطي للجوال
+    document.getElementById('s6keyboard').addEventListener('click', function(){ apply(70); });
+  }
+
+  window.Quiz.practice({
+    malleable: { xpId: 'l5-malleable', xp: 'MCQ', reason: 'فسّرتَ قابلية الطرق',
+                 correctText: T2.s6.malleable.correct, hints: T2.s6.malleable }
+  }, {
+    onAllSolved: function(){ document.getElementById('s6table').hidden = false; }
+  });
+
+  window.Chips.hints(T2.s6.propHints);
+  window.Chips.hints(T2.s6.trioHints);
+  window.Chips.onDone('props', function(){
+    document.getElementById('s6bonus').hidden = false;
+    if(window.Sounds) window.Sounds.playChime();
+  });
+  window.Chips.onDone('trio', function(){
+    var m = document.createElement('p');
+    m.className = 'dose strong-q';
+    m.textContent = T2.s6.trioDone;
+    var host = document.getElementById('s6bonus');
+    host.insertBefore(m, host.querySelector('.station-handoff'));
+    if(window.XP) window.XP.claim('l5-trio', window.XP.POINTS.BONUS, 'أتممتَ التحدّي الاختياري');
+    if(window.Sounds) window.Sounds.playChime();
+  });
+}
+
+/* ══════════════════ المحطة 7 — التقييم الختامي ══════════════════ */
+function station7(){
+  if(!document.getElementById('evalQuestions')) return;
+
+  // مصحّح السؤال 5: مطابقة مفاهيم لا تطابق حرفيّ. المطبِّع يردّ أي
+  // إجابة تحمل المفاتيح إلى نصّ واحد، فتساوي الإجابة النموذجية.
+  var keys = window.Quiz.matcher({ paths: [ { all: [
+    ['حره', 'حرة', 'الحركه'],
+    ['تتحرك', 'تنتقل', 'تحمل', 'تنقل', 'حركه'],
+    ['الشحنه', 'شحنه', 'التيار', 'تيار', 'الكهربائيه']
+  ] } ] });
+  function normE5(s){
+    var n = window.Quiz.normalizeAr(s);
+    return keys(n, s) ? 'مطابق' : n;
+  }
+  // السؤال 6: يقبل الرقم واللفظ معًا — رفض إجابة صحيحة لسبب كتابيّ رفضٌ لفهم
+  function normE6(s){
+    var n = window.Quiz.normalizeAr(s);
+    if(/100/.test(s) || /مئه|مايه|ماه/.test(n) || /مئة|مائة/.test(s)) return '100';
+    return n;
+  }
+
+  window.Quiz.evaluate({
+    title: 'لماذا تُعدّ الفلزّات موصّلات جيّدة للحرارة والتيّار الكهربائي؟',
+    questions: [
+      { name: 'e1', why: T2.eval.e1 },
+      { name: 'e2', why: T2.eval.e2 },
+      { name: 'e3', why: T2.eval.e3 },
+      { name: 'e4', why: T2.eval.e4 },
+      { name: 'e5', type: 'text', input: 'e5Input', button: 'e5Btn', feedback: 'fb-e5',
+        answer: T2.eval.e5, normalize: normE5, why: T2.eval.e5 },
+      { name: 'e6', type: 'text', input: 'e6Input', button: 'e6Btn', feedback: 'fb-e6',
+        answer: '100', normalize: normE6, why: T2.eval.e6 },
+      { name: 'e7', why: T2.eval.e7 },
+      { name: 'e8', why: T2.eval.e8 },
+      { name: 'e9', why: T2.eval.e9 },
+      { name: 'e10', why: T2.eval.e10 }
+    ]
+  });
+}
+
+station3();
+station4();
+station5();
+station6();
+station7();
+
+
+/* ══════════════════ الانتقال بين المحطات ══════════════════
+   الرابط الشظوي وحده يفشل صامتًا: المحطة التالية hidden، و.station
+   تبدأ بـopacity:0. فكل زرّ انتقال يُدار بمعالج صريح يؤدّي الأربعة:
+   رفع hidden ← in-view ← تفعيل نقطة التقدّم ← التمرير. */
+document.querySelectorAll('a.station-next[href^="#station-"]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    var id = a.getAttribute('href').slice(1);
+    var sec = document.getElementById(id);
+    if(!sec) return;
+    sec.hidden = false;
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + id + '"]');
+    if(dot) dot.classList.add('active');
+    if(sec.scrollIntoView){
+      sec.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+    }
+    if(window.Sounds) window.Sounds.playChime();
+  });
+});
+
+/* ══════════════════ الدخول من الخارج بالمرساة ══════════════════
+   .station تبدأ بـopacity:0، فالقفز إلى مرساة لم تُوسَم بـin-view
+   يُنزل الطالب على مساحة فارغة. نؤدّي الثلاثة صراحةً: رفع hidden،
+   ثم in-view، ثم تفعيل نقطة التقدّم. والوصول مفتوح بلا شرط: المنع
+   يشتري حمايةً موجودة أصلًا بثمن طالبٍ صادق محبوس. */
+window.addEventListener('load', function(){
+  var id = (location.hash || '').replace(/^#/, '');
+  if(!/^station-[A-Za-z0-9_-]+$/.test(id)) return;
+  var target = document.getElementById(id);
+  if(!target || !target.classList.contains('station')) return;
+  var all = Array.prototype.slice.call(document.querySelectorAll('.station'));
+  var idx = all.indexOf(target);
+  if(idx < 0) return;
+  function activate(sec){
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + sec.id + '"]');
+    if(dot) dot.classList.add('active');
+  }
+  all.slice(0, idx).forEach(function(sec){ if(!sec.hidden) activate(sec); });
+  target.hidden = false;
+  activate(target);
+  if(target.scrollIntoView){
+    target.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+  }
+});
+})();
+</script>
+</body>
+</html>
