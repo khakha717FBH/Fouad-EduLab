@@ -625,9 +625,9 @@
   </section>
 
   <!-- ===================== محطة 2: الاستكشاف ===================== -->
-  <section class="station" id="station-2" hidden>
+  <section class="station" id="station-2">
     <div class="station-label">المحطة الثانية</div>
-    <h2>الإلكترونات تغادر</h2>
+    <h2>ذرّة صوديوم… ثم ستّ ذرّات</h2>
     <p class="station-tagline">ابدأ بأبسط فلزّ: الصوديوم، وله إلكترون واحد في مستواه الخارجي.</p>
 
     <p class="task-line">أمامك ستّ ذرّات صوديوم متجاورة. انقر الإلكترون المرجاني في كلّ ذرّة، وتابع بعينك أين يذهب.</p>
@@ -711,7 +711,7 @@
   </section>
 
   <!-- ===================== محطة 3: نموذجان للفلزّ ===================== -->
-  <section class="station" id="station-3" hidden>
+  <section class="station" id="station-3">
     <div class="station-label">المحطة الثالثة</div>
     <h2>نموذجان للفلزّ</h2>
     <p class="station-tagline">رسمتَ الألومنيوم بالنقاط، وبنيتَ الصوديوم بمستوياته. وللفلزّ رسمان آخران.</p>
@@ -778,7 +778,7 @@
   </section>
 
   <!-- ===================== محطة 4: كم إلكترونًا يترك كلّ أيون؟ ===================== -->
-  <section class="station" id="station-4" hidden>
+  <section class="station" id="station-4">
     <div class="station-label">المحطة الرابعة</div>
     <h2>كم إلكترونًا يترك كلّ أيون؟</h2>
     <p class="station-tagline">الصوديوم يترك إلكترونًا واحدًا. فماذا عن النحاس والألومنيوم؟</p>
@@ -856,7 +856,7 @@
   </section>
 
   <!-- ===================== محطة 5: لماذا تُوصّل الفلزّات؟ ===================== -->
-  <section class="station" id="station-5" hidden>
+  <section class="station" id="station-5">
     <div class="station-label">المحطة الخامسة</div>
     <h2>لماذا تُوصّل الفلزّات؟</h2>
     <p class="station-tagline">إلكترونات تتحرّك بحرّية في قطعة الفلزّ. تابع ماذا تفعل.</p>
@@ -960,7 +960,7 @@
   </section>
 
   <!-- ===================== محطة 6: قويّة… لكنها تنثني ===================== -->
-  <section class="station" id="station-6" hidden>
+  <section class="station" id="station-6">
     <div class="station-label">المحطة السادسة</div>
     <h2>قويّة… لكنها تنثني</h2>
     <p class="station-tagline">الفلزّ صلب وينصهر عند درجة مرتفعة، ومع ذلك يُطرَق ويُسحَب. كيف يجتمع الأمران؟</p>
@@ -1069,7 +1069,7 @@
   </section>
 
   <!-- ===================== محطة 7: التقييم الختامي ===================== -->
-  <section class="station" id="station-7" hidden>
+  <section class="station" id="station-7">
     <div class="station-label">المحطة السابعة</div>
     <h2>التقييم الختامي</h2>
     <p class="station-tagline">عشرة أسئلة، ومحاولة واحدة لكلّ سؤال. وفي نهايتها شهادتك باسمك.</p>
@@ -2360,9 +2360,13 @@ station7();
 
 
 /* ══════════════════ الانتقال بين المحطات ══════════════════
-   الرابط الشظوي وحده يفشل صامتًا: المحطة التالية hidden، و.station
-   تبدأ بـopacity:0. فكل زرّ انتقال يُدار بمعالج صريح يؤدّي الأربعة:
-   رفع hidden ← in-view ← تفعيل نقطة التقدّم ← التمرير. */
+   المحطات السبع كلّها في الصفحة منذ التحميل بلا hidden — سياسة
+   درسَي 03 و04 نفسها (قرار 3 أغسطس 2026). فالطالب يرجع إلى أي
+   محطة بلا إعادة الدرس، وما يحمي تسلسل المفاهيم هو الكشف المتدرّج
+   داخل المحطة لا حجب المحطة كلّها.
+   ويبقى المعالج الصريح لازمًا: الرابط الشظوي وحده يفشل صامتًا لأن
+   .station تبدأ بـopacity:0. فيؤدّي المعالج الأربعة:
+   رفع hidden (احتياطًا) ← in-view ← تفعيل نقطة التقدّم ← التمرير. */
 document.querySelectorAll('a.station-next[href^="#station-"]').forEach(function(a){
   a.addEventListener('click', function(e){
     e.preventDefault();
