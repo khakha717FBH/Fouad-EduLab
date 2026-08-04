@@ -324,37 +324,49 @@ describe('المحطة 3 — النموذجان', () => {
 describe('المحطة 4 — النسبة', () => {
   it('العدد الناقص والزائد يُبلَّغان ولا يفتحان ما بعدهما', async () => {
     const { doc } = await page();
-    for(let i = 0; i < 6; i++) h.click(doc, 's4aAdd');
-    h.click(doc, 's4aCheck');
+    h.type(doc, 's4aInput', '6'); h.click(doc, 's4aCheck');
     has(doc.getElementById('s4amsg').textContent, 'الشحنات الموجبة أكثر');
     ok(hidden(doc, 's4b'));
-    for(let i = 0; i < 4; i++) h.click(doc, 's4aAdd');   // صارت 10
-    h.click(doc, 's4aCheck');
+    h.type(doc, 's4aInput', '10'); h.click(doc, 's4aCheck');
     has(doc.getElementById('s4amsg').textContent, 'ليست متعادلة');
     ok(hidden(doc, 's4b'));
   });
 
   it('العدد الصحيح يفتح السؤال ويمنح نقاط الإنتاج', async () => {
     const { doc, w } = await page();
-    for(let i = 0; i < 8; i++) h.click(doc, 's4aAdd');
-    h.click(doc, 's4aCheck');
+    h.type(doc, 's4aInput', '8'); h.click(doc, 's4aCheck');
     has(doc.getElementById('s4amsg').textContent, 'القطعة متعادلة');
     no(hidden(doc, 's4b'));
     eq(w.XP.total(), 8);
   });
 
-  it('«أزل الأخير» يصحّح زيادةً بلا إعادة تحميل', async () => {
+  it('البحر يُظهر عدد الطالب نفسه لا العدد الصحيح — الخطأ يُرى لا يُكتشف بالنقر', async () => {
     const { doc } = await page();
-    for(let i = 0; i < 9; i++) h.click(doc, 's4aAdd');
-    h.click(doc, 's4aUndo');
-    h.click(doc, 's4aCheck');
-    has(doc.getElementById('s4amsg').textContent, 'القطعة متعادلة');
+    const svg = doc.getElementById('stage4a');
+    h.type(doc, 's4aInput', '3'); h.click(doc, 's4aCheck');
+    eq(svg.querySelectorAll('.sea-layer .epos').length, 3, 'البحر لم يُظهر رقم الطالب بعينه');
+  });
+
+  it('كتابة عدد جديد تعيد بناء البحر لا تضيف عليه', async () => {
+    const { doc } = await page();
+    const svg = doc.getElementById('stage4a');
+    h.type(doc, 's4aInput', '5'); h.click(doc, 's4aCheck');
+    eq(svg.querySelectorAll('.sea-layer .epos').length, 5);
+    h.type(doc, 's4aInput', '8'); h.click(doc, 's4aCheck');
+    eq(svg.querySelectorAll('.sea-layer .epos').length, 8, 'تراكمت الإلكترونات بدل إعادة البناء');
+  });
+
+  it('حقل فارغ أو غير رقمي يُرفَض بتنبيه ولا يُبنى به بحر', async () => {
+    const { doc } = await page();
+    const svg = doc.getElementById('stage4a');
+    h.type(doc, 's4aInput', 'ثمانية'); h.click(doc, 's4aCheck');
+    eq(svg.querySelectorAll('.sea-layer .epos').length, 0);
+    has(doc.getElementById('s4amsg').textContent, 'عددًا صحيحًا');
   });
 
   it('الإجابة القصيرة تقبل الرقم واللفظ معًا', async () => {
     const { doc } = await page();
-    for(let i = 0; i < 8; i++) h.click(doc, 's4aAdd');
-    h.click(doc, 's4aCheck');
+    h.type(doc, 's4aInput', '8'); h.click(doc, 's4aCheck');
     h.type(doc, 'cu100Input', 'مئتان إلكترون');
     h.click(doc, 'cu100Btn');
     has(doc.getElementById('fb-cu100').className, 'is-correct');
@@ -362,8 +374,7 @@ describe('المحطة 4 — النسبة', () => {
 
   it('مخرج النجاة يظهر بعد محاولتين ويمنح نصف النقاط', async () => {
     const { doc, w } = await page();
-    for(let i = 0; i < 8; i++) h.click(doc, 's4aAdd');
-    h.click(doc, 's4aCheck');
+    h.type(doc, 's4aInput', '8'); h.click(doc, 's4aCheck');
     const before = w.XP.total();
     h.type(doc, 'cu100Input', '20');  h.click(doc, 'cu100Btn');
     ok(doc.getElementById('cu100ModelBtn').hidden, 'ظهر مبكّرًا');
