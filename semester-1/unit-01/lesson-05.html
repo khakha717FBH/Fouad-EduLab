@@ -99,14 +99,7 @@
     pointer-events:none;
     user-select:none;
   }
-  .ion-symbol{
-    font-family:'Cairo', sans-serif;
-    font-weight:800;
-    font-size:13px;
-    fill:var(--ink-dim);
-    pointer-events:none;
-    user-select:none;
-  }
+  .ion-sign-charge{ font-size:10px; }
 
   /* ---- بطاقة المعطى بجوار المسرح ---- */
   .given-card{
@@ -579,14 +572,14 @@
 
     <!-- 1-ج · التمثيل النقطي للألومنيوم: إنتاج لا تعرّف -->
     <p class="task-line">ذرّة الألومنيوم في مستواها الخارجي ثلاثة إلكترونات. ارسم تمثيلها النقطي: انقر على المستوى الخارجي ثلاث مرّات.</p>
-    <div class="stage-wrap">
-      <svg id="stage1" class="stage" viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ذرّة ألومنيوم بثلاثة مستويات طاقة، مستواها الخارجي فارغ في انتظار رسم إلكتروناته"></svg>
-    </div>
     <div class="given-card">
       <span>الألومنيوم</span>
       <span><b dir="ltr">Al</b></span>
       <span>العدد الذرّي <b>13</b></span>
       <span>التوزيع <b dir="ltr">2, 8, 3</b></span>
+    </div>
+    <div class="stage-wrap">
+      <svg id="stage1" class="stage" viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ذرّة ألومنيوم بثلاثة مستويات طاقة، مستواها الخارجي فارغ في انتظار رسم إلكتروناته"></svg>
     </div>
     <p class="stage-msg" id="s1msg" aria-live="polite"></p>
 
@@ -631,14 +624,14 @@
     <p class="station-tagline">ابدأ بأبسط فلزّ: الصوديوم، وله إلكترون واحد في مستواه الخارجي.</p>
 
     <p class="task-line">أمامك ستّ ذرّات صوديوم متجاورة. انقر الإلكترون المرجاني في كلّ ذرّة، وتابع بعينك أين يذهب.</p>
-    <div class="stage-wrap">
-      <svg id="stage2" class="stage" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ستّ ذرّات صوديوم متجاورة، في كلٍّ منها إلكترون واحد في المستوى الخارجي"></svg>
-    </div>
     <div class="given-card">
       <span>الصوديوم</span>
       <span><b dir="ltr">Na</b></span>
       <span>العدد الذرّي <b>11</b></span>
       <span>التوزيع <b dir="ltr">2, 8, 1</b></span>
+    </div>
+    <div class="stage-wrap">
+      <svg id="stage2" class="stage" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ستّ ذرّات صوديوم متجاورة، في كلٍّ منها إلكترون واحد في المستوى الخارجي"></svg>
     </div>
     <p class="stage-msg" id="s2msg" aria-live="polite"></p>
 
@@ -720,18 +713,19 @@
 
     <div class="figure-grid">
       <div class="figure-card">
-        <div class="fig-name">الشكل 1-30 — نموذج مجسّم</div>
+        <div class="fig-name">النموذج المجسّم</div>
         <svg id="fig30" viewBox="0 0 380 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="كرات فضّية متراصّة في شبكة ثلاثية الأبعاد"></svg>
         <p class="fig-note">الجسيمات الفلزّية في هذا النموذج مثبَّتة في مكانها بواسطة روابط فلزّية قوية.</p>
       </div>
       <div class="figure-card">
-        <div class="fig-name">الشكل 1-31 — رسم مسطّح</div>
+        <div class="fig-name">الرسم المسطّح</div>
         <svg id="fig31" viewBox="0 0 380 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="صفوف من دوائر عليها إشارة موجب وبينها نقاط صغيرة عليها إشارة سالب"></svg>
+        <p class="fig-note" id="fig31Note" hidden>أيونات الفلزّ هنا مرتّبةٌ في شبكة بلّورية فلزّية.</p>
       </div>
     </div>
 
     <div class="explore-step">
-      <p class="explore-q">الكرات في الشكل 1-30 لا تحمل أي إشارة شحنة. فما نوع هذه الجسيمات؟</p>
+      <p class="explore-q">الكرات في النموذج المجسّم لا تحمل أي إشارة شحنة. فما نوع هذه الجسيمات؟</p>
       <div class="quiz-options" data-q="greySpheres">
         <label class="quiz-option"><input type="radio" name="greySpheres" value="w1">ذرّات فلزّ كاملة لم تفقد شيئًا من إلكتروناتها</label>
         <label class="quiz-option"><input type="radio" name="greySpheres" value="correct">أيونات الفلزّ الموجبة، لأنها فقدت إلكتروناتها الخارجية</label>
@@ -742,7 +736,7 @@
     </div>
 
     <div id="s3after" hidden>
-      <p class="stage-note act">وهذه أسماء ما تراه في الشكل 1-31.</p>
+      <p class="stage-note act">وهذه أسماء ما تراه في الرسم المسطّح.</p>
 
       <div class="explore-step">
         <p class="explore-q">أمامك أربع خصائص للرابطة الفلزّية. ضع كلّ واحدة في المكان الذي يُظهرها بوضوح.</p>
@@ -755,10 +749,10 @@
           </div>
           <div class="cat-grid">
             <div class="slot cat-slot" id="lim-30" data-answer="شبكة بلّورية فلزّية ثلاثية الأبعاد">
-              <span class="slot-label">الشكل 1-30 — النموذج المجسّم</span><span class="slot-items"></span>
+              <span class="slot-label">النموذج المجسّم</span><span class="slot-items"></span>
             </div>
             <div class="slot cat-slot" id="lim-31" data-answer="أيونات فلزّية موجبة الشحنة|إلكترونات حرّة الحركة">
-              <span class="slot-label">الشكل 1-31 — الرسم المسطّح</span><span class="slot-items"></span>
+              <span class="slot-label">الرسم المسطّح</span><span class="slot-items"></span>
             </div>
             <div class="slot cat-slot" id="lim-none" data-answer="التجاذب بين أيونات الفلزّ والإلكترونات الحرّة">
               <span class="slot-label">لا يُظهرها أيٌّ منهما</span><span class="slot-items"></span>
@@ -783,14 +777,13 @@
     <h2>كم إلكترونًا يترك كلّ أيون؟</h2>
     <p class="station-tagline">الصوديوم يترك إلكترونًا واحدًا. فماذا عن النحاس والألومنيوم؟</p>
 
-    <p class="task-line">أمامك أربعة أيونات نحاس، رمز كلّ واحد منها <span dir="ltr">Cu<sup>2+</sup></span>. أضف إلى البحر عدد الإلكترونات الحرّة الذي يجعل القطعة متعادلة الشحنة.</p>
+    <p class="task-line">أمامك أربعة أيونات نحاس، رمز كلّ واحد منها <span dir="ltr">Cu<sup>2+</sup></span>. احسب عدد الإلكترونات الحرّة الذي يجعل القطعة متعادلة الشحنة، واكتبه.</p>
     <div class="stage-wrap">
       <svg id="stage4a" class="stage" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="أربعة أيونات نحاس داخل قطعة فلزّ، وبحرها فارغ"></svg>
     </div>
-    <div class="try-row">
-      <button type="button" class="btn" id="s4aAdd">أضف إلكترونًا</button>
-      <button type="button" class="btn" id="s4aCheck">تحقّق من التعادل</button>
-      <button type="button" class="link-btn" id="s4aUndo">أزل الأخير</button>
+    <div class="explore-answer-row">
+      <input type="text" class="explore-input" id="s4aInput" placeholder="كم إلكترونًا حرًّا يلزم؟" autocomplete="off" inputmode="numeric">
+      <button type="button" class="btn" id="s4aCheck">تحقّق</button>
     </div>
     <p class="stage-msg" id="s4amsg" aria-live="polite"></p>
 
@@ -808,14 +801,13 @@
     </div>
 
     <div id="s4c" hidden>
-      <p class="task-line">والآن ثلاثة أيونات ألومنيوم، رمز كلّ واحد منها <span dir="ltr">Al<sup>3+</sup></span>. أضف الإلكترونات الحرّة حتى تتعادل القطعة.</p>
+      <p class="task-line">والآن ثلاثة أيونات ألومنيوم، رمز كلّ واحد منها <span dir="ltr">Al<sup>3+</sup></span>. احسب عدد الإلكترونات الحرّة اللازم لتعادل القطعة، واكتبه.</p>
       <div class="stage-wrap">
         <svg id="stage4b" class="stage" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ثلاثة أيونات ألومنيوم داخل قطعة فلزّ، وبحرها فارغ"></svg>
       </div>
-      <div class="try-row">
-        <button type="button" class="btn" id="s4cAdd">أضف إلكترونًا</button>
-        <button type="button" class="btn" id="s4cCheck">تحقّق من التعادل</button>
-        <button type="button" class="link-btn" id="s4cUndo">أزل الأخير</button>
+      <div class="explore-answer-row">
+        <input type="text" class="explore-input" id="s4cInput" placeholder="كم إلكترونًا حرًّا يلزم؟" autocomplete="off" inputmode="numeric">
+        <button type="button" class="btn" id="s4cCheck">تحقّق</button>
       </div>
       <p class="stage-msg" id="s4cmsg" aria-live="polite"></p>
     </div>
@@ -1239,25 +1231,25 @@ var T = {
     progress: function(n){ return n + ' من 6 ذرّات غادرها إلكترونها.'; },
     done    : 'ستّة أيونات صوديوم موجبة، وستّة إلكترونات لا ينتمي أيٌّ منها إلى ذرّة بعينها.',
     naIon: {
-      correct: 'الذرّة فقدت إلكترونًا سالبًا واحدًا، فصار عدد البروتونات الموجبة أكبر بواحد. هذا أيون الصوديوم الموجب.',
+      correct: '✓ صحيح! الذرّة فقدت إلكترونًا سالبًا واحدًا، فصار عدد البروتونات الموجبة أكبر بواحد. هذا أيون الصوديوم الموجب.',
       w1: 'انظر إلى الدائرة على الشاشة — هل ما زالت بلا إشارة؟',
       w2: 'الذرّة فقدت جسيمًا سالبًا. فأيّ الشحنتين صار أكثر: الموجبة أم السالبة؟',
       w3: 'الجزيء يتكوّن بمشاركة أزواج. هل ترى زوجًا مشتركًا على المسرح؟'
     },
     whereElectron: {
-      correct: 'هذا هو الفرق الجوهري. لا نقل ولا مشاركة — الإلكترون تركَ ذرّته ولم يرتبط بغيرها.',
+      correct: '✓ صحيح! هذا هو الفرق الجوهري. لا نقل ولا مشاركة — الإلكترون تركَ ذرّته ولم يرتبط بغيرها.',
       w1: 'تفحّص الدوائر كلّها على المسرح. هل تحمل واحدة منها إشارة سالبة؟',
       w2: 'تابع إلكترونًا واحدًا بعينك عشر ثوانٍ. هل يبقى قرب دائرة واحدة؟',
       w3: 'لو خرج فعلًا لصارت القطعة مشحونة موجبة. هل يحدث هذا لملعقة معدنية؟'
     },
     neutral: {
-      correct: 'ستّ شحنات موجبة وستّة إلكترونات سالبة داخل القطعة نفسها. المجموع صفر — والقطعة متعادلة.',
+      correct: '✓ صحيح! ستّ شحنات موجبة وستّة إلكترونات سالبة داخل القطعة نفسها. المجموع صفر — والقطعة متعادلة.',
       w1: 'عُدّ الإشارات السالبة المتحرّكة على المسرح. كم عددها؟',
       w2: 'الأيونات على المسرح ما زالت تحمل إشارة +. هل اختفت؟',
       w3: 'الإلكترونات ما زالت داخل الإطار تتحرّك. هل غادرته؟'
     },
     repulsion: {
-      correct: 'الإلكترونات السالبة تملأ الفراغ بين الأيونات الموجبة وتحيط بكلّ واحد منها من كلّ جهة. فالتجاذب أقوى من التنافر، والقطعة متماسكة.',
+      correct: '✓ صحيح! الإلكترونات السالبة تملأ الفراغ بين الأيونات الموجبة وتحيط بكلّ واحد منها من كلّ جهة. فالتجاذب أقوى من التنافر، والقطعة متماسكة.',
       w1: 'التنافر يضعف بالبُعد لكنه لا ينعدم. وما الذي يجذبها إذًا؟',
       w2: 'تأمّل المسرح: الدوائر الموجبة ثابتة في مواضعها. المتحرّك غيرها.',
       w3: 'النوى كلّها موجبة الشحنة. والموجب لا يجذب موجبًا.'
@@ -1381,14 +1373,26 @@ function drawAtom(parent, cfg){
            cx: cfg.cx, cy: cfg.cy };
 }
 
-/* أيون: دائرة أصغر تحمل إشارتها. الانكماش نفسه هو انتقال الطالب من
-   نموذج الذرّة إلى نموذج الفلزّ، فلا يُشرح نصًّا. */
+/* أيون: دائرة أصغر تحمل هويّته. الانكماش نفسه هو انتقال الطالب من
+   نموذج الذرّة إلى نموذج الفلزّ، فلا يُشرح نصًّا (والانكماش صار
+   مرئيًّا في station2 — راجع release()، لا محوًا فجائيًّا).
+   الرمز والشحنة معًا داخل القرص وحده، لا مكرَّرَين: «Na⁺» تكفي
+   لتُقرأ «أيون»، وتكرار «Na» تحت الدائرة حشوٌ لا يضيف معلومة. */
 function drawIon(parent, cfg){
+  var r = cfg.r || 26;
   var g = G.add(parent, 'g', { 'class': 'ion' });
-  G.add(g, 'circle', { cx: cfg.cx, cy: cfg.cy, r: cfg.r || 26, 'class': 'ion-body' });
-  G.text(g, cfg.sign || '+', { x: cfg.cx, y: cfg.cy + 5.5, 'class': 'ion-sign' });
+  G.add(g, 'circle', { cx: cfg.cx, cy: cfg.cy, r: r, 'class': 'ion-body' });
+
+  var signTxt = G.add(g, 'text', { x: cfg.cx, y: cfg.cy + 5.5, 'class': 'ion-sign' });
+  signTxt.setAttribute('text-anchor', 'middle');
+  signTxt.setAttribute('direction', 'ltr');
+  signTxt.style.unicodeBidi = 'isolate';
+
   if(cfg.symbol){
-    G.text(g, cfg.symbol, { x: cfg.cx, y: cfg.cy + (cfg.r || 26) + 15, 'class': 'ion-symbol' });
+    G.add(signTxt, 'tspan', {}).textContent = cfg.symbol;
+    G.add(signTxt, 'tspan', { dy: '-7', 'class': 'ion-sign-charge' }).textContent = cfg.sign || '+';
+  }else{
+    signTxt.textContent = cfg.sign || '+';
   }
   return g;
 }
@@ -1708,8 +1712,42 @@ function station2(){
       // الإلكترون يغادر ذرّته ولا يستقرّ عند أي ذرّة أخرى
       if(e.parentNode) e.parentNode.removeChild(e);
       sea.spawn(p.x, p.y - SHELL_R[2]);
-      G.clear(holder);
-      drawIon(holder, { cx: p.x, cy: p.y, r: 26, sign: '+', symbol: 'Na' });
+
+      /* المستوى الخارجي فقط هو ما فرغ الآن — مداره يتلاشى أوّلًا، فيقرأ
+         الطالب «هذا المستوى فرغ» لا «الذرّة اختفت». ثم المستويان
+         الداخليان بإلكتروناتهما العشرة (لا يُمسّان) ينكمشان مرئيَّين
+         نحو قرص الأيون نفسه — تحوّلٌ يُرى لا محوٌ فجائي. هذا ردّ مباشر
+         على خطر مفهومي: أن يظنّ الطالب أن التأيّن يُفرغ الذرّة من كل
+         إلكتروناتها لا من مستواها الخارجي وحده. */
+      var reduced  = G.reduced();
+      var ringMs   = reduced ? 1 : 260;
+      var shrinkMs = reduced ? 1 : 420;
+      var outerOrbit = atom.group.querySelector('.orbit-shell-2');
+      if(outerOrbit){
+        outerOrbit.style.transition = 'opacity ' + ringMs + 'ms ease';
+        outerOrbit.style.opacity = '0';
+      }
+
+      var ion = drawIon(holder, { cx: p.x, cy: p.y, r: 26, sign: '+', symbol: 'Na' });
+      ion.style.opacity = '0';
+      ion.style.transition = 'opacity ' + shrinkMs + 'ms ease-in ' + ringMs + 'ms';
+      holder.insertBefore(ion, atom.group);
+
+      atom.group.style.transformOrigin = p.x + 'px ' + p.y + 'px';
+      atom.group.style.transition =
+        'transform ' + shrinkMs + 'ms ease-in ' + ringMs + 'ms, ' +
+        'opacity '   + shrinkMs + 'ms ease-in ' + ringMs + 'ms';
+      requestAnimationFrame(function(){
+        ion.style.opacity = '1';
+        atom.group.style.transform = 'scale(.3)';
+        atom.group.style.opacity = '0';
+      });
+
+      setTimeout(function(){
+        G.clear(holder);
+        drawIon(holder, { cx: p.x, cy: p.y, r: 26, sign: '+', symbol: 'Na' });
+      }, ringMs + shrinkMs + 30);
+
       freed++;
       if(window.Sounds) window.Sounds.playSnap();
       if(freed < 6){
@@ -1766,23 +1804,23 @@ station2();
 var T2 = {
   s3: {
     greySpheres: {
-      correct: 'النموذج المجسّم لا يرسم الشحنة، لكن الجسيمات فيه أيونات موجبة — لأن إلكتروناتها الخارجية صارت في البحر.',
+      correct: '✓ صحيح! النموذج المجسّم لا يرسم الشحنة، لكن الجسيمات فيه أيونات موجبة — لأن إلكتروناتها الخارجية صارت في البحر.',
       w1: 'لو بقيت ذرّات كاملة، فأين بحر الإلكترونات الذي بنيتَه؟',
       w2: 'جرّبتَ المشاركة في المحطة 1 على الألومنيوم. هل نجحت بين ذرّتي فلزّ؟',
       w3: 'في قطعة فلزّ نقيّة، مِن أين تأتي الإلكترونات الزائدة؟'
     },
     hints: {
       'التجاذب بين أيونات الفلزّ والإلكترونات الحرّة': 'ابحث في الرسم عن سهم أو خطّ يمثّل قوّة التجاذب. هل تجده؟',
-      'شبكة بلّورية فلزّية ثلاثية الأبعاد|lim-31': 'الشكل 1-31 مرسوم على ورقة مسطّحة. هل ترى فيه عمقًا؟'
+      'شبكة بلّورية فلزّية ثلاثية الأبعاد|lim-31': 'الرسم الذي أمامك مسطّح بلا عمق ثالث. فهل يظهر فيه تركيبٌ ثلاثي الأبعاد؟'
     }
   },
   s4: {
     cuShort:  'الشحنات الموجبة أكثر من السالبة حتى الآن. أعد العدّ: كم شحنة موجبة على كلّ أيون؟',
     cuLong:   'الإلكترونات صارت أكثر من الشحنات الموجبة، والقطعة ليست متعادلة.',
-    cuDone:   'أربعة أيونات × شحنتان لكلّ أيون = ثمانية إلكترونات في البحر. القطعة متعادلة.',
+    cuDone:   '✓ صحيح! أربعة أيونات × شحنتان لكلّ أيون = ثمانية إلكترونات في البحر. القطعة متعادلة.',
     alShort:  'الشحنات الموجبة أكثر من السالبة حتى الآن. كم شحنة موجبة على أيون الألومنيوم؟',
     alLong:   'الإلكترونات صارت أكثر من الشحنات الموجبة، والقطعة ليست متعادلة.',
-    alDone:   'ثلاثة أيونات × ثلاث شحنات = تسعة إلكترونات في البحر.',
+    alDone:   '✓ صحيح! ثلاثة أيونات × ثلاث شحنات = تسعة إلكترونات في البحر.',
     cu100Hints: ['كلّ أيون نحاس رمزه Cu²⁺. فكم إلكترونًا تركَ كلّ واحد منها؟',
                  'اضرب عدد الأيونات في عدد الإلكترونات التي يتركها الأيون الواحد.'],
     cu100Model: '200 إلكترون. لأن كلّ أيون Cu²⁺ ترك إلكترونين، و100 × 2 = 200.',
@@ -1790,7 +1828,7 @@ var T2 = {
                  'اضرب عدد الأيونات في عدد الإلكترونات التي يتركها الأيون الواحد.'],
     al100Model: '300 إلكترون. لأن كلّ أيون Al³⁺ ترك ثلاثة إلكترونات، و100 × 3 = 300.',
     pattern: {
-      correct: 'الشحنة الموجبة على الأيون هي بالضبط عدد الإلكترونات التي فقدها. فأيون شحنته 3+ ترك ثلاثة إلكترونات.',
+      correct: '✓ صحيح! الشحنة الموجبة على الأيون هي بالضبط عدد الإلكترونات التي فقدها. فأيون شحنته 3+ ترك ثلاثة إلكترونات.',
       w1: 'الصوديوم واحد والنحاس اثنان. فهل العدد ثابت؟',
       w2: 'الأيون Cu²⁺ شحنته 2. فهل ترك أربعة إلكترونات أم اثنين؟',
       w3: 'راجع الحالات الثلاث: Na⁺ و Cu²⁺ و Al³⁺. هل ترى نمطًا؟'
@@ -1800,13 +1838,13 @@ var T2 = {
     connected: 'الإلكترونات الحرّة صارت تنجرف كلّها في اتجاه واحد. والأيونات الموجبة لم تغادر مواضعها.',
     warmed:    'في الفلزّ حملت الإلكترونات الحرّة الطاقة إلى الطرف البارد بسرعة. وفي المادة الأخرى زحفت الطاقة من جسيم إلى جاره.',
     whatMoves: {
-      correct: 'الإلكترونات موجودة في السلك من قبل. والبطارية لا تمنحه إلكترونات، بل تدفع ما فيه إلى الحركة في اتجاه واحد.',
+      correct: '✓ صحيح! الإلكترونات موجودة في السلك من قبل. والبطارية لا تمنحه إلكترونات، بل تدفع ما فيه إلى الحركة في اتجاه واحد.',
       w1: 'راقب الدوائر الموجبة على المسرح. هل غادرت مواضعها؟',
       w2: 'السلك مليء بالإلكترونات الحرّة قبل وصل البطارية. راجع المسرح.',
       w3: 'لو تحرّك النوعان معًا لتفكّكت الشبكة. ما الثابت وما المتحرّك؟'
     },
     heat: {
-      correct: 'في المادة الأخرى تنتقل الطاقة بالاهتزاز من جسيم إلى جاره فقط. وفي الفلزّ تحملها الإلكترونات الحرّة نفسها عبر القطعة كلّها، فتصل أسرع بكثير.',
+      correct: '✓ صحيح! في المادة الأخرى تنتقل الطاقة بالاهتزاز من جسيم إلى جاره فقط. وفي الفلزّ تحملها الإلكترونات الحرّة نفسها عبر القطعة كلّها، فتصل أسرع بكثير.',
       w1: 'الأيونات مثبَّتة في الشبكة. هل رأيتها تنتقل؟',
       w2: 'قارن المسرحين: ما الموجود في الأول ومفقود في الثاني؟',
       w3: 'الاهتزاز موجود في المادتين. فما الذي يميّز الفلزّ عنها؟'
@@ -1815,7 +1853,7 @@ var T2 = {
                 'ولو اختفى هذا الناقل، فبأي طريقة تبقى الحرارة تنتقل؟ وهل هي أسرع أم أبطأ؟'],
     cookModel: 'الإلكترونات حرّة الحركة تتحرّك في أجزاء الشبكة الفلزّية كلّها وتنقل الطاقة الحرارية بسرعة. وبدونها لا تنتقل الحرارة إلا بالاهتزاز البطيء بين الجسيمات، فيستغرق طهي الطعام وقتًا أطول.',
     sulfur: {
-      correct: 'الكبريت لافلزّ. يكوّن روابط تساهمية مع اللافلزّات وروابط أيونية مع الفلزّات، لكنه لا يكوّن رابطة فلزّية — فلا يملك إلكترونات حرّة الحركة تحمل الشحنة الكهربائية.',
+      correct: '✓ صحيح! الكبريت لافلزّ. يكوّن روابط تساهمية مع اللافلزّات وروابط أيونية مع الفلزّات، لكنه لا يكوّن رابطة فلزّية — فلا يملك إلكترونات حرّة الحركة تحمل الشحنة الكهربائية.',
       w1: 'لو قوّيناه، هل يصير موصّلًا؟ السؤال عن التوصيل لا عن القوّة.',
       w2: 'في قطعة كبريت نقيّة لا توجد أيونات أصلًا. راجع نوع العنصر.',
       w3: 'حتى لو حفظناه من الهواء، ما الذي سيحمل الشحنة داخله؟'
@@ -1823,14 +1861,14 @@ var T2 = {
   },
   s6: {
     naVsMg: {
-      correct: 'أيون المغنيسيوم يحمل شحنتين موجبتين، ويمنح إلكترونين للبحر. فالتجاذب بين الأيونات والإلكترونات في المغنيسيوم أقوى منه في الصوديوم.',
+      correct: '✓ صحيح! أيون المغنيسيوم يحمل شحنتين موجبتين، ويمنح إلكترونين للبحر. فالتجاذب بين الأيونات والإلكترونات في المغنيسيوم أقوى منه في الصوديوم.',
       w1: 'حرّية الحركة واحدة في الفلزّين. قارن مقدار الشحنة والعدد.',
       w2: 'النوع واحد لكن القوّة تتفاوت. ما الذي يختلف بينهما؟',
       w3: 'التجاذب الكهربائي يقوى بزيادة الشحنة لا بنقصانها.'
     },
     slid: 'الأيونات غيّرت مواضعها، والإلكترونات الحرّة ما زالت تحيط بها كلّها. فالرابطة الفلزّية لم تنكسر.',
     malleable: {
-      correct: 'الأيونات تنزلق فوق بعضها، والبحر يحيط بها في كلّ وضع. فلا تنكسر الرابطة، والقطعة تستطيل إلى سلك أو تُفرَد إلى صفيحة.',
+      correct: '✓ صحيح! الأيونات تنزلق فوق بعضها، والبحر يحيط بها في كلّ وضع. فلا تنكسر الرابطة، والقطعة تستطيل إلى سلك أو تُفرَد إلى صفيحة.',
       w1: 'راقب البحر أثناء السحب. هل انقطع تجاذبه لحظة واحدة؟',
       w2: 'الدوائر بقيت عليها إشارة + طوال الحركة. هل عادت ذرّات؟',
       w3: 'لو أعادتها لما تغيّر شكل القطعة. لكن الشكل تغيّر فعلًا.'
@@ -1919,9 +1957,14 @@ function station3(){
     var t = G.text(callouts, txt, { x: tx, y: ty - 6, 'class': 'fig-callout' });
     t.setAttribute('direction', 'rtl');
   }
+  /* «إلكترونات حرّة الحركة» وحدها بقيت تسمية عائمة على المسرح. أيّ
+     موضع داخل الشبكة أو أسفلها تصطدم فيه بأحد الإلكترونات الأربعة
+     والعشرين المبعثرة، فانتقلت إلى الشريط العلوي الخالي — المنطقة
+     نفسها التي تستعملها «أيونات الفلزّ» بأمان أصلًا — بدل تتبّع كل
+     نقطة يدويًّا. و«شبكة بلّورية فلزّية» صارت سطرًا نصّيًّا أسفل
+     الشكل (fig31Note)، فلا مسرح مزدحم يتّسع لها. */
   callout(70, 60, 120, 26, 'أيونات الفلزّ');
-  callout(110, 94, 250, 232, 'إلكترونات حرّة الحركة');
-  callout(300, 190, 300, 240, 'شبكة بلّورية فلزّية');
+  callout(350, 38, 300, 26, 'إلكترونات حرّة الحركة');
 
   window.Quiz.practice({
     greySpheres: { xpId: 'l5-grey-spheres', xp: 'MCQ', reason: 'قرأتَ نموذجًا لا يرسم الشحنة',
@@ -1930,6 +1973,7 @@ function station3(){
     onAllSolved: function(){
       document.getElementById('s3after').hidden = false;
       callouts.setAttribute('class', 'fig31-callouts');
+      document.getElementById('fig31Note').hidden = false;
     }
   });
 
@@ -1942,11 +1986,18 @@ function station3(){
 
 /* ══════════════════ المحطة 4 ══════════════════
    العدّاد لا يسبق السؤال: عدد الإلكترونات المطلوب لا يُكتب على
-   الشاشة قبل أن يعدّ الطالب بنفسه. */
+   الشاشة قبل أن يحسب الطالب بنفسه.
+   توقّع ثم تحقّق — لا نقر متكرّر بلا سقف حقيقي (قرار 4 أغسطس):
+   كان الطالب ينقر «أضف إلكترونًا» حتى عشرين مرّة، فيتحوّل الحساب
+   إلى تجربة وخطأ عشوائية بلا حاجة لضرب ٤×٢. الآن يكتب عدده المتوقَّع
+   فيظهر البحر بالعدد الذي كتبه هو — لا بالعدد الصحيح — فإن أخطأ رأى
+   خطأه مجسَّدًا أمامه بدل أن يكتشفه بالنقر العشوائي. */
 function seaBuilder(cfg){
   var svg = document.getElementById(cfg.svg);
   if(!svg) return null;
   var msg = document.getElementById(cfg.msg);
+  var input = document.getElementById(cfg.inputId);
+  var checkBtn = document.getElementById(cfg.checkBtn);
   var box = { x: 150, y: 60, w: 600, h: 190 };
   pieceFrame(svg, box, cfg.frameLabel);
 
@@ -1956,43 +2007,53 @@ function seaBuilder(cfg){
 
   var sea = Sea(svg, { x: box.x + 24, y: box.y + 20, w: box.w - 48, h: box.h - 40 }, { speed: 0.5 });
   var added = [];
+  var done = false;
 
-  function add(){
-    if(added.length >= 20) return;
-    var x = box.x + 40 + Math.random() * (box.w - 80);
-    var y = box.y + 30 + Math.random() * (box.h - 60);
-    added.push(sea.spawn(x, y));
-    if(window.Sounds) window.Sounds.playTick();
-    msg.textContent = '';
-    msg.classList.remove('done');
+  function rebuild(n){
+    added.forEach(function(e){ sea.remove(e); });
+    added = [];
+    // سقفٌ بصري بحت (٣٠) لعدد صحيح غريب الضخامة — لا يمسّ صحّة المقارنة أدناه
+    var toDraw = Math.min(n, 30);
+    for(var i = 0; i < toDraw; i++){
+      var x = box.x + 40 + Math.random() * (box.w - 80);
+      var y = box.y + 30 + Math.random() * (box.h - 60);
+      added.push(sea.spawn(x, y));
+    }
   }
-  function undo(){
-    var e = added.pop();
-    if(!e) return;
-    sea.remove(e);
-    msg.textContent = '';
-    msg.classList.remove('done');
-  }
+
   function check(){
-    var n = added.length;
+    if(done) return;
+    var raw = (input.value || '').trim();
+    if(!raw || !/^\d+$/.test(raw)){
+      msg.textContent = 'اكتب عددًا صحيحًا أوّلًا.';
+      msg.classList.remove('done');
+      input.focus();
+      return;
+    }
+    var n = parseInt(raw, 10);
+    rebuild(n);
+    if(window.Sounds) window.Sounds.playTick();
+
     if(n < cfg.need){ msg.textContent = cfg.textShort; msg.classList.remove('done'); return; }
     if(n > cfg.need){ msg.textContent = cfg.textLong;  msg.classList.remove('done'); return; }
+
+    done = true;
     msg.textContent = cfg.textDone;
     msg.classList.add('done');
-    document.getElementById(cfg.addBtn).disabled = true;
-    document.getElementById(cfg.undoBtn).hidden = true;
-    document.getElementById(cfg.checkBtn).disabled = true;
-    document.getElementById(cfg.checkBtn).classList.add('demoted');
+    input.disabled = true;
+    checkBtn.disabled = true;
+    checkBtn.classList.add('demoted');
     if(window.Sounds) window.Sounds.playChime();
     if(window.XP) window.XP.claim(cfg.xpId, window.XP.POINTS.PRODUCE, cfg.reason);
     if(cfg.onDone) cfg.onDone();
   }
 
-  document.getElementById(cfg.addBtn).addEventListener('click', add);
-  document.getElementById(cfg.undoBtn).addEventListener('click', undo);
-  document.getElementById(cfg.checkBtn).addEventListener('click', check);
+  checkBtn.addEventListener('click', check);
+  input.addEventListener('keydown', function(ev){
+    if(ev.key === 'Enter'){ ev.preventDefault(); check(); }
+  });
   sea.start();
-  return { add: add, check: check, count: function(){ return added.length; } };
+  return { check: check, count: function(){ return added.length; } };
 }
 
 function station4(){
@@ -2002,7 +2063,7 @@ function station4(){
     svg: 'stage4a', msg: 's4amsg', frameLabel: 'قطعة نحاس',
     ions: [{ x: 260, y: 155 }, { x: 380, y: 155 }, { x: 500, y: 155 }, { x: 620, y: 155 }],
     sign: '2+', symbol: 'Cu', need: 8,
-    addBtn: 's4aAdd', undoBtn: 's4aUndo', checkBtn: 's4aCheck',
+    inputId: 's4aInput', checkBtn: 's4aCheck',
     textShort: T2.s4.cuShort, textLong: T2.s4.cuLong, textDone: T2.s4.cuDone,
     xpId: 'l5-cu-build', reason: 'بنيتَ بحر النحاس متعادلًا',
     onDone: function(){ document.getElementById('s4b').hidden = false; }
@@ -2024,7 +2085,7 @@ function station4(){
     svg: 'stage4b', msg: 's4cmsg', frameLabel: 'قطعة ألومنيوم',
     ions: [{ x: 320, y: 155 }, { x: 450, y: 155 }, { x: 580, y: 155 }],
     sign: '3+', symbol: 'Al', need: 9,
-    addBtn: 's4cAdd', undoBtn: 's4cUndo', checkBtn: 's4cCheck',
+    inputId: 's4cInput', checkBtn: 's4cCheck',
     textShort: T2.s4.alShort, textLong: T2.s4.alLong, textDone: T2.s4.alDone,
     xpId: 'l5-al-build', reason: 'بنيتَ بحر الألومنيوم متعادلًا',
     onDone: function(){ document.getElementById('s4d').hidden = false; }
