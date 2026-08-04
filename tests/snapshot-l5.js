@@ -110,13 +110,15 @@ function clickAll(nodes) { nodes.forEach(n => h.clickNode(n)); }
   // ---- المحطة 2: ثلاث حالات ----
   made.push(await snap('s2-a-ست-ذرّات', ({ doc }) => node(doc, '#stage2')));
 
-  made.push(await snap('s2-b-ذرّتان-محرَّرتان', ({ doc }) => {
+  made.push(await snap('s2-b-ذرّتان-محرَّرتان', async ({ doc, w }) => {
     clickAll(all(doc, '#stage2 .epos.clickable').slice(0, 2));
+    await h.tick(w, 60);   // انتظار اكتمال الانكماش المرئي (release) قبل الالتقاط
     return node(doc, '#stage2');
   }));
 
-  made.push(await snap('s2-c-البحر-كاملًا', ({ doc }) => {
+  made.push(await snap('s2-c-البحر-كاملًا', async ({ doc, w }) => {
     clickAll(all(doc, '#stage2 .epos.clickable'));
+    await h.tick(w, 60);
     return node(doc, '#stage2');
   }));
 
@@ -133,11 +135,9 @@ function clickAll(nodes) { nodes.forEach(n => h.clickNode(n)); }
       put('التجاذب بين أيونات الفلزّ والإلكترونات الحرّة', 'lim-none');
     }
     if (upto >= 5) {
-      for (let i = 0; i < 8; i++) h.click(doc, 's4aAdd');
-      h.click(doc, 's4aCheck');
+      h.type(doc, 's4aInput', '8'); h.click(doc, 's4aCheck');
       h.type(doc, 'cu100Input', '200'); h.click(doc, 'cu100Btn');
-      for (let i = 0; i < 9; i++) h.click(doc, 's4cAdd');
-      h.click(doc, 's4cCheck');
+      h.type(doc, 's4cInput', '9'); h.click(doc, 's4cCheck');
       h.type(doc, 'al100Input', '300'); h.click(doc, 'al100Btn');
       h.choose(doc, 'ratioPattern', 'correct');
     }
@@ -159,7 +159,7 @@ function clickAll(nodes) { nodes.forEach(n => h.clickNode(n)); }
 
   made.push(await snap('s4-a-نحاس-فارغ', async (s) => node(s.doc, '#stage4a')));
   made.push(await snap('s4-b-نحاس-ممتلئ', async (s) => {
-    for (let i = 0; i < 8; i++) h.click(s.doc, 's4aAdd');
+    h.type(s.doc, 's4aInput', '8');
     h.click(s.doc, 's4aCheck');
     return node(s.doc, '#stage4a');
   }));

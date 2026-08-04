@@ -42,11 +42,9 @@ const flows = {
 
   // المحطة 4: بناء بحرَي النحاس والألومنيوم والسؤالان والنمط
   s4(doc){
-    for(let i = 0; i < 8; i++) h.click(doc, 's4aAdd');
-    h.click(doc, 's4aCheck');
+    h.type(doc, 's4aInput', '8'); h.click(doc, 's4aCheck');
     h.type(doc, 'cu100Input', '200'); h.click(doc, 'cu100Btn');
-    for(let i = 0; i < 9; i++) h.click(doc, 's4cAdd');
-    h.click(doc, 's4cCheck');
+    h.type(doc, 's4cInput', '9'); h.click(doc, 's4cCheck');
     h.type(doc, 'al100Input', '300'); h.click(doc, 'al100Btn');
     h.choose(doc, 'ratioPattern', 'correct');
   },
