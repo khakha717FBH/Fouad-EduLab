@@ -243,14 +243,19 @@ describe('المحطة 2 — قطعة الصوديوم', () => {
                          'إلكترون حرّ خارج إطار القطعة'));
   });
 
-  it('رمز الأيون تحت دائرته لا فوقها ولا داخلها', async () => {
+  it('لا تكرار لرمز العنصر خارج القرص — الاسم والشحنة معًا داخله وحده', async () => {
     const { doc } = await page();
     const svg = doc.getElementById('stage2');
     svg.querySelectorAll('.epos.clickable').forEach(e => h.clickNode(e));
     const ion = svg.querySelector('.ion');
+    eq(ion.querySelectorAll('.ion-symbol').length, 0, 'رمز مكرَّر تحت الدائرة');
+    const sign = ion.querySelector('.ion-sign');
+    has(sign.textContent, 'Na');
+    has(sign.textContent, '+');
     const body = ion.querySelector('.ion-body');
-    const sym = ion.querySelector('.ion-symbol');
-    ok(num(sym, 'y') > num(body, 'cy') + num(body, 'r'), 'الرمز يقع داخل دائرة الأيون');
+    ok(num(sign, 'y') > num(body, 'cy') - num(body, 'r') &&
+       num(sign, 'y') < num(body, 'cy') + num(body, 'r'),
+       'رمز الأيون يقع خارج دائرته');
   });
 });
 
@@ -301,7 +306,7 @@ describe('المحطة 4 — بناء البحر', () => {
   it('الإلكترونات المضافة تقع داخل الإطار', async () => {
     const { doc } = await page();
     const svg = doc.getElementById('stage4a');
-    for(let i = 0; i < 8; i++) h.click(doc, 's4aAdd');
+    h.type(doc, 's4aInput', '8'); h.click(doc, 's4aCheck');
     const fb = boundsOf(svg.querySelector('.piece-frame rect'), svg);
     const free = Array.from(svg.querySelectorAll('.sea-layer .epos')).map(n => pos(n, svg));
     eq(free.length, 8);
@@ -311,7 +316,7 @@ describe('المحطة 4 — بناء البحر', () => {
 
   it('لا شيء يخرج عن حدود المشهدين', async () => {
     const { doc } = await page();
-    for(let i = 0; i < 8; i++) h.click(doc, 's4aAdd');
+    h.type(doc, 's4aInput', '8'); h.click(doc, 's4aCheck');
     eq(outOfBounds(doc.getElementById('stage4a')).length, 0);
     eq(outOfBounds(doc.getElementById('stage4b')).length, 0);
   });
