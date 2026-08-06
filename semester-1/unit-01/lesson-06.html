@@ -1,0 +1,2216 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدرس 6 — كيف تشرح الفرق بين خصائص المركّبات الأيونية والمواد التساهمية والفلزّات؟ | مختبر فؤاد التعليمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/identity/identity.css">
+<link rel="stylesheet" href="../../shared/template-boilerplate/template.css">
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  الدرس 6 — مختبر فؤاد التعليمي
+  "كيف تشرح الفرق بين خصائص المركّبات الأيونية والمواد التساهمية
+  والفلزّات؟"
+
+  سبع محطات معلنة وسبع نقاط تقدّم. المحطة الثانية مشطورة داخليًّا إلى
+  مرحلتين (المختبر الحراري ثم الدائرة الكهربائية) بلا نقطة تقدّم
+  إضافية — نقطة واحدة للمحطة كلّها، كما ورد في الخريطة النصّية المعتمدة.
+
+  ترتيب الوسوم: وسوم shared/ الستّة تسبق سكربت الدرس.
+
+  هذا الدرس لا يستعمل راسم الذرّة إطلاقًا (مصرَّح في الخريطة النصّية):
+  خمسة مسارح جديدة بدلًا منه — موقد التسخين، دائرة المصباح، بوتقة
+  الأميتر، شبكة الثلج المنصهرة، والشبكتان الأيونية والفلزّية.
+
+  ملاحظة أمانة بالأرقام: جدول رصيد الخريطة النصّية أعلن للمحطة 4
+  المجموع 38، لكن مجموع نقاط أسئلتها الفعلية (5+10+5+5+8) هو 33 —
+  خطأ حسابي في جدول الملخّص لا في محتوى المحطة نفسها. اعتُمد هنا
+  الرقم المشتقّ من المحتوى الفعلي: 222 نقطة أساسية + 8 اختيارية = 230.
+  ========================================================= -->
+<style>
+  /* ============ منع سحب التحديث من تصفير XP ============ */
+  html, body{ overscroll-behavior-y:contain; }
+  html{scroll-behavior:smooth;}
+  .station{ scroll-margin-top:14px; }
+
+  /* ============ نصوص وبطاقات عامّة (نمط مشترك بين الدروس، كل درس يعرّفه محليًّا) ============ */
+  .dose{
+    max-width:920px;
+    margin:16px auto 0;
+    font-size:.95rem;
+    line-height:2;
+  }
+  .dose.strong-q{ font-weight:700; color:var(--turquoise); }
+  .sub-h{
+    max-width:920px;
+    margin:30px auto 12px;
+    font-family:'Cairo', sans-serif;
+    font-size:1rem;
+    font-weight:700;
+    color:var(--turquoise);
+  }
+  .task-line{
+    max-width:920px;
+    margin:18px auto 10px;
+    border-inline-start:3px solid var(--turquoise);
+    padding-inline-start:12px;
+    font-size:.95rem;
+    line-height:1.95;
+    color:var(--ink);
+  }
+  .given-card{
+    display:inline-flex;
+    flex-wrap:wrap;
+    gap:6px 16px;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    max-width:920px;
+    margin:10px auto 0;
+    padding:9px 14px;
+    border:1px dashed rgba(20,200,168,.35);
+    border-radius:14px;
+    font-size:13px;
+    color:var(--ink-dim);
+  }
+  .given-card b{ color:var(--turquoise); font-weight:700; }
+  .stage-wrap{
+    width:100%;
+    max-width:920px;
+    margin:12px auto 0;
+    background:var(--navy-darker);
+    border:1px solid rgba(20,200,168,0.15);
+    border-radius:22px;
+    padding:14px;
+  }
+  svg.stage{
+    width:100%;
+    height:auto;
+    display:block;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .stage-msg{
+    max-width:920px;
+    margin:10px auto 0;
+    min-height:22px;
+    text-align:center;
+    font-size:14px;
+    color:var(--ink-dim);
+    line-height:1.9;
+  }
+  .stage-msg.done{ color:var(--turquoise); font-weight:700; }
+  .stage-msg.impasse{
+    max-width:920px;
+    margin:12px auto 0;
+    border-inline-start:3px solid var(--coral);
+    padding:10px 14px;
+    text-align:start;
+    color:var(--ink);
+    font-weight:600;
+    background:rgba(255,107,74,.06);
+    border-radius:0 12px 12px 0;
+    animation:impasseIn .45s ease;
+  }
+  .stage-msg.impasse::before{ content:'✕ '; color:var(--coral); font-weight:800; }
+  @keyframes impasseIn{ from{ opacity:0; transform:translateY(-6px); } to{ opacity:1; transform:translateY(0); } }
+  @media (prefers-reduced-motion: reduce){ .stage-msg.impasse{ animation:none; } }
+  .stage-msg.coral{
+    max-width:920px;
+    margin:12px auto 0;
+    border-inline-start:3px solid var(--coral);
+    padding:10px 14px;
+    text-align:start;
+    color:var(--ink);
+    font-weight:600;
+    background:rgba(255,107,74,.07);
+    border-radius:0 12px 12px 0;
+  }
+  .try-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+    margin:14px auto 0;
+    max-width:920px;
+  }
+  .success-tag{
+    margin-top:18px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(20,200,168,.08);
+    border:1px solid var(--turquoise-soft);
+    color:var(--turquoise);
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:.9rem;
+    padding:9px 20px;
+    border-radius:999px;
+    opacity:0;
+    transform:translateY(6px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .success-tag.show{opacity:1; transform:translateY(0);}
+  .explore-q{
+    font-weight:700;
+    color:var(--ink);
+    margin:0 0 12px;
+    font-size:clamp(14px,2.4vw,16px);
+  }
+  .explore-step{
+    margin-top:26px;
+    padding-top:20px;
+    border-top:1px dashed var(--border);
+  }
+  .explore-step:first-of-type{ border-top:none; padding-top:0; }
+  .explore-answer-row{ display:flex; gap:10px; flex-wrap:wrap; }
+  .explore-input{
+    flex:1 1 140px;
+    min-width:100px;
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:11px 20px;
+    color:var(--ink);
+    font-family:'Tajawal', sans-serif;
+    font-size:15px;
+    text-align:center;
+  }
+  .explore-input::placeholder{ color:var(--ink-dim); opacity:.55; font-size:.86em; }
+  .explore-input:focus{ outline:none; border-color:var(--turquoise); box-shadow:0 0 0 3px var(--turquoise-faint); }
+  .explore-input:disabled{ opacity:.7; }
+  .name-card{
+    max-width:920px;
+    margin:16px auto 0;
+    border:1px dashed var(--turquoise-soft);
+    border-radius:14px;
+    padding:12px 16px;
+    font-size:.92rem;
+    line-height:1.9;
+    background:rgba(20,200,168,.05);
+  }
+  .name-card b{color:var(--turquoise); font-weight:800;}
+  .name-gate{
+    margin-top:20px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(20,200,168,.2);
+    border-radius:16px;
+    padding:16px 18px;
+  }
+  .name-gate label{ display:block; font-size:.9rem; color:var(--ink); font-weight:700; margin-bottom:10px; }
+  .name-gate .gate-note{ font-size:.78rem; color:var(--ink-dim); margin:10px 0 0; }
+  .eval-q{ border-top:1px solid rgba(255,255,255,.06); margin-top:26px; padding-top:22px; }
+  .eval-q.first{border-top:none; margin-top:18px; padding-top:0;}
+  .q-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    background:rgba(20,200,168,.12);
+    border:1px solid var(--turquoise-soft);
+    color:var(--turquoise);
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:.8rem;
+    margin-inline-end:8px;
+    flex-shrink:0;
+  }
+  .eval-summary{
+    margin-top:30px;
+    background:rgba(20,200,168,.06);
+    border:1px solid var(--turquoise-soft);
+    border-radius:18px;
+    padding:20px 18px;
+    text-align:center;
+  }
+  #certTriggerSlot{display:flex; justify-content:center; margin-top:18px;}
+  .facts-grid.single-card{ grid-template-columns:none; max-width:280px; margin:16px auto; }
+  .is-off{ display:none !important; }
+  .fact-sub{ font-size:.84rem; color:var(--ink-dim); margin-top:6px; line-height:1.8; }
+
+  /* ============ أصناف خاصّة بهذا الدرس ============ */
+
+  /* ---- جدول البيانات التقدّمي (المحطة 2) ---- */
+  .data-table-wrap{ max-width:920px; margin:18px auto 0; overflow-x:auto; }
+  table.data-table{
+    width:100%;
+    border-collapse:collapse;
+    direction:rtl;
+    font-size:.86rem;
+    background:var(--navy-darker);
+    border:1px solid rgba(20,200,168,.18);
+    border-radius:14px;
+    overflow:hidden;
+  }
+  table.data-table th, table.data-table td{
+    padding:10px 12px;
+    text-align:center;
+    border:1px solid rgba(255,255,255,.06);
+    color:var(--ink);
+    line-height:1.7;
+  }
+  table.data-table th{
+    background:rgba(20,200,168,.1);
+    color:var(--turquoise);
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:.82rem;
+  }
+  table.data-table td:first-child, table.data-table th:first-child{
+    text-align:end;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    color:var(--ink-dim);
+  }
+  table.data-table td.tbd{ color:var(--ink-dim); opacity:.4; }
+  table.data-table td.filled{ color:var(--turquoise); font-weight:600; animation:cellIn .4s ease; }
+  @keyframes cellIn{ from{opacity:0;} to{opacity:1;} }
+
+  /* ---- عيّنات قابلة للنقر (الدائرة والمحاليل) ---- */
+  .sample-row{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:14px auto 0; max-width:920px; }
+  .sample-tile{
+    flex:1 1 120px;
+    max-width:150px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(20,200,168,.22);
+    border-radius:14px;
+    padding:12px 8px;
+    text-align:center;
+    font-family:'Tajawal', sans-serif;
+    font-size:.82rem;
+    color:var(--ink);
+    cursor:pointer;
+    transition:border-color .2s ease, background .2s ease, transform .15s ease;
+  }
+  .sample-tile:hover:not(:disabled){ border-color:var(--turquoise); transform:translateY(-2px); }
+  .sample-tile:disabled{ cursor:not-allowed; opacity:.55; }
+  .sample-tile.lit{ border-color:var(--turquoise); background:rgba(20,200,168,.12); color:var(--turquoise); font-weight:700; }
+  .sample-tile.unlit{ border-color:rgba(255,107,74,.35); }
+  .sample-tile .dot-icon{
+    width:14px; height:14px; border-radius:50%;
+    margin:0 auto 6px; background:#3d4a68; transition:background .25s ease, box-shadow .25s ease;
+  }
+  .sample-tile.lit .dot-icon{ background:var(--turquoise); box-shadow:0 0 10px var(--turquoise); }
+
+  /* ---- المحطة 2أ: موقد التسخين ---- */
+  .heat-tray{ fill:#3d4a68; stroke:rgba(159,176,201,.4); stroke-width:1.4; }
+  .heat-sample{ transition:transform .3s ease, opacity .3s ease; }
+  .heat-sample-body{ fill:#22314e; stroke:var(--turquoise-soft); stroke-width:1.3; }
+  .heat-sample-label{
+    font-family:'Tajawal', sans-serif; font-size:13px; fill:var(--ink-dim);
+    pointer-events:none; user-select:none;
+  }
+  .wax-pool{ fill:rgba(255,220,150,.5); stroke:rgba(255,220,150,.7); stroke-width:1; }
+  .tripod-leg{ stroke:rgba(159,176,201,.5); stroke-width:2.4; }
+  .flame{ fill:url(#flameGrad); opacity:0; transition:opacity .3s ease; }
+  .flame.on{ opacity:1; }
+  @keyframes flameFlicker{ 0%,100%{ transform:scaleY(1); } 50%{ transform:scaleY(1.08); } }
+  .flame.on{ animation:flameFlicker 1s ease-in-out infinite; transform-origin:bottom center; }
+  @media (prefers-reduced-motion: reduce){ .flame.on{ animation:none; } }
+  .timer-readout{
+    font-family:'Cairo', sans-serif; font-weight:800; font-size:22px;
+    fill:var(--turquoise); direction:ltr;
+  }
+
+  /* ---- المحطة 2ب: الدائرة ---- */
+  .wire-body{ fill:rgba(20,200,168,.05); stroke:rgba(20,200,168,.35); stroke-width:1.6; }
+  .battery-box{ fill:#22314e; stroke:var(--ink-dim); stroke-width:1.4; }
+  .battery-label{ font-family:'Cairo', sans-serif; font-weight:800; font-size:15px; fill:var(--ink); }
+  .bulb-glass{ fill:#22314e; stroke:rgba(159,176,201,.5); stroke-width:1.6; transition:fill .3s ease, stroke .3s ease; }
+  .bulb-glass.lit{ fill:#ffe28a; stroke:#ffe28a; filter:drop-shadow(0 0 10px rgba(255,226,138,.75)); }
+  .bulb-filament{ stroke:rgba(159,176,201,.6); stroke-width:1.4; fill:none; transition:stroke .3s ease; }
+  .bulb-filament.lit{ stroke:#7a5a12; }
+  .clip{ fill:none; stroke:rgba(159,176,201,.55); stroke-width:2; }
+  .gap-slot{ fill:rgba(255,255,255,.03); stroke:rgba(159,176,201,.3); stroke-width:1.2; stroke-dasharray:4 4; }
+  .gap-label{ font-family:'Tajawal', sans-serif; font-size:11px; fill:var(--ink-dim); }
+  .panel-title{ font-family:'Cairo', sans-serif; font-weight:700; font-size:13px; fill:var(--ink-dim); }
+
+  /* ---- المحطة 3: البوتقة والأميتر ---- */
+  .crucible-body{ fill:#3d4a68; stroke:rgba(159,176,201,.45); stroke-width:1.4; }
+  .crucible-powder{ fill:#c9d6e6; transition:fill .4s ease; }
+  .crucible-powder.molten{ fill:#8fd8ff; opacity:.85; }
+  .electrode{ stroke:#2a3550; stroke-width:6; stroke-linecap:round; }
+  .ammeter-box{
+    fill:#0e1626; stroke:var(--turquoise-soft); stroke-width:1.4; rx:10;
+  }
+  .ammeter-readout{
+    font-family:'Cairo', sans-serif; font-weight:800; font-size:24px; fill:var(--turquoise); direction:ltr;
+  }
+  .ammeter-readout.jump{ fill:var(--coral); }
+  .temp-readout{ font-family:'Cairo', sans-serif; font-weight:700; font-size:16px; fill:var(--ink); direction:ltr; }
+  .temp-gauge-track{ fill:none; stroke:rgba(255,255,255,.1); stroke-width:10; stroke-linecap:round; }
+  .temp-gauge-fill{ fill:none; stroke:var(--coral); stroke-width:10; stroke-linecap:round; transition:stroke-dasharray .4s linear; }
+
+  /* ---- المحطة 4: شبكة الثلج ---- */
+  .o-atom{ fill:#c0392b1a; }
+  .molecule-o{ fill:#3d5a80; stroke:rgba(159,176,201,.5); stroke-width:1.2; }
+  .molecule-h{ fill:#e8eef7; stroke:rgba(159,176,201,.5); stroke-width:1; }
+  .covalent-stick{ stroke:var(--turquoise); stroke-width:3; stroke-linecap:round; }
+  .imf-dots{ stroke:var(--coral); stroke-width:1.6; stroke-dasharray:3 4; transition:opacity .5s ease; }
+  .water-molecule{ transition:transform .8s ease; }
+
+  /* ---- المحطة 5: الشبكتان ---- */
+  .lattice-ion{ cursor:grab; touch-action:none; }
+  .lattice-ion.jiggling{ animation:jiggle .35s ease; }
+  @keyframes jiggle{
+    0%,100%{ transform:translate(0,0); }
+    25%{ transform:translate(4px,-2px); }
+    50%{ transform:translate(-4px,2px); }
+    75%{ transform:translate(3px,2px); }
+  }
+  @media (prefers-reduced-motion: reduce){ .lattice-ion.jiggling{ animation:none; } }
+  @media (prefers-reduced-motion: reduce){ .water-molecule, .imf-dots{ transition:none !important; } }
+  .ion-body{ fill:#22314e; stroke:var(--turquoise); stroke-width:1.8; }
+  .ion-body.negative{ stroke:var(--coral); }
+  .ion-sign{
+    font-family:'Cairo', sans-serif; font-weight:800; font-size:15px;
+    fill:var(--turquoise); pointer-events:none; user-select:none;
+  }
+  .ion-sign.negative{ fill:var(--coral); }
+  .edot{ fill:var(--coral); }
+  .ehalo{ fill:none; }
+  .metal-core{ fill:#22314e; stroke:var(--turquoise); stroke-width:1.6; }
+  .free-flowing .edot{ }
+  .battery-live .battery-box{ stroke:var(--turquoise); }
+
+  /* ---- المحطة 6: بطاقات المصنّفات وجزيء الإيثين ---- */
+  .cat-grid{ margin-top:16px; }
+  .ethene-carbon{ fill:#2a3550; stroke:var(--ink-dim); stroke-width:1.4; }
+  .ethene-hydrogen{ fill:#e8eef7; stroke:rgba(159,176,201,.5); stroke-width:1; }
+  .ethene-bond{ stroke:var(--turquoise); stroke-width:3; stroke-linecap:round; }
+  .ethene-bond.double{ stroke-width:2.4; }
+  .atom-label{ font-family:'Cairo', sans-serif; font-weight:800; font-size:13px; fill:var(--ink); pointer-events:none; }
+
+  .terms-box{
+    margin:18px 0 4px;
+    border:1px solid var(--turquoise-soft);
+    border-radius:14px;
+    background:var(--turquoise-faint);
+    padding:0 16px;
+  }
+  .terms-box > summary{ cursor:pointer; list-style:none; padding:12px 0; color:var(--turquoise); font-weight:700; font-size:.9rem; }
+  .terms-box > summary::-webkit-details-marker{display:none;}
+  .terms-box > summary::after{content:' ▾'; font-size:.8em;}
+  .terms-box[open] > summary::after{content:' ▴';}
+
+  .bonus-box{
+    max-width:920px;
+    margin:24px auto 0;
+    border:1px dashed var(--coral);
+    border-radius:16px;
+    padding:16px 18px;
+    background:rgba(255,107,74,.04);
+  }
+  .bonus-tag{
+    display:inline-block;
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:.75rem;
+    color:var(--coral);
+    border:1px solid var(--coral);
+    border-radius:999px;
+    padding:3px 12px;
+    margin-bottom:10px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="crumb">
+  <a href="../../index.html">الرئيسية</a> ›
+  <a href="../index.html">الفصل الأول</a> ›
+  <a href="index.html">الوحدة 1</a> ›
+  الدرس 6
+</nav>
+
+<div class="progress-track">
+  <div class="xp-counter" id="xpCounter">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+    <span id="xpValue">0</span>
+    <span class="xp-label">XP</span>
+  </div>
+  <div class="progress-dot" data-target="station-1"></div>
+  <div class="progress-dot" data-target="station-2"></div>
+  <div class="progress-dot" data-target="station-3"></div>
+  <div class="progress-dot" data-target="station-4"></div>
+  <div class="progress-dot" data-target="station-5"></div>
+  <div class="progress-dot" data-target="station-6"></div>
+  <div class="progress-dot" data-target="station-7"></div>
+</div>
+
+<header class="hero">
+  <div class="eyebrow">الوحدة 1 · الدرس 6</div>
+  <h1>كيف تشرح الفرق بين خصائص المركّبات الأيونية والمواد التساهمية والفلزّات؟</h1>
+  <div class="objectives-box">
+    <h3>في نهاية هذا الدرس سوف تتمكن من أن:</h3>
+    <ul>
+      <li>تشرح لماذا تمتلك المركّبات الأيونية خصائص فيزيائية مشتركة.</li>
+      <li>تشرح سبب اختلاف خصائص المواد التساهمية عن المركّبات الأيونية.</li>
+      <li>تشرح كيف تؤثّر الروابط الفلزّية على خصائص الفلزّات.</li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===================== محطة 1 ===================== -->
+  <section class="station" id="station-1">
+    <div class="station-label">المحطة الأولى</div>
+    <h2>ثلاث موادّ أمامك</h2>
+    <p class="station-tagline">ثلاث موادّ تراها كل يوم. انظر إليها جيّدًا، ثم توقّع.</p>
+
+    <div class="facts-grid">
+      <div class="fact-card">
+        <div class="term">ماء</div>
+      </div>
+      <div class="fact-card">
+        <div class="term">نحاس</div>
+      </div>
+      <div class="fact-card">
+        <div class="term">ملح طعام NaCl</div>
+      </div>
+    </div>
+
+    <div class="explore-step" id="s1predictBox">
+      <p class="explore-q">أيّ هذه الموادّ يوصّل التيار الكهربائي في رأيك؟ (يمكنك اختيار أكثر من واحدة)</p>
+      <div class="quiz-options" id="s1predictOptions">
+        <label class="quiz-option"><input type="checkbox" name="l6predict" value="water"> الماء</label>
+        <label class="quiz-option"><input type="checkbox" name="l6predict" value="copper"> النحاس</label>
+        <label class="quiz-option"><input type="checkbox" name="l6predict" value="nacl"> كلوريد الصوديوم</label>
+      </div>
+      <p class="explore-feedback" id="fb-s1predict" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s1bondBox" hidden>
+      <p class="explore-q">درستَ الروابط الثلاث في الدروس السابقة. أيّ ترتيب يصف الموادّ الثلاث أعلاه بالترتيب: الماء، ثم النحاس، ثم كلوريد الصوديوم؟</p>
+      <div class="quiz-options" data-q="bondTypes">
+        <label class="quiz-option"><input type="radio" name="bondTypes" value="w1">رابطة أيونية · رابطة فلزّية · رابطة تساهمية</label>
+        <label class="quiz-option"><input type="radio" name="bondTypes" value="correct">رابطة تساهمية · رابطة فلزّية · رابطة أيونية</label>
+        <label class="quiz-option"><input type="radio" name="bondTypes" value="w2">رابطة تساهمية · رابطة أيونية · رابطة فلزّية</label>
+        <label class="quiz-option"><input type="radio" name="bondTypes" value="w3">رابطة فلزّية · رابطة تساهمية · رابطة أيونية</label>
+      </div>
+      <p class="explore-feedback" id="fb-bondTypes" hidden></p>
+    </div>
+
+    <div id="s1done" hidden>
+      <div class="success-tag show">✓ سُجِّل تنبّؤك</div>
+      <div class="station-handoff">
+        <a href="#station-2" class="station-next">إلى المختبر ←</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 2 ===================== -->
+  <section class="station" id="station-2">
+    <div class="station-label">المحطة الثانية</div>
+    <h2>إلى المختبر: نقيس بأنفسنا</h2>
+    <p class="station-tagline">ستّ عيّنات، وموقد، ودائرة كهربائية. لن نخبرك بالنتائج — ستقيسها بنفسك.</p>
+
+    <!-- ---------- المرحلة أ: مقعد التسخين ---------- -->
+    <p class="stage-msg coral">قبل أن تبدأ: في المختبر الحقيقي لا تلمس كلوريد الكالسيوم، ولا تلمس الجهاز الكهربائي ويداك مبتلّتان، وانتظر حتى يبرد الموقد قبل لمسه.</p>
+    <p class="sub-h">الآن نختبر درجة الانصهار</p>
+
+    <div class="stage-wrap">
+      <svg id="stage2a" class="stage" viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="خمس عيّنات على علبة معدنية فوق موقد بنزن مطفأ"></svg>
+    </div>
+    <div class="try-row">
+      <button type="button" class="btn" id="s2aHeatBtn">أشعل الموقد</button>
+    </div>
+    <p class="stage-msg" id="s2aMsg" aria-live="polite"></p>
+
+    <div class="explore-step" id="s2aQBox" hidden>
+      <p class="explore-q">بناءً على ما رأيتَه، أيّ العبارات يصف درجات الانصهار وصفًا صحيحًا؟</p>
+      <div class="quiz-options" data-q="meltQ">
+        <label class="quiz-option"><input type="radio" name="meltQ" value="w1">الشمع درجة انصهاره مرتفعة، والباقي منخفضة</label>
+        <label class="quiz-option"><input type="radio" name="meltQ" value="w2">الموادّ الخمس كلّها درجات انصهارها متقاربة</label>
+        <label class="quiz-option"><input type="radio" name="meltQ" value="correct">الشمع درجة انصهاره منخفضة نسبيًّا، والباقي مرتفعة نسبيًّا</label>
+        <label class="quiz-option"><input type="radio" name="meltQ" value="w3">الفلزّان وحدهما درجتا انصهارهما منخفضتان</label>
+      </div>
+      <p class="explore-feedback" id="fb-meltQ" hidden></p>
+
+      <p class="explore-q" style="margin-top:22px">أعِد النظر في الموادّ الستّ (الخمس السابقة مع الماء). أيّ عبارة صحيحة عن حالتها عند درجة حرارة الغرفة؟</p>
+      <div class="quiz-options" data-q="stateQ">
+        <label class="quiz-option"><input type="radio" name="stateQ" value="correct">الماء وحده سائل، ومعظم الموادّ الأخرى صلبة</label>
+        <label class="quiz-option"><input type="radio" name="stateQ" value="w1">الموادّ الستّ كلّها صلبة</label>
+        <label class="quiz-option"><input type="radio" name="stateQ" value="w2">الفلزّات سائلة والباقي صلب</label>
+        <label class="quiz-option"><input type="radio" name="stateQ" value="w3">الموادّ الأيونية سائلة والباقي صلب</label>
+      </div>
+      <p class="explore-feedback" id="fb-stateQ" hidden></p>
+    </div>
+
+    <div class="data-table-wrap">
+      <table class="data-table" id="propTable">
+        <thead>
+          <tr><th>الخاصّية</th><th>المركّبات الأيونية</th><th>المواد التساهمية</th><th>الفلزّات</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>درجات الانصهار والغليان</td><td class="tbd" id="td-melt-ionic">—</td><td class="tbd" id="td-melt-cov">—</td><td class="tbd" id="td-melt-metal">—</td></tr>
+          <tr><td>الحالة عند درجة حرارة الغرفة</td><td class="tbd" id="td-state-ionic">—</td><td class="tbd" id="td-state-cov">—</td><td class="tbd" id="td-state-metal">—</td></tr>
+          <tr><td>التوصيل الكهربائي</td><td class="tbd" id="td-cond-ionic">—</td><td class="tbd" id="td-cond-cov">—</td><td class="tbd" id="td-cond-metal">—</td></tr>
+          <tr><td>الذوبان في الماء</td><td class="tbd" id="td-dis-ionic">—</td><td class="tbd" id="td-dis-cov">—</td><td class="tbd" id="td-dis-metal">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ---------- المرحلة ب: الدائرة الكهربائية ---------- -->
+    <div id="s2b" hidden>
+      <p class="sub-h">الآن نختبر الكهرباء</p>
+
+      <div class="explore-step" id="s2bWaterPredict">
+        <p class="explore-q">هل الماء المقطر موصل جيد للتيار الكهربائي؟</p>
+        <div class="quiz-options" id="waterPredictOptions">
+          <label class="quiz-option"><input type="radio" name="waterPredict" value="yes">نعم</label>
+          <label class="quiz-option"><input type="radio" name="waterPredict" value="no">لا</label>
+        </div>
+        <p class="explore-feedback" id="fb-waterPredict" hidden></p>
+      </div>
+
+      <div class="stage-wrap">
+        <svg id="stage2b" class="stage" viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="دائرة كهربائية بسيطة ببطارية ومصباح وطرفَي تمساح مفتوحين"></svg>
+      </div>
+
+      <p class="dose">انقر كلّ عيّنة بالأسفل لتختبر توصيلها الكهربائي، واحدة تلو الأخرى.</p>
+      <div class="sample-row" id="s2bSamples">
+        <button type="button" class="sample-tile" data-sample="nacl-solid" data-result="off"><span class="dot-icon"></span>كلوريد الصوديوم صلب</button>
+        <button type="button" class="sample-tile" data-sample="cacl2-solid" data-result="off"><span class="dot-icon"></span>كلوريد الكالسيوم صلب</button>
+        <button type="button" class="sample-tile" data-sample="wax" data-result="off"><span class="dot-icon"></span>شمع</button>
+        <button type="button" class="sample-tile" data-sample="al" data-result="on"><span class="dot-icon"></span>ألومنيوم</button>
+        <button type="button" class="sample-tile" data-sample="cu" data-result="on"><span class="dot-icon"></span>نحاس</button>
+        <button type="button" class="sample-tile" id="tile-water" data-sample="water" data-result="off" disabled><span class="dot-icon"></span>ماء مقطَّر</button>
+      </div>
+
+      <p class="stage-msg coral" id="s2bWaterMsg" hidden></p>
+      <p class="stage-msg" id="s2bMsg" aria-live="polite"></p>
+
+      <div id="s2c" hidden>
+        <p class="sub-h">نذيب الأملاح في الماء ونعيد الاختبار</p>
+
+        <div class="sample-row" id="s2cSamples">
+          <button type="button" class="sample-tile" data-sample="sol-nacl" data-result="on"><span class="dot-icon"></span>محلول كلوريد الصوديوم</button>
+          <button type="button" class="sample-tile" data-sample="sol-cacl2" data-result="on"><span class="dot-icon"></span>محلول كلوريد الكالسيوم</button>
+          <button type="button" class="sample-tile" data-sample="sol-wax" data-result="nodissolve"><span class="dot-icon"></span>شمع في ماء</button>
+        </div>
+        <p class="dose" id="s2cWaxNote" hidden>الشمع لا يذوب في الماء، فلا محلول لنختبره.</p>
+        <p class="dose">الألومنيوم والنحاس لا يذوبان في الماء أيضًا.</p>
+
+        <div class="explore-step" id="s2cQBox" hidden>
+          <p class="explore-q">كلوريد الصوديوم مادّة واحدة، ونتيجتان مختلفتان: لم يضِئ المصباح وهو صلب، وأضاءه وهو محلول. ما الذي تغيّر؟</p>
+          <div class="quiz-options" data-q="paradoxQ">
+            <label class="quiz-option"><input type="radio" name="paradoxQ" value="w1">تغيّر نوع الرابطة داخل كلوريد الصوديوم عند الذوبان</label>
+            <label class="quiz-option"><input type="radio" name="paradoxQ" value="w2">تغيّرت الأيونات نفسها فصار بعضها موجبًا وبعضها سالبًا</label>
+            <label class="quiz-option"><input type="radio" name="paradoxQ" value="correct">لم تتغيّر الأيونات ولا الرابطة، بل تغيّرت قدرة الأيونات على الحركة</label>
+            <label class="quiz-option"><input type="radio" name="paradoxQ" value="w3">الماء هو الذي وصّل التيار لا كلوريد الصوديوم</label>
+          </div>
+          <p class="explore-feedback" id="fb-paradoxQ" hidden></p>
+
+          <p class="explore-q" style="margin-top:22px">من ملاحظاتك، أيّ الموادّ ذاب في الماء؟</p>
+          <div class="quiz-options" data-q="dissolveQ">
+            <label class="quiz-option"><input type="radio" name="dissolveQ" value="w1">الشمع والفلزّان</label>
+            <label class="quiz-option"><input type="radio" name="dissolveQ" value="w2">الفلزّان وحدهما</label>
+            <label class="quiz-option"><input type="radio" name="dissolveQ" value="w3">الشمع وحده</label>
+            <label class="quiz-option"><input type="radio" name="dissolveQ" value="correct">المركّبان الأيونيان وحدهما</label>
+          </div>
+          <p class="explore-feedback" id="fb-dissolveQ" hidden></p>
+        </div>
+
+        <div id="s2done" hidden>
+          <div class="success-tag show">✓ اكتملت المحطة</div>
+          <div class="station-handoff">
+            <a href="#station-3" class="station-next">إلى العرض التوضيحي ←</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 3 ===================== -->
+  <section class="station" id="station-3">
+    <div class="station-label">المحطة الثالثة</div>
+    <h2>عرض توضيحي: كلوريد الخارصين</h2>
+    <p class="station-tagline">بقي سؤال واحد عن المركّبات الأيونية: ماذا لو صهرناها بلا ماء إطلاقًا؟</p>
+
+    <div class="given-card"><span>كلوريد الخارصين</span><span>مركّب أيوني</span><span>ينصهر عند <b dir="ltr">290 °C</b></span></div>
+
+    <div class="explore-step" id="s3predictBox">
+      <p class="explore-q">سنشعل الموقد. متى سيسجّل الأميتر تيّارًا؟</p>
+      <div class="quiz-options" id="s3predictOptions">
+        <label class="quiz-option"><input type="radio" name="znPredict" value="p1">فور إشعال الموقد</label>
+        <label class="quiz-option"><input type="radio" name="znPredict" value="p2">بعد قليل من ارتفاع الحرارة، وقبل الانصهار</label>
+        <label class="quiz-option"><input type="radio" name="znPredict" value="p3">عند انصهار كلوريد الخارصين</label>
+        <label class="quiz-option"><input type="radio" name="znPredict" value="p4">لن يسجّل تيّارًا إطلاقًا</label>
+      </div>
+      <p class="explore-feedback" id="fb-s3predict" hidden></p>
+    </div>
+
+    <div class="stage-wrap">
+      <svg id="stage3" class="stage" viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="بوتقة على مثلّث خزفي فوق موقد، بها كلوريد خارصين صلب وقطبا كربون موصولان ببطارية وأميتر"></svg>
+    </div>
+
+    <div class="try-row">
+      <button type="button" class="btn" id="s3HeatBtn" hidden>أشعل الموقد</button>
+    </div>
+    <p class="stage-msg" id="s3Msg" aria-live="polite"></p>
+
+    <div class="explore-step" id="s3QBox" hidden>
+      <p class="explore-q">ما الذي جعل الأميتر يسجّل تيّارًا؟</p>
+      <div class="quiz-options" data-q="znWhen">
+        <label class="quiz-option"><input type="radio" name="znWhen" value="w1">ارتفاع درجة الحرارة وحده</label>
+        <label class="quiz-option"><input type="radio" name="znWhen" value="correct">انصهار كلوريد الخارصين</label>
+        <label class="quiz-option"><input type="radio" name="znWhen" value="w2">اقتراب قطبَي الكربون من بعضهما</label>
+        <label class="quiz-option"><input type="radio" name="znWhen" value="w3">زيادة قوّة البطارية بالتسخين</label>
+      </div>
+      <p class="explore-feedback" id="fb-znWhen" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s3ShortBox" hidden>
+      <p class="explore-q">بجملة واحدة: لماذا لم يوصّل كلوريد الخارصين الكهرباء وهو صلب، ووصّلها وهو منصهر؟</p>
+      <div class="explore-answer-row">
+        <input type="text" class="explore-input" id="znExplainInput" placeholder="اكتب إجابتك" autocomplete="off">
+        <button type="button" class="btn" id="znExplainBtn">سلّم الإجابة</button>
+      </div>
+      <p class="explore-feedback" id="fb-znExplain" hidden></p>
+      <button type="button" class="link-btn" id="znExplainModelBtn" hidden>أرِني الإجابة النموذجية</button>
+      <p class="name-card" id="znExplainModel" hidden></p>
+    </div>
+
+    <div id="s3done" hidden>
+      <div class="success-tag show">✓ اكتملت المحطة</div>
+      <div class="station-handoff">
+        <a href="#station-4" class="station-next">لماذا يحدث كل هذا؟ ←</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 4 ===================== -->
+  <section class="station" id="station-4">
+    <div class="station-label">المحطة الرابعة</div>
+    <h2>ما الذي ينكسر عند الانصهار؟</h2>
+    <p class="station-tagline">قِستَ الانصهار في المختبر. الآن نفتح المادّة من الداخل لنرى سبب ما قِسته.</p>
+
+    <div class="name-card">
+      <h3>التجاذب الكهربائي الساكن</h3>
+      <p>قوّة جذب بين جسيمين مشحونين بشحنتين متعاكستين. هو الذي يربط الأيون الموجب بالأيون السالب في المركّب الأيوني، ويربط الأيونات الموجبة ببحر الإلكترونات في الفلزّ.</p>
+      <p>وهو تجاذب قويّ جدًّا، يحتاج كسره إلى طاقة كبيرة.</p>
+    </div>
+
+    <div class="explore-step" id="s4Q1Box">
+      <p class="explore-q">لتنصهر بلّورة كلوريد الصوديوم، ما الذي يجب أن تكسره الحرارة؟</p>
+      <div class="quiz-options" data-q="breakIonic">
+        <label class="quiz-option"><input type="radio" name="breakIonic" value="w1">الأيونات نفسها فتتحوّل إلى ذرّات</label>
+        <label class="quiz-option"><input type="radio" name="breakIonic" value="w2">نواة كل أيون</label>
+        <label class="quiz-option"><input type="radio" name="breakIonic" value="correct">التجاذب الكهربائي الساكن الذي يمسك الأيونات في الشبكة</label>
+        <label class="quiz-option"><input type="radio" name="breakIonic" value="w3">الإلكترونات الحرّة بين الأيونات</label>
+      </div>
+      <p class="explore-feedback" id="fb-breakIonic" hidden></p>
+    </div>
+
+    <p class="sub-h" id="s4IceHeading" hidden>ماذا يحدث عندما ينصهر الثلج؟</p>
+    <p class="dose" id="s4IceIntro" hidden>العصيّ الممتلئة داخل كل جزيء هي الروابط التساهمية. والخطوط المنقّطة بين الجزيئات شيء آخر.</p>
+    <div class="stage-wrap" id="s4IceWrap" hidden>
+      <svg id="stage4ice" class="stage" viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ستّة جزيئات ماء منتظمة في شبكة ثلج، وبينها خطوط منقّطة"></svg>
+    </div>
+    <div class="try-row" id="s4IceBtnRow" hidden>
+      <button type="button" class="btn" id="s4IceHeatBtn">سخّن الثلج</button>
+    </div>
+    <p class="stage-msg" id="s4IceMsg" aria-live="polite"></p>
+
+    <div class="explore-step" id="s4Q2Box" hidden>
+      <p class="explore-q">ما الذي انكسر عندما انصهر الثلج؟</p>
+      <div class="quiz-options" data-q="iceWhatBroke">
+        <label class="quiz-option"><input type="radio" name="iceWhatBroke" value="w1">الروابط التساهمية داخل جزيئات الماء</label>
+        <label class="quiz-option"><input type="radio" name="iceWhatBroke" value="correct">قوى الجذب الضعيفة بين جزيئات الماء</label>
+        <label class="quiz-option"><input type="radio" name="iceWhatBroke" value="w2">الروابط التساهمية وقوى الجذب معًا</label>
+        <label class="quiz-option"><input type="radio" name="iceWhatBroke" value="w3">لم ينكسر شيء، الجزيئات تحرّكت فقط</label>
+      </div>
+      <p class="explore-feedback" id="fb-iceWhatBroke" hidden></p>
+    </div>
+
+    <div class="name-card" id="imfTermCard" hidden>
+      <h3>القوى الجزيئية البينيّة</h3>
+      <p>قوى التجاذب أو التنافر التي تحدث بين الجزيئات التساهمية.</p>
+      <p>وهي القوى التي رأيتَها تنكسر بين جزيئات الماء عند الانصهار.</p>
+    </div>
+
+    <div class="explore-step" id="s4Q3Box" hidden>
+      <p class="explore-q">القوى الجزيئية البينيّة تساوي ما بين 1/10 و1/100 من قوّة الرابطة التساهمية أو الأيونية. ماذا يعني هذا عمليًّا؟</p>
+      <div class="quiz-options" data-q="imfStrength">
+        <label class="quiz-option"><input type="radio" name="imfStrength" value="w1">تحتاج إلى طاقة أكبر لتنكسر</label>
+        <label class="quiz-option"><input type="radio" name="imfStrength" value="w2">تحتاج إلى الطاقة نفسها تقريبًا</label>
+        <label class="quiz-option"><input type="radio" name="imfStrength" value="w3">لا تنكسر إطلاقًا مهما ارتفعت الحرارة</label>
+        <label class="quiz-option"><input type="radio" name="imfStrength" value="correct">تحتاج إلى طاقة أقلّ بكثير لتنكسر</label>
+      </div>
+      <p class="explore-feedback" id="fb-imfStrength" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s4ShortBox" hidden>
+      <p class="explore-q">بجملة أو جملتين: لماذا تنصهر الموادّ التساهمية الجزيئية عند درجات أدنى بكثير من المركّبات الأيونية؟</p>
+      <div class="explore-answer-row">
+        <input type="text" class="explore-input" id="compareExplainInput" placeholder="اكتب إجابتك" autocomplete="off">
+        <button type="button" class="btn" id="compareExplainBtn">سلّم الإجابة</button>
+      </div>
+      <p class="explore-feedback" id="fb-compareExplain" hidden></p>
+      <button type="button" class="link-btn" id="compareExplainModelBtn" hidden>أرِني الإجابة النموذجية</button>
+      <p class="name-card" id="compareExplainModel" hidden></p>
+    </div>
+
+    <div id="s4done" hidden>
+      <p class="dose"><b>الفلزّات كذلك:</b> تحتاج إلى طاقة كبيرة لتنصهر، لأن الروابط الفلزّية القوية بين الأيونات الموجبة وبحر الإلكترونات تحتاج إلى الكثير من الطاقة لتنكسر.</p>
+      <div class="station-handoff">
+        <a href="#station-5" class="station-next">وماذا عن الكهرباء؟ ←</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 5 ===================== -->
+  <section class="station" id="station-5">
+    <div class="station-label">المحطة الخامسة</div>
+    <h2>من يحمل الشحنة؟</h2>
+    <p class="station-tagline">بقيت المفارقة التي رأيتَها في المختبر بلا تفسير. الآن نفسّرها.</p>
+
+    <div class="name-card">
+      <p>لكي توصّل المادّة التيّار الكهربائي، يلزمها شرطان معًا:</p>
+      <p><b>1.</b> أن تحتوي على جسيمات مشحونة.</p>
+      <p><b>2.</b> أن تكون تلك الجسيمات <b>حرّة الحركة</b>. شرط واحد لا يكفي.</p>
+    </div>
+
+    <p class="sub-h">من يحمل الشحنة في المركّب الأيوني الصلب؟</p>
+    <p class="task-line">اسحب ثلاثة أيونات مختلفة، وحاول إخراج كلٍّ منها من الشبكة.</p>
+    <div class="stage-wrap">
+      <svg id="stage5lattice" class="stage" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="شبكة بلّورية مستوية من أيونات موجبة وسالبة متبادلة"></svg>
+    </div>
+    <p class="stage-msg" id="s5latticeMsg" aria-live="polite"></p>
+
+    <div class="explore-step" id="s5Q1Box" hidden>
+      <p class="explore-q">أيّ شرطَي التوصيل يتحقّق في المركّب الأيوني الصلب؟</p>
+      <div class="quiz-options" data-q="latticeQ">
+        <label class="quiz-option"><input type="radio" name="latticeQ" value="w1">الشرطان معًا</label>
+        <label class="quiz-option"><input type="radio" name="latticeQ" value="correct">وجود جسيمات مشحونة فقط</label>
+        <label class="quiz-option"><input type="radio" name="latticeQ" value="w2">حرّية الحركة فقط</label>
+        <label class="quiz-option"><input type="radio" name="latticeQ" value="w3">لا شرط منهما</label>
+      </div>
+      <p class="explore-feedback" id="fb-latticeQ" hidden></p>
+    </div>
+
+    <div class="try-row" id="s5MeltBtnRow" hidden>
+      <button type="button" class="btn" id="s5MeltBtn">سخّن الشبكة</button>
+    </div>
+    <p class="stage-msg" id="s5MeltMsg" aria-live="polite"></p>
+
+    <div class="explore-step" id="s5Q2Box" hidden>
+      <p class="explore-q">وفي المحلول المائي، لماذا يوصّل كلوريد الصوديوم الكهرباء؟</p>
+      <div class="quiz-options" data-q="solutionQ">
+        <label class="quiz-option"><input type="radio" name="solutionQ" value="w1">لأن الماء نفسه موصّل جيّد</label>
+        <label class="quiz-option"><input type="radio" name="solutionQ" value="w2">لأن الأيونات تتحوّل إلى إلكترونات حرّة</label>
+        <label class="quiz-option"><input type="radio" name="solutionQ" value="correct">لأن الماء يفرّق الأيونات بعضها عن بعض فتصير حرّة الحركة</label>
+        <label class="quiz-option"><input type="radio" name="solutionQ" value="w3">لأن الرابطة الأيونية تتحوّل إلى رابطة فلزّية</label>
+      </div>
+      <p class="explore-feedback" id="fb-solutionQ" hidden></p>
+    </div>
+
+    <div id="s5MetalBlock" hidden>
+      <p class="sub-h">ومن يحمل الشحنة في الفلزّ؟</p>
+      <div class="stage-wrap">
+        <svg id="stage5metal" class="stage" viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="شبكة من أيونات موجبة ثابتة وبينها إلكترونات حرّة تتحرّك"></svg>
+      </div>
+      <div class="try-row">
+        <button type="button" class="btn" id="s5ConnectBtn">صل البطارية</button>
+      </div>
+      <p class="stage-msg" id="s5MetalMsg" aria-live="polite"></p>
+    </div>
+
+    <div class="explore-step" id="s5Q3Box" hidden>
+      <p class="explore-q">ما الذي يحمل الشحنة في الفلزّ؟</p>
+      <div class="quiz-options" data-q="metalCarrier">
+        <label class="quiz-option"><input type="radio" name="metalCarrier" value="w1">الأيونات الموجبة المتحرّكة</label>
+        <label class="quiz-option"><input type="radio" name="metalCarrier" value="correct">الإلكترونات الحرّة</label>
+        <label class="quiz-option"><input type="radio" name="metalCarrier" value="w2">الأيونات السالبة</label>
+        <label class="quiz-option"><input type="radio" name="metalCarrier" value="w3">النوى الذرّية</label>
+      </div>
+      <p class="explore-feedback" id="fb-metalCarrier" hidden></p>
+
+      <p class="explore-q" style="margin-top:22px">الفلزّ الصلب يوصّل الكهرباء، والمركّب الأيوني الصلب لا يوصّلها. لماذا؟ كلاهما صلب وكلاهما يحتوي على جسيمات مشحونة.</p>
+      <div class="quiz-options" data-q="metalSolid">
+        <label class="quiz-option"><input type="radio" name="metalSolid" value="w1">لأن الفلزّ أصلب من المركّب الأيوني</label>
+        <label class="quiz-option"><input type="radio" name="metalSolid" value="w2">لأن شحنة الفلزّ أكبر</label>
+        <label class="quiz-option"><input type="radio" name="metalSolid" value="w3">لأن الفلزّ لا يحتوي على أيونات إطلاقًا</label>
+        <label class="quiz-option"><input type="radio" name="metalSolid" value="correct">لأن الفلزّ يملك إلكترونات حرّة الحركة حتى وهو صلب</label>
+      </div>
+      <p class="explore-feedback" id="fb-metalSolid" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s5ShortBox" hidden>
+      <p class="explore-q">بجملة واحدة: لماذا لا توصّل معظم الموادّ التساهمية الكهرباء في أيّ حالة؟</p>
+      <div class="explore-answer-row">
+        <input type="text" class="explore-input" id="covalentWhyInput" placeholder="اكتب إجابتك" autocomplete="off">
+        <button type="button" class="btn" id="covalentWhyBtn">سلّم الإجابة</button>
+      </div>
+      <p class="explore-feedback" id="fb-covalentWhy" hidden></p>
+      <button type="button" class="link-btn" id="covalentWhyModelBtn" hidden>أرِني الإجابة النموذجية</button>
+      <p class="name-card" id="covalentWhyModel" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s5Q4Box" hidden>
+      <p class="explore-q">في بداية الدرس توقّعتَ أيّ الموادّ الثلاث يوصّل الكهرباء. ماء الصنبور يوصّل الكهرباء فعلًا، والماء المقطَّر لا يوصّلها. ما تفسير ذلك؟</p>
+      <div class="quiz-options" data-q="closeLoop">
+        <label class="quiz-option"><input type="radio" name="closeLoop" value="w1">الماء المقطَّر جزيئاته أثقل</label>
+        <label class="quiz-option"><input type="radio" name="closeLoop" value="correct">ماء الصنبور تذوب فيه أملاح، فتزوّده بأيونات حرّة الحركة</label>
+        <label class="quiz-option"><input type="radio" name="closeLoop" value="w2">الماء المقطَّر بارد أكثر</label>
+        <label class="quiz-option"><input type="radio" name="closeLoop" value="w3">ماء الصنبور يحتوي على إلكترونات حرّة كالفلزّ</label>
+      </div>
+      <p class="explore-feedback" id="fb-closeLoop" hidden></p>
+    </div>
+
+    <div id="s5done" hidden>
+      <div class="success-tag show">✓ اكتملت المحطة</div>
+      <div class="station-handoff">
+        <a href="#station-6" class="station-next">نطبّق على موادّ جديدة ←</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 6 ===================== -->
+  <section class="station" id="station-6">
+    <div class="station-label">المحطة السادسة</div>
+    <h2>نطبّق على موادّ جديدة</h2>
+    <p class="station-tagline">ستّ موادّ لم تختبرها، وجزيء لم تره. ماذا تستطيع أن تتوقّع عنها؟</p>
+
+    <div class="given-card">
+      <span><b>الفلزّات:</b> الذهب · التيتانيوم</span>
+      <span><b>اللافلزّات:</b> الأكسجين · الكلور</span>
+      <span><b>مركّبات من فلزّ ولا فلزّ:</b> كلوريد المغنيسيوم · أكسيد البوتاسيوم</span>
+    </div>
+
+    <div data-chips="classify">
+      <div class="chips-pool">
+        <span class="chip" data-value="كلوريد المغنيسيوم" data-xp-id="l6-chip-mgcl2" data-xp-reason="صنّفتَ مركّبًا أيونيًّا">كلوريد المغنيسيوم</span>
+        <span class="chip" data-value="أكسيد البوتاسيوم" data-xp-id="l6-chip-k2o" data-xp-reason="صنّفتَ مركّبًا أيونيًّا">أكسيد البوتاسيوم</span>
+        <span class="chip" data-value="الأكسجين" data-xp-id="l6-chip-o2" data-xp-reason="صنّفتَ مادّة تساهمية">الأكسجين</span>
+        <span class="chip" data-value="الكلور" data-xp-id="l6-chip-cl2" data-xp-reason="صنّفتَ مادّة تساهمية">الكلور</span>
+        <span class="chip" data-value="الذهب" data-xp-id="l6-chip-au" data-xp-reason="صنّفتَ فلزًّا">الذهب</span>
+        <span class="chip" data-value="التيتانيوم" data-xp-id="l6-chip-ti" data-xp-reason="صنّفتَ فلزًّا">التيتانيوم</span>
+      </div>
+      <div class="cat-grid">
+        <div class="slot cat-slot" id="cat-ionic" data-answer="كلوريد المغنيسيوم|أكسيد البوتاسيوم">
+          <span class="slot-label">رابطة أيونية · شبكة بلّورية عملاقة</span><span class="slot-items"></span>
+        </div>
+        <div class="slot cat-slot" id="cat-covalent" data-answer="الأكسجين|الكلور">
+          <span class="slot-label">رابطة تساهمية · جزيئات</span><span class="slot-items"></span>
+        </div>
+        <div class="slot cat-slot" id="cat-metal" data-answer="الذهب|التيتانيوم">
+          <span class="slot-label">رابطة فلزّية · شبكة من أيونات موجبة في بحر إلكترونات</span><span class="slot-items"></span>
+        </div>
+      </div>
+      <p class="explore-feedback chips-feedback" hidden></p>
+    </div>
+
+    <div id="s6classifyDone" hidden>
+      <div class="success-tag show">✓ ستّ موادّ، وثلاث مجموعات</div>
+    </div>
+
+    <p class="sub-h" id="s6etheneHeading" hidden>الإيثين</p>
+    <div class="given-card" id="s6etheneGiven" hidden>
+      <span><b>الإيثين</b> — صيغته <b dir="ltr">C₂H₄</b></span>
+      <span>يتكوّن من كربون وهيدروجين، وكلاهما لا فلزّ</span>
+    </div>
+    <div class="stage-wrap" id="s6etheneWrap" hidden>
+      <svg id="stage6ethene" class="stage" viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نموذج جزيء الإيثين: ذرّتا كربون بينهما رابطة، ولكلّ منهما ذرّتا هيدروجين"></svg>
+    </div>
+
+    <div class="explore-step" id="s6etheneQBox" hidden>
+      <p class="explore-q">ما نوع الروابط بين ذرّات الإيثين؟</p>
+      <div class="quiz-options" data-q="etheneBond">
+        <label class="quiz-option"><input type="radio" name="etheneBond" value="w1">رابطة فلزّية</label>
+        <label class="quiz-option"><input type="radio" name="etheneBond" value="w2">رابطة أيونية</label>
+        <label class="quiz-option"><input type="radio" name="etheneBond" value="correct">رابطة تساهمية</label>
+        <label class="quiz-option"><input type="radio" name="etheneBond" value="w3">لا توجد روابط بين ذرّاته</label>
+      </div>
+      <p class="explore-feedback" id="fb-etheneBond" hidden></p>
+
+      <p class="explore-q" style="margin-top:22px">ماذا تتوقّع عن درجتَي انصهار الإيثين وغليانه، وحالته عند درجة حرارة الغرفة؟</p>
+      <div class="quiz-options" data-q="etheneState">
+        <label class="quiz-option"><input type="radio" name="etheneState" value="w1">مرتفعتان، وهو صلب</label>
+        <label class="quiz-option"><input type="radio" name="etheneState" value="w2">مرتفعتان، وهو سائل</label>
+        <label class="quiz-option"><input type="radio" name="etheneState" value="w3">منخفضتان، وهو صلب</label>
+        <label class="quiz-option"><input type="radio" name="etheneState" value="correct">منخفضتان نسبيًّا، وهو غاز</label>
+      </div>
+      <p class="explore-feedback" id="fb-etheneState" hidden></p>
+
+      <p class="explore-q" style="margin-top:22px">هل يوصّل الإيثين الكهرباء؟</p>
+      <div class="quiz-options" data-q="etheneConduct">
+        <label class="quiz-option"><input type="radio" name="etheneConduct" value="correct">لا، لأنه لا يحتوي على أيونات ولا إلكترونات حرّة</label>
+        <label class="quiz-option"><input type="radio" name="etheneConduct" value="w1">نعم، لأن ذرّات الكربون تنقل الشحنة</label>
+        <label class="quiz-option"><input type="radio" name="etheneConduct" value="w2">نعم، لكن عند صهره فقط</label>
+        <label class="quiz-option"><input type="radio" name="etheneConduct" value="w3">لا، لأن جزيئاته كبيرة الحجم</label>
+      </div>
+      <p class="explore-feedback" id="fb-etheneConduct" hidden></p>
+    </div>
+
+    <div class="bonus-box" id="s6bonusBox" hidden>
+      <span class="bonus-tag">تحدٍّ اختياري</span>
+      <div class="given-card">
+        <span><b>الجرافيت</b> — أحد أشكال الكربون في الطبيعة</span>
+        <span>تربط بين ذرّاته روابط تساهمية</span>
+        <span>وهو موصّل جيّد للتيار الكهربائي</span>
+      </div>
+      <p class="explore-q" style="margin-top:14px">قلنا في هذا الدرس إن الموادّ التساهمية لا توصّل الكهرباء. لماذا يُعدّ الجرافيت استثناءً؟</p>
+      <div class="quiz-options" data-q="graphiteQ">
+        <label class="quiz-option"><input type="radio" name="graphiteQ" value="w1">لأن روابطه في الحقيقة فلزّية لا تساهمية</label>
+        <label class="quiz-option"><input type="radio" name="graphiteQ" value="w2">لأنه يحتوي على أيونات موجبة وسالبة</label>
+        <label class="quiz-option"><input type="radio" name="graphiteQ" value="correct">لأن روابطه تساهمية لكنّه يملك إلكترونات حرّة الحركة تحمل الشحنة</label>
+        <label class="quiz-option"><input type="radio" name="graphiteQ" value="w3">لأنه ينصهر عند درجة حرارة منخفضة</label>
+      </div>
+      <p class="explore-feedback" id="fb-graphiteQ" hidden></p>
+    </div>
+
+    <div id="s6done" hidden>
+      <div class="success-tag show">✓ اكتملت المحطة</div>
+      <div class="station-handoff">
+        <a href="#station-7" class="station-next">التقييم الختامي ←</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 7 ===================== -->
+  <section class="station" id="station-7">
+    <div class="station-label">المحطة السابعة</div>
+    <h2>التقييم الختامي</h2>
+    <p class="station-tagline">عشرة أسئلة، ومحاولة واحدة لكلّ سؤال. وفي نهايتها شهادتك باسمك.</p>
+
+    <div class="name-gate">
+      <label for="evalName">اكتب اسمك كما تريده أن يظهر على الشهادة</label>
+      <input type="text" class="explore-input" id="evalName" placeholder="الاسم الكامل" autocomplete="off">
+      <button type="button" class="btn" id="evalStart">ابدأ التقييم</button>
+      <p class="explore-feedback" id="evalNameFb" hidden></p>
+      <p class="gate-note">هذا هو التقييم الختامي لهذا الدرس. لكلّ سؤال محاولة واحدة، وبعد آخر سؤال تظهر نتيجتك وشهادتك. خذ وقتك.</p>
+    </div>
+
+    <div id="evalQuestions" hidden>
+
+      <div class="eval-q first">
+        <p class="explore-q"><span class="q-num">1</span> ما تركيب المركّبات الأيونية؟</p>
+        <div class="quiz-options" data-q="e1">
+          <label class="quiz-option"><input type="radio" name="e1" value="w1">جزيئات منفصلة تتشارك ذرّاتها بالإلكترونات في روابط تساهمية</label>
+          <label class="quiz-option"><input type="radio" name="e1" value="w2">شبكة ضخمة من الأيونات الموجبة الشحنة داخل بحر من الإلكترونات الحرّة</label>
+          <label class="quiz-option"><input type="radio" name="e1" value="w3">شبكة بلّورية ضخمة من الأيونات السالبة الشحنة وحدها</label>
+          <label class="quiz-option"><input type="radio" name="e1" value="correct">شبكة بلّورية ضخمة من الأيونات الموجبة الشحنة والأيونات السالبة الشحنة</label>
+        </div>
+        <p class="explore-feedback" id="fb-e1" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">2</span> ما الخاصّية المميّزة للمركّب الأيوني؟</p>
+        <div class="quiz-options" data-q="e2">
+          <label class="quiz-option"><input type="radio" name="e2" value="correct">يمتلك درجة انصهار مرتفعة نسبيًّا</label>
+          <label class="quiz-option"><input type="radio" name="e2" value="w1">يمتلك درجة انصهار منخفضة نسبيًّا</label>
+          <label class="quiz-option"><input type="radio" name="e2" value="w2">يكون في العادة سائلًا أو غازًا عند درجة حرارة الغرفة</label>
+          <label class="quiz-option"><input type="radio" name="e2" value="w3">يوصّل الكهرباء فقط عندما يكون صلبًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-e2" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">3</span> أيٌّ من المركّبات الآتية موصّل جيّد للكهرباء؟</p>
+        <div class="quiz-options" data-q="e3">
+          <label class="quiz-option"><input type="radio" name="e3" value="w1">كلوريد الصوديوم الصلب</label>
+          <label class="quiz-option"><input type="radio" name="e3" value="correct">كلوريد الصوديوم المنصهر</label>
+          <label class="quiz-option"><input type="radio" name="e3" value="w2">الشمع</label>
+          <label class="quiz-option"><input type="radio" name="e3" value="w3">الماء المقطَّر</label>
+        </div>
+        <p class="explore-feedback" id="fb-e3" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">4</span> أيٌّ من الموادّ الآتية تمتلك أدنى درجة انصهار؟</p>
+        <div class="quiz-options" data-q="e4">
+          <label class="quiz-option"><input type="radio" name="e4" value="w1">كلوريد الصوديوم</label>
+          <label class="quiz-option"><input type="radio" name="e4" value="w2">أكسيد المغنيسيوم</label>
+          <label class="quiz-option"><input type="radio" name="e4" value="w3">الحديد</label>
+          <label class="quiz-option"><input type="radio" name="e4" value="correct">الشمع</label>
+        </div>
+        <p class="explore-feedback" id="fb-e4" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">5</span> أيٌّ من الموادّ الآتية يُحتمل أن تكون غازًا عند درجة حرارة الغرفة؟</p>
+        <div class="quiz-options" data-q="e5">
+          <label class="quiz-option"><input type="radio" name="e5" value="w1">مركّب أيوني</label>
+          <label class="quiz-option"><input type="radio" name="e5" value="correct">مادّة ذات جزيئات مرتبطة تساهميًّا</label>
+          <label class="quiz-option"><input type="radio" name="e5" value="w2">عنصر فلزّي</label>
+          <label class="quiz-option"><input type="radio" name="e5" value="w3">عنصر بتركيب شبكيّ وإلكترونات حرّة</label>
+        </div>
+        <p class="explore-feedback" id="fb-e5" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">6</span> ما نوع التركيب الظاهر في الرسم؟</p>
+        <div class="stage-wrap" style="max-width:420px; margin:0 auto 16px;">
+          <svg id="stageE6" class="stage" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="شبكة بلّورية من كرات خضراء وبيضاء متبادلة"></svg>
+        </div>
+        <div class="quiz-options" data-q="e6">
+          <label class="quiz-option"><input type="radio" name="e6" value="w1">جزيئات منفصلة مرتبطة تساهميًّا</label>
+          <label class="quiz-option"><input type="radio" name="e6" value="w2">شبكة فلزّية بأيونات موجبة وبحر إلكترونات</label>
+          <label class="quiz-option"><input type="radio" name="e6" value="correct">شبكة بلّورية أيونية</label>
+          <label class="quiz-option"><input type="radio" name="e6" value="w3">ذرّات منفردة غير مرتبطة</label>
+        </div>
+        <p class="explore-feedback" id="fb-e6" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">7</span> لماذا يوصّل محلول كلوريد البوتاسيوم الكهرباء، ولا يوصّلها كلوريد البوتاسيوم الصلب؟</p>
+        <div class="quiz-options" data-q="e7">
+          <label class="quiz-option"><input type="radio" name="e7" value="w1">لأن الماء نفسه موصّل جيّد للكهرباء</label>
+          <label class="quiz-option"><input type="radio" name="e7" value="w2">لأن الرابطة الأيونية تتحوّل إلى رابطة فلزّية في المحلول</label>
+          <label class="quiz-option"><input type="radio" name="e7" value="correct">لأن أيوناته تصير حرّة الحركة في المحلول وليست كذلك في الصلب</label>
+          <label class="quiz-option"><input type="radio" name="e7" value="w3">لأن المحلول أسخن من المادّة الصلبة</label>
+        </div>
+        <p class="explore-feedback" id="fb-e7" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">8</span> لماذا درجة انصهار أكسيد الكالسيوم أعلى من درجة انصهار ثاني أكسيد الكبريت؟</p>
+        <div class="quiz-options" data-q="e8">
+          <label class="quiz-option"><input type="radio" name="e8" value="correct">لأن أكسيد الكالسيوم مركّب أيوني بروابط قوية، وثاني أكسيد الكبريت مادّة تساهمية بقوى بينيّة ضعيفة</label>
+          <label class="quiz-option"><input type="radio" name="e8" value="w1">لأن أكسيد الكالسيوم يحتوي على عدد أكبر من الذرّات في الجزيء الواحد</label>
+          <label class="quiz-option"><input type="radio" name="e8" value="w2">لأن ثاني أكسيد الكبريت يحتوي على إلكترونات حرّة تسهّل انصهاره</label>
+          <label class="quiz-option"><input type="radio" name="e8" value="w3">لأن الكالسيوم عنصر أثقل من الكبريت في الجدول الدوري</label>
+        </div>
+        <p class="explore-feedback" id="fb-e8" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">9</span> اقترح اسم مركّب يمكن أن يكون له التركيب الظاهر في رسم السؤال 6.</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="e9Input" placeholder="اكتب اسم المركّب" autocomplete="off">
+          <button type="button" class="btn" id="e9Btn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-e9" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">10</span> في العرض التوضيحي، لم يسجّل الأميتر تيّارًا إلّا بعد عدّة دقائق من بدء التسخين. اشرح السبب.</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="e10Input" placeholder="اكتب إجابتك" autocomplete="off">
+          <button type="button" class="btn" id="e10Btn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-e10" hidden></p>
+      </div>
+    </div>
+
+    <div class="eval-summary" id="evalSummary" hidden></div>
+    <!-- إلزامي: بدونه تحقن وحدة الشهادة زرّها عائمًا فيصطدم بزرّ فهيم -->
+    <div id="certTriggerSlot"></div>
+  </section>
+
+</main>
+
+<!-- وسوم shared/ الستّة تسبق سكربت الدرس -->
+<script src="../../shared/sounds/sounds.js"></script>
+<script src="../../shared/xp-system/xp.js"></script>
+<script src="../../shared/faheem-widget/faheem.js"></script>
+<script src="../../shared/template-boilerplate/template.js"></script>
+<script src="../../shared/certificate-system/certificate.js"></script>
+<script src="../../shared/identity/footer.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   الدرس 6 — سكربت الدرس (نصوص المحطات كلّها في T أدناه)
+
+   بنية الملف: T (النصوص) ← G (أدوات SVG) ← دوالّ رسم صغيرة مشتركة
+   بين المسارح (electron/drawIon/Sea/animate) ← محطة في دالّة
+   مستقلّة لكل محطة ← نداء المحطات السبع ← الانتقال بين المحطات.
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+/* ============ 1) النصوص ============ */
+var T = {
+  s1: {
+    predictFb: 'سجّلنا توقّعك. لن نخبرك الآن مَن أصاب ومَن أخطأ — ستكتشف ذلك بنفسك في المختبر بعد قليل.',
+    bondTypes: {
+      correct: '✓ صحيح! ثلاث موادّ، وثلاث روابط مختلفة تمامًا. هل يعني هذا أن خصائصها ستختلف أيضًا؟',
+      w1: 'الماء يتكوّن من هيدروجين وأكسجين، وكلاهما لا فلزّ. هل تتكوّن الرابطة الأيونية بين لا فلزَّين؟',
+      w2: 'النحاس عنصر فلزّي واحد لا مركّب. هل تحتاج الرابطة الأيونية إلى عنصرين مختلفين؟',
+      w3: 'النحاس فلزّ، لكن هل هو الأوّل في القائمة؟ أعِد قراءة ترتيب الموادّ.'
+    }
+  },
+  s2: {
+    meltDone: 'انتهت الدقيقتان. مادّة واحدة فقط انصهرت.',
+    meltQ: {
+      correct: '✓ صحيح! الشمع مادّة تساهمية، وهو الوحيد الذي استسلم لشعلة الموقد.',
+      w1: 'المادّة التي تنصهر بسرعة هل تحتاج حرارة كثيرة أم قليلة؟',
+      w2: 'لو كانت متقاربة، لانصهرت كلّها أو لم تنصهر أيّ واحدة. ما الذي رأيته فعلًا؟',
+      w3: 'هل انصهر الألومنيوم أو النحاس أمام عينيك؟'
+    },
+    stateQ: {
+      correct: '✓ صحيح! المركّبات الأيونية ومعظم الفلزّات صلبة عند درجة حرارة الغرفة.',
+      w1: 'هل رأيتَ الماء صلبًا في الكأس في بداية الدرس؟',
+      w2: 'هل ينساب سلك النحاس على الطاولة؟',
+      w3: 'كلوريد الصوديوم مركّب أيوني. هل هو سائل في مطبخك؟'
+    },
+    waterPredictFb: 'سُجِّل تنبّؤك. الآن انقر عيّنة الماء المقطَّر وشاهد بنفسك.',
+    waterResultMsg: 'المصباح لم يضِئ. الماء المقطَّر لا يوصّل التيار الكهربائي.\nوهذا قد يفاجئك — فما الذي كان يوصّل في ماء الصنبور إذن؟ ستعرف قبل نهاية الدرس.',
+    circuitDone: 'فلزّان أضاءا المصباح. الأربع الباقية لم تفعل.',
+    waxNoSolution: 'الشمع لا يذوب في الماء، فلا محلول لنختبره.',
+    paradoxQ: {
+      correct: '✓ صحيح! الأيونات موجودة في الحالتين. الفرق في حركتها، لا في وجودها.\nوسنرى هذه الحركة بأعيننا بعد محطّتين.',
+      w1: 'لو انكسرت الرابطة الأيونية وتغيّرت، لصار المركّب مادّة أخرى. هل صار الملح مادّة أخرى؟',
+      w2: 'كلوريد الصوديوم أصلًا مكوَّن من أيون موجب وأيون سالب منذ الدرس الثالث. هذا لم يتغيّر.',
+      w3: 'اختبرتَ الماء المقطَّر وحده قبل قليل. هل أضاء المصباح؟'
+    },
+    dissolveQ: {
+      correct: '✓ صحيح! كلوريد الصوديوم وكلوريد الكالسيوم ذابا، والباقي لا.',
+      w1: 'هل تكوّن للشمع محلول تختبره؟',
+      w2: 'هل ذاب سلك النحاس في الكأس؟',
+      w3: 'قرأتَ للتوّ أن الشمع لا يذوب في الماء.'
+    }
+  },
+  s3: {
+    predictFb: 'سجّلنا توقّعك. أشعل الموقد وراقب الأميتر ومؤشّر الحرارة معًا.',
+    heatedMsg: 'الحرارة ارتفعت أكثر من 250 درجة والأميتر لم يتحرّك. ثم انصهر المركّب، فقفز التيّار فجأة.',
+    znWhen: {
+      correct: '✓ صحيح! اللحظة الفاصلة هي الانصهار نفسه، لا الحرارة.',
+      w1: 'الحرارة ارتفعت من 25 إلى 285 والأميتر على الصفر. فهل الحرارة وحدها كافية؟',
+      w2: 'لم يتحرّك القطبان من مكانهما إطلاقًا.',
+      w3: 'البطارية خارج البوتقة ولم تُسخَّن.'
+    },
+    znExplainHint: 'فكّر في المفارقة نفسها التي رأيتها مع محلول الملح. ما الذي تغيّر هناك؟',
+    znExplainModel: 'لأن الأيونات في كلوريد الخارصين الصلب ثابتة، وتصبح حرّة الحركة عند الانصهار فتحمل التيّار الكهربائي.'
+  },
+  s4: {
+    breakIonic: {
+      correct: '✓ صحيح! والتجاذب قويّ جدًّا، فتلزمه حرارة عالية — وهذا ما رأيته في المختبر.',
+      w1: 'الانصهار تغيّر في الحالة لا في نوع المادّة. الملح المنصهر ما زال ملحًا.',
+      w2: 'النواة لا تتأثّر بحرارة موقد إطلاقًا.',
+      w3: 'هل يوجد بحر إلكترونات في المركّب الأيوني، أم في الفلزّ؟'
+    },
+    iceIntro: 'العصيّ الممتلئة داخل كل جزيء هي الروابط التساهمية. والخطوط المنقّطة بين الجزيئات شيء آخر.',
+    iceDone: 'الجزيئات تباعدت، وكلّ جزيء ما زال كاملًا كما كان.',
+    iceWhatBroke: {
+      correct: '✓ صحيح! الروابط التساهمية سليمة تمامًا. الذي انكسر هو ما كان بين الجزيئات.',
+      w1: 'انظر إلى المسرح: هل تفكّك أيّ جزيء إلى ذرّاته؟',
+      w2: 'نصفها صحيح. أعِد النظر في العصيّ داخل الجزيئات — هل اختفت؟',
+      w3: 'الخطوط المنقّطة كانت موجودة ثم اختفت. ألم يكن اختفاؤها كسرًا؟'
+    },
+    imfStrength: {
+      correct: '✓ صحيح! ولهذا انصهر الشمع في دقيقتين، بينما لم يتأثّر الملح ولا الفلزّان.',
+      w1: 'الكسر 1/10 أصغر من 1 أم أكبر؟',
+      w2: 'لو كانت متساوية لكُتبت 1 لا 1/10.',
+      w3: 'الثلج انصهر أمامك للتوّ.'
+    },
+    compareExplainHint: 'قارِن بين ما ينكسر في كل حالة: في الملح تنكسر الروابط الأيونية نفسها، وفي الشمع ماذا ينكسر؟',
+    compareExplainModel: 'لأن الانصهار في المادّة التساهمية يكسر القوى الجزيئية البينيّة الضعيفة بين الجزيئات، بينما يكسر في المركّب الأيوني تجاذبًا كهربائيًّا ساكنًا قويًّا جدًّا يحتاج إلى طاقة أكبر بكثير.'
+  },
+  s5: {
+    latticeTryMsg: 'الأيونات مشحونة فعلًا — لكنّها محبوسة في مواضعها.',
+    latticeQ: {
+      correct: '✓ صحيح! الشحنة موجودة والحركة غائبة، فلا توصيل.',
+      w1: 'لو تحقّق الشرطان لأضاء المصباح في المختبر. هل أضاء؟',
+      w2: 'حاولتَ سحب أيون للتوّ. هل تحرّك؟',
+      w3: 'الأيونات مشحونة بالتأكيد — موجبة وسالبة.'
+    },
+    meltLatticeMsg: 'الأيونات نفسها، وقد صارت حرّة الحركة.',
+    solutionQ: {
+      correct: '✓ صحيح! سواء بالصهر أو بالإذابة، النتيجة واحدة: أيونات حرّة الحركة.',
+      w1: 'اختبرتَ الماء المقطَّر وحده ولم يضِئ المصباح.',
+      w2: 'الأيون جسيم مشحون كامل، ولا يتحوّل إلى إلكترون.',
+      w3: 'لا يوجد فلزّ حرّ في المحلول ولا بحر إلكترونات.'
+    },
+    metalConnected: 'الإلكترونات انسابت كلّها في اتّجاه واحد، والأيونات الموجبة لم تبرح مواضعها.',
+    metalCarrier: {
+      correct: '✓ صحيح! الحامل هنا إلكترون لا أيون.',
+      w1: 'انظر إلى المسرح: هل تحرّك أيّ قرص موجب من مكانه؟',
+      w2: 'الفلزّ لا يحتوي على أيونات سالبة إطلاقًا.',
+      w3: 'النواة داخل الأيون ولا تفارقه.'
+    },
+    metalSolid: {
+      correct: '✓ صحيح! في المركّب الأيوني الصلب حاملُ الشحنة محبوس، وفي الفلزّ الصلب حاملُ الشحنة حرّ. ولذلك يوصّل الفلزّ الكهرباء في الحالة الصلبة أو عند صهره.',
+      w1: 'الصلابة ليست أحد شرطَي التوصيل. راجع البطاقة.',
+      w2: 'مقدار الشحنة ليس شرطًا. الشرطان: وجود شحنة، وحرّية حركة.',
+      w3: 'الفلزّ شبكة من أيونات موجبة — راجع مسرح الفلزّ.'
+    },
+    covalentWhyHint: 'راجع الشرط الأوّل من شرطَي التوصيل. هل تملك المادّة التساهمية ما يحمل الشحنة أصلًا؟',
+    covalentWhyModel: 'لأنها لا تحتوي على أيونات ولا على إلكترونات حرّة تحمل الشحنة الكهربائية.',
+    closeLoop: {
+      correct: '✓ صحيح! الماء نفسه لا يوصّل. الذي يوصّل هو ما ذاب فيه.',
+      w1: 'كتلة الجزيء ليست من شرطَي التوصيل.',
+      w2: 'الحرارة لم تكن كافية لتوصيل كلوريد الخارصين الصلب أصلًا.',
+      w3: 'بحر الإلكترونات موجود في الفلزّ وحده.'
+    }
+  },
+  s6: {
+    classifyDone: '✓ صحيح! ستّ موادّ، وثلاث مجموعات. ولاحظ: كل مادّة في المجموعة نفسها تشترك مع أختها في الخصائص أيضًا.',
+    chipHints: {
+      'الذهب|cat-ionic': 'الذهب عنصر واحد. هل تحتاج الرابطة الأيونية إلى فلزّ ولا فلزّ معًا؟',
+      'الأكسجين|cat-metal': 'هل الأكسجين فلزّ؟',
+      'كلوريد المغنيسيوم|cat-covalent': 'المغنيسيوم فلزّ والكلور لا فلزّ. ما الرابطة بينهما؟',
+      'التيتانيوم|cat-covalent': 'راجع بطاقة المعطيات — أين صُنّف التيتانيوم؟',
+      'الكلور|cat-ionic': 'هنا كلور مع كلور، لا كلور مع فلزّ.',
+      'أكسيد البوتاسيوم|cat-metal': 'البوتاسيوم فلزّ لكنّه هنا مرتبط بالأكسجين اللافلزّ.'
+    },
+    etheneBond: {
+      correct: '✓ صحيح! لا فلزّ مع لا فلزّ، فالرابطة تساهمية.',
+      w1: 'الرابطة الفلزّية تحتاج إلى فلزّ. هل الكربون أو الهيدروجين فلزّ؟',
+      w2: 'الرابطة الأيونية تحتاج إلى فلزّ ولا فلزّ. وهنا لا فلزّان.',
+      w3: 'انظر إلى العصيّ في النموذج — هي الروابط.'
+    },
+    etheneState: {
+      correct: '✓ صحيح! تمامًا كالأكسجين، وهو غاز عند درجة حرارة الغرفة.',
+      w1: 'الإيثين مادّة تساهمية جزيئية. ما الذي ينكسر عند انصهارها؟',
+      w2: 'القوى بين جزيئات الإيثين ضعيفة. فهل تحتاج إلى حرارة عالية؟',
+      w3: 'لو كانت درجتا الانصهار والغليان منخفضتين جدًّا، أيبقى غازًا أم صلبًا في الغرفة؟'
+    },
+    etheneConduct: {
+      correct: '✓ صحيح! لا حامل للشحنة، فلا توصيل في أيّ حالة.',
+      w1: 'الكربون لا فلزّ، ولا يملك إلكترونات حرّة.',
+      w2: 'الصهر يحرّر الأيونات في المركّب الأيوني. فهل في الإيثين أيونات أصلًا؟',
+      w3: 'حجم الجزيء ليس أحد شرطَي التوصيل.'
+    },
+    graphiteQ: {
+      correct: '✓ صحيح! الجرافيت يكسر التعميم لأنه يحقّق الشرطين رغم أن روابطه تساهمية. ولهذا نقول «معظم» الموادّ التساهمية لا توصّل، لا «كلّها».',
+      w1: 'البطاقة تنصّ على أن روابطه تساهمية. لا تغيّر المعطى، فسّره.',
+      w2: 'الجرافيت كربون وحده. من أين يأتي الأيون الموجب والسالب؟',
+      w3: 'درجة الانصهار لا علاقة لها بالتوصيل. راجع شرطَي التوصيل.'
+    }
+  },
+  eval: {
+    e1: 'المركّب الأيوني شبكة بلّورية عملاقة تتبادل فيها الأيونات الموجبة والسالبة مواضعها.',
+    e2: 'التجاذب الكهربائي الساكن القويّ يحتاج إلى طاقة كبيرة لينكسر.',
+    e3: 'بالانصهار تتحرّر الأيونات فتصير حرّة الحركة وتحمل التيّار.',
+    e4: 'الشمع مادّة تساهمية جزيئية، وقواه الجزيئية البينيّة ضعيفة.',
+    e5: 'الموادّ التساهمية الجزيئية درجات غليانها منخفضة، فكثير منها غازات.',
+    e6: 'نوعان من الجسيمات يتبادلان مواضعهما بانتظام في شبكة عملاقة — هذا تركيب أيوني.',
+    e7: 'الأيونات موجودة في الحالتين، والفرق في حرّية حركتها.',
+    e8: 'ما ينكسر عند انصهار المادّة التساهمية هو القوى الضعيفة بين الجزيئات لا الروابط نفسها.',
+    e9: 'كلوريد الصوديوم',
+    e9why: 'أيّ مركّب أيوني مكوَّن من فلزّ ولا فلزّ مقبول، مثل كلوريد الصوديوم.',
+    e10why: 'كان على الحرارة أن ترفع المركّب إلى درجة انصهاره أوّلًا، وعندها فقط تحرّرت الأيونات فحملت التيّار.'
+  }
+};
+
+/* ============ 2) أدوات SVG ============ */
+var NS = 'http://www.w3.org/2000/svg';
+var G = {
+  el: function(tag, attrs){
+    var n = document.createElementNS(NS, tag);
+    if(attrs) Object.keys(attrs).forEach(function(k){ n.setAttribute(k, attrs[k]); });
+    return n;
+  },
+  add: function(parent, tag, attrs){
+    var n = G.el(tag, attrs);
+    parent.appendChild(n);
+    return n;
+  },
+  text: function(parent, str, attrs){
+    var n = G.add(parent, 'text', attrs || {});
+    n.setAttribute('text-anchor', n.getAttribute('text-anchor') || 'middle');
+    n.setAttribute('direction', 'ltr');
+    n.style.unicodeBidi = 'isolate';
+    n.textContent = str;
+    return n;
+  },
+  clear: function(node){ while(node.firstChild) node.removeChild(node.firstChild); },
+  reduced: function(){
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+};
+
+/* حركة عامّة: تُمرَّر دالّة تضع القيمة عند كل إطار. تحت تقليل الحركة
+   تقع النتيجة فورًا — فالرسالة النصّية هي القناة الأولى دائمًا. */
+function animate(ms, apply, done){
+  if(G.reduced()) ms = 1;
+  var t0 = Date.now();
+  function step(){
+    var t = Math.min(1, (Date.now() - t0) / ms);
+    apply(t);
+    if(t < 1) window.requestAnimationFrame(step);
+    else if(done) done();
+  }
+  window.requestAnimationFrame(step);
+}
+
+function drawIon(parent, cfg){
+  var r = cfg.r || 22;
+  var neg = cfg.sign === '\u2212' || cfg.sign === '-';
+  var g = G.add(parent, 'g', { 'class': 'ion lattice-ion' });
+  G.add(g, 'circle', { cx: cfg.cx, cy: cfg.cy, r: r, 'class': 'ion-body' + (neg ? ' negative' : '') });
+  var signTxt = G.add(g, 'text', { x: cfg.cx, y: cfg.cy + 5.5, 'class': 'ion-sign' + (neg ? ' negative' : '') });
+  signTxt.setAttribute('text-anchor', 'middle');
+  signTxt.setAttribute('direction', 'ltr');
+  signTxt.style.unicodeBidi = 'isolate';
+  signTxt.textContent = cfg.sign || '+';
+  return g;
+}
+
+function electron(parent, x, y, cls){
+  var g = G.add(parent, 'g', { 'class': 'epos ' + (cls || '') });
+  g.setAttribute('transform', 'translate(' + x.toFixed(1) + ',' + y.toFixed(1) + ')');
+  G.add(g, 'circle', { 'class': 'ehalo', cx: 0, cy: 0, r: 0 });
+  G.add(g, 'circle', { 'class': 'edot' + (cls && cls.indexOf('free') >= 0 ? ' free' : ''), cx: 0, cy: 0, r: 4.5 });
+  return g;
+}
+
+/* بحر إلكترونات متحرّك: يتوقّف تلقائيًّا خارج الشاشة وتحت تقليل
+   الحركة (§9.5 من ملف المعرفة). drift يتحكّم بانجراف موجّه عند وصل
+   البطارية بدل الحركة العشوائية. */
+function Sea(svg, box, opts){
+  opts = opts || {};
+  var layer = G.add(svg, 'g', { 'class': 'sea-layer' });
+  var list = [], raf = null, running = false;
+  var speed = opts.speed || 0.55;
+  var drift = 0;
+
+  function spawn(x, y){
+    var node = electron(layer, x, y, 'free');
+    var a = Math.random() * Math.PI * 2;
+    var e = { node: node, x: x, y: y, vx: Math.cos(a) * speed, vy: Math.sin(a) * speed };
+    list.push(e);
+    return e;
+  }
+
+  function step(){
+    for(var i = 0; i < list.length; i++){
+      var e = list[i];
+      if(drift){
+        e.vx += drift * 0.05;
+        var cap = speed * 3.2;
+        if(e.vx > cap) e.vx = cap;
+        if(e.vx < -cap) e.vx = -cap;
+      }else{
+        e.vx += (Math.random() - 0.5) * 0.12;
+        e.vy += (Math.random() - 0.5) * 0.12;
+        var sp = Math.sqrt(e.vx * e.vx + e.vy * e.vy) || 1;
+        e.vx = e.vx / sp * speed;
+        e.vy = e.vy / sp * speed;
+      }
+      e.x += e.vx; e.y += e.vy;
+      if(e.x < box.x){ e.x = box.x; e.vx = Math.abs(e.vx); }
+      if(e.x > box.x + box.w){ e.x = box.x + box.w; e.vx = -Math.abs(e.vx); }
+      if(e.y < box.y){ e.y = box.y; e.vy = Math.abs(e.vy); }
+      if(e.y > box.y + box.h){ e.y = box.y + box.h; e.vy = -Math.abs(e.vy); }
+      e.node.setAttribute('transform', 'translate(' + e.x.toFixed(1) + ',' + e.y.toFixed(1) + ')');
+    }
+    raf = window.requestAnimationFrame(step);
+  }
+
+  var api = {
+    spawn: spawn,
+    setSpeed: function(v){ speed = v; },
+    setDrift: function(d){ drift = d; },
+    start: function(){
+      if(running || G.reduced()) return;
+      running = true;
+      raf = window.requestAnimationFrame(step);
+    },
+    stop: function(){
+      running = false;
+      if(raf) window.cancelAnimationFrame(raf);
+      raf = null;
+    }
+  };
+  if(window.IntersectionObserver){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting) api.start(); else api.stop(); });
+    }, { threshold: 0 });
+    io.observe(svg);
+  }
+  return api;
+}
+
+/* ============ 3) المحطة 1 ============ */
+function station1(){
+  var predictDone = false;
+  document.querySelectorAll('#s1predictOptions input[type="checkbox"]').forEach(function(cb){
+    cb.addEventListener('change', function(){
+      if(predictDone) return;
+      predictDone = true;
+      var fb = document.getElementById('fb-s1predict');
+      fb.textContent = T.s1.predictFb;
+      fb.className = 'explore-feedback is-hint';
+      fb.hidden = false;
+      document.getElementById('s1bondBox').hidden = false;
+      if(window.Sounds) window.Sounds.playSnap();
+      if(window.XP) window.XP.claim('l6-predict', window.XP.POINTS.PREDICT, 'تنبّأتَ قبل الاستكشاف');
+    });
+  });
+
+  window.Quiz.practice({
+    bondTypes: { xpId: 'l6-bond-types', xp: 'MCQ', reason: 'ميّزتَ نوع الرابطة في ثلاث موادّ مختلفة',
+                 correctText: T.s1.bondTypes.correct, hints: T.s1.bondTypes }
+  }, {
+    onAllSolved: function(){ document.getElementById('s1done').hidden = false; }
+  });
+}
+
+/* ============ 4) المحطة 2 ============ */
+function station2(){
+  var svgA = document.getElementById('stage2a');
+  if(!svgA) return;
+
+  /* ---- المرحلة أ: بناء المسرح ---- */
+  var defs = G.add(svgA, 'defs');
+  var fg = G.add(defs, 'radialGradient', { id: 'flameGrad', cx: '.5', cy: '.7', r: '.7' });
+  G.add(fg, 'stop', { offset: '0%',  'stop-color': '#fff3b0' });
+  G.add(fg, 'stop', { offset: '55%', 'stop-color': '#ff6b4a' });
+  G.add(fg, 'stop', { offset: '100%','stop-color': 'rgba(255,107,74,0)' });
+
+  var TRAY = { x: 220, y: 110, w: 460, h: 90 };
+  G.add(svgA, 'line', { x1: TRAY.x + 40,       y1: TRAY.y + TRAY.h, x2: TRAY.x + 20,       y2: 330, 'class': 'tripod-leg' });
+  G.add(svgA, 'line', { x1: TRAY.x + TRAY.w/2, y1: TRAY.y + TRAY.h, x2: TRAY.x + TRAY.w/2, y2: 330, 'class': 'tripod-leg' });
+  G.add(svgA, 'line', { x1: TRAY.x + TRAY.w-40,y1: TRAY.y + TRAY.h, x2: TRAY.x + TRAY.w-20,y2: 330, 'class': 'tripod-leg' });
+  G.add(svgA, 'rect', { x: TRAY.x, y: TRAY.y, width: TRAY.w, height: TRAY.h, rx: 12, 'class': 'heat-tray' });
+  var flame = G.add(svgA, 'ellipse', { cx: TRAY.x + TRAY.w/2, cy: 322, rx: 34, ry: 46, 'class': 'flame' });
+
+  var samples = [
+    { key: 'nacl',  label: 'كلوريد الصوديوم' },
+    { key: 'cacl2', label: 'كلوريد الكالسيوم' },
+    { key: 'cu',    label: 'نحاس' },
+    { key: 'al',    label: 'ألومنيوم' },
+    { key: 'wax',   label: 'شمع' }
+  ];
+  var sw = 76, gap = (TRAY.w - 40 - sw * 5) / 4;
+  var waxRect = null, waxPool = null;
+  samples.forEach(function(s, i){
+    var x = TRAY.x + 20 + i * (sw + gap);
+    var g = G.add(svgA, 'g', { 'class': 'heat-sample' });
+    var rect = G.add(g, 'rect', { x: x, y: TRAY.y + 18, width: sw, height: 44, rx: 6, 'class': 'heat-sample-body' });
+    var labelParts = s.label.split(' ');
+    var labelEl = G.add(svgA, 'text', { x: x + sw/2, y: TRAY.y - 8, 'class': 'heat-sample-label',
+      'text-anchor': 'middle', direction: 'rtl' });
+    if(labelParts.length > 1){
+      G.add(labelEl, 'tspan', { x: x + sw/2, dy: -16 }).textContent = labelParts[0];
+      G.add(labelEl, 'tspan', { x: x + sw/2, dy: 16 }).textContent = labelParts.slice(1).join(' ');
+    }else{
+      labelEl.textContent = s.label;
+    }
+    if(s.key === 'wax'){
+      waxRect = rect;
+      rect.style.transformBox = 'fill-box';
+      rect.style.transformOrigin = 'bottom';
+      waxPool = G.add(svgA, 'ellipse', { cx: x + sw/2, cy: TRAY.y + TRAY.h - 4, rx: 0, ry: 6, 'class': 'wax-pool' });
+    }
+  });
+  var timerTxt = G.text(svgA, '', { x: 450, y: 62, 'class': 'timer-readout' });
+
+  var heatBtn = document.getElementById('s2aHeatBtn');
+  var msgA = document.getElementById('s2aMsg');
+  heatBtn.addEventListener('click', function(){
+    heatBtn.disabled = true;
+    flame.setAttribute('class', 'flame on');
+    var DUR = G.reduced() ? 1 : 5200;
+    animate(DUR, function(t){
+      var remain = Math.max(0, Math.round(120 * (1 - t)));
+      var mm = Math.floor(remain / 60), ss = remain % 60;
+      timerTxt.textContent = mm + ':' + (ss < 10 ? '0' : '') + ss;
+      if(waxRect){
+        waxRect.style.transform = 'scaleY(' + (1 - t * 0.85).toFixed(2) + ')';
+        waxRect.style.opacity = String(1 - t * 0.35);
+      }
+      if(waxPool) waxPool.setAttribute('rx', (t * 30).toFixed(1));
+    }, function(){
+      timerTxt.textContent = '0:00';
+      msgA.textContent = T.s2.meltDone;
+      msgA.classList.add('done');
+      document.getElementById('s2aQBox').hidden = false;
+      if(window.Sounds) window.Sounds.playChime();
+      if(window.XP) window.XP.claim('l6-melt-observe', window.XP.POINTS.TASK, 'رصدتَ أيّ العيّنات ينصهر');
+    });
+  });
+
+  window.Quiz.practice({
+    meltQ:  { xpId: 'l6-melt-q',  xp: 'MCQ', reason: 'قرأتَ نتيجة التسخين بدقّة',
+              correctText: T.s2.meltQ.correct,  hints: T.s2.meltQ },
+    stateQ: { xpId: 'l6-state-q', xp: 'MCQ', reason: 'وصفتَ حالة الموادّ في الغرفة',
+              correctText: T.s2.stateQ.correct, hints: T.s2.stateQ }
+  }, {
+    onAllSolved: function(){
+      fillCell('td-melt-ionic', 'مرتفعة نسبيًّا');
+      fillCell('td-melt-cov', 'منخفضة');
+      fillCell('td-melt-metal', 'مرتفعة نسبيًّا');
+      fillCell('td-state-ionic', 'صلبة');
+      fillCell('td-state-cov', 'سائلة أو صلبة');
+      fillCell('td-state-metal', 'صلبة');
+      document.getElementById('s2b').hidden = false;
+      buildCircuit();
+      if(window.Sounds) window.Sounds.playChime();
+    }
+  });
+
+  function fillCell(id, text){
+    var td = document.getElementById(id);
+    if(!td) return;
+    td.textContent = text;
+    td.classList.remove('tbd');
+    td.classList.add('filled');
+  }
+
+  /* ---- المرحلة ب: الدائرة الكهربائية ---- */
+  var circuitBuilt = false;
+  var bulbGlass, bulbFilament, gapLabel;
+  function buildCircuit(){
+    if(circuitBuilt) return;
+    circuitBuilt = true;
+    var svgB = document.getElementById('stage2b');
+
+    var batt = G.add(svgB, 'g');
+    G.add(batt, 'rect', { x: 174, y: 90, width: 100, height: 80, rx: 10, 'class': 'battery-box' });
+    G.text(batt, '+', { x: 202, y: 138, 'class': 'battery-label' });
+    G.text(batt, '\u2212', { x: 246, y: 138, 'class': 'battery-label' });
+
+    G.add(svgB, 'path', { d: 'M274,110 H374', 'class': 'wire-body', fill: 'none', 'stroke-width': 3 });
+    G.add(svgB, 'path', { d: 'M274,150 H374', 'class': 'wire-body', fill: 'none', 'stroke-width': 3 });
+
+    // فكّا التمساح المفتوحان وخانة العيّنة بينهما — في المنتصف، بين البطارية والمصباح
+    G.add(svgB, 'rect', { x: 374, y: 60, width: 220, height: 140, rx: 16, 'class': 'gap-slot' });
+    gapLabel = G.text(svgB, 'ضع عيّنة', { x: 484, y: 135, 'class': 'gap-label' });
+    gapLabel.setAttribute('direction', 'rtl');
+    G.add(svgB, 'path', { d: 'M374,90 h20 M374,170 h20', 'class': 'clip' });
+    G.add(svgB, 'path', { d: 'M594,90 h20 M594,170 h20', 'class': 'clip' });
+
+    G.add(svgB, 'path', { d: 'M594,110 H634', 'class': 'wire-body', fill: 'none', 'stroke-width': 3 });
+    G.add(svgB, 'path', { d: 'M594,150 H634', 'class': 'wire-body', fill: 'none', 'stroke-width': 3 });
+
+    bulbGlass = G.add(svgB, 'circle', { cx: 680, cy: 130, r: 46, 'class': 'bulb-glass' });
+    bulbFilament = G.add(svgB, 'path', { d: 'M660,148 L670,112 L690,148 L700,112', 'class': 'bulb-filament' });
+  }
+
+  var SAMPLE_NAMES = {
+    'nacl-solid': 'كلوريد الصوديوم صلب', 'cacl2-solid': 'كلوريد الكالسيوم صلب',
+    'wax': 'شمع', 'al': 'ألومنيوم', 'cu': 'نحاس', 'water': 'ماء مقطَّر',
+    'sol-nacl': 'محلول كلوريد الصوديوم', 'sol-cacl2': 'محلول كلوريد الكالسيوم', 'sol-wax': 'شمع في ماء'
+  };
+
+  function setBulb(lit){
+    if(!bulbGlass) return;
+    bulbGlass.setAttribute('class', 'bulb-glass' + (lit ? ' lit' : ''));
+    bulbFilament.setAttribute('class', 'bulb-filament' + (lit ? ' lit' : ''));
+    if(gapLabel) gapLabel.textContent = '';
+  }
+
+  var solidTested = 0, solutionTested = 0;
+  function bindSample(btn){
+    btn.addEventListener('click', function(){
+      if(btn.disabled) return;
+      var key = btn.dataset.sample;
+      var lit = btn.dataset.result === 'on';
+      if(key === 'sol-wax'){
+        btn.disabled = true;
+        btn.classList.add('unlit');
+        setBulb(false);
+        document.getElementById('s2cWaxNote').hidden = false;
+        solutionTested++;
+      }else{
+        btn.disabled = true;
+        setBulb(lit);
+        btn.classList.add(lit ? 'lit' : 'unlit');
+        if(key === 'water'){
+          document.getElementById('s2bWaterMsg').textContent = T.s2.waterResultMsg;
+          document.getElementById('s2bWaterMsg').hidden = false;
+        }
+        if(/^sol-/.test(key)) solutionTested++; else solidTested++;
+      }
+      if(window.Sounds) window.Sounds[lit ? 'playSnap' : 'playTick']();
+
+      if(solidTested === 6){
+        document.getElementById('s2bMsg').textContent = T.s2.circuitDone;
+        document.getElementById('s2bMsg').classList.add('done');
+        if(window.XP) window.XP.claim('l6-circuit-solid', window.XP.POINTS.TASK,
+                                      'اختبرتَ توصيل ستّ موادّ في الحالة الصلبة والسائلة');
+        document.getElementById('s2bWaterMsg').hidden = true;
+        document.getElementById('s2bMsg').hidden = true;
+        document.getElementById('s2c').hidden = false;
+        if(window.Sounds) window.Sounds.playChime();
+      }
+      if(solutionTested === 3){
+        if(window.XP) window.XP.claim('l6-solution-test', window.XP.POINTS.TASK,
+                                      'اختبرتَ توصيل المحاليل');
+        document.getElementById('s2cQBox').hidden = false;
+      }
+    });
+  }
+  document.querySelectorAll('#s2bSamples .sample-tile, #s2cSamples .sample-tile').forEach(bindSample);
+
+  document.querySelectorAll('#waterPredictOptions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      var fb = document.getElementById('fb-waterPredict');
+      if(!fb.hidden) return;
+      fb.textContent = T.s2.waterPredictFb;
+      fb.className = 'explore-feedback is-hint';
+      fb.hidden = false;
+      document.getElementById('tile-water').disabled = false;
+      if(window.Sounds) window.Sounds.playSnap();
+      if(window.XP) window.XP.claim('l6-water-predict', window.XP.POINTS.PREDICT, 'تنبّأتَ قبل اختبار الماء المقطَّر');
+    });
+  });
+
+  window.Quiz.practice({
+    paradoxQ:   { xpId: 'l6-paradox',  xp: 'PATTERN', reason: 'فسّرتَ مفارقة كلوريد الصوديوم صلبًا ومحلولًا',
+                  correctText: T.s2.paradoxQ.correct,  hints: T.s2.paradoxQ },
+    dissolveQ:  { xpId: 'l6-dissolve', xp: 'MCQ', reason: 'رصدتَ أيّ الموادّ ذاب في الماء',
+                  correctText: T.s2.dissolveQ.correct, hints: T.s2.dissolveQ }
+  }, {
+    onAllSolved: function(){
+      fillCell('td-cond-ionic', 'لا توصّل صلبة، وتوصّل محلولًا');
+      fillCell('td-cond-cov', 'لا توصّل');
+      fillCell('td-cond-metal', 'توصّل صلبة');
+      fillCell('td-dis-ionic', 'تذوب');
+      fillCell('td-dis-cov', 'الشمع لا يذوب');
+      fillCell('td-dis-metal', 'لا يذوبان');
+      var doneEl = document.getElementById('s2done');
+      var handoff = doneEl.querySelector('.station-handoff');
+      var recapLabel = document.createElement('p');
+      recapLabel.className = 'dose strong-q';
+      recapLabel.textContent = 'هذا ما توصّلتَ إليه:';
+      var recapTable = document.getElementById('propTable').cloneNode(true);
+      recapTable.removeAttribute('id');
+      recapTable.querySelectorAll('[id]').forEach(function(el){ el.removeAttribute('id'); });
+      var recapWrap = document.createElement('div');
+      recapWrap.className = 'data-table-wrap';
+      recapWrap.appendChild(recapTable);
+      doneEl.insertBefore(recapLabel, handoff);
+      doneEl.insertBefore(recapWrap, handoff);
+      doneEl.hidden = false;
+    }
+  });
+}
+
+/* ============ 5) المحطة 3 ============ */
+function station3(){
+  var svg = document.getElementById('stage3');
+  if(!svg) return;
+
+  var crucible = G.add(svg, 'path', { d: 'M370,180 L530,180 L505,250 L395,250 Z', 'class': 'crucible-body' });
+  var powder = G.add(svg, 'ellipse', { cx: 450, cy: 185, rx: 78, ry: 16, 'class': 'crucible-powder' });
+  G.add(svg, 'path', { d: 'M330,270 L570,270 L450,150 Z', fill: 'none', stroke: 'rgba(159,176,201,.4)', 'stroke-width': 1.4 });
+  G.add(svg, 'line', { x1: 420, y1: 130, x2: 420, y2: 190, 'class': 'electrode' });
+  G.add(svg, 'line', { x1: 480, y1: 130, x2: 480, y2: 190, 'class': 'electrode' });
+  G.add(svg, 'path', { d: 'M420,120 H300 V90', 'class': 'wire-body', fill: 'none', 'stroke-width': 3 });
+  G.add(svg, 'path', { d: 'M480,120 H600 V90', 'class': 'wire-body', fill: 'none', 'stroke-width': 3 });
+
+  var ammBox = G.add(svg, 'rect', { x: 250, y: 40, width: 400, height: 60, rx: 12, 'class': 'ammeter-box' });
+  var ammReadout = G.text(svg, '0.00 A', { x: 450, y: 78, 'class': 'ammeter-readout' });
+  var tempReadout = G.text(svg, '25 °C', { x: 450, y: 300, 'class': 'temp-readout' });
+
+  var predictOK = false;
+  document.querySelectorAll('#s3predictOptions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(predictOK) return;
+      predictOK = true;
+      var fb = document.getElementById('fb-s3predict');
+      fb.textContent = T.s3.predictFb;
+      fb.className = 'explore-feedback is-hint';
+      fb.hidden = false;
+      document.getElementById('s3HeatBtn').hidden = false;
+      if(window.Sounds) window.Sounds.playSnap();
+      if(window.XP) window.XP.claim('l6-zn-predict', window.XP.POINTS.PREDICT, 'تنبّأتَ قبل مراقبة الأميتر');
+    });
+  });
+
+  document.getElementById('s3HeatBtn').addEventListener('click', function(){
+    this.disabled = true;
+    var msg = document.getElementById('s3Msg');
+    var DUR = G.reduced() ? 1 : 4400;
+    animate(DUR, function(t){
+      var temp = Math.min(285, Math.round(25 + t * 260));
+      tempReadout.textContent = temp + ' °C';
+    }, function(){
+      tempReadout.textContent = '290 °C';
+      powder.setAttribute('class', 'crucible-powder molten');
+      ammReadout.setAttribute('class', 'ammeter-readout jump');
+      ammReadout.textContent = '0.42 A';
+      msg.textContent = T.s3.heatedMsg;
+      msg.classList.add('done');
+      document.getElementById('s3QBox').hidden = false;
+      if(window.Sounds) window.Sounds.playChime();
+    });
+  });
+
+  window.Quiz.practice({
+    znWhen: { xpId: 'l6-zn-when', xp: 'MCQ', reason: 'حدّدتَ اللحظة الفاصلة في التوصيل',
+              correctText: T.s3.znWhen.correct, hints: T.s3.znWhen }
+  }, {
+    onAllSolved: function(){ document.getElementById('s3ShortBox').hidden = false; }
+  });
+
+  window.Quiz.short({
+    input: 'znExplainInput', button: 'znExplainBtn', feedback: 'fb-znExplain',
+    modelBtn: 'znExplainModelBtn', model: 'znExplainModel',
+    accept: { paths: [ { all: [ ['حركه', 'تتحرك', 'حره'], ['ايونات', 'ايون'] ] } ] },
+    normalize: 'ar',
+    hints: [T.s3.znExplainHint, T.s3.znExplainHint],
+    modelText: T.s3.znExplainModel,
+    xpId: 'l6-zn-explain', xp: 'PRODUCE', reason: 'فسّرتَ توصيل كلوريد الخارصين المنصهر',
+    modelReason: 'راجعتَ الإجابة النموذجية',
+    onDone: function(){ document.getElementById('s3done').hidden = false; }
+  });
+}
+
+/* ============ 6) المحطة 4 ============ */
+function waterMolecule(parent, cx, cy){
+  var g = G.add(parent, 'g', { 'class': 'water-molecule' });
+  var h1 = { x: cx - 20, y: cy - 16 };
+  var h2 = { x: cx + 20, y: cy - 16 };
+  G.add(g, 'line', { x1: cx, y1: cy, x2: h1.x, y2: h1.y, 'class': 'covalent-stick' });
+  G.add(g, 'line', { x1: cx, y1: cy, x2: h2.x, y2: h2.y, 'class': 'covalent-stick' });
+  G.add(g, 'circle', { cx: h1.x, cy: h1.y, r: 8, 'class': 'molecule-h' });
+  G.add(g, 'circle', { cx: h2.x, cy: h2.y, r: 8, 'class': 'molecule-h' });
+  G.add(g, 'circle', { cx: cx, cy: cy, r: 13, 'class': 'molecule-o' });
+  return g;
+}
+
+function station4(){
+  window.Quiz.practice({
+    breakIonic: { xpId: 'l6-break-ionic', xp: 'MCQ', reason: 'حدّدتَ ما تكسره الحرارة عند الانصهار الأيوني',
+                  correctText: T.s4.breakIonic.correct, hints: T.s4.breakIonic }
+  }, {
+    onAllSolved: function(){
+      document.getElementById('s4IceHeading').hidden = false;
+      document.getElementById('s4IceIntro').hidden = false;
+      document.getElementById('s4IceIntro').textContent = T.s4.iceIntro;
+      document.getElementById('s4IceWrap').hidden = false;
+      document.getElementById('s4IceBtnRow').hidden = false;
+      buildIce();
+    }
+  });
+
+  var iceBuilt = false, molecules = [], imfLines = [];
+  var CENTER = { x: 450, y: 160 };
+  function buildIce(){
+    if(iceBuilt) return;
+    iceBuilt = true;
+    var svg = document.getElementById('stage4ice');
+    var pos = [];
+    [0, 1].forEach(function(row){
+      [0, 1, 2].forEach(function(col){
+        pos.push({ x: 250 + col * 200, y: 90 + row * 140 });
+      });
+    });
+    var imfLayer = G.add(svg, 'g', { 'class': 'imf-layer' });
+    // خطوط منقّطة بين الجيران: أفقيًّا داخل كل صفّ، وعموديًّا بين الصفّين
+    pos.forEach(function(p, i){
+      var col = i % 3, row = Math.floor(i / 3);
+      if(col < 2){
+        var next = pos[i + 1];
+        imfLines.push(G.add(imfLayer, 'line', { x1: p.x + 30, y1: p.y, x2: next.x - 30, y2: next.y, 'class': 'imf-dots' }));
+      }
+      if(row === 0){
+        var below = pos[i + 3];
+        imfLines.push(G.add(imfLayer, 'line', { x1: p.x, y1: p.y + 24, x2: below.x, y2: below.y - 24, 'class': 'imf-dots' }));
+      }
+    });
+    pos.forEach(function(p){ molecules.push(waterMolecule(svg, p.x, p.y)); });
+  }
+
+  document.getElementById('s4IceHeatBtn').addEventListener('click', function(){
+    this.disabled = true;
+    imfLines.forEach(function(l){ l.style.opacity = '0'; });
+    molecules.forEach(function(m, i){
+      var p = { x: [250,450,650,250,450,650][i], y: [90,90,90,230,230,230][i] };
+      var dx = (p.x - CENTER.x) * 0.55;
+      var dy = (p.y - CENTER.y) * 0.55;
+      m.style.transform = 'translate(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px)';
+    });
+    var msg = document.getElementById('s4IceMsg');
+    var DUR = G.reduced() ? 1 : 850;
+    window.setTimeout(function(){
+      msg.textContent = T.s4.iceDone;
+      msg.classList.add('done');
+      document.getElementById('s4Q2Box').hidden = false;
+      if(window.Sounds) window.Sounds.playChime();
+      if(window.XP) window.XP.claim('l6-ice-build', window.XP.POINTS.TASK, 'شاهدتَ ما ينكسر وما يبقى سليمًا عند انصهار الثلج');
+    }, DUR);
+  });
+
+  window.Quiz.practice({
+    iceWhatBroke: { xpId: 'l6-ice-what-broke', xp: 'MCQ', reason: 'ميّزتَ الرابطة التساهمية عن القوى البينيّة',
+                    correctText: T.s4.iceWhatBroke.correct, hints: T.s4.iceWhatBroke }
+  }, {
+    onAllSolved: function(){
+      document.getElementById('imfTermCard').hidden = false;
+      document.getElementById('s4Q3Box').hidden = false;
+    }
+  });
+
+  window.Quiz.practice({
+    imfStrength: { xpId: 'l6-imf-strength', xp: 'MCQ', reason: 'فسّرتَ معنى ضعف القوى الجزيئية البينيّة',
+                   correctText: T.s4.imfStrength.correct, hints: T.s4.imfStrength }
+  }, {
+    onAllSolved: function(){ document.getElementById('s4ShortBox').hidden = false; }
+  });
+
+  window.Quiz.short({
+    input: 'compareExplainInput', button: 'compareExplainBtn', feedback: 'fb-compareExplain',
+    modelBtn: 'compareExplainModelBtn', model: 'compareExplainModel',
+    accept: { paths: [
+      { all: [ ['ضعيفه', 'اضعف', 'سهله الكسر', 'سهل الكسر'], ['بين الجزييات', 'جزيييه بينيه', 'الجزيييه البينيه'] ] },
+      { all: [ ['قويه', 'قوي'], ['ايونيه', 'تجاذب'] ] }
+    ] },
+    normalize: 'ar',
+    hints: [T.s4.compareExplainHint, T.s4.compareExplainHint],
+    modelText: T.s4.compareExplainModel,
+    xpId: 'l6-compare-explain', xp: 'PRODUCE', reason: 'قارنتَ بين قوّة الرابطة الأيونية والقوى الجزيئية البينيّة',
+    modelReason: 'راجعتَ الإجابة النموذجية',
+    onDone: function(){ document.getElementById('s4done').hidden = false; }
+  });
+}
+
+/* ============ 7) المحطة 5 ============ */
+function station5(){
+  var svgL = document.getElementById('stage5lattice');
+  if(!svgL) return;
+
+  var GRID = { cols: 4, rows: 3, x0: 150, y0: 70, gx: 150, gy: 80 };
+  var latticeIons = [];
+  for(var r = 0; r < GRID.rows; r++){
+    for(var c = 0; c < GRID.cols; c++){
+      var cx = GRID.x0 + c * GRID.gx;
+      var cy = GRID.y0 + r * GRID.gy;
+      var neg = (r + c) % 2 === 1;
+      var ion = drawIon(svgL, { cx: cx, cy: cy, r: 24, sign: neg ? '\u2212' : '+' });
+      ion.dataset.cx = cx; ion.dataset.cy = cy;
+      latticeIons.push(ion);
+    }
+  }
+
+  var triedIons = new Set(), latticeTaskDone = false;
+  var latticeCountWords = { 1: 'أيونًا واحدًا', 2: 'أيونين' };
+  function tryPull(ion){
+    var isNew = !triedIons.has(ion);
+    if(isNew) triedIons.add(ion);
+    if(!G.reduced()){
+      ion.classList.add('jiggling');
+      window.setTimeout(function(){ ion.classList.remove('jiggling'); }, 350);
+    }
+    if(window.Sounds) window.Sounds.playTick();
+    var msg = document.getElementById('s5latticeMsg');
+    if(latticeTaskDone) return;
+    if(!isNew){
+      if(G.reduced()) msg.textContent = 'جرّبتَ هذا الأيون من قبل — جرّب أيونًا آخر.';
+      return;
+    }
+    if(triedIons.size < 3){
+      var countText = latticeCountWords[triedIons.size];
+      msg.textContent = G.reduced()
+        ? 'حاولتَ سحب الأيون — لم يتحرّك من موضعه. جرّبتَ ' + countText + ' من ثلاثة.'
+        : 'جرّبتَ ' + countText + ' من ثلاثة.';
+    }else{
+      latticeTaskDone = true;
+      msg.textContent = T.s5.latticeTryMsg;
+      msg.classList.add('done');
+      document.getElementById('s5Q1Box').hidden = false;
+      if(window.XP) window.XP.claim('l6-lattice-try', window.XP.POINTS.TASK, 'حاولتَ تحريك أيونات الشبكة الصلبة');
+    }
+  }
+  latticeIons.forEach(function(ion){
+    ion.setAttribute('tabindex', '0');
+    ion.setAttribute('role', 'button');
+    ion.addEventListener('pointerdown', function(){ tryPull(ion); });
+    ion.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); tryPull(ion); }
+    });
+  });
+
+  window.Quiz.practice({
+    latticeQ: { xpId: 'l6-lattice-q', xp: 'MCQ', reason: 'حدّدتَ أيّ شرطَي التوصيل يتحقّق في الصلب الأيوني',
+                correctText: T.s5.latticeQ.correct, hints: T.s5.latticeQ }
+  }, {
+    onAllSolved: function(){ document.getElementById('s5MeltBtnRow').hidden = false; }
+  });
+
+  document.getElementById('s5MeltBtn').addEventListener('click', function(){
+    this.disabled = true;
+    var stageEl = document.getElementById('stage5lattice');
+    if(stageEl.scrollIntoView){
+      stageEl.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'center' });
+    }
+    var CX = GRID.x0 + (GRID.cols - 1) * GRID.gx / 2;
+    var CY = GRID.y0 + (GRID.rows - 1) * GRID.gy / 2;
+    var bases = [];
+    latticeIons.forEach(function(ion, i){
+      var dx = ((+ion.dataset.cx) - CX) * (0.7 + Math.random() * 0.5);
+      var dy = ((+ion.dataset.cy) - CY) * (0.7 + Math.random() * 0.5);
+      bases[i] = { dx: dx, dy: dy };
+      ion.style.transition = G.reduced() ? 'none' : 'transform .5s ease';
+      ion.style.transform = 'translate(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px)';
+    });
+    var msg = document.getElementById('s5MeltMsg');
+    function finish(){
+      msg.textContent = T.s5.meltLatticeMsg;
+      msg.classList.add('done');
+      document.getElementById('s5Q2Box').hidden = false;
+      if(window.Sounds) window.Sounds.playChime();
+      if(window.XP) window.XP.claim('l6-melt-lattice', window.XP.POINTS.TASK, 'شاهدتَ الأيونات وقد صارت حرّة الحركة');
+    }
+    if(G.reduced()){
+      window.setTimeout(finish, 1);
+      return;
+    }
+    var hop = 0, totalHops = 2;
+    function nextHop(){
+      hop++;
+      latticeIons.forEach(function(ion, i){
+        var jx = bases[i].dx + (Math.random() - 0.5) * 30;
+        var jy = bases[i].dy + (Math.random() - 0.5) * 30;
+        ion.style.transform = 'translate(' + jx.toFixed(1) + 'px,' + jy.toFixed(1) + 'px)';
+      });
+      window.setTimeout(hop < totalHops ? nextHop : finish, 500);
+    }
+    window.setTimeout(nextHop, 500);
+  });
+
+  window.Quiz.practice({
+    solutionQ: { xpId: 'l6-solution-q', xp: 'MCQ', reason: 'فسّرتَ توصيل المحلول المائي',
+                 correctText: T.s5.solutionQ.correct, hints: T.s5.solutionQ }
+  }, {
+    onAllSolved: function(){
+      document.getElementById('s5MetalBlock').hidden = false;
+      document.getElementById('s5Q3Box').hidden = false;
+      buildMetalStage();
+    }
+  });
+
+  var metalBuilt = false;
+  function buildMetalStage(){
+    if(metalBuilt) return;
+    metalBuilt = true;
+    var svgM = document.getElementById('stage5metal');
+    var box = { x: 60, y: 40, w: 780, h: 180 };
+    G.add(svgM, 'rect', { x: box.x, y: box.y, width: box.w, height: box.h, rx: 18,
+                          fill: 'rgba(20,200,168,.03)', stroke: 'rgba(20,200,168,.25)', 'stroke-width': 1.3 });
+    for(var r = 0; r < 3; r++){
+      for(var c = 0; c < 6; c++){
+        drawIon(svgM, { cx: box.x + 60 + c * 130, cy: box.y + 40 + r * 55, r: 20, sign: '+' });
+      }
+    }
+    var sea = Sea(svgM, { x: box.x + 20, y: box.y + 15, w: box.w - 40, h: box.h - 30 }, { speed: 0.55 });
+    for(var i = 0; i < 16; i++){
+      sea.spawn(box.x + 30 + Math.random() * (box.w - 60), box.y + 25 + Math.random() * (box.h - 50));
+    }
+    sea.start();
+
+    document.getElementById('s5ConnectBtn').addEventListener('click', function(){
+      this.disabled = true;
+      sea.setDrift(-1);
+      var msg = document.getElementById('s5MetalMsg');
+      msg.textContent = T.s5.metalConnected;
+      msg.classList.add('done');
+      if(window.Sounds) window.Sounds.playChime();
+    });
+  }
+
+  window.Quiz.practice({
+    metalCarrier: { xpId: 'l6-metal-carrier', xp: 'MCQ', reason: 'حدّدتَ حامل الشحنة في الفلزّ',
+                     correctText: T.s5.metalCarrier.correct, hints: T.s5.metalCarrier },
+    metalSolid:   { xpId: 'l6-metal-solid', xp: 'PATTERN', reason: 'قارنتَ توصيل الفلزّ الصلب بالمركّب الأيوني الصلب',
+                     correctText: T.s5.metalSolid.correct, hints: T.s5.metalSolid }
+  }, {
+    onAllSolved: function(){ document.getElementById('s5ShortBox').hidden = false; }
+  });
+
+  window.Quiz.short({
+    input: 'covalentWhyInput', button: 'covalentWhyBtn', feedback: 'fb-covalentWhy',
+    modelBtn: 'covalentWhyModelBtn', model: 'covalentWhyModel',
+    accept: { paths: [ { all: [ ['لا', 'ليس', 'خاليه'], ['ايونات', 'الكترونات حره', 'جسيمات مشحونه'] ] } ] },
+    normalize: 'ar',
+    hints: [T.s5.covalentWhyHint, T.s5.covalentWhyHint],
+    modelText: T.s5.covalentWhyModel,
+    xpId: 'l6-covalent-why', xp: 'PRODUCE', reason: 'فسّرتَ سبب عزل معظم الموادّ التساهمية',
+    modelReason: 'راجعتَ الإجابة النموذجية',
+    onDone: function(){ document.getElementById('s5Q4Box').hidden = false; }
+  });
+
+  window.Quiz.practice({
+    closeLoop: { xpId: 'l6-close-loop', xp: 'MCQ', reason: 'أغلقتَ حلقة تنبّؤ بداية الدرس',
+                 correctText: T.s5.closeLoop.correct, hints: T.s5.closeLoop }
+  }, {
+    onAllSolved: function(){ document.getElementById('s5done').hidden = false; }
+  });
+}
+
+/* ============ 8) المحطة 6 ============ */
+function station6(){
+  window.Chips.hints(T.s6.chipHints);
+  window.Chips.onDone('classify', function(){
+    var tag = document.querySelector('#s6classifyDone .success-tag');
+    if(tag) tag.textContent = T.s6.classifyDone;
+    document.getElementById('s6classifyDone').hidden = false;
+    document.getElementById('s6etheneHeading').hidden = false;
+    document.getElementById('s6etheneGiven').hidden = false;
+    document.getElementById('s6etheneWrap').hidden = false;
+    document.getElementById('s6etheneQBox').hidden = false;
+    buildEthene();
+    if(window.Sounds) window.Sounds.playChime();
+  });
+
+  var etheneBuilt = false;
+  function buildEthene(){
+    if(etheneBuilt) return;
+    etheneBuilt = true;
+    var svg = document.getElementById('stage6ethene');
+    var C1 = { x: 190, y: 110 }, C2 = { x: 310, y: 110 };
+    var H = [
+      { x: 120, y: 65 }, { x: 120, y: 155 },
+      { x: 380, y: 65 }, { x: 380, y: 155 }
+    ];
+    G.add(svg, 'line', { x1: C1.x, y1: C1.y - 7, x2: C2.x, y2: C2.y - 7, 'class': 'ethene-bond double' });
+    G.add(svg, 'line', { x1: C1.x, y1: C1.y + 7, x2: C2.x, y2: C2.y + 7, 'class': 'ethene-bond double' });
+    G.add(svg, 'line', { x1: C1.x, y1: C1.y, x2: H[0].x, y2: H[0].y, 'class': 'ethene-bond' });
+    G.add(svg, 'line', { x1: C1.x, y1: C1.y, x2: H[1].x, y2: H[1].y, 'class': 'ethene-bond' });
+    G.add(svg, 'line', { x1: C2.x, y1: C2.y, x2: H[2].x, y2: H[2].y, 'class': 'ethene-bond' });
+    G.add(svg, 'line', { x1: C2.x, y1: C2.y, x2: H[3].x, y2: H[3].y, 'class': 'ethene-bond' });
+    [C1, C2].forEach(function(c){
+      G.add(svg, 'circle', { cx: c.x, cy: c.y, r: 17, 'class': 'ethene-carbon' });
+      G.text(svg, 'C', { x: c.x, y: c.y + 5, 'class': 'atom-label' });
+    });
+    H.forEach(function(h){
+      G.add(svg, 'circle', { cx: h.x, cy: h.y, r: 11, 'class': 'ethene-hydrogen' });
+      var t = G.text(svg, 'H', { x: h.x, y: h.y + 4.5, 'class': 'atom-label' });
+      t.style.fill = '#131c30';
+    });
+  }
+
+  window.Quiz.practice({
+    etheneBond:    { xpId: 'l6-ethene-bond', xp: 'MCQ', reason: 'حدّدتَ نوع الرابطة في الإيثين',
+                      correctText: T.s6.etheneBond.correct, hints: T.s6.etheneBond },
+    etheneState:   { xpId: 'l6-ethene-state', xp: 'MCQ', reason: 'توقّعتَ حالة الإيثين عند حرارة الغرفة',
+                      correctText: T.s6.etheneState.correct, hints: T.s6.etheneState },
+    etheneConduct: { xpId: 'l6-ethene-conduct', xp: 'MCQ', reason: 'حدّدتَ عدم توصيل الإيثين',
+                      correctText: T.s6.etheneConduct.correct, hints: T.s6.etheneConduct }
+  }, {
+    onAllSolved: function(){
+      document.getElementById('s6bonusBox').hidden = false;
+      document.getElementById('s6done').hidden = false;
+    }
+  });
+
+  window.Quiz.practice({
+    graphiteQ: { xpId: 'l6-graphite', xp: 'BONUS', reason: 'أتممتَ التحدّي الاختياري',
+                 correctText: T.s6.graphiteQ.correct, hints: T.s6.graphiteQ }
+  });
+}
+
+/* ============ 9) المحطة 7 — التقييم الختامي ============ */
+function station7(){
+  if(!document.getElementById('evalQuestions')) return;
+
+  var svgE6 = document.getElementById('stageE6');
+  if(svgE6){
+    for(var r = 0; r < 3; r++){
+      for(var c = 0; c < 4; c++){
+        var green = (r + c) % 2 === 0;
+        G.add(svgE6, 'circle', {
+          cx: 45 + c * 70, cy: 45 + r * 60, r: 26,
+          fill: green ? '#2ecc9f' : '#e8eef7',
+          stroke: 'rgba(255,255,255,.18)', 'stroke-width': 1
+        });
+      }
+    }
+  }
+
+  // السؤال 9: يقبل أيّ مركّب أيوني من المفردات التي تعلّمها الطالب في هذه الوحدة
+  var IONIC_NAMES = ['كلوريد الصوديوم', 'كلوريد الكالسيوم', 'كلوريد المغنيسيوم', 'كلوريد البوتاسيوم',
+    'كلوريد الخارصين', 'كلوريد الليثيوم', 'أكسيد المغنيسيوم', 'أكسيد البوتاسيوم', 'أكسيد الكالسيوم',
+    'أكسيد الصوديوم', 'بروميد الصوديوم', 'يوديد الصوديوم', 'فلوريد الصوديوم', 'فلوريد الكالسيوم']
+    .map(function(s){ return window.Quiz.normalizeAr(s); });
+  var IONIC_FORMULAS = ['NaCl', 'CaCl2', 'MgCl2', 'KCl', 'ZnCl2', 'LiCl', 'MgO', 'K2O', 'CaO',
+    'Na2O', 'NaBr', 'NaI', 'NaF', 'CaF2']
+    .map(function(s){ return window.Quiz.normalizeFormula(s); });
+  function normE9(s){
+    var nAr = window.Quiz.normalizeAr(s);
+    if(IONIC_NAMES.indexOf(nAr) >= 0) return 'مطابق';
+    var nF = window.Quiz.normalizeFormula(s);
+    if(IONIC_FORMULAS.indexOf(nF) >= 0) return 'مطابق';
+    return nAr;
+  }
+
+  // السؤال 10: مطابقة مفاهيم لا مطابقة حرفيّة
+  var keys10 = window.Quiz.matcher({ paths: [
+    { all: [ ['ينصهر', 'الانصهار', 'منصهر'], ['حره', 'تتحرك', 'حركه'] ] },
+    { all: [ ['ايونات', 'ايون'], ['حره الحركه', 'حره', 'تتحرك'] ] },
+    { all: [ ['ايونات', 'ايون'], ['مقيده', 'ثابته', 'محبوسه', 'محبوس'] ],
+      rejectTokens: ['لا', 'ليس', 'ليست'] }
+  ] });
+  function normE10(s){
+    var n = window.Quiz.normalizeAr(s);
+    return keys10(n, s) ? 'مطابق' : n;
+  }
+
+  window.Quiz.evaluate({
+    title: 'كيف تشرح الفرق بين خصائص المركّبات الأيونية والمواد التساهمية والفلزّات؟',
+    questions: [
+      { name: 'e1', why: T.eval.e1 },
+      { name: 'e2', why: T.eval.e2 },
+      { name: 'e3', why: T.eval.e3 },
+      { name: 'e4', why: T.eval.e4 },
+      { name: 'e5', why: T.eval.e5 },
+      { name: 'e6', why: T.eval.e6 },
+      { name: 'e7', why: T.eval.e7 },
+      { name: 'e8', why: T.eval.e8 },
+      { name: 'e9', type: 'text', input: 'e9Input', button: 'e9Btn', feedback: 'fb-e9',
+        answer: T.eval.e9, normalize: normE9, why: T.eval.e9why },
+      { name: 'e10', type: 'text', input: 'e10Input', button: 'e10Btn', feedback: 'fb-e10',
+        answer: 'مطابق', normalize: normE10, why: T.eval.e10why }
+    ]
+  });
+}
+
+station1();
+station2();
+station3();
+station4();
+station5();
+station6();
+station7();
+
+/* ══════════════════ الانتقال بين المحطات ══════════════════
+   المحطات السبع كلّها في الصفحة منذ التحميل بلا hidden — سياسة
+   الدروس 03–05 نفسها. التنقّل حرّ، والحماية من كشف مبكّر داخل
+   المحطة (كشف متدرّج) لا بحجب المحطة كلّها. */
+document.querySelectorAll('a.station-next[href^="#station-"]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    var id = a.getAttribute('href').slice(1);
+    var sec = document.getElementById(id);
+    if(!sec) return;
+    sec.hidden = false;
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + id + '"]');
+    if(dot) dot.classList.add('active');
+    if(sec.scrollIntoView){
+      sec.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+    }
+    if(window.Sounds) window.Sounds.playChime();
+  });
+});
+
+/* ══════════════════ الدخول من الخارج بالمرساة ══════════════════ */
+window.addEventListener('load', function(){
+  var id = (location.hash || '').replace(/^#/, '');
+  if(!/^station-[A-Za-z0-9_-]+$/.test(id)) return;
+  var target = document.getElementById(id);
+  if(!target || !target.classList.contains('station')) return;
+  var all = Array.prototype.slice.call(document.querySelectorAll('.station'));
+  var idx = all.indexOf(target);
+  if(idx < 0) return;
+  function activate(sec){
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + sec.id + '"]');
+    if(dot) dot.classList.add('active');
+  }
+  all.slice(0, idx).forEach(function(sec){ if(!sec.hidden) activate(sec); });
+  target.hidden = false;
+  activate(target);
+  if(target.scrollIntoView){
+    target.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+  }
+});
+})();
+</script>
+</body>
+</html>
