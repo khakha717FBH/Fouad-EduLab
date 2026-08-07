@@ -619,11 +619,29 @@
     </div>
 
     <div id="clBuildBlock" hidden>
-      <p class="sub-h">ابنِ الزوج المشترك</p>
-      <p class="stage-note act" id="clGuide">انقر إلكترونًا واحدًا من المستوى الخارجي في كل ذرّة لتنقله إلى المنتصف.</p>
+      <p class="sub-h">ذرّتا الكلور</p>
       <div class="stage-wrap">
-        <svg id="stage2" class="stage" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ذرّتا كلور متجاورتان، إلكترونات المستوى الخارجي قابلة للنقر"></svg>
+        <svg id="stage2" class="stage" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ذرّتا كلور متجاورتان، إلكترونات المستوى الخارجي مرسومة نقاطًا في الذرّة اليسرى وعلاماتٍ متقاطعة في اليمنى"></svg>
       </div>
+
+      <!-- سؤال الاصطلاح قبل استعماله: المسرح ظاهر وساكن (diatomic ترسم
+           الذرّتين عند الإنشاء، و start وحدها تفتح النقر). الذرّتان
+           كلتاهما كلور، فالمشهد نفسه يحمل الدليل على أن اختلاف الشكل
+           ليس اختلافًا في نوع الإلكترون. المفهوم الخاطئ مستهدَف في
+           النشاط لا في بطاقة حقائق. -->
+      <div class="explore-step" id="clMarkStep">
+        <p class="explore-q">الذرّتان أمامك كلتاهما ذرّة كلور. فلماذا رُسمت إلكترونات إحداهما نقاطًا (●) وإلكترونات الأخرى علاماتٍ متقاطعة (✕)؟</p>
+        <div class="quiz-options" data-q="cl-marks">
+          <label class="quiz-option"><input type="radio" name="clMarks" value="w1">لأن إلكترونات الذرّة اليمنى نوع مختلف عن إلكترونات الذرّة اليسرى</label>
+          <label class="quiz-option"><input type="radio" name="clMarks" value="w2">لأن العلامات المتقاطعة تدلّ على إلكترونات أعلى في الطاقة</label>
+          <label class="quiz-option"><input type="radio" name="clMarks" value="w3">لأن الذرّة اليمنى فقدت إلكتروناتها عند اقترابها من اليسرى</label>
+          <label class="quiz-option"><input type="radio" name="clMarks" value="correct">لنتمكّن من تتبّع كل إلكترون ومعرفة الذرّة التي جاء منها</label>
+        </div>
+        <p class="explore-feedback" id="fb-cl-marks" hidden></p>
+      </div>
+
+      <p class="sub-h" id="clBuildHead" hidden>ابنِ الزوج المشترك</p>
+      <p class="stage-note act" id="clGuide" hidden>انقر إلكترونًا واحدًا من المستوى الخارجي في كل ذرّة لتنقله إلى المنتصف.</p>
       <p class="stage-note" id="clMsg" hidden></p>
     </div>
 
@@ -2035,6 +2053,27 @@
             show('clCountStep');
           }
         });
+        /* لا st2.start() هنا: المسرح يظهر ساكنًا ليُتأمَّل، والنقر
+           يُفتح بعد الإجابة عن سؤال النقطة والعلامة المتقاطعة. */
+      }
+    });
+
+    window.Quiz.practice({
+      'cl-marks': {
+        xpId:'l4-cl-marks', xp:'MCQ',
+        reason:'ميّزتَ وظيفة النقطة والعلامة المتقاطعة',
+        correctText:'✓ صحيح! الإلكترونات كلها متشابهة تمامًا. اختلاف الشكل أداة لنا نحن لنتتبّع مصدر كل إلكترون، ولا يعني وجود نوعين مختلفين. وستحتاج هذا التتبّع بعد قليل.',
+        hints:{
+          w1:'الذرّتان كلتاهما كلور، وتوزيعهما الإلكتروني واحد. فمن أين يأتي هذا الاختلاف؟',
+          w2:'هل يخبرك شكل العلامة بشيء عن طاقة الإلكترون، أم عن الذرّة التي جاء منها؟',
+          w3:'أعِد النظر في الذرّة اليمنى وعُدّ علاماتها. هل نقص عددها عن اليسرى؟',
+          any:'الذرّتان متطابقتان تمامًا. فما الفائدة الوحيدة التي يقدّمها اختلاف الشكل؟'
+        }
+      }
+    }, {
+      onSolved: function(){
+        show('clBuildHead');
+        show('clGuide');
         if(st2) st2.start();
       }
     });
