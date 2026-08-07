@@ -94,6 +94,7 @@ describe('هندسة مسرح الكلور', () => {
     const { w, doc } = await S.boot();
     h.choose(doc, 'clValence', 'correct'); await h.tick(w, 20);
     h.choose(doc, 'clNeeds', 'correct'); await h.tick(w, 60);
+    h.choose(doc, 'clMarks', 'correct'); await h.tick(w, 30);
     const outer = circles(doc, 'stage2', 'circle.orbit-shell-2');
     eq(outer.length, 2, 'مستويان خارجيان');
     const before = outer.map(o => o.cx).join(',');

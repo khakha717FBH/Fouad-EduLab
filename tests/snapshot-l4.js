@@ -34,6 +34,7 @@ function grabBlock(doc, id) {
 
   h.choose(doc, 'clValence', 'correct'); await h.tick(w, 20);
   h.choose(doc, 'clNeeds', 'correct'); await h.tick(w, 80);
+  h.choose(doc, 'clMarks', 'correct'); await h.tick(w, 30);
   shots.push(['الكلور — قبل الربط (الذرّتان متباعدتان)', grab(doc, 'stage2')]);
 
   await f.makePair(w, doc, 'stage2');

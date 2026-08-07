@@ -57,6 +57,7 @@ async function fullPath(w, doc) {
 
   h.choose(doc, 'clValence', 'correct'); await h.tick(w, 15);
   h.choose(doc, 'clNeeds', 'correct');   await h.tick(w, 40);
+  h.choose(doc, 'clMarks', 'correct');   await h.tick(w, 20);
   await makePair(w, doc, 'stage2');
   h.choose(doc, 'clCount', 'correct');   await h.tick(w, 320);
   h.choose(doc, 'whyShare', 'correct');  await h.tick(w, 20);

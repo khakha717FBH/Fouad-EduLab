@@ -169,6 +169,32 @@ describe('المحطة 2 — بناء جزيء الكلور', () => {
     no(asText, 'وُجد حرف × نصّي داخل المسرح');
   });
 
+  /* سؤال الاصطلاح يسبق استعماله: المسرح يُتأمَّل قبل أن يُلمَس. */
+  it('المسرح يظهر ساكنًا: لا إلكترون قابل للنقر قبل سؤال الاصطلاح', async () => {
+    const { doc } = await C.boot();
+    ok(h.visible(doc, 'clMarkStep'), 'سؤال النقطة والعلامة لم يظهر مع المسرح');
+    eq(f.live(doc, 'stage2').length, 0, 'المسرح تفاعلي قبل سؤال الاصطلاح');
+    no(h.visible(doc, 'clGuide'), 'تعليمة البناء ظهرت قبل أوانها');
+    no(h.visible(doc, 'clBuildHead'), 'عنوان البناء ظهر قبل أوانه');
+  });
+
+  it('مشتّت «نوعان مختلفان» يخاطب المفهوم الخاطئ نفسه', async () => {
+    const { w, doc } = await C.boot();
+    h.choose(doc, 'clMarks', 'w1');
+    await h.tick(w, 20);
+    has(h.text(doc, 'fb-cl-marks'), 'كلتاهما كلور');
+    eq(f.live(doc, 'stage2').length, 0, 'الخطأ فتح المسرح');
+  });
+
+  it('الصواب يفتح النقر ويُظهر تعليمة البناء', async () => {
+    const { w, doc } = await C.boot();
+    h.choose(doc, 'clMarks', 'correct');
+    await h.tick(w, 40);
+    ok(h.visible(doc, 'clGuide'));
+    ok(h.visible(doc, 'clBuildHead'));
+    eq(w.XP.total(), 15);
+  });
+
   it('إلكترونان فقط قابلان للنقر — واحد من كل ذرّة', async () => {
     const { doc } = await C.boot();
     eq(f.live(doc, 'stage2').length, 2);
@@ -202,7 +228,7 @@ describe('المحطة 2 — بناء جزيء الكلور', () => {
   it('نقاط البناء تُمنح عند اكتمال الزوج', async () => {
     const { w } = await C.boot();
     ok(w.XP.has('l4-cl-build'), 'نقاط البناء لم تُمنح');
-    eq(w.XP.total(), 20);
+    eq(w.XP.total(), 25);
   });
 
   it('والعدّاد يبقى مخفيًّا حتى يجيب الطالب', async () => {
@@ -235,12 +261,12 @@ describe('المحطة 2 — بناء جزيء الكلور', () => {
     ok(h.visible(doc, 'whyShareStep'));
   });
 
-  it('المحطة تُسلَّم برصيد 30', async () => {
+  it('المحطة تُسلَّم برصيد 35', async () => {
     const { w, doc } = await C.boot();
     h.choose(doc, 'whyShare', 'correct');
     await h.tick(w, 30);
     ok(h.visible(doc, 'st2Done'));
-    eq(w.XP.total(), 30);
+    eq(w.XP.total(), 35);
   });
 });
 
@@ -599,19 +625,19 @@ describe('المحطة 7 — التقييم', () => {
    8) الرصيد الكامل — رقم مُثبَّت
    --------------------------------------------------------- */
 describe('رصيد المسار', () => {
-  it('المسار الكامل 150 نقطة — رقم مُثبَّت', async () => {
+  it('المسار الكامل 155 نقطة — رقم مُثبَّت', async () => {
     const store = {};
     const { w, doc, dom } = await f.load({ storage: store });
     await f.fullPath(w, doc);
-    eq(w.XP.total(), 150, 'رصيد المسار');
+    eq(w.XP.total(), 155, 'رصيد المسار');
     dom.window.close();
 
     // إعادة تحميل بالتخزين نفسه: لا كسب مزدوج
     const again = await f.load({ storage: store });
-    eq(again.w.XP.total(), 150, 'الرصيد بعد إعادة التحميل');
+    eq(again.w.XP.total(), 155, 'الرصيد بعد إعادة التحميل');
     h.choose(again.doc, 'l4predict', 'p1');
     await h.tick(again.w, 20);
-    eq(again.w.XP.total(), 150, 'كُسبت نقاط مُعرّف سبق كسبه');
+    eq(again.w.XP.total(), 155, 'كُسبت نقاط مُعرّف سبق كسبه');
     again.dom.window.close();
   });
 });
