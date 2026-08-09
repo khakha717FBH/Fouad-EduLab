@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدرس 1 — ما وظائف العظام الرئيسة في الهيكل العظمي لجسم الإنسان؟ | مختبر فؤاد التعليمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/identity/identity.css">
+<link rel="stylesheet" href="../../shared/template-boilerplate/template.css">
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  الوحدة 2 — الدرس 1 — مختبر فؤاد التعليمي
+  "ما وظائف العظام الرئيسة في الهيكل العظمي لجسم الإنسان؟"
+  ص 64–69 · المعيار B0905.1
+
+  ستّ محطات معلنة وستّ نقاط تقدّم. المحطة الثانية مشطورة داخليًّا إلى
+  أربع مراحل (استكشاف حرّ ← عرض محوري/طرفي ← رقاقات ← مفهوم خاطئ)
+  بلا نقطة تقدّم إضافية — نقطة واحدة للمحطة كلّها، كالمحطة 2 في درس 06
+  من الوحدة 01.
+
+  ترتيب الوسوم: وسوم shared/ الستّة تسبق سكربت الدرس.
+  بادئة data-q لهذا الدرس: u2l1- (سمة واحدة بقيمة فريدة في الصفحة).
+
+  أوّل درس أحياء على المنصّة. لا راسم ذرّة، ولا مصطلحات كيميائية.
+  مسرح الهيكل العظمي مبنيّ على معاينة فؤاد المعتمَدة بصريًّا
+  (skeleton-preview.html)، بمتغيّرات الهوية الحقيقية (turquoise/
+  navy-dark/matter/muted) بدل الأسماء المختصرة في ملف المعاينة.
+
+  الرصيد المقدَّر: 143 أساسي + 8 اختياري (l3+l2+l3+l4+l5 اختياري):
+  3 + 35 + 23 + 30 + 52 = 143، والاختياري 8 (l5-rib-fracture-bonus).
+  رقم الاختبار هو الحقيقة لا هذا التعليق.
+  ========================================================= -->
+<style>
+  /* ============ منع سحب التحديث من تصفير XP ============ */
+  html, body{ overscroll-behavior-y:contain; }
+  html{scroll-behavior:smooth;}
+  .station{ scroll-margin-top:14px; }
+
+  /* ============ أصناف عامّة مستعارة من نمط دروس الوحدة 01 ============ */
+  .dose{ max-width:920px; margin:16px auto 0; font-size:.95rem; line-height:2; }
+  .sub-h{
+    max-width:920px; margin:30px auto 12px;
+    font-family:'Cairo', sans-serif; font-size:1rem; font-weight:700; color:var(--turquoise);
+  }
+  .given-card{
+    display:inline-flex; flex-wrap:wrap; gap:6px 16px; align-items:center; justify-content:center;
+    width:100%; max-width:920px; margin:10px auto 0; padding:9px 14px;
+    border:1px dashed rgba(20,200,168,.35); border-radius:14px;
+    font-size:13px; color:var(--ink-dim);
+  }
+  .given-card b{ color:var(--turquoise); font-weight:700; }
+  .stage-wrap{
+    width:100%; max-width:640px; margin:12px auto 0;
+    background:var(--navy-darker); border:1px solid rgba(20,200,168,0.15);
+    border-radius:22px; padding:14px;
+  }
+  .stage-wrap.wide{ max-width:920px; }
+  svg.stage{ width:100%; height:auto; display:block; -webkit-tap-highlight-color:transparent; }
+  .stage-msg{
+    max-width:920px; margin:10px auto 0; min-height:22px; text-align:center;
+    font-size:14px; color:var(--ink-dim); line-height:1.9;
+  }
+  .stage-msg.done{ color:var(--turquoise); font-weight:700; }
+  .station-tagline{
+    max-width:920px; margin:0 auto 4px; font-size:.95rem; color:var(--ink-dim); line-height:1.9;
+  }
+  .explore-q{
+    font-weight:700; color:var(--ink); margin:0 0 12px; font-size:clamp(14px,2.4vw,16px);
+  }
+  .explore-step{ margin-top:26px; padding-top:20px; border-top:1px dashed var(--border); }
+  .explore-step:first-of-type{ border-top:none; padding-top:0; }
+  .explore-answer-row{ display:flex; gap:10px; flex-wrap:wrap; }
+  .explore-input{
+    flex:1 1 140px; min-width:100px; background:rgba(255,255,255,.03);
+    border:1px solid var(--border); border-radius:999px; padding:11px 20px;
+    color:var(--ink); font-family:'Tajawal', sans-serif; font-size:15px; text-align:center;
+  }
+  .explore-input::placeholder{ color:var(--ink-dim); opacity:.55; font-size:.86em; }
+  .explore-input:focus{ outline:none; border-color:var(--turquoise); box-shadow:0 0 0 3px var(--turquoise-faint); }
+  .explore-input:disabled{ opacity:.7; }
+  .success-tag{
+    margin-top:18px; display:inline-flex; align-items:center; gap:8px;
+    background:rgba(20,200,168,.08); border:1px solid var(--turquoise-soft); color:var(--turquoise);
+    font-family:'Cairo', sans-serif; font-weight:700; font-size:.9rem; padding:9px 20px;
+    border-radius:999px; opacity:0; transform:translateY(6px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .success-tag.show{opacity:1; transform:translateY(0);}
+  .name-card{
+    max-width:920px; margin:16px auto 0; border:1px dashed var(--turquoise-soft); border-radius:14px;
+    padding:12px 16px; font-size:.92rem; line-height:1.9; background:rgba(20,200,168,.05);
+  }
+  .name-card b{color:var(--turquoise); font-weight:800;}
+  .name-gate{
+    margin-top:20px; background:rgba(255,255,255,.03); border:1px solid rgba(20,200,168,.2);
+    border-radius:16px; padding:16px 18px;
+  }
+  .name-gate label{ display:block; font-size:.9rem; color:var(--ink); font-weight:700; margin-bottom:10px; }
+  .name-gate .gate-note{ font-size:.78rem; color:var(--ink-dim); margin:10px 0 0; }
+  .eval-q{ border-top:1px solid rgba(255,255,255,.06); margin-top:26px; padding-top:22px; }
+  .eval-q.first{border-top:none; margin-top:18px; padding-top:0;}
+  .q-num{
+    display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px;
+    border-radius:50%; background:rgba(20,200,168,.12); border:1px solid var(--turquoise-soft);
+    color:var(--turquoise); font-family:'Cairo', sans-serif; font-weight:800; font-size:.8rem;
+    margin-inline-end:8px; flex-shrink:0;
+  }
+  .eval-summary{
+    margin-top:30px; background:rgba(20,200,168,.06); border:1px solid var(--turquoise-soft);
+    border-radius:18px; padding:20px 18px; text-align:center;
+  }
+  #certTriggerSlot{display:flex; justify-content:center; margin-top:18px;}
+  .bonus-box{
+    max-width:920px; margin:24px auto 0; border:1px dashed var(--coral); border-radius:16px;
+    padding:16px 18px; background:rgba(255,107,74,.04);
+  }
+  .bonus-tag{
+    display:inline-block; font-family:'Cairo', sans-serif; font-weight:800; font-size:.75rem;
+    color:var(--coral); border:1px solid var(--coral); border-radius:999px; padding:3px 12px; margin-bottom:10px;
+  }
+  .data-table-wrap{ max-width:920px; margin:18px auto 0; overflow-x:auto; }
+  table.data-table{
+    width:100%; border-collapse:collapse; direction:rtl; font-size:.86rem;
+    background:var(--navy-darker); border:1px solid rgba(20,200,168,.18); border-radius:14px; overflow:hidden;
+  }
+  table.data-table th, table.data-table td{
+    padding:12px 12px; text-align:center; border:1px solid rgba(255,255,255,.06); color:var(--ink); line-height:1.7;
+  }
+  table.data-table th{
+    background:rgba(20,200,168,.1); color:var(--turquoise); font-family:'Cairo', sans-serif;
+    font-weight:700; font-size:.82rem;
+  }
+  table.data-table td:first-child, table.data-table th:first-child{
+    text-align:end; font-family:'Cairo', sans-serif; font-weight:700; color:var(--ink-dim); white-space:nowrap;
+  }
+  table.data-table td.tbd{ color:var(--ink-dim); opacity:.35; }
+
+  /* ============ مسرح الهيكل العظمي (محطتان 2 و3) ============ */
+  :root{ --bone:var(--matter); --bone-edge:var(--matter-edge); --brain:#C99AA4; --lung:#B0757A; --heart:#C0453A; }
+  .skeleton-box{
+    border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,.02);
+    padding:10px; display:grid; grid-template-columns:1fr; gap:10px; justify-items:center;
+    max-width:920px; margin:12px auto 0;
+  }
+  @media(min-width:640px){ .skeleton-box{justify-items:stretch; grid-template-columns:1fr 230px;} }
+  .skeleton-box svg{width:100%; height:auto; display:block; max-height:64vh; margin:0 auto; touch-action:none;}
+  @media(max-width:639px){
+    .skeleton-box .sk-side{order:-1;}
+    .skeleton-box svg{ height:52vh; width:auto; max-height:none; max-width:100%; }
+  }
+  .sk-side{display:flex; flex-direction:column; gap:10px; justify-content:flex-start; padding:6px;}
+  .sk-readout{
+    border:1px solid var(--border); border-radius:14px; padding:14px; min-height:88px;
+    background:rgba(20,200,168,.05);
+  }
+  .sk-readout .name{font-family:'Cairo',sans-serif;font-weight:700;font-size:17px;color:var(--turquoise);}
+  .sk-readout .hint{font-size:13.5px;color:var(--ink-dim);}
+  .sk .f{fill:var(--bone);stroke:var(--bone-edge);stroke-width:1;}
+  .sk .s{fill:none;stroke:var(--bone);stroke-width:7;stroke-linecap:round;}
+  .sk .s.thin{stroke-width:4;}
+  .sk .s.rib{stroke-width:5;}
+  .sk .grp{transition:filter .2s;}
+  .sk .grp.on .f{fill:var(--turquoise);}
+  .sk .grp.on .s{stroke:var(--turquoise);}
+  .sk .grp.on{filter:drop-shadow(0 0 7px var(--turquoise-soft));}
+  .sk .hit{fill:transparent;cursor:pointer;touch-action:none;}
+  .sk .hitgrp:focus-visible .hit{stroke:var(--coral);stroke-width:2;stroke-dasharray:4 3;}
+  .sk.axialmode .sk-app{--bone:var(--muted);}
+  .sk.xray .sk-skull, .sk.xray .sk-ribs{opacity:.42;}
+  .sk .sk-organs{opacity:0;transition:opacity .7s;pointer-events:none;}
+  .sk .sk-organs.show{opacity:1;}
+  @media (prefers-reduced-motion: reduce){ .sk .sk-organs{transition:none;} }
+
+  /* ============ محطة 1 — القنديل ============ */
+  #jellyGroup{ transform-origin:200px 210px; transition:transform .9s ease; }
+  #jellyGroup.beached{ transform:translateY(28px) scaleY(.42) scaleX(1.35); }
+  .jelly-tentacle{ transition:transform .9s ease, opacity .9s ease; transform-origin:top center; }
+  #jellyGroup.beached .jelly-tentacle{ transform:scaleY(.28); opacity:.55; }
+  @media (prefers-reduced-motion: reduce){ #jellyGroup, .jelly-tentacle{ transition:none; } }
+
+  /* ============ محطة 4 — الجسم بلا هيكل + الجبيرة + العمودان ============ */
+  #humanBody{ transform-origin:130px 360px; transition:transform .95s ease; }
+  #humanBody.collapsed{ transform:translateY(90px) scaleY(.16) scaleX(1.25) rotate(-3deg); }
+  .skeleton-hint{ transition:opacity .4s ease; }
+  #humanBody.collapsed ~ .skeleton-hint, .skeleton-hint.faded{ opacity:0; }
+  @media (prefers-reduced-motion: reduce){ #humanBody, .skeleton-hint{ transition:none; } }
+
+  .strength-col{ transition:transform .3s ease; }
+  .strength-col.bent{ transform:rotate(-9deg) translateX(6px); fill:var(--coral) !important; }
+  .strength-col.holding{ filter:drop-shadow(0 0 6px var(--turquoise-soft)); }
+  .weight-block{ fill:var(--muted); stroke:var(--matter-edge); stroke-width:1; }
+  .col-label{ font-family:'Tajawal',sans-serif; font-size:12px; fill:var(--ink-dim); text-anchor:middle; }
+
+  /* ============ محطة 5 — أيقونات العظام والجدول ============ */
+  .bone-icon-row{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; max-width:920px; margin:14px auto 0; }
+  .bone-icon-card{
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    border:1px solid var(--border); border-radius:14px; padding:12px 16px; min-width:110px;
+    background:rgba(255,255,255,.02);
+  }
+  .bone-icon-card span{ font-size:12.5px; color:var(--ink-dim); text-align:center; }
+  .bone-icon-card svg{ width:52px; height:52px; }
+</style>
+</head>
+<body>
+
+<nav class="crumb">
+  <a href="../../index.html">الرئيسية</a> ›
+  <a href="../index.html">الفصل الأول</a> ›
+  <a href="index.html">الوحدة 2</a> ›
+  الدرس 1
+</nav>
+
+<div class="progress-track">
+  <div class="xp-counter" id="xpCounter">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+    <span id="xpValue">0</span>
+    <span class="xp-label">XP</span>
+  </div>
+  <div class="progress-dot" data-target="station-1"></div>
+  <div class="progress-dot" data-target="station-2"></div>
+  <div class="progress-dot" data-target="station-3"></div>
+  <div class="progress-dot" data-target="station-4"></div>
+  <div class="progress-dot" data-target="station-5"></div>
+  <div class="progress-dot" data-target="station-6"></div>
+</div>
+
+<header class="hero">
+  <div class="eyebrow">الوحدة 2 · الدرس 1</div>
+  <h1>ما وظائف العظام الرئيسة في الهيكل العظمي لجسم الإنسان؟</h1>
+  <div class="objectives-box">
+    <h3>في نهاية هذا الدرس سوف تتمكّن من أن:</h3>
+    <ul>
+      <li>تُحدّد العظام الرئيسة في الهيكل العظمي لجسم الإنسان.</li>
+      <li>تصف كيف يوفّر الهيكل العظمي الدعم والحماية للجسم.</li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===================== محطة 1 ===================== -->
+  <section class="station" id="station-1">
+    <div class="station-label">المحطة الأولى</div>
+    <h2>لماذا يقف جسمك؟</h2>
+    <p class="station-tagline">قنديل بحر من مياه الخليج. راقبه وهو يترك الماء إلى الرمل.</p>
+
+    <div class="stage-wrap">
+      <svg class="stage" id="stageJelly" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="قنديل بحر ينبسط تدريجيًّا عند خروجه من الماء إلى الرمل">
+        <defs>
+          <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#123a52"/>
+            <stop offset="100%" stop-color="#0d2438"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="400" height="170" fill="url(#waterGrad)"/>
+        <rect x="0" y="170" width="400" height="90" fill="#3a2f22"/>
+        <g id="jellyGroup">
+          <path d="M150,150 C150,110 175,90 200,90 C225,90 250,110 250,150 C250,168 235,178 200,178 C165,178 150,168 150,150 Z"
+                fill="rgba(20,200,168,.32)" stroke="var(--turquoise)" stroke-width="2"/>
+          <path class="jelly-tentacle" d="M172,178 C170,205 176,225 172,246" fill="none" stroke="var(--turquoise)" stroke-width="3" stroke-linecap="round"/>
+          <path class="jelly-tentacle" d="M188,178 C186,210 192,232 188,250" fill="none" stroke="var(--turquoise)" stroke-width="3" stroke-linecap="round"/>
+          <path class="jelly-tentacle" d="M204,178 C206,210 200,232 204,250" fill="none" stroke="var(--turquoise)" stroke-width="3" stroke-linecap="round"/>
+          <path class="jelly-tentacle" d="M220,178 C222,205 216,225 220,246" fill="none" stroke="var(--turquoise)" stroke-width="3" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <p class="stage-msg" id="jellyCaption">القنديل في الماء، منبسطًا بلا مجهود.</p>
+      <div class="station-handoff" style="margin-top:10px;">
+        <button type="button" class="btn" id="jellyPullBtn">اسحب القنديل إلى الرمل</button>
+      </div>
+    </div>
+
+    <div class="explore-step" id="s1PredictBox">
+      <p class="explore-q">لو اختفت كل عظامك في هذه اللحظة، ماذا يحدث لجسمك في رأيك؟</p>
+      <div class="quiz-options" id="s1PredictOptions">
+        <label class="quiz-option"><input type="radio" name="u2l1-collapse" value="a">سينهار جسدي كقطعة قماش، مثل القنديل تمامًا</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-collapse" value="b">سأبقى واقفًا كما أنا، بلا أي فرق</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-collapse" value="c">سأتحرّك ببطء أكثر لكنّني سأبقى واقفًا</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-collapse" value="d">لا أعرف، سأكتشف ذلك في هذا الدرس</label>
+      </div>
+      <p class="explore-feedback" id="fb-s1predict" hidden></p>
+    </div>
+
+    <div id="s1done" hidden>
+      <div class="success-tag show">✓ سُجِّل توقّعك</div>
+      <div class="station-handoff">
+        <a href="#station-2" class="station-next">استكشف هيكلك ←</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 2 ===================== -->
+  <section class="station" id="station-2">
+    <div class="station-label">المحطة الثانية</div>
+    <h2>206 عظام: تعرّف على هيكلك</h2>
+    <p class="station-tagline" id="s2Hint">انقر على كلّ عظمة من العظام الستّ في الهيكل لتتعرّف عليها.</p>
+
+    <div class="skeleton-box">
+      <svg class="sk stage" id="skeleton2" viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="هيكل عظمي لجسم الإنسان قابل للنقر">
+
+        <g id="axialSet-2">
+          <g class="grp sk-skull sk-axial" id="g-skull-2">
+            <path class="f" d="M148,52 C148,28 160,15 180,15 C200,15 212,28 212,52 C212,65 208,73 202,77 L202,85 C202,92 195,96 180,96 C165,96 158,92 158,85 L158,77 C152,73 148,65 148,52 Z"/>
+            <ellipse cx="169" cy="55" rx="7.5" ry="8.5" fill="var(--navy-darker)"/>
+            <ellipse cx="191" cy="55" rx="7.5" ry="8.5" fill="var(--navy-darker)"/>
+            <path d="M180,64 L175,74 L185,74 Z" fill="var(--navy-darker)"/>
+            <path d="M166,85 H194" stroke="var(--matter-edge)" stroke-width="1.4"/>
+          </g>
+          <g class="grp sk-axial" id="g-spine-2">
+            <g id="verts-2"></g>
+          </g>
+          <g class="grp sk-ribs sk-axial" id="g-ribs-2">
+            <rect class="f" x="174" y="130" width="12" height="88" rx="5"/>
+            <g id="ribsL-2"></g>
+            <g id="ribsR-2" transform="translate(360,0) scale(-1,1)"></g>
+          </g>
+        </g>
+
+        <g id="appSet-2" class="sk-app">
+          <path class="s thin" d="M176,124 C165,119 150,123 140,131" style="pointer-events:none"/>
+          <path class="s thin" d="M184,124 C195,119 210,123 220,131" style="pointer-events:none"/>
+
+          <g class="grp" id="g-humerus-2">
+            <circle class="f" cx="140" cy="134" r="8"/>
+            <path class="s" d="M137,140 C129,175 125,205 121,234"/>
+            <circle class="f" cx="120" cy="239" r="6.5"/>
+            <circle class="f" cx="220" cy="134" r="8"/>
+            <path class="s" d="M223,140 C231,175 235,205 239,234"/>
+            <circle class="f" cx="240" cy="239" r="6.5"/>
+          </g>
+
+          <path class="s thin" style="pointer-events:none" d="M116,245 L105,316"/>
+          <path class="s thin" style="pointer-events:none" d="M124,245 L115,317"/>
+          <path class="s thin" style="pointer-events:none" d="M244,245 L255,316"/>
+          <path class="s thin" style="pointer-events:none" d="M236,245 L245,317"/>
+          <g style="pointer-events:none">
+            <path class="s thin" d="M104,322 L98,348 M109,323 L104,351 M114,324 L111,352 M119,325 L118,350"/>
+            <path class="s thin" d="M256,322 L262,348 M251,323 L256,351 M246,324 L249,352 M241,325 L242,350"/>
+          </g>
+
+          <g class="grp" id="g-pelvis-2">
+            <path class="f" d="M177,298 C158,293 138,302 134,320 C131,336 141,350 157,353 C170,355 177,347 178,336 Z"/>
+            <path class="f" d="M183,298 C202,293 222,302 226,320 C229,336 219,350 203,353 C190,355 183,347 182,336 Z"/>
+            <path class="f" d="M172,296 H188 L185,340 H175 Z"/>
+          </g>
+
+          <g class="grp" id="g-femur-2">
+            <circle class="f" cx="159" cy="330" r="8"/>
+            <path class="s" d="M157,338 C154,380 152,424 151,462" style="stroke-width:9"/>
+            <circle class="f" cx="201" cy="330" r="8"/>
+            <path class="s" d="M203,338 C206,380 208,424 209,462" style="stroke-width:9"/>
+          </g>
+
+          <g style="pointer-events:none">
+            <circle cx="151" cy="471" r="6" class="f"/>
+            <circle cx="209" cy="471" r="6" class="f"/>
+            <path class="s" d="M149,479 L145,568" style="stroke-width:7"/>
+            <path class="s thin" d="M159,482 L157,564"/>
+            <path class="s" d="M211,479 L215,568" style="stroke-width:7"/>
+            <path class="s thin" d="M201,482 L203,564"/>
+            <rect x="122" y="574" width="34" height="11" rx="5.5" class="f"/>
+            <rect x="204" y="574" width="34" height="11" rx="5.5" class="f"/>
+          </g>
+        </g>
+
+        <g id="hits-2">
+          <g class="hitgrp" tabindex="0" role="button" data-t="g-ribs-2" aria-label="الضلوع">
+            <rect class="hit" x="112" y="128" width="136" height="130"/></g>
+          <g class="hitgrp" tabindex="0" role="button" data-t="g-skull-2" aria-label="الجمجمة">
+            <rect class="hit" x="144" y="12" width="72" height="88"/></g>
+          <g class="hitgrp" tabindex="0" role="button" data-t="g-pelvis-2" aria-label="الحوض">
+            <rect class="hit" x="130" y="292" width="100" height="64"/></g>
+          <g class="hitgrp" tabindex="0" role="button" data-t="g-humerus-2" aria-label="عظم العَضُد">
+            <rect class="hit" x="108" y="126" width="42" height="120"/>
+            <rect class="hit" x="210" y="126" width="42" height="120"/></g>
+          <g class="hitgrp" tabindex="0" role="button" data-t="g-femur-2" aria-label="عظم الفخذ">
+            <rect class="hit" x="136" y="326" width="36" height="142"/>
+            <rect class="hit" x="188" y="326" width="36" height="142"/></g>
+          <g class="hitgrp" tabindex="0" role="button" data-t="g-spine-2" aria-label="العمود الفقري">
+            <rect class="hit" x="168" y="96" width="24" height="32"/>
+            <rect class="hit" x="168" y="246" width="24" height="46"/></g>
+        </g>
+      </svg>
+
+      <div class="sk-side">
+        <div class="sk-readout" id="readout2" aria-live="polite">
+          <div class="hint">انقر على أي عظمة في الهيكل.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- المرحلة 2 (عرض): المحوري والطرفي ---- -->
+    <div class="explore-step" id="s2AxialBox" hidden>
+      <p class="explore-q">العظام المضيئة الآن — الجمجمة والعمود الفقري والضلوع — تشكّل <b style="color:var(--turquoise)">الهيكل المحوري</b> في منتصف جسمك. وبقية العظام — كعظم العَضُد والحوض وعظم الفخذ — تشكّل <b style="color:var(--turquoise)">الهيكل الطرفي</b>.</p>
+      <div class="station-handoff">
+        <button type="button" class="btn" id="s2ContinueBtn">تابع: نشاط المطابقة</button>
+      </div>
+    </div>
+
+    <!-- ---- المرحلة 3: الرقاقات ---- -->
+    <div class="explore-step" id="s2ChipsBox" hidden>
+      <p class="explore-q">طابق كل اسم عظمة مع الوصف الصحيح له.</p>
+      <div data-chips="u2l1-bones">
+        <div class="chips-pool">
+          <span class="chip" data-value="الجمجمة" data-xp-id="u2l1-match-skull" data-xp-reason="طابقتَ اسم الجمجمة بوصفها">الجمجمة</span>
+          <span class="chip" data-value="العمود الفقري" data-xp-id="u2l1-match-spine" data-xp-reason="طابقتَ اسم العمود الفقري بوصفه">العمود الفقري</span>
+          <span class="chip" data-value="الضلوع" data-xp-id="u2l1-match-ribs" data-xp-reason="طابقتَ اسم الضلوع بوصفها">الضلوع</span>
+          <span class="chip" data-value="عظم العَضُد" data-xp-id="u2l1-match-humerus" data-xp-reason="طابقتَ اسم عظم العَضُد بوصفه">عظم العَضُد</span>
+          <span class="chip" data-value="الحوض" data-xp-id="u2l1-match-pelvis" data-xp-reason="طابقتَ اسم الحوض بوصفه">الحوض</span>
+          <span class="chip" data-value="عظم الفخذ" data-xp-id="u2l1-match-femur" data-xp-reason="طابقتَ اسم عظم الفخذ بوصفه">عظم الفخذ</span>
+        </div>
+        <div class="cat-grid">
+          <div class="slot cat-slot" id="s2-slot-skull" data-answer="الجمجمة">
+            <span class="slot-label">عظمة واحدة مستديرة مغلقة تعلو رأسك</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="s2-slot-spine" data-answer="العمود الفقري">
+            <span class="slot-label">سلسلة من العظام الصغيرة تمتدّ من قاعدة رأسك إلى حوضك</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="s2-slot-ribs" data-answer="الضلوع">
+            <span class="slot-label">أقواس عظمية متتابعة تلتقي عند منتصف صدرك</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="s2-slot-humerus" data-answer="عظم العَضُد">
+            <span class="slot-label">عظمة طويلة واحدة أعلى كلّ ذراع، بين الكتف والمرفق</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="s2-slot-pelvis" data-answer="الحوض">
+            <span class="slot-label">عظام عريضة تحيط بأسفل جذعك وتتّصل بعظمَي الفخذ</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="s2-slot-femur" data-answer="عظم الفخذ">
+            <span class="slot-label">أطول عظمة في جسمك، أعلى كلّ ساق بين الحوض والركبة</span><span class="slot-items"></span>
+          </div>
+        </div>
+        <p class="explore-feedback chips-feedback" hidden></p>
+      </div>
+      <div id="s2ChipsDone" hidden>
+        <div class="success-tag show">✓ ستّ عظام، وستّة أوصاف صحيحة</div>
+      </div>
+    </div>
+
+    <!-- ---- المرحلة 4: مفهوم خاطئ — الأسنان ---- -->
+    <div class="explore-step" id="s2TeethBox" hidden>
+      <p class="explore-q">الأسنان صلبة وبيضاء — هل تُعدّ من العظام الـ206؟</p>
+      <div class="quiz-options" data-q="u2l1-teeth">
+        <label class="quiz-option"><input type="radio" name="u2l1-teeth" value="w1">نعم، لأنها صلبة وبيضاء مثل بقية العظام</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-teeth" value="correct">لا، تركيبها مختلف عن تركيب العظام رغم صلابتها</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-teeth" value="w2">نعم، لكنّها لا تُحسب ضمن الهيكل المحوري فقط</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-teeth" value="w3">لا، لأنها لا تنمو مع الجسم</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l1-teeth" hidden></p>
+    </div>
+
+    <div id="s2done" hidden>
+      <div class="facts-grid">
+        <div class="fact-card"><div class="term" dir="ltr">206</div>عظام في جسم البالغ</div>
+        <div class="fact-card"><div class="term">قسمان</div>محوريّ وطرفيّ</div>
+      </div>
+      <div class="station-handoff">
+        <a href="#station-3" class="station-next">ما الذي تحميه هذه العظام؟ ←</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 3 ===================== -->
+  <section class="station" id="station-3">
+    <div class="station-label">المحطة الثالثة</div>
+    <h2>درعٌ من عظم: الحماية</h2>
+    <p class="station-tagline">تحت هذه العظام أعضاء حسّاسة. توقّع أوّلًا، ثم اكشف لتتحقّق.</p>
+
+    <div class="explore-step" id="s3PredictBox">
+      <p class="explore-q">أيّ عضو تحيط به الجمجمة في رأيك؟</p>
+      <div class="quiz-options" data-q="u2l1-organ-skull">
+        <label class="quiz-option"><input type="radio" name="u2l1-organ-skull" value="w1">الرئتان</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-organ-skull" value="correct">الدماغ</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-organ-skull" value="w2">المعدة</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-organ-skull" value="w3">القلب</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l1-organ-skull" hidden></p>
+
+      <p class="explore-q" style="margin-top:22px">وما الذي يقع داخل القفص الصدري (الضلوع) في رأيك؟</p>
+      <div class="quiz-options" data-q="u2l1-organ-ribs">
+        <label class="quiz-option"><input type="radio" name="u2l1-organ-ribs" value="w1">الكبد وحده</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-organ-ribs" value="w2">الكليتان</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-organ-ribs" value="correct">القلب والرئتان</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-organ-ribs" value="w3">الدماغ</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l1-organ-ribs" hidden></p>
+    </div>
+
+    <div class="station-handoff" id="s3RevealRow" hidden>
+      <button type="button" class="btn" id="s3RevealBtn">اكشف ما تحت العظم</button>
+    </div>
+
+    <div class="skeleton-box">
+      <svg class="sk stage" id="skeleton3" viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="هيكل عظمي يكشف الأعضاء الداخلية تحت الجمجمة والضلوع">
+
+        <g class="sk-organs" id="organs-3">
+          <path d="M158,40 C158,26 168,20 180,20 C192,20 202,26 202,40 C202,54 194,64 180,64 C166,64 158,54 158,40 Z" fill="var(--brain)"/>
+          <path d="M170,26 C166,34 174,38 170,46 M180,22 C176,32 184,36 180,46 M190,26 C194,34 186,38 190,46"
+                fill="none" stroke="#a5717c" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M172,146 C154,148 142,164 140,186 C138,206 144,220 156,222 C168,224 172,214 172,200 Z" fill="var(--lung)"/>
+          <path d="M188,146 C206,148 218,164 220,186 C222,206 216,220 204,222 C192,224 188,214 188,200 Z" fill="var(--lung)"/>
+          <path d="M186,168 C182,160 170,162 170,174 C170,186 182,196 188,202 C194,196 206,186 206,174 C206,162 194,160 190,168 Z" fill="var(--heart)"/>
+        </g>
+
+        <g id="axialSet-3">
+          <g class="grp sk-skull" id="g-skull-3">
+            <path class="f" d="M148,52 C148,28 160,15 180,15 C200,15 212,28 212,52 C212,65 208,73 202,77 L202,85 C202,92 195,96 180,96 C165,96 158,92 158,85 L158,77 C152,73 148,65 148,52 Z"/>
+            <ellipse cx="169" cy="55" rx="7.5" ry="8.5" fill="var(--navy-darker)"/>
+            <ellipse cx="191" cy="55" rx="7.5" ry="8.5" fill="var(--navy-darker)"/>
+            <path d="M180,64 L175,74 L185,74 Z" fill="var(--navy-darker)"/>
+            <path d="M166,85 H194" stroke="var(--matter-edge)" stroke-width="1.4"/>
+          </g>
+          <g class="grp" id="g-spine-3">
+            <g id="verts-3"></g>
+          </g>
+          <g class="grp sk-ribs" id="g-ribs-3">
+            <rect class="f" x="174" y="130" width="12" height="88" rx="5"/>
+            <g id="ribsL-3"></g>
+            <g id="ribsR-3" transform="translate(360,0) scale(-1,1)"></g>
+          </g>
+        </g>
+
+        <g id="appSet-3">
+          <path class="s thin" style="pointer-events:none" d="M176,124 C165,119 150,123 140,131"/>
+          <path class="s thin" style="pointer-events:none" d="M184,124 C195,119 210,123 220,131"/>
+          <g class="grp" id="g-humerus-3">
+            <circle class="f" cx="140" cy="134" r="8"/>
+            <path class="s" d="M137,140 C129,175 125,205 121,234"/>
+            <circle class="f" cx="120" cy="239" r="6.5"/>
+            <circle class="f" cx="220" cy="134" r="8"/>
+            <path class="s" d="M223,140 C231,175 235,205 239,234"/>
+            <circle class="f" cx="240" cy="239" r="6.5"/>
+          </g>
+          <path class="s thin" style="pointer-events:none" d="M116,245 L105,316"/>
+          <path class="s thin" style="pointer-events:none" d="M124,245 L115,317"/>
+          <path class="s thin" style="pointer-events:none" d="M244,245 L255,316"/>
+          <path class="s thin" style="pointer-events:none" d="M236,245 L245,317"/>
+          <g style="pointer-events:none">
+            <path class="s thin" d="M104,322 L98,348 M109,323 L104,351 M114,324 L111,352 M119,325 L118,350"/>
+            <path class="s thin" d="M256,322 L262,348 M251,323 L256,351 M246,324 L249,352 M241,325 L242,350"/>
+          </g>
+          <g class="grp" id="g-pelvis-3">
+            <path class="f" d="M177,298 C158,293 138,302 134,320 C131,336 141,350 157,353 C170,355 177,347 178,336 Z"/>
+            <path class="f" d="M183,298 C202,293 222,302 226,320 C229,336 219,350 203,353 C190,355 183,347 182,336 Z"/>
+            <path class="f" d="M172,296 H188 L185,340 H175 Z"/>
+          </g>
+          <g class="grp" id="g-femur-3">
+            <circle class="f" cx="159" cy="330" r="8"/>
+            <path class="s" d="M157,338 C154,380 152,424 151,462" style="stroke-width:9"/>
+            <circle class="f" cx="201" cy="330" r="8"/>
+            <path class="s" d="M203,338 C206,380 208,424 209,462" style="stroke-width:9"/>
+          </g>
+          <g style="pointer-events:none">
+            <circle cx="151" cy="471" r="6" class="f"/>
+            <circle cx="209" cy="471" r="6" class="f"/>
+            <path class="s" d="M149,479 L145,568" style="stroke-width:7"/>
+            <path class="s thin" d="M159,482 L157,564"/>
+            <path class="s" d="M211,479 L215,568" style="stroke-width:7"/>
+            <path class="s thin" d="M201,482 L203,564"/>
+            <rect x="122" y="574" width="34" height="11" rx="5.5" class="f"/>
+            <rect x="204" y="574" width="34" height="11" rx="5.5" class="f"/>
+          </g>
+        </g>
+      </svg>
+
+      <div class="sk-side">
+        <div class="sk-readout" id="readout3" aria-live="polite">
+          <div class="hint">توقّع أوّلًا، ثم اضغط «اكشف ما تحت العظم».</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="explore-step" id="s3ShortBox" hidden>
+      <p class="explore-q">لماذا توجد عظام حول هذه الأعضاء تحديدًا في رأيك؟</p>
+      <div class="explore-answer-row">
+        <input type="text" class="explore-input" id="s3ShortInput" placeholder="اكتب إجابتك" autocomplete="off">
+        <button type="button" class="btn" id="s3ShortBtn">سلّم الإجابة</button>
+      </div>
+      <p class="explore-feedback" id="fb-u2l1-organ-why" hidden></p>
+      <button type="button" class="link-btn" id="s3ShortModelBtn" hidden>أرِني الإجابة النموذجية</button>
+      <p class="name-card" id="s3ShortModel" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s3HelmetBox" hidden>
+      <div class="given-card">
+        <span>عامل في موقع بناء بالدوحة يلبس خوذة صلبة فوق رأسه طوال دوامه.</span>
+      </div>
+      <p class="explore-q" style="margin-top:14px">إن كانت الجمجمة تحمي الدماغ بالفعل، فلماذا يحتاج هذا العامل إلى خوذة أيضًا؟</p>
+      <div class="quiz-options" data-q="u2l1-helmet">
+        <label class="quiz-option"><input type="radio" name="u2l1-helmet" value="w1">لأن الجمجمة لا تحمي الدماغ فعليًّا</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-helmet" value="correct">لأن حماية الجمجمة الطبيعية كافية للصدمات اليومية العادية، لا لارتطامات قوية كسقوط أداة ثقيلة</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-helmet" value="w2">لأن الخوذة تحلّ محلّ الجمجمة تمامًا</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-helmet" value="w3">لأن العمّال لا يملكون جماجم قوية مثل غيرهم</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l1-helmet" hidden></p>
+    </div>
+
+    <div id="s3done" hidden>
+      <div class="facts-grid">
+        <div class="fact-card"><div class="term">الجمجمة</div>تحمي الدماغ</div>
+        <div class="fact-card"><div class="term">الضلوع</div>تحمي القلب والرئتين</div>
+      </div>
+      <div class="station-handoff">
+        <a href="#station-4" class="station-next">لماذا لا ينهار جسمك؟ ←</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 4 ===================== -->
+  <section class="station" id="station-4">
+    <div class="station-label">المحطة الرابعة</div>
+    <h2>دعامة الجسم: لماذا لا تنهار؟</h2>
+    <p class="station-tagline">عودة إلى القنديل الذي رأيته في بداية الدرس — لكن هذه المرّة مع جسم إنسان.</p>
+
+    <div class="stage-wrap">
+      <svg class="stage" id="stageSilhouette" viewBox="0 0 260 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="صورة ظلّية لجسم إنسان واقف، تنهار عند إطفاء الهيكل العظمي بداخلها">
+        <g class="skeleton-hint" id="silhouetteSkeleton">
+          <line x1="130" y1="55" x2="130" y2="270" stroke="var(--matter)" stroke-width="3" stroke-dasharray="6 5"/>
+          <line x1="130" y1="270" x2="100" y2="360" stroke="var(--matter)" stroke-width="3" stroke-dasharray="6 5"/>
+          <line x1="130" y1="270" x2="160" y2="360" stroke="var(--matter)" stroke-width="3" stroke-dasharray="6 5"/>
+        </g>
+        <g id="humanBody">
+          <circle cx="130" cy="38" r="24" fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.5"/>
+          <path d="M92,68 C92,62 100,58 130,58 C160,58 168,62 168,68 L176,220 C176,232 166,238 130,238 C94,238 84,232 84,220 Z"
+                fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.5"/>
+          <rect x="68" y="72" width="16" height="150" rx="8" fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.2"/>
+          <rect x="176" y="72" width="16" height="150" rx="8" fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.2"/>
+          <rect x="103" y="230" width="24" height="130" rx="10" fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.2"/>
+          <rect x="133" y="230" width="24" height="130" rx="10" fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.2"/>
+        </g>
+      </svg>
+      <p class="stage-msg" id="silhouetteMsg">جسدك واقف، والهيكل العظمي بداخله يحمله.</p>
+      <div class="station-handoff" style="margin-top:10px;">
+        <button type="button" class="btn" id="silhouetteBtn">أطفئ الهيكل العظمي</button>
+      </div>
+    </div>
+
+    <div class="explore-step" id="s4SpineBox" hidden>
+      <p class="explore-q">ما وظيفة العمود الفقري في رأيك؟</p>
+      <div class="explore-answer-row">
+        <input type="text" class="explore-input" id="s4SpineInput" placeholder="اكتب إجابتك" autocomplete="off">
+        <button type="button" class="btn" id="s4SpineBtn">سلّم الإجابة</button>
+      </div>
+      <p class="explore-feedback" id="fb-u2l1-spine" hidden></p>
+      <button type="button" class="link-btn" id="s4SpineModelBtn" hidden>أرِني الإجابة النموذجية</button>
+      <p class="name-card" id="s4SpineModel" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s4CastBox" hidden>
+      <div class="stage-wrap" style="max-width:280px;">
+        <svg class="stage" viewBox="0 0 200 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="معصم مكسور مثبَّت بجبيرة">
+          <line x1="20" y1="70" x2="80" y2="60" stroke="var(--matter)" stroke-width="10" stroke-linecap="round"/>
+          <rect x="75" y="42" width="60" height="38" rx="16" fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.5"/>
+          <line x1="80" y1="46" x2="130" y2="46" stroke="var(--matter-edge)" stroke-width="1" opacity=".5"/>
+          <line x1="80" y1="60" x2="130" y2="60" stroke="var(--matter-edge)" stroke-width="1" opacity=".5"/>
+          <line x1="80" y1="74" x2="130" y2="74" stroke="var(--matter-edge)" stroke-width="1" opacity=".5"/>
+          <line x1="135" y1="58" x2="185" y2="52" stroke="var(--ink-dim)" stroke-width="8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="given-card">
+        <span>لا يستطيع الشخص المصاب بكسر في معصمه أن يدعم يده، لذلك يحتاج إلى جبيرة لدعمها مؤقّتًا.</span>
+      </div>
+      <p class="explore-q" style="margin-top:14px">على ماذا يدلّ احتياج هذا المصاب إلى جبيرة في رأيك؟</p>
+      <div class="quiz-options" data-q="u2l1-cast">
+        <label class="quiz-option"><input type="radio" name="u2l1-cast" value="correct">أن العظم المكسور فقد مؤقّتًا قدرته على القيام بوظيفة الدعم، فاحتاج دعامة خارجية بديلة</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-cast" value="w1">أن العظام لا تُشفى من الكسر أبدًا</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-cast" value="w2">أن الجبيرة تقوم بكل وظائف الهيكل العظمي بدلًا عنه</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-cast" value="w3">أن الكسر لا علاقة له بوظيفة العظم في الدعم</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l1-cast" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s4StrengthBox" hidden>
+      <p class="explore-q">عمود من العظم وعمود من الفولاذ بالكتلة نفسها. زد الحمل عليهما تدريجيًّا وراقب أيّهما يصمد أطول.</p>
+      <div class="stage-wrap" style="max-width:340px;">
+        <svg class="stage" id="stageStrength" viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="عمود عظم وعمود فولاذ بالكتلة نفسها يُزاد الحمل عليهما تدريجيًّا">
+          <g id="boneStack"></g>
+          <rect class="strength-col" id="boneCol" x="70" y="150" width="46" height="50" fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.5"/>
+          <text class="col-label" x="93" y="212">عمود عظم</text>
+
+          <g id="steelStack"></g>
+          <rect class="strength-col" id="steelCol" x="195" y="150" width="28" height="50" fill="var(--muted)" stroke="var(--matter-edge)" stroke-width="1.5"/>
+          <text class="col-label" x="209" y="212">عمود فولاذ</text>
+        </svg>
+      </div>
+      <p class="stage-msg" id="strengthMsg">كلا العمودين بالكتلة نفسها، رغم اختلاف سُمكهما.</p>
+      <div class="station-handoff" style="margin-top:10px;">
+        <button type="button" class="btn" id="strengthLoadBtn">زد الحمل</button>
+      </div>
+    </div>
+
+    <div class="explore-step" id="s4SupportBox" hidden>
+      <p class="explore-q">ما الذي يمنح عظامك القوّة والمتانة الكافيتين لدعم جسمك، رغم خفّة وزنها؟</p>
+      <div class="quiz-options" data-q="u2l1-support-property">
+        <label class="quiz-option"><input type="radio" name="u2l1-support-property" value="correct">تركيبها المزدوج من ألياف الكولاجين المرنة ومعادن الكالسيوم والفوسفات الصلبة معًا</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-support-property" value="w1">احتواؤها على تجويف هوائي كامل يُخفّف وزنها فقط</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-support-property" value="w2">غلافها الخارجي الأملس وحده</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-support-property" value="w3">كونها لا تتعرّض لأي ضغط في حياتك اليومية</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l1-support-property" hidden></p>
+    </div>
+
+    <div id="s4done" hidden>
+      <div class="facts-grid">
+        <div class="fact-card"><div class="term">الكولاجين</div>يكسب العظم المرونة</div>
+        <div class="fact-card"><div class="term">الكالسيوم والفوسفات</div>يعطيان العظم القوّة والصلابة</div>
+      </div>
+      <div class="station-handoff">
+        <a href="#station-5" class="station-next">الشكل يخدم الوظيفة ←</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 5 ===================== -->
+  <section class="station" id="station-5">
+    <div class="station-label">المحطة الخامسة</div>
+    <h2>الشكل يخدم الوظيفة</h2>
+    <p class="station-tagline">أربع عظام بأشكال مختلفة تمامًا. املأ عمود الشكل أوّلًا، ثم استنتج الوظيفة منه.</p>
+
+    <div class="bone-icon-row">
+      <div class="bone-icon-card">
+        <svg viewBox="0 0 60 60"><path class="f" d="M10,40 C10,18 18,8 30,8 C42,8 50,18 50,40 C50,48 44,52 30,52 C16,52 10,48 10,40 Z" fill="var(--matter)" stroke="var(--matter-edge)"/></svg>
+        <span>عظم العَضُد</span>
+      </div>
+      <div class="bone-icon-card">
+        <svg viewBox="0 0 60 60"><path class="f" d="M10,40 C10,18 18,8 30,8 C42,8 50,18 50,40 C50,48 44,52 30,52 C16,52 10,48 10,40 Z" fill="var(--matter)" stroke="var(--matter-edge)"/></svg>
+        <span>عظم الفخذ</span>
+      </div>
+      <div class="bone-icon-card">
+        <svg viewBox="0 0 60 60"><path fill="none" stroke="var(--matter)" stroke-width="4" stroke-linecap="round" d="M12,20 C20,16 40,16 48,20 M12,32 C20,28 40,28 48,32 M12,44 C20,40 40,40 48,44"/></svg>
+        <span>الضلوع</span>
+      </div>
+      <div class="bone-icon-card">
+        <svg viewBox="0 0 60 60"><path fill="var(--matter)" stroke="var(--matter-edge)" d="M14,50 C10,40 10,20 30,12 C50,20 50,40 46,50 Z"/></svg>
+        <span>الجمجمة</span>
+      </div>
+    </div>
+
+    <p class="sub-h">أوّلًا: شكل وترتيب كل عظمة</p>
+    <div data-chips="u2l1-shape">
+      <div class="chips-pool">
+        <span class="chip" data-value="عمود مستقيم طويل" data-xp-id="u2l1-shape-humerus" data-xp-reason="وصفتَ شكل عظم العَضُد">عمود مستقيم طويل</span>
+        <span class="chip" data-value="عمود طويل، أطول عظمة في الجسم" data-xp-id="u2l1-shape-femur" data-xp-reason="وصفتَ شكل عظم الفخذ">عمود طويل، أطول عظمة في الجسم</span>
+        <span class="chip" data-value="أقواس متتابعة منحنية" data-xp-id="u2l1-shape-ribs" data-xp-reason="وصفتَ شكل الضلوع">أقواس متتابعة منحنية</span>
+        <span class="chip" data-value="قبّة مستديرة مغلقة" data-xp-id="u2l1-shape-skull" data-xp-reason="وصفتَ شكل الجمجمة">قبّة مستديرة مغلقة</span>
+      </div>
+      <div class="cat-grid">
+        <div class="slot cat-slot" id="s5-shape-humerus" data-answer="عمود مستقيم طويل">
+          <span class="slot-label">عظم العَضُد</span><span class="slot-items"></span>
+        </div>
+        <div class="slot cat-slot" id="s5-shape-femur" data-answer="عمود طويل، أطول عظمة في الجسم">
+          <span class="slot-label">عظم الفخذ</span><span class="slot-items"></span>
+        </div>
+        <div class="slot cat-slot" id="s5-shape-ribs" data-answer="أقواس متتابعة منحنية">
+          <span class="slot-label">الضلوع</span><span class="slot-items"></span>
+        </div>
+        <div class="slot cat-slot" id="s5-shape-skull" data-answer="قبّة مستديرة مغلقة">
+          <span class="slot-label">الجمجمة</span><span class="slot-items"></span>
+        </div>
+      </div>
+      <p class="explore-feedback chips-feedback" hidden></p>
+    </div>
+
+    <div id="s5ShapeDone" hidden>
+      <div class="success-tag show">✓ اكتمل عمود الشكل — الآن استنتج الوظيفة</div>
+    </div>
+
+    <p class="sub-h" id="s5FuncHeading" hidden>ثانيًا: وظيفة كل عظمة</p>
+    <div data-chips="u2l1-function" id="s5FuncWrap" hidden>
+      <div class="chips-pool">
+        <span class="chip" data-value="يدعم حركة الذراع عند الكتف والمرفق" data-xp-id="u2l1-func-humerus" data-xp-reason="استنتجتَ وظيفة عظم العَضُد">يدعم حركة الذراع عند الكتف والمرفق</span>
+        <span class="chip" data-value="يدعم وزن الجسم ويساعد الساق على الحركة عند الورك والركبة" data-xp-id="u2l1-func-femur" data-xp-reason="استنتجتَ وظيفة عظم الفخذ">يدعم وزن الجسم ويساعد الساق على الحركة عند الورك والركبة</span>
+        <span class="chip" data-value="يحمي القلب والرئتين ويسمح للصدر بالتمدّد أثناء التنفّس" data-xp-id="u2l1-func-ribs" data-xp-reason="استنتجتَ وظيفة الضلوع">يحمي القلب والرئتين ويسمح للصدر بالتمدّد أثناء التنفّس</span>
+        <span class="chip" data-value="يحمي الدماغ داخل قبّة عظمية مغلقة" data-xp-id="u2l1-func-skull" data-xp-reason="استنتجتَ وظيفة الجمجمة">يحمي الدماغ داخل قبّة عظمية مغلقة</span>
+      </div>
+      <div class="cat-grid">
+        <div class="slot cat-slot" id="s5-func-humerus" data-answer="يدعم حركة الذراع عند الكتف والمرفق">
+          <span class="slot-label">عظم العَضُد</span><span class="slot-items"></span>
+        </div>
+        <div class="slot cat-slot" id="s5-func-femur" data-answer="يدعم وزن الجسم ويساعد الساق على الحركة عند الورك والركبة">
+          <span class="slot-label">عظم الفخذ</span><span class="slot-items"></span>
+        </div>
+        <div class="slot cat-slot" id="s5-func-ribs" data-answer="يحمي القلب والرئتين ويسمح للصدر بالتمدّد أثناء التنفّس">
+          <span class="slot-label">الضلوع</span><span class="slot-items"></span>
+        </div>
+        <div class="slot cat-slot" id="s5-func-skull" data-answer="يحمي الدماغ داخل قبّة عظمية مغلقة">
+          <span class="slot-label">الجمجمة</span><span class="slot-items"></span>
+        </div>
+      </div>
+      <p class="explore-feedback chips-feedback" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s5PatternBox" hidden>
+      <p class="explore-q">بعد ملء الجدول، ما العلاقة العامّة بين شكل العظم ووظيفته؟</p>
+      <div class="quiz-options" data-q="u2l1-shape-function-pattern">
+        <label class="quiz-option"><input type="radio" name="u2l1-shape-function-pattern" value="correct">شكل كل عظمة يلائم وظيفتها: العظام الطويلة تدعم وتساعد على الحركة، والعظام المقوّسة أو المقبّبة تحيط بالأعضاء وتحميها</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-shape-function-pattern" value="w1">لا علاقة بين شكل العظم ووظيفته إطلاقًا</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-shape-function-pattern" value="w2">كل العظام لها الشكل نفسه بغضّ النظر عن وظيفتها</label>
+        <label class="quiz-option"><input type="radio" name="u2l1-shape-function-pattern" value="w3">شكل العظم يحدّده وزن الجسم فقط بلا علاقة بالوظيفة</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l1-shape-function-pattern" hidden></p>
+    </div>
+
+    <div id="s5PostPattern" hidden>
+      <button type="button" class="link-btn" id="s5ExtBtn">وهل تحمي الضلوع غير القلب والرئتين؟</button>
+      <p class="name-card" id="s5ExtText" hidden>نعم — يذكر الكتاب أن الضلوع تحمي أيضًا الطحال والمعدة والكليتين.</p>
+
+      <div class="bonus-box" id="s5BonusBox">
+        <span class="bonus-tag">تحدٍّ اختياري</span>
+        <p class="explore-q">توقّع كيف يمكن أن يُلحق ضلعٌ مكسور ضررًا بالجسم.</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="s5BonusInput" placeholder="اكتب توقّعك" autocomplete="off">
+          <button type="button" class="btn" id="s5BonusBtn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-u2l1-rib-fracture-bonus" hidden></p>
+        <button type="button" class="link-btn" id="s5BonusModelBtn" hidden>أرِني الإجابة النموذجية</button>
+        <p class="name-card" id="s5BonusModel" hidden></p>
+      </div>
+
+      <div class="station-handoff">
+        <a href="#station-6" class="station-next">التقييم الختامي ←</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 6 ===================== -->
+  <section class="station" id="station-6">
+    <div class="station-label">المحطة السادسة</div>
+    <h2>التقييم الختامي</h2>
+    <p class="station-tagline">عشرة أسئلة، ومحاولة واحدة لكلّ سؤال. وفي نهايتها شهادتك باسمك.</p>
+
+    <div class="name-gate">
+      <label for="evalName">اكتب اسمك كما تريده أن يظهر على الشهادة</label>
+      <input type="text" class="explore-input" id="evalName" placeholder="الاسم الكامل" autocomplete="off">
+      <button type="button" class="btn" id="evalStart">ابدأ التقييم</button>
+      <p class="explore-feedback" id="evalNameFb" hidden></p>
+      <p class="gate-note">هذا هو التقييم الختامي لهذا الدرس. لكلّ سؤال محاولة واحدة، وبعد آخر سؤال تظهر نتيجتك وشهادتك. خذ وقتك.</p>
+    </div>
+
+    <div id="evalQuestions" hidden>
+
+      <div class="eval-q first">
+        <p class="explore-q"><span class="q-num">1</span> ما الأعضاء التي يحميها القفص الصدري (الضلوع)؟</p>
+        <div class="quiz-options" data-q="u2l1-e1">
+          <label class="quiz-option"><input type="radio" name="u2l1-e1" value="w1">الدماغ</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e1" value="w2">الكبد والمعدة</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e1" value="w3">الكليتان</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e1" value="correct">القلب والرئتان</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l1-e1" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">2</span> ما اسم جزء الهيكل العظمي الذي يُشكّل قاعدة عريضة أسفل الجذع، ويتّصل بعظمَي الفخذ؟</p>
+        <div class="quiz-options" data-q="u2l1-e2">
+          <label class="quiz-option"><input type="radio" name="u2l1-e2" value="w1">الجمجمة</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e2" value="w2">العمود الفقري</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e2" value="correct">الحوض</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e2" value="w3">الضلوع</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l1-e2" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">3</span> هل تُعدّ الأسنان من عظام الجسم الـ206؟</p>
+        <div class="quiz-options" data-q="u2l1-e3">
+          <label class="quiz-option"><input type="radio" name="u2l1-e3" value="correct">لا، تركيبها مختلف عن تركيب العظام رغم صلابتها</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e3" value="w1">نعم، لأنها صلبة وبيضاء</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e3" value="w2">نعم، لكنّها لا تُحسب ضمن الهيكل المحوري فقط</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e3" value="w3">لا، لأنها لا تحتوي على كالسيوم إطلاقًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l1-e3" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">4</span> لماذا لا تنكسر عظامك بسهولة رغم أنها أخفّ وزنًا من الفولاذ بالحجم نفسه؟</p>
+        <div class="quiz-options" data-q="u2l1-e4">
+          <label class="quiz-option"><input type="radio" name="u2l1-e4" value="correct">لأن تركيبها المزدوج من ألياف الكولاجين والمعادن يمنحها متانة تضاهي الفولاذ أو تفوقه بالكتلة نفسها</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e4" value="w1">لأنها مجوّفة تمامًا من الداخل</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e4" value="w2">لأنها لا تتعرّض لأي ضغط في حياتك اليومية</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e4" value="w3">لأنها أخفّ وزنًا فقط، ولا علاقة لتركيبها بمتانتها</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l1-e4" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">5</span> ما وظيفة شكل الضلوع المقوّس المتتابع؟</p>
+        <div class="quiz-options" data-q="u2l1-e5">
+          <label class="quiz-option"><input type="radio" name="u2l1-e5" value="correct">يشكّل قفصًا يحيط بالأعضاء الداخلية ويحميها، مع سماحه بالتمدّد أثناء التنفّس</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e5" value="w1">يجعل جسمك أخفّ وزنًا فقط</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e5" value="w2">يمنع نموّ الأعضاء الداخلية</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e5" value="w3">يربط الضلوع بالعمود الفقري فقط دون أي وظيفة حماية</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l1-e5" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">6</span> عظم العَضُد وعظم الفخذ طويلان ومفصليان. ما وظيفتهما المشتركة؟</p>
+        <div class="quiz-options" data-q="u2l1-e6">
+          <label class="quiz-option"><input type="radio" name="u2l1-e6" value="correct">دعم حركة الذراعين والساقين</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e6" value="w1">حماية الأعضاء الداخلية فقط</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e6" value="w2">إنتاج خلايا الدم</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e6" value="w3">تخزين الكالسيوم فقط بلا وظيفة حركية</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l1-e6" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">7</span> ما الذي يدلّ عليه احتياج شخص مصاب بكسر إلى جبيرة؟</p>
+        <div class="quiz-options" data-q="u2l1-e7">
+          <label class="quiz-option"><input type="radio" name="u2l1-e7" value="correct">أن العظم المكسور فقد مؤقّتًا قدرته على دعم الجزء المصاب، فاحتاج دعامة خارجية</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e7" value="w1">أن العظام لا تُشفى أبدًا</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e7" value="w2">أن الجبيرة تحلّ محلّ العظم نهائيًّا</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e7" value="w3">أن الكسر لا علاقة له بوظيفة العظم في الدعم</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l1-e7" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">8</span> ما الفرق بين كائن حيّ يمتلك هيكلًا عظميًّا وآخر بلا عظام على الإطلاق؟</p>
+        <div class="quiz-options" data-q="u2l1-e8">
+          <label class="quiz-option"><input type="radio" name="u2l1-e8" value="correct">الكائن ذو الهيكل العظمي يمتلك دعامة ثابتة تحمي أعضاءه الداخلية وتساعده على الحركة بقوّة أكبر</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e8" value="w1">لا فرق بينهما إطلاقًا</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e8" value="w2">الكائن بلا عظام أقوى دائمًا من الكائن ذي العظام</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e8" value="w3">الكائن ذو العظام لا يستطيع الحركة إطلاقًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l1-e8" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">9</span> اذكر اسم عظمة واحدة من الهيكل الطرفي (غير الجمجمة والضلوع) تساعد جسمك على الدعم والحركة.</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="e9Input" placeholder="اكتب اسم العظمة" autocomplete="off">
+          <button type="button" class="btn" id="e9Btn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-e9" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">10</span> اشرح وظيفة الضلوع (القفص الصدري) في جسمك.</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="e10Input" placeholder="اكتب إجابتك" autocomplete="off">
+          <button type="button" class="btn" id="e10Btn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-e10" hidden></p>
+      </div>
+    </div>
+
+    <div class="eval-summary" id="evalSummary" hidden></div>
+    <!-- إلزامي: بدونه تحقن وحدة الشهادة زرّها عائمًا فيصطدم بزرّ فهيم -->
+    <div id="certTriggerSlot"></div>
+  </section>
+
+</main>
+
+<!-- وسوم shared/ الستّة تسبق سكربت الدرس -->
+<script src="../../shared/sounds/sounds.js"></script>
+<script src="../../shared/xp-system/xp.js"></script>
+<script src="../../shared/faheem-widget/faheem.js"></script>
+<script src="../../shared/template-boilerplate/template.js"></script>
+<script src="../../shared/certificate-system/certificate.js"></script>
+<script src="../../shared/identity/footer.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   الوحدة 2 — الدرس 1 — سكربت الدرس (نصوص المحطات كلّها في T أدناه)
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+var NS = 'http://www.w3.org/2000/svg';
+
+/* ============ 1) النصوص ============ */
+var T = {
+  s1: {
+    predictFb: 'سجّلنا توقّعك. لن نخبرك الآن مَن أصاب — ستكتشف ذلك بنفسك في بقية هذا الدرس.'
+  },
+  s2: {
+    teeth: {
+      correct: '✓ صحيح! الأسنان صلبة فعلًا، لكنّ تركيبها (المينا والعاج) مختلف تمامًا عن تركيب العظام، فلا تُحسب ضمن الـ206 عظمة.',
+      w1: 'الصلابة واللون وحدهما لا يكفيان لعدّها عظمًا. فكّر في تركيبها الداخلي.',
+      w2: 'الأمر لا علاقة له بالتقسيم المحوري/الطرفي. أعِد التفكير في تركيب السنّ نفسه.',
+      w3: 'الأسنان تنمو فعلًا مع الجسم، لكن هذا ليس سبب استبعادها. فكّر في تركيبها.'
+    },
+    chipHints: {
+      'عظم العَضُد|s2-slot-femur': 'عظم العَضُد في ذراعك لا في ساقك. أعِد قراءة الوصف.',
+      'عظم الفخذ|s2-slot-humerus': 'عظم الفخذ في ساقك لا في ذراعك. أعِد قراءة الوصف.',
+      'الحوض|s2-slot-ribs': 'الحوض في أسفل جذعك، لا حول صدرك.',
+      'الضلوع|s2-slot-pelvis': 'الضلوع تحيط بصدرك، لا بأسفل جذعك.'
+    }
+  },
+  s3: {
+    organSkull: {
+      correct: '✓ صحيح! الدماغ هو العضو الذي تحيط به الجمجمة.',
+      w1: 'الرئتان داخل القفص الصدري لا داخل الجمجمة.',
+      w2: 'المعدة أسفل الجذع بكثير، بعيدًا عن الجمجمة.',
+      w3: 'القلب أيضًا داخل القفص الصدري لا داخل الجمجمة.'
+    },
+    organRibs: {
+      correct: '✓ صحيح! القلب والرئتان يقعان داخل القفص الصدري.',
+      w1: 'الكبد قريب فعلًا، لكنّ هناك عضوين آخرين أهمّ يقعان مباشرة داخل القفص.',
+      w2: 'الكليتان أسفل القفص الصدري بقليل، لا داخله مباشرة.',
+      w3: 'الدماغ تحميه الجمجمة لا الضلوع.'
+    },
+    revealMsg: 'الدماغ داخل الجمجمة، والقلب والرئتان داخل القفص الصدري — كما توقّعت.',
+    shortHint: 'فكّر في حجم هذه الأعضاء وأهمّيتها لبقائك، مقارنةً بأعضاء أخرى غير محاطة بعظام.',
+    shortModel: 'لأن هذه الأعضاء (الدماغ والقلب والرئتان) حسّاسة جدًّا وضرورية لبقاء الإنسان، فتحيط بها العظام لحمايتها من الصدمات.',
+    helmet: {
+      correct: '✓ صحيح! الجمجمة تحمي من صدمات الحياة اليومية، لا من ارتطام قوي كسقوط أداة ثقيلة من ارتفاع.',
+      w1: 'الجمجمة تحمي الدماغ فعلًا، لكن حمايتها لها حدود.',
+      w2: 'الخوذة إضافة فوق الجمجمة، لا بديل عنها.',
+      w3: 'كل الجماجم تعمل بالطريقة نفسها؛ الأمر يتعلّق بقوّة الصدمة لا بجمجمة العامل نفسها.'
+    }
+  },
+  s4: {
+    spineHint: 'فكّر في شكل العمود الفقري: عمود طويل يمتدّ من رأسك إلى حوضك، وينحني قليلًا.',
+    spineModel: 'العمود الفقري يدعم رأسك وجذعك في وضع مستقيم، ويحمي الحبل الشوكي الذي يمرّ بداخله.',
+    cast: {
+      correct: '✓ صحيح! فقدان العظم لقدرته المؤقّتة على الدعم هو ما يستدعي الجبيرة.',
+      w1: 'العظام تُشفى فعلًا مع الوقت — ولهذا الجبيرة مؤقّتة لا دائمة.',
+      w2: 'الجبيرة تدعم الجزء المصاب فقط ريثما يُشفى العظم، لا تحلّ محلّ الهيكل كلّه.',
+      w3: 'الكسر يمنع العظم من أداء وظيفة الدعم تمامًا، ولهذا احتاج المصاب دعامة بديلة.'
+    },
+    strengthMsg1: 'زد الحمل تدريجيًّا وراقب أيّ عمود يصمد أطول.',
+    strengthDone: 'انحنى عمود الفولاذ عند الحمل الرابع، وبقي عمود العظم ثابتًا رغم أنه أخفّ منه بكثير.',
+    support: {
+      correct: '✓ صحيح! المزيج بين المرونة والصلابة هو سرّ متانة العظم.',
+      w1: 'الوزن الخفيف وحده لا يفسّر متانتها أمام الحِمل.',
+      w2: 'السطح الخارجي وحده لا يمنح القوّة اللازمة لتحمّل الأوزان.',
+      w3: 'عظامك تتعرّض لضغط في كل خطوة تمشيها فعليًّا.'
+    }
+  },
+  s5: {
+    shapeHint: 'صِف شكل العظمة فقط الآن — الوظيفة تأتي بعد قليل.',
+    funcHint: 'استعِن بالشكل الذي وصفتَه للتوّ لتستنتج الوظيفة.',
+    pattern: {
+      correct: '✓ صحيح! لاحظ كيف تكرّر النمط: عمودان طويلان لعظمَي الحركة، وشكلان محيطان لعظمَي الحماية.',
+      w1: 'راجع الجدول الذي بنيتَه للتوّ — هل الشكل والوظيفة متطابقان في كل صفّ فعلًا؟',
+      w2: 'أربع عظام بأربعة أشكال مختلفة تمامًا — أعِد النظر في الجدول.',
+      w3: 'الوزن ليس ما يحدّد الشكل هنا؛ الوظيفة هي المحدِّد.'
+    },
+    bonusHint: 'فكّر فيما يجاوره الضلع مباشرة من أعضاء حسّاسة.',
+    bonusModel: 'يمكن لطرف الضلع المكسور الحادّ أن يخترق أو يجرح عضوًا مجاورًا كالرئة، فيسبّب ضررًا أكبر من الكسر نفسه.'
+  },
+  eval: {
+    e1: 'راجع بطاقة الحقائق في المحطة الثالثة: الضلوع تحمي عضوين بعينهما.',
+    e2: 'الحوض عظام عريضة في أسفل الجذع، تتّصل بعظمَي الفخذ.',
+    e3: 'تركيب الأسنان مختلف عن تركيب العظام رغم صلابتها.',
+    e4: 'راجع بطاقة الحقائق في المحطة الرابعة: تركيب مزدوج من الكولاجين والمعادن.',
+    e5: 'شكل الضلوع المقوّس المتكرّر له وظيفتان معًا: الحماية والسماح بالتنفّس.',
+    e6: 'كلا العظمين طويل ومفصلي، وكلاهما في الهيكل الطرفي الداعم للحركة.',
+    e7: 'الجبيرة تعوّض ما فقده العظم مؤقّتًا من قدرة على الدعم.',
+    e8: 'الهيكل العظمي يمنح صاحبه دعامة وحماية وحركة أقوى ممّن لا يملكه.',
+    e9why: 'العظام الطرفية الداعمة للحركة: عظم العَضُد، عظم الفخذ، أو الحوض.',
+    e10why: 'الضلوع تحيط بالقلب والرئتين وتحميهما، وشكلها المقوّس يسمح بتمدّد الصدر أثناء التنفّس.'
+  }
+};
+
+/* ============ 2) أدوات SVG صغيرة ============ */
+var G = {
+  el: function(tag, attrs){
+    var n = document.createElementNS(NS, tag);
+    if(attrs) Object.keys(attrs).forEach(function(k){ n.setAttribute(k, attrs[k]); });
+    return n;
+  },
+  add: function(parent, tag, attrs){
+    var n = G.el(tag, attrs);
+    parent.appendChild(n);
+    return n;
+  },
+  reduced: function(){
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+};
+
+function animate(ms, apply, done){
+  if(G.reduced()) ms = 1;
+  var t0 = Date.now();
+  function step(){
+    var t = Math.min(1, (Date.now() - t0) / ms);
+    apply(t);
+    if(t < 1) window.requestAnimationFrame(step);
+    else if(done) done();
+  }
+  window.requestAnimationFrame(step);
+}
+
+/* بناء فقرات العمود الفقري وأقواس الضلوع لهيكل بمُعرّف لاحقة suf */
+function buildSpineRibs(suf){
+  var v = document.getElementById('verts-' + suf);
+  if(v){
+    var h = '';
+    for(var y = 98; y <= 296; y += 11){
+      var w = (y < 130 || y > 240) ? 15 : 12;
+      h += '<rect class="f" x="' + (180 - w/2) + '" y="' + y + '" width="' + w + '" height="8" rx="3"/>';
+    }
+    v.innerHTML = h;
+  }
+  var rl = document.getElementById('ribsL-' + suf);
+  if(rl){
+    var r = '', W = [40,52,60,64,64,58,46], Y = 136;
+    for(var i = 0; i < 7; i++){
+      var yy = Y + i * 15, ww = W[i];
+      r += '<path class="s rib" d="M176,' + yy + ' C' + (180 - ww) + ',' + (yy - 2) + ' ' + (180 - ww - 5) + ',' + (yy + 20) + ' 178,' + (yy + 27) + '"/>';
+    }
+    rl.innerHTML = r;
+    var rr = document.getElementById('ribsR-' + suf);
+    if(rr) rr.innerHTML = r;
+  }
+}
+buildSpineRibs('2');
+buildSpineRibs('3');
+
+/* ============ 3) المحطة 1 ============ */
+function station1(){
+  var jelly = document.getElementById('jellyGroup');
+  var caption = document.getElementById('jellyCaption');
+  var pullBtn = document.getElementById('jellyPullBtn');
+
+  pullBtn.addEventListener('click', function(){
+    if(pullBtn.disabled) return;
+    pullBtn.disabled = true;
+    jelly.classList.add('beached');
+    caption.textContent = 'القنديل الآن على الرمل، وقد انبسط تمامًا بلا شكل ثابت — لا هيكل يدعمه.';
+    caption.classList.add('done');
+    if(window.Sounds) window.Sounds.playChime();
+  });
+
+  var predictDone = false;
+  document.querySelectorAll('#s1PredictOptions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(predictDone) return;
+      predictDone = true;
+      var fb = document.getElementById('fb-s1predict');
+      fb.textContent = T.s1.predictFb;
+      fb.className = 'explore-feedback is-hint';
+      fb.hidden = false;
+      document.getElementById('s1done').hidden = false;
+      if(window.Sounds) window.Sounds.playSnap();
+      if(window.XP) window.XP.claim('u2l1-predict-collapse', window.XP.POINTS.PREDICT, 'تنبّأتَ قبل الاستكشاف');
+    });
+  });
+}
+
+/* ============ 4) المحطة 2 ============ */
+function station2(){
+  var svg = document.getElementById('skeleton2');
+  if(!svg) return;
+
+  var NAMES = {
+    'g-skull-2':   ['الجمجمة', 'عظمة واحدة مستديرة مغلقة في أعلى الجسم.'],
+    'g-spine-2':   ['العمود الفقري', 'سلسلة من العظام الصغيرة تمتدّ من الرأس إلى الحوض.'],
+    'g-ribs-2':    ['الضلوع (القفص الصدري)', 'أقواس متتابعة تلتقي في المنتصف.'],
+    'g-humerus-2': ['عظم العَضُد', 'عظمة طويلة واحدة في أعلى كل ذراع.'],
+    'g-pelvis-2':  ['الحوض', 'عظام عريضة في أسفل الجذع.'],
+    'g-femur-2':   ['عظم الفخذ', 'أطول عظمة في الجسم، في أعلى كل ساق.']
+  };
+
+  var readout = document.getElementById('readout2');
+  var hits = document.getElementById('hits-2');
+  var explored = {};
+
+  function select(id){
+    document.querySelectorAll('#skeleton2 .grp').forEach(function(g){ g.classList.toggle('on', g.id === id); });
+    var n = NAMES[id];
+    readout.innerHTML = '<div class="name">' + n[0] + '</div><div class="hint">' + n[1] + '</div>';
+    if(window.Sounds) window.Sounds.playTick();
+  }
+
+  function checkAllExplored(){
+    if(Object.keys(explored).length < 6) return;
+    document.getElementById('s2AxialBox').hidden = false;
+    svg.classList.add('axialmode');
+    hits.style.pointerEvents = 'none';
+    document.querySelectorAll('#skeleton2 .hitgrp').forEach(function(g){ g.setAttribute('tabindex', '-1'); });
+    document.querySelectorAll('#skeleton2 .grp').forEach(function(g){ g.classList.remove('on'); });
+    readout.innerHTML = '<div class="hint">الهيكل مقسَّم الآن: المحوري بلونه المعتاد، والطرفي مُخفَت.</div>';
+  }
+
+  document.querySelectorAll('#skeleton2 .hitgrp').forEach(function(g){
+    var id = g.dataset.t;
+    function pick(){ select(id); explored[id] = true; checkAllExplored(); }
+    g.addEventListener('click', pick);
+    g.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); pick(); }
+    });
+  });
+
+  document.getElementById('s2ContinueBtn').addEventListener('click', function(){
+    document.getElementById('s2AxialBox').hidden = true;
+    document.getElementById('s2ChipsBox').hidden = false;
+    if(window.Sounds) window.Sounds.playSnap();
+  });
+
+  window.Chips.hints(T.s2.chipHints);
+  window.Chips.onDone('u2l1-bones', function(){
+    document.getElementById('s2ChipsDone').hidden = false;
+    document.getElementById('s2TeethBox').hidden = false;
+  });
+
+  window.Quiz.practice({
+    'u2l1-teeth': { xpId: 'u2l1-teeth', xp: 'MCQ', reason: 'ميّزتَ الأسنان عن عظام الهيكل',
+                    correctText: T.s2.teeth.correct, hints: T.s2.teeth }
+  }, {
+    onAllSolved: function(){ document.getElementById('s2done').hidden = false; }
+  });
+}
+
+/* ============ 5) المحطة 3 ============ */
+function station3(){
+  var svg = document.getElementById('skeleton3');
+  if(!svg) return;
+  var readout = document.getElementById('readout3');
+
+  window.Quiz.practice({
+    'u2l1-organ-skull': { xpId: 'u2l1-organ-skull', xp: 'MCQ', reason: 'توقّعتَ العضو الذي تحميه الجمجمة',
+                           correctText: T.s3.organSkull.correct, hints: T.s3.organSkull },
+    'u2l1-organ-ribs':  { xpId: 'u2l1-organ-ribs', xp: 'MCQ', reason: 'توقّعتَ الأعضاء التي يحميها القفص الصدري',
+                           correctText: T.s3.organRibs.correct, hints: T.s3.organRibs }
+  }, {
+    onAllSolved: function(){ document.getElementById('s3RevealRow').hidden = false; }
+  });
+
+  var revealBtn = document.getElementById('s3RevealBtn');
+  revealBtn.addEventListener('click', function(){
+    if(revealBtn.disabled) return;
+    document.getElementById('organs-3').classList.add('show');
+    svg.classList.add('xray');
+    revealBtn.disabled = true;
+    revealBtn.classList.add('demoted');
+    revealBtn.textContent = 'كُشفت الأعضاء';
+    readout.innerHTML = '<div class="hint">' + T.s3.revealMsg + '</div>';
+    if(window.Sounds) window.Sounds.playChime();
+    document.getElementById('s3ShortBox').hidden = false;
+  });
+
+  window.Quiz.short({
+    input: 's3ShortInput', button: 's3ShortBtn', feedback: 'fb-u2l1-organ-why',
+    modelBtn: 's3ShortModelBtn', model: 's3ShortModel',
+    accept: { paths: [
+      { all: [ ['حمايه', 'يحمي', 'تحمي', 'يقي'] ] }
+    ] },
+    normalize: 'ar',
+    hints: [T.s3.shortHint, T.s3.shortHint],
+    modelText: T.s3.shortModel,
+    xpId: 'u2l1-organ-why', xp: 'PRODUCE', reason: 'فسّرتَ سبب وجود العظام حول هذه الأعضاء',
+    modelReason: 'راجعتَ الإجابة النموذجية',
+    onDone: function(){ document.getElementById('s3HelmetBox').hidden = false; }
+  });
+
+  window.Quiz.practice({
+    'u2l1-helmet': { xpId: 'u2l1-helmet', xp: 'MCQ', reason: 'ميّزتَ حدود الحماية الطبيعية للجمجمة',
+                      correctText: T.s3.helmet.correct, hints: T.s3.helmet }
+  }, {
+    onAllSolved: function(){ document.getElementById('s3done').hidden = false; }
+  });
+}
+
+/* ============ 6) المحطة 4 ============ */
+function station4(){
+  var silhouetteBtn = document.getElementById('silhouetteBtn');
+  silhouetteBtn.addEventListener('click', function(){
+    if(silhouetteBtn.disabled) return;
+    silhouetteBtn.disabled = true;
+    document.getElementById('humanBody').classList.add('collapsed');
+    document.getElementById('silhouetteSkeleton').classList.add('faded');
+    var msg = document.getElementById('silhouetteMsg');
+    msg.textContent = 'بلا هيكل عظمي، لا شيء يُبقي جسمك واقفًا — تمامًا كالقنديل على الرمل.';
+    msg.classList.add('done');
+    if(window.Sounds) window.Sounds.playWrong();
+    document.getElementById('s4SpineBox').hidden = false;
+  });
+
+  window.Quiz.short({
+    input: 's4SpineInput', button: 's4SpineBtn', feedback: 'fb-u2l1-spine',
+    modelBtn: 's4SpineModelBtn', model: 's4SpineModel',
+    accept: { paths: [
+      { all: [ ['دعم', 'دعامه', 'يدعم', 'اسناد'] ] },
+      { all: [ ['حمايه', 'يحمي', 'الحبل الشوكي'] ] }
+    ] },
+    normalize: 'ar',
+    hints: [T.s4.spineHint, T.s4.spineHint],
+    modelText: T.s4.spineModel,
+    xpId: 'u2l1-spine-function', xp: 'PRODUCE', reason: 'اقترحتَ وظيفة العمود الفقري',
+    modelReason: 'راجعتَ الإجابة النموذجية',
+    onDone: function(){ document.getElementById('s4CastBox').hidden = false; }
+  });
+
+  window.Quiz.practice({
+    'u2l1-cast': { xpId: 'u2l1-cast', xp: 'MCQ', reason: 'فسّرتَ دلالة الحاجة إلى جبيرة',
+                    correctText: T.s4.cast.correct, hints: T.s4.cast }
+  }, {
+    onAllSolved: function(){ document.getElementById('s4StrengthBox').hidden = false; }
+  });
+
+  /* ---- عمود عظم مقابل عمود فولاذ ---- */
+  var boneStack = document.getElementById('boneStack');
+  var steelStack = document.getElementById('steelStack');
+  var boneCol = document.getElementById('boneCol');
+  var steelCol = document.getElementById('steelCol');
+  var loadBtn = document.getElementById('strengthLoadBtn');
+  var strengthMsg = document.getElementById('strengthMsg');
+  var level = 0;
+  var FAIL_AT = 4;
+  var patternClaimed = false;
+
+  function addBlock(container, x, width, lv){
+    G.add(container, 'rect', {
+      x: x, y: 150 - (lv + 1) * 15 - 12, width: width, height: 12,
+      'class': 'weight-block'
+    });
+  }
+
+  loadBtn.addEventListener('click', function(){
+    if(loadBtn.disabled) return;
+    level++;
+    addBlock(boneStack, 70, 46, level - 1);
+    addBlock(steelStack, 195, 28, level - 1);
+    if(window.Sounds) window.Sounds.playTick();
+
+    if(level >= FAIL_AT){
+      steelCol.classList.add('bent');
+      boneCol.classList.add('holding');
+      strengthMsg.textContent = T.s4.strengthDone;
+      strengthMsg.classList.add('done');
+      loadBtn.disabled = true;
+      loadBtn.classList.add('demoted');
+      if(window.Sounds) window.Sounds.playChime();
+      if(!patternClaimed){
+        patternClaimed = true;
+        if(window.XP) window.XP.claim('u2l1-strength-pattern', window.XP.POINTS.PATTERN,
+          'اكتشفتَ أن العظم يصمد أطول من الفولاذ بالكتلة نفسها');
+      }
+      document.getElementById('s4SupportBox').hidden = false;
+    } else {
+      strengthMsg.textContent = 'الحمل الآن ' + level + ' من ' + FAIL_AT + '. زد الحمل أكثر.';
+    }
+  });
+
+  window.Quiz.practice({
+    'u2l1-support-property': { xpId: 'u2l1-support-property', xp: 'MCQ', reason: 'حدّدتَ سرّ متانة العظم',
+                                 correctText: T.s4.support.correct, hints: T.s4.support }
+  }, {
+    onAllSolved: function(){ document.getElementById('s4done').hidden = false; }
+  });
+}
+
+/* ============ 7) المحطة 5 ============ */
+function station5(){
+  window.Chips.onDone('u2l1-shape', function(){
+    document.getElementById('s5ShapeDone').hidden = false;
+    document.getElementById('s5FuncHeading').hidden = false;
+    document.getElementById('s5FuncWrap').hidden = false;
+  });
+
+  window.Chips.onDone('u2l1-function', function(){
+    document.getElementById('s5PatternBox').hidden = false;
+  });
+
+  window.Quiz.practice({
+    'u2l1-shape-function-pattern': { xpId: 'u2l1-shape-function-pattern', xp: 'PATTERN',
+      reason: 'استنتجتَ العلاقة بين شكل العظم ووظيفته',
+      correctText: T.s5.pattern.correct, hints: T.s5.pattern }
+  }, {
+    onAllSolved: function(){ document.getElementById('s5PostPattern').hidden = false; }
+  });
+
+  var extBtn = document.getElementById('s5ExtBtn');
+  extBtn.addEventListener('click', function(){
+    document.getElementById('s5ExtText').hidden = false;
+    extBtn.hidden = true;
+  });
+
+  window.Quiz.short({
+    input: 's5BonusInput', button: 's5BonusBtn', feedback: 'fb-u2l1-rib-fracture-bonus',
+    modelBtn: 's5BonusModelBtn', model: 's5BonusModel',
+    accept: { paths: [
+      { all: [ ['يخترق', 'يجرح', 'يصيب', 'يضر', 'يؤذي'] ] }
+    ] },
+    normalize: 'ar',
+    hints: [T.s5.bonusHint, T.s5.bonusHint],
+    modelText: T.s5.bonusModel,
+    xpId: 'u2l1-rib-fracture-bonus', xp: 'BONUS', reason: 'توقّعتَ أثر ضلع مكسور على الأعضاء المجاورة',
+    modelReason: 'راجعتَ الإجابة النموذجية'
+  });
+}
+
+/* ============ 8) المحطة 6 — التقييم ============ */
+function station6(){
+  if(!document.getElementById('evalQuestions')) return;
+
+  // السؤال 9: أيّ عظمة طرفية واحدة من الأربع الدالّة على الدعم والحركة
+  var keys9 = window.Quiz.matcher({ paths: [
+    { all: [ [/فخذ/] ] },
+    { all: [ [/عضد/] ] },
+    { all: [ [/حوض/] ] },
+    { all: [ [/عمود/] ] }
+  ] });
+  function normE9(s){
+    var n = window.Quiz.normalizeAr(s);
+    return keys9(n, s) ? 'مطابق' : n;
+  }
+
+  // السؤال 10: وظيفة الضلوع — حماية + عضو داخلي
+  var keys10 = window.Quiz.matcher({ paths: [
+    { all: [ ['يحمي', 'حمايه', 'يقي', 'تحمي'], ['قلب', 'رئه', 'رئتين', 'الاعضاء'] ] }
+  ] });
+  function normE10(s){
+    var n = window.Quiz.normalizeAr(s);
+    return keys10(n, s) ? 'مطابق' : n;
+  }
+
+  window.Quiz.evaluate({
+    title: 'ما وظائف العظام الرئيسة في الهيكل العظمي لجسم الإنسان؟',
+    questions: [
+      { name: 'u2l1-e1', why: T.eval.e1 },
+      { name: 'u2l1-e2', why: T.eval.e2 },
+      { name: 'u2l1-e3', why: T.eval.e3 },
+      { name: 'u2l1-e4', why: T.eval.e4 },
+      { name: 'u2l1-e5', why: T.eval.e5 },
+      { name: 'u2l1-e6', why: T.eval.e6 },
+      { name: 'u2l1-e7', why: T.eval.e7 },
+      { name: 'u2l1-e8', why: T.eval.e8 },
+      { name: 'e9', type: 'text', input: 'e9Input', button: 'e9Btn', feedback: 'fb-e9',
+        answer: 'مطابق', normalize: normE9, why: T.eval.e9why },
+      { name: 'e10', type: 'text', input: 'e10Input', button: 'e10Btn', feedback: 'fb-e10',
+        answer: 'مطابق', normalize: normE10, why: T.eval.e10why }
+    ]
+  });
+}
+
+station1();
+station2();
+station3();
+station4();
+station5();
+station6();
+
+/* ══════════════════ الانتقال بين المحطات ══════════════════
+   المحطات الستّ كلّها في الصفحة منذ التحميل بلا hidden — سياسة
+   الدروس 03–06 نفسها. التنقّل حرّ، والحماية من كشف مبكّر داخل
+   المحطة (كشف متدرّج) لا بحجب المحطة كلّها. */
+document.querySelectorAll('a.station-next[href^="#station-"]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    var id = a.getAttribute('href').slice(1);
+    var sec = document.getElementById(id);
+    if(!sec) return;
+    sec.hidden = false;
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + id + '"]');
+    if(dot) dot.classList.add('active');
+    if(sec.scrollIntoView){
+      sec.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+    }
+    if(window.Sounds) window.Sounds.playChime();
+  });
+});
+
+/* ══════════════════ الدخول من الخارج بالمرساة ══════════════════ */
+window.addEventListener('load', function(){
+  var id = (location.hash || '').replace(/^#/, '');
+  if(!/^station-[A-Za-z0-9_-]+$/.test(id)) return;
+  var target = document.getElementById(id);
+  if(!target || !target.classList.contains('station')) return;
+  var all = Array.prototype.slice.call(document.querySelectorAll('.station'));
+  var idx = all.indexOf(target);
+  if(idx < 0) return;
+  function activate(sec){
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + sec.id + '"]');
+    if(dot) dot.classList.add('active');
+  }
+  all.slice(0, idx).forEach(function(sec){ if(!sec.hidden) activate(sec); });
+  target.hidden = false;
+  activate(target);
+  if(target.scrollIntoView){
+    target.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+  }
+});
+})();
+</script>
+</body>
+</html>
+
