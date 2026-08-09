@@ -138,7 +138,7 @@
   table.data-table td.tbd{ color:var(--ink-dim); opacity:.35; }
 
   /* ============ مسرح الهيكل العظمي (محطتان 2 و3) ============ */
-  :root{ --bone:var(--matter); --bone-edge:var(--matter-edge); --brain:#C99AA4; --lung:#B0757A; --heart:#C0453A; }
+  :root{ --bone:var(--matter); --bone-edge:var(--matter-edge); --brain:#C99AA4; --lung:#B0757A; --heart:#C0453A; --cast:#D9E6EE; }
   .skeleton-box{
     border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,.02);
     padding:10px; display:grid; grid-template-columns:1fr; gap:10px; justify-items:center;
@@ -173,22 +173,29 @@
   .sk .sk-organs.show{opacity:1;}
   @media (prefers-reduced-motion: reduce){ .sk .sk-organs{transition:none;} }
 
-  /* ============ محطة 1 — القنديل ============ */
-  #jellyGroup{ transform-origin:200px 210px; transition:transform .9s ease; }
-  #jellyGroup.beached{ transform:translateY(28px) scaleY(.42) scaleX(1.35); }
-  .jelly-tentacle{ transition:transform .9s ease, opacity .9s ease; transform-origin:top center; }
-  #jellyGroup.beached .jelly-tentacle{ transform:scaleY(.28); opacity:.55; }
-  @media (prefers-reduced-motion: reduce){ #jellyGroup, .jelly-tentacle{ transition:none; } }
+  /* ============ محطة 1 — القنديل ============
+     حالتان مرسومتان بدقّة كلّ في موضعها النهائي، وتلاشٍ متبادل
+     بينهما — لا تحويل CSS يُشوِّه الشكل. رسم القنديل الممدَّد
+     المشوَّه سابقًا كان ناتج transform واحد يُطبَّق على الجرس
+     والأذرع معًا حول نقطة واحدة، فينكسر شكلاهما بشكل مختلف. */
+  #jellyWater{ transition:opacity .9s ease; }
+  #jellySand{ opacity:0; transition:opacity .9s ease; }
+  #stageJelly.beached #jellyWater{ opacity:0; }
+  #stageJelly.beached #jellySand{ opacity:1; }
+  @media (prefers-reduced-motion: reduce){ #jellyWater, #jellySand{ transition:none; } }
 
-  /* ============ محطة 4 — الجسم بلا هيكل + الجبيرة + العمودان ============ */
-  #humanBody{ transform-origin:130px 360px; transition:transform .95s ease; }
-  #humanBody.collapsed{ transform:translateY(90px) scaleY(.16) scaleX(1.25) rotate(-3deg); }
-  .skeleton-hint{ transition:opacity .4s ease; }
-  #humanBody.collapsed ~ .skeleton-hint, .skeleton-hint.faded{ opacity:0; }
-  @media (prefers-reduced-motion: reduce){ #humanBody, .skeleton-hint{ transition:none; } }
+  /* ============ محطة 4 — الجسم بلا هيكل + الجبيرة + العمودان ============
+     حالتان مرسومتان بدقّة (واقف / كومة منهارة قرب الأرض) وتلاشٍ متبادل
+     بينهما — لا تحويل CSS. التحويل السابق (translateY + scaleY حول نقطة
+     واحدة) كان يدفع الشكل المنهار خارج حدود viewBox فيختفي كليًّا. */
+  #humanBody{ transition:opacity .5s ease; }
+  #bodyCollapsed{ opacity:0; transition:opacity .9s ease; }
+  #stageSilhouette.collapsed #humanBody{ opacity:0; }
+  #stageSilhouette.collapsed #bodyCollapsed{ opacity:1; }
+  @media (prefers-reduced-motion: reduce){ #humanBody, #bodyCollapsed{ transition:none; } }
 
-  .strength-col{ transition:transform .3s ease; }
-  .strength-col.bent{ transform:rotate(-9deg) translateX(6px); fill:var(--coral) !important; }
+  .strength-col{ transition:transform .3s ease; transform-box:fill-box; transform-origin:50% 100%; }
+  .strength-col.bent{ transform:rotate(-18deg); fill:var(--coral) !important; }
   .strength-col.holding{ filter:drop-shadow(0 0 6px var(--turquoise-soft)); }
   .weight-block{ fill:var(--muted); stroke:var(--matter-edge); stroke-width:1; }
   .col-label{ font-family:'Tajawal',sans-serif; font-size:12px; fill:var(--ink-dim); text-anchor:middle; }
@@ -250,7 +257,7 @@
     <p class="station-tagline">قنديل بحر من مياه الخليج. راقبه وهو يترك الماء إلى الرمل.</p>
 
     <div class="stage-wrap">
-      <svg class="stage" id="stageJelly" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="قنديل بحر ينبسط تدريجيًّا عند خروجه من الماء إلى الرمل">
+      <svg class="stage" id="stageJelly" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="قنديل بحر في الماء، ثم منبسطًا على الرمل">
         <defs>
           <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stop-color="#123a52"/>
@@ -259,13 +266,24 @@
         </defs>
         <rect x="0" y="0" width="400" height="170" fill="url(#waterGrad)"/>
         <rect x="0" y="170" width="400" height="90" fill="#3a2f22"/>
-        <g id="jellyGroup">
-          <path d="M150,150 C150,110 175,90 200,90 C225,90 250,110 250,150 C250,168 235,178 200,178 C165,178 150,168 150,150 Z"
+
+        <!-- حالة الماء: جرس مقبَّب وأذرع متدلّية، كلّها فوق خطّ الرمل بمسافة واضحة -->
+        <g id="jellyWater">
+          <path d="M150,110 C150,65 175,40 200,40 C225,40 250,65 250,110 C250,122 235,130 200,130 C165,130 150,122 150,110 Z"
                 fill="rgba(20,200,168,.32)" stroke="var(--turquoise)" stroke-width="2"/>
-          <path class="jelly-tentacle" d="M172,178 C170,205 176,225 172,246" fill="none" stroke="var(--turquoise)" stroke-width="3" stroke-linecap="round"/>
-          <path class="jelly-tentacle" d="M188,178 C186,210 192,232 188,250" fill="none" stroke="var(--turquoise)" stroke-width="3" stroke-linecap="round"/>
-          <path class="jelly-tentacle" d="M204,178 C206,210 200,232 204,250" fill="none" stroke="var(--turquoise)" stroke-width="3" stroke-linecap="round"/>
-          <path class="jelly-tentacle" d="M220,178 C222,205 216,225 220,246" fill="none" stroke="var(--turquoise)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M172,130 C170,145 176,153 172,160" fill="none" stroke="var(--turquoise)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M188,130 C186,148 192,156 188,163" fill="none" stroke="var(--turquoise)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M204,130 C206,148 200,156 204,163" fill="none" stroke="var(--turquoise)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M220,130 C222,145 216,153 220,160" fill="none" stroke="var(--turquoise)" stroke-width="3" stroke-linecap="round"/>
+        </g>
+
+        <!-- حالة الرمل: جرس مسطَّح، وأذرع مفروشة أفقيًّا حوله — مرسومة في موضعها النهائي مباشرة -->
+        <g id="jellySand">
+          <ellipse cx="200" cy="203" rx="86" ry="17" fill="rgba(20,200,168,.32)" stroke="var(--turquoise)" stroke-width="2"/>
+          <path d="M118,214 q14,12 30,4 q14,10 28,1" fill="none" stroke="var(--turquoise)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M150,224 q12,10 26,3 q12,8 24,1" fill="none" stroke="var(--turquoise)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M224,224 q12,10 26,3 q12,8 24,1" fill="none" stroke="var(--turquoise)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M254,214 q14,12 30,4 q14,10 28,1" fill="none" stroke="var(--turquoise)" stroke-width="3" stroke-linecap="round"/>
         </g>
       </svg>
       <p class="stage-msg" id="jellyCaption">القنديل في الماء، منبسطًا بلا مجهود.</p>
@@ -615,13 +633,8 @@
     <h2>دعامة الجسم: لماذا لا تنهار؟</h2>
     <p class="station-tagline">عودة إلى القنديل الذي رأيته في بداية الدرس — لكن هذه المرّة مع جسم إنسان.</p>
 
-    <div class="stage-wrap">
+    <div class="stage-wrap" style="max-width:280px;">
       <svg class="stage" id="stageSilhouette" viewBox="0 0 260 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="صورة ظلّية لجسم إنسان واقف، تنهار عند إطفاء الهيكل العظمي بداخلها">
-        <g class="skeleton-hint" id="silhouetteSkeleton">
-          <line x1="130" y1="55" x2="130" y2="270" stroke="var(--matter)" stroke-width="3" stroke-dasharray="6 5"/>
-          <line x1="130" y1="270" x2="100" y2="360" stroke="var(--matter)" stroke-width="3" stroke-dasharray="6 5"/>
-          <line x1="130" y1="270" x2="160" y2="360" stroke="var(--matter)" stroke-width="3" stroke-dasharray="6 5"/>
-        </g>
         <g id="humanBody">
           <circle cx="130" cy="38" r="24" fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.5"/>
           <path d="M92,68 C92,62 100,58 130,58 C160,58 168,62 168,68 L176,220 C176,232 166,238 130,238 C94,238 84,232 84,220 Z"
@@ -631,10 +644,13 @@
           <rect x="103" y="230" width="24" height="130" rx="10" fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.2"/>
           <rect x="133" y="230" width="24" height="130" rx="10" fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.2"/>
         </g>
+        <path id="bodyCollapsed"
+              d="M55,365 Q70,335 105,342 Q125,320 150,340 Q180,328 195,355 Q200,370 180,372 Q130,378 85,374 Q58,372 55,365 Z"
+              fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.5"/>
       </svg>
       <p class="stage-msg" id="silhouetteMsg">جسدك واقف، والهيكل العظمي بداخله يحمله.</p>
       <div class="station-handoff" style="margin-top:10px;">
-        <button type="button" class="btn" id="silhouetteBtn">أطفئ الهيكل العظمي</button>
+        <button type="button" class="btn" id="silhouetteBtn">ماذا يحدث بلا عظام؟</button>
       </div>
     </div>
 
@@ -651,13 +667,20 @@
 
     <div class="explore-step" id="s4CastBox" hidden>
       <div class="stage-wrap" style="max-width:280px;">
-        <svg class="stage" viewBox="0 0 200 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="معصم مكسور مثبَّت بجبيرة">
-          <line x1="20" y1="70" x2="80" y2="60" stroke="var(--matter)" stroke-width="10" stroke-linecap="round"/>
-          <rect x="75" y="42" width="60" height="38" rx="16" fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.5"/>
-          <line x1="80" y1="46" x2="130" y2="46" stroke="var(--matter-edge)" stroke-width="1" opacity=".5"/>
-          <line x1="80" y1="60" x2="130" y2="60" stroke="var(--matter-edge)" stroke-width="1" opacity=".5"/>
-          <line x1="80" y1="74" x2="130" y2="74" stroke="var(--matter-edge)" stroke-width="1" opacity=".5"/>
-          <line x1="135" y1="58" x2="185" y2="52" stroke="var(--ink-dim)" stroke-width="8" stroke-linecap="round"/>
+        <svg class="stage" viewBox="0 0 200 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ساعد وكفّ، والمعصم بينهما مثبَّت بجبيرة ملفوفة">
+          <!-- الساعد -->
+          <rect x="8" y="46" width="62" height="20" rx="10" fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.5"/>
+          <!-- الجبيرة الملفوفة حول المعصم -->
+          <rect x="64" y="34" width="54" height="40" rx="14" fill="var(--cast)" stroke="var(--ink-dim)" stroke-width="1.5"/>
+          <line x1="72" y1="35" x2="66" y2="73" stroke="var(--ink-dim)" stroke-width="1.5" opacity=".7"/>
+          <line x1="84" y1="34" x2="79" y2="74" stroke="var(--ink-dim)" stroke-width="1.5" opacity=".7"/>
+          <line x1="96" y1="34" x2="92" y2="74" stroke="var(--ink-dim)" stroke-width="1.5" opacity=".7"/>
+          <line x1="108" y1="35" x2="105" y2="73" stroke="var(--ink-dim)" stroke-width="1.5" opacity=".7"/>
+          <!-- الكفّ والأصابع -->
+          <rect x="112" y="42" width="28" height="22" rx="10" fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.5"/>
+          <rect x="138" y="36" width="10" height="18" rx="5" fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.2"/>
+          <rect x="150" y="34" width="10" height="20" rx="5" fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.2"/>
+          <rect x="162" y="37" width="10" height="17" rx="5" fill="var(--matter)" stroke="var(--matter-edge)" stroke-width="1.2"/>
         </svg>
       </div>
       <div class="given-card">
@@ -722,11 +745,11 @@
 
     <div class="bone-icon-row">
       <div class="bone-icon-card">
-        <svg viewBox="0 0 60 60"><path class="f" d="M10,40 C10,18 18,8 30,8 C42,8 50,18 50,40 C50,48 44,52 30,52 C16,52 10,48 10,40 Z" fill="var(--matter)" stroke="var(--matter-edge)"/></svg>
+        <svg viewBox="0 0 60 60"><rect x="24" y="6" width="12" height="48" rx="6" fill="var(--matter)" stroke="var(--matter-edge)"/></svg>
         <span>عظم العَضُد</span>
       </div>
       <div class="bone-icon-card">
-        <svg viewBox="0 0 60 60"><path class="f" d="M10,40 C10,18 18,8 30,8 C42,8 50,18 50,40 C50,48 44,52 30,52 C16,52 10,48 10,40 Z" fill="var(--matter)" stroke="var(--matter-edge)"/></svg>
+        <svg viewBox="0 0 60 60"><rect x="17" y="3" width="26" height="54" rx="13" fill="var(--matter)" stroke="var(--matter-edge)"/></svg>
         <span>عظم الفخذ</span>
       </div>
       <div class="bone-icon-card">
@@ -734,7 +757,7 @@
         <span>الضلوع</span>
       </div>
       <div class="bone-icon-card">
-        <svg viewBox="0 0 60 60"><path fill="var(--matter)" stroke="var(--matter-edge)" d="M14,50 C10,40 10,20 30,12 C50,20 50,40 46,50 Z"/></svg>
+        <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="21" fill="var(--matter)" stroke="var(--matter-edge)"/></svg>
         <span>الجمجمة</span>
       </div>
     </div>
@@ -878,10 +901,10 @@
       <div class="eval-q">
         <p class="explore-q"><span class="q-num">4</span> لماذا لا تنكسر عظامك بسهولة رغم أنها أخفّ وزنًا من الفولاذ بالحجم نفسه؟</p>
         <div class="quiz-options" data-q="u2l1-e4">
+          <label class="quiz-option"><input type="radio" name="u2l1-e4" value="w1">لأنها مجوّفة تمامًا من الداخل، فلا يوجد فيها أي نسيج صلب يتحمّل الحمل</label>
           <label class="quiz-option"><input type="radio" name="u2l1-e4" value="correct">لأن تركيبها المزدوج من ألياف الكولاجين والمعادن يمنحها متانة تضاهي الفولاذ أو تفوقه بالكتلة نفسها</label>
-          <label class="quiz-option"><input type="radio" name="u2l1-e4" value="w1">لأنها مجوّفة تمامًا من الداخل</label>
-          <label class="quiz-option"><input type="radio" name="u2l1-e4" value="w2">لأنها لا تتعرّض لأي ضغط في حياتك اليومية</label>
-          <label class="quiz-option"><input type="radio" name="u2l1-e4" value="w3">لأنها أخفّ وزنًا فقط، ولا علاقة لتركيبها بمتانتها</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e4" value="w2">لأنها لا تتعرّض لأي ضغط يُذكر في حياتك اليومية العادية أو أثناء ممارسة الرياضة، فلا حاجة لمتانة خاصّة</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e4" value="w3">لأنها أخفّ وزنًا فقط من الفولاذ، ولا علاقة إطلاقًا بين تركيبها الداخلي الفعلي ومتانتها الحقيقية</label>
         </div>
         <p class="explore-feedback" id="fb-u2l1-e4" hidden></p>
       </div>
@@ -889,10 +912,10 @@
       <div class="eval-q">
         <p class="explore-q"><span class="q-num">5</span> ما وظيفة شكل الضلوع المقوّس المتتابع؟</p>
         <div class="quiz-options" data-q="u2l1-e5">
+          <label class="quiz-option"><input type="radio" name="u2l1-e5" value="w1">يجعل جسمك أخفّ وزنًا فقط، بلا أي دور آخر يتعلّق بحماية الأعضاء أو التنفّس</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e5" value="w2">يمنع نموّ الأعضاء الداخلية المحيطة به طوال مراحل حياتك كلّها</label>
           <label class="quiz-option"><input type="radio" name="u2l1-e5" value="correct">يشكّل قفصًا يحيط بالأعضاء الداخلية ويحميها، مع سماحه بالتمدّد أثناء التنفّس</label>
-          <label class="quiz-option"><input type="radio" name="u2l1-e5" value="w1">يجعل جسمك أخفّ وزنًا فقط</label>
-          <label class="quiz-option"><input type="radio" name="u2l1-e5" value="w2">يمنع نموّ الأعضاء الداخلية</label>
-          <label class="quiz-option"><input type="radio" name="u2l1-e5" value="w3">يربط الضلوع بالعمود الفقري فقط دون أي وظيفة حماية</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e5" value="w3">يربط الضلوع بالعمود الفقري فقط، دون أي دور في حماية القلب أو الرئتين</label>
         </div>
         <p class="explore-feedback" id="fb-u2l1-e5" hidden></p>
       </div>
@@ -900,10 +923,10 @@
       <div class="eval-q">
         <p class="explore-q"><span class="q-num">6</span> عظم العَضُد وعظم الفخذ طويلان ومفصليان. ما وظيفتهما المشتركة؟</p>
         <div class="quiz-options" data-q="u2l1-e6">
-          <label class="quiz-option"><input type="radio" name="u2l1-e6" value="correct">دعم حركة الذراعين والساقين</label>
           <label class="quiz-option"><input type="radio" name="u2l1-e6" value="w1">حماية الأعضاء الداخلية فقط</label>
           <label class="quiz-option"><input type="radio" name="u2l1-e6" value="w2">إنتاج خلايا الدم</label>
           <label class="quiz-option"><input type="radio" name="u2l1-e6" value="w3">تخزين الكالسيوم فقط بلا وظيفة حركية</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e6" value="correct">دعم حركة الذراعين والساقين</label>
         </div>
         <p class="explore-feedback" id="fb-u2l1-e6" hidden></p>
       </div>
@@ -912,9 +935,9 @@
         <p class="explore-q"><span class="q-num">7</span> ما الذي يدلّ عليه احتياج شخص مصاب بكسر إلى جبيرة؟</p>
         <div class="quiz-options" data-q="u2l1-e7">
           <label class="quiz-option"><input type="radio" name="u2l1-e7" value="correct">أن العظم المكسور فقد مؤقّتًا قدرته على دعم الجزء المصاب، فاحتاج دعامة خارجية</label>
-          <label class="quiz-option"><input type="radio" name="u2l1-e7" value="w1">أن العظام لا تُشفى أبدًا</label>
-          <label class="quiz-option"><input type="radio" name="u2l1-e7" value="w2">أن الجبيرة تحلّ محلّ العظم نهائيًّا</label>
-          <label class="quiz-option"><input type="radio" name="u2l1-e7" value="w3">أن الكسر لا علاقة له بوظيفة العظم في الدعم</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e7" value="w1">أن العظام لا تُشفى أبدًا مهما طال الوقت، فتبقى الجبيرة ضرورية إلى الأبد</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e7" value="w2">أن الجبيرة تحلّ محلّ العظم نهائيًّا، وتؤدّي وظيفته حتى بعد الشفاء</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e7" value="w3">أن الكسر لا علاقة له إطلاقًا بوظيفة العظم في دعم الجسم وحمايته</label>
         </div>
         <p class="explore-feedback" id="fb-u2l1-e7" hidden></p>
       </div>
@@ -922,16 +945,16 @@
       <div class="eval-q">
         <p class="explore-q"><span class="q-num">8</span> ما الفرق بين كائن حيّ يمتلك هيكلًا عظميًّا وآخر بلا عظام على الإطلاق؟</p>
         <div class="quiz-options" data-q="u2l1-e8">
+          <label class="quiz-option"><input type="radio" name="u2l1-e8" value="w1">لا فرق بينهما إطلاقًا، فكلاهما يمتلك القدرة نفسها على الدعم والحماية والحركة</label>
           <label class="quiz-option"><input type="radio" name="u2l1-e8" value="correct">الكائن ذو الهيكل العظمي يمتلك دعامة ثابتة تحمي أعضاءه الداخلية وتساعده على الحركة بقوّة أكبر</label>
-          <label class="quiz-option"><input type="radio" name="u2l1-e8" value="w1">لا فرق بينهما إطلاقًا</label>
-          <label class="quiz-option"><input type="radio" name="u2l1-e8" value="w2">الكائن بلا عظام أقوى دائمًا من الكائن ذي العظام</label>
-          <label class="quiz-option"><input type="radio" name="u2l1-e8" value="w3">الكائن ذو العظام لا يستطيع الحركة إطلاقًا</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e8" value="w2">الكائن بلا عظام أقوى دائمًا من الكائن ذي العظام في كل مقاييس القوّة والمتانة والصلابة الجسدية</label>
+          <label class="quiz-option"><input type="radio" name="u2l1-e8" value="w3">الكائن ذو العظام لا يستطيع الحركة إطلاقًا بسبب ثقل هيكله العظمي الدائم</label>
         </div>
         <p class="explore-feedback" id="fb-u2l1-e8" hidden></p>
       </div>
 
       <div class="eval-q">
-        <p class="explore-q"><span class="q-num">9</span> اذكر اسم عظمة واحدة من الهيكل الطرفي (غير الجمجمة والضلوع) تساعد جسمك على الدعم والحركة.</p>
+        <p class="explore-q"><span class="q-num">9</span> اذكر اسم عظمة واحدة من الهيكل الطرفي تساعد جسمك على الدعم والحركة.</p>
         <div class="explore-answer-row">
           <input type="text" class="explore-input" id="e9Input" placeholder="اكتب اسم العظمة" autocomplete="off">
           <button type="button" class="btn" id="e9Btn">سلّم الإجابة</button>
@@ -1116,14 +1139,14 @@ buildSpineRibs('3');
 
 /* ============ 3) المحطة 1 ============ */
 function station1(){
-  var jelly = document.getElementById('jellyGroup');
+  var stage = document.getElementById('stageJelly');
   var caption = document.getElementById('jellyCaption');
   var pullBtn = document.getElementById('jellyPullBtn');
 
   pullBtn.addEventListener('click', function(){
     if(pullBtn.disabled) return;
     pullBtn.disabled = true;
-    jelly.classList.add('beached');
+    stage.classList.add('beached');
     caption.textContent = 'القنديل الآن على الرمل، وقد انبسط تمامًا بلا شكل ثابت — لا هيكل يدعمه.';
     caption.classList.add('done');
     if(window.Sounds) window.Sounds.playChime();
@@ -1241,7 +1264,7 @@ function station3(){
     input: 's3ShortInput', button: 's3ShortBtn', feedback: 'fb-u2l1-organ-why',
     modelBtn: 's3ShortModelBtn', model: 's3ShortModel',
     accept: { paths: [
-      { all: [ ['حمايه', 'يحمي', 'تحمي', 'يقي'] ] }
+      { all: [ ['حماي', 'حمي', 'يقي', 'تقي'] ] }
     ] },
     normalize: 'ar',
     hints: [T.s3.shortHint, T.s3.shortHint],
@@ -1261,12 +1284,14 @@ function station3(){
 
 /* ============ 6) المحطة 4 ============ */
 function station4(){
+  var stage = document.getElementById('stageSilhouette');
   var silhouetteBtn = document.getElementById('silhouetteBtn');
   silhouetteBtn.addEventListener('click', function(){
     if(silhouetteBtn.disabled) return;
     silhouetteBtn.disabled = true;
-    document.getElementById('humanBody').classList.add('collapsed');
-    document.getElementById('silhouetteSkeleton').classList.add('faded');
+    silhouetteBtn.classList.add('demoted');
+    silhouetteBtn.textContent = 'شاهدتَ النتيجة';
+    stage.classList.add('collapsed');
     var msg = document.getElementById('silhouetteMsg');
     msg.textContent = 'بلا هيكل عظمي، لا شيء يُبقي جسمك واقفًا — تمامًا كالقنديل على الرمل.';
     msg.classList.add('done');
@@ -1279,7 +1304,7 @@ function station4(){
     modelBtn: 's4SpineModelBtn', model: 's4SpineModel',
     accept: { paths: [
       { all: [ ['دعم', 'دعامه', 'يدعم', 'اسناد'] ] },
-      { all: [ ['حمايه', 'يحمي', 'الحبل الشوكي'] ] }
+      { all: [ ['حماي', 'حمي', 'الحبل الشوكي'] ] }
     ] },
     normalize: 'ar',
     hints: [T.s4.spineHint, T.s4.spineHint],
