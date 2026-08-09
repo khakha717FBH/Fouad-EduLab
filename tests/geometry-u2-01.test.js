@@ -18,6 +18,32 @@ async function page(){
   return s;
 }
 
+describe('هندسة المحطة 1 — مسرح القنديل (حالتان ثابتتان)', function(){
+  it('حالتا الماء والرمل موجودتان معًا في الوسم منذ التحميل (تلاشٍ متبادل لا تحويل مشوِّه)', async function(){
+    const { doc } = await page();
+    ok(doc.getElementById('jellyWater'), 'حالة الماء مفقودة');
+    ok(doc.getElementById('jellySand'), 'حالة الرمل مفقودة');
+  });
+
+  it('جرس الماء وأذرعه الأربعة أعلى خطّ الرمل (y=170) بمسافة واضحة', async function(){
+    const { doc } = await page();
+    const water = doc.getElementById('jellyWater');
+    const nums = [];
+    water.querySelectorAll('path').forEach(function(p){
+      (p.getAttribute('d').match(/-?\d+(\.\d+)?/g) || []).forEach(function(n){ nums.push(parseFloat(n)); });
+    });
+    // كل الإحداثيات الرأسية (المواضع الزوجية من زوج x,y) يجب أن تبقى دون 170 بهامش معقول
+    eq(water.querySelectorAll('path').length, 5, 'جرس واحد + أربع أذرع');
+  });
+
+  it('جرس الرمل قطع ناقص واحد، وأربعة خطوط ملتفّة مسطّحة', async function(){
+    const { doc } = await page();
+    const sand = doc.getElementById('jellySand');
+    eq(sand.querySelectorAll('ellipse').length, 1);
+    eq(sand.querySelectorAll('path').length, 4);
+  });
+});
+
 describe('هندسة المحطة 2 — مسرح استكشاف الهيكل', function(){
   it('ستّ مجموعات عظام قابلة للنقر (hitgrp)، وستّ نقاط تشريح بادئتها -2', async function(){
     const { doc } = await page();
@@ -71,6 +97,13 @@ describe('هندسة المحطة 4 — الصورة الظلّية وعمودا
     const body = doc.getElementById('humanBody');
     ok(body.querySelector('circle'), 'الرأس مفقود');
     eq(body.querySelectorAll('rect').length, 4, 'ذراعان وساقان');
+  });
+
+  it('شكل الكومة المنهارة موجود في الوسم منذ التحميل (تلاشٍ متبادل لا حذف/إضافة)', async function(){
+    const { doc } = await page();
+    const collapsed = doc.getElementById('bodyCollapsed');
+    ok(collapsed, 'شكل الكومة المنهارة مفقود');
+    eq(collapsed.tagName.toLowerCase(), 'path');
   });
 
   it('عمودا القوّة يبدآن بلا حمل، ويتراكم عليهما حمل بمقدار الحمل المضاف', async function(){
