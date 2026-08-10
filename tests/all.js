@@ -18,7 +18,9 @@ const SUITES = [
   'lesson-01.test.js',      // انحدار: درس يرث template.js ولا يستعملها
   'lesson-02.test.js',      // حصانة: درس لا يربط المشترك أصلًا
   'lesson-u2-01.test.js',   // الوحدة 02 · الدرس 01 — أوّل درس أحياء
-  'geometry-u2-01.test.js'  // فحص عددي لمسارح الوحدة 02 · الدرس 01
+  'geometry-u2-01.test.js', // فحص عددي لمسارح الوحدة 02 · الدرس 01
+  'lesson-u2-02.test.js',   // الوحدة 02 · الدرس 02 — إنتاج خلايا الدم
+  'geometry-u2-02.test.js'  // فحص عددي لمسارح الوحدة 02 · الدرس 02
 ];
 
 let pass = 0, fail = 0, broken = [];
