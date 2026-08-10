@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدرس 2 — ما دور العظام في إنتاج خلايا الدم وتوفير بعض المواد للجسم؟ | مختبر فؤاد التعليمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/identity/identity.css">
+<link rel="stylesheet" href="../../shared/template-boilerplate/template.css">
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  الوحدة 2 — الدرس 2 — مختبر فؤاد التعليمي
+  "ما دور العظام في إنتاج خلايا الدم وتوفير بعض المواد للجسم؟"
+  ص 70–75 · المعيار B0905.2 · بادئة data-q/XP: u2l2-
+
+  ستّ محطات، ستّ نقاط تقدّم. المحطة الثانية مشطورة داخليًّا إلى ثلاث
+  مراحل (استكشاف حرّ ← تسمية بالرقاقات ← مفهوم خاطئ) بنقطة واحدة.
+
+  دَينان يُسدَّدان هنا (مؤجَّلان من الدرس 01 بقرار صريح):
+  شقّ «إنتاج خلايا الدم» من تعريف الهيكل العظمي (محطة 4)،
+  والمفهوم الخاطئ «العظام ليست حيّة» (محطة 4، u2l2-alive).
+
+  خانات الرقاقات في المحطة 2 عناصر HTML موضوعة فوق الـSVG بنسب
+  مئوية (لا داخل الـSVG نفسه) — نتيجة فحص مباشر على template.js
+  الحيّ: الخانة التي يكتب فيها المحرّك textContent يجب أن تكون
+  عنصر HTML حقيقيًّا، وإلا صارت عقدة نصّ داخل SVG لا تُرسَم.
+  المصدر الكامل لهذا القرار في وثيقة التسليم §2.1.
+
+  الرصيد المقدَّر: 126 أساسي (3+25+30+43+25) + 8 اختياري
+  (u2l2-osteoporosis-bonus) = 134. رقم الاختبار هو الحقيقة لا هذا
+  التعليق.
+  ========================================================= -->
+<style>
+  /* ============ منع سحب التحديث من تصفير XP ============ */
+  html, body{ overscroll-behavior-y:contain; }
+  html{scroll-behavior:smooth;}
+  .station{ scroll-margin-top:14px; }
+
+  /* ============ أصناف عامّة مستعارة من نمط دروس الوحدة 02 ============ */
+  .dose{ max-width:920px; margin:16px auto 0; font-size:.95rem; line-height:2; }
+  .sub-h{
+    max-width:920px; margin:30px auto 12px;
+    font-family:'Cairo', sans-serif; font-size:1rem; font-weight:700; color:var(--turquoise);
+  }
+  .given-card{
+    display:inline-flex; flex-wrap:wrap; gap:6px 16px; align-items:center; justify-content:center;
+    width:100%; max-width:920px; margin:10px auto 0; padding:9px 14px;
+    border:1px dashed rgba(20,200,168,.35); border-radius:14px;
+    font-size:13px; color:var(--ink-dim);
+  }
+  .given-card b{ color:var(--turquoise); font-weight:700; }
+  .stage-wrap{
+    width:100%; max-width:640px; margin:12px auto 0;
+    background:var(--navy-darker); border:1px solid rgba(20,200,168,0.15);
+    border-radius:22px; padding:14px;
+  }
+  .stage-wrap.wide{ max-width:920px; }
+  svg.stage{ width:100%; height:auto; display:block; -webkit-tap-highlight-color:transparent; }
+  .stage-msg{
+    max-width:920px; margin:10px auto 0; min-height:22px; text-align:center;
+    font-size:14px; color:var(--ink-dim); line-height:1.9;
+  }
+  .stage-msg.done{ color:var(--turquoise); font-weight:700; }
+  .station-tagline{
+    max-width:920px; margin:0 auto 4px; font-size:.95rem; color:var(--ink-dim); line-height:1.9;
+  }
+  .explore-q{
+    font-weight:700; color:var(--ink); margin:0 0 12px; font-size:clamp(14px,2.4vw,16px);
+  }
+  .explore-step{ margin-top:26px; padding-top:20px; border-top:1px dashed var(--border); }
+  .explore-step:first-of-type{ border-top:none; padding-top:0; }
+  .explore-answer-row{ display:flex; gap:10px; flex-wrap:wrap; }
+  .explore-input{
+    flex:1 1 140px; min-width:100px; background:rgba(255,255,255,.03);
+    border:1px solid var(--border); border-radius:999px; padding:11px 20px;
+    color:var(--ink); font-family:'Tajawal', sans-serif; font-size:15px; text-align:center;
+  }
+  .explore-input::placeholder{ color:var(--ink-dim); opacity:.55; font-size:.86em; }
+  .explore-input:focus{ outline:none; border-color:var(--turquoise); box-shadow:0 0 0 3px var(--turquoise-faint); }
+  .explore-input:disabled{ opacity:.7; }
+  .success-tag{
+    margin-top:18px; display:inline-flex; align-items:center; gap:8px;
+    background:rgba(20,200,168,.08); border:1px solid var(--turquoise-soft); color:var(--turquoise);
+    font-family:'Cairo', sans-serif; font-weight:700; font-size:.9rem; padding:9px 20px;
+    border-radius:999px; opacity:0; transform:translateY(6px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .success-tag.show{opacity:1; transform:translateY(0);}
+  .name-card{
+    max-width:920px; margin:16px auto 0; border:1px dashed var(--turquoise-soft); border-radius:14px;
+    padding:12px 16px; font-size:.92rem; line-height:1.9; background:rgba(20,200,168,.05);
+  }
+  .name-card b{color:var(--turquoise); font-weight:800;}
+  .name-gate{
+    margin-top:20px; background:rgba(255,255,255,.03); border:1px solid rgba(20,200,168,.2);
+    border-radius:16px; padding:16px 18px;
+  }
+  .name-gate label{ display:block; font-size:.9rem; color:var(--ink); font-weight:700; margin-bottom:10px; }
+  .name-gate .gate-note{ font-size:.78rem; color:var(--ink-dim); margin:10px 0 0; }
+  .eval-q{ border-top:1px solid rgba(255,255,255,.06); margin-top:26px; padding-top:22px; }
+  .eval-q.first{border-top:none; margin-top:18px; padding-top:0;}
+  .q-num{
+    display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px;
+    border-radius:50%; background:rgba(20,200,168,.12); border:1px solid var(--turquoise-soft);
+    color:var(--turquoise); font-family:'Cairo', sans-serif; font-weight:800; font-size:.8rem;
+    margin-inline-end:8px; flex-shrink:0;
+  }
+  .eval-summary{
+    margin-top:30px; background:rgba(20,200,168,.06); border:1px solid var(--turquoise-soft);
+    border-radius:18px; padding:20px 18px; text-align:center;
+  }
+  #certTriggerSlot{display:flex; justify-content:center; margin-top:18px;}
+  .bonus-box{
+    max-width:920px; margin:24px auto 0; border:1px dashed var(--coral); border-radius:16px;
+    padding:16px 18px; background:rgba(255,107,74,.04);
+  }
+  .bonus-tag{
+    display:inline-block; font-family:'Cairo', sans-serif; font-weight:800; font-size:.75rem;
+    color:var(--coral); border:1px solid var(--coral); border-radius:999px; padding:3px 12px; margin-bottom:10px;
+  }
+
+  /* ============ محطتان 2 و3 — مسرح المقطع الطولي في العظم ============ */
+  :root{ --marrow-red:#B8443C; --marrow-yellow:#D9A84E; --water-cloudy:#E7E2D8; --water-clear:#8FB9D8; }
+  .bone-stage-wrap{ position:relative; max-width:460px; margin:14px auto 0; }
+  .bone-stage-wrap.zoom{ max-width:210px; }
+  .bone-stage-wrap svg.bone-stage{ width:100%; height:auto; display:block; -webkit-tap-highlight-color:transparent; }
+  .bone-stage .f{ fill:var(--matter); stroke:var(--matter-edge); stroke-width:1; }
+  .bone-stage .cavity{ fill:var(--navy-darker); }
+  .bone-stage .mesh{ stroke-width:2.2; stroke-linecap:round; fill:none; transition:stroke .2s; }
+  .bone-stage .mesh-outline{ stroke:var(--navy-darker); stroke-width:4.5; stroke-linecap:round; fill:none; opacity:.5; }
+  .bone-stage .node{ stroke:var(--navy-darker); stroke-width:.8; transition:fill .2s; }
+  .bone-stage .mrw{ fill:url(#marrowGrad2); transition:fill .2s; }
+  .bone-stage .connector{ stroke:var(--turquoise-soft); stroke-width:1.5; stroke-dasharray:3 3; opacity:0; transition:opacity .5s ease; }
+  .bone-stage .connector.shown{ opacity:.75; }
+  @media (prefers-reduced-motion: reduce){ .bone-stage .connector{ transition:none; } }
+  .bone-stage .grp{ cursor:pointer; touch-action:none; outline:none; }
+  .bone-stage .grp:focus-visible{ outline:2px solid var(--coral); outline-offset:2px; }
+  .bone-stage .grp.on .f{ fill:var(--turquoise); }
+  .bone-stage .grp.on .mesh{ stroke:var(--turquoise); }
+  .bone-stage .grp.on .node{ fill:var(--turquoise); }
+  .bone-stage .grp.on .mrw{ stroke:var(--turquoise); stroke-width:3; }
+  .bone-stage .grp.on{ filter:drop-shadow(0 0 8px var(--turquoise-soft)); }
+  .bone-readout-done{ color:var(--turquoise); font-weight:700; margin-top:6px; }
+  /* بقع دالّة على مواضع النقر الثلاثة — تحلّ مشكلة رصدها فؤاد: طالب
+     ينقر مرّتين فقط ويظنّ أنه أنهى الاستكشاف فينتقل بلا اكتمال. كل
+     بقعة نابضة حتى تُنقر منطقتها، ثم تخفت وتصغر لتُعلن "زرتُ هذا". */
+  .bone-stage .hotspot-ring{
+    fill:none; stroke:var(--turquoise); stroke-width:2; opacity:.8;
+    transform-box:fill-box; transform-origin:50% 50%;
+    animation:tplHotspotPulse 1.8s ease-out infinite;
+  }
+  .bone-stage .hotspot-dot{ fill:var(--turquoise); stroke:var(--navy-darker); stroke-width:1.5; transition:fill .3s; }
+  .bone-stage .hotspot.done .hotspot-ring{ animation:none; opacity:0; }
+  .bone-stage .hotspot.done .hotspot-dot{
+    fill:var(--muted); transform-box:fill-box; transform-origin:50% 50%; transform:scale(.55);
+    transition:fill .3s, transform .3s;
+  }
+  @keyframes tplHotspotPulse{
+    0%{ transform:scale(1); opacity:.8; }
+    100%{ transform:scale(1.9); opacity:0; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .bone-stage .hotspot-ring{ animation:none; opacity:.45; }
+  }
+  .bone-slot{
+    position:absolute; transform:translate(-50%,-50%);
+    white-space:nowrap; font-size:12.5px; z-index:2;
+    /* .slot المشتركة تحمل transition:.2s عامّة (كل الخصائص). حين يكتب
+       المحرّك النصّ داخل الخانة يكبر عرضها، وبما أنّ توسيطها هنا
+       بنسبة مئوية (translate(-50%)) لا بإحداثيات ثابتة، كانت إعادة
+       التوسيط نفسها تُرسَم متحرّكة فتبدو الرقاقة "تتوقّف يمين مكانها
+       ثم تأخذ مكانها" — إلغاء الانتقال هنا يجعل التوسيط فوريًّا
+       (ملاحظة فؤاد). */
+    transition:none;
+  }
+  .bone-legend{ display:flex; flex-direction:column; gap:10px; align-items:flex-start; max-width:260px; margin:16px auto 0; }
+  .legend-item{ display:inline-flex; align-items:center; gap:10px; font-size:14px; color:var(--ink); line-height:1.5; }
+  .legend-swatch{ width:18px; height:18px; border-radius:50%; background:var(--matter); flex-shrink:0; box-sizing:border-box; }
+  .legend-swatch.spongy{
+    background:radial-gradient(circle, var(--marrow-yellow) 0%, var(--marrow-red) 100%);
+    border:2px solid var(--navy-darker);
+  }
+  .legend-swatch.marrow{ background:var(--marrow-red); }
+  .fact-line{
+    max-width:920px; margin:14px auto 0; border:1px dashed var(--turquoise-soft); border-radius:14px;
+    padding:12px 16px; font-size:.92rem; line-height:1.9; background:rgba(20,200,168,.05); text-align:center;
+  }
+  .fat-icon-wrap{ max-width:110px; margin:12px auto 0; }
+  .fat-icon-wrap svg{ width:100%; height:auto; display:block; }
+
+  /* ============ محطة 1 — كيس التبرّع ============ */
+  .bloodbag-wrap{ max-width:220px; margin:10px auto 0; }
+  .bloodbag .bag{ fill:rgba(255,255,255,.04); stroke:var(--matter-edge); stroke-width:2; }
+  .bloodbag .liquid{ fill:var(--marrow-red); opacity:.82; }
+  .bloodbag .cap{ fill:var(--matter); }
+
+  /* ============ محطة 4 — مسرح الحلقة المصغّر ============ */
+  .flow-stage-wrap{ max-width:640px; margin:14px auto 0; }
+  .flow-stage .marrow-blob{ fill:var(--marrow-red); opacity:.6; }
+  .flow-stage .marrow-dot{ fill:var(--muted); }
+  .flow-stage .cell-rbc{ fill:var(--marrow-red); }
+  .flow-stage .cell-wbc{ fill:var(--ink); opacity:.85; }
+  .flow-stage .cell-plt{ fill:var(--matter); }
+  .flow-stage .flow-arrow{ stroke:var(--turquoise-soft); stroke-width:2.5; fill:none; marker-end:url(#flowArrow); }
+  .flow-stage .flow-cap{ font-family:'Tajawal',sans-serif; font-size:11.5px; fill:var(--ink-dim); text-anchor:middle; }
+
+  /* ============ محطة 5 — كأس الماء ============ */
+  .glass-stage-wrap{ max-width:220px; margin:10px auto 0; }
+  .glass-stage .beaker{ fill:none; stroke:var(--matter-edge); stroke-width:2.5; }
+  #waterClear{ transition:opacity .9s ease; }
+  #waterCloudy{ opacity:0; transition:opacity .9s ease; }
+  #stageWater.cloudy #waterClear{ opacity:0; }
+  #stageWater.cloudy #waterCloudy{ opacity:1; }
+  @media (prefers-reduced-motion: reduce){ #waterClear, #waterCloudy{ transition:none; } }
+
+  /* ============ محطة 5 — شريطا الحجم/الكتلة ============ */
+  .density-bars{ max-width:520px; margin:16px auto 0; display:flex; flex-direction:column; gap:14px; }
+  .density-row{ display:flex; align-items:center; gap:12px; }
+  .density-label{ flex:0 0 128px; font-size:12.5px; color:var(--ink-dim); text-align:end; }
+  .density-track{
+    flex:1 1 auto; height:15px; border-radius:999px; background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.08); overflow:hidden;
+  }
+  .density-fill{ height:100%; background:var(--matter); border-radius:999px 0 0 999px; }
+  .density-pct{ flex:0 0 40px; font-family:'Cairo',sans-serif; font-weight:700; font-size:13px; color:var(--ink); }
+  .density-note{ max-width:520px; margin:6px auto 0; font-size:12px; color:var(--ink-dim); text-align:center; }
+
+  /* ============ محطة 6 — صورة التقييم الواقعية ============ */
+  .photo-card{
+    max-width:340px; margin:14px auto 0; background:rgba(255,255,255,.9); border-radius:18px;
+    padding:10px; text-align:center;
+  }
+  .photo-card img{ width:100%; height:auto; display:block; border-radius:12px; }
+  .photo-credit{ max-width:340px; margin:6px auto 0; font-size:10.5px; color:var(--ink-dim); text-align:center; line-height:1.7; }
+</style>
+</head>
+<body>
+
+<nav class="crumb">
+  <a href="../../index.html">الرئيسية</a> ›
+  <a href="../index.html">الفصل الأول</a> ›
+  <a href="index.html">الوحدة 2</a> ›
+  الدرس 2
+</nav>
+
+<div class="progress-track">
+  <div class="xp-counter" id="xpCounter">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+    <span id="xpValue">0</span>
+    <span class="xp-label">XP</span>
+  </div>
+  <div class="progress-dot" data-target="station-1"></div>
+  <div class="progress-dot" data-target="station-2"></div>
+  <div class="progress-dot" data-target="station-3"></div>
+  <div class="progress-dot" data-target="station-4"></div>
+  <div class="progress-dot" data-target="station-5"></div>
+  <div class="progress-dot" data-target="station-6"></div>
+</div>
+
+<header class="hero">
+  <div class="eyebrow">الوحدة 2 · الدرس 2</div>
+  <h1>ما دور العظام في إنتاج خلايا الدم وتوفير بعض المواد للجسم؟</h1>
+  <div class="objectives-box">
+    <h3>في نهاية هذا الدرس سوف تتمكّن من أن:</h3>
+    <ul>
+      <li>تحدّد العناصر المهمّة التي يخزّنها العظم مثل الكالسيوم والبوتاسيوم.</li>
+      <li>تصف كيف ينتج نخاع العظم الأحمر خلايا الدم الحمراء والبيضاء والصفائح الدموية.</li>
+      <li>تصف كيف يحتوي نخاع العظم الأصفر على الأنسجة الدهنية التي تُعدّ مصدرًا للطاقة.</li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===================== محطة 1 ===================== -->
+  <section class="station" id="station-1">
+    <div class="station-label">المحطة الأولى</div>
+    <h2>من أين يأتي الدم الجديد؟</h2>
+    <p class="station-tagline">حملة تبرّع بالدم في الدوحة. تخيّل نفسك بعد التبرّع مباشرة.</p>
+
+    <div class="bloodbag-wrap">
+      <svg class="stage bloodbag" viewBox="0 0 160 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="كيس تبرّع بالدم ممتلئ">
+        <rect class="bag" x="25" y="35" width="110" height="140" rx="18"/>
+        <rect class="liquid" x="35" y="70" width="90" height="95" rx="10"/>
+        <rect class="cap" x="68" y="12" width="24" height="26" rx="5"/>
+        <line x1="80" y1="38" x2="80" y2="48" stroke="var(--matter)" stroke-width="4"/>
+      </svg>
+    </div>
+
+    <div class="given-card">
+      <span><b>الكمية المتبرَّع بها:</b> نصف لتر تقريبًا</span>
+      <span><b>العودة للعمل:</b> في اليوم نفسه</span>
+      <span><b>التبرّع مجدّدًا:</b> بعد أسابيع قليلة</span>
+    </div>
+
+    <div class="explore-step" style="border-top:none;padding-top:14px;">
+      <p class="explore-q">جسمك خسر نصف لتر من الدم. من أين يأتي البديل؟</p>
+      <div class="quiz-options" id="s1PredictOptions">
+        <label class="quiz-option"><input type="radio" name="s1predict" value="a">القلب يصنع خلايا دم جديدة أثناء ضخّه للدم</label>
+        <label class="quiz-option"><input type="radio" name="s1predict" value="b">الكبد يخزّن دمًا احتياطيًّا ويطلقه عند الحاجة</label>
+        <label class="quiz-option"><input type="radio" name="s1predict" value="c">الطعام والشراب يتحوّلان إلى دم بعد الهضم مباشرة</label>
+        <label class="quiz-option"><input type="radio" name="s1predict" value="d">شيء ما داخل العظام يصنع خلايا الدم</label>
+      </div>
+      <p class="explore-feedback" id="fb-s1predict" hidden></p>
+    </div>
+
+    <div class="station-handoff" id="s1done" hidden>
+      <a href="#station-2" class="station-next">ماذا يوجد داخل العظم؟ ←</a>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 2 ===================== -->
+  <section class="station" id="station-2">
+    <div class="station-label">المحطة الثانية</div>
+    <h2>ماذا يوجد داخل العظم؟</h2>
+    <p class="station-tagline">مقطع طولي في عظم طويل. انقر كل جزء منه لتعرف وصفه.</p>
+
+    <div data-chips="u2l2-parts">
+      <div class="bone-stage-wrap">
+        <svg class="stage bone-stage" id="boneStage2" viewBox="0 0 260 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="طرف عظم طويل مقطوعًا مع جزء من العمود، بلا أسماء">
+          <defs>
+            <!-- تدرّج أفقي بإحداثيات ثابتة: النخاع أحمر عند الطرف ويتحوّل
+                 أصفر مع امتداد العمود — شكل واحد مستمرّ لا قطعتان منفصلتان. -->
+            <linearGradient id="marrowGrad2" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="260" y2="0">
+              <stop offset="0%" stop-color="var(--marrow-red)"/>
+              <stop offset="22%" stop-color="var(--marrow-red)"/>
+              <stop offset="42%" stop-color="var(--marrow-yellow)"/>
+              <stop offset="100%" stop-color="var(--marrow-yellow)"/>
+            </linearGradient>
+            <clipPath id="clipLeftCav2"><rect x="25" y="75" width="80" height="130" rx="40"/></clipPath>
+            <!-- عصيّات الإسفنجي بتدرّج أحمر/أصفر لا شاحب، لتمييزها عن لون
+                 العظم الكثيف نفسه (ملاحظة فؤاد) -->
+            <radialGradient id="strutGrad2" cx="65" cy="140" r="58" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="var(--marrow-yellow)"/>
+              <stop offset="100%" stop-color="var(--marrow-red)"/>
+            </radialGradient>
+          </defs>
+          <!-- طرف واحد فقط لا طرفان: كلاهما يعرض المفهوم نفسه بلا إضافة
+               تعليمية، فحذف الثاني يقلّل الازدحام البصري (ملاحظة فؤاد). -->
+          <g class="grp hitgrp" id="g-compact-2" data-t="compact" tabindex="0" role="button" aria-label="القشرة الخارجية">
+            <rect class="f" x="10" y="60" width="110" height="160" rx="55"/>
+            <rect class="f" x="95" y="95" width="165" height="70"/>
+            <g class="hotspot" id="hs-compact">
+              <circle class="hotspot-ring" cx="180" cy="100" r="12"/>
+              <circle class="hotspot-dot" cx="180" cy="100" r="6"/>
+            </g>
+          </g>
+          <rect class="cavity" x="25" y="75" width="80" height="130" rx="40"/>
+          <rect class="cavity" x="105" y="110" width="155" height="40"/>
+          <g class="grp hitgrp" id="g-marrow-2" data-t="marrow" tabindex="0" role="button" aria-label="الوسط">
+            <rect class="mrw" x="25" y="75" width="80" height="130" rx="40"/>
+            <rect class="mrw" x="105" y="110" width="155" height="40"/>
+            <g class="hotspot" id="hs-marrow">
+              <circle class="hotspot-ring" cx="180" cy="130" r="12"/>
+              <circle class="hotspot-dot" cx="180" cy="130" r="6"/>
+            </g>
+          </g>
+          <g class="grp hitgrp" id="g-spongy-2" data-t="spongy" tabindex="0" role="button" aria-label="الداخل عند الطرف">
+            <g clip-path="url(#clipLeftCav2)">
+              <path class="mesh-outline" d="M83.2,125.1 Q83.4,142.2 92.6,156.6"/>
+              <path class="mesh-outline" d="M92.6,156.6 Q93.7,168.8 88.4,179.8"/>
+              <path class="mesh-outline" d="M40.7,156.5 Q47.1,161.8 55.1,163.9"/>
+              <path class="mesh-outline" d="M46.2,182.9 Q54.6,185.2 62.9,182.5"/>
+              <path class="mesh-outline" d="M32.6,116.3 Q41.9,119.0 48.8,125.8"/>
+              <path class="mesh-outline" d="M48.8,125.8 Q57.7,126.6 64.8,121.2"/>
+              <path class="mesh-outline" d="M48.8,125.8 Q45.1,131.6 44.9,138.4"/>
+              <path class="mesh-outline" d="M55.1,163.9 Q47.9,172.1 46.2,182.9"/>
+              <path class="mesh-outline" d="M55.1,163.9 Q56.9,160.3 59.9,157.5"/>
+              <path class="mesh-outline" d="M92.9,117.7 Q85.9,133.8 70.4,142.1"/>
+              <path class="mesh-outline" d="M43.0,100.6 Q50.4,101.9 57.7,99.6"/>
+              <path class="mesh-outline" d="M57.7,99.6 Q64.9,97.7 71.9,100.1"/>
+              <path class="mesh-outline" d="M43.0,100.6 Q40.7,110.4 32.6,116.3"/>
+              <path class="mesh-outline" d="M44.9,138.4 Q39.5,146.7 40.7,156.5"/>
+              <path class="mesh-outline" d="M63.2,134.9 Q67.6,137.7 70.4,142.1"/>
+              <path class="mesh-outline" d="M62.9,182.5 Q66.0,183.1 68.7,181.4"/>
+              <path class="mesh-outline" d="M59.9,157.5 Q68.4,159.5 77.1,158.1"/>
+              <path class="mesh-outline" d="M83.2,125.1 Q83.4,133.2 86.5,140.6"/>
+              <path class="mesh-outline" d="M64.8,121.2 Q66.3,128.3 63.2,134.9"/>
+              <path class="mesh-outline" d="M68.7,181.4 Q78.8,183.4 88.4,179.8"/>
+              <path class="mesh-outline" d="M80.3,100.4 Q84.7,110.5 92.9,117.7"/>
+              <path class="mesh-outline" d="M86.5,140.6 Q92.1,147.7 92.6,156.6"/>
+              <path class="mesh-outline" d="M71.9,100.1 Q76.1,101.0 80.3,100.4"/>
+              <path class="mesh-outline" d="M70.4,142.1 Q78.6,143.1 86.5,140.6"/>
+              <path class="mesh-outline" d="M83.2,125.1 Q87.3,120.4 92.9,117.7"/>
+              <path class="mesh-outline" d="M77.1,158.1 Q84.7,155.7 92.6,156.6"/>
+              <path class="mesh" d="M83.2,125.1 Q83.4,142.2 92.6,156.6" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M92.6,156.6 Q93.7,168.8 88.4,179.8" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M40.7,156.5 Q47.1,161.8 55.1,163.9" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M46.2,182.9 Q54.6,185.2 62.9,182.5" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M32.6,116.3 Q41.9,119.0 48.8,125.8" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M48.8,125.8 Q57.7,126.6 64.8,121.2" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M48.8,125.8 Q45.1,131.6 44.9,138.4" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M55.1,163.9 Q47.9,172.1 46.2,182.9" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M55.1,163.9 Q56.9,160.3 59.9,157.5" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M92.9,117.7 Q85.9,133.8 70.4,142.1" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M43.0,100.6 Q50.4,101.9 57.7,99.6" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M57.7,99.6 Q64.9,97.7 71.9,100.1" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M43.0,100.6 Q40.7,110.4 32.6,116.3" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M44.9,138.4 Q39.5,146.7 40.7,156.5" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M63.2,134.9 Q67.6,137.7 70.4,142.1" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M62.9,182.5 Q66.0,183.1 68.7,181.4" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M59.9,157.5 Q68.4,159.5 77.1,158.1" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M83.2,125.1 Q83.4,133.2 86.5,140.6" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M64.8,121.2 Q66.3,128.3 63.2,134.9" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M68.7,181.4 Q78.8,183.4 88.4,179.8" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M80.3,100.4 Q84.7,110.5 92.9,117.7" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M86.5,140.6 Q92.1,147.7 92.6,156.6" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M71.9,100.1 Q76.1,101.0 80.3,100.4" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M70.4,142.1 Q78.6,143.1 86.5,140.6" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M83.2,125.1 Q87.3,120.4 92.9,117.7" stroke="url(#strutGrad2)"/>
+              <path class="mesh" d="M77.1,158.1 Q84.7,155.7 92.6,156.6" stroke="url(#strutGrad2)"/>
+              <circle class="node" cx="43.0" cy="100.6" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="57.7" cy="99.6" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="71.9" cy="100.1" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="80.3" cy="100.4" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="32.6" cy="116.3" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="48.8" cy="125.8" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="64.8" cy="121.2" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="83.2" cy="125.1" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="92.9" cy="117.7" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="44.9" cy="138.4" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="63.2" cy="134.9" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="70.4" cy="142.1" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="86.5" cy="140.6" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="40.7" cy="156.5" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="55.1" cy="163.9" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="59.9" cy="157.5" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="77.1" cy="158.1" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="92.6" cy="156.6" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="46.2" cy="182.9" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="62.9" cy="182.5" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="68.7" cy="181.4" r="2.6" fill="url(#strutGrad2)"/>
+              <circle class="node" cx="88.4" cy="179.8" r="2.6" fill="url(#strutGrad2)"/>
+            </g>
+            <g class="hotspot" id="hs-spongy">
+              <circle class="hotspot-ring" cx="65" cy="86" r="12"/>
+              <circle class="hotspot-dot" cx="65" cy="86" r="6"/>
+            </g>
+          </g>
+          <!-- خطوط ربط رفيعة من كل تسمية إلى موضعها الدقيق -->
+          <line class="connector" data-t="compact" x1="180" y1="42" x2="180" y2="100"/>
+          <line class="connector" data-t="spongy" x1="65" y1="42" x2="65" y2="86"/>
+          <line class="connector" data-t="marrow" x1="180" y1="238" x2="180" y2="130"/>
+        </svg>
+        <div class="slot bone-slot" id="s2-slot-compact" data-answer="العظم الكثيف" data-xp-reason="طابقتَ اسم العظم الكثيف بموضعه في المسرح" style="left:69.2%;top:10.7%" hidden></div>
+        <div class="slot bone-slot" id="s2-slot-spongy" data-answer="العظم الإسفنجي" data-xp-reason="طابقتَ اسم العظم الإسفنجي بموضعه في المسرح" style="left:25%;top:10.7%" hidden></div>
+        <div class="slot bone-slot" id="s2-slot-marrow" data-answer="نخاع العظم" data-xp-reason="طابقتَ اسم نخاع العظم بموضعه في المسرح" style="left:69.2%;top:89.3%" hidden></div>
+      </div>
+      <p class="stage-msg" id="boneReadout2">انقر كل جزء من العظم في المسرح أعلاه.</p>
+      <p class="bone-readout-done" id="boneReadoutDone" hidden>أحسنت — نقرتَ الأجزاء الثلاثة. الآن طابق كل اسم مع موضعه في المسرح.</p>
+
+      <div class="explore-step" id="s2NameStep" hidden>
+        <p class="explore-q">الآن طابق كل اسم مع موضعه في المسرح.</p>
+        <div class="chips-pool" id="s2ChipsPool">
+          <span class="chip" data-value="العظم الكثيف" data-xp-id="u2l2-name-compact">العظم الكثيف</span>
+          <span class="chip" data-value="العظم الإسفنجي" data-xp-id="u2l2-name-spongy">العظم الإسفنجي</span>
+          <span class="chip" data-value="نخاع العظم" data-xp-id="u2l2-name-marrow">نخاع العظم</span>
+        </div>
+      </div>
+      <p class="explore-feedback chips-feedback" hidden></p>
+    </div>
+
+    <div id="s2FactBox" hidden>
+      <p class="fact-line">يتكوّن العظم من ثلاثة مكوّنات: العظم الكثيف والعظم الإسفنجي ونخاع العظم.</p>
+    </div>
+
+    <div class="explore-step" id="s2SolidBox" hidden>
+      <p class="explore-q">بعد أن فحصتَ داخل العظم بنفسك، أيّ العبارات يصف ما رأيته؟</p>
+      <div class="quiz-options" data-q="u2l2-all-solid">
+        <label class="quiz-option"><input type="radio" name="u2l2-all-solid" value="w1">العظم كتلة صلبة متماسكة من سطحه الخارجي إلى مركزه تمامًا</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-all-solid" value="correct">الجزء الصلب قشرة خارجية، وداخله مناطق مثقوبة وأخرى ليّنة</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-all-solid" value="w2">العظم ليّن في قشرته الخارجية وصلب متماسك في مركزه فقط</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-all-solid" value="w3">العظم مثقوب مثل الإسفنج من سطحه الخارجي إلى مركزه تمامًا</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l2-all-solid" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s2LocBox" hidden>
+      <p class="explore-q">أين يوجد العظم الإسفنجي؟</p>
+      <div class="quiz-options" data-q="u2l2-locations">
+        <label class="quiz-option"><input type="radio" name="u2l2-locations" value="w1">في وسط العظم الطويل وحده، بعيدًا عن طرفيه تمامًا</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-locations" value="w2">على السطح الخارجي للعظم، محيطًا به من كلّ جانب</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-locations" value="correct">داخل العظم وفي طرفيه، محاطًا بالقشرة الصلبة</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-locations" value="w3">بين قشرة العظم والجلد، في صورة طبقة رقيقة</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l2-locations" hidden></p>
+    </div>
+
+    <div class="station-handoff" id="s2done" hidden>
+      <a href="#station-3" class="station-next">لماذا هذا الشكل بالذات؟ ←</a>
+    </div>
+  </section>
+  <!-- ===================== محطة 3 ===================== -->
+  <section class="station" id="station-3">
+    <div class="station-label">المحطة الثالثة</div>
+    <h2>لماذا هذا الشكل بالذات؟</h2>
+    <p class="station-tagline">الجزء نفسه مكبَّرًا ومسمّى، لتربط كل شكل بوظيفته.</p>
+
+    <div class="bone-stage-wrap zoom">
+      <svg class="stage bone-stage" id="boneStage3" viewBox="0 45 130 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="طرف العظم مكبَّرًا: القشرة الخارجية والمنطقة الإسفنجية، مسمّاتان">
+        <defs>
+          <clipPath id="clipLeftCav3"><rect x="25" y="75" width="80" height="130" rx="40"/></clipPath>
+          <radialGradient id="strutGrad3" cx="65" cy="140" r="58" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="var(--marrow-yellow)"/>
+            <stop offset="100%" stop-color="var(--marrow-red)"/>
+          </radialGradient>
+        </defs>
+        <g id="g-compact-3">
+          <rect class="f" x="10" y="60" width="110" height="160" rx="55"/>
+        </g>
+        <rect class="cavity" x="25" y="75" width="80" height="130" rx="40"/>
+        <g id="g-marrow-3">
+          <rect fill="var(--marrow-red)" x="25" y="75" width="80" height="130" rx="40"/>
+        </g>
+        <g id="g-spongy-3">
+          <g clip-path="url(#clipLeftCav3)">
+            <path class="mesh-outline" d="M83.2,125.1 Q83.4,142.2 92.6,156.6"/>
+            <path class="mesh-outline" d="M92.6,156.6 Q93.7,168.8 88.4,179.8"/>
+            <path class="mesh-outline" d="M40.7,156.5 Q47.1,161.8 55.1,163.9"/>
+            <path class="mesh-outline" d="M46.2,182.9 Q54.6,185.2 62.9,182.5"/>
+            <path class="mesh-outline" d="M32.6,116.3 Q41.9,119.0 48.8,125.8"/>
+            <path class="mesh-outline" d="M48.8,125.8 Q57.7,126.6 64.8,121.2"/>
+            <path class="mesh-outline" d="M48.8,125.8 Q45.1,131.6 44.9,138.4"/>
+            <path class="mesh-outline" d="M55.1,163.9 Q47.9,172.1 46.2,182.9"/>
+            <path class="mesh-outline" d="M55.1,163.9 Q56.9,160.3 59.9,157.5"/>
+            <path class="mesh-outline" d="M92.9,117.7 Q85.9,133.8 70.4,142.1"/>
+            <path class="mesh-outline" d="M43.0,100.6 Q50.4,101.9 57.7,99.6"/>
+            <path class="mesh-outline" d="M57.7,99.6 Q64.9,97.7 71.9,100.1"/>
+            <path class="mesh-outline" d="M43.0,100.6 Q40.7,110.4 32.6,116.3"/>
+            <path class="mesh-outline" d="M44.9,138.4 Q39.5,146.7 40.7,156.5"/>
+            <path class="mesh-outline" d="M63.2,134.9 Q67.6,137.7 70.4,142.1"/>
+            <path class="mesh-outline" d="M62.9,182.5 Q66.0,183.1 68.7,181.4"/>
+            <path class="mesh-outline" d="M59.9,157.5 Q68.4,159.5 77.1,158.1"/>
+            <path class="mesh-outline" d="M83.2,125.1 Q83.4,133.2 86.5,140.6"/>
+            <path class="mesh-outline" d="M64.8,121.2 Q66.3,128.3 63.2,134.9"/>
+            <path class="mesh-outline" d="M68.7,181.4 Q78.8,183.4 88.4,179.8"/>
+            <path class="mesh-outline" d="M80.3,100.4 Q84.7,110.5 92.9,117.7"/>
+            <path class="mesh-outline" d="M86.5,140.6 Q92.1,147.7 92.6,156.6"/>
+            <path class="mesh-outline" d="M71.9,100.1 Q76.1,101.0 80.3,100.4"/>
+            <path class="mesh-outline" d="M70.4,142.1 Q78.6,143.1 86.5,140.6"/>
+            <path class="mesh-outline" d="M83.2,125.1 Q87.3,120.4 92.9,117.7"/>
+            <path class="mesh-outline" d="M77.1,158.1 Q84.7,155.7 92.6,156.6"/>
+            <path class="mesh" d="M83.2,125.1 Q83.4,142.2 92.6,156.6" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M92.6,156.6 Q93.7,168.8 88.4,179.8" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M40.7,156.5 Q47.1,161.8 55.1,163.9" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M46.2,182.9 Q54.6,185.2 62.9,182.5" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M32.6,116.3 Q41.9,119.0 48.8,125.8" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M48.8,125.8 Q57.7,126.6 64.8,121.2" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M48.8,125.8 Q45.1,131.6 44.9,138.4" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M55.1,163.9 Q47.9,172.1 46.2,182.9" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M55.1,163.9 Q56.9,160.3 59.9,157.5" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M92.9,117.7 Q85.9,133.8 70.4,142.1" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M43.0,100.6 Q50.4,101.9 57.7,99.6" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M57.7,99.6 Q64.9,97.7 71.9,100.1" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M43.0,100.6 Q40.7,110.4 32.6,116.3" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M44.9,138.4 Q39.5,146.7 40.7,156.5" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M63.2,134.9 Q67.6,137.7 70.4,142.1" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M62.9,182.5 Q66.0,183.1 68.7,181.4" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M59.9,157.5 Q68.4,159.5 77.1,158.1" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M83.2,125.1 Q83.4,133.2 86.5,140.6" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M64.8,121.2 Q66.3,128.3 63.2,134.9" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M68.7,181.4 Q78.8,183.4 88.4,179.8" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M80.3,100.4 Q84.7,110.5 92.9,117.7" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M86.5,140.6 Q92.1,147.7 92.6,156.6" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M71.9,100.1 Q76.1,101.0 80.3,100.4" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M70.4,142.1 Q78.6,143.1 86.5,140.6" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M83.2,125.1 Q87.3,120.4 92.9,117.7" stroke="url(#strutGrad3)"/>
+            <path class="mesh" d="M77.1,158.1 Q84.7,155.7 92.6,156.6" stroke="url(#strutGrad3)"/>
+            <circle class="node" cx="43.0" cy="100.6" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="57.7" cy="99.6" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="71.9" cy="100.1" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="80.3" cy="100.4" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="32.6" cy="116.3" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="48.8" cy="125.8" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="64.8" cy="121.2" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="83.2" cy="125.1" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="92.9" cy="117.7" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="44.9" cy="138.4" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="63.2" cy="134.9" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="70.4" cy="142.1" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="86.5" cy="140.6" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="40.7" cy="156.5" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="55.1" cy="163.9" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="59.9" cy="157.5" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="77.1" cy="158.1" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="92.6" cy="156.6" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="46.2" cy="182.9" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="62.9" cy="182.5" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="68.7" cy="181.4" r="2.6" fill="url(#strutGrad3)"/>
+            <circle class="node" cx="88.4" cy="179.8" r="2.6" fill="url(#strutGrad3)"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="bone-legend">
+      <span class="legend-item"><span class="legend-swatch"></span> العظم الكثيف</span>
+      <span class="legend-item"><span class="legend-swatch spongy"></span> العظم الإسفنجي</span>
+      <span class="legend-item"><span class="legend-swatch marrow"></span> نخاع العظم</span>
+    </div>
+
+    <div class="explore-step">
+      <p class="explore-q">لماذا يناسب تركيبُ العظم الكثيف وظيفةَ دعم الجسم؟</p>
+      <div class="quiz-options" data-q="u2l2-compact-why">
+        <label class="quiz-option"><input type="radio" name="u2l2-compact-why" value="w1">لأن ثقوبه كثيرة فيصير خفيفًا وسهل الحمل على الجسم</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-compact-why" value="correct">لأنه صلب وثقوبه قليلة جدًّا فيتحمّل الوزن والإجهاد</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-compact-why" value="w2">لأنه ليّن فيستطيع أن ينثني مع حركة الجسم بلا كسر</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-compact-why" value="w3">لأنه يمتلئ بالنخاع الذي يمنحه صلابة إضافية عالية</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l2-compact-why" hidden></p>
+    </div>
+
+    <div class="explore-step">
+      <p class="explore-q">ما الذي تفعله الثقوب الكثيرة في العظم الإسفنجي؟</p>
+      <div class="quiz-options" data-q="u2l2-spongy-why">
+        <label class="quiz-option"><input type="radio" name="u2l2-spongy-why" value="w1">تجعله أثقل وزنًا وأقدر على تحمّل الضغط الشديد عليه</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-spongy-why" value="w2">تمنع وصول الأوعية الدموية إلى داخل العظم الطويل</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-spongy-why" value="correct">تجعله أكثر مرونة وتحفظ نخاع العظم داخلها</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-spongy-why" value="w3">تحوّله إلى قشرة صلبة تحمي أعضاء الجسم الداخلية</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l2-spongy-why" hidden></p>
+      <p class="fact-line">يعمل العظم الإسفنجي بطريقة عمل الإسفنج الفعلي نفسها — مرن ويمكن ضغطه لاحتوائه على ثقوب.</p>
+    </div>
+
+    <div class="explore-step" id="s3PatternBox" hidden>
+      <p class="explore-q">أيٌّ من هذه العظام يحتوي على أعلى نسبة من العظم الإسفنجي؟</p>
+      <div class="quiz-options" data-q="u2l2-spine-pattern">
+        <label class="quiz-option"><input type="radio" name="u2l2-spine-pattern" value="w1">الجمجمة، لأنها تحمي الدماغ وتحتاج إلى صلابة عالية</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-spine-pattern" value="w2">عظم الساق، لأنه يحمل وزن الجسم كلّه أثناء الوقوف</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-spine-pattern" value="w3">عظم الذراع، لأنه يتحرّك في اتجاهات كثيرة ومختلفة</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-spine-pattern" value="correct">العمود الفقري، لأنه ينثني وينحني مع حركة الجسم</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l2-spine-pattern" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s3DescribeBox" hidden>
+      <p class="explore-q">بكلماتك: ما أبرز ما يميّز تركيب العظم الإسفنجي؟</p>
+      <div class="explore-answer-row">
+        <input type="text" class="explore-input" id="s3DescribeInput" placeholder="اكتب إجابتك" autocomplete="off">
+        <button type="button" class="btn" id="s3DescribeBtn">سلّم الإجابة</button>
+      </div>
+      <p class="explore-feedback" id="fb-u2l2-spongy-describe" hidden></p>
+      <button type="button" class="link-btn" id="s3DescribeModelBtn" hidden>أرِني الإجابة النموذجية</button>
+      <p class="name-card" id="s3DescribeModel" hidden></p>
+    </div>
+
+    <div class="station-handoff" id="s3done" hidden>
+      <a href="#station-4" class="station-next">المصنع الذي بداخلك ←</a>
+    </div>
+  </section>
+
+  <!-- ===================== محطة 4 ===================== -->
+  <section class="station" id="station-4">
+    <div class="station-label">المحطة الرابعة</div>
+    <h2>المصنع الذي بداخلك</h2>
+    <p class="station-tagline">عد إلى توقّعك في المحطة الأولى — هل كان صحيحًا؟</p>
+
+    <div class="flow-stage-wrap">
+      <svg class="stage flow-stage" viewBox="0 0 480 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نخاع العظم الأحمر ينتج خلايا دم جديدة تدخل مجرى الدم">
+        <ellipse class="marrow-blob" cx="45" cy="60" rx="34" ry="28"/>
+        <circle class="marrow-dot" cx="32" cy="50" r="4"/>
+        <circle class="marrow-dot" cx="50" cy="45" r="3.5"/>
+        <circle class="marrow-dot" cx="58" cy="62" r="4"/>
+        <circle class="marrow-dot" cx="38" cy="72" r="3.5"/>
+        <path class="flow-arrow" d="M92,60 L178,60"/>
+        <circle class="cell-rbc" cx="205" cy="48" r="9"/>
+        <circle class="cell-wbc" cx="225" cy="75" r="8"/>
+        <circle class="cell-plt" cx="245" cy="55" r="5"/>
+        <path class="flow-arrow" d="M282,60 L368,60"/>
+        <path d="M400,35 Q430,60 400,85" fill="none" stroke="var(--marrow-red)" stroke-width="6" stroke-linecap="round"/>
+        <text class="flow-cap" x="45" y="108">نخاع العظم الأحمر</text>
+        <text class="flow-cap" x="228" y="108">خلايا دم جديدة</text>
+        <text class="flow-cap" x="410" y="108">تدخل مجرى الدم</text>
+      </svg>
+    </div>
+
+    <div class="explore-step">
+      <p class="explore-q">عد إلى توقّعك في البداية: من أين يأتي الدم الجديد بعد التبرّع؟</p>
+      <div class="quiz-options" data-q="u2l2-close-loop">
+        <label class="quiz-option"><input type="radio" name="u2l2-close-loop" value="w1">من الكبد الذي يخزّن الدم ويطلقه عند الحاجة إليه</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-close-loop" value="correct">من نخاع العظم الأحمر الموجود داخل عظام الجسم</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-close-loop" value="w2">من القلب الذي يضخّ الدم ويصنع خلاياه الجديدة</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-close-loop" value="w3">من الطعام الذي يتحوّل إلى خلايا دم بعد هضمه</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l2-close-loop" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s4ChipsBox" hidden>
+      <p class="explore-q">صنّف كل مكوّن في نوع النخاع الذي ينتجه.</p>
+      <div data-chips="u2l2-marrow">
+        <div class="chips-pool">
+          <span class="chip" data-value="خلايا الدم الحمراء" data-xp-id="u2l2-chip-rbc">خلايا الدم الحمراء</span>
+          <span class="chip" data-value="خلايا الدم البيضاء" data-xp-id="u2l2-chip-wbc">خلايا الدم البيضاء</span>
+          <span class="chip" data-value="الصفائح الدموية" data-xp-id="u2l2-chip-plt">الصفائح الدموية</span>
+          <span class="chip" data-value="الأنسجة الدهنية" data-xp-id="u2l2-chip-fat">الأنسجة الدهنية</span>
+        </div>
+        <div class="cat-grid">
+          <div class="slot cat-slot" id="s4-slot-red" data-answer="خلايا الدم الحمراء|خلايا الدم البيضاء|الصفائح الدموية">
+            <span class="slot-label">نخاع العظم الأحمر</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="s4-slot-yellow" data-answer="الأنسجة الدهنية">
+            <span class="slot-label">نخاع العظم الأصفر</span><span class="slot-items"></span>
+          </div>
+        </div>
+        <p class="explore-feedback chips-feedback" hidden></p>
+      </div>
+    </div>
+
+    <div id="s4FactBox" hidden>
+      <div class="fat-icon-wrap">
+        <svg viewBox="0 0 90 62" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نسيج دهني: عدّة خلايا دهنية متجاورة بلون النخاع الأصفر">
+          <g fill="var(--marrow-yellow)" stroke="var(--matter-edge)" stroke-width="1.5">
+            <circle cx="24" cy="26" r="15"/>
+            <circle cx="47" cy="18" r="13"/>
+            <circle cx="66" cy="30" r="14"/>
+            <circle cx="34" cy="44" r="13"/>
+            <circle cx="58" cy="46" r="12"/>
+          </g>
+        </svg>
+      </div>
+      <p class="fact-line">نخاع العظم الأصفر يحتوي على الأنسجة الدهنية التي تُعدّ مصدرًا للطاقة.</p>
+    </div>
+
+    <div class="explore-step" id="s4StemBox" hidden>
+      <p class="explore-q">ما الذي يميّز الخلية الجذعية عن غيرها؟</p>
+      <div class="quiz-options" data-q="u2l2-stem">
+        <label class="quiz-option"><input type="radio" name="u2l2-stem" value="w1">خلية دم حمراء ناضجة تنقل الأكسجين إلى أنسجة الجسم</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-stem" value="correct">خلية في نخاع العظم يمكنها تكوين أنواع مختلفة من الخلايا</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-stem" value="w2">خلية دهنية مخزَّنة في النخاع الأصفر لإنتاج الطاقة</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-stem" value="w3">خلية صلبة في العظم الكثيف تمنحه قوّته وصلابته</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l2-stem" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s4NutritionBox" hidden>
+      <p class="explore-q">اشرح لماذا يتطلّب نخاع العظم الكثير من العناصر الغذائية.</p>
+      <div class="explore-answer-row">
+        <input type="text" class="explore-input" id="s4NutritionInput" placeholder="اكتب إجابتك" autocomplete="off">
+        <button type="button" class="btn" id="s4NutritionBtn">سلّم الإجابة</button>
+      </div>
+      <p class="explore-feedback" id="fb-u2l2-marrow-nutrition" hidden></p>
+      <button type="button" class="link-btn" id="s4NutritionModelBtn" hidden>أرِني الإجابة النموذجية</button>
+      <p class="name-card" id="s4NutritionModel" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s4AliveBox" hidden>
+      <p class="explore-q">هل العظام أنسجة حيّة؟</p>
+      <div class="quiz-options" data-q="u2l2-alive">
+        <label class="quiz-option"><input type="radio" name="u2l2-alive" value="w1">لا، لأنها صلبة والأشياء الصلبة لا تكون حيّة أبدًا</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-alive" value="w2">لا، لأنها لا تتحرّك من نفسها ولا يصلها أيّ غذاء</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-alive" value="correct">نعم، لأنها تحتوي خلايا تنقسم وتنتج خلايا دم جديدة</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-alive" value="w3">نعم، لأنها تكبر مع الطفل ثم تتوقّف عن النمو تمامًا</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l2-alive" hidden></p>
+    </div>
+
+    <div class="station-handoff" id="s4done" hidden>
+      <a href="#station-5" class="station-next">ما الذي يخزّنه العظم؟ ←</a>
+    </div>
+  </section>
+  <!-- ===================== محطة 5 ===================== -->
+  <section class="station" id="station-5">
+    <div class="station-label">المحطة الخامسة</div>
+    <h2>ما الذي يخزّنه العظم؟</h2>
+    <p class="station-tagline">غلينا عظمًا في هذا الماء ثم أخرجناه. الماء يبدو صافيًا.</p>
+
+    <div class="glass-stage-wrap">
+      <svg class="stage glass-stage" id="stageWater" viewBox="0 0 140 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="كأس ماء غُلي فيه عظم، صافٍ تمامًا">
+        <path class="beaker" d="M28,18 L22,142 Q22,152 34,152 L106,152 Q118,152 112,142 L106,18"/>
+        <line x1="20" y1="18" x2="114" y2="18" stroke="var(--matter-edge)" stroke-width="2.5"/>
+        <path id="waterClear" d="M30,45 L25,140 Q25,148 35,148 L103,148 Q113,148 108,140 L103,45 Z" fill="var(--water-clear)" opacity=".4"/>
+        <g id="waterCloudy">
+          <path d="M30,45 L25,140 Q25,148 35,148 L103,148 Q113,148 108,140 L103,45 Z" fill="var(--water-cloudy)" opacity=".92"/>
+          <circle cx="50" cy="90" r="2.5" fill="#fff" opacity=".7"/>
+          <circle cx="70" cy="110" r="2" fill="#fff" opacity=".6"/>
+          <circle cx="85" cy="80" r="2.5" fill="#fff" opacity=".65"/>
+          <circle cx="60" cy="130" r="2" fill="#fff" opacity=".6"/>
+          <circle cx="90" cy="120" r="2" fill="#fff" opacity=".55"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="explore-step" style="border-top:none;padding-top:14px;">
+      <p class="explore-q">هل خرج من العظم شيء إلى الماء؟</p>
+      <div class="quiz-options" id="s5PredictOptions">
+        <label class="quiz-option"><input type="radio" name="s5predict" value="a">لا شيء — العظم صلب ولا يخرج منه شيء إلى الماء</label>
+        <label class="quiz-option"><input type="radio" name="s5predict" value="b">خرج شيء، لكنه لا يُرى بالعين</label>
+      </div>
+      <p class="explore-feedback" id="fb-s5predict" hidden></p>
+    </div>
+
+    <div class="station-handoff" id="s5RevealRow" hidden style="margin-top:10px;">
+      <button type="button" class="btn" id="s5RevealBtn">أضف قطرة الكاشف</button>
+    </div>
+
+    <div id="s5WaterFact" hidden>
+      <p class="fact-line">الراسب الأبيض دليل على وجود أيونات الكالسيوم في الماء — إذن العظم يخزّن الكالسيوم.</p>
+    </div>
+
+    <div class="explore-step" id="s5StoreBox" hidden>
+      <p class="explore-q">ما الذي يخزّنه العظم؟ طابق كل عنصر مع دوره.</p>
+      <div data-chips="u2l2-store">
+        <div class="chips-pool">
+          <span class="chip" data-value="الكالسيوم" data-xp-id="u2l2-store-ca">الكالسيوم</span>
+          <span class="chip" data-value="البوتاسيوم" data-xp-id="u2l2-store-k">البوتاسيوم</span>
+        </div>
+        <div class="cat-grid">
+          <div class="slot cat-slot" id="s5-slot-ca" data-answer="الكالسيوم">
+            <span class="slot-label">يساهم في تقوية العظم</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="s5-slot-k" data-answer="البوتاسيوم">
+            <span class="slot-label">يساهم في تقوية العظم والمحافظة على صحّة الجهاز العصبي</span><span class="slot-items"></span>
+          </div>
+        </div>
+        <p class="explore-feedback chips-feedback" hidden></p>
+      </div>
+    </div>
+
+    <div class="explore-step" id="s5DensityBox" hidden>
+      <p class="explore-q">لاحظ نصيب العظم الكثيف من حجم الهيكل العظمي وكتلته:</p>
+      <div class="density-bars">
+        <div class="density-row">
+          <span class="density-label">حجم الهيكل العظمي</span>
+          <div class="density-track"><div class="density-fill" style="width:20%"></div></div>
+          <span class="density-pct" dir="ltr">20%</span>
+        </div>
+        <div class="density-row">
+          <span class="density-label">كتلة الهيكل العظمي</span>
+          <div class="density-track"><div class="density-fill" style="width:80%"></div></div>
+          <span class="density-pct" dir="ltr">80%</span>
+        </div>
+      </div>
+      <p class="density-note">النصيب المصبوغ في كلّ شريط هو نصيب العظم الكثيف تحديدًا.</p>
+
+      <p class="explore-q" style="margin-top:22px;">العظم الكثيف يشغل 20% فقط من حجم الهيكل العظمي، لكنه يشكّل 80% من كتلته. كيف يكون ذلك؟</p>
+      <div class="quiz-options" data-q="u2l2-density-pattern">
+        <label class="quiz-option"><input type="radio" name="u2l2-density-pattern" value="correct">لأن العظم الكثيف أعلى كثافة، فكتلته أكبر رغم صغر حجمه</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-density-pattern" value="w1">لأن العظم الإسفنجي يوجد في أطراف العظام الطويلة فقط</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-density-pattern" value="w2">لأن العظم الكثيف يوجد في عظام الجسم كلّها بلا استثناء</label>
+        <label class="quiz-option"><input type="radio" name="u2l2-density-pattern" value="w3">لأن العظم الإسفنجي يحتوي على النخاع الذي يزيد كتلته</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l2-density-pattern" hidden></p>
+    </div>
+
+    <div id="s5BonusWrap" hidden>
+      <div class="bonus-box">
+        <span class="bonus-tag">تحدٍّ اختياري</span>
+        <p class="explore-q">في هشاشة العظام يصير العظم الكثيف أقلّ سماكة، والعظم الإسفنجي أقلّ كثافة. ما أثر ذلك على وظيفتَي العظمين؟</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="s5BonusInput" placeholder="اكتب إجابتك" autocomplete="off">
+          <button type="button" class="btn" id="s5BonusBtn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-u2l2-osteoporosis-bonus" hidden></p>
+        <button type="button" class="link-btn" id="s5BonusModelBtn" hidden>أرِني الإجابة النموذجية</button>
+        <p class="name-card" id="s5BonusModel" hidden></p>
+      </div>
+
+      <div class="station-handoff">
+        <a href="#station-6" class="station-next">التقييم الختامي ←</a>
+      </div>
+    </div>
+  </section>
+  <!-- ===================== محطة 6 ===================== -->
+  <section class="station" id="station-6">
+    <div class="station-label">المحطة السادسة</div>
+    <h2>التقييم الختامي</h2>
+    <p class="station-tagline">عشرة أسئلة، ومحاولة واحدة لكلّ سؤال. وفي نهايتها شهادتك باسمك.</p>
+
+    <div class="name-gate">
+      <label for="evalName">اكتب اسمك كما تريده أن يظهر على الشهادة</label>
+      <input type="text" class="explore-input" id="evalName" placeholder="الاسم الكامل" autocomplete="off">
+      <button type="button" class="btn" id="evalStart">ابدأ التقييم</button>
+      <p class="explore-feedback" id="evalNameFb" hidden></p>
+      <p class="gate-note">هذا هو التقييم الختامي لهذا الدرس. لكلّ سؤال محاولة واحدة، وبعد آخر سؤال تظهر نتيجتك وشهادتك. خذ وقتك.</p>
+    </div>
+
+    <div id="evalQuestions" hidden>
+
+      <div class="eval-q first">
+        <p class="explore-q"><span class="q-num">1</span> ما وظيفة العظم الإسفنجي؟</p>
+        <div class="quiz-options" data-q="u2l2-e1">
+          <label class="quiz-option"><input type="radio" name="u2l2-e1" value="w1">دعم وزن الجسم بمفرده دون مساعدة العظم الكثيف</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e1" value="w2">إنتاج الكالسيوم الذي يحتاجه الجسم يوميًّا</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e1" value="correct">إضافة المرونة إلى العظم وتخزين نخاع العظم</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e1" value="w3">حماية الأعضاء الداخلية الحسّاسة كالقلب والدماغ</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l2-e1" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">2</span> أيّ العظام يحتوي على أعلى نسبة من العظم الإسفنجي؟</p>
+        <div class="quiz-options" data-q="u2l2-e2">
+          <label class="quiz-option"><input type="radio" name="u2l2-e2" value="correct">العمود الفقري، لأنه ينثني وينحني باستمرار</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e2" value="w1">الجمجمة، لأنها تحتاج إلى صلابة عالية لحماية الدماغ</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e2" value="w2">عظم الفخذ، لأنه يحمل وزن الجسم كلّه أثناء الوقوف</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e2" value="w3">عظم العَضُد، لأنه يتحرّك في اتجاهات كثيرة ومختلفة</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l2-e2" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">3</span> أين يوجد العظم الكثيف في العظم الطويل؟</p>
+        <div class="quiz-options" data-q="u2l2-e3">
+          <label class="quiz-option"><input type="radio" name="u2l2-e3" value="w1">في نخاع العظم وحده، بعيدًا عن بقية أجزاء العظم</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e3" value="w2">داخل العظم وفي طرفيه فقط، دون سطحه الخارجي</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e3" value="w3">في مركز العظم فقط، محاطًا بالعظم الإسفنجي من كلّ جانب</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e3" value="correct">في الجزء الخارجي من العظم، على طول العظم كلّه</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l2-e3" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">4</span> ماذا ينتج نخاع العظم الأحمر؟</p>
+        <div class="quiz-options" data-q="u2l2-e4">
+          <label class="quiz-option"><input type="radio" name="u2l2-e4" value="w1">الأنسجة الدهنية التي تُعدّ مصدرًا للطاقة</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e4" value="correct">خلايا الدم الحمراء والبيضاء والصفائح الدموية</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e4" value="w2">الكالسيوم والبوتاسيوم اللذين يقوّيان العظم</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e4" value="w3">خلايا العظم الكثيف الجديدة التي تحلّ محلّ القديمة</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l2-e4" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">5</span> ما الذي يميّز الخلية الجذعية؟</p>
+        <div class="quiz-options" data-q="u2l2-e5">
+          <label class="quiz-option"><input type="radio" name="u2l2-e5" value="w1">أنها خلية دم حمراء ناضجة تحمل الأكسجين لخلايا الجسم</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e5" value="w2">أنها خلية دهنية تُخزَّن في النخاع الأصفر لإنتاج الطاقة</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e5" value="correct">أنها خلية في نخاع العظم تكوّن أنواعًا مختلفة من الخلايا</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e5" value="w3">أنها خلية صلبة في العظم الكثيف تمنحه صلابته وقوّته</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l2-e5" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">6</span> ما دور نخاع العظم الأصفر؟</p>
+        <div class="quiz-options" data-q="u2l2-e6">
+          <label class="quiz-option"><input type="radio" name="u2l2-e6" value="w1">إنتاج خلايا الدم الحمراء والبيضاء والصفائح الدموية</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e6" value="w2">تخزين الكالسيوم والبوتاسيوم اللذين يقوّيان العظم</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e6" value="w3">دعم وزن الجسم وحماية الأعضاء الداخلية الحسّاسة</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e6" value="correct">احتواؤه على أنسجة دهنية تُعدّ مصدرًا للطاقة</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l2-e6" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">7</span> أيّ عنصر يخزّنه العظم ويساهم في صحّة الجهاز العصبي؟</p>
+        <div class="quiz-options" data-q="u2l2-e7">
+          <label class="quiz-option"><input type="radio" name="u2l2-e7" value="correct">البوتاسيوم، فهو يساهم في تقوية العظم وصحّة الجهاز العصبي</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e7" value="w1">الكالسيوم، فهو يساهم في تقوية العظم فقط دون الجهاز العصبي</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e7" value="w2">الحديد، فهو موجود في خلايا الدم الحمراء لا في أنسجة العظم</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e7" value="w3">الصوديوم، فهو عنصر لم يرد ذكره ضمن ما يخزّنه العظم هنا</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l2-e7" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">8</span> تُظهر الصورة مقطعًا في عظم حقيقي. أيّ ترتيب يطابق الأرقام الثلاثة بأجزاء العظم؟</p>
+        <div class="photo-card">
+          <img src="bone-section.jpg" alt="صورة فوتوغرافية لمقطع دائري في رأس عظم العَضُد، مرقَّمة 1 و2 و3 على ثلاث مناطق مختلفة الملمس واللون" loading="lazy">
+        </div>
+        <p class="photo-credit">المصدر: OpenStax Anatomy and Physiology — عبر Wikimedia Commons · رخصة CC BY 4.0 (creativecommons.org/licenses/by/4.0) · عُدِّلت الصورة: اقتصاص وإضافة أرقام.</p>
+        <div class="quiz-options" data-q="u2l2-e8">
+          <label class="quiz-option"><input type="radio" name="u2l2-e8" value="w1">1 العظم الكثيف · 2 نخاع العظم · 3 العظم الإسفنجي</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e8" value="correct">1 العظم الكثيف · 2 العظم الإسفنجي · 3 نخاع العظم</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e8" value="w2">1 العظم الإسفنجي · 2 العظم الكثيف · 3 نخاع العظم</label>
+          <label class="quiz-option"><input type="radio" name="u2l2-e8" value="w3">1 نخاع العظم · 2 العظم الإسفنجي · 3 العظم الكثيف</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l2-e8" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">9</span> حدّد وظيفة العظم الكثيف.</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="e9Input" placeholder="اكتب إجابتك" autocomplete="off">
+          <button type="button" class="btn" id="e9Btn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-e9" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">10</span> سمِّ نوعَي نخاع العظم.</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="e10Input" placeholder="اكتب إجابتك" autocomplete="off">
+          <button type="button" class="btn" id="e10Btn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-e10" hidden></p>
+      </div>
+    </div>
+
+    <div class="eval-summary" id="evalSummary" hidden></div>
+    <!-- إلزامي: بدونه تحقن وحدة الشهادة زرّها عائمًا فيصطدم بزرّ فهيم -->
+    <div id="certTriggerSlot"></div>
+  </section>
+
+</main>
+<!-- وسوم shared/ الستّة تسبق سكربت الدرس -->
+<script src="../../shared/sounds/sounds.js"></script>
+<script src="../../shared/xp-system/xp.js"></script>
+<script src="../../shared/faheem-widget/faheem.js"></script>
+<script src="../../shared/template-boilerplate/template.js"></script>
+<script src="../../shared/certificate-system/certificate.js"></script>
+<script src="../../shared/identity/footer.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   الوحدة 2 — الدرس 2 — سكربت الدرس (نصوص المحطات كلّها في T أدناه)
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+var G = {
+  reduced: function(){
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+};
+
+/* ============ 1) النصوص ============ */
+var T = {
+  s1: {
+    predictFb: 'سجّلنا توقّعك. لن نخبرك الآن مَن أصاب — ستكتشف ذلك بنفسك في بقية هذا الدرس.'
+  },
+  s2: {
+    desc: {
+      compact: 'صلب، أملس، ثقوبه قليلة جدًّا. يحيط بالعظم من الخارج.',
+      spongy: 'مليء بالثقوب الصغيرة، يشبه الإسفنج. يوجد داخل العظم وفي طرفيه.',
+      marrow: 'ليّن، لا يشبه العظم في ملمسه. لونه أحمر في موضع وأصفر في موضع آخر.'
+    },
+    chipHints: {
+      'العظم الكثيف|s2-slot-spongy': 'القشرة التي وصفتَها بأنها صلبة وقليلة الثقوب — هل هذا وصف الإسفنجي؟',
+      'العظم الكثيف|s2-slot-marrow': 'القشرة الخارجية صلبة، والجزء الذي تحاول تسميته وصفتَه بأنه ليّن.',
+      'العظم الإسفنجي|s2-slot-compact': 'الإسفنج مليء بالثقوب. هل المنطقة الصلبة القليلة الثقوب هي الأنسب لهذا الاسم؟',
+      'العظم الإسفنجي|s2-slot-marrow': 'العظم الإسفنجي وصفتَه بأنه مثقوب لا ليّن الملمس.',
+      'نخاع العظم|s2-slot-compact': 'النخاع ليّن، والقشرة الخارجية صلبة تمامًا — راجع وصفيهما.',
+      'نخاع العظم|s2-slot-spongy': 'نخاع العظم في الوسط، لا في الجزء المثقوب عند الطرفين.'
+    },
+    allSolid: {
+      correct: '✓ صحيح! الجزء الصلب قشرة خارجية، وداخل العظم مناطق مثقوبة وأخرى ليّنة.',
+      w1: 'عد إلى المسرح وانقر وسط العظم — هل ما رأيته هناك صلب؟',
+      w2: 'انقر القشرة الخارجية في المسرح مجدّدًا — هل وصفها كان ليّنًا حقًّا؟',
+      w3: 'القشرة الخارجية التي فحصتَها وُصفت بثقوب قليلة جدًّا لا كثيرة — راجعها.'
+    },
+    locations: {
+      correct: '✓ صحيح! العظم الإسفنجي داخل العظم وفي طرفيه، محاطًا بالقشرة الصلبة.',
+      w1: 'أعِد النظر فيما نقرتَه عند طرفَي العظم في المسرح.',
+      w2: 'السطح الخارجي وصفتَه بأنه صلب وقليل الثقوب — هذا وصف القشرة لا الإسفنجي.',
+      w3: 'لا جلد في هذا الرسم أصلًا. راجع ما نقرتَه داخل العظم وفي طرفيه.'
+    }
+  },
+  s3: {
+    compactWhy: {
+      correct: '✓ صحيح! الصلابة وقلّة الثقوب هما ما يمنحان العظم الكثيف قدرته على تحمّل الوزن.',
+      w1: 'راجع وصفك للقشرة الخارجية في المحطة السابقة — هل ثقوبها كثيرة؟',
+      w2: 'العظم الكثيف وصفتَه بأنه صلب لا ليّن.',
+      w3: 'النخاع ليّن لا صلب — راجع وصفك له في المحطة السابقة.'
+    },
+    spongyWhy: {
+      correct: '✓ صحيح! الثقوب تمنح العظم الإسفنجي مرونة وتحفظ داخلها نخاع العظم.',
+      w1: 'الثقوب تقلّل المادّة الصلبة، فهل يصير العظم أثقل حقًّا؟',
+      w2: 'الثقوب مساحات مفتوحة، فكّر فيما يمكن أن يمرّ خلالها لا فيما تمنعه.',
+      w3: 'القشرة الصلبة اسمٌ آخر غير الإسفنجي — راجع الفرق بينهما.'
+    },
+    spinePattern: {
+      correct: '✓ صحيح! العمود الفقري ينثني وينحني باستمرار، وهذا يفسّر احتواءه على أعلى نسبة من العظم الإسفنجي المرن.',
+      w1: 'الصلابة العالية أقرب لوصف العظم الكثيف لا كثرة الإسفنجي.',
+      w2: 'حمل الوزن يحتاج قوّة، لكن هذا لا يعني بالضرورة أعلى نسبة إسفنجي.',
+      w3: 'اتجاهات الحركة لا علاقة مباشرة لها بنسبة العظم الإسفنجي.'
+    },
+    describeHint1: 'صِف ما رأيته في المسرح: كثرة أم قلّة الثقوب؟',
+    describeHint2: 'فكّر أيضًا في تأثير الثقوب على مرونة العظم.',
+    describeModel: 'مليء بالثقوب، وهذا يجعله مرنًا ويحفظ نخاع العظم داخله.'
+  },
+  s4: {
+    closeLoop: {
+      correct: '✓ صحيح! نخاع العظم الأحمر داخل عظامك هو مصدر خلايا الدم الجديدة.',
+      w1: 'الكبد له وظائف أخرى مهمّة، لكن لا يخزّن دمًا احتياطيًّا بهذه الطريقة.',
+      w2: 'القلب يضخّ الدم، لكن ضخّه لا يعني أنه يصنع خلايا دم جديدة.',
+      w3: 'الطعام يمدّك بالعناصر الغذائية اللازمة، لكن تكوين الخلايا يحدث في مكان آخر داخل جسمك.'
+    },
+    chipHints: {
+      'خلايا الدم الحمراء|s4-slot-yellow': 'خلايا الدم الحمراء أحد مكوّنات الدم الثلاثة، لا من الأنسجة الدهنية.',
+      'خلايا الدم البيضاء|s4-slot-yellow': 'خلايا الدم البيضاء أحد مكوّنات الدم الثلاثة، لا من الأنسجة الدهنية.',
+      'الصفائح الدموية|s4-slot-yellow': 'الصفائح الدموية أحد مكوّنات الدم الثلاثة، لا من الأنسجة الدهنية.',
+      'الأنسجة الدهنية|s4-slot-red': 'الأنسجة الدهنية مصدر طاقة، وليست من مكوّنات الدم الثلاثة.'
+    },
+    stem: {
+      correct: '✓ صحيح! الخلية الجذعية في نخاع العظم قادرة على تكوين أنواع مختلفة من الخلايا.',
+      w1: 'هذا وصف لخلية دم حمراء مكتملة، لا للخلية التي تنتجها.',
+      w2: 'هذا وصف لخلية دهنية، لا للخلية الجذعية.',
+      w3: 'الخلية الجذعية في النخاع لا في العظم الكثيف.'
+    },
+    nutritionHint1: 'فكّر: ماذا يحدث باستمرار داخل نخاع العظم؟',
+    nutritionHint2: 'العناصر الغذائية موادّ خام — لأيّ عملية بناء تلزم هذه الموادّ؟',
+    nutritionModel: 'لأنه يبني خلايا دم جديدة باستمرار، والبناء يحتاج موادّ.',
+    alive: {
+      correct: '✓ صحيح! العظام تحتوي خلايا حيّة تنقسم باستمرار وتنتج خلايا دم جديدة.',
+      w1: 'الصلابة وحدها لا تنفي الحياة — فكّر فيما رأيته للتوّ من خلايا تنقسم داخل النخاع.',
+      w2: 'العظم يحتوي أوعية دموية توصل الغذاء إليه.',
+      w3: 'النموّ في الطفولة صحيح جزئيًّا، لكنّه ليس السبب الذي يبرهن أن العظم حيّ الآن.'
+    }
+  },
+  s5: {
+    predictFb: 'سجّلنا ملاحظتك — أضف قطرة الكاشف الآن لترى ماذا يحدث فعلًا.',
+    storeHints: {
+      'الكالسيوم|s5-slot-k': 'الكالسيوم يساهم في تقوية العظم فقط — هذه الخانة تذكر الجهاز العصبي أيضًا.',
+      'البوتاسيوم|s5-slot-ca': 'هذه الخانة عنصر واحد فقط يساهم في تقوية العظم دون ذكر الجهاز العصبي.'
+    },
+    densityPattern: {
+      correct: '✓ صحيح! الكثافة الأعلى تعني كتلة أكبر لكل وحدة حجم، حتى لو كان الحجم نفسه صغيرًا.',
+      w1: 'هذا صحيح عن موضعه، لكنه لا يفسّر مفارقة الحجم والكتلة.',
+      w2: 'هذا لا يفسّر لماذا 20% من الحجم يساوي 80% من الكتلة تحديدًا.',
+      w3: 'النخاع ليّن وخفيف نسبيًّا، فلا يفسّر هذا زيادة كتلة الإسفنجي.'
+    },
+    bonusHint1: 'فكّر في وظيفتَي العظمين اللتين تعلّمتهما: الدعم والمرونة.',
+    bonusHint2: 'ماذا يحدث لعظمٍ أقلّ صلابة وأقلّ مرونة عند الضغط عليه؟',
+    bonusModel: 'يضعف قدرة العظم الكثيف على الدعم وتحمّل الوزن، وتقلّ مرونة العظم الإسفنجي، فيصبح العظم أكثر عرضة للكسر.'
+  },
+  eval: {
+    e1: 'راجع بطاقة الحقائق في المحطة الثانية: العظم الإسفنجي يمنح المرونة ويحفظ النخاع.',
+    e2: 'راجع نمط المحطة الثالثة: العمود الفقري ينثني باستمرار، فيحتاج أعلى نسبة من العظم الإسفنجي المرن.',
+    e3: 'راجع المسرح في المحطتين الثانية والثالثة: القشرة الصلبة تحيط بالعظم من الخارج على طوله كلّه.',
+    e4: 'راجع المحطة الرابعة: نخاع العظم الأحمر مصدر خلايا الدم الثلاثة كلّها.',
+    e5: 'راجع المحطة الرابعة: الخلية الجذعية تكوّن أنواعًا مختلفة من الخلايا، وهذا ما يميّزها.',
+    e6: 'راجع بطاقة الحقائق في المحطة الرابعة: النخاع الأصفر يحتوي أنسجة دهنية مصدرًا للطاقة.',
+    e7: 'راجع نشاط المحطة الخامسة: البوتاسيوم يساهم في تقوية العظم والمحافظة على صحّة الجهاز العصبي.',
+    e8: 'راجع خصائص كل جزء: القشرة الخارجية كثيفة، والنسيج المسامي إسفنجي، والبقعة المركزية نخاع.',
+    e9why: 'وظيفتا العظم الكثيف: الدعم وتحمّل الوزن، أو حماية ما بداخل العظم.',
+    e10why: 'نوعا نخاع العظم: الأحمر (يُنتج خلايا الدم) والأصفر (يحتوي أنسجة دهنية).'
+  }
+};
+
+/* ============ 2) المحطة 1 ============ */
+function station1(){
+  var predictDone = false;
+  document.querySelectorAll('#s1PredictOptions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(predictDone) return;
+      predictDone = true;
+      var fb = document.getElementById('fb-s1predict');
+      fb.textContent = T.s1.predictFb;
+      fb.className = 'explore-feedback is-hint';
+      fb.hidden = false;
+      document.getElementById('s1done').hidden = false;
+      if(window.Sounds) window.Sounds.playSnap();
+      if(window.XP) window.XP.claim('u2l2-predict-blood', window.XP.POINTS.PREDICT, 'تنبّأتَ قبل الاستكشاف');
+    });
+  });
+}
+
+/* ============ 3) المحطة 2 ============ */
+function station2(){
+  var stage = document.getElementById('boneStage2');
+  if(!stage) return;
+  var readout = document.getElementById('boneReadout2');
+  var explored = {};
+
+  function select(id, key){
+    stage.querySelectorAll('.grp').forEach(function(g){ g.classList.toggle('on', g.id === id); });
+    readout.textContent = T.s2.desc[key];
+    if(window.Sounds) window.Sounds.playTick();
+    /* بقعة الموضع الذي نُقر تخفت وتصغر لتُعلن "زرتُ هذا الجزء" — تمنع
+       الطالب من الاعتقاد أنه أنهى الاستكشاف بعد نقرتين فقط، لأن
+       البقعتين الباقيتين تظلّان تنبضان بوضوح (ملاحظة فؤاد). */
+    var hs = document.getElementById('hs-' + key);
+    if(hs) hs.classList.add('done');
+    /* خطّ الربط الخاصّ بهذا الجزء يظهر الآن فقط — لا معنى لخطّ يشير
+       إلى تسمية غير مكشوفة بعد قبل أن يُستكشف الجزء (ملاحظة فؤاد). */
+    var conn = stage.querySelector('.connector[data-t="' + key + '"]');
+    if(conn) conn.classList.add('shown');
+  }
+
+  function checkAllExplored(){
+    if(Object.keys(explored).length < 3) return;
+    document.getElementById('s2NameStep').hidden = false;
+    ['s2-slot-compact', 's2-slot-spongy', 's2-slot-marrow'].forEach(function(id){
+      document.getElementById(id).hidden = false;
+    });
+    /* لا يُستبدَل نصّ الوصف الأخير الذي نقره الطالب لحظتها — رسالة
+       «أحسنت» تُضاف في عنصر مستقلّ أسفله بدل الكتابة فوقه، وإلا
+       اختفى وصف آخر جزء نقره الطالب قبل أن يُتاح له قراءته. */
+    document.getElementById('boneReadoutDone').hidden = false;
+    /* تمييز آخر جزء نُقر (اللون التركوازي) يُزال عند اكتمال الاستكشاف:
+       بقاؤه كان يجعل جزءًا واحدًا يبدو "مميَّزًا" عن الآخرَين لحظة بدء
+       مرحلة التسمية، رغم أن الثلاثة متساوون فيها (ملاحظة فؤاد). */
+    stage.querySelectorAll('.grp.on').forEach(function(g){ g.classList.remove('on'); });
+  }
+
+  stage.querySelectorAll('.hitgrp').forEach(function(g){
+    var key = g.dataset.t;
+    function pick(){ select(g.id, key); explored[key] = true; checkAllExplored(); }
+    g.addEventListener('click', pick);
+    g.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); pick(); }
+    });
+  });
+
+  window.Chips.hints(T.s2.chipHints);
+  window.Chips.onDone('u2l2-parts', function(){
+    document.getElementById('s2FactBox').hidden = false;
+    document.getElementById('s2SolidBox').hidden = false;
+  });
+
+  window.Quiz.practice({
+    'u2l2-all-solid': { xpId: 'u2l2-all-solid', xp: 'MCQ', reason: 'ميّزتَ الجزء الصلب من العظم',
+                         correctText: T.s2.allSolid.correct, hints: T.s2.allSolid }
+  }, {
+    onAllSolved: function(){ document.getElementById('s2LocBox').hidden = false; }
+  });
+
+  window.Quiz.practice({
+    'u2l2-locations': { xpId: 'u2l2-locations', xp: 'MCQ', reason: 'حدّدتَ موضع العظم الإسفنجي',
+                         correctText: T.s2.locations.correct, hints: T.s2.locations }
+  }, {
+    onAllSolved: function(){ document.getElementById('s2done').hidden = false; }
+  });
+}
+
+/* ============ 4) المحطة 3 ============ */
+function station3(){
+  window.Quiz.practice({
+    'u2l2-compact-why': { xpId: 'u2l2-compact-why', xp: 'MCQ', reason: 'فسّرتَ سبب صلابة العظم الكثيف',
+                           correctText: T.s3.compactWhy.correct, hints: T.s3.compactWhy },
+    'u2l2-spongy-why':  { xpId: 'u2l2-spongy-why', xp: 'MCQ', reason: 'فسّرتَ فائدة ثقوب العظم الإسفنجي',
+                           correctText: T.s3.spongyWhy.correct, hints: T.s3.spongyWhy }
+  }, {
+    onAllSolved: function(){ document.getElementById('s3PatternBox').hidden = false; }
+  });
+
+  window.Quiz.practice({
+    'u2l2-spine-pattern': { xpId: 'u2l2-spine-pattern', xp: 'PATTERN', reason: 'اكتشفتَ نمط توزّع العظم الإسفنجي',
+                             correctText: T.s3.spinePattern.correct, hints: T.s3.spinePattern }
+  }, {
+    onAllSolved: function(){ document.getElementById('s3DescribeBox').hidden = false; }
+  });
+
+  window.Quiz.short({
+    input: 's3DescribeInput', button: 's3DescribeBtn', feedback: 'fb-u2l2-spongy-describe',
+    modelBtn: 's3DescribeModelBtn', model: 's3DescribeModel',
+    accept: { paths: [
+      { all: [ ['ثق'] ] },
+      { all: [ ['مسام'] ] },
+      { all: [ ['مرن'] ] },
+      { all: [ ['اسفنج'] ] }
+    ] },
+    normalize: 'ar',
+    hints: [T.s3.describeHint1, T.s3.describeHint2],
+    modelText: T.s3.describeModel,
+    xpId: 'u2l2-spongy-describe', xp: 'PRODUCE', reason: 'وصفتَ تركيب العظم الإسفنجي',
+    modelReason: 'راجعتَ الإجابة النموذجية',
+    onDone: function(){ document.getElementById('s3done').hidden = false; }
+  });
+}
+
+/* ============ 5) المحطة 4 ============ */
+function station4(){
+  window.Quiz.practice({
+    'u2l2-close-loop': { xpId: 'u2l2-close-loop', xp: 'MCQ', reason: 'أغلقتَ حلقة توقّعك الأول',
+                          correctText: T.s4.closeLoop.correct, hints: T.s4.closeLoop }
+  }, {
+    onAllSolved: function(){ document.getElementById('s4ChipsBox').hidden = false; }
+  });
+
+  window.Chips.hints(T.s4.chipHints);
+  window.Chips.onDone('u2l2-marrow', function(){
+    document.getElementById('s4FactBox').hidden = false;
+    document.getElementById('s4StemBox').hidden = false;
+  });
+
+  window.Quiz.practice({
+    'u2l2-stem': { xpId: 'u2l2-stem', xp: 'MCQ', reason: 'ميّزتَ خصائص الخلية الجذعية',
+                   correctText: T.s4.stem.correct, hints: T.s4.stem }
+  }, {
+    onAllSolved: function(){ document.getElementById('s4NutritionBox').hidden = false; }
+  });
+
+  window.Quiz.short({
+    input: 's4NutritionInput', button: 's4NutritionBtn', feedback: 'fb-u2l2-marrow-nutrition',
+    modelBtn: 's4NutritionModelBtn', model: 's4NutritionModel',
+    accept: { paths: [
+      { all: [ ['خلاي'], ['كون', 'كوين', 'صنع', 'نتج', 'نتاج', 'بنا', 'بني'] ] }
+    ] },
+    normalize: 'ar',
+    hints: [T.s4.nutritionHint1, T.s4.nutritionHint2],
+    modelText: T.s4.nutritionModel,
+    xpId: 'u2l2-marrow-nutrition', xp: 'PRODUCE', reason: 'فسّرتَ حاجة نخاع العظم للغذاء',
+    modelReason: 'راجعتَ الإجابة النموذجية',
+    onDone: function(){ document.getElementById('s4AliveBox').hidden = false; }
+  });
+
+  window.Quiz.practice({
+    'u2l2-alive': { xpId: 'u2l2-alive', xp: 'MCQ', reason: 'ميّزتَ أن العظام نسيج حيّ',
+                    correctText: T.s4.alive.correct, hints: T.s4.alive }
+  }, {
+    onAllSolved: function(){ document.getElementById('s4done').hidden = false; }
+  });
+}
+
+/* ============ 6) المحطة 5 ============ */
+function station5(){
+  var predictDone = false;
+  document.querySelectorAll('#s5PredictOptions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(predictDone) return;
+      predictDone = true;
+      var fb = document.getElementById('fb-s5predict');
+      fb.textContent = T.s5.predictFb;
+      fb.className = 'explore-feedback is-hint';
+      fb.hidden = false;
+      document.getElementById('s5RevealRow').hidden = false;
+      if(window.Sounds) window.Sounds.playSnap();
+      if(window.XP) window.XP.claim('u2l2-predict-water', window.XP.POINTS.PREDICT, 'تنبّأتَ قبل الكشف');
+    });
+  });
+
+  var revealBtn = document.getElementById('s5RevealBtn');
+  revealBtn.addEventListener('click', function(){
+    if(revealBtn.disabled) return;
+    revealBtn.disabled = true;
+    revealBtn.classList.add('demoted');
+    revealBtn.textContent = 'أُضيفت قطرة الكاشف';
+    document.getElementById('stageWater').classList.add('cloudy');
+    document.getElementById('s5WaterFact').hidden = false;
+    document.getElementById('s5StoreBox').hidden = false;
+    if(window.Sounds) window.Sounds.playChime();
+  });
+
+  window.Chips.hints(T.s5.storeHints);
+  window.Chips.onDone('u2l2-store', function(){
+    document.getElementById('s5DensityBox').hidden = false;
+  });
+
+  window.Quiz.practice({
+    'u2l2-density-pattern': { xpId: 'u2l2-density-pattern', xp: 'PATTERN', reason: 'فسّرتَ مفارقة الحجم والكتلة',
+                               correctText: T.s5.densityPattern.correct, hints: T.s5.densityPattern }
+  }, {
+    onAllSolved: function(){ document.getElementById('s5BonusWrap').hidden = false; }
+  });
+
+  window.Quiz.short({
+    input: 's5BonusInput', button: 's5BonusBtn', feedback: 'fb-u2l2-osteoporosis-bonus',
+    modelBtn: 's5BonusModelBtn', model: 's5BonusModel',
+    accept: { paths: [
+      { all: [ ['دعم'] ] },
+      { all: [ ['كسر'] ] },
+      { all: [ ['وزن'] ] },
+      { all: [ ['مرون'] ] }
+    ] },
+    normalize: 'ar',
+    hints: [T.s5.bonusHint1, T.s5.bonusHint2],
+    modelText: T.s5.bonusModel,
+    xpId: 'u2l2-osteoporosis-bonus', xp: 'BONUS', reason: 'توقّعتَ أثر هشاشة العظام على وظيفتَي العظمين',
+    modelReason: 'راجعتَ الإجابة النموذجية'
+  });
+}
+
+/* ============ 7) المحطة 6 — التقييم ============ */
+function station6(){
+  if(!document.getElementById('evalQuestions')) return;
+
+  // السؤال 9: وظيفة العظم الكثيف — الدعم أو الحماية، أيّهما يكفي
+  var keys9 = window.Quiz.matcher({ paths: [
+    { all: [ ['دعم'] ] },
+    { all: [ ['حماي'] ] }
+  ] });
+  function normE9(s){
+    var n = window.Quiz.normalizeAr(s);
+    return keys9(n, s) ? 'مطابق' : n;
+  }
+
+  // السؤال 10: نوعا النخاع — الأحمر والأصفر معًا
+  var keys10 = window.Quiz.matcher({ paths: [
+    { all: [ ['احمر'], ['اصفر'] ] }
+  ] });
+  function normE10(s){
+    var n = window.Quiz.normalizeAr(s);
+    return keys10(n, s) ? 'مطابق' : n;
+  }
+
+  window.Quiz.evaluate({
+    title: 'ما دور العظام في إنتاج خلايا الدم وتوفير بعض المواد للجسم؟',
+    questions: [
+      { name: 'u2l2-e1', why: T.eval.e1 },
+      { name: 'u2l2-e2', why: T.eval.e2 },
+      { name: 'u2l2-e3', why: T.eval.e3 },
+      { name: 'u2l2-e4', why: T.eval.e4 },
+      { name: 'u2l2-e5', why: T.eval.e5 },
+      { name: 'u2l2-e6', why: T.eval.e6 },
+      { name: 'u2l2-e7', why: T.eval.e7 },
+      { name: 'u2l2-e8', why: T.eval.e8 },
+      { name: 'e9', type: 'text', input: 'e9Input', button: 'e9Btn', feedback: 'fb-e9',
+        answer: 'مطابق', normalize: normE9, why: T.eval.e9why },
+      { name: 'e10', type: 'text', input: 'e10Input', button: 'e10Btn', feedback: 'fb-e10',
+        answer: 'مطابق', normalize: normE10, why: T.eval.e10why }
+    ]
+  });
+}
+
+station1();
+station2();
+station3();
+station4();
+station5();
+station6();
+
+/* ══════════════════ الانتقال بين المحطات ══════════════════
+   المحطات الستّ كلّها في الصفحة منذ التحميل بلا hidden — سياسة
+   الدروس 03–06 ودرس 01 من هذه الوحدة نفسها. */
+document.querySelectorAll('a.station-next[href^="#station-"]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    var id = a.getAttribute('href').slice(1);
+    var sec = document.getElementById(id);
+    if(!sec) return;
+    sec.hidden = false;
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + id + '"]');
+    if(dot) dot.classList.add('active');
+    if(sec.scrollIntoView){
+      sec.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+    }
+    if(window.Sounds) window.Sounds.playChime();
+  });
+});
+
+/* ══════════════════ الدخول من الخارج بالمرساة ══════════════════ */
+window.addEventListener('load', function(){
+  var id = (location.hash || '').replace(/^#/, '');
+  if(!/^station-[A-Za-z0-9_-]+$/.test(id)) return;
+  var target = document.getElementById(id);
+  if(!target || !target.classList.contains('station')) return;
+  var all = Array.prototype.slice.call(document.querySelectorAll('.station'));
+  var idx = all.indexOf(target);
+  if(idx < 0) return;
+  function activate(sec){
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + sec.id + '"]');
+    if(dot) dot.classList.add('active');
+  }
+  all.slice(0, idx).forEach(function(sec){ if(!sec.hidden) activate(sec); });
+  target.hidden = false;
+  activate(target);
+  if(target.scrollIntoView){
+    target.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+  }
+});
+})();
+</script>
+</body>
+</html>
