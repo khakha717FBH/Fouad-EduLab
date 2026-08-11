@@ -29,51 +29,92 @@ describe('هندسة المحطة 2 — مسرح المقطع الطولي (تف
     });
   });
 
-  it('القشرة الخارجية شكلان (طرف واحد وعمود)، والإسفنجي شبكة عُقَد متّصلة مقصوصة داخل الطرف', async function(){
+  it('القشرة الخارجية مسارٌ واحد مغلق (رأس + ساق + رأس أصغر) لا شكلان ملصوقان بدرز ظاهر', async function(){
     const { doc } = await page();
-    eq(doc.getElementById('g-compact-2').querySelectorAll('rect').length, 2);
-    eq(doc.getElementById('g-spongy-2').querySelectorAll('path.mesh').length, 26);
-    eq(doc.getElementById('g-spongy-2').querySelectorAll('circle.node').length, 22);
-    eq(doc.getElementById('g-spongy-2').querySelectorAll('g[clip-path]').length, 1);
+    const g = doc.getElementById('g-compact-2');
+    eq(g.querySelectorAll('rect').length, 0, 'لم يعد الكفاف مستطيلات');
+    const paths = g.querySelectorAll('path.f');
+    eq(paths.length, 1, 'كفاف واحد لا أكثر — تعدّده هو ما يُنتج الدرز');
+    const d = paths[0].getAttribute('d');
+    has(d, 'Z', 'المسار يجب أن يكون مغلقًا');
+    eq((d.match(/M/g) || []).length, 1, 'مسار فرعي واحد فقط');
   });
 
-  it('عُقَد الشبكة وخيوطها بتدرّج أحمر/أصفر لا شاحب — بحدّ داكن خلفي يحفظ وضوحها فوق النخاع', async function(){
+  it('العظم له طرفان لا طرف واحد — والثاني أصغر (النصّ يقول «وفي طرفيه»)', async function(){
     const { doc } = await page();
-    const grad = doc.getElementById('strutGrad2');
-    ok(grad, 'تدرّج الشبكة مفقود');
-    eq(grad.tagName.toLowerCase(), 'radialgradient');
-    doc.querySelectorAll('#g-spongy-2 path.mesh').forEach(function(p){
-      has(p.getAttribute('stroke') || '', 'strutGrad2');
+    ok(doc.getElementById('clipLeftCav2'), 'حدّ قصّ الطرف الأول مفقود');
+    ok(doc.getElementById('clipRightCav2'), 'حدّ قصّ الطرف الثاني مفقود');
+    const g = doc.getElementById('g-spongy-2');
+    eq(g.querySelectorAll('g[clip-path]').length, 2, 'شبكة إسفنجية في كلا الطرفين');
+    // مقارنة ارتفاع منطقتَي القصّ: الطرف الثاني أصغر
+    function span(id){
+      const d = doc.getElementById(id).querySelector('path').getAttribute('d');
+      const ys = (d.match(/-?\d+(?:\.\d+)?/g) || []).map(Number).filter(function(_, i){ return i % 2 === 1; });
+      return Math.max.apply(null, ys) - Math.min.apply(null, ys);
+    }
+    ok(span('clipRightCav2') < span('clipLeftCav2'), 'الطرف الثاني يجب أن يكون أصغر من الأول');
+  });
+
+  it('لا عُقَد دائرية في الشبكة إطلاقًا — العقدة هي ما جعلها تُقرأ نموذجًا جزيئيًّا', async function(){
+    const { doc } = await page();
+    eq(doc.querySelectorAll('#boneStage2 circle.node').length, 0);
+    eq(doc.querySelectorAll('#boneStage2 .node').length, 0);
+  });
+
+  it('العصيّ متفاوتة السُّمك — لا سُمك موحّد واحد', async function(){
+    const { doc } = await page();
+    const widths = Array.from(doc.querySelectorAll('#g-spongy-2 path.mesh'))
+      .map(function(p){ return parseFloat(p.getAttribute('stroke-width')); });
+    ok(widths.length >= 8, 'شرائح سُمك قليلة جدًّا: ' + widths.length);
+    widths.forEach(function(w){ ok(w > 0, 'عصاة بلا سُمك معلن على مسارها'); });
+    const distinct = new Set(widths);
+    ok(distinct.size >= 5, 'يجب ألّا يقلّ تفاوت السُّمك عن خمس قيَم، الموجود: ' + distinct.size);
+    ok(Math.max.apply(null, widths) / Math.min.apply(null, widths) >= 2,
+      'الفارق بين أغلظ عصاة وأرفعها ضئيل — التفاوت لن يُرى');
+  });
+
+  it('لكلّ شريحة سُمك هالةٌ داكنة خلفها أوسع منها (تحفظ تباينها فوق النخاع)', async function(){
+    const { doc } = await page();
+    const mesh = Array.from(doc.querySelectorAll('#g-spongy-2 path.mesh'));
+    const outline = Array.from(doc.querySelectorAll('#g-spongy-2 path.mesh-outline'));
+    eq(outline.length, mesh.length, 'لكل شريحة عصيّ شريحةُ هالة تقابلها');
+    mesh.forEach(function(m){
+      const w = parseFloat(m.getAttribute('stroke-width'));
+      const twin = outline.find(function(o){ return o.getAttribute('d') === m.getAttribute('d'); });
+      ok(twin, 'شريحة بلا هالة مطابقة لمسارها');
+      ok(parseFloat(twin.getAttribute('stroke-width')) > w, 'الهالة يجب أن تكون أوسع من عصاتها');
     });
-    eq(doc.getElementById('g-spongy-2').querySelectorAll('path.mesh-outline').length, 26,
-      'حدّ داكن خلف كل خيط للحفاظ على تباينه فوق النخاع الأحمر');
   });
 
-  it('خطوط الشبكة منحنية (Q — Bezier تربيعي) لا مستقيمة، بإحساس عضوي غير منتظم', async function(){
+  it('العصيّ غير منتظمة الاتجاه: منحنيات Q، وفراغاتها متفاوتة الاتّساع', async function(){
     const { doc } = await page();
-    doc.querySelectorAll('#g-spongy-2 path.mesh').forEach(function(p){
-      has(p.getAttribute('d') || '', 'Q');
+    const ds = Array.from(doc.querySelectorAll('#g-spongy-2 path.mesh'))
+      .map(function(p){ return p.getAttribute('d') || ''; });
+    ds.forEach(function(d){ has(d, 'Q', 'عصاة مستقيمة لا منحنية'); });
+    const total = ds.reduce(function(a, d){ return a + (d.match(/M/g) || []).length; }, 0);
+    ok(total >= 120, 'الشبكة أقلّ كثافة ممّا يُقرأ إسفنجًا: ' + total);
+    // أطوال الوصلات متفاوتة (لا شبكة منتظمة)
+    const lens = [];
+    ds.join(' ').split('M').slice(1).forEach(function(seg){
+      const n = (seg.match(/-?\d+(?:\.\d+)?/g) || []).map(Number);
+      if(n.length >= 6) lens.push(Math.hypot(n[4] - n[0], n[5] - n[1]));
     });
+    const avg = lens.reduce(function(a, b){ return a + b; }, 0) / lens.length;
+    const spread = Math.sqrt(lens.reduce(function(a, b){ return a + (b - avg) * (b - avg); }, 0) / lens.length);
+    ok(spread / avg > 0.12, 'أطوال الوصلات متقاربة جدًّا — الشبكة تبدو منتظمة');
   });
 
-  it('النخاع شكل واحد مستمرّ بتدرّج أفقي (لا فجوة كحليّة بينه وبين الإسفنجي)', async function(){
+  it('النخاع شكل واحد مستمرّ، وتدرّجه أحمر عند الطرفين وأصفر في الوسط', async function(){
     const { doc } = await page();
     const grad = doc.getElementById('marrowGrad2');
     ok(grad, 'التدرّج مفقود');
     eq(grad.tagName.toLowerCase(), 'lineargradient');
-    const marrowRects = doc.querySelectorAll('#g-marrow-2 .mrw');
-    eq(marrowRects.length, 2, 'شكلان (الطرف والعمود) يشتركان التدرّج نفسه');
-    // الطرف والعمود متلاصقان تمامًا (بلا فجوة) على محور x
-    const xs = Array.from(marrowRects).map(function(r){ return parseFloat(r.getAttribute('x')); });
-    const ws = Array.from(marrowRects).map(function(r){ return parseFloat(r.getAttribute('width')); });
-    ok(xs[0] + ws[0] >= xs[1], 'فجوة بين الطرف والعمود');
-  });
-
-  it('عُصَيّات الإسفنجي مقصوصة داخل حدود التجويف بدقّة (clipPath) فلا تتجاوز القشرة الخارجية', async function(){
-    const { doc } = await page();
-    ok(doc.getElementById('clipLeftCav2'));
-    const clips = doc.querySelectorAll('#g-spongy-2 g[clip-path]');
-    eq(clips.length, 1);
+    const stops = Array.from(grad.querySelectorAll('stop'))
+      .map(function(s){ return s.getAttribute('stop-color'); });
+    has(stops[0], 'marrow-red', 'الطرف الأول يجب أن يكون أحمر');
+    has(stops[stops.length - 1], 'marrow-red', 'الطرف الثاني يجب أن يكون أحمر أيضًا');
+    ok(stops.some(function(c){ return /marrow-yellow/.test(c); }), 'الوسط يجب أن يكون أصفر');
+    eq(doc.querySelectorAll('#g-marrow-2 .mrw').length, 1, 'شكل واحد مستمرّ لا قطع ملصوقة');
   });
 
   it('ثلاثة خطوط ربط رفيعة من التسميات إلى مواضعها الدقيقة', async function(){
@@ -98,6 +139,22 @@ describe('هندسة المحطة 2 — مسرح المقطع الطولي (تف
     });
   });
 
+  it('بقعة الإسفنجي تقع على تقاطع عصيّ فعليّ لا في فراغ النخاع', async function(){
+    const { doc } = await page();
+    const dot = doc.querySelector('#hs-spongy .hotspot-dot');
+    const hx = parseFloat(dot.getAttribute('cx'));
+    const hy = parseFloat(dot.getAttribute('cy'));
+    const pts = [];
+    Array.from(doc.querySelectorAll('#g-spongy-2 path.mesh')).forEach(function(p){
+      (p.getAttribute('d') || '').split('M').slice(1).forEach(function(seg){
+        const n = (seg.match(/-?\d+(?:\.\d+)?/g) || []).map(Number);
+        if(n.length >= 6){ pts.push([n[0], n[1]], [n[2], n[3]], [n[4], n[5]]); }
+      });
+    });
+    const near = pts.some(function(pt){ return Math.hypot(pt[0] - hx, pt[1] - hy) < 1.2; });
+    ok(near, 'مركز بقعة الإسفنجي (' + hx + ',' + hy + ') لا يقع على أي عصاة');
+  });
+
   it('كل مجموعة تفاعلية تحمل بقعة نابضة واحدة (ring+dot) بمُعرّف مطابق لاسمها', async function(){
     const { doc } = await page();
     ['hs-compact', 'hs-spongy', 'hs-marrow'].forEach(function(id){
@@ -108,9 +165,20 @@ describe('هندسة المحطة 2 — مسرح المقطع الطولي (تف
     });
   });
 
+  it('التحديد لا يملأ الجزء تركوازيًّا — حدّ وتوهّج وإخفات ما عداه، ولون المادّة باقٍ', async function(){
+    const { raw } = await page();
+    ok(!/\.grp\.on\s+\.f\{[^}]*fill:var\(--turquoise\)/.test(raw),
+      'ملء القشرة بالتركوازي يمحو لون المادّة الذي يبني عليه مفتاح المحطة 3');
+    ok(!/\.grp\.on\s+\.mesh\{[^}]*stroke:var\(--turquoise\)/.test(raw),
+      'صبغ العصيّ نفسها تركوازيًّا يمحو تدرّجها');
+    has(raw, '.bone-stage.has-sel .grp:not(.on)', 'لا قاعدة تُخفت الأجزاء غير المحدَّدة');
+    has(raw, '.bone-stage .grp.on .f{ stroke:var(--turquoise)', 'الاختيار يُعلَن بحدّ');
+    has(raw, 'drop-shadow', 'الاختيار يُعلَن بتوهّج أيضًا');
+  });
+
   it('لا حلقة تركيز افتراضية سوداء على مجموعات المسرح (outline:none في الحالة العادية)', async function(){
     const { raw } = await page();
-    const seg = raw.slice(raw.indexOf('.bone-stage .grp{'), raw.indexOf('.bone-stage .grp{') + 120);
+    const seg = raw.slice(raw.indexOf('.bone-stage .grp{'), raw.indexOf('.bone-stage .grp{') + 140);
     has(seg, 'outline:none');
   });
 
@@ -130,7 +198,6 @@ describe('هندسة المحطة 2 — مسرح المقطع الطولي (تف
       ok(s.left >= 0 && s.left <= 100, s.id + ': نسبة left خارج الحدود');
       ok(s.top >= 0 && s.top <= 100, s.id + ': نسبة top خارج الحدود');
     });
-    // فحص فروق كافية بين كل زوج (لا نقطتان بفارق أقلّ من 8% على أيّ محور معًا)
     for(let i = 0; i < slots.length; i++){
       for(let j = i + 1; j < slots.length; j++){
         const dx = Math.abs(slots[i].left - slots[j].left);
@@ -138,6 +205,19 @@ describe('هندسة المحطة 2 — مسرح المقطع الطولي (تف
         ok(dx > 8 || dy > 8, 'تقارب محتمل بين ' + slots[i].id + ' و' + slots[j].id);
       }
     }
+  });
+
+  it('كل خانة إفلات فوق بداية خطّ ربطها لا بعيدًا عنه (النسب تتبع viewBox الجديد)', async function(){
+    const { doc } = await page();
+    const vb = doc.getElementById('boneStage2').getAttribute('viewBox').split(/\s+/).map(Number);
+    const pairs = [['s2-slot-compact', 'compact'], ['s2-slot-spongy', 'spongy'], ['s2-slot-marrow', 'marrow']];
+    pairs.forEach(function(pair){
+      const el = doc.getElementById(pair[0]);
+      const line = doc.querySelector('#boneStage2 .connector[data-t="' + pair[1] + '"]');
+      const lx = parseFloat(line.getAttribute('x1'));
+      const slotX = pct(el.style.left) / 100 * vb[2] + vb[0];
+      ok(Math.abs(slotX - lx) < 3, pair[0] + ': الخانة بعيدة أفقيًّا عن بداية خطّها');
+    });
   });
 
   it('الخانات الثلاث محجوبة قبل اكتمال الاستكشاف', async function(){
@@ -162,7 +242,7 @@ describe('هندسة المحطة 3 — النسخة الثانية المكبَ
     const vb2 = doc.getElementById('boneStage2').getAttribute('viewBox');
     const vb3 = doc.getElementById('boneStage3').getAttribute('viewBox');
     ok(vb2 !== vb3, 'يجب أن يختلف viewBox بين النسختين');
-    eq(vb3, '0 45 130 190');
+    eq(vb3, '1 55 126 170');
   });
 
   it('لا طبقة نقر في مسرح المحطة 3 (عرض لا استكشاف)', async function(){
@@ -176,21 +256,25 @@ describe('هندسة المحطة 3 — النسخة الثانية المكبَ
     ok(!/transform\s*:\s*scale/.test(seg), 'التكبير يجب أن يكون بـviewBox لا بـtransform:scale');
   });
 
-  it('عصيّات المحطة 3 بنفس تدرّج المحطة 2 وحدّها الداكن (اتّساق بصري بين النسختين)', async function(){
+  it('لا جزء من الساق ولا الطرف الثاني في النسخة المكبَّرة — الطرف الأول وحده', async function(){
     const { doc } = await page();
-    const grad = doc.getElementById('strutGrad3');
-    ok(grad, 'تدرّج شبكة المحطة 3 مفقود');
-    eq(doc.getElementById('g-spongy-3').querySelectorAll('path.mesh-outline').length, 26);
-  });
-
-  it('لا جزء من الساق (العمود) ظاهر في النسخة المكبَّرة — القشرة والنخاع محصوران بالطرف وحده', async function(){
-    const { doc } = await page();
-    eq(doc.getElementById('g-compact-3').querySelectorAll('rect').length, 1, 'يجب ألّا يبقى مقطع الساق المقصوص');
-    eq(doc.getElementById('g-marrow-3').querySelectorAll('rect').length, 1);
+    eq(doc.getElementById('g-compact-3').querySelectorAll('path').length, 1);
+    eq(doc.getElementById('g-marrow-3').querySelectorAll('path').length, 1);
     no(doc.getElementById('marrowGrad3'), 'لا حاجة لتدرّج بعد أن صار الطرف وحده مرئيًّا');
+    no(doc.getElementById('clipRightCav3'), 'الطرف الثاني خارج نطاق التكبير');
   });
 
-  it('وسيلة إيضاح نصّية (Legend) تحمل أسماء الأجزاء الثلاثة كلّها الآن', async function(){
+  it('شبكة المحطة 3 بلا عُقَد كذلك، ومتفاوتة السُّمك، ولها هالاتها', async function(){
+    const { doc } = await page();
+    eq(doc.querySelectorAll('#boneStage3 circle.node').length, 0);
+    const mesh = Array.from(doc.querySelectorAll('#g-spongy-3 path.mesh'));
+    const outline = doc.querySelectorAll('#g-spongy-3 path.mesh-outline');
+    eq(outline.length, mesh.length);
+    ok(new Set(mesh.map(function(p){ return p.getAttribute('stroke-width'); })).size >= 5);
+    ok(doc.getElementById('strutGrad3'), 'تدرّج شبكة المحطة 3 مفقود');
+  });
+
+  it('وسيلة إيضاح نصّية (Legend) تحمل أسماء الأجزاء الثلاثة كلّها', async function(){
     const { doc } = await page();
     const legend = doc.querySelector('.bone-legend');
     ok(legend, 'وسيلة الإيضاح مفقودة');
@@ -201,17 +285,18 @@ describe('هندسة المحطة 3 — النسخة الثانية المكبَ
   it('شبكة الإسفنجي في نسخة المحطة 3 مقصوصة أيضًا داخل حدود التجويف', async function(){
     const { doc } = await page();
     ok(doc.getElementById('clipLeftCav3'));
-    eq(doc.getElementById('g-spongy-3').querySelectorAll('path.mesh').length, 26);
-    eq(doc.getElementById('g-spongy-3').querySelectorAll('circle.node').length, 22);
+    eq(doc.getElementById('g-spongy-3').querySelectorAll('g[clip-path]').length, 1);
   });
 
-  it('شبكتا المحطتين 2 و3 متطابقتان هندسيًّا (نفس العُقَد) — اتّساق بصري بين النسختين', async function(){
+  it('شبكتا المحطتين 2 و3 متطابقتان هندسيًّا في الطرف الأول — اتّساق بصري بين النسختين', async function(){
     const { doc } = await page();
-    const nodes2 = Array.from(doc.getElementById('g-spongy-2').querySelectorAll('circle.node'))
-      .map(function(c){ return c.getAttribute('cx') + ',' + c.getAttribute('cy'); }).sort();
-    const nodes3 = Array.from(doc.getElementById('g-spongy-3').querySelectorAll('circle.node'))
-      .map(function(c){ return c.getAttribute('cx') + ',' + c.getAttribute('cy'); }).sort();
-    eq(JSON.stringify(nodes2), JSON.stringify(nodes3));
+    function meshOf(stage, clip){
+      const g = Array.from(doc.getElementById(stage).querySelectorAll('g[clip-path]'))
+        .find(function(el){ return (el.getAttribute('clip-path') || '').indexOf(clip) > -1; });
+      return Array.from(g.querySelectorAll('path.mesh'))
+        .map(function(p){ return p.getAttribute('stroke-width') + '|' + p.getAttribute('d'); }).sort();
+    }
+    eq(JSON.stringify(meshOf('g-spongy-2', 'clipLeftCav2')), JSON.stringify(meshOf('g-spongy-3', 'clipLeftCav3')));
   });
 });
 

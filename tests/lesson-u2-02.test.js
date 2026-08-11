@@ -233,6 +233,36 @@ describe('المحطة 2 — ماذا يوجد داخل العظم؟ (مشطور
     no(doc.getElementById('boneReadoutDone').hidden, 'رسالة الاكتمال يجب أن تظهر في عنصرها المستقلّ');
   });
 
+  it('صنف الإخفات يُضاف عند أوّل تحديد ويُرفع عند اكتمال الاستكشاف', async function(){
+    const { doc, w } = await page();
+    const stage = doc.getElementById('boneStage2');
+    no(stage.classList.contains('has-sel'), 'لا إخفات قبل أي نقر');
+    clickNode(doc, w, 'g-compact-2');
+    ok(stage.classList.contains('has-sel'), 'يجب إخفات ما لم يُحدَّد بعد أوّل نقرة');
+    clickNode(doc, w, 'g-marrow-2');
+    clickNode(doc, w, 'g-spongy-2');
+    no(stage.classList.contains('has-sel'), 'يُرفع الإخفات عند اكتمال الاستكشاف — الثلاثة متساوون في مرحلة التسمية');
+  });
+
+  it('وصف الجزء الأخير يزول عند أوّل لمسة على رقاقة لا قبلها', async function(){
+    const { doc, w } = await page();
+    exploreBoneStage(doc, w);
+    const readout = doc.getElementById('boneReadout2');
+    no(readout.hidden, 'الوصف يجب أن يبقى مقروءًا بعد النقرة الثالثة');
+    clickChipInto(doc, w, 'العظم الكثيف', 's2-slot-compact');
+    ok(readout.hidden, 'الوصف يجب أن يزول حين ينتقل الطالب إلى المطابقة');
+  });
+
+  it('رسالة الاكتمال لا تكرّر تعليمة المطابقة المكتوبة أسفلها', async function(){
+    const { doc, w } = await page();
+    exploreBoneStage(doc, w);
+    const done = doc.getElementById('boneReadoutDone').textContent;
+    const instr = doc.querySelector('#s2NameStep .explore-q').textContent;
+    has(done, 'أحسنت');
+    no(/طابق/.test(done), 'التعليمة مكتوبة مرّة واحدة فقط، في سطر السؤال');
+    has(instr, 'طابق');
+  });
+
   it('المسار الكوني للرقاقات (Enter) يعمل، والمطابقة الثلاث تمنح 15 نقطة', async function(){
     const { doc, w } = await page();
     exploreBoneStage(doc, w);
@@ -306,6 +336,22 @@ describe('المحطة 3 — لماذا هذا الشكل بالذات؟', funct
     const before = w.XP.total();
     h.click(doc, 's3DescribeModelBtn');
     eq(w.XP.total() - before, 4);
+  });
+
+  it('سطر التمهيد لاختلاف لون النخاع يظهر مع زرّ الانتقال، ولا يسمّي نوعَي النخاع', async function(){
+    const { doc } = await page();
+    const teaser = doc.getElementById('s3MarrowTeaser');
+    ok(teaser, 'سطر التمهيد مفقود');
+    ok(teaser.hidden, 'يجب ألّا يظهر قبل إتمام أنشطة المحطة');
+    h.choose(doc, 'u2l2-compact-why', 'correct');
+    h.choose(doc, 'u2l2-spongy-why', 'correct');
+    h.choose(doc, 'u2l2-spine-pattern', 'correct');
+    h.type(doc, 's3DescribeInput', 'مليء بالثقوب ومرن'); h.click(doc, 's3DescribeBtn');
+    no(teaser.hidden);
+    const t = teaser.textContent;
+    ok(/أحمر/.test(t) && /أصفر/.test(t), 'التمهيد يذكّر بما رآه الطالب فعلًا');
+    no(/نوعان|نوعَي|نخاع العظم الأحمر|نخاع العظم الأصفر/.test(t),
+      'التسمية والوظيفة تعيشان في المحطة 4 — التمهيد يفتح السؤال ولا يكشفه');
   });
 
   it('رصيد المحطة الكامل 30', async function(){
