@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300" role="img" aria-labelledby="kickTitle">
+  <title id="kickTitle">لاعب كرة قدم يثني ركبته ليركل الكرة</title>
+  <!--
+    ظلّية المحطة 1 — مختبر فؤاد التعليمي · الوحدة 02 · الدرس 03
+    ═══════════════════════════════════════════════════════════
+    شرط الرسم الحاكم: الركبة مثنيّة بزاوية ظاهرة. النسخة الأولى
+    رسمت الساق الراكلة خطًّا مستقيمًا بلا ركبة، ونصّ الدرس يقول
+    للطالب «يثني ركبته ثم يمدّها» — فكان النصّ يصف ما لا يريه
+    الرسم. الفخذ هنا يتقدّم إلى الأمام والساق تهبط منه بزاوية،
+    فتصير الركبة رأسًا ظاهرًا لا نقطة على خطّ.
+
+    والساق الثابتة أيضًا مثنيّة قليلًا: ركبة واحدة ظاهرة والأخرى
+    مستقيمة كانت ستوحي أن للساقين تركيبين مختلفين.
+
+    ولا قوس حركة: المحطة 1 تسأل عن عدد اتجاهات الحركة، فرسمها
+    يجيب عن السؤال قبل أن يُطرح.
+  -->
+  <defs>
+    <linearGradient id="kickFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1FD9B6"/>
+      <stop offset="1" stop-color="#0E8F79"/>
+    </linearGradient>
+  </defs>
+
+  <!-- الأرض وخطّ الملعب -->
+  <ellipse cx="150" cy="274" rx="122" ry="8" fill="#14C8A8" opacity=".10"/>
+  <path d="M 34,256 Q 150,242 266,256" fill="none" stroke="#14C8A8" stroke-opacity=".12" stroke-width="2"/>
+
+  <g fill="url(#kickFill)" stroke="url(#kickFill)">
+
+    <!-- ذراع التوازن الممدودة -->
+    <path d="M 103,100 L 70,118 L 46,104" fill="none" stroke-width="11"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="46" cy="103" r="6.5" stroke="none"/>
+
+    <!-- الذراع الأخرى -->
+    <path d="M 143,98 L 174,118 L 184,146" fill="none" stroke-width="11"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="185" cy="147" r="6.5" stroke="none"/>
+
+    <!-- ══════════ الساق الثابتة: ركبة بانحناء طفيف ══════════ -->
+    <path d="M 123,170 L 112,218 L 118,260" fill="none" stroke-width="16"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 116,264 L 140,266" fill="none" stroke-width="11" stroke-linecap="round"/>
+
+    <!-- ══════════ الساق الراكلة ══════════
+         الفخذ يتقدّم أفقيًّا، والساق تهبط منه بزاوية حادّة —
+         والركبة عند (200,186) رأسٌ ظاهر بين الاتجاهين. -->
+    <path d="M 148,166 L 200,186 L 222,238" fill="none" stroke-width="16"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 222,240 L 243,250" fill="none" stroke-width="11" stroke-linecap="round"/>
+
+    <!-- الجذع مائل قليلًا إلى الخلف كما في لحظة الركل -->
+    <path d="M 100,96 Q 122,86 145,94 L 154,150 Q 130,158 116,152 Z" stroke="none"/>
+
+    <!-- الرقبة والرأس -->
+    <rect x="115" y="76" width="14" height="20" rx="5" stroke="none"/>
+    <circle cx="122" cy="58" r="20" stroke="none"/>
+  </g>
+
+  <!-- السروال: شريط أغمق يفصل الجذع عن الفخذين فيوضّح مفصل الورك -->
+  <path d="M 118,148 Q 137,142 153,146 L 158,176 Q 138,184 120,178 Z" fill="#0A6455" opacity=".85"/>
+
+  <!-- الكرة -->
+  <g fill="none" stroke="url(#kickFill)" stroke-width="3">
+    <circle cx="262" cy="252" r="17"/>
+    <path d="M 262,241 L 271,248 L 268,259 L 256,259 L 253,248 Z" fill="url(#kickFill)" stroke="none"/>
+    <path d="M 262,241 L 262,234 M 271,248 L 278,245 M 268,259 L 272,266 M 256,259 L 252,266 M 253,248 L 246,245"
+          stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+</svg>

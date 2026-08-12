@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300" role="img" aria-labelledby="ardhaTitle">
+  <title id="ardhaTitle">راقص عرضة يرفع ذراعه فوق كتفه</title>
+  <!--
+    ظلّية المحطة 1 — مختبر فؤاد التعليمي · الوحدة 02 · الدرس 03
+    ═══════════════════════════════════════════════════════════
+    شرط الرسم الحاكم: مفصل الكتف مقروء. النسخة الأولى دفنت نقطة
+    التقاء الذراع بالجذع تحت الرأس والغترة، فلم يكن الطالب يرى
+    الكتف أصلًا — وهو محور المحطة كلّها. العلاج هنا: رقبة ظاهرة
+    ترفع الرأس عن خطّ الكتفين، وذراع تبدأ من زاوية الثوب العليا
+    مكشوفةً بلا تراكب.
+
+    ولا قوس حركة ولا علامة على المفصل: المحطة 1 تسأل الطالب
+    أيّهما يتحرّك في اتجاهات أكثر، فإظهار مدى الحركة رسمًا يجيب
+    عن السؤال قبل أن يُطرح.
+
+    بلا لوحة خلفية ولا حدّ: الصورة تعيش داخل بطاقة في الدرس،
+    فحدّها الخاصّ كان يُنتج حدًّا داخل حدّ.
+  -->
+  <defs>
+    <linearGradient id="ardhaFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1FD9B6"/>
+      <stop offset="1" stop-color="#0E8F79"/>
+    </linearGradient>
+  </defs>
+
+  <!-- الأرض -->
+  <ellipse cx="150" cy="272" rx="118" ry="8" fill="#14C8A8" opacity=".10"/>
+
+  <!-- صفّ الراقصين خلف: العرضة رقصة صفّ لا فردية -->
+  <g fill="#14C8A8" stroke="#14C8A8" opacity=".18">
+    <g>
+      <circle cx="62" cy="112" r="12" stroke="none"/>
+      <path d="M 50,132 L 74,132 L 84,264 L 40,264 Z" stroke="none"/>
+      <path d="M 52,140 L 34,116 L 22,88" fill="none" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M 72,140 L 90,116 L 102,88" fill="none" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g>
+      <circle cx="238" cy="112" r="12" stroke="none"/>
+      <path d="M 226,132 L 250,132 L 260,264 L 216,264 Z" stroke="none"/>
+      <path d="M 228,140 L 210,116 L 198,88" fill="none" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M 248,140 L 266,116 L 278,88" fill="none" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+
+  <!-- ══════════ الراقص الأمامي ══════════ -->
+  <g fill="url(#ardhaFill)" stroke="url(#ardhaFill)">
+
+    <!-- السيف: يمتدّ من قبضة اليد المرفوعة -->
+    <g stroke-linecap="round">
+      <path d="M 238,42 L 280,10" fill="none" stroke-width="4"/>
+      <path d="M 231,50 L 245,36" fill="none" stroke-width="6"/>
+    </g>
+
+    <!-- الثوب: كفافٌ واحد مغلق، وزاويتاه العلويتان هما الكتفان.
+         يُرسم قبل الذراعين لا بعدهما: ترتيبه الأول كان يبتلع الذراع
+         المنخفضة فيختفي كتفها، والكتف هو ما جاء الطالب ليراه. -->
+    <path d="M 119,102 Q 150,94 181,102 L 190,168 Q 196,220 200,262
+             L 100,262 Q 104,220 110,168 Z" stroke="none"/>
+
+    <!-- الذراع المرفوعة: تنطلق من زاوية الثوب العليا فوقه لا تحته -->
+    <path d="M 179,110 L 213,82 L 235,46" fill="none" stroke-width="12"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="236" cy="45" r="7" stroke="none"/>
+
+    <!-- الذراع الأخرى: مُبعَدة عن الجذع كي يبقى كتفها ظاهرًا هو أيضًا -->
+    <path d="M 121,110 L 92,150 L 88,196" fill="none" stroke-width="12"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="88" cy="197" r="7" stroke="none"/>
+
+    <!-- الرقبة: هي ما يرفع الرأس عن خطّ الكتفين فيصير الكتف مقروءًا -->
+    <rect x="142" y="80" width="16" height="22" rx="5" stroke="none"/>
+
+    <!-- الرأس والغطرة والعقال — كلّها فوق y=82 فلا تلمس الكتف -->
+    <circle cx="150" cy="62" r="21" stroke="none"/>
+    <path d="M 127,60 Q 127,34 150,34 Q 173,34 173,60 Z" stroke="none" opacity=".45"/>
+    <rect x="129" y="45" width="42" height="6" rx="3" stroke="none" opacity=".95"/>
+
+    <!-- القدمان تحت طرف الثوب -->
+    <ellipse cx="133" cy="266" rx="12" ry="6" stroke="none"/>
+    <ellipse cx="167" cy="266" rx="12" ry="6" stroke="none"/>
+  </g>
+</svg>

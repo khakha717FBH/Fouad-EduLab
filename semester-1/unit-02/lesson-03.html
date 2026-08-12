@@ -1,0 +1,2058 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدرس 3 — ما تركيب المفاصل الزلالية؟ | مختبر فؤاد التعليمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/identity/identity.css">
+<link rel="stylesheet" href="../../shared/template-boilerplate/template.css">
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  الوحدة 2 — الدرس 3 — مختبر فؤاد التعليمي
+  "ما تركيب المفاصل الزلالية؟"
+  ص 76–81 · المعيار B0906.1 · بادئة data-q/XP: u2l3-
+
+  ستّ محطات، ستّ نقاط تقدّم. المحطات 2 و3 و4 مشطورة داخليًّا إلى
+  مراحل، ولكلّ محطة نقطة واحدة لا نقطة لكل مرحلة.
+
+  ستّة مسارح: تشريح ساق الدجاجة الطبقي (م2) · مسرح الاحتكاك
+  ثلاثي الحالات (م3) · مقطع الركبة ببناء الرقاقات (م3) · الكتف
+  الكروي (م4) · المرفق الرزّي (م4) · الركبة السليمة/المتضرّرة (م5).
+
+  والصورتان الظلّيتان ملفّان مستقلّان بجوار هذا الملف لا في مجلّد
+  أصول مركزي — القرار نفسه المتّبع في bone-section.jpg بدرس 02.
+
+  قيد رسم مسجَّل (قرار فؤاد): لا دم ولا أدوات قطع متحرّكة ولا صوت
+  قطع في مسرح التشريح. الكشف إزاحة وتلاشٍ لا تمزيق.
+
+  خارج النطاق نصًّا وبالاختبار: الرافعة · المفصل المنزلق ·
+  المفصل المحوري · أسماء العضلات · «تنقبض» و«تنبسط» (درس 04).
+  ولفظ «محور» وحده مسموح كما في الكتاب بلا بناء عليه.
+
+  الرصيد المقدَّر: 155 أساسي (6+38+45+50+16) + 8 اختياري
+  (u2l3-hip-replacement-bonus) = 163. رقم الاختبار هو الحقيقة
+  لا هذا التعليق.
+  ========================================================= -->
+<style>
+  /* ============ منع سحب التحديث من تصفير XP ============ */
+  html, body{ overscroll-behavior-y:contain; }
+  html{ scroll-behavior:smooth; }
+  .station{ scroll-margin-top:14px; }
+
+  /* ============ أصناف عامّة — نمط دروس الوحدة 02 ============ */
+  .station-tagline{
+    max-width:920px; margin:0 auto 4px; font-size:.95rem; color:var(--ink-dim); line-height:1.9;
+  }
+  .explore-q{
+    font-weight:700; color:var(--ink); margin:0 0 12px; font-size:clamp(14px,2.4vw,16px);
+  }
+  .explore-step{ margin-top:26px; padding-top:20px; border-top:1px dashed var(--border); }
+  .explore-step:first-of-type{ border-top:none; padding-top:0; }
+  .explore-answer-row{ display:flex; gap:10px; flex-wrap:wrap; }
+  .explore-input{
+    flex:1 1 140px; min-width:100px; background:rgba(255,255,255,.03);
+    border:1px solid var(--border); border-radius:999px; padding:11px 20px;
+    color:var(--ink); font-family:'Tajawal', sans-serif; font-size:15px; text-align:center;
+  }
+  .explore-input::placeholder{ color:var(--ink-dim); opacity:.55; font-size:.86em; }
+  .explore-input:focus{ outline:none; border-color:var(--turquoise); box-shadow:0 0 0 3px var(--turquoise-faint); }
+  .explore-input:disabled{ opacity:.7; }
+  .fact-line{
+    max-width:920px; margin:14px auto 0; border:1px dashed var(--turquoise-soft); border-radius:14px;
+    padding:12px 16px; font-size:.92rem; line-height:1.9; background:rgba(20,200,168,.05);
+  }
+  .fact-line.center{ text-align:center; }
+  .name-card{
+    max-width:920px; margin:16px auto 0; border:1px dashed var(--turquoise-soft); border-radius:14px;
+    padding:12px 16px; font-size:.92rem; line-height:1.9; background:rgba(20,200,168,.05);
+  }
+  .name-card b{ color:var(--turquoise); font-weight:800; }
+  .stage-msg{
+    max-width:920px; margin:10px auto 0; min-height:22px; text-align:center;
+    font-size:14px; color:var(--ink-dim); line-height:1.9;
+  }
+  .stage-msg.done{ color:var(--turquoise); font-weight:700; }
+  .stage-wrap{
+    width:100%; max-width:640px; margin:12px auto 0;
+    background:var(--navy-darker); border:1px solid rgba(20,200,168,0.15);
+    border-radius:22px; padding:14px;
+  }
+  .stage-wrap.narrow{ max-width:420px; }
+  svg.stage{ width:100%; height:auto; display:block; -webkit-tap-highlight-color:transparent; }
+  .bonus-box{
+    max-width:920px; margin:24px auto 0; border:1px dashed var(--coral); border-radius:16px;
+    padding:16px 18px; background:rgba(255,107,74,.04);
+  }
+  .bonus-tag{
+    display:inline-block; font-family:'Cairo', sans-serif; font-weight:800; font-size:.75rem;
+    color:var(--coral); border:1px solid var(--coral); border-radius:999px; padding:3px 12px; margin-bottom:10px;
+  }
+
+  /* ============ محطة 1 — الصورتان الظلّيتان ============ */
+  .img-pair{
+    display:flex; flex-wrap:wrap; gap:14px; justify-content:center;
+    max-width:920px; margin:14px auto 0;
+  }
+  .img-cell{
+    flex:1 1 240px; max-width:320px; background:var(--navy-darker);
+    border:1px solid rgba(20,200,168,.15); border-radius:22px; padding:10px 10px 4px;
+  }
+  .img-cell img{ width:100%; height:auto; display:block; }
+  .img-cap{
+    text-align:center; font-size:13px; color:var(--ink-dim); line-height:1.8; padding:6px 4px 8px;
+  }
+
+  /* ============ محطة 2 — مسرح التشريح الطبقي ============ */
+  :root{
+    --skin:#D9B79A; --fat-y:#E4C86A; --muscle-p:#C4657A;
+    --sinew:#F2F0E8; --cart:#FFFFFF; --fluid:#9CC9E0;
+  }
+  #dissectStage{ cursor:pointer; touch-action:manipulation; outline:none; }
+  #dissectStage:focus-visible{ outline:2px solid var(--coral); outline-offset:3px; }
+  #dissectStage.locked{ cursor:default; }
+  .dissect .lay{ transition:opacity .45s ease; }
+  .dissect .lay.off{ display:none !important; }
+  .dissect .lay.dim{ opacity:.32; }
+  /* العظم هنا أغمق قليلًا من رمز --matter العامّ عمدًا: الوتر والرباط
+     والغضروف كلّها بيضاء، وبلا هذا الفارق تُقرأ امتدادًا للعظم لا
+     نسيجًا مستقلًّا فوقه. قرار محلّي لا يمسّ المشترك. */
+  .dissect .bone-shaft{ stroke:#C9C2B0; stroke-linecap:round; fill:none; }
+  .dissect .bone-knob{ fill:#C9C2B0; stroke:var(--matter-edge); stroke-width:1; }
+  .dissect .skin-f{ fill:var(--skin); stroke:var(--matter-edge); stroke-width:1; }
+  .dissect .fat-f{ fill:var(--fat-y); stroke:var(--matter-edge); stroke-width:1; }
+  .dissect .muscle-f{ fill:var(--muscle-p); stroke:var(--matter-edge); stroke-width:1; }
+  .dissect .sinew{ stroke:var(--sinew); fill:none; stroke-linecap:round; }
+  .dissect .cart-cap{ stroke:var(--cart); fill:none; stroke-linecap:round; }
+  .dissect .lay.spot{ filter:drop-shadow(0 0 7px var(--turquoise-soft)); }
+  /* نقطة الارتكاز عند المفصل نفسه لا عند مركز العنصر: الافتراضي
+     (المركز) يُطيّر الطرف بعيدًا عن قاعدته المرئية. */
+  #legRotor{
+    transform-box:view-box; transform-origin:159px 100px;
+  }
+  #dissectStage.moving #legRotor{ animation:legSwing 2.6s ease-in-out 3; }
+  @keyframes legSwing{
+    0%{ transform:rotate(0deg); }
+    28%{ transform:rotate(10deg); }
+    60%{ transform:rotate(-8deg); }
+    100%{ transform:rotate(0deg); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    #dissectStage.moving #legRotor{ animation:none; }
+    .dissect .lay{ transition:none; }
+  }
+  .peel-hint{
+    max-width:920px; margin:8px auto 0; text-align:center;
+    font-size:12.5px; color:var(--turquoise); font-weight:700;
+  }
+  /* عدّاد الخطوات: «الخطوة X من N». العدّ بالنقرات لا بالأنسجة —
+     النقرة الثالثة تسلّط الضوء على العضلة ولا تكشف نسيجًا جديدًا،
+     فعدٌّ بالأنسجة يكذب عندها. وصيغة «X من N» هي صيغة عدّاد
+     المحطات نفسها فيقرؤها الطالب بلا تعلّم جديد. */
+  .peel-count{
+    max-width:920px; margin:4px auto 0; text-align:center;
+    font-size:12px; color:var(--ink-dim); font-weight:600;
+  }
+
+  /* ============ نبضة المسرح حين يكون النقر متاحًا ============
+     تنفع من ينظر إلى المسرح؛ ولا تنفع من هو أسفل الصفحة — ولذلك
+     هي إضافة إلى زرّ المتابعة لا بديل عنه. تُنزع عند أوّل نقرة
+     وتعود عند كل فتح للقفل. */
+  #dissectStage.awaiting{ animation:peelPulse 2s ease-in-out infinite; }
+  @keyframes peelPulse{
+    0%,100%{ filter:drop-shadow(0 0 0 rgba(20,200,168,0)); }
+    50%{ filter:drop-shadow(0 0 9px var(--turquoise-soft)); }
+  }
+
+  /* ============ طيّ السؤال المُجاب (المحطة 2 وحدها) ============
+     العلّة: الأسئلة الثلاثة تبقى مفتوحة بخياراتها الأربعة، فتتراكم
+     بين الطالب والمسرح الذي عليه أن يعود إليه لينقره. والطيّ يقع
+     بفعل الطالب (ضغط زرّ المتابعة أو نقر المسرح) لا بمؤقّت: لو
+     طُوي بعد مهلة لاختفى زرّ المتابعة قبل أن يراه.
+
+     والسطر المطويّ يحمل عنوان السؤال لا إجابته: مفاهيم هذه المحطة
+     (الوتر والرباط) تُقاس ثانيةً بنشاط الرقاقات في المحطة 3، وسطرٌ
+     معروض يحمل الجواب يفسد ذلك القياس.
+
+     والسطر زرّ حقيقي لا div: يستجيب للوحة المفاتيح ويعلن حالته
+     عبر aria-expanded. */
+  .step-summary{
+    display:none; width:100%; align-items:center; gap:10px;
+    background:none; border:none; padding:0; cursor:pointer;
+    font-family:'Tajawal', sans-serif; font-size:13.5px; font-weight:700;
+    color:var(--turquoise); text-align:start;
+  }
+  .explore-step.is-answered > .step-summary{ display:flex; }
+  .step-summary:focus-visible{ outline:2px solid var(--coral); outline-offset:4px; border-radius:8px; }
+  .step-caret{
+    width:15px; height:15px; flex:0 0 auto; margin-inline-start:auto;
+    transition:transform .25s ease; stroke:var(--turquoise);
+  }
+  .explore-step.is-answered:not(.is-folded) .step-caret{ transform:rotate(180deg); }
+  .step-body{ overflow:hidden; transition:max-height .34s ease, opacity .2s ease; }
+  .explore-step.is-folded > .step-body{ max-height:0 !important; opacity:0; }
+  /* المسافات تتقلّص مع الطيّ كي تُقرأ السطور كسلسلة متّصلة */
+  .explore-step.is-folded{ margin-top:12px; padding-top:10px; }
+  .peel-return{ margin-top:12px; }
+  @media (prefers-reduced-motion: reduce){
+    .step-body{ transition:none; }
+    .step-caret{ transition:none; }
+    #dissectStage.awaiting{ animation:none; }
+  }
+
+  /* ============ محطة 3 — مسرح الاحتكاك ============ */
+  .fric .bone-end{ fill:var(--matter); stroke:var(--matter-edge); stroke-width:1.5; }
+  .fric .cart{ fill:var(--cart); opacity:0; transition:opacity .5s ease; }
+  .fric .fluid{ fill:var(--fluid); opacity:0; transition:opacity .5s ease; }
+  .fric.s2 .cart, .fric.s3 .cart{ opacity:.95; }
+  .fric.s3 .fluid{ opacity:.7; }
+  #fricRight{ transform-box:view-box; transform-origin:255px 80px; }
+  .fric.s1 #fricRight{ animation:fricRough 1.1s linear infinite; }
+  .fric.s2 #fricRight{ animation:fricMid 1.1s linear infinite; }
+  .fric.s3 #fricRight{ animation:fricSmooth 1.4s ease-in-out infinite; }
+  @keyframes fricRough{
+    0%{transform:translateX(0)} 12%{transform:translateX(7px)} 20%{transform:translateX(3px)}
+    38%{transform:translateX(11px)} 50%{transform:translateX(4px)}
+    68%{transform:translateX(12px)} 82%{transform:translateX(2px)} 100%{transform:translateX(0)}
+  }
+  @keyframes fricMid{
+    0%{transform:translateX(0)} 30%{transform:translateX(7px)}
+    60%{transform:translateX(2px)} 100%{transform:translateX(0)}
+  }
+  @keyframes fricSmooth{
+    0%{transform:translateX(0)} 50%{transform:translateX(9px)} 100%{transform:translateX(0)}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .fric #fricRight{ animation:none !important; }
+    .fric .cart, .fric .fluid{ transition:none; }
+  }
+  /* حشوة البطاقة تُرفع عن الجانبين وحدهما ليبلغ العظم حافّتها
+     المستديرة فعلًا لا يقف على بُعد 14 بكسل منها. والمؤشّر يحتفظ
+     بحشوته وحده فلا يلتصق بالحافّة على الشاشات الضيّقة. */
+  #s3FricWrap{ padding-inline:0; overflow:hidden; }
+  #s3FricWrap .gauge{ padding-inline:14px; }
+  .gauge{ max-width:520px; margin:12px auto 2px; }
+  /* الأشرطة بصرية بحتة، وسطر التغذية الذي كان ينقل المقدار حُذف —
+     فقراءة كل صفّ تعيش هنا: مخفيّة عن العين، مقروءة لقارئ الشاشة. */
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+  }
+  .gauge-title{ margin:0 0 8px; font-size:12.5px; color:var(--ink-dim); font-weight:700; }
+  .gauge-row{ display:flex; align-items:center; gap:12px; margin-top:7px; }
+  .gauge-label{
+    flex:0 0 118px; font-size:11.5px; color:var(--ink-dim);
+    text-align:end; line-height:1.5;
+  }
+  .gauge-track{
+    flex:1 1 auto; height:14px; border-radius:999px; background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.08); overflow:hidden; position:relative;
+    /* منشأ الشريط عند اليمين — نقضٌ مقصود لقاعدة «الرسوم من اليسار
+       لليمين»، وهي قاعدة سببها الأرقام الغربية والمحاور الكمّية.
+       وهذا المؤشّر لا يحمل رقمًا: وصفيٌّ بكلمتين، ومنشؤه ملاصق
+       لتسميته العربية، وفي اتجاه قراءة الصفحة، وفي جهة العظم
+       المتحرّك على المسرح. */
+    direction:rtl;
+  }
+  /* display:block إلزامي — العنصر <span> سطريّ بطبعه، والسطريّ
+     يتجاهل العرض والارتفاع بالنسبة المئوية. وبدونه لم يُرسم الشريط
+     إطلاقًا، والاختبار كان يمرّ لأنه يقرأ القيمة المكتوبة لا ما
+     يُرسم فعلًا. */
+  .gauge-fill{
+    display:block; position:absolute; inset-block:0; right:0; left:auto;
+    height:100%; width:0%; border-radius:999px;
+    background:var(--coral);
+    transition:width .6s ease;
+  }
+  .gauge-fill.lvl-2{ background:#C98A72; }
+  .gauge-fill.lvl-3{ background:var(--matter); }
+  .gauge-scale{ display:flex; align-items:center; gap:12px; margin-top:6px; }
+  .gauge-scale-pad{ flex:0 0 118px; }
+  .gauge-scale-ends{
+    flex:1 1 auto; display:flex; justify-content:space-between; direction:rtl;
+    font-size:11px; color:var(--ink-dim); opacity:.75;
+  }
+  .gauge-word{
+    max-width:520px; margin:10px auto 0; text-align:center;
+    font-size:13.5px; color:var(--ink-dim);
+  }
+  .gauge-word b{ color:var(--ink); font-weight:700; }
+  @media (prefers-reduced-motion: reduce){ .gauge-fill{ transition:none; } }
+  .fric-watch{
+    max-width:520px; margin:8px auto 0; text-align:center;
+    font-size:12.5px; color:var(--turquoise); font-weight:700;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .gauge-fill, .gauge-ghost{ transition:none; }
+  }
+
+  /* ============ محطة 3 — مقطع الركبة وخانات البناء ============ */
+  .knee-wrap{ position:relative; max-width:480px; margin:14px auto 0; }
+  .knee-wrap svg.knee{ width:100%; height:auto; display:block; }
+  .knee .bone-f{ fill:var(--matter); stroke:var(--matter-edge); stroke-width:1.2; }
+  .knee .cart-f{ fill:var(--cart); }
+  .knee .cavity-f{ fill:var(--fluid); opacity:.55; }
+  /* الغشاء خطّ متّصل رفيع بلون نسيج محايد: كان متقطّعًا بأزرق قريب
+     من التركوازي، فيشترك في النحو البصري نفسه مع الخانة الفارغة
+     وخطّ الربط (متقطّع + تركوازي) — فيُقرأ خانةً سادسة تنتظر رقاقة.
+     ولا يُبيَّض لئلا يُخلط بالغضروف. */
+  .knee .memb{ stroke:#8E9AA8; stroke-width:1.6; fill:none; }
+  .knee .muscle-f{ fill:var(--muscle-p); stroke:var(--matter-edge); stroke-width:1; }
+  .knee .sinew-f{ stroke:var(--sinew); stroke-width:9; fill:none; stroke-linecap:round; }
+  .knee .connector{ stroke:var(--turquoise-soft); stroke-width:1.5; stroke-dasharray:3 3; }
+  .stage-caption{
+    max-width:520px; margin:10px auto 0; text-align:center;
+    font-size:12.5px; color:var(--ink-dim); line-height:1.7;
+  }
+  .stage-caption b{ color:#8E9AA8; font-weight:700; }
+  .knee-slot{
+    position:absolute; transform:translate(-50%,-50%);
+    white-space:nowrap; font-size:11.5px; z-index:2; transition:none;
+  }
+  /* نبضة نجاح المطابقة محسوبة على مركز الخانة لا على زاويتها.
+     العلّة: `.slot.correct` في المشترك تحمل `animation: tplPopIn`،
+     وإطاراتها تكتب `transform: scale(...)` كاملًا — فتمحو
+     `translate(-50%,-50%)` طوال 350 مللي ثانية. فتقفز الخانة بمقدار
+     نصف عرضها يمينًا ونصف ارتفاعها أسفل، ثم تعود لحظة انتهاء الحركة.
+     ولا يقع هذا إلا حيث تُوضع الخانة فوق مسرح بالتوسيط — درسان على
+     المنصّة لا أكثر (هذا ودرس 02).
+     والعلاج محلّي لا في المشترك: تعديل `tplPopIn` نفسها يُقحم إزاحةً
+     على خانات الجُمَل الجارية في سبعة دروس فتقفز هي بدلًا منها.
+     وjsdom لا يحسب تخطيطًا ولا يشغّل حركة، فلا اختبار يكشف هذا —
+     رصده فؤاد بالعين. */
+  .knee-slot.correct{ animation:popCentered .35s ease; }
+  @keyframes popCentered{
+    0%  { transform:translate(-50%,-50%) scale(.82); }
+    60% { transform:translate(-50%,-50%) scale(1.08); }
+    100%{ transform:translate(-50%,-50%) scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .knee-slot.correct{ animation:none; }
+  }
+
+  /* ============ محطة 4 — الكتف والمرفق ============ */
+  .joint-pair{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; max-width:920px; margin:14px auto 0; }
+  .joint-cell{
+    flex:1 1 260px; max-width:330px; background:var(--navy-darker);
+    border:1px solid rgba(20,200,168,.15); border-radius:22px; padding:12px;
+  }
+  .joint-cell svg{ width:100%; height:auto; display:block; }
+  .joint-cell .cell-cap{ text-align:center; font-size:12.5px; color:var(--ink-dim); margin-top:6px; line-height:1.8; }
+  .jt .bone-f{ fill:var(--matter); stroke:var(--matter-edge); stroke-width:1.2; }
+  .jt .socket-f{ fill:var(--matter); stroke:var(--matter-edge); stroke-width:1.2; opacity:.75; }
+  .jt .grip{ cursor:grab; touch-action:none; }
+  .jt .grip:active{ cursor:grabbing; }
+  .jt .stripe{ stroke:var(--turquoise); stroke-width:3; fill:none; stroke-linecap:round; opacity:.9; }
+  #humerusRotor{ transform-box:view-box; transform-origin:128px 96px; }
+  #humerusSpin{ transform-box:view-box; transform-origin:128px 96px; }
+  #ulnaRotor{ transform-box:view-box; transform-origin:150px 150px; }
+  .limit-msg{ min-height:20px; text-align:center; font-size:12.5px; color:var(--coral); font-weight:700; margin-top:6px; }
+
+  /* ============ محطة 4 — جدول عدد المفاصل ============ */
+  .count-table{
+    max-width:420px; margin:14px auto 0; border-collapse:collapse; width:100%;
+    /* الجداول من اليسار لليمين */
+    direction:ltr;
+  }
+  .count-table th, .count-table td{
+    border:1px solid rgba(255,255,255,.09); padding:8px 12px; font-size:13.5px;
+  }
+  .count-table th{ background:rgba(20,200,168,.08); color:var(--turquoise); font-weight:700; }
+  .count-table td.n{ font-family:'Cairo',sans-serif; font-weight:700; color:var(--ink); text-align:center; width:38%; }
+  .count-table td.p{ color:var(--ink-dim); text-align:right; }
+
+  /* ============ محطة 5 — الركبة السليمة والمتضرّرة ============ */
+  #kneeDamaged{ opacity:0; transition:opacity .7s ease; }
+  #kneeHealthy{ opacity:1; transition:opacity .7s ease; }
+  #dmgStage.dmg #kneeDamaged{ opacity:1; }
+  #dmgStage.dmg #kneeHealthy{ opacity:0; }
+  @media (prefers-reduced-motion: reduce){
+    #kneeDamaged, #kneeHealthy{ transition:none; }
+  }
+  .dmg-stage .bone-f{ fill:var(--matter); stroke:var(--matter-edge); stroke-width:1.2; }
+  .dmg-stage .cart-f{ fill:var(--cart); }
+  .dmg-stage .cavity-f{ fill:var(--fluid); opacity:.55; }
+  /* لا تورّم في هذا المشهد: ليس فيه نسيج يتورّم أصلًا (لا جلد ولا
+     دهن ولا عضلة — عظمان وغضروف وتجويف فقط)، فأي هالة حوله تُقرأ
+     ضبابًا لا نسيجًا منتفخًا. والمشهد مجرَّد عمدًا ليعزل الغضروف،
+     وسطر وصفه يطلب مقارنة الطبقة البيضاء وحدها. وحُذف معه ذكرُ
+     التورّم من الخيار والتغذية: ما لا يُعطى لا يُقاس. */
+
+  /* ============ محطة 6 — التقييم ============ */
+  .name-gate{
+    margin-top:20px; background:rgba(255,255,255,.03); border:1px solid rgba(20,200,168,.2);
+    border-radius:16px; padding:16px 18px;
+  }
+  .name-gate label{ display:block; font-size:.9rem; color:var(--ink); font-weight:700; margin-bottom:10px; }
+  .name-gate .gate-note{ font-size:.78rem; color:var(--ink-dim); margin:10px 0 0; }
+  .eval-q{ border-top:1px solid rgba(255,255,255,.06); margin-top:26px; padding-top:22px; }
+  .eval-q.first{ border-top:none; margin-top:18px; padding-top:0; }
+  .q-num{
+    display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px;
+    border-radius:50%; background:rgba(20,200,168,.12); border:1px solid var(--turquoise-soft);
+    color:var(--turquoise); font-family:'Cairo', sans-serif; font-weight:800; font-size:.8rem;
+    margin-inline-end:8px; flex-shrink:0;
+  }
+  .eval-summary{
+    margin-top:30px; background:rgba(20,200,168,.06); border:1px solid var(--turquoise-soft);
+    border-radius:18px; padding:20px 18px; text-align:center;
+  }
+  #certTriggerSlot{ display:flex; justify-content:center; margin-top:18px; }
+</style>
+</head>
+<body>
+
+<nav class="crumb">
+  <a href="../../index.html">الرئيسية</a> ›
+  <a href="../index.html">الفصل الأول</a> ›
+  <a href="index.html">الوحدة 2</a> ›
+  الدرس 3
+</nav>
+
+<div class="progress-track">
+  <div class="xp-counter" id="xpCounter">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+    <span id="xpValue">0</span>
+    <span class="xp-label">XP</span>
+  </div>
+  <div class="progress-dot" data-target="station-1"></div>
+  <div class="progress-dot" data-target="station-2"></div>
+  <div class="progress-dot" data-target="station-3"></div>
+  <div class="progress-dot" data-target="station-4"></div>
+  <div class="progress-dot" data-target="station-5"></div>
+  <div class="progress-dot" data-target="station-6"></div>
+</div>
+
+<header class="hero">
+  <div class="eyebrow">الوحدة 2 · الدرس 3</div>
+  <h1>ما تركيب المفاصل الزلالية؟</h1>
+  <div class="objectives-box">
+    <h3>في نهاية هذا الدرس سوف تتمكّن من أن:</h3>
+    <ul>
+      <li>تصف تركيب المفصل الزلالي وما يوجد داخله.</li>
+      <li>تميّز بين الوتر والرباط والغضروف بوظيفة كلٍّ منها.</li>
+      <li>تشرح أهمّية المفاصل لحركة ذراعيك وساقيك.</li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ═════════════════════ محطة 1 ═════════════════════ -->
+  <section class="station" id="station-1">
+    <div class="station-label">المحطة الأولى</div>
+    <h2>حرّك جسدك أنت</h2>
+    <p class="station-tagline">صورتان لحركتين تراهما كثيرًا. انظر إليهما ثم جرّب بنفسك.</p>
+
+    <div class="img-pair">
+      <figure class="img-cell" style="margin:0;">
+        <img src="ardha-silhouette.svg" width="300" height="300" loading="lazy"
+             alt="رسم ظلّي لراقص عرضة يرفع ذراعه إلى أعلى فوق كتفه، وخلفه راقصان في الصفّ يرفعان ذراعيهما">
+        <figcaption class="img-cap">راقص عرضة في الدوحة يرفع ذراعه فوق كتفه.</figcaption>
+      </figure>
+      <figure class="img-cell" style="margin:0;">
+        <img src="football-kick-silhouette.svg" width="300" height="300" loading="lazy"
+             alt="رسم ظلّي للاعب كرة قدم يثني ركبته ويمدّ ساقه نحو الكرة ليركلها">
+        <figcaption class="img-cap">لاعب كرة قدم يثني ركبته ثم يمدّها ليركل الكرة.</figcaption>
+      </figure>
+    </div>
+
+    <p class="fact-line center" id="s1Guide">قبل أن تقرأ سطرًا آخر، جرّب بنفسك: لُفّ ذراعك دائرة كاملة حول كتفك. ثم حاول أن تفعل الشيء نفسه بركبتك.</p>
+
+    <div class="explore-step">
+      <p class="explore-q">أيّهما تحرّك في اتجاهات أكثر — كتفك أم ركبتك؟</p>
+      <div class="quiz-options" id="s1DirOptions">
+        <label class="quiz-option"><input type="radio" name="s1dir" value="a">الكتف</label>
+        <label class="quiz-option"><input type="radio" name="s1dir" value="b">الركبة</label>
+        <label class="quiz-option"><input type="radio" name="s1dir" value="c">تحرّكا بالقدر نفسه تقريبًا</label>
+      </div>
+      <p class="explore-feedback" id="fb-s1dir" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s1HoldStep" hidden>
+      <p class="explore-q">العظمان يلتقيان عند كتفك ولا ينفصلان مهما أدرتَ ذراعك. برأيك ما الذي يمسكهما معًا؟</p>
+      <div class="quiz-options" id="s1HoldOptions">
+        <label class="quiz-option"><input type="radio" name="s1hold" value="a">عضلة تلتفّ حول العظمين وتشدّهما إلى بعضهما</label>
+        <label class="quiz-option"><input type="radio" name="s1hold" value="b">مادة قوية تصل بين العظم والعظم فتمنع انفصالهما</label>
+        <label class="quiz-option"><input type="radio" name="s1hold" value="c">العظمان ملتحمان ببعضهما التحامًا كاملًا عند نقطة اللقاء</label>
+        <label class="quiz-option"><input type="radio" name="s1hold" value="d">سائل لزج يملأ ما بينهما ويلصقهما ببعضهما</label>
+      </div>
+      <p class="explore-feedback" id="fb-s1hold" hidden></p>
+    </div>
+
+    <div class="station-handoff" id="s1done" hidden>
+      <a href="#station-2" class="station-next">إلى طاولة التشريح ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 2 ═════════════════════ -->
+  <section class="station" id="station-2">
+    <div class="station-label">المحطة الثانية</div>
+    <h2>إلى طاولة التشريح</h2>
+    <p class="station-tagline">أمامك ساق دجاجة. ستفتحها طبقةً طبقة وترى بنفسك ما بداخل المفصل.</p>
+
+    <p class="fact-line" id="s2LabCard">في المختبر الحقيقي يحتاج هذا النشاط ساق دجاجة نيئة وقفّازات ومشرطًا ومقصّ تشريح وملقطًا ولوح تشريح — مع غسل اليدين قبل العمل وبعده، لأن الدجاج النيء قد يحمل بكتيريا. هنا ستفعل الشيء نفسه على الشاشة.</p>
+
+    <!-- ═══ مرحلة أ — حرّك قبل أن تقطع ═══ -->
+    <div class="stage-wrap">
+      <svg class="stage dissect" id="dissectStage" viewBox="0 0 340 230"
+           xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="ساق دجاجة يمكن فتح طبقاتها طبقةً بعد طبقة">
+
+        <!-- ــــ العظم: ظاهر دائمًا تحت ما فوقه ــــ -->
+        <g class="lay" id="lay-bone">
+          <path class="bone-shaft" d="M 62,62 L 146,96" stroke-width="20"/>
+          <circle class="bone-knob" cx="60" cy="61" r="15"/>
+          <circle class="bone-knob" cx="148" cy="97" r="16"/>
+        </g>
+
+        <!-- ــــ الغضروف: يغلّف طرفَي العظمين عند المفصل ــــ -->
+        <path class="lay cart-cap off" id="lay-cartilage-a" d="M 136,86 A 17,17 0 0 1 160,110" stroke-width="9"/>
+
+        <!-- ــــ الرباط: يعبر المفصل من عظم إلى عظم ــــ -->
+        <g class="lay off" id="lay-ligament">
+          <path class="sinew" d="M 126,104 Q 160,136 204,128" stroke-width="8"/>
+          <path class="sinew" d="M 132,78 Q 166,88 202,104" stroke-width="7"/>
+        </g>
+
+        <!-- ــــ الوتر: من طرف العضلة إلى العظم ــــ -->
+        <path class="lay sinew off" id="lay-tendon" d="M 138,66 Q 174,82 206,106" stroke-width="6"/>
+
+        <!-- ــــ العضلة ــــ -->
+        <path class="lay muscle-f off" id="lay-muscle"
+              d="M 58,44 Q 104,28 146,66 Q 138,90 66,76 Q 48,68 58,44 Z"/>
+
+        <!-- ــــ الجزء الدوّار: كل ما تحت المفصل ــــ -->
+        <g id="legRotor">
+          <g class="lay" id="lay-bone-b">
+            <path class="bone-shaft" d="M 177.5 106.9 L 289.5 131.8" stroke-width="20"/>
+            <circle class="bone-knob" cx="178.6" cy="107.7" r="15"/>
+            <circle class="bone-knob" cx="291.7" cy="132.5" r="13"/>
+          </g>
+          <path class="lay cart-cap off" id="lay-cartilage-b" d="M 193 117.6 A 17 17 -10 0 0 165 97.8" stroke-width="9"/>
+          <path class="lay fat-f off" id="lay-fat-b"
+                d="M 150.7 93.3 Q 154.9 82.4 169.5 84.9 L 296.8 121.4 Q 313.5 129.6 308.9 143.6 Q 300.9 156.2 284.8 150.9 L 165.1 117.2 Q 150.9 111.6 150.7 93.3 Z"/>
+          <path class="lay skin-f" id="lay-skin-b"
+                d="M 145.7 88.1 Q 151.2 72.9 170 75.7 L 300.5 113.6 Q 322.6 123.9 316.3 145.4 Q 307.6 165.2 284.2 159.2 L 161.5 119.9 Q 144 112.8 145.7 88.1 Z"/>
+        </g>
+
+        <!-- ــــ النسيج الدهني (الجزء الثابت) ــــ -->
+        <path class="lay fat-f off" id="lay-fat-a"
+              d="M 48,56 Q 52,36 74,40 L 148,70 Q 160,76 163,86 Q 166,97 157,102 Q 148,108 137,103 L 57,80 Q 43,73 48,56 Z"/>
+
+        <!-- ــــ الجلد (الجزء الثابت) — أعلى الطبقات ــــ -->
+        <path class="lay skin-f" id="lay-skin-a"
+              d="M 40,52 Q 44,26 76,30 L 152,62 Q 168,70 172,84 Q 176,98 164,106 Q 152,114 138,108 L 52,84 Q 34,76 40,52 Z"/>
+      </svg>
+    </div>
+
+    <div class="station-handoff" id="s2MoveRow" style="margin-top:10px;">
+      <button type="button" class="btn" id="s2MoveBtn">حرّك الساق</button>
+    </div>
+    <p class="stage-msg" id="s2MoveNote" hidden>العظمان يدوران عند نقطة واحدة. ما الذي يوجد عند تلك النقطة؟</p>
+
+    <!-- ═══ مرحلة ب — الكشف الطبقي ═══ -->
+    <div id="s2DissectStep" hidden>
+      <p class="peel-hint" id="s2PeelHint">انقر على الساق لتزيح الطبقة التي فوقها.</p>
+      <p class="peel-count" id="s2PeelCount">الخطوة 0 من 6</p>
+      <p class="stage-msg" id="s2Readout"></p>
+
+      <div class="explore-step" id="s2Q1Box" hidden>
+        <button type="button" class="step-summary" id="s2Sum1" aria-expanded="true" aria-controls="s2Body1">
+          <span>✓ أين ترتبط العضلة</span>
+          <svg class="step-caret" viewBox="0 0 24 24" fill="none" stroke-width="2.4"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="step-body" id="s2Body1">
+          <p class="explore-q">الجزء الوردي عضلة. تابع طرفها بعينك — أين ينتهي؟</p>
+          <div class="quiz-options" data-q="u2l3-muscle-attach">
+            <label class="quiz-option"><input type="radio" name="u2l3-muscle-attach" value="correct">يرتبط بالعظم عند طرفه</label>
+            <label class="quiz-option"><input type="radio" name="u2l3-muscle-attach" value="w1">ينتهي عند الجلد من الخارج ولا يصل إلى العظم</label>
+            <label class="quiz-option"><input type="radio" name="u2l3-muscle-attach" value="w2">ينتهي حرًّا في الفراغ بين العظمين بلا ارتباط</label>
+            <label class="quiz-option"><input type="radio" name="u2l3-muscle-attach" value="w3">يلتفّ حول المفصل كاملًا دون أن يرتبط بشيء</label>
+          </div>
+          <p class="explore-feedback" id="fb-u2l3-muscle-attach" hidden></p>
+          <button type="button" class="btn peel-return" id="s2Back1" hidden>تابع التشريح ↑</button>
+        </div>
+      </div>
+
+      <div class="explore-step" id="s2Q2Box" hidden>
+        <button type="button" class="step-summary" id="s2Sum2" aria-expanded="true" aria-controls="s2Body2">
+          <span>✓ ما فائدة الخيط الأبيض</span>
+          <svg class="step-caret" viewBox="0 0 24 24" fill="none" stroke-width="2.4"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="step-body" id="s2Body2">
+          <p class="explore-q">ظهر خيط أبيض قويّ يصل بين العضلة والعظم. ما الفائدة التي يؤدّيها هذا الخيط؟</p>
+          <div class="quiz-options" data-q="u2l3-tendon-role">
+            <label class="quiz-option"><input type="radio" name="u2l3-tendon-role" value="w1">يمنع العظمين من الانفصال عن بعضهما عند حركة المفصل</label>
+            <label class="quiz-option"><input type="radio" name="u2l3-tendon-role" value="w2">يغطّي طرف العظم بطبقة ملساء تقلّل احتكاكه بجاره</label>
+            <label class="quiz-option"><input type="radio" name="u2l3-tendon-role" value="correct">ينقل شدّ العضلة إلى العظم فيتحرّك الطرف كلّه</label>
+            <label class="quiz-option"><input type="radio" name="u2l3-tendon-role" value="w3">يملأ الفراغ بين العظمين بسائل يسهّل انزلاقهما</label>
+          </div>
+          <p class="explore-feedback" id="fb-u2l3-tendon-role" hidden></p>
+          <button type="button" class="btn peel-return" id="s2Back2" hidden>تابع التشريح ↑</button>
+        </div>
+      </div>
+
+      <div class="explore-step" id="s2Q3Box" hidden>
+        <button type="button" class="step-summary" id="s2Sum3" aria-expanded="true" aria-controls="s2Body3">
+          <span>✓ ما الذي يصل بين عظم وعظم</span>
+          <svg class="step-caret" viewBox="0 0 24 24" fill="none" stroke-width="2.4"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="step-body" id="s2Body3">
+          <p class="explore-q">بعد إزالة العضلات ظهرت مادة خيطية أخرى — لكنها تصل بين عظم وعظم لا بين عضلة وعظم. ماذا تفعل؟</p>
+          <div class="quiz-options" data-q="u2l3-ligament-role">
+            <label class="quiz-option"><input type="radio" name="u2l3-ligament-role" value="w1">تشدّ العظم في اتجاه معيّن فتحرّك الطرف كما تفعل العضلة</label>
+            <label class="quiz-option"><input type="radio" name="u2l3-ligament-role" value="correct">تُبقي العظمين متماسكين معًا فلا ينفصلان عند الحركة</label>
+            <label class="quiz-option"><input type="radio" name="u2l3-ligament-role" value="w2">تفرز سائلًا يملأ الفراغ الواقع بين طرفَي العظمين</label>
+            <label class="quiz-option"><input type="radio" name="u2l3-ligament-role" value="w3">تغطّي طرف العظم بطبقة بيضاء ملساء تقلّل الاحتكاك</label>
+          </div>
+          <p class="explore-feedback" id="fb-u2l3-ligament-role" hidden></p>
+          <button type="button" class="btn peel-return" id="s2Back3" hidden>تابع التشريح ↑</button>
+        </div>
+      </div>
+
+      <p class="fact-line" id="s2SpongyLink" hidden>تذكّر أنّ طرف العظم من الداخل عظم إسفنجي — وهذا ما يغطّيه من الخارج.</p>
+    </div>
+
+    <!-- ═══ مرحلة ج — التوقّع عند التلف ═══ -->
+    <div id="s2TearStep" hidden>
+      <div class="explore-step">
+        <p class="explore-q">الوتر هو ما ينقل شدّ العضلة إلى العظم. توقّع: ماذا يحدث لحركة الطرف إذا تمزّق أحد الأوتار؟</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="s2TearInput" placeholder="اكتب إجابتك" autocomplete="off">
+          <button type="button" class="btn" id="s2TearBtn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-u2l3-tendon-tear" hidden></p>
+        <button type="button" class="link-btn" id="s2TearModelBtn" hidden>أرِني الإجابة النموذجية</button>
+        <p class="name-card" id="s2TearModel" hidden></p>
+      </div>
+
+      <div class="explore-step" id="s2Q4Box" hidden>
+        <p class="explore-q">والآن توقّع: ماذا يحدث للمفصل نفسه إذا تمزّق أحد الأربطة؟</p>
+        <div class="quiz-options" data-q="u2l3-ligament-tear">
+          <label class="quiz-option"><input type="radio" name="u2l3-ligament-tear" value="w1">تتوقّف العضلة عن سحب العظم فلا يتحرّك الطرف إطلاقًا</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-ligament-tear" value="w2">يزداد احتكاك طرفَي العظم فورًا فيتآكل كلٌّ منهما</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-ligament-tear" value="correct">يصير المفصل أقلّ ثباتًا وقد تنزلق العظام عن موضعها</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-ligament-tear" value="w3">يجفّ السائل الموجود داخل تجويف المفصل فيصير خشنًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l3-ligament-tear" hidden></p>
+      </div>
+    </div>
+
+    <div class="station-handoff" id="s2done" hidden>
+      <a href="#station-3" class="station-next">لماذا لا تتآكل العظام؟ ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 3 ═════════════════════ -->
+  <section class="station" id="station-3">
+    <div class="station-label">المحطة الثالثة</div>
+    <h2>لماذا لا تتآكل العظام؟</h2>
+    <p class="station-tagline">عظماك يتحرّكان على بعضهما آلاف المرّات كل يوم. ما الذي يحمي طرفيهما؟</p>
+
+    <!-- ═══ مرحلة أ — توقّع ثم تحقّق ═══ -->
+    <div class="explore-step">
+      <p class="explore-q">في التشريح رأيتَ طبقة بيضاء ملساء تغطّي طرف العظم. توقّع: ماذا سيحدث لو تحرّك العظمان وهذه الطبقة مفقودة؟</p>
+      <div class="quiz-options" id="s3PredictOptions">
+        <label class="quiz-option"><input type="radio" name="s3predict" value="a">سيتحرّكان بسهولة كما هما</label>
+        <label class="quiz-option"><input type="radio" name="s3predict" value="b">ستصير حركتهما أصعب وأخشن</label>
+        <label class="quiz-option"><input type="radio" name="s3predict" value="c">سيتوقّفان عن الحركة تمامًا</label>
+      </div>
+      <p class="explore-feedback" id="fb-s3predict" hidden></p>
+    </div>
+
+    <!-- المسرح والمؤشّر في بطاقة واحدة: المؤشّر لوحة قياس ملحقة
+         بالجهاز، لا جزءًا من الرسم — فيبقى خارج الـSVG وداخل
+         البطاقة. والإطار مضيَّق حول العظمين: كان 45% من ارتفاع
+         البطاقة فراغًا خالصًا أعلى العظمين وأسفلهما. -->
+    <div class="stage-wrap" id="s3FricWrap" hidden>
+      <svg class="stage fric s1" id="fricStage" viewBox="0 28 340 104"
+           xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="طرفا عظم يُمرَّران على بعضهما، مع طبقة ملساء وسائل يُضافان تباعًا">
+        <!-- السائل يملأ الفراغ بين الطرفين -->
+        <ellipse class="fluid" cx="170" cy="80" rx="30" ry="34"/>
+        <!-- الطرف الأيسر -->
+        <g>
+          <!-- الطرف الخارجي يتجاوز حافّة المشهد فتقصّه الحافّة: كان
+               ينتهي بحدّ عمودي حادّ على بُعد 12 وحدة منها، فيبقى بعده
+               فراغ كحلي تقرؤه العين نهايةً — أي عظمًا مقطوعًا. والخروج
+               يقول «يكمل خارج الصورة»، وهو اصطلاح التكبير المألوف. -->
+          <path class="bone-end" d="M -12,44 L 118,44 Q 156,44 156,80 Q 156,116 118,116 L -12,116 Z"/>
+          <path class="cart" d="M 140,48 Q 164,54 164,80 Q 164,106 140,112 Q 152,98 152,80 Q 152,62 140,48 Z"/>
+        </g>
+        <!-- الطرف الأيمن -->
+        <g id="fricRight">
+          <!-- يتجاوز الحافّة بأكثر من الثابت: هذا هو العظم المتحرّك،
+               وإزاحته تبلغ 12 وحدة — فلو وقف عند الحافّة بالضبط لانكشف
+               فراغ عند طرفه في كل دورة. -->
+          <path class="bone-end" d="M 356,44 L 222,44 Q 184,44 184,80 Q 184,116 222,116 L 356,116 Z"/>
+          <path class="cart" d="M 200,48 Q 176,54 176,80 Q 176,106 200,112 Q 188,98 188,80 Q 188,62 200,48 Z"/>
+        </g>
+      </svg>
+
+      <!-- سجلّ قياس يتراكم: شريط مسمّى لكل حالة يبقى ظاهرًا.
+           كان شريطًا واحدًا يتحرّك ويترك خلفه أثرًا باهتًا بلا تفسير،
+           فلا يرى الطالب إلا قيمتين ويقارن الثالثة من ذاكرته. والآن
+           تقف الثلاثة معًا أمامه فيُجاب سؤال النمط بالنظر لا بقراءة
+           الجُمَل التي كتبناها له. -->
+      <div class="gauge" id="s3Gauge" hidden>
+        <p class="gauge-title">مقدار الاحتكاك</p>
+        <div class="gauge-row" id="fricRow1" hidden>
+          <span class="gauge-label">بلا شيء بينهما</span>
+          <span class="gauge-track"><span class="gauge-fill" id="fricFill1"></span></span>
+          <span class="sr-only" id="fricSr1">احتكاك شديد</span>
+        </div>
+        <div class="gauge-row" id="fricRow2" hidden>
+          <span class="gauge-label">مع الطبقة الملساء</span>
+          <span class="gauge-track"><span class="gauge-fill lvl-2" id="fricFill2"></span></span>
+          <span class="sr-only" id="fricSr2">احتكاك أقلّ</span>
+        </div>
+        <div class="gauge-row" id="fricRow3" hidden>
+          <span class="gauge-label">مع الطبقة والسائل</span>
+          <span class="gauge-track"><span class="gauge-fill lvl-3" id="fricFill3"></span></span>
+          <span class="sr-only" id="fricSr3">انزلاق سلس</span>
+        </div>
+        <!-- الطرفان يُحاذيان المسار ببنية الصفّ نفسها لا بحشوة مقدَّرة -->
+        <div class="gauge-scale">
+          <span class="gauge-scale-pad" aria-hidden="true"></span>
+          <!-- المنشأ عند اليمين، فـ«سلس» (الصفر) عنده و«شديد» في أقصى
+               المدى يسارًا. وترتيب العنصرين يتبع direction:rtl للصفّ:
+               الأول يقع يمينًا. وقلبُ الاتجاه وقلبُ الترتيب معًا كان
+               يُلغي أحدهما الآخر فتظهر الكلمتان معكوستين. -->
+          <span class="gauge-scale-ends"><span>سلس</span><span>شديد</span></span>
+        </div>
+        <!-- قراءة المؤشّر تعيش تحت الشريط داخل البطاقة: كانت قد
+             خرجت أسفل الزرّ عند نقله، فانفصل الوصف عمّا يصفه. -->
+        <p class="gauge-word" id="fricWord" hidden></p>
+      </div>
+    </div>
+
+    <!-- الزرّ أسفل المسرح: الترتيب هو ترتيب المعنى — أرى، أقيس، أضيف -->
+    <div class="station-handoff" id="s3RunRow" hidden style="margin-top:12px;">
+      <button type="button" class="btn" id="s3RunBtn">شغّل التجربة</button>
+    </div>
+    <p class="fric-watch" id="s3Watch" hidden>راقب المؤشّر أعلاه قبل أن تضغط الزرّ ثانيةً.</p>
+
+    <div class="explore-step" id="s3PatternBox" hidden>
+      <p class="explore-q">قارن الحالات الثلاث. أي عبارة تصف ما رأيته؟</p>
+      <div class="quiz-options" data-q="u2l3-friction-pattern">
+        <label class="quiz-option"><input type="radio" name="u2l3-friction-pattern" value="w1">الغضروف وحده يمنع الاحتكاك منعًا تامًّا ولا حاجة لشيء آخر معه</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-friction-pattern" value="w2">السائل وحده هو ما يقلّل الاحتكاك، والغضروف لا أثر له في ذلك</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-friction-pattern" value="w3">الاحتكاك بقي على حاله في الحالات الثلاث ولم يتغيّر مقداره</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-friction-pattern" value="correct">كلّما أُضيفت طبقة — الغضروف ثم السائل — قلّ الاحتكاك أكثر</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l3-friction-pattern" hidden></p>
+    </div>
+
+    <!-- ═══ مرحلة ب — بناء المفصل ═══ -->
+    <div class="explore-step" id="s3BuildBox" hidden>
+      <p class="explore-q">أمامك مقطع في ركبة. ضع كل اسم في موضعه من الرسم.</p>
+
+      <div data-chips="u2l3-build">
+        <div class="chips-pool" id="s3ChipsPool">
+          <div class="chip" data-value="عضلة" data-xp-id="u2l3-build-muscle" data-xp-reason="حدّدتَ موضع العضلة في المفصل" tabindex="0">عضلة</div>
+          <div class="chip" data-value="وتر" data-xp-id="u2l3-build-tendon" data-xp-reason="حدّدتَ موضع الوتر" tabindex="0">وتر</div>
+          <div class="chip" data-value="رباط" data-xp-id="u2l3-build-ligament" data-xp-reason="حدّدتَ موضع الرباط" tabindex="0">رباط</div>
+          <div class="chip" data-value="غضروف" data-xp-id="u2l3-build-cartilage" data-xp-reason="حدّدتَ موضع الغضروف" tabindex="0">غضروف</div>
+          <div class="chip" data-value="السائل الزلالي" data-xp-id="u2l3-build-fluid" data-xp-reason="حدّدتَ ما يملأ الفراغ بين الطرفين" tabindex="0">السائل الزلالي</div>
+        </div>
+
+        <div class="knee-wrap" id="kneeBuildWrap">
+          <svg class="knee" id="kneeStage" viewBox="0 0 340 320"
+               xmlns="http://www.w3.org/2000/svg" role="img"
+               aria-label="مقطع تخطيطي في مفصل الركبة: عظمان وطبقة ملساء على طرفيهما وتجويف بينهما">
+
+            <!-- العظم العلوي -->
+            <path class="bone-f" d="M 148,10 L 190,10 L 196,120 Q 224,128 226,146 L 112,146 Q 114,128 142,120 Z"/>
+            <!-- العظم السفلي -->
+            <path class="bone-f" d="M 112,182 Q 114,196 142,204 L 148,314 L 190,314 L 196,204 Q 224,196 226,182 Z"/>
+
+            <!-- الغضروف: طبقة تغطّي طرفَي العظمين -->
+            <path class="cart-f" d="M 112,146 L 226,146 L 226,155 Q 169,161 112,155 Z"/>
+            <path class="cart-f" d="M 112,182 L 226,182 L 226,173 Q 169,167 112,173 Z"/>
+
+            <!-- تجويف المفصل ومحتواه -->
+            <path class="cavity-f" d="M 112,155 Q 169,161 226,155 L 226,173 Q 169,167 112,173 Z"/>
+
+            <!-- الغشاء الزلالي: مرسوم ومسمّى، بلا خانة وبلا رقاقة.
+                 وتسميته تعيش أسفل الشكل لا داخله: كانت نصًّا عائمًا
+                 بخطّ إشارة، فتصادمت مع خانة «غضروف». وأي موضع بديل
+                 داخل الرسم يحجبه قوس الرباط — قِيس فوجد كل خطّ مستقيم
+                 من المنطقة الحرّة إلى الغشاء يمرّ على بُعد أقلّ من وحدة
+                 من الرباط. والقاعدة: التسمية التي تُطارَد إحداثيًّا
+                 تُنقَل إلى تسمية ثابتة أسفل الشكل. -->
+            <path class="memb" d="M 114,150 Q 103,164 114,178"/>
+            <path class="memb" d="M 224,150 Q 235,164 224,178"/>
+
+            <!-- العضلة: تلامس العظم العلوي فلا تبقى كتلة معلّقة بلا رابط -->
+            <path class="muscle-f" d="M 104,30 Q 80,72 90,114 Q 118,120 146,114 L 143,30 Z"/>
+            <!-- الوتر: من طرف العضلة، يتقوّس يسارًا ويتجاوز المفصل إلى العظم السفلي -->
+            <path class="sinew-f" d="M 108,112 Q 84,166 124,218"/>
+            <!-- الرباط: شريط قصير يعبر المفصل وحده من عظم إلى عظم -->
+            <path class="sinew-f" d="M 220,136 Q 254,164 222,190"/>
+
+            <!-- خطوط الربط بين كل خانة وموضعها التشريحي -->
+            <line class="connector" data-t="muscle" x1="56" y1="58" x2="100" y2="70"/>
+            <line class="connector" data-t="cartilage" x1="286" y1="96" x2="204" y2="150"/>
+            <line class="connector" data-t="ligament" x1="288" y1="222" x2="243" y2="166"/>
+            <line class="connector" data-t="tendon" x1="52" y1="232" x2="94" y2="180"/>
+            <line class="connector" data-t="fluid" x1="102" y1="282" x2="169" y2="164"/>
+          </svg>
+
+          <div class="slot knee-slot" id="s3-slot-muscle" data-answer="عضلة"
+               style="left:16.4706%; top:18.125%;">ضع الاسم</div>
+          <div class="slot knee-slot" id="s3-slot-cartilage" data-answer="غضروف"
+               style="left:84.1176%; top:30%;">ضع الاسم</div>
+          <div class="slot knee-slot" id="s3-slot-ligament" data-answer="رباط"
+               style="left:84.7059%; top:69.375%;">ضع الاسم</div>
+          <div class="slot knee-slot" id="s3-slot-tendon" data-answer="وتر"
+               style="left:15.2941%; top:72.5%;">ضع الاسم</div>
+          <!-- (86,272) من أصل 340×320. كانت عند (170,294): فوق ساق العظم
+               وعلى بُعد 26 وحدة من الحافّة السفلى فتبدو مقصوصة، وخطّ
+               إشارتها يصعد رأسيًّا مدفونًا في العظم 85% من طوله. -->
+          <div class="slot knee-slot" id="s3-slot-fluid" data-answer="السائل الزلالي"
+               style="left:30%; top:88.125%;">ضع الاسم</div>
+        </div>
+        <p class="explore-feedback chips-feedback" hidden></p>
+        <!-- تسمية ثابتة تصف ما يراه الطالب بموضعه، فلا تصطدم بخانة
+             ولا تحتاج مطاردة إحداثيات كلّما تغيّر الشكل. -->
+        <p class="stage-caption">القوسان الرقيقان على جانبَي التجويف هما <b>الغشاء الزلالي</b>.</p>
+      </div>
+    </div>
+
+    <!-- ═══ مرحلة ج — التسمية والتعريف ═══ -->
+    <p class="name-card" id="s3NameLine" hidden>ما بنيتَه الآن اسمه <b>المفصل الزلالي</b>: المكان الذي يكون فيه الهيكل العظمي مرنًا ويتحرّك حول محور.</p>
+
+    <div class="explore-step" id="s3NameBox" hidden>
+      <p class="explore-q">ما الذي يميّز المفصل الزلالي عن أي التقاء آخر بين عظمين في الجسم؟</p>
+      <div class="quiz-options" data-q="u2l3-synovial-name">
+        <label class="quiz-option"><input type="radio" name="u2l3-synovial-name" value="w1">وجود عضلة كبيرة تغطّي مكان الالتقاء من الخارج تمامًا</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-synovial-name" value="correct">وجود تجويف مملوء بسائل يتيح للعظمين الحركة بحرّية</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-synovial-name" value="w2">التحام العظمين ببعضهما التحامًا يمنع الحركة بينهما نهائيًّا</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-synovial-name" value="w3">وجود طبقة دهنية صفراء تفصل بين طرفَي العظمين</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l3-synovial-name" hidden></p>
+    </div>
+
+    <div class="station-handoff" id="s3done" hidden>
+      <a href="#station-4" class="station-next">أنواع المفاصل ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 4 ═════════════════════ -->
+  <section class="station" id="station-4">
+    <div class="station-label">المحطة الرابعة</div>
+    <h2>أنواع المفاصل</h2>
+    <p class="station-tagline">مفصلان أمامك. اسحب طرف العظم في كلٍّ منهما بإصبعك، وانتبه إلى ما يسمح به كل شكل.</p>
+
+    <!-- ═══ مرحلة أ — حرّك المفصلين بنفسك ═══ -->
+    <div class="joint-pair">
+      <div class="joint-cell">
+        <svg class="jt" id="shoulderStage" viewBox="0 0 260 240"
+             xmlns="http://www.w3.org/2000/svg" role="img"
+             aria-label="مفصل الكتف: كرة عظمية تستقرّ داخل تجويف، والعظم قابل للسحب">
+          <!-- العظم الحامل للتجويف -->
+          <path class="socket-f" d="M 162,52 L 218,34 L 232,156 L 164,140 Z"/>
+          <!-- التجويف: هلال يحتضن الكرة من جهتها لا يقف بجوارها -->
+          <path class="bone-f" d="M 128,52 A 44,44 0 0 1 128,140 L 128,128 A 32,32 0 0 0 128,64 Z"/>
+          <g id="humerusRotor" class="grip" tabindex="0" role="slider"
+             aria-label="اسحب عظم الذراع حول الكتف" aria-valuemin="-70" aria-valuemax="95" aria-valuenow="0">
+            <path class="bone-f" d="M 114,118 L 68,178 Q 60,190 71,197 Q 82,204 90,192 L 136,134 Z"/>
+            <circle class="bone-f" cx="128" cy="96" r="28"/>
+            <circle class="bone-f" cx="76" cy="188" r="12"/>
+            <g id="humerusSpin">
+              <path class="stripe" d="M 128,70 L 128,122"/>
+            </g>
+          </g>
+        </svg>
+        <p class="cell-cap">الكتف — اسحب العظم في أي اتجاه.</p>
+        <p class="limit-msg" id="shoulderMsg"></p>
+      </div>
+
+      <div class="joint-cell">
+        <svg class="jt" id="elbowStage" viewBox="0 0 260 240"
+             xmlns="http://www.w3.org/2000/svg" role="img"
+             aria-label="مفصل المرفق: طرف عظم يدور حول محور واحد، والعظم قابل للسحب">
+          <!-- عظم العَضُد: ثابت -->
+          <path class="bone-f" d="M 18,118 L 138,136 Q 154,139 154,150 L 132,156 Q 128,147 114,145 L 16,134 Z"/>
+          <circle class="bone-f" cx="22" cy="126" r="13"/>
+          <!-- محور الدوران -->
+          <circle class="bone-f" cx="150" cy="150" r="16"/>
+          <g id="ulnaRotor" class="grip" tabindex="0" role="slider"
+             aria-label="اسحب عظم الساعد حول المرفق" aria-valuemin="-140" aria-valuemax="-20" aria-valuenow="0">
+            <path class="bone-f" d="M 154,143 L 224,187 Q 236,195 230,205 Q 223,215 211,208 L 145,164 Z"/>
+            <circle class="bone-f" cx="228" cy="200" r="12"/>
+          </g>
+        </svg>
+        <!-- «جرّب» لا «اسحب»: الاكتشاف هنا أنّ بعض الاتجاهات لا
+             تستجيب، فلا يصحّ أمرٌ يوحي بأنها كلّها تستجيب. -->
+        <p class="cell-cap">المرفق — جرّب سحب العظم في أي اتجاه.</p>
+        <p class="limit-msg" id="elbowMsg"></p>
+      </div>
+    </div>
+
+    <div class="explore-step" id="s4BallBox" hidden>
+      <p class="explore-q">انظر إلى شكل طرف العظم في الكتف: كرة تستقرّ داخل تجويف. ما الذي يسمح به هذا الشكل؟</p>
+      <div class="quiz-options" data-q="u2l3-ball-socket">
+        <label class="quiz-option"><input type="radio" name="u2l3-ball-socket" value="w1">الحركة ذهابًا وإيابًا في مستوى واحد فقط لا غير</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-ball-socket" value="correct">الحركة في جميع الاتجاهات، ودوران العظم حول نفسه</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-ball-socket" value="w2">منع الحركة كليًّا وتثبيت العظمين في موضع واحد</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-ball-socket" value="w3">الحركة في اتجاه واحد بشرط أن تشدّ العضلة أولًا</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l3-ball-socket" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s4HingeBox" hidden>
+      <p class="explore-q">والآن انظر إلى المرفق: طرف عظم يدور حول محور واحد كما يدور الباب. ما الذي يسمح به هذا الشكل؟</p>
+      <div class="quiz-options" data-q="u2l3-hinge">
+        <label class="quiz-option"><input type="radio" name="u2l3-hinge" value="correct">الثني والمدّ في اتجاه واحد فقط لا أكثر</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-hinge" value="w1">الحركة في جميع الاتجاهات كما في الكتف تمامًا</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-hinge" value="w2">دوران العظم حول نفسه دورة كاملة بلا حدّ</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-hinge" value="w3">الحركة في اتجاهين متعامدين في وقت واحد</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l3-hinge" hidden></p>
+    </div>
+
+    <!-- تُسمّى ولا تُرقَّم: «الأول» و«الثاني» بلا مرجع في المسرح،
+         وترتيب البطاقتين نفسه يتبدّل — أفقيًّا على الحاسوب ورأسيًّا
+         على الجوال بحكم flex-wrap. وطالبٌ يمسح الصور من اليسار قد
+         يعكسهما فيحفظ أنّ المرفق كروي. والاسمان مكتوبان على
+         البطاقتين أصلًا، فالربط مباشر بلا وسيط. -->
+    <p class="name-card" id="s4NameLine" hidden>الكتف <b>مفصل كروي</b>، والمرفق <b>مفصل رزّي</b>.</p>
+
+    <!-- ═══ مرحلة ب — التصنيف ═══ -->
+    <div class="explore-step" id="s4TypesBox" hidden>
+      <p class="explore-q">صنّف هذه المفاصل الأربعة بحسب شكل طرف العظم فيها.</p>
+      <div data-chips="u2l3-types">
+        <div class="chips-pool" id="s4ChipsPool">
+          <div class="chip" data-value="الكتف" data-xp-id="u2l3-chip-shoulder" data-xp-reason="صنّفتَ مفصل الكتف" tabindex="0">الكتف</div>
+          <div class="chip" data-value="المرفق" data-xp-id="u2l3-chip-elbow" data-xp-reason="صنّفتَ مفصل المرفق" tabindex="0">المرفق</div>
+          <div class="chip" data-value="الورك" data-xp-id="u2l3-chip-hip" data-xp-reason="صنّفتَ مفصل الورك" tabindex="0">الورك</div>
+          <div class="chip" data-value="الركبة" data-xp-id="u2l3-chip-knee" data-xp-reason="صنّفتَ مفصل الركبة" tabindex="0">الركبة</div>
+        </div>
+        <div class="cat-grid">
+          <div class="slot cat-slot" id="s4-slot-ball" data-answer="الكتف|الورك" tabindex="0">
+            <span class="slot-label">المفصل الكروي</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="s4-slot-hinge" data-answer="المرفق|الركبة" tabindex="0">
+            <span class="slot-label">المفصل الرزّي</span><span class="slot-items"></span>
+          </div>
+        </div>
+        <p class="explore-feedback chips-feedback" hidden></p>
+      </div>
+    </div>
+
+    <div class="explore-step" id="s4ArdhaBox" hidden>
+      <p class="explore-q">عُد إلى الصورتين في بداية الدرس: راقص العرضة يدير ذراعه في قوس واسع فوق كتفه، واللاعب يثني ركبته ثم يمدّها ليركل. أيّ وصف يطابق ما اكتشفته؟</p>
+      <div class="quiz-options" data-q="u2l3-ardha-kick">
+        <label class="quiz-option"><input type="radio" name="u2l3-ardha-kick" value="w1">الكتف مفصل رزّي والركبة مفصل كروي</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-ardha-kick" value="w2">كلاهما مفصل كروي يتحرّك في كل الاتجاهات</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-ardha-kick" value="correct">الكتف مفصل كروي والركبة مفصل رزّي</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-ardha-kick" value="w3">كلاهما مفصل رزّي يتحرّك في اتجاه واحد</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l3-ardha-kick" hidden></p>
+    </div>
+
+    <!-- ═══ مرحلة ج — كم مفصلًا في جسمك؟ ═══ -->
+    <div class="explore-step" id="s4CountBox" hidden>
+      <p class="explore-q">أي جزء من جسمك تظنّ أنه يحوي أكبر عدد من المفاصل؟</p>
+      <div class="quiz-options" id="s4CountOptions">
+        <label class="quiz-option"><input type="radio" name="s4count" value="a">اليد</label>
+        <label class="quiz-option"><input type="radio" name="s4count" value="b">القدم</label>
+        <label class="quiz-option"><input type="radio" name="s4count" value="c">العمود الفقري</label>
+        <label class="quiz-option"><input type="radio" name="s4count" value="d">الركبة</label>
+      </div>
+      <p class="explore-feedback" id="fb-s4count" hidden></p>
+    </div>
+
+    <div id="s4TableBox" hidden>
+      <table class="count-table">
+        <thead>
+          <tr><th>عدد المفاصل</th><th>الجزء من الجسم</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="n">27</td><td class="p">اليد</td></tr>
+          <tr><td class="n">3</td><td class="p">المرفق</td></tr>
+          <tr><td class="n">3</td><td class="p">المعصم</td></tr>
+          <tr><td class="n">128</td><td class="p">العمود الفقري</td></tr>
+          <tr><td class="n">3</td><td class="p">الورك</td></tr>
+          <tr><td class="n">2</td><td class="p">الركبة</td></tr>
+          <tr><td class="n">33</td><td class="p">القدم</td></tr>
+        </tbody>
+      </table>
+      <p class="fact-line center">هذه أعداد المفاصل كما وردت في كتابك. لا يُطلب منك حفظ أي رقم فيها — انظر إليها لترى أين تتجمّع المفاصل في جسمك.</p>
+    </div>
+
+    <div class="explore-step" id="s4PatternBox" hidden>
+      <!-- «كان طرف العظم كرةً» لا «اقترب طرف العظم من كرة»: الفعل
+           «اقترب» فعل مسافة، والمشهد فيه أصلًا جسمان (عظم وتجويف
+           يخصّ العظم المقابل) — فتُقرأ الكرة جسمًا ثالثًا يدنو منه
+           العظم، بينما الكرة هي طرف العظم نفسه. وذلك يهدم ما بنته
+           المحطة: الطالب سحب العظم فرأى أنّ طرفه هو الكروي. -->
+      <p class="explore-q">ما العلاقة بين شكل طرف العظم عند المفصل وعدد اتجاهات حركته؟</p>
+      <div class="quiz-options" data-q="u2l3-type-pattern">
+        <label class="quiz-option"><input type="radio" name="u2l3-type-pattern" value="w1">كلّما كبر حجم العظم زادت اتجاهات حركته مهما كان شكل طرفه</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-type-pattern" value="w2">شكل الطرف لا أثر له، والعضلات وحدها هي ما يحدّد الاتجاهات</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-type-pattern" value="correct">كلّما كان طرف العظم كرةً تستقرّ في تجويف، زادت اتجاهات حركته</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-type-pattern" value="w3">كلّما زاد عدد الأربطة حول المفصل زادت اتجاهات حركته المتاحة</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l3-type-pattern" hidden></p>
+    </div>
+
+    <div class="station-handoff" id="s4done" hidden>
+      <a href="#station-5" class="station-next">حين يتلف الغضروف ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 5 ═════════════════════ -->
+  <section class="station" id="station-5">
+    <div class="station-label">المحطة الخامسة</div>
+    <h2>حين يتلف الغضروف</h2>
+    <p class="station-tagline">الطبقة البيضاء الملساء ليست دائمة. ماذا يحدث حين تنقص؟</p>
+
+    <div class="explore-step">
+      <p class="explore-q">الغضروف طبقة ملساء تتآكل مع السنين ومع الإجهاد المتكرّر. توقّع: بماذا سيشعر صاحب المفصل؟</p>
+      <div class="quiz-options" id="s5PredictOptions">
+        <label class="quiz-option"><input type="radio" name="s5predict" value="a">لن يشعر بشيء لأن الغضروف ليس فيه إحساس</label>
+        <label class="quiz-option"><input type="radio" name="s5predict" value="b">سيشعر بألم عند الحركة</label>
+        <label class="quiz-option"><input type="radio" name="s5predict" value="c">ستزداد مرونة مفصله وتتّسع حركته</label>
+      </div>
+      <p class="explore-feedback" id="fb-s5predict" hidden></p>
+    </div>
+
+    <div class="stage-wrap narrow" id="s5StageWrap" hidden>
+      <svg class="stage dmg-stage" id="dmgStage" viewBox="0 0 300 260"
+           xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="مقطعان في مفصل ركبة: سليم ومتضرّر، يتبادلان الظهور">
+
+        <!-- ═══ الحالة أ — مفصل سليم ═══ -->
+        <g id="kneeHealthy">
+          <path class="bone-f" d="M 122,8 L 178,8 L 184,96 Q 216,104 218,120 L 82,120 Q 84,104 116,96 Z"/>
+          <path class="bone-f" d="M 82,158 Q 84,172 116,180 L 122,252 L 178,252 L 184,180 Q 216,172 218,158 Z"/>
+          <path class="cart-f" d="M 82,120 L 218,120 L 218,131 Q 150,137 82,131 Z"/>
+          <path class="cart-f" d="M 82,158 L 218,158 L 218,147 Q 150,141 82,147 Z"/>
+          <path class="cavity-f" d="M 82,131 Q 150,137 218,131 L 218,147 Q 150,141 82,147 Z"/>
+        </g>
+
+        <!-- ═══ الحالة ب — مفصل متضرّر ═══
+العظمان بنفس viewBox والكفاف الخارجي
+             نفسه، والفرق مقصود ومحصور: الغضروف، والتجويف، وضيق
+             المسافة عند المفصل. وكان التعليق يمنع تحرّك أي عظم —
+             والسبب ما زال صحيحًا، لكنّ ضيق المسافة صار فرقًا مقصودًا
+             لأنّ اختفاء الغضروف بلا ضيقٍ يقول للطالب إنّ سائلًا أكثر
+             حلّ محلّ الغضروف. -->
+        <g id="kneeDamaged">
+          <path class="bone-f" d="M 122,8 L 178,8 L 184,96 Q 216,104 218,120 L 82,120 Q 84,104 116,96 Z"/>
+          <!-- انفراج العظم السفلي يرتفع 12 وحدة وتطول ساقه بالمقدار
+               نفسه، فيبقى طرفها عند موضعه: المسافة تضيق ولا يبدو عظمٌ
+               قَصُر أو انزاح. والمسافة 38 ← 26، وفقد الغضروف 13 —
+               فالضيق كلّه من حساب الغضروف والسائل لم يُمسّ. وهذا هو
+               الصدق العلمي: في تلف المفصل لا ينقص السائل بل يزيد
+               غالبًا، والذي يضيّق المسافة ذهابُ الغضروف نفسه. ورسمُ
+               «سائل أقلّ» يبني قصّة سببية خاطئة يربطها الطالب بالمحطة
+               الثالثة فيستنتج أنّ العلاج إضافة سائل. -->
+          <path class="bone-f" d="M 82,146 Q 84,160 116,168 L 122,252 L 178,252 L 184,168 Q 216,160 218,146 Z"/>
+          <!-- الغضروف العلوي رقيق، ومفقود تمامًا في موضع منه -->
+          <path class="cart-f" d="M 82,120 L 124,120 L 124,125 Q 104,127 82,125 Z"/>
+          <path class="cart-f" d="M 186,120 L 218,120 L 218,125 Q 202,127 186,125 Z"/>
+          <!-- الغضروف السفلي رقيق على امتداده -->
+          <path class="cart-f" d="M 82,146 L 218,146 L 218,142 Q 150,139 82,142 Z"/>
+          <!-- حيث اختفى الغضروف يبلغ التجويفُ العظمَ مباشرة: لا فجوة
+               مرسومة هناك، وإلا قُرئت ثقبًا في العظم لا طبقةً ناقصة. -->
+          <path class="cavity-f" d="M 82,125 Q 104,127 124,125 L 124,120 L 186,120 L 186,125 Q 202,127 218,125 L 218,142 Q 150,139 82,142 Z"/>
+        </g>
+      </svg>
+    </div>
+    <p class="stage-msg" id="s5StageMsg" hidden></p>
+
+    <!-- الزرّ أسفل سطر الوصف: كان فوق المسرح فيدعو إلى الانتقال قبل
+         أن يقرأ الطالب وصف ما ينظر إليه. والترتيب هو ترتيب المعنى —
+         أرى، أقرأ، ثم أطلب التالي — وهو نفسه ترتيب المحطة الثالثة. -->
+    <div class="station-handoff" id="s5ToggleRow" hidden style="margin-top:10px;">
+      <button type="button" class="btn" id="s5ToggleBtn">أرِني المفصل المتضرّر</button>
+    </div>
+
+    <div class="explore-step" id="s5SymptomsBox" hidden>
+      <p class="explore-q">ما الذي تراه في المفصل المتضرّر ولا تراه في السليم؟</p>
+      <div class="quiz-options" data-q="u2l3-symptoms">
+        <label class="quiz-option"><input type="radio" name="u2l3-symptoms" value="w1">العظام صارت أقصر مما كانت عليه في الحالة السليمة</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-symptoms" value="w2">اختفت الأربطة كلّها من حول المفصل ولم يبقَ منها شيء</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-symptoms" value="w3">امتلأ تجويف المفصل كلّه بنسيج دهني أصفر اللون</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-symptoms" value="correct">الغضروف صار رقيقًا، واختفى تمامًا في موضع منه</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l3-symptoms" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s5AthleteBox" hidden>
+      <p class="explore-q">لاعب كرة قدم يركض ويقفز ويركل كل يوم. اشرح لماذا يزيد ذلك احتمال تلف غضروف ركبته.</p>
+      <div class="explore-answer-row">
+        <input type="text" class="explore-input" id="s5AthleteInput" placeholder="اكتب إجابتك" autocomplete="off">
+        <button type="button" class="btn" id="s5AthleteBtn">سلّم الإجابة</button>
+      </div>
+      <p class="explore-feedback" id="fb-u2l3-athlete" hidden></p>
+      <button type="button" class="link-btn" id="s5AthleteModelBtn" hidden>أرِني الإجابة النموذجية</button>
+      <p class="name-card" id="s5AthleteModel" hidden></p>
+    </div>
+
+    <div id="s5BonusRow" hidden style="text-align:center;margin-top:22px;">
+      <button type="button" class="link-btn" id="s5BonusLink">تحدٍّ اختياري: مفصل من صنع الإنسان</button>
+    </div>
+
+    <div class="bonus-box" id="s5BonusBox" hidden>
+      <span class="bonus-tag">تحدٍّ اختياري</span>
+      <p class="fact-line">حين يتلف مفصل الورك تلفًا شديدًا، يُستبدل بمفصل صناعي: كرة معدنية تستقرّ في تجويف مصنوع من بلاستيك خاصّ شديد الملاسة.</p>
+      <p class="explore-q" style="margin-top:14px;">لماذا اختير البلاستيك للتجويف بدل المعدن؟</p>
+      <div class="quiz-options" data-q="u2l3-hip-replacement-bonus">
+        <label class="quiz-option"><input type="radio" name="u2l3-hip-replacement-bonus" value="correct">ليؤدّي دور الغضروف فيقلّل الاحتكاك بين الكرة والتجويف</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-hip-replacement-bonus" value="w1">لأنه أرخص ثمنًا من المعدن وأسهل في التصنيع والتشكيل</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-hip-replacement-bonus" value="w2">لأنه يفرز سائلًا زلاليًّا شبيهًا بالسائل الطبيعي في المفصل</label>
+        <label class="quiz-option"><input type="radio" name="u2l3-hip-replacement-bonus" value="w3">لأنه يجعل المفصل الصناعي يتحرّك في اتجاه واحد فقط</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l3-hip-replacement-bonus" hidden></p>
+    </div>
+
+    <div class="station-handoff" id="s5done" hidden>
+      <a href="#station-6" class="station-next">التقييم الختامي ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 6 ═════════════════════ -->
+  <section class="station" id="station-6">
+    <div class="station-label">المحطة السادسة</div>
+    <h2>التقييم الختامي</h2>
+    <p class="station-tagline">عشرة أسئلة، ومحاولة واحدة لكلّ سؤال. وفي نهايتها شهادتك باسمك.</p>
+
+    <div class="name-gate">
+      <label for="evalName">اكتب اسمك كما تريده أن يظهر على الشهادة</label>
+      <input type="text" class="explore-input" id="evalName" placeholder="الاسم الكامل" autocomplete="off">
+      <button type="button" class="btn" id="evalStart">ابدأ التقييم</button>
+      <p class="explore-feedback" id="evalNameFb" hidden></p>
+      <p class="gate-note">هذا هو التقييم الختامي لهذا الدرس. لكلّ سؤال محاولة واحدة، وبعد آخر سؤال تظهر نتيجتك وشهادتك. خذ وقتك.</p>
+    </div>
+
+    <div id="evalQuestions" hidden>
+
+      <div class="eval-q first">
+        <p class="explore-q"><span class="q-num">1</span> ما النسيج الذي يربط العضلات بالعظام؟</p>
+        <div class="quiz-options" data-q="u2l3-e1">
+          <label class="quiz-option"><input type="radio" name="u2l3-e1" value="w1">الرباط</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e1" value="correct">الوتر</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e1" value="w2">الغضروف</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e1" value="w3">السائل الزلالي</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l3-e1" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">2</span> ما النسيج الذي يربط العظام بعضها ببعض؟</p>
+        <div class="quiz-options" data-q="u2l3-e2">
+          <label class="quiz-option"><input type="radio" name="u2l3-e2" value="w1">الوتر</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e2" value="w2">الغضروف</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e2" value="w3">السائل الزلالي</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e2" value="correct">الرباط</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l3-e2" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">3</span> ما وظيفة الغضروف؟</p>
+        <div class="quiz-options" data-q="u2l3-e3">
+          <label class="quiz-option"><input type="radio" name="u2l3-e3" value="correct">يقلّل الاحتكاك بين طرفَي العظم عند الحركة</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e3" value="w1">ينقل شدّ العضلة إلى العظم فيتحرّك الطرف</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e3" value="w2">يمنع العظمين من الانفصال عند حركة المفصل</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e3" value="w3">يفرز السائل الذي يملأ تجويف المفصل</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l3-e3" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">4</span> رياضي تمزّق أحد أربطة ركبته. ما الأثر الأرجح؟</p>
+        <div class="quiz-options" data-q="u2l3-e4">
+          <label class="quiz-option"><input type="radio" name="u2l3-e4" value="w1">تتوقّف عضلة الفخذ عن شدّ العظم توقّفًا تامًّا</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e4" value="w2">يفقد الغضروف ملاسته فجأة ويصير خشنًا</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e4" value="correct">يصير المفصل غير ثابت وقد تنزلق العظام عن موضعها</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e4" value="w3">يمتلئ تجويف المفصل كلّه بنسيج دهني أصفر</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l3-e4" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">5</span> لماذا يحتاج المفصل إلى السائل الزلالي؟</p>
+        <div class="quiz-options" data-q="u2l3-e5">
+          <label class="quiz-option"><input type="radio" name="u2l3-e5" value="w1">ليربط العظام بعضها ببعض ويمنع انفصالها عند الحركة</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e5" value="correct">ليزلّق المفصل فتتحرّك العظام باحتكاك أقلّ</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e5" value="w2">لينقل شدّ العضلة إلى العظم فيتحرّك الطرف كلّه</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e5" value="w3">ليصنع طبقة صلبة تحمي نهاية العظم من الكسر</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l3-e5" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">6</span> أيّ زوج من المفاصل يتحرّك في اتجاه واحد فقط؟</p>
+        <div class="quiz-options" data-q="u2l3-e6">
+          <label class="quiz-option"><input type="radio" name="u2l3-e6" value="w1">الكتف والورك</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e6" value="w2">الكتف والركبة</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e6" value="w3">الورك والمرفق</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e6" value="correct">الركبة والمرفق</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l3-e6" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">7</span> راقص العرضة يدير ذراعه في قوس واسع فوق كتفه. ما الذي يجعل ذلك ممكنًا؟</p>
+        <div class="quiz-options" data-q="u2l3-e7">
+          <label class="quiz-option"><input type="radio" name="u2l3-e7" value="w1">شكل طرف العظم رزّي يسمح بالحركة في اتجاه واحد فقط</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e7" value="w2">الأوتار حول الكتف أطول من غيرها في أنحاء الجسم كلّها</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e7" value="correct">طرف العظم كرة تستقرّ في تجويف فتتيح الحركة في كل الاتجاهات</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e7" value="w3">غياب الأربطة حول مفصل الكتف يجعله حرّ الحركة تمامًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l3-e7" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">8</span> شخص تآكل غضروف ركبته ويشكو ألمًا عند المشي. ما التفسير الأرجح؟</p>
+        <div class="quiz-options" data-q="u2l3-e8">
+          <label class="quiz-option"><input type="radio" name="u2l3-e8" value="correct">صار طرفا العظم يحتكّان مباشرة بلا طبقة ملساء بينهما</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e8" value="w1">انقطع الوتر الذي يربط عضلة الفخذ بالعظم تحتها</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e8" value="w2">تحوّل مفصل ركبته من مفصل رزّي إلى مفصل كروي</label>
+          <label class="quiz-option"><input type="radio" name="u2l3-e8" value="w3">صار السائل الزلالي أكثر لزوجة مما ينبغي أن يكون</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l3-e8" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">9</span> ما اسم النسيج الذي يغطّي طرف العظم فيقلّل الاحتكاك؟</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="e9Input" placeholder="اكتب إجابتك" autocomplete="off">
+          <button type="button" class="btn" id="e9Btn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-e9" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">10</span> اذكر مفصلًا واحدًا في جسمك يتحرّك في جميع الاتجاهات.</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="e10Input" placeholder="اكتب إجابتك" autocomplete="off">
+          <button type="button" class="btn" id="e10Btn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-e10" hidden></p>
+      </div>
+    </div>
+
+    <div class="eval-summary" id="evalSummary" hidden></div>
+    <!-- إلزامي: بدونه تحقن وحدة الشهادة زرّها عائمًا فيصطدم بزرّ فهيم -->
+    <div id="certTriggerSlot"></div>
+  </section>
+
+</main>
+
+<!-- وسوم shared/ الستّة تسبق سكربت الدرس -->
+<script src="../../shared/sounds/sounds.js"></script>
+<script src="../../shared/xp-system/xp.js"></script>
+<script src="../../shared/faheem-widget/faheem.js"></script>
+<script src="../../shared/template-boilerplate/template.js"></script>
+<script src="../../shared/certificate-system/certificate.js"></script>
+<script src="../../shared/identity/footer.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   الوحدة 2 — الدرس 3 — سكربت الدرس (نصوص المحطات كلّها في T أدناه)
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+var G = {
+  reduced: function(){
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+};
+function el(id){ return document.getElementById(id); }
+function show(id){ var n = el(id); if(n) n.hidden = false; }
+function fbNeutral(id, txt){
+  var n = el(id);
+  if(!n) return;
+  n.textContent = txt;
+  n.className = 'explore-feedback is-hint';
+  n.hidden = false;
+}
+
+/* ============ 1) النصوص ============ */
+var T = {
+  s1: {
+    dirFb:  'سجّلنا ملاحظتك. سنعود إليها بعد أن نرى ما بداخل المفصل.',
+    holdFb: 'توقّعك مسجَّل — وستُشرِّح بنفسك بعد قليل وترى الجواب بعينك.'
+  },
+  s2: {
+    peel: [
+      /* السطران الأوّلان يسمّيان الطبقة الظاهرة لحظة ظهورها لا بعد
+         اختفائها: كان الأول يصف الفعل («أزحتَ الجلد») والثاني يصف
+         الدهن بينما العضلة هي الظاهرة، فتأخّر الوصف خطوةً كاملة. */
+      'أزحتَ الجلد — وتحته طبقة صفراء: نسيج دهني.',
+      'وأزحتَ الطبقة الدهنية — وتحتها نسيج وردي كبير.',
+      'الجزء الوردي عضلة.',
+      'ظهر خيط أبيض يصل بين العضلة والعظم.',
+      'وهذا خيط آخر — لكنه يصل بين عظم وعظم.',
+      'طرف العظم مغطّى بطبقة بيضاء ملساء.'
+    ],
+    peelHint: 'انقر على الساق لتزيح الطبقة التي فوقها.',
+    peelWait: 'أجب عن السؤال أدناه لتتابع التشريح.',
+    peelDone: 'وصلتَ إلى آخر طبقة. أمامك الآن ما يجعل هذا المفصل يعمل.',
+    muscleAttach: {
+      correct: '✓ صحيح! العضلة ترتبط بالعظم — وسنرى بعد قليل بأيّ شيء ترتبط.',
+      w1: 'انظر إلى الطرف الأبعد عن مركز العضلة — إلى أين يتّجه؟',
+      w2: 'لو كانت حرّة، فما الذي كانت ستحرّكه حين تشدّ؟',
+      w3: 'الالتفاف حول شيء غير الارتباط به. ابحث عن نقطة الاتصال نفسها.'
+    },
+    tendonRole: {
+      correct: '✓ صحيح! هذا الخيط اسمه الوتر. يربط العضلة بالعظم فتستطيع العضلة تحريكه.',
+      w1: 'هذا الخيط يصل بين عضلة وعظم لا بين عظم وعظم — أعِد النظر في طرفيه.',
+      w2: 'ما رأيتَه خيط ممتدّ لا طبقة تغطّي. الطبقة ستظهر لاحقًا.',
+      w3: 'هل رأيتَ سائلًا؟ ما ظهر مادة صلبة خيطية.'
+    },
+    ligamentRole: {
+      correct: '✓ صحيح! هذه الأربطة. تحافظ على تماسك العظام وترابطها معًا — وهذا جواب سؤالك في بداية الدرس عمّا يمسك العظمين معًا.',
+      w1: 'الشدّ والتحريك عمل الوتر والعضلة. هذه تصل بين عظمين — فما الذي يحتاجه عظمان متجاوران؟',
+      w2: 'ما رأيتَه مادة خيطية صلبة لا غدّة تفرز شيئًا.',
+      w3: 'الطبقة التي تغطّي طرف العظم ستظهر في الخطوة التالية — هذه ليست هي.'
+    },
+    tearHint1: 'العضلة تشدّ، والوتر ينقل شدّها. فماذا يصل إلى العظم إن انقطع الناقل؟',
+    tearHint2: 'صِف ما يحدث للحركة نفسها: هل تبقى كما هي، أم تضعف، أم تتوقّف؟',
+    tearModel: 'تضعف حركة الطرف أو تتوقّف، لأن شدّ العضلة لم يعد يصل إلى العظم.',
+    ligamentTear: {
+      correct: '✓ صحيح! الرباط هو ما يحفظ ثبات المفصل، ففقدانه يفقده ثباته.',
+      w1: 'هذا ما يحدث عند تمزّق الوتر لا الرباط. ما وظيفة الرباط تحديدًا؟',
+      w2: 'الاحتكاك شأن الطبقة التي تغطّي طرف العظم، لا شأن ما يربط العظمين.',
+      w3: 'الرباط مادة خيطية صلبة، لا علاقة له بكمّية السائل.'
+    }
+  },
+  s3: {
+    predictFb: 'توقّعك مسجَّل. شغّل التجربة الآن وقِس بنفسك.',
+    runDone: 'اكتملت التجربة',
+    /* n نسبة امتلاء الشريط لا رقمًا يُعرض: الرقم القديم كان وحدةً
+       بلا سند في الكتاب. و next تسمية الزرّ للخطوة التالية —
+       التجربة صارت درجًا بيد الطالب لا تتابعًا بمؤقّت. */
+    states: [
+      /* word للحالة الثالثة وحدها: الشريط المسمّى والحركة يغنيان عن
+         وصف الحالتين الأوليين، وثلاثة سطور طويلة تتبدّل كانت تزاحم
+         السجلّ. والسطر الباقي فعلُ تسمية لا وصفًا — والتسمية لا
+         تُدمَج في عنوان الصفّ لأن العنوان يُقرأ وسمَ حالةٍ لا تعريفًا. */
+      { n: 88, tag: 'احتكاك شديد', word: '', next: 'أضِف الطبقة الملساء' },
+      { n: 52, tag: 'احتكاك أقلّ', word: '', next: 'أضِف سائلًا بين الطرفين' },
+      { n: 18, tag: 'انزلاق سلس',
+        word: 'هذا السائل اسمه السائل الزلالي.',
+        next: '' }
+    ],
+    frictionPattern: {
+      correct: '✓ صحيح! الغضروف والسائل معًا يقلّلان الاحتكاك — كلٌّ منهما يضيف إلى الآخر.',
+      w1: 'انظر إلى شريط «مع الطبقة الملساء» — هل بلغ الصفر؟',
+      w2: 'قارن الحالة 1 بالحالة 2 وحدهما. هل تغيّر شيء قبل إضافة السائل؟',
+      w3: 'قارن الأشرطة الثلاثة أمامك — هل هي بطول واحد؟'
+    },
+    chipHints: {
+      'وتر|s3-slot-ligament': 'هذا الموضع يصل بين عظم وعظم. الوتر يصل بين عضلة وعظم.',
+      'رباط|s3-slot-tendon': 'هذا الموضع يصل بين العضلة والعظم — وهذا عمل الوتر لا الرباط.',
+      'غضروف|s3-slot-fluid': 'الغضروف طبقة صلبة تغطّي، لا شيء يملأ فراغًا.',
+      'السائل الزلالي|s3-slot-cartilage': 'هذا الموضع طبقة على طرف العظم نفسه، لا فراغ بين الطرفين.',
+      'عضلة|s3-slot-tendon': 'العضلة كتلة ممتدّة، وهذا الموضع خيط رفيع خارج منها.',
+      'عضلة|s3-slot-ligament': 'العضلة تقع على العظم العلوي، وهذا الموضع يعبر المفصل بين العظمين.',
+      'وتر|s3-slot-muscle': 'هذا الموضع كتلة ممتدّة لا خيطًا. الوتر أرفع منها بكثير.',
+      'رباط|s3-slot-muscle': 'هذا الموضع كتلة ممتدّة لا شريطًا رفيعًا.',
+      'غضروف|s3-slot-tendon': 'الغضروف طبقة تغطّي طرف العظم، لا خيطًا ممتدًّا.',
+      'السائل الزلالي|s3-slot-ligament': 'هذا الموضع شريط صلب يعبر المفصل، لا فراغًا.'
+    },
+    synovialName: {
+      correct: '✓ صحيح! التجويف المملوء بالسائل هو ما يميّز المفصل الزلالي.',
+      w1: 'العضلة تحرّك العظم من خارج المفصل، وليست ما يميّز المفصل من داخله.',
+      w2: 'التحام العظمين يمنع الحركة — والمفصل الزلالي مكان الحركة لا منعها.',
+      w3: 'الطبقة الصفراء التي رأيتها في التشريح كانت تحت الجلد لا داخل المفصل.'
+    }
+  },
+  s4: {
+    shoulderFree: 'العظم يدور في كل اتجاه سحبتَه إليه.',
+    elbowLimit: 'لا يمضي أبعد من هذا في هذا الاتجاه.',
+    ballSocket: {
+      correct: '✓ صحيح! الكرة داخل التجويف تسمح بالحركة في كل الاتجاهات وبدوران العظم حول نفسه.',
+      w1: 'المستوى الواحد وصف لما جرّبته في المرفق لا في الكتف.',
+      w2: 'العظم تحرّك بين يديك فعلًا — فكيف يكون الشكل مانعًا للحركة؟',
+      w3: 'جرّب سحبه ثانيةً: هل احتجتَ إلى شيء قبل أن يتحرّك؟'
+    },
+    hinge: {
+      correct: '✓ صحيح! المرفق يثني ويمدّ في اتجاه واحد، ويقف عند حدّه.',
+      w1: 'جرّب سحبه جانبًا كما فعلت في الكتف — هل تحرّك؟',
+      w2: 'حاول أن تديره دورة كاملة. أين توقّف؟',
+      w3: 'جرّب أن تحرّكه في اتجاهين معًا — هل استجاب؟'
+    },
+    chipHints: {
+      'الركبة|s4-slot-ball': 'جرّب أن تدير ركبتك دائرة كاملة — هل استطعت؟',
+      'المرفق|s4-slot-ball': 'المرفق في المسرح وقف عند حدّه ولم يمضِ أبعد. هل هذا وصف الكروي؟',
+      'الورك|s4-slot-hinge': 'حرّك ساقك من الورك في اتجاهات مختلفة. كم اتجاهًا استطعت؟',
+      'الكتف|s4-slot-hinge': 'كتفك يدور دائرة كاملة، والرزّي يتحرّك في اتجاه واحد.'
+    },
+    ardhaKick: {
+      correct: '✓ صحيح! وهذا ما جرّبتَه بجسدك في بداية الدرس.',
+      w1: 'عد إلى ما جرّبتَه بنفسك: أيّهما دار دائرة كاملة؟',
+      w2: 'لو كانت الركبة كروية لأدرتَها دائرة كاملة. هل استطعت؟',
+      w3: 'لو كان الكتف رزّيًّا لما استطاع راقص العرضة أن يدير ذراعه بذلك القوس.'
+    },
+    countFb: 'توقّعك مسجَّل. انظر الآن إلى الأعداد.',
+    typePattern: {
+      correct: '✓ صحيح! شكل طرف العظم هو ما يحدّد عدد اتجاهات الحركة.',
+      w1: 'عظم الفخذ أكبر من عظم الذراع، ومع ذلك حركة الورك ليست أكثر من حركة الكتف.',
+      w2: 'العضلة تحرّك العظم، لكنها لا تستطيع أن تحرّكه في اتجاه لا يسمح به شكل طرفه.',
+      w3: 'الرباط يمسك العظمين معًا — وكثرته تحدّ الحركة ولا تزيدها.'
+    }
+  },
+  s5: {
+    predictFb: 'توقّعك مسجَّل. قارن المفصلين الآن.',
+    stageHealthy: 'هذا مفصل سليم: غضروف سميك على الطرفين وتجويف منتظم.',
+    stageDamaged: 'وهذا مفصل متضرّر. قارن الطبقة البيضاء في الحالتين.',
+    symptoms: {
+      /* لا يُسمّى موضع الاختفاء: الرسم اختار موضعًا لأجل الوضوح، وتآكل
+         الغضروف يبدأ حيث يقع الحمل والاحتكاك — ويختلف بالمفصل والسبب.
+         وما يُختار في الرسم لأجل الوضوح لا يُصاغ في الجواب كأنه قاعدة. */
+      /* لا «يتلامسان مباشرة»: السائل يبقى بينهما بعد الضيق أيضًا. */
+      correct: '✓ صحيح! باختفاء الغضروف ضاقت المسافة واقترب العظمان أحدهما من الآخر.',
+      w1: 'قارن طول العظمين في الحالتين — هل تغيّر؟',
+      w2: 'الأربطة لم تكن مرسومة في أيٍّ من المشهدين أصلًا.',
+      w3: 'النسيج الدهني الأصفر رأيتَه تحت الجلد في التشريح، لا داخل التجويف.'
+    },
+    athleteHint1: 'فكّر في عدد المرّات التي تتحرّك فيها ركبته كل يوم.',
+    athleteHint2: 'وما الذي يزداد على الغضروف كلّما تكرّرت الحركة وزاد الحمل؟',
+    athleteModel: 'لأن الحركة المتكرّرة والحمل الثقيل على الركبة يزيدان احتكاك المفصل وإجهاده، فيتآكل الغضروف مع الوقت.',
+    bonus: {
+      correct: '✓ صحيح! المهندس حلّ المشكلة نفسها التي حلّها الغضروف في جسمك.',
+      w1: 'الثمن ليس سببًا علميًّا. فكّر في وظيفة السطح الأملس داخل المفصل.',
+      w2: 'البلاستيك مادة صناعية لا تفرز شيئًا. فكّر في ملاسته لا في إفرازه.',
+      w3: 'مفصل الورك كروي، والمفصل الصناعي يقلّده لا يغيّر نوعه.'
+    }
+  },
+  eval: {
+    e1: 'الوتر ينقل شدّ العضلة إلى العظم. أما الرباط فيربط عظمًا بعظم.',
+    e2: 'الأربطة تحافظ على تماسك العظام وترابطها معًا.',
+    e3: 'الغضروف طبقة ملساء تغلّف طرف العظم فتخفّف احتكاكه بجاره.',
+    e4: 'وظيفة الرباط تثبيت العظمين معًا، ففقدانه يفقد المفصل ثباته.',
+    e5: 'السائل الزلالي يتخلّل المفصل ويليّنه فيتحرّك بلا احتكاك يُذكر.',
+    e6: 'الركبة والمرفق مفصلان رزّيان. أما الكتف والورك فكرويّان.',
+    e7: 'الشكل الكروي داخل التجويف هو ما يتيح تعدّد اتجاهات الحركة.',
+    e8: 'الغضروف هو ما يفصل الطرفين، وفقدانه يعني احتكاكًا مباشرًا مؤلمًا.',
+    e9why: 'الغضروف طبقة بيضاء ملساء تغطّي طرف العظم عند المفصل.',
+    e10why: 'الكتف والورك مفصلان كرويّان يتحرّكان في كل الاتجاهات. أما الركبة والمرفق فرزّيان.'
+  }
+};
+
+/* ============ 2) المحطة 1 ============ */
+function station1(){
+  var dirDone = false, holdDone = false;
+  document.querySelectorAll('#s1DirOptions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(dirDone) return;
+      dirDone = true;
+      /* تغذية محايدة لا تصحيح: القياس قادم، وتصحيح التنبّؤ الآن
+         يُفقده قيمته. الخيارات الثلاثة كلّها تُقبل. */
+      fbNeutral('fb-s1dir', T.s1.dirFb);
+      show('s1HoldStep');
+      if(window.Sounds) window.Sounds.playSnap();
+      if(window.XP) window.XP.claim('u2l3-predict-directions', window.XP.POINTS.PREDICT, 'تنبّأتَ قبل الاستكشاف');
+    });
+  });
+  document.querySelectorAll('#s1HoldOptions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(holdDone) return;
+      holdDone = true;
+      fbNeutral('fb-s1hold', T.s1.holdFb);
+      show('s1done');
+      if(window.Sounds) window.Sounds.playSnap();
+      if(window.XP) window.XP.claim('u2l3-predict-what-holds', window.XP.POINTS.PREDICT, 'تنبّأتَ بما يمسك العظمين');
+    });
+  });
+}
+
+/* ============ 3) المحطة 2 — التشريح الطبقي ============
+   جدول الظهور بحسب عدد النقرات: كل خطوة تُعلن الطبقات الظاهرة
+   وحدها. الطبقة المخفتة (dim) تُستعمل في خطوة الوتر وحدها كي
+   يبقى «يصل بين العضلة والعظم» وصفًا لما يراه الطالب فعلًا. */
+var DISSECT = [
+  /* 0 */ { on: ['lay-bone','lay-bone-b','lay-skin-a','lay-skin-b'] },
+  /* 1 */ { on: ['lay-bone','lay-bone-b','lay-fat-a','lay-fat-b'] },
+  /* 2 */ { on: ['lay-bone','lay-bone-b','lay-muscle'] },
+  /* 3 */ { on: ['lay-bone','lay-bone-b','lay-muscle'], spot: 'lay-muscle', q: 'u2l3-muscle-attach', box: 's2Q1Box' },
+  /* 4 */ { on: ['lay-bone','lay-bone-b','lay-muscle','lay-tendon'], dim: 'lay-muscle', spot: 'lay-tendon', q: 'u2l3-tendon-role', box: 's2Q2Box' },
+  /* 5 */ { on: ['lay-bone','lay-bone-b','lay-ligament'], spot: 'lay-ligament', q: 'u2l3-ligament-role', box: 's2Q3Box' },
+  /* 6 */ { on: ['lay-bone','lay-bone-b','lay-cartilage-a','lay-cartilage-b'], spot: 'lay-cartilage-a' }
+];
+var ALL_LAYERS = ['lay-bone','lay-bone-b','lay-skin-a','lay-skin-b','lay-fat-a','lay-fat-b',
+                  'lay-muscle','lay-tendon','lay-ligament','lay-cartilage-a','lay-cartilage-b'];
+
+function station2(){
+  var stage = el('dissectStage');
+  if(!stage) return;
+  var step = 0, waiting = false, moved = false, dissectClaimed = false;
+
+  function paint(){
+    var cfg = DISSECT[step];
+    ALL_LAYERS.forEach(function(id){
+      var n = el(id);
+      if(!n) return;
+      var on = cfg.on.indexOf(id) !== -1;
+      n.classList.toggle('off', !on);
+      n.classList.toggle('dim', on && cfg.dim === id);
+      n.classList.toggle('spot', on && cfg.spot === id);
+    });
+  }
+  paint();
+
+  /* ــــ مرحلة أ: الحركة قبل القطع. صفر نقاط — المشاهدة لا تُمنح. ــــ */
+  el('s2MoveBtn').addEventListener('click', function(){
+    if(moved) return;
+    moved = true;
+    var btn = el('s2MoveBtn');
+    btn.disabled = true;
+    btn.classList.add('demoted');
+    stage.classList.add('moving');
+    if(window.Sounds) window.Sounds.playTick();
+    var wait = G.reduced() ? 0 : 7800;
+    setTimeout(function(){
+      stage.classList.remove('moving');
+      show('s2MoveNote');
+      show('s2DissectStep');
+      stage.setAttribute('tabindex', '0');
+      stage.setAttribute('role', 'button');
+      stage.classList.add('awaiting');
+      updateCount();
+    }, wait);
+  });
+
+  /* ــــ طيّ السؤال المُجاب ــــ
+     العلّة: ثلاثة أسئلة مفتوحة بخياراتها الأربعة تتراكم بين الطالب
+     والمسرح الذي عليه أن يعود إليه. والطيّ يقع بفعل الطالب لا
+     بمؤقّت: لو طُوي بعد مهلة لاختفى زرّ المتابعة قبل أن يراه. */
+  var PEEL_TOTAL = DISSECT.length - 1;
+  var BOX_OF = { 'u2l3-muscle-attach': 1, 'u2l3-tendon-role': 2, 'u2l3-ligament-role': 3 };
+
+  function boxEl(n){ return el('s2Q' + n + 'Box'); }
+  function updateCount(){
+    var n = el('s2PeelCount');
+    if(n) n.textContent = 'الخطوة ' + step + ' من ' + PEEL_TOTAL;
+  }
+  function foldStep(n){
+    var box = boxEl(n), body = el('s2Body' + n), sum = el('s2Sum' + n);
+    if(!box || !body || box.classList.contains('is-folded')) return;
+    box.classList.add('is-answered');
+    /* تثبيت الارتفاع الفعلي أوّلًا كي تنساب الحركة من قيمة معلومة */
+    body.style.maxHeight = body.scrollHeight + 'px';
+    void body.offsetHeight;
+    box.classList.add('is-folded');
+    if(sum) sum.setAttribute('aria-expanded', 'false');
+  }
+  function expandStep(n){
+    var box = boxEl(n), body = el('s2Body' + n), sum = el('s2Sum' + n);
+    if(!box || !body) return;
+    box.classList.remove('is-folded');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    if(sum) sum.setAttribute('aria-expanded', 'true');
+    setTimeout(function(){ body.style.maxHeight = ''; }, G.reduced() ? 0 : 360);
+  }
+  function foldAnsweredOpen(){
+    [1, 2, 3].forEach(function(n){
+      var box = boxEl(n);
+      if(box && box.classList.contains('is-answered') && !box.classList.contains('is-folded')) foldStep(n);
+    });
+  }
+
+  /* ــــ مرحلة ب: الكشف الطبقي ــــ */
+  function peel(){
+    if(waiting || step >= DISSECT.length - 1) return;
+    foldAnsweredOpen();
+    stage.classList.remove('awaiting');
+    step++;
+    paint();
+    updateCount();
+    var cfg = DISSECT[step];
+    el('s2Readout').textContent = T.s2.peel[step - 1] || '';
+    if(window.Sounds) window.Sounds.playTick();
+
+    if(cfg.box){
+      show(cfg.box);
+      waiting = true;
+      stage.classList.add('locked');
+      el('s2PeelHint').textContent = T.s2.peelWait;
+    }
+    if(step === DISSECT.length - 1){
+      el('s2Readout').classList.add('done');
+      el('s2PeelHint').textContent = T.s2.peelDone;
+      stage.classList.add('locked');
+      show('s2SpongyLink');
+      /* نقطة المهمّة تُمنح برمجيًّا لا عبر Quiz، وبحارس يمنع المنح
+         مرّتين لو أُعيد النداء لأي سبب. */
+      if(!dissectClaimed){
+        dissectClaimed = true;
+        if(window.XP) window.XP.claim('u2l3-dissect', window.XP.POINTS.TASK, 'شرّحتَ المفصل طبقةً طبقة');
+      }
+      if(window.Sounds) window.Sounds.playChime();
+      show('s2TearStep');
+    }
+  }
+  function unlock(){
+    waiting = false;
+    stage.classList.remove('locked');
+    stage.classList.add('awaiting');
+    el('s2PeelHint').textContent = T.s2.peelHint;
+  }
+  stage.addEventListener('click', peel);
+  stage.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); peel(); }
+  });
+
+  /* ــــ زرّ «تابع التشريح» وسطر الطيّ ــــ
+     الزرّ يعيش عند سطر التغذية الراجعة لا فوق المسرح: التعليمة
+     القديمة كانت تتبدّل أعلى الصفحة بينما عين الطالب أسفلها. */
+  function goToStage(){
+    if(stage.scrollIntoView) stage.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+    if(stage.focus) stage.focus();
+  }
+  [1, 2, 3].forEach(function(n){
+    var back = el('s2Back' + n);
+    if(back) back.addEventListener('click', function(){
+      foldStep(n);
+      goToStage();
+    });
+    var sum = el('s2Sum' + n);
+    if(sum) sum.addEventListener('click', function(){
+      var box = boxEl(n);
+      if(box && box.classList.contains('is-folded')) expandStep(n);
+      else foldStep(n);
+    });
+  });
+
+  /* عند الإجابة الصحيحة: يظهر سطر الطيّ (بلا طيّ بعد) وزرّ المتابعة
+     حاملًا عدد الخطوات الباقية — وهو ما يمنع توهّم انتهاء النشاط. */
+  function onSolved(name){
+    var n = BOX_OF[name];
+    if(!n) return;
+    var box = boxEl(n);
+    if(box) box.classList.add('is-answered');
+    var back = el('s2Back' + n);
+    if(back){
+      var left = PEEL_TOTAL - step;
+      back.textContent = left > 0 ? ('تابع التشريح ↑ (بقيت ' + left + ')') : 'تابع التشريح ↑';
+      back.hidden = false;
+    }
+  }
+
+  window.Quiz.practice({
+    'u2l3-muscle-attach': { xpId: 'u2l3-muscle-attach', xp: 'MCQ', reason: 'تتبّعتَ طرف العضلة إلى العظم',
+                            correctText: T.s2.muscleAttach.correct, hints: T.s2.muscleAttach }
+  }, { onSolved: onSolved, onAllSolved: unlock });
+
+  window.Quiz.practice({
+    'u2l3-tendon-role': { xpId: 'u2l3-tendon-role', xp: 'MCQ', reason: 'استنتجتَ وظيفة الوتر',
+                          correctText: T.s2.tendonRole.correct, hints: T.s2.tendonRole }
+  }, { onSolved: onSolved, onAllSolved: unlock });
+
+  window.Quiz.practice({
+    'u2l3-ligament-role': { xpId: 'u2l3-ligament-role', xp: 'MCQ', reason: 'استنتجتَ وظيفة الرباط',
+                            correctText: T.s2.ligamentRole.correct, hints: T.s2.ligamentRole }
+  }, { onSolved: onSolved, onAllSolved: unlock });
+
+  /* ــــ مرحلة ج: التوقّع عند التلف ــــ
+     مزلق النفي: وجود جذر «حرك» وحده لا يكفي — «يتحرّك بشكل طبيعي»
+     تحمل الجذر وهي عكس الصواب. فالقبول إمّا بجذر عجز صريح، وإمّا
+     بأداة نفي متبوعة بالجذر. */
+  window.Quiz.short({
+    input: 's2TearInput', button: 's2TearBtn', feedback: 'fb-u2l3-tendon-tear',
+    modelBtn: 's2TearModelBtn', model: 's2TearModel',
+    accept: { paths: [
+      { all: [ ['ضعف','صعب','توقف','تتوقف','يتوقف','شلل','تقل','يقل','يعجز','عجز','تشل','مشلول'] ] },
+      { all: [ [/(^|\s)(لا|ما|مش|لن|لم)\s+\S{0,4}حرك/] ] }
+    ] },
+    normalize: 'ar',
+    hints: [T.s2.tearHint1, T.s2.tearHint2],
+    modelText: T.s2.tearModel,
+    xpId: 'u2l3-tendon-tear', xp: 'PRODUCE', reason: 'توقّعتَ أثر تمزّق الوتر',
+    modelReason: 'راجعتَ الإجابة النموذجية وقارنتها بإجابتك',
+    onDone: function(){ show('s2Q4Box'); }
+  });
+
+  window.Quiz.practice({
+    'u2l3-ligament-tear': { xpId: 'u2l3-ligament-tear', xp: 'MCQ', reason: 'توقّعتَ أثر تمزّق الرباط',
+                            correctText: T.s2.ligamentTear.correct, hints: T.s2.ligamentTear }
+  }, { onAllSolved: function(){ show('s2done'); } });
+}
+
+/* ============ 4) المحطة 3 ============ */
+function station3(){
+  var predictDone = false;
+  document.querySelectorAll('#s3PredictOptions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(predictDone) return;
+      predictDone = true;
+      fbNeutral('fb-s3predict', T.s3.predictFb);
+      show('s3RunRow');
+      if(window.Sounds) window.Sounds.playSnap();
+      if(window.XP) window.XP.claim('u2l3-friction-predict', window.XP.POINTS.PREDICT, 'تنبّأتَ قبل التجربة');
+    });
+  });
+
+  /* المسرح: ثلاث حالات بالتتابع بمقياس زمني مضغوط ظاهر، والوصف
+     النصّي هو القناة الأولى دائمًا — تحت «تقليل الحركة» تُعرض
+     الحالات بلا حركة وبمهلة صفرية. */
+  /* درج بيد الطالب لا تتابع بمؤقّت: كانت ضغطة واحدة تُشغّل الحالات
+     الثلاث بفاصل 2.6 ثانية، فيتبدّل المشهد مرّتين بلا فعل من الطالب
+     ويُستبدَل الوصف قبل أن يُقرأ. والآن كل حالة تبقى تتحرّك أمامه
+     بلا حدّ حتى يطلب التالية بنفسه — «الطالب هو من يطلب الكشف». */
+  var fricStep = -1;
+  el('s3RunBtn').addEventListener('click', function(){
+    var btn = el('s3RunBtn');
+    if(fricStep >= T.s3.states.length - 1) return;
+    var prev = fricStep >= 0 ? T.s3.states[fricStep] : null;
+    fricStep++;
+    var st = T.s3.states[fricStep];
+
+    if(fricStep === 0){
+      show('s3FricWrap');
+      show('s3Gauge');
+    }
+    /* className على عنصر SVG للقراءة فقط (SVGAnimatedString) —
+       التبديل يكون بـsetAttribute لا بالإسناد المباشر. */
+    el('fricStage').setAttribute('class', 'stage fric s' + (fricStep + 1));
+
+    /* أوّل ظهور للمسرح يقع فوق الزرّ، فلولا هذا ضغط الطالب ولم يرَ شيئًا */
+    if(fricStep === 0){
+      var wrap = el('s3FricWrap');
+      if(wrap && wrap.scrollIntoView){
+        wrap.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'center' });
+      }
+    }
+    /* صفّ السجلّ الخاصّ بهذه الحالة يظهر ثم يمتدّ شريطه من الصفر،
+       وصفوف الحالات السابقة تبقى كما هي للمقارنة. */
+    show('fricRow' + (fricStep + 1));
+    var fill = el('fricFill' + (fricStep + 1));
+    if(G.reduced()){
+      fill.style.width = st.n + '%';
+    }else{
+      setTimeout(function(){ fill.style.width = st.n + '%'; }, 30);
+    }
+    var wordEl = el('fricWord');
+    wordEl.textContent = st.word || '';
+    wordEl.hidden = !st.word;
+    if(window.Sounds) window.Sounds.playTick();
+
+    if(st.next){
+      btn.textContent = st.next;
+      show('s3Watch');
+    }else{
+      /* التسمية تتبدّل إلى حالٍ لا فعل: «أضِف سائلًا» بعد إضافته
+         تَعِد بفعلٍ استُهلك، والزرّ معطَّل أصلًا. */
+      btn.textContent = T.s3.runDone;
+      btn.disabled = true;
+      btn.classList.add('demoted');
+      var watch = el('s3Watch');
+      if(watch) watch.hidden = true;
+      show('s3PatternBox');
+    }
+  });
+
+  window.Quiz.practice({
+    'u2l3-friction-pattern': { xpId: 'u2l3-friction-pattern', xp: 'PATTERN', reason: 'اكتشفتَ نمط تقليل الاحتكاك',
+                               correctText: T.s3.frictionPattern.correct, hints: T.s3.frictionPattern }
+  }, { onAllSolved: function(){ show('s3BuildBox'); } });
+
+  window.Chips.hints(T.s3.chipHints);
+  window.Chips.onDone('u2l3-build', function(){
+    /* التسمية تلحق البناء: اسم «المفصل الزلالي» لا يظهر قبل أن
+       يكتمل بناء أجزائه الخمسة بيد الطالب. */
+    show('s3NameLine');
+    show('s3NameBox');
+  });
+
+  window.Quiz.practice({
+    'u2l3-synovial-name': { xpId: 'u2l3-synovial-name', xp: 'MCQ', reason: 'ميّزتَ المفصل الزلالي',
+                            correctText: T.s3.synovialName.correct, hints: T.s3.synovialName }
+  }, { onAllSolved: function(){ show('s3done'); } });
+}
+
+/* ============ 5) المحطة 4 ============
+   محرّك سحب واحد للمسرحين. الحدّ يفرضه المسرح لا نصّ يخبر الطالب
+   به مسبقًا: المرفق يقف عند حدّه ورسالة تظهر، بلا اهتزاز —
+   الاهتزاز محجوز لما هو ممنوع لا لما هو ناقص. */
+function makeRotator(cfg){
+  var rotor = el(cfg.rotor);
+  var svg   = el(cfg.stage);
+  if(!rotor || !svg) return;
+  /* زاوية البداية قد تقع خارج المدى حين يُرسم العظم في وضعٍ يتجاوز
+     الحدّ الطبيعي — فتُحدَّد صراحةً بدل الاعتماد على الصفر. */
+  var angle = cfg.start != null ? cfg.start : 0;
+  var spin = 0, dragging = false, lastX = 0, lastY = 0, reached = false;
+
+  function apply(){
+    rotor.style.transform = 'rotate(' + angle.toFixed(2) + 'deg)';
+    rotor.setAttribute('aria-valuenow', String(Math.round(angle)));
+    if(cfg.spinner){
+      var sp = el(cfg.spinner);
+      if(sp) sp.style.transform = 'rotate(' + spin.toFixed(2) + 'deg)';
+    }
+  }
+  function move(deltaDeg, dy){
+    var next = angle + deltaDeg;
+    var clamped = Math.max(cfg.min, Math.min(cfg.max, next));
+    var atLimit = clamped !== next;
+    angle = clamped;
+    if(cfg.spinner) spin = (spin + dy * 1.6) % 360;
+    apply();
+    if(atLimit && cfg.limitMsg){
+      el(cfg.msg).textContent = cfg.limitMsg;
+      if(!reached){ reached = true; if(cfg.onReach) cfg.onReach(); }
+    }else if(cfg.freeMsg){
+      el(cfg.msg).textContent = cfg.freeMsg;
+    }
+    if(!reached && cfg.freeAt != null && Math.abs(angle) >= cfg.freeAt){
+      reached = true;
+      if(cfg.onReach) cfg.onReach();
+    }
+  }
+  rotor.addEventListener('pointerdown', function(e){
+    dragging = true; lastX = e.clientX; lastY = e.clientY;
+    if(rotor.setPointerCapture) rotor.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+  rotor.addEventListener('pointermove', function(e){
+    if(!dragging) return;
+    move((e.clientX - lastX) * cfg.gain, e.clientY - lastY);
+    lastX = e.clientX; lastY = e.clientY;
+  });
+  ['pointerup','pointercancel','lostpointercapture'].forEach(function(evt){
+    rotor.addEventListener(evt, function(){ dragging = false; });
+  });
+  /* مسار لوحة المفاتيح: بديل كوني للسحب لا حلّ احتياطي للجوال. */
+  rotor.addEventListener('keydown', function(e){
+    var step = cfg.keyStep || 15;
+    if(e.key === 'ArrowRight'){ e.preventDefault(); move(step, 0); }
+    else if(e.key === 'ArrowLeft'){ e.preventDefault(); move(-step, 0); }
+    else if(e.key === 'ArrowUp'){ e.preventDefault(); move(0, -14); }
+    else if(e.key === 'ArrowDown'){ e.preventDefault(); move(0, 14); }
+  });
+  apply();
+}
+
+function station4(){
+  var ballShown = false, hingeShown = false;
+  function maybeName(){
+    if(ballShown && hingeShown) show('s4NameLine');
+  }
+
+  makeRotator({
+    stage: 'shoulderStage', rotor: 'humerusRotor', spinner: 'humerusSpin',
+    /* الحدّ العلوي 95 لا 70: الكتف يرتفع فوق الأفق. و95 هو أقصى ما
+       يسمح به الإطار — طول الذراع 105 ومركز الدوران على ارتفاع 96
+       من أصل 240، فعند 110 يخرج طرفها من أعلى المشهد. */
+    msg: 'shoulderMsg', min: -70, max: 95, gain: 0.55, freeAt: 40,
+    freeMsg: T.s4.shoulderFree,
+    onReach: function(){ show('s4BallBox'); }
+  });
+  makeRotator({
+    stage: 'elbowStage', rotor: 'ulnaRotor',
+    /* الحدّ الأقصى -20 لا صفر: عند صفر يمضي الساعد 19.5 درجة بعد
+       استقامة الذراع (ميل العَضُد 13.2° وميل الساعد 32.7°) — وهو
+       انثناء إلى الخلف لا يفعله مرفق سليم، ويكذّب ما تعلّمه المحطة
+       نفسها عن حدّ المفصل الرزّي. و-20 يوقفه عند الاستقامة.
+       والبداية -40 كي يظهر مثنيًّا قليلًا داخل المدى الجديد. */
+    msg: 'elbowMsg', min: -140, max: -20, start: -40, gain: 0.55, freeAt: 70,
+    limitMsg: T.s4.elbowLimit,
+    onReach: function(){ show('s4HingeBox'); }
+  });
+
+  window.Quiz.practice({
+    'u2l3-ball-socket': { xpId: 'u2l3-ball-socket', xp: 'MCQ', reason: 'وصفتَ ما يسمح به الشكل الكروي',
+                          correctText: T.s4.ballSocket.correct, hints: T.s4.ballSocket }
+  }, { onAllSolved: function(){ ballShown = true; maybeName(); show('s4TypesBox'); } });
+
+  window.Quiz.practice({
+    'u2l3-hinge': { xpId: 'u2l3-hinge', xp: 'MCQ', reason: 'وصفتَ ما يسمح به الشكل الرزّي',
+                    correctText: T.s4.hinge.correct, hints: T.s4.hinge }
+  }, { onAllSolved: function(){ hingeShown = true; maybeName(); show('s4TypesBox'); } });
+
+  window.Chips.hints(T.s4.chipHints);
+  window.Chips.onDone('u2l3-types', function(){ show('s4ArdhaBox'); });
+
+  window.Quiz.practice({
+    'u2l3-ardha-kick': { xpId: 'u2l3-ardha-kick', xp: 'MCQ', reason: 'أغلقتَ حلقة صورتَي بداية الدرس',
+                         correctText: T.s4.ardhaKick.correct, hints: T.s4.ardhaKick }
+  }, { onAllSolved: function(){ show('s4CountBox'); } });
+
+  var countDone = false;
+  document.querySelectorAll('#s4CountOptions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(countDone) return;
+      countDone = true;
+      /* الجدول تأكيد لا مصدر: يُكشف بعد التنبّؤ، ولا تقييم على أرقامه.
+         ولا تُوصف هذه المفاصل بأنها زلالية — الكتاب لا يقولها. */
+      fbNeutral('fb-s4count', T.s4.countFb);
+      show('s4TableBox');
+      show('s4PatternBox');
+      if(window.Sounds) window.Sounds.playSnap();
+      if(window.XP) window.XP.claim('u2l3-joint-count', window.XP.POINTS.PREDICT, 'تنبّأتَ قبل رؤية الأعداد');
+    });
+  });
+
+  window.Quiz.practice({
+    'u2l3-type-pattern': { xpId: 'u2l3-type-pattern', xp: 'PATTERN', reason: 'اكتشفتَ العلاقة بين الشكل وعدد الاتجاهات',
+                           correctText: T.s4.typePattern.correct, hints: T.s4.typePattern }
+  }, { onAllSolved: function(){ show('s4done'); } });
+}
+
+/* ============ 6) المحطة 5 ============ */
+function station5(){
+  var predictDone = false;
+  document.querySelectorAll('#s5PredictOptions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(predictDone) return;
+      predictDone = true;
+      fbNeutral('fb-s5predict', T.s5.predictFb);
+      show('s5ToggleRow');
+      show('s5StageWrap');
+      show('s5StageMsg');
+      el('s5StageMsg').textContent = T.s5.stageHealthy;
+      if(window.Sounds) window.Sounds.playSnap();
+      if(window.XP) window.XP.claim('u2l3-damage-predict', window.XP.POINTS.PREDICT, 'تنبّأتَ قبل المقارنة');
+    });
+  });
+
+  var damaged = false, toggled = false;
+  el('s5ToggleBtn').addEventListener('click', function(){
+    damaged = !damaged;
+    el('dmgStage').classList.toggle('dmg', damaged);
+    el('s5ToggleBtn').textContent = damaged ? 'أرِني المفصل السليم' : 'أرِني المفصل المتضرّر';
+    el('s5StageMsg').textContent = damaged ? T.s5.stageDamaged : T.s5.stageHealthy;
+    if(window.Sounds) window.Sounds.playTick();
+    if(!toggled){ toggled = true; show('s5SymptomsBox'); }
+  });
+
+  window.Quiz.practice({
+    'u2l3-symptoms': { xpId: 'u2l3-symptoms', xp: 'MCQ', reason: 'قارنتَ المفصلين ورصدتَ الفرق',
+                       correctText: T.s5.symptoms.correct, hints: T.s5.symptoms }
+  }, { onAllSolved: function(){ show('s5AthleteBox'); } });
+
+  window.Quiz.short({
+    input: 's5AthleteInput', button: 's5AthleteBtn', feedback: 'fb-u2l3-athlete',
+    modelBtn: 's5AthleteModelBtn', model: 's5AthleteModel',
+    accept: { paths: [
+      { all: [ ['تكرار','متكرر','كرر','كثر','يوميا','احتكاك','حتكاك','اجهاد','جهد','حمل','ضغط','اكل','تعب'] ] }
+    ] },
+    normalize: 'ar',
+    hints: [T.s5.athleteHint1, T.s5.athleteHint2],
+    modelText: T.s5.athleteModel,
+    xpId: 'u2l3-athlete', xp: 'PRODUCE', reason: 'فسّرتَ سبب تلف غضروف الرياضي',
+    modelReason: 'راجعتَ الإجابة النموذجية وقارنتها بإجابتك',
+    onDone: function(){ show('s5BonusRow'); show('s5done'); }
+  });
+
+  el('s5BonusLink').addEventListener('click', function(){
+    show('s5BonusBox');
+    var b = el('s5BonusLink');
+    b.disabled = true;
+    b.classList.add('demoted');
+  });
+
+  window.Quiz.practice({
+    'u2l3-hip-replacement-bonus': { xpId: 'u2l3-hip-replacement-bonus', xp: 'BONUS',
+                                    reason: 'حللتَ تحدّي المفصل الصناعي',
+                                    correctText: T.s5.bonus.correct, hints: T.s5.bonus }
+  });
+}
+
+/* ============ 7) المحطة 6 — التقييم والشهادة ============
+   الشهادة بنيوية لا تذكُّرية: Quiz.evaluate ينادي الوحدة بنفسه
+   عند تمرير title، ولا يُكتب نداء Certificate.finish هنا. */
+function normE9(v){
+  var s = window.Quiz.normalizeAr(v);
+  /* الجمع المكسّر يغيّر بنية الكلمة كلّها: غضروف ← غضاريف، فلا يكفي
+     البحث عن «غضروف». والجذر المشترك القصير هو «غض» يليه راء أو ألف. */
+  return /غض[را]/.test(s) ? 'مطابق' : s;
+}
+function normE10(v){
+  var s = window.Quiz.normalizeAr(v);
+  /* «الركبة» و«المرفق» جوابان خاطئان هنا ولو ورد معهما جواب صحيح:
+     الطالب سُئل عن مفصل واحد، فذكرُ رزّيٍّ يعني أنه لم يميّز. */
+  if(s.indexOf('ركب') !== -1 || s.indexOf('مرفق') !== -1) return s;
+  if(s.indexOf('كتف') !== -1 || s.indexOf('ورك') !== -1 || s.indexOf('حوض') !== -1) return 'مطابق';
+  return s;
+}
+
+function station6(){
+  window.Quiz.evaluate({
+    title: 'ما تركيب المفاصل الزلالية؟',
+    questions: [
+      { name: 'u2l3-e1', why: T.eval.e1 },
+      { name: 'u2l3-e2', why: T.eval.e2 },
+      { name: 'u2l3-e3', why: T.eval.e3 },
+      { name: 'u2l3-e4', why: T.eval.e4 },
+      { name: 'u2l3-e5', why: T.eval.e5 },
+      { name: 'u2l3-e6', why: T.eval.e6 },
+      { name: 'u2l3-e7', why: T.eval.e7 },
+      { name: 'u2l3-e8', why: T.eval.e8 },
+      { name: 'e9', type: 'text', input: 'e9Input', button: 'e9Btn', feedback: 'fb-e9',
+        answer: 'مطابق', normalize: normE9, why: T.eval.e9why },
+      { name: 'e10', type: 'text', input: 'e10Input', button: 'e10Btn', feedback: 'fb-e10',
+        answer: 'مطابق', normalize: normE10, why: T.eval.e10why }
+    ]
+  });
+}
+
+station1();
+station2();
+station3();
+station4();
+station5();
+station6();
+
+/* ══════════════════ الانتقال بين المحطات ══════════════════
+   المحطات الستّ كلّها في الصفحة منذ التحميل بلا hidden — قاعدة
+   منصّية: ما يحمي تسلسل المفاهيم هو الكشف المتدرّج داخل المحطة
+   لا حجب المحطة كلّها. */
+document.querySelectorAll('a.station-next[href^="#station-"]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    var id = a.getAttribute('href').slice(1);
+    var sec = document.getElementById(id);
+    if(!sec) return;
+    sec.hidden = false;
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + id + '"]');
+    if(dot) dot.classList.add('active');
+    if(sec.scrollIntoView){
+      sec.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+    }
+    if(window.Sounds) window.Sounds.playChime();
+  });
+});
+
+/* ══════════════════ الدخول من الخارج بالمرساة ══════════════════ */
+window.addEventListener('load', function(){
+  var id = (location.hash || '').replace(/^#/, '');
+  if(!/^station-[A-Za-z0-9_-]+$/.test(id)) return;
+  var target = document.getElementById(id);
+  if(!target || !target.classList.contains('station')) return;
+  var all = Array.prototype.slice.call(document.querySelectorAll('.station'));
+  var idx = all.indexOf(target);
+  if(idx < 0) return;
+  function activate(sec){
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + sec.id + '"]');
+    if(dot) dot.classList.add('active');
+  }
+  all.slice(0, idx).forEach(function(sec){ if(!sec.hidden) activate(sec); });
+  activate(target);
+  if(target.scrollIntoView) target.scrollIntoView({ behavior: 'auto', block: 'start' });
+});
+
+})();
+</script>
+</body>
+</html>
