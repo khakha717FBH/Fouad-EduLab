@@ -15,9 +15,17 @@ const path = require('path');
 
 const ROOT = process.env.EDULAB_ROOT || path.resolve(__dirname, '..');
 const IDENTITY = path.join(ROOT, 'shared', 'identity', 'identity.css');
+const TEMPLATE = path.join(ROOT, 'shared', 'template-boilerplate', 'template.css');
 const css = fs.readFileSync(IDENTITY, 'utf8');
+const tpl = fs.readFileSync(TEMPLATE, 'utf8');
 
 /* قراءة كتلة قاعدة بمحدِّدها المضبوط، بلا تعليقات */
+function blockIn(source, selector){
+  const clean = source.replace(/\/\*[\s\S]*?\*\//g, '');
+  const re = new RegExp('(^|[};])\\s*' + selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*\\{([^}]*)\\}');
+  const m = re.exec(clean);
+  return m ? m[2] : null;
+}
 function block(selector){
   const clean = css.replace(/\/\*[\s\S]*?\*\//g, '');
   const re = new RegExp('(^|[};])\\s*' + selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*\\{([^}]*)\\}');
@@ -31,7 +39,8 @@ const STANDALONE = [
   'index.html',
   'semester-1/index.html',
   'semester-1/unit-01/index.html',
-  'semester-1/unit-02/index.html'
+  'semester-1/unit-02/index.html',
+  'semester-1/unit-01/lesson-02.html'   // درس قديم لا يربط المشترك
 ];
 
 describe('خلفية الصفحة — ومضة التمرير السريع', function(){
@@ -83,6 +92,50 @@ describe('خلفية الصفحة — ومضة التمرير السريع', fun
       if(!/html\s*\{[^}]*background(-color)?\s*:/.test(clean)) missing.push(rel);
     });
     eq(missing.length, 0, 'صفحات بلا لون قاعدة على html: ' + missing.join(' · '));
+  });
+});
+
+describe('حقول الأسئلة — لا تُترك لاجتهاد المتصفّح', function(){
+
+  /* color-scheme:dark يجعل المتصفّح يشتقّ حدّ الدائرة الفارغة من
+     accent-color بعد إعتامه، فيخرج التركوازي زيتونيًّا بنّيًّا. رصدها
+     فؤاد بالعين بعد رفع علاج الومضة. والحارس يمنع عودة الاعتماد على
+     رسم المتصفّح، لا يمنع اللون بعينه. */
+
+  it('الراديو ومربّع الاختيار مرسومان يدويًّا لا بحقل المتصفّح الأصلي', function(){
+    const clean = tpl.replace(/\/\*[\s\S]*?\*\//g, '');
+    ['radio', 'checkbox'].forEach(function(kind){
+      const re = new RegExp('\\.quiz-option input\\[type="' + kind + '"\\][^{]*\\{([^}]*)\\}');
+      const m = re.exec(clean);
+      ok(m, 'لا قاعدة مخصّصة لحقل ' + kind);
+    });
+    ok(/appearance\s*:\s*none/.test(clean),
+       'الحقول متروكة لرسم المتصفّح — فيُعتم لونها في النمط الداكن');
+  });
+
+  it('اللون المختار هو التركوازي نفسه لا مشتقًّا منه', function(){
+    const clean = tpl.replace(/\/\*[\s\S]*?\*\//g, '');
+    const at = clean.indexOf('.quiz-option input[type="radio"]::before');
+    ok(at !== -1, 'لا نقطة مرسومة داخل الدائرة');
+    const body = clean.slice(at, clean.indexOf('}', at));
+    ok(/background\s*:\s*var\(--turquoise\)/.test(body),
+       'نقطة الاختيار ليست بالتركوازي الأساسي: ' + body.trim());
+  });
+
+  it('الحدّ رمادي قبل الاختيار وتركوازي بعده — لونٌ واحد لا يحمل معنيين', function(){
+    const clean = tpl.replace(/\/\*[\s\S]*?\*\//g, '');
+    const at = clean.indexOf('.quiz-option input[type="radio"],');
+    const body = clean.slice(at, clean.indexOf('}', at));
+    ok(/border\s*:\s*2px solid var\(--muted\)/.test(body),
+       'الدائرة الفارغة ليست رمادية: ' + body.trim().slice(0, 120));
+    ok(/:checked[^{]*\{[^}]*border-color\s*:\s*var\(--turquoise\)/.test(clean),
+       'الدائرة المختارة ليست تركوازية');
+  });
+
+  it('الحركة تتوقّف عند تفضيل تقليل الحركة', function(){
+    const reduced = tpl.split('prefers-reduced-motion').slice(1).join(' ');
+    ok(/\.quiz-option input\[type="radio"\]/.test(reduced),
+       'حقول الأسئلة بلا نظير عند تقليل الحركة');
   });
 });
 
