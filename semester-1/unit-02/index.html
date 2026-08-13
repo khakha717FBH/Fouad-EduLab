@@ -14,6 +14,11 @@
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
+  /* لون قاعدة صلب على html: خلفية body متدرّجة، وأثناء التمرير
+     السريع تُعرض المنطقة المكشوفة بلون اللوحة الابتدائي (الأبيض)
+     قبل أن يصلها الطلاء. والصفحة لا تربط الهوية المشتركة، فتعالج
+     الومضة بنفسها. */
+  html{background-color:var(--navy-deep);color-scheme:dark;}
   body{
     background:linear-gradient(180deg,var(--navy-deep),var(--navy) 35%,var(--navy-deep));
     color:var(--text); font-family:'Tajawal','Cairo',sans-serif; line-height:1.8; min-height:100dvh;
@@ -66,10 +71,10 @@
       <div class="lesson-title">ما تركيب المفاصل الزلالية؟</div>
      <div class="lesson-status">جاهز</div>
     </a>
-    <a class="lesson-card disabled" href="#">
+    <a class="lesson-card" href="lesson-04.html">
       <div class="lesson-num">4</div>
       <div class="lesson-title">كيف تساعدك العضلات الثنائية المتضادة على الحركة؟</div>
-      <div class="lesson-status">قيد الإعداد</div>
+      <div class="lesson-status">جاهز</div>
     </a>
   </div>
 </div>
