@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدرس 4 — كيف تساعدك العضلات الثنائية المتضادة على الحركة؟ | مختبر فؤاد التعليمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/identity/identity.css">
+<link rel="stylesheet" href="../../shared/template-boilerplate/template.css">
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  الوحدة 2 — الدرس 4 — مختبر فؤاد التعليمي
+  "كيف تساعدك العضلات الثنائية المتضادة على الحركة؟"
+  ص 82–87 · المعيار B0906.2 · بادئة data-q/XP: u2l4-
+
+  ستّ محطات، ستّ نقاط تقدّم. المحطتان 2 و3 مشطورتان داخليًّا إلى
+  مراحل، ولكلّ محطة نقطة واحدة لا نقطة لكل مرحلة.
+
+  أربعة مسارح: الخيط والمعجون (م2) · الذراع بعضلة ثم بعضلتين (م3) ·
+  الجسد بمناطقه الخمس (م4) · الذراع المتضرّرة (م5).
+
+  والظلّية ملفّ مستقلّ بجوار هذا الملف لا في مجلّد أصول مركزي —
+  القرار نفسه المتّبع في bone-section.jpg وظلّيتَي درس 03.
+
+  قرارات نطاق مسجَّلة:
+  • «المفاصل الرزّية» لا تُذكر قيدًا على العضلات المتضادة. الجملة في
+    خلفية الدليل المعرفيّة وليست في كتاب الطالب، وطالبٌ أنهى درس 03
+    يعرف أنّ الورك والكتف كرويّان — فتناقضها ما تعلّمه.
+  • زوج الصدر «الصدرية الكبرى وشبه المنحرفة» وحدها. الكتاب يعطي
+    إجابتين مختلفتين للسؤال نفسه، وهذه هي إجابة تقييمه.
+  • خانات المحطة 4 صفٌّ أسفل المسرح لا خانات موضوعة فوقه بالتوسيط:
+    يُسقط علّة قفزة الخانة (tplPopIn تمحو translate) قبل وجودها،
+    ويُسقط معها تصادم خمس خانات على جسد كامل.
+  • بلا صورة فوتوغرافية في التقييم (سابقة درس 03). والسؤال 8 مصمَّم
+    ليُبدَّل مصدره البصري وحده لاحقًا بلا مساس بنصّه ولا خياراته.
+
+  خارج النطاق نصًّا وبالاختبار: آلية الانقباض داخل الليف · الرافعة ·
+  أسماء عضلات خارج قائمة الدليل · إعادة تعريف الوتر والرباط (درس 03).
+
+  الرصيد المقدَّر: 135 أساسي (6+26+47+40+16) + 8 اختياري
+  (u2l4-model-critique-bonus) = 143. رقم الاختبار هو الحقيقة
+  لا هذا التعليق.
+  ========================================================= -->
+<style>
+  /* ============ منع سحب التحديث من تصفير XP ============ */
+  html, body{ overscroll-behavior-y:contain; }
+  html{ scroll-behavior:smooth; }
+  .station{ scroll-margin-top:14px; }
+
+  /* ============ أصناف عامّة — نمط دروس الوحدة 02 ============ */
+  .station-tagline{
+    max-width:920px; margin:0 auto 4px; font-size:.95rem; color:var(--ink-dim); line-height:1.9;
+  }
+  .explore-q{
+    font-weight:700; color:var(--ink); margin:0 0 12px; font-size:clamp(14px,2.4vw,16px);
+  }
+  .explore-step{ margin-top:26px; padding-top:20px; border-top:1px dashed var(--border); }
+  .explore-step:first-of-type{ border-top:none; padding-top:0; }
+  .explore-answer-row{ display:flex; gap:10px; flex-wrap:wrap; }
+  .explore-input{
+    flex:1 1 140px; min-width:100px; background:rgba(255,255,255,.03);
+    border:1px solid var(--border); border-radius:999px; padding:11px 20px;
+    color:var(--ink); font-family:'Tajawal', sans-serif; font-size:15px; text-align:center;
+  }
+  .explore-input::placeholder{ color:var(--ink-dim); opacity:.55; font-size:.86em; }
+  .explore-input:focus{ outline:none; border-color:var(--turquoise); box-shadow:0 0 0 3px var(--turquoise-faint); }
+  .explore-input:disabled{ opacity:.7; }
+  .fact-line{
+    max-width:920px; margin:14px auto 0; border:1px dashed var(--turquoise-soft); border-radius:14px;
+    padding:12px 16px; font-size:.92rem; line-height:1.9; background:rgba(20,200,168,.05);
+  }
+  .fact-line.center{ text-align:center; }
+  .name-card{
+    max-width:920px; margin:16px auto 0; border:1px dashed var(--turquoise-soft); border-radius:14px;
+    padding:12px 16px; font-size:.92rem; line-height:1.9; background:rgba(20,200,168,.05);
+  }
+  .name-card b{ color:var(--turquoise); font-weight:800; }
+  .stage-msg{
+    max-width:920px; margin:10px auto 0; min-height:22px; text-align:center;
+    font-size:14px; color:var(--ink-dim); line-height:1.9;
+  }
+  .stage-msg.done{ color:var(--turquoise); font-weight:700; }
+  .stage-wrap{
+    width:100%; max-width:640px; margin:12px auto 0;
+    background:var(--navy-darker); border:1px solid rgba(20,200,168,0.15);
+    border-radius:22px; padding:14px;
+  }
+  .stage-wrap.narrow{ max-width:460px; }
+  svg.stage{ width:100%; height:auto; display:block; -webkit-tap-highlight-color:transparent; }
+  .stage-caption{
+    max-width:920px; margin:8px auto 0; text-align:center;
+    font-size:12.5px; color:var(--ink-dim); line-height:1.85;
+  }
+  .stage-caption b{ color:#8E9AA8; font-weight:700; }
+  .step-count{
+    max-width:920px; margin:4px auto 0; text-align:center;
+    font-size:12px; color:var(--ink-dim); font-weight:600;
+  }
+  .try-hint{
+    max-width:920px; margin:8px auto 0; text-align:center;
+    font-size:12.5px; color:var(--turquoise); font-weight:700;
+  }
+  .bonus-box{
+    max-width:920px; margin:24px auto 0; border:1px dashed var(--coral); border-radius:16px;
+    padding:16px 18px; background:rgba(255,107,74,.04);
+  }
+  .bonus-tag{
+    display:inline-block; font-family:'Cairo', sans-serif; font-weight:800; font-size:.75rem;
+    color:var(--coral); border:1px solid var(--coral); border-radius:999px; padding:3px 12px; margin-bottom:10px;
+  }
+
+  /* ============ محطة 1 — الظلّية ============ */
+  .img-solo{
+    display:flex; justify-content:center; margin:14px auto 0; max-width:920px;
+  }
+  .img-cell{
+    flex:0 1 320px; max-width:320px; background:var(--navy-darker);
+    border:1px solid rgba(20,200,168,.15); border-radius:22px; padding:10px 10px 4px;
+  }
+  .img-cell img{ width:100%; height:auto; display:block; }
+  .img-cap{
+    text-align:center; font-size:13px; color:var(--ink-dim); line-height:1.8; padding:6px 4px 8px;
+  }
+
+  /* ============ ألوان الأنسجة — مشتركة بين مسارح هذا الدرس ============
+     العضلة الوردية والوتر الأبيض بالقيم نفسها المستعملة في درس 03،
+     فالطالب يعبر من درس إلى درس ولون النسيج لا يتبدّل تحت عينه. */
+  :root{
+    --muscle-p:#C4657A;
+    --sinew:#F2F0E8; --dough:#8A93A2; --dough-edge:#6E7686;
+  }
+
+  /* ============ محطة 2 — الخيط والمعجون ============ */
+  .str .ground{ stroke:rgba(255,255,255,.14); stroke-width:2; stroke-linecap:round; }
+  .str .dough-f{ fill:var(--dough); stroke:var(--dough-edge); stroke-width:1.4; }
+  .str .cord{ stroke:var(--sinew); stroke-width:2.6; fill:none; stroke-linecap:round; }
+  .str .grip{
+    fill:var(--turquoise); stroke:#0E8F79; stroke-width:1.6;
+    cursor:grab; touch-action:none;
+  }
+  .str .grip:active{ cursor:grabbing; }
+  .str .cord{ transition:opacity .3s ease; }
+  .str .state-pull, .str .state-push{ opacity:0; }
+  .str.pulling .state-rest{ opacity:0; }
+  .str.pulling .state-pull{ opacity:1; }
+  .str.pushing .state-rest{ opacity:0; }
+  .str.pushing .state-push{ opacity:1; }
+  /* قيم px في تحويلات CSS على عناصر SVG الفرعية تُفسَّر وحداتِ
+     viewBox لا بكسلَ شاشة — والقيم هنا مطابقة لفروق الإحداثيات
+     بين الحالات الثلاث المرسومة، فلا ينفصل المقبض عن طرف الخيط.
+     وإزاحة المعجون 30 لا 24 مثل المقبض: الخيط لا يستطيل، فزحف
+     المعجون يُحسب من شرط بقاء طوله ثابتًا (120.8 وحدة) لا من
+     مساواة الإزاحتين. ومساواتهما كانت تمطّ الخيط 6.5 وحدات. */
+  #gripGroup{ transition:transform .3s ease; }
+  .str.pulling #gripGroup{ transform:translate(24px,-11px); }
+  .str.pushing #gripGroup{ transform:translate(-22px,10px); }
+  .str.pulling #doughGroup{ transform:translate(30px,0px); }
+  #cordStage:focus-visible .grip{ stroke:var(--coral); stroke-width:3; }
+  #doughGroup{ transition:transform .35s ease; }
+  /* نبضة الدعوة تختفي بمجرّد أن يجرّب الطالب الفعلين معًا: بقاؤها
+     بعد استهلاك الدعوة يجعله يظنّ أنّ عليه فعلًا آخر. */
+  #cordGrip.invite{ animation:gripPulse 1.8s ease-in-out infinite; }
+  @keyframes gripPulse{
+    0%,100%{ opacity:1; }
+    50%{ opacity:.55; }
+  }
+  .str.shake #cordGroup{ animation:cordShake .4s ease; }
+  @keyframes cordShake{
+    0%,100%{ transform:translateX(0); }
+    30%{ transform:translateX(3px); }
+    70%{ transform:translateX(-3px); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    #doughGroup{ transition:none; }
+    #cordGrip.invite{ animation:none; }
+    .str.shake #cordGroup{ animation:none; }
+  }
+  .trial-row{
+    display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin:12px auto 0; max-width:920px;
+  }
+
+  /* ============ محطة 3 و5 — الذراع ============
+     الحالتان مرسومتان كلٌّ في موضعها الصحيح منذ التحميل، والتبديل
+     بينهما بتلاشٍ متبادل على صنف واحد في الجذر — لا تحويل هندسي
+     ولا استيفاء مسارات. وتغيّر طول العضلة هو المفهوم المقيس هنا،
+     فلا يجوز أن يُنتَج بتمديد CSS يشوّه سماكة الحدّ معه. */
+  .arm .bone-f{ fill:var(--matter); stroke:var(--matter-edge); stroke-width:1.2; }
+  .arm .joint-f{ fill:var(--matter); stroke:var(--matter-edge); stroke-width:1.2; }
+  .arm .mus-f{ fill:var(--muscle-p); stroke:var(--matter-edge); stroke-width:1; }
+  .arm .sinew{ stroke:var(--sinew); stroke-width:2.4; fill:none; stroke-linecap:round; }
+  .arm .pose{ transition:opacity .55s ease; }
+  .arm .grip{
+    fill:var(--turquoise); stroke:#0E8F79; stroke-width:1.6;
+    cursor:grab; touch-action:none;
+  }
+  .arm .grip:active{ cursor:grabbing; }
+  .arm .grip.invite{ animation:gripPulse 1.8s ease-in-out infinite; }
+  .arm .grip.spent{ opacity:.35; }
+  /* العضلة الخلفية ومقبضها لا يظهران إلا في المرحلة الثانية:
+     تسلسل المفاهيم يمنع رؤية الزوج قبل أن يكتشف الطالب الحاجة إليه. */
+  .arm:not(.has-tri) .tri{ display:none; }
+  .arm:not(.has-tri) #tricepsGrip{ display:none; }
+  #armExtended{ opacity:1; }
+  #armFlexed{ opacity:0; }
+  #armStage.flexed #armExtended{ opacity:0; }
+  #armStage.flexed #armFlexed{ opacity:1; }
+  #tornExtended{ opacity:1; }
+  #tornFlexed{ opacity:0; }
+  #tornStage.flexed #tornExtended{ opacity:0; }
+  #tornStage.flexed #tornFlexed{ opacity:1; }
+  /* العضلة الممزّقة: خفوت + فجوة مرسومة في متنها. الفجوة تُظهَر بأن
+     يبلغ ما حولها موضعه لا بترك خلفية المشهد تظهر — وإلا قُرئت ثقبًا. */
+  .arm .torn{ opacity:.42; }
+  .arm .tear-gap{ stroke:var(--navy-darker); stroke-width:5; stroke-linecap:round; fill:none; }
+  .arm.shake{ animation:cordShake .4s ease; }
+  @media (prefers-reduced-motion: reduce){
+    .arm .pose{ transition:none; }
+    .arm .grip.invite{ animation:none; }
+    .arm.shake{ animation:none; }
+  }
+
+  /* ============ محطة 4 — الجسد ومناطقه ============ */
+  .body .body-f{ fill:#5A6274; stroke:#454C5C; stroke-width:1; }
+  .body .zone{ cursor:pointer; }
+  .body .zone .hit{ fill:transparent; }
+  .body .zone .patch{ fill:var(--muscle-p); opacity:.55; transition:opacity .3s ease, stroke .3s ease; stroke:none; }
+  .body .zone.on .patch{
+    opacity:1; stroke:var(--turquoise); stroke-width:2;
+  }
+  .body .zone.on{ filter:drop-shadow(0 0 6px var(--turquoise-soft)); }
+  /* الإخفات يخصّ الأخوات لا المنطقة نفسها، فمحلّ الصنف الجذر */
+  .body.has-sel .zone:not(.on){ opacity:.32; }
+  .body .arrows{ opacity:0; transition:opacity .3s ease; }
+  .body .zone.on .arrows{ opacity:1; }
+  .body .arrows path{ stroke:var(--turquoise); stroke-width:2.4; fill:none; stroke-linecap:round; }
+  .body .arrows polygon{ fill:var(--turquoise); }
+  .body .dot{ fill:var(--turquoise); opacity:.9; }
+  .body .zone.on .dot, .body .zone.seen .dot{ opacity:0; }
+  .body-pair{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; max-width:920px; margin:14px auto 0; }
+  .body-cell{
+    flex:1 1 240px; max-width:300px; background:var(--navy-darker);
+    border:1px solid rgba(20,200,168,.15); border-radius:22px; padding:12px;
+  }
+  .body-cell svg{ width:100%; height:auto; display:block; }
+  .body-cell .cell-cap{ text-align:center; font-size:12.5px; color:var(--ink-dim); margin-top:6px; line-height:1.8; }
+  @media (prefers-reduced-motion: reduce){
+    .body .zone .patch, .body .arrows{ transition:none; }
+  }
+  /* خمس خانات مسمّاة في صفّ أسفل المسرحين لا خانات موضوعة فوقهما
+     بالتوسيط. سببان: علّة قفزة الخانة (tplPopIn تكتب transform:scale
+     كاملًا فتمحو translate(-50%,-50%))، وتصادم خمس خانات على جسد
+     كامل — وأسماء الأزواج نصوص عريضة لا تسع فوق الرسم أصلًا. */
+  .pair-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));
+    gap:10px; max-width:920px; margin:14px auto 0;
+  }
+
+  /* ============ محطة 6 — التقييم ============ */
+  .name-gate{
+    margin-top:20px; background:rgba(255,255,255,.03); border:1px solid rgba(20,200,168,.2);
+    border-radius:16px; padding:16px 18px;
+  }
+  .name-gate label{ display:block; font-size:.9rem; color:var(--ink); font-weight:700; margin-bottom:10px; }
+  .name-gate .gate-note{ font-size:.78rem; color:var(--ink-dim); margin:10px 0 0; }
+  .eval-q{ border-top:1px solid rgba(255,255,255,.06); margin-top:26px; padding-top:22px; }
+  .eval-q.first{ border-top:none; margin-top:18px; padding-top:0; }
+  .q-num{
+    display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px;
+    border-radius:50%; background:rgba(20,200,168,.12); border:1px solid var(--turquoise-soft);
+    color:var(--turquoise); font-family:'Cairo', sans-serif; font-weight:800; font-size:.8rem;
+    margin-inline-end:8px; flex-shrink:0;
+  }
+  .eval-summary{
+    margin-top:30px; background:rgba(20,200,168,.06); border:1px solid var(--turquoise-soft);
+    border-radius:18px; padding:20px 18px; text-align:center;
+  }
+  #certTriggerSlot{ display:flex; justify-content:center; margin-top:18px; }
+</style>
+</head>
+<body>
+
+<nav class="crumb">
+  <a href="../../index.html">الرئيسية</a> ›
+  <a href="../index.html">الفصل الأول</a> ›
+  <a href="index.html">الوحدة 2</a> ›
+  الدرس 4
+</nav>
+
+<div class="progress-track">
+  <div class="xp-counter" id="xpCounter">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+    <span id="xpValue">0</span>
+    <span class="xp-label">XP</span>
+  </div>
+  <div class="progress-dot" data-target="station-1"></div>
+  <div class="progress-dot" data-target="station-2"></div>
+  <div class="progress-dot" data-target="station-3"></div>
+  <div class="progress-dot" data-target="station-4"></div>
+  <div class="progress-dot" data-target="station-5"></div>
+  <div class="progress-dot" data-target="station-6"></div>
+</div>
+
+<header class="hero">
+  <div class="eyebrow">الوحدة 2 · الدرس 4</div>
+  <h1>كيف تساعدك العضلات الثنائية المتضادة على الحركة؟</h1>
+  <div class="objectives-box">
+    <h3>في نهاية هذا الدرس سوف تتمكّن من أن:</h3>
+    <ul>
+      <li>تشرح أنّ العضلات لا تستطيع الدفع، بل يقتصر عملها على السحب.</li>
+      <li>تتعرّف أنّ أزواج العضلات تحرّك الأطراف، إحداها تسحب في اتجاه والأخرى في الاتجاه الآخر.</li>
+      <li>تسمّي أزواج العضلات المتضادة في الذراعين والفخذين والصدر والظهر والوركين.</li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ═════════════════════ محطة 1 ═════════════════════ -->
+  <section class="station" id="station-1">
+    <div class="station-label">المحطة الأولى</div>
+    <h2>أين تشعر بالشدّ؟</h2>
+    <p class="station-tagline">صورة للحظة يعرفها كل من شاهد رفع الأثقال. ثم تجربة على ذراعك أنت.</p>
+
+    <div class="img-solo">
+      <figure class="img-cell" style="margin:0;">
+        <img src="weightlifter-silhouette.svg" width="300" height="300" loading="lazy"
+             alt="رسم ظلّي جانبي لرافع أثقال، مرفقه مثنيّ: عضده يهبط من كتفه إلى مرفقه وساعده يصعد من المرفق إلى البار أمامه">
+        <figcaption class="img-cap">رافع الأثقال القطري فارس إبراهيم حسونة في أولمبياد ريو 2016.</figcaption>
+      </figure>
+    </div>
+
+    <p class="fact-line center" id="s1Guide">قبل أن تقرأ سطرًا آخر، جرّب بنفسك: ضع كفّك على مقدّمة عضدك، وارفع ساعدك ببطء ثم أنزله. ثم انقل كفّك إلى خلف عضدك وأعِد الحركة نفسها.</p>
+
+    <div class="explore-step">
+      <p class="explore-q">أين شعرتَ بالشدّ حين <b>رفعتَ</b> ساعدك؟</p>
+      <div class="quiz-options" id="s1WhereOptions">
+        <label class="quiz-option"><input type="radio" name="s1where" value="a">في مقدّمة العضد</label>
+        <label class="quiz-option"><input type="radio" name="s1where" value="b">في خلف العضد</label>
+        <label class="quiz-option"><input type="radio" name="s1where" value="c">في المقدّمة والخلف بالقدر نفسه</label>
+      </div>
+      <p class="explore-feedback" id="fb-s1where" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s1CountStep" hidden>
+      <p class="explore-q">كم عضلة تظنّ أنها عملت لترفع ساعدك ثم تُنزله؟</p>
+      <div class="quiz-options" id="s1CountOptions">
+        <label class="quiz-option"><input type="radio" name="s1count" value="a">عضلة واحدة تكفي للحركتين معًا</label>
+        <label class="quiz-option"><input type="radio" name="s1count" value="b">عضلتان، واحدة لكلّ اتجاه</label>
+        <label class="quiz-option"><input type="radio" name="s1count" value="c">ثلاث عضلات أو أكثر</label>
+      </div>
+      <p class="explore-feedback" id="fb-s1count" hidden></p>
+    </div>
+
+    <div class="station-handoff" id="s1done" hidden>
+      <a href="#station-2" class="station-next">هل يستطيع الخيط أن يدفع؟ ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 2 ═════════════════════ -->
+  <section class="station" id="station-2">
+    <div class="station-label">المحطة الثانية</div>
+    <h2>هل يستطيع الخيط أن يدفع؟</h2>
+    <p class="station-tagline">أمامك كتلة معجون لاصق مربوطة بطرف خيط. جرّب أن تحرّكها بالخيط.</p>
+
+    <p class="fact-line" id="s2LabCard">في المختبر الحقيقي يحتاج هذا النشاط قطعة معجون لاصق وخيطًا يُثبَّت في طرفها لا أكثر. هنا ستفعل الشيء نفسه على الشاشة.</p>
+
+    <!-- ═══ مرحلة أ — التنبّؤ قبل اللمس ═══
+         بطاقة الأداة قبل المسرح، وسؤال التنبّؤ قبل التجربة: يرى
+         الطالب الأداة وهو يتنبّأ. -->
+    <div class="explore-step">
+      <p class="explore-q">لو <b>دفعتَ</b> المقبض نحو المعجون بدل أن تسحبه، ما الذي تتوقّع حدوثه؟</p>
+      <div class="quiz-options" id="s2PredictOptions">
+        <label class="quiz-option"><input type="radio" name="s2predict" value="a">يزحف المعجون إلى الأمام كما يزحف عند السحب</label>
+        <label class="quiz-option"><input type="radio" name="s2predict" value="b">يبقى المعجون مكانه ولا يتحرّك</label>
+        <label class="quiz-option"><input type="radio" name="s2predict" value="c">يتحرّك المعجون قليلًا ثم يتوقّف</label>
+      </div>
+      <p class="explore-feedback" id="fb-s2predict" hidden></p>
+    </div>
+
+    <!-- ═══ مرحلة ب — التجربة ═══ -->
+    <div id="s2StageBox" hidden>
+      <div class="stage-wrap">
+        <svg class="stage str" id="cordStage" viewBox="0 0 340 200" tabindex="0"
+             xmlns="http://www.w3.org/2000/svg" role="img"
+             aria-label="كتلة معجون على سطح، يخرج منها خيط ينتهي بمقبض دائري">
+
+          <line class="ground" x1="28" y1="170" x2="312" y2="170"/>
+
+          <!-- المعجون: يتحرّك بالإزاحة عند السحب وحده -->
+          <g id="doughGroup">
+            <path class="dough-f" d="M 84,158 Q 76,132 104,126 Q 133,121 139,143 Q 143,163 116,167 Q 91,169 84,158 Z"/>
+          </g>
+
+          <!-- الخيط: ثلاث حالات مرسومة، والظاهر منها واحدة.
+               الحالة الملتوية مرسومة سلفًا لا محسوبة لحظيًّا: الالتواء
+               صفةٌ تُرى، وحسابه في كل إطار يجعل شكله يتبدّل من محاولة
+               إلى أخرى فيصعب على الطالب أن يقارن. -->
+          <g id="cordGroup">
+            <path class="cord state-rest" id="cordRest" d="M 138,142 L 248,92"/>
+            <path class="cord state-pull" id="cordTaut" d="M 168,142 L 272,81"/>
+            <path class="cord state-push" id="cordBuckled" d="M 138,142 Q 150,104 178,128 Q 202,150 226,102"/>
+          </g>
+
+          <g id="gripGroup">
+            <circle class="grip invite" id="cordGrip" cx="248" cy="92" r="13"/>
+          </g>
+        </svg>
+      </div>
+
+      <p class="try-hint" id="s2TryHint">اسحب المقبض بعيدًا عن المعجون، ثم ادفعه نحوه. جرّب الفعلين.</p>
+      <p class="step-count" id="s2TryCount">جرّبتَ 0 من 2</p>
+      <p class="stage-msg" id="s2StageMsg"></p>
+      <p class="stage-caption">وإن كنت تستعمل لوحة المفاتيح: انقر على الرسم ثم استعمل <b>السهم الأيمن</b> للسحب و<b>السهم الأيسر</b> للدفع.</p>
+    </div>
+
+    <!-- ═══ مرحلة ج — الأسئلة ═══ -->
+    <div class="explore-step" id="s2ResultBox" hidden>
+      <p class="explore-q">ما الذي منع المعجون من التحرّك حين دفعتَ المقبض؟</p>
+      <div class="quiz-options" data-q="u2l4-push-result">
+        <label class="quiz-option"><input type="radio" name="u2l4-push-result" value="w1">المعجون أثقل من أن يتحرّك بقوّة الدفع وحدها</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-push-result" value="correct">الخيط التوى على نفسه فلم تصل قوّة الدفع إلى المعجون</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-push-result" value="w2">السطح تحت المعجون شديد الخشونة فمنعه من الانزلاق</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-push-result" value="w3">الخيط قصير أكثر ممّا ينبغي فلم يبلغ المعجون أصلًا</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l4-push-result" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s2OneBox" hidden>
+      <p class="explore-q">عظمٌ في جسمك عليه عضلة واحدة فقط، والعضلة تعمل كما يعمل هذا الخيط. إلى أين يستطيع هذا العظم أن يذهب، وإلى أين لا يستطيع؟</p>
+      <div class="explore-answer-row">
+        <input type="text" class="explore-input" id="s2OneInput" placeholder="اكتب إجابتك" autocomplete="off">
+        <button type="button" class="btn" id="s2OneBtn">سلّم الإجابة</button>
+      </div>
+      <p class="explore-feedback" id="fb-u2l4-one-muscle" hidden></p>
+      <button type="button" class="link-btn" id="s2OneModelBtn" hidden>أرِني الإجابة النموذجية</button>
+      <p class="name-card" id="s2OneModel" hidden></p>
+    </div>
+
+    <p class="fact-line" id="s2FactLine" hidden>يقتصر عمل العضلات على <b>السحب</b>، ولا يمكنها الدفع.</p>
+
+    <!-- تمهيد للمحطة التالية: يذكّر بما رآه الطالب ويفتح السؤال،
+         ولا يسمّي «العضلات المتضادة» ولا «الزوج» — تسميتها ووظيفتها
+         محتوى المحطة 3 حيث تُقاس. -->
+    <p class="stage-caption" id="s2Teaser" hidden>إذن العضلة تعرف طريقًا واحدًا: أن تشدّ. لكنّ ساعدك يصعد <b>وينزل</b>. فكيف ينزل؟</p>
+
+    <div class="station-handoff" id="s2done" hidden>
+      <a href="#station-3" class="station-next">إلى ذراع بعضلة واحدة ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 3 ═════════════════════ -->
+  <section class="station" id="station-3">
+    <div class="station-label">المحطة الثالثة</div>
+    <h2>ذراع بعضلة واحدة</h2>
+    <p class="station-tagline">عضد وساعد يلتقيان عند المرفق، وعليهما عضلة واحدة. اسحبها وانظر ماذا يحدث.</p>
+
+    <p class="fact-line" id="s3CloseWhere">في بداية الدرس وضعتَ كفّك على عضدك وسألناك أين تشعر بالشدّ حين ترفع ساعدك. أمامك الآن المكان نفسه مرسومًا من الداخل.</p>
+
+    <!-- ═══ مرحلة أ — عضلة واحدة ═══ -->
+    <div class="stage-wrap narrow">
+      <svg class="stage arm" id="armStage" viewBox="0 0 340 300"
+           xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="رسم تخطيطي لذراع: عضد وساعد يلتقيان عند المرفق، وعليهما عضلة أمامية وأخرى خلفية">
+
+        <!-- ── العناصر الثابتة: لا تتبدّل بين الوضعين ── -->
+        <path class="bone-f" d="M 62,44 Q 108,36 138,48 L 134,70 Q 104,62 66,68 Z"/>
+        <circle class="joint-f" cx="108" cy="62" r="11"/>
+        <path class="bone-f" d="M 100,62 L 116,62 L 116,180 L 100,180 Z"/>
+        <circle class="joint-f" cx="108" cy="180" r="9"/>
+
+        <!-- ── وضع المدّ: الساعد إلى أسفل ── -->
+        <g class="pose" id="armExtended">
+          <path class="bone-f" d="M 102.9,185.5 L 190.9,267.5 L 201.1,256.5 L 113.1,174.5 Z"/>
+          <circle class="joint-f" cx="196" cy="262" r="10"/>
+          <!-- العضلة الأمامية ممدودة ورفيعة -->
+          <path class="mus-f" id="bicepsExt" d="M 117,72 Q 137,120 117,170 Q 110,120 117,72 Z"/>
+          <path class="sinew" d="M 117,170 Q 121,182 128,192"/>
+          <g class="tri">
+            <!-- العضلة الخلفية قصيرة ومنتفخة -->
+            <path class="mus-f" id="tricepsExt" d="M 99,72 Q 64,110 99,150 Q 110,110 99,72 Z"/>
+            <path class="sinew" d="M 99,150 Q 92,180 118,192"/>
+          </g>
+        </g>
+
+        <!-- ── وضع الثني: الساعد إلى أعلى ── -->
+        <g class="pose" id="armFlexed">
+          <path class="bone-f" d="M 111.7,186.5 L 217.7,126.5 L 210.3,113.5 L 104.3,173.5 Z"/>
+          <circle class="joint-f" cx="214" cy="120" r="10"/>
+          <!-- العضلة الأمامية قصيرة ومنتفخة -->
+          <path class="mus-f" id="bicepsFlex" d="M 117,72 Q 152,110 117,148 Q 106,110 117,72 Z"/>
+          <path class="sinew" d="M 117,148 Q 123,158 130,168"/>
+          <g class="tri">
+            <!-- العضلة الخلفية ممدودة ورفيعة -->
+            <path class="mus-f" id="tricepsFlex" d="M 99,72 Q 79,120 99,172 Q 106,120 99,72 Z"/>
+            <path class="sinew" d="M 99,172 Q 97,186 106,193"/>
+          </g>
+        </g>
+
+        <!-- ── المقبضان: خارج مجموعتَي الوضع فلا يتلاشيان معهما ── -->
+        <circle class="grip invite" id="bicepsGrip" cx="128" cy="110" r="11" tabindex="0"
+                role="button" aria-label="اسحب العضلة الأمامية"/>
+        <circle class="grip" id="tricepsGrip" cx="88" cy="110" r="11" tabindex="0"
+                role="button" aria-label="اسحب العضلة الخلفية"/>
+      </svg>
+    </div>
+
+    <p class="try-hint" id="s3TryHint">اسحب المقبض على العضلة الأمامية نحو الكتف.</p>
+    <p class="stage-msg" id="s3StageMsg"></p>
+    <p class="stage-caption">وإن كنت تستعمل لوحة المفاتيح: انقل التركيز إلى المقبض ثم اضغط <b>مسافة</b> أو <b>Enter</b> لسحبه.</p>
+
+    <!-- ═══ مرحلة ب — كيف نُعيده؟ ═══ -->
+    <div class="explore-step" id="s3DownBox" hidden>
+      <p class="explore-q">الساعد مرفوع الآن، ودفعُ العضلة لا يفعل شيئًا. فما الذي يلزم لإنزاله؟</p>
+      <div class="quiz-options" data-q="u2l4-bring-down">
+        <label class="quiz-option"><input type="radio" name="u2l4-bring-down" value="w1">أن تدفع العضلة نفسها بقوّة أكبر ممّا دفعتَ به أوّل مرّة</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-bring-down" value="w2">أن تنتظر حتى تتعب العضلة الأمامية فيسقط الساعد وحده</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-bring-down" value="correct">عضلة ثانية في الجهة المقابلة تسحب الساعد إلى أسفل</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-bring-down" value="w3">أن يطول العظم قليلًا فيميل الساعد إلى أسفل بثقله</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l4-bring-down" hidden></p>
+    </div>
+
+    <!-- ═══ مرحلة ج — التسمية والقياس ═══ -->
+    <p class="name-card" id="s3NameLine" hidden>العضلة أمام عضدك اسمها <b>العضلة ذات الرأسين</b>، والتي خلفه اسمها <b>العضلة ثلاثية الرؤوس</b>.</p>
+
+    <div class="explore-step" id="s3ContractBox" hidden>
+      <p class="explore-q">انظر إلى العضلة ذات الرأسين في الوضعين. ما الذي حدث لها لحظة رفعت الساعد؟</p>
+      <div class="quiz-options" data-q="u2l4-contract-means">
+        <label class="quiz-option"><input type="radio" name="u2l4-contract-means" value="w1">استطالت وصارت أرقّ ممّا كانت عليه قبل الحركة</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-contract-means" value="w2">بقي طولها وسمكها كما هما ولم يتغيّر فيها شيء</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-contract-means" value="w3">انفصل طرفها الأسفل عن العظم ثم عاد إليه بعد الحركة</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-contract-means" value="correct">قصُرت وصارت أكثر انتفاخًا ممّا كانت عليه</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l4-contract-means" hidden></p>
+    </div>
+
+    <p class="name-card" id="s3TermLine" hidden>حين تقصُر العضلة نقول إنها <b>تنقبض</b>، وحين تستطيل نقول إنها <b>تنبسط</b>.</p>
+
+    <div class="explore-step" id="s3StatesBox" hidden>
+      <p class="explore-q">أعِد الساعد إلى الأعلى بعينك، وصنّف حال كلّ عضلة في تلك اللحظة.</p>
+      <div data-chips="u2l4-states">
+        <div class="chips-pool" id="s3ChipsPool">
+          <div class="chip" data-value="منقبضة" data-xp-id="u2l4-state-biceps" data-xp-reason="حدّدتَ حال العضلة ذات الرأسين عند الرفع" tabindex="0">منقبضة — قصُرت</div>
+          <div class="chip" data-value="منبسطة" data-xp-id="u2l4-state-triceps" data-xp-reason="حدّدتَ حال العضلة ثلاثية الرؤوس عند الرفع" tabindex="0">منبسطة — استطالت</div>
+        </div>
+        <div class="cat-grid">
+          <div class="slot cat-slot" id="s3-slot-biceps" data-answer="منقبضة" tabindex="0">
+            <span class="slot-label">العضلة ذات الرأسين</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="s3-slot-triceps" data-answer="منبسطة" tabindex="0">
+            <span class="slot-label">العضلة ثلاثية الرؤوس</span><span class="slot-items"></span>
+          </div>
+        </div>
+        <p class="explore-feedback chips-feedback" hidden></p>
+      </div>
+    </div>
+
+    <div class="explore-step" id="s3PatternBox" hidden>
+      <p class="explore-q">والآن أنزِل الساعد بعينك. ما حال العضلتين في هذه اللحظة؟</p>
+      <div class="quiz-options" data-q="u2l4-extend-pattern">
+        <label class="quiz-option"><input type="radio" name="u2l4-extend-pattern" value="w1">تنقبض العضلتان معًا في اللحظة نفسها لتُنزلا الساعد</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-extend-pattern" value="correct">تنقبض ثلاثية الرؤوس وتنبسط ذات الرأسين — أي عكس ما كان</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-extend-pattern" value="w2">تبقى كلّ عضلة على حالها نفسها التي كانت عليها عند الرفع</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-extend-pattern" value="w3">تنبسط العضلتان معًا فينزل الساعد بثقله وحده بلا سحب</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l4-extend-pattern" hidden></p>
+    </div>
+
+    <p class="name-card" id="s3AntagLine" hidden>عضلتان تعملان على العظم نفسه، كلٌّ منهما تسحبه في اتجاه معاكس للأخرى: هاتان هما <b>العضلات المتضادة</b>.</p>
+
+    <p class="fact-line" id="s3RelaxFact" hidden>والعضلة المنبسطة ليست عضلة معطَّلة. هي تستطيل لأنّ شريكتها تسحب العظم فتشدّها معه — فلكلّ منهما دور في كل حركة.</p>
+
+    <div class="explore-step" id="s3CountBox" hidden>
+      <p class="explore-q">في بداية الدرس سألناك كم عضلة عملت لترفع ساعدك ثم تُنزله. ما الجواب الآن بعد ما رأيته؟</p>
+      <div class="quiz-options" data-q="u2l4-close-count">
+        <label class="quiz-option"><input type="radio" name="u2l4-close-count" value="correct">عضلتان: واحدة تسحبه إلى أعلى وأخرى تسحبه إلى أسفل</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-close-count" value="w1">عضلة واحدة تسحب في اتجاه ثم تدفع في الاتجاه المعاكس</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-close-count" value="w2">عضلة واحدة ترفع الساعد، وثقل الذراع وحده هو ما يُنزله</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-close-count" value="w3">ثلاث عضلات: اثنتان ترفعان الساعد وواحدة تُعيده إلى أسفل</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l4-close-count" hidden></p>
+    </div>
+
+    <div class="station-handoff" id="s3done" hidden>
+      <a href="#station-4" class="station-next">أين الأزواج الأخرى؟ ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 4 ═════════════════════ -->
+  <section class="station" id="station-4">
+    <div class="station-label">المحطة الرابعة</div>
+    <h2>أين الأزواج الأخرى؟</h2>
+    <p class="station-tagline">ما رأيته في الذراع ليس خاصًّا بها. ابحث عنه في بقيّة جسدك.</p>
+
+    <div class="explore-step">
+      <p class="explore-q">قبل أن تنقر شيئًا: أيّ هذه الأجزاء تظنّ أنه يحتاج أكثر من عضلة واحدة ليتحرّك؟</p>
+      <div class="quiz-options" id="s4PredictOptions">
+        <label class="quiz-option"><input type="radio" name="s4predict" value="a">الذراعان وحدهما، لأنهما أكثر أجزاء الجسم حركة</label>
+        <label class="quiz-option"><input type="radio" name="s4predict" value="b">الذراعان والفخذان، لأنهما الطرفان اللذان ينثنيان</label>
+        <label class="quiz-option"><input type="radio" name="s4predict" value="c">كلّ جزء يتحرّك في اتجاهين، أيًّا كان موضعه من الجسم</label>
+      </div>
+      <p class="explore-feedback" id="fb-s4predict" hidden></p>
+    </div>
+
+    <div id="s4StageBox" hidden>
+      <div class="body-pair">
+        <div class="body-cell">
+          <svg class="body" id="bodyFront" viewBox="0 0 160 300"
+               xmlns="http://www.w3.org/2000/svg" role="img"
+               aria-label="رسم ظلّي لجسم الإنسان من الأمام، عليه ثلاث مناطق قابلة للنقر: الذراعان والصدر والفخذان">
+            <path class="body-f" d="M 80,12 C 89,12 96,20 96,29 C 96,38 90,44 88,45 L 88,52 L 104,58 L 120,132 L 126,186 L 114,188 L 108,134 L 100,140 L 106,166 L 102,228 L 98,276 L 104,284 L 84,284 L 88,276 L 84,228 L 80,192 L 76,228 L 72,276 L 76,284 L 56,284 L 62,276 L 58,228 L 54,166 L 60,140 L 52,134 L 46,188 L 34,186 L 40,132 L 56,58 L 72,52 L 72,45 C 70,44 64,38 64,29 C 64,20 71,12 80,12 Z"/>
+
+            <g class="zone" id="zoneArms" data-zone="arms" tabindex="0" role="button" aria-label="الذراعان">
+              <ellipse class="patch" cx="112" cy="96" rx="9" ry="30"/>
+              <ellipse class="patch" cx="48" cy="96" rx="9" ry="30"/>
+              <g class="arrows">
+                <path d="M 112,78 L 112,114"/>
+                <polygon points="112,72 108,80 116,80"/>
+                <polygon points="112,120 108,112 116,112"/>
+                <path d="M 48,78 L 48,114"/>
+                <polygon points="48,72 44,80 52,80"/>
+                <polygon points="48,120 44,112 52,112"/>
+              </g>
+              <circle class="dot" cx="112" cy="96" r="3.5"/>
+              <!-- مساحتا نقر لا واحدة: مستطيل واحد يشمل الذراعين
+                   يبتلع الصدر الواقع بينهما، فيلتبس المقصود بالنقرة. -->
+              <rect class="hit" x="36" y="62" width="24" height="70"/>
+              <rect class="hit" x="100" y="62" width="26" height="70"/>
+            </g>
+
+            <g class="zone" id="zoneChest" data-zone="chest" tabindex="0" role="button" aria-label="الصدر">
+              <ellipse class="patch" cx="80" cy="80" rx="20" ry="18"/>
+              <g class="arrows">
+                <path d="M 64,80 L 96,80"/>
+                <polygon points="58,80 66,76 66,84"/>
+                <polygon points="102,80 94,76 94,84"/>
+              </g>
+              <circle class="dot" cx="80" cy="80" r="3.5"/>
+              <rect class="hit" x="60" y="62" width="40" height="36"/>
+            </g>
+
+            <g class="zone" id="zoneThighs" data-zone="thighs" tabindex="0" role="button" aria-label="الفخذان">
+              <ellipse class="patch" cx="93" cy="200" rx="9" ry="26"/>
+              <ellipse class="patch" cx="67" cy="200" rx="9" ry="26"/>
+              <g class="arrows">
+                <path d="M 93,184 L 93,216"/>
+                <polygon points="93,178 89,186 97,186"/>
+                <polygon points="93,222 89,214 97,214"/>
+                <path d="M 67,184 L 67,216"/>
+                <polygon points="67,178 63,186 71,186"/>
+                <polygon points="67,222 63,214 71,214"/>
+              </g>
+              <circle class="dot" cx="93" cy="200" r="3.5"/>
+              <rect class="hit" x="56" y="174" width="48" height="52"/>
+            </g>
+          </svg>
+          <p class="cell-cap">من الأمام</p>
+        </div>
+
+        <div class="body-cell">
+          <svg class="body" id="bodyBack" viewBox="0 0 160 300"
+               xmlns="http://www.w3.org/2000/svg" role="img"
+               aria-label="رسم ظلّي لجسم الإنسان من الخلف، عليه منطقتان قابلتان للنقر: الظهر والوركان">
+            <path class="body-f" d="M 80,12 C 89,12 96,20 96,29 C 96,38 90,44 88,45 L 88,52 L 104,58 L 120,132 L 126,186 L 114,188 L 108,134 L 100,140 L 106,166 L 102,228 L 98,276 L 104,284 L 84,284 L 88,276 L 84,228 L 80,192 L 76,228 L 72,276 L 76,284 L 56,284 L 62,276 L 58,228 L 54,166 L 60,140 L 52,134 L 46,188 L 34,186 L 40,132 L 56,58 L 72,52 L 72,45 C 70,44 64,38 64,29 C 64,20 71,12 80,12 Z"/>
+
+            <g class="zone" id="zoneBack" data-zone="back" tabindex="0" role="button" aria-label="الظهر">
+              <ellipse class="patch" cx="80" cy="92" rx="22" ry="30"/>
+              <g class="arrows">
+                <path d="M 80,74 L 80,110"/>
+                <polygon points="80,68 76,76 84,76"/>
+                <polygon points="80,116 76,108 84,108"/>
+              </g>
+              <circle class="dot" cx="80" cy="92" r="3.5"/>
+              <rect class="hit" x="56" y="60" width="48" height="64"/>
+            </g>
+
+            <g class="zone" id="zoneHips" data-zone="hips" tabindex="0" role="button" aria-label="الوركان">
+              <ellipse class="patch" cx="80" cy="168" rx="24" ry="16"/>
+              <g class="arrows">
+                <path d="M 80,156 L 80,180"/>
+                <polygon points="80,150 76,158 84,158"/>
+                <polygon points="80,186 76,178 84,178"/>
+              </g>
+              <circle class="dot" cx="80" cy="168" r="3.5"/>
+              <rect class="hit" x="54" y="150" width="52" height="36"/>
+            </g>
+          </svg>
+          <p class="cell-cap">من الخلف</p>
+        </div>
+      </div>
+
+      <p class="try-hint" id="s4TryHint">انقر كلّ منطقة مضيئة وانظر إلى اتجاهَي حركتها.</p>
+      <p class="step-count" id="s4ZoneCount">استكشفتَ 0 من 5</p>
+      <p class="stage-msg" id="s4ZoneMsg"></p>
+    </div>
+
+    <div class="explore-step" id="s4PairsBox" hidden>
+      <p class="explore-q">لكلّ منطقة من هذه المناطق زوج عضلات متضادة له اسمان. ضع كلّ زوج في موضعه.</p>
+      <div data-chips="u2l4-pairs">
+        <div class="chips-pool" id="s4ChipsPool">
+          <div class="chip" data-value="ذات الرأسين وثلاثية الرؤوس" data-xp-id="u2l4-pair-arm" data-xp-reason="حدّدتَ زوج الذراعين" tabindex="0">ذات الرأسين وثلاثية الرؤوس</div>
+          <div class="chip" data-value="المأبضية ورباعية الرؤوس" data-xp-id="u2l4-pair-thigh" data-xp-reason="حدّدتَ زوج الفخذين" tabindex="0">المأبضية ورباعية الرؤوس</div>
+          <div class="chip" data-value="الصدرية الكبرى وشبه المنحرفة" data-xp-id="u2l4-pair-chest" data-xp-reason="حدّدتَ زوج الصدر" tabindex="0">الصدرية الكبرى وشبه المنحرفة</div>
+          <div class="chip" data-value="الدالية والظهرية العريضة" data-xp-id="u2l4-pair-back" data-xp-reason="حدّدتَ زوج الظهر" tabindex="0">الدالية والظهرية العريضة</div>
+          <div class="chip" data-value="الألوية الكبرى والمثنية للورك" data-xp-id="u2l4-pair-hip" data-xp-reason="حدّدتَ زوج الوركين" tabindex="0">الألوية الكبرى والمثنية للورك</div>
+        </div>
+        <div class="pair-grid">
+          <div class="slot cat-slot" id="s4-slot-arm" data-answer="ذات الرأسين وثلاثية الرؤوس" tabindex="0">
+            <span class="slot-label">الذراعان</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="s4-slot-thigh" data-answer="المأبضية ورباعية الرؤوس" tabindex="0">
+            <span class="slot-label">الفخذان</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="s4-slot-chest" data-answer="الصدرية الكبرى وشبه المنحرفة" tabindex="0">
+            <span class="slot-label">الصدر</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="s4-slot-back" data-answer="الدالية والظهرية العريضة" tabindex="0">
+            <span class="slot-label">الظهر</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="s4-slot-hip" data-answer="الألوية الكبرى والمثنية للورك" tabindex="0">
+            <span class="slot-label">الوركان</span><span class="slot-items"></span>
+          </div>
+        </div>
+        <p class="explore-feedback chips-feedback" hidden></p>
+      </div>
+    </div>
+
+    <div class="explore-step" id="s4PatternBox" hidden>
+      <p class="explore-q">خمس مناطق مختلفة من جسمك، وفيها كلّها زوج لا عضلة واحدة. ما القاعدة التي تجمعها؟</p>
+      <div class="quiz-options" data-q="u2l4-two-way-pattern">
+        <label class="quiz-option"><input type="radio" name="u2l4-two-way-pattern" value="w1">كلّما كان الجزء بعيدًا عن مركز الجسم زاد عدد عضلاته العاملة عليه</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-two-way-pattern" value="w2">كلّما كان العظم أطول احتاج عضلتين بدل عضلة واحدة تسحبه</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-two-way-pattern" value="w3">كلّما كثر عدد المفاصل في الجزء زاد عدد عضلاته المتضادة فيه</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-two-way-pattern" value="correct">كلّما احتاج الجزء أن يتحرّك في اتجاهين احتاج زوجًا يسحب كلٌّ منه في اتجاه</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l4-two-way-pattern" hidden></p>
+    </div>
+
+    <div class="station-handoff" id="s4done" hidden>
+      <a href="#station-5" class="station-next">حين تتمزّق عضلة ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 5 ═════════════════════ -->
+  <section class="station" id="station-5">
+    <div class="station-label">المحطة الخامسة</div>
+    <h2>حين تتمزّق عضلة</h2>
+    <p class="station-tagline">رافع أثقال حمّل ذراعه وزنًا زائدًا، فتمزّقت عضلته ثلاثية الرؤوس.</p>
+
+    <div class="explore-step">
+      <p class="explore-q">قبل أن ترى شيئًا: أيّ حركة تتوقّع أن يفقدها؟</p>
+      <div class="quiz-options" id="s5PredictOptions">
+        <label class="quiz-option"><input type="radio" name="s5predict" value="a">يفقد قدرته على رفع ساعده إلى أعلى</label>
+        <label class="quiz-option"><input type="radio" name="s5predict" value="b">يفقد قدرته على مدّ ساعده إلى أسفل بقوّة</label>
+        <label class="quiz-option"><input type="radio" name="s5predict" value="c">يفقد الحركتين معًا فلا يتحرّك ساعده إطلاقًا</label>
+      </div>
+      <p class="explore-feedback" id="fb-s5predict" hidden></p>
+    </div>
+
+    <div id="s5StageBox" hidden>
+      <div class="stage-wrap narrow">
+        <svg class="stage arm" id="tornStage" viewBox="0 0 340 300"
+             xmlns="http://www.w3.org/2000/svg" role="img"
+             aria-label="الذراع نفسها، وعضلتها الخلفية باهتة وفيها فجوة تمزّق">
+
+          <path class="bone-f" d="M 62,44 Q 108,36 138,48 L 134,70 Q 104,62 66,68 Z"/>
+          <circle class="joint-f" cx="108" cy="62" r="11"/>
+          <path class="bone-f" d="M 100,62 L 116,62 L 116,180 L 100,180 Z"/>
+          <circle class="joint-f" cx="108" cy="180" r="9"/>
+
+          <g class="pose" id="tornExtended">
+            <path class="bone-f" d="M 102.9,185.5 L 190.9,267.5 L 201.1,256.5 L 113.1,174.5 Z"/>
+            <circle class="joint-f" cx="196" cy="262" r="10"/>
+            <path class="mus-f" id="tornBicepsExt" d="M 117,72 Q 137,120 117,170 Q 110,120 117,72 Z"/>
+            <path class="sinew" d="M 117,170 Q 121,182 128,192"/>
+            <g class="torn">
+              <path class="mus-f" id="tornTricepsExt" d="M 99,72 Q 64,110 99,150 Q 110,110 99,72 Z"/>
+              <path class="sinew" d="M 99,150 Q 92,180 118,192"/>
+            </g>
+            <path class="tear-gap" d="M 84,109 L 103,112"/>
+          </g>
+
+          <g class="pose" id="tornFlexed">
+            <path class="bone-f" d="M 111.7,186.5 L 217.7,126.5 L 210.3,113.5 L 104.3,173.5 Z"/>
+            <circle class="joint-f" cx="214" cy="120" r="10"/>
+            <path class="mus-f" id="tornBicepsFlex" d="M 117,72 Q 152,110 117,148 Q 106,110 117,72 Z"/>
+            <path class="sinew" d="M 117,148 Q 123,158 130,168"/>
+            <g class="torn">
+              <path class="mus-f" id="tornTricepsFlex" d="M 99,72 Q 79,120 99,172 Q 106,120 99,72 Z"/>
+              <path class="sinew" d="M 99,172 Q 97,186 106,193"/>
+            </g>
+            <path class="tear-gap" d="M 90,119 L 101,121"/>
+          </g>
+
+          <circle class="grip invite" id="tornBicepsGrip" cx="128" cy="110" r="11" tabindex="0"
+                  role="button" aria-label="اسحب العضلة الأمامية"/>
+          <circle class="grip" id="tornTricepsGrip" cx="88" cy="110" r="11" tabindex="0"
+                  role="button" aria-label="اسحب العضلة الخلفية"/>
+        </svg>
+      </div>
+      <p class="try-hint" id="s5TryHint">اسحب كلّ مقبض بدوره، وانظر أيّهما ما زال يعمل.</p>
+      <p class="stage-msg" id="s5StageMsg"></p>
+    </div>
+
+    <div class="explore-step" id="s5SymptomBox" hidden>
+      <p class="explore-q">هذا الرافع يشكو ضعفًا في اتجاه واحد لا في الاتجاهين. لماذا؟</p>
+      <div class="quiz-options" data-q="u2l4-tear-symptom">
+        <label class="quiz-option"><input type="radio" name="u2l4-tear-symptom" value="w1">لأنّ العضلة الممزّقة كانت تحرّك المرفق والكتف معًا في وقت واحد</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-tear-symptom" value="w2">لأنّ التمزّق أصاب العظم نفسه لا العضلة التي تشدّه إلى أسفل</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-tear-symptom" value="correct">لأنّ كلّ عضلة من الزوج تسحب في اتجاه واحد، فتلفُ إحداها يفقده اتجاهها وحده</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-tear-symptom" value="w3">لأنّ العضلة السليمة تصير أقوى فتغلب الممزّقة وتسحب الساعد إلى أعلى</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l4-tear-symptom" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s5ExplainBox" hidden>
+      <p class="explore-q">العضلة ذات الرأسين عنده سليمة تمامًا. اشرح لماذا لا تستطيع أن تعوّض عن شريكتها الممزّقة.</p>
+      <div class="explore-answer-row">
+        <input type="text" class="explore-input" id="s5ExplainInput" placeholder="اكتب إجابتك" autocomplete="off">
+        <button type="button" class="btn" id="s5ExplainBtn">سلّم الإجابة</button>
+      </div>
+      <p class="explore-feedback" id="fb-u2l4-tear-explain" hidden></p>
+      <button type="button" class="link-btn" id="s5ExplainModelBtn" hidden>أرِني الإجابة النموذجية</button>
+      <p class="name-card" id="s5ExplainModel" hidden></p>
+    </div>
+
+    <div id="s5BonusRow" hidden style="text-align:center;margin-top:22px;">
+      <button type="button" class="link-btn" id="s5BonusLink">تحدٍّ اختياري: نموذج من كرتون وشريط مطّاطي</button>
+    </div>
+
+    <div class="bonus-box" id="s5BonusBox" hidden>
+      <span class="bonus-tag">تحدٍّ اختياري</span>
+      <p class="fact-line">يمكنك صنع نموذج للذراع من قطعتَي كرتون يصلهما مشبك فراشة عند المرفق، وشريطين مطّاطيين يمثّلان العضلتين: أحدهما أمام المشبك والآخر خلفه.</p>
+      <p class="explore-q" style="margin-top:14px;">هذا النموذج يشبه ذراعك في أشياء ويخدعك في أشياء. أيّ العبارات الآتية هي وجه <b>الاختلاف</b> الحقيقي بينه وبين ذراعك؟</p>
+      <div class="quiz-options" data-q="u2l4-model-critique-bonus">
+        <label class="quiz-option"><input type="radio" name="u2l4-model-critique-bonus" value="correct">الشريط المطّاطي يعود إلى طوله وحده بمرونته، أمّا العضلة فلا يُعيدها إلا شريكتها</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-model-critique-bonus" value="w1">الشريط المطّاطي يُربَط بالكرتون من طرفيه، أمّا العضلة فلا ترتبط بعظمها بشيء</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-model-critique-bonus" value="w2">الشريط المطّاطي يسحب الكرتون حين يُشدّ، أمّا العضلة فلا تسحب عظمها إطلاقًا</label>
+        <label class="quiz-option"><input type="radio" name="u2l4-model-critique-bonus" value="w3">مشبك الفراشة يدور حول محور، أمّا المرفق فلا يدور حول محور إطلاقًا</label>
+      </div>
+      <p class="explore-feedback" id="fb-u2l4-model-critique-bonus" hidden></p>
+    </div>
+
+    <div class="station-handoff" id="s5done" hidden>
+      <a href="#station-6" class="station-next">التقييم الختامي ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 6 ═════════════════════ -->
+  <section class="station" id="station-6">
+    <div class="station-label">المحطة السادسة</div>
+    <h2>التقييم الختامي</h2>
+    <p class="station-tagline">عشرة أسئلة، ومحاولة واحدة لكلّ سؤال. وفي نهايتها شهادتك باسمك.</p>
+
+    <div class="name-gate">
+      <label for="evalName">اكتب اسمك كما تريده أن يظهر على الشهادة</label>
+      <input type="text" class="explore-input" id="evalName" placeholder="الاسم الكامل" autocomplete="off">
+      <button type="button" class="btn" id="evalStart">ابدأ التقييم</button>
+      <p class="explore-feedback" id="evalNameFb" hidden></p>
+      <p class="gate-note">هذا هو التقييم الختامي لهذا الدرس. لكلّ سؤال محاولة واحدة، وبعد آخر سؤال تظهر نتيجتك وشهادتك. خذ وقتك.</p>
+    </div>
+
+    <div id="evalQuestions" hidden>
+
+      <div class="eval-q first">
+        <p class="explore-q"><span class="q-num">1</span> اذكر زوج عضلات متضادة في الذراع.</p>
+        <div class="quiz-options" data-q="u2l4-e1">
+          <label class="quiz-option"><input type="radio" name="u2l4-e1" value="w1">العضلة الصدرية الكبرى والعضلة الظهرية العريضة</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e1" value="correct">العضلة ذات الرأسين والعضلة ثلاثية الرؤوس</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e1" value="w2">العضلة المأبضية والعضلة رباعية الرؤوس</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e1" value="w3">العضلة الألوية الكبرى والعضلة المثنية للورك</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l4-e1" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">2</span> اذكر زوج عضلات متضادة في الصدر.</p>
+        <div class="quiz-options" data-q="u2l4-e2">
+          <label class="quiz-option"><input type="radio" name="u2l4-e2" value="correct">العضلة الصدرية الكبرى والعضلة شبه المنحرفة</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e2" value="w1">العضلة ذات الرأسين والعضلة ثلاثية الرؤوس</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e2" value="w2">العضلة المأبضية والعضلة رباعية الرؤوس</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e2" value="w3">العضلة الألوية الكبرى والعضلة المثنية للورك</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l4-e2" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">3</span> اذكر زوج عضلات متضادة في الفخذ.</p>
+        <div class="quiz-options" data-q="u2l4-e3">
+          <label class="quiz-option"><input type="radio" name="u2l4-e3" value="w1">العضلة الصدرية الكبرى والعضلة الظهرية العريضة</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e3" value="w2">العضلة ذات الرأسين والعضلة ثلاثية الرؤوس</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e3" value="correct">العضلة المأبضية والعضلة رباعية الرؤوس</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e3" value="w3">العضلة الألوية الكبرى والعضلة المثنية للورك</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l4-e3" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">4</span> لماذا تنتظم العضلات المتضادة في أزواج؟</p>
+        <div class="quiz-options" data-q="u2l4-e4">
+          <label class="quiz-option"><input type="radio" name="u2l4-e4" value="w1">لأنّ عضلة واحدة لا تحتمل ثقل الطرف كلّه فتتقاسمان الحمل بينهما</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e4" value="w2">لأنّ إحداهما تعمل نهارًا والأخرى تعمل حين يستريح الجسم ليلًا</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e4" value="w3">لأنّ العضلة الواحدة تتعب سريعًا فتحلّ الثانية محلّها عند تعبها</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e4" value="correct">لأنّ العضلة تسحب ولا تدفع، فيلزم واحدة لكلّ اتجاه من اتجاهَي الحركة</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l4-e4" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">5</span> عند ثني المرفق ورفع الساعد إلى أعلى، ما حال العضلة ثلاثية الرؤوس؟</p>
+        <div class="quiz-options" data-q="u2l4-e5">
+          <label class="quiz-option"><input type="radio" name="u2l4-e5" value="w1">تنقبض هي أيضًا في اللحظة نفسها التي تنقبض فيها ذات الرأسين</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e5" value="w2">تنفصل عن العظم مؤقّتًا ثم تعود إليه بعد انتهاء الحركة كلّها</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e5" value="correct">تنبسط فتستطيل لأنّ شريكتها تسحب العظم فتشدّها معه</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e5" value="w3">تبقى على طولها نفسه تمامًا فلا يتغيّر فيها شيء عند الحركة</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l4-e5" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">6</span> ماذا يحدث للعضلة حين تنبسط؟</p>
+        <div class="quiz-options" data-q="u2l4-e6">
+          <label class="quiz-option"><input type="radio" name="u2l4-e6" value="correct">تستطيل فيزيد طولها عمّا كان</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e6" value="w1">تقصُر فيقلّ طولها عمّا كان</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e6" value="w2">تنتفخ ويزيد سمكها كثيرًا</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e6" value="w3">تتصلّب فتصير كالعظم تمامًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l4-e6" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">7</span> لاعب كرة قدم يثني ركبته ثم يمدّها ليركل الكرة. أيّ وصف يطابق ما تعلّمته؟</p>
+        <div class="quiz-options" data-q="u2l4-e7">
+          <label class="quiz-option"><input type="radio" name="u2l4-e7" value="w1">عضلة واحدة في فخذه تسحب الساق ثم تدفعها في الاتجاه المعاكس</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e7" value="w2">عضلات فخذه تنقبض كلّها معًا في اللحظة نفسها ليقوى الركل</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e7" value="w3">لا تعمل في فخذه عضلة، والحركة كلّها من مفصل الركبة وحده</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e7" value="correct">زوج في فخذه: تنقبض واحدة لتثني، ثم تنقبض الأخرى لتمدّ</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l4-e7" hidden></p>
+      </div>
+
+      <!-- منفذ الصورة: إن توفّرت صورة فوتوغرافية لذراع مثنيّة تُدرَج
+           <figure> هنا وحدها، ويُبدَّل صدرُ السؤال إليها. نصّ السؤال
+           وخياراته ومصحّحه ومعرّفه لا تُمسّ. -->
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">8</span> تحسّستَ عضد صديقك وهو يرفع ساعده، فوجدتَ مقدّمة عضده صلبة منتفخة وخلفه رخوًا. ما تفسير ذلك؟</p>
+        <div class="quiz-options" data-q="u2l4-e8">
+          <label class="quiz-option"><input type="radio" name="u2l4-e8" value="w1">العضلة الأمامية أكبر حجمًا من الخلفية في كلّ الأوضاع دائمًا</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e8" value="correct">الأمامية انقبضت فقصُرت وانتفخت، والخلفية انبسطت فاستطالت</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e8" value="w2">الأمامية امتلأت بالسائل الزلالي القادم إليها من مفصل المرفق</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-e8" value="w3">الأمامية دفعت العظم إلى أعلى، والخلفية سحبته إلى أسفل معها</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l4-e8" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">9</span> ما اللفظ الذي نصف به العضلة حين تقصُر؟</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="e9Input" placeholder="اكتب إجابتك" autocomplete="off">
+          <button type="button" class="btn" id="e9Btn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-e9" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">10</span> اكتب في جملة واحدة: لماذا لا تكفي عضلة واحدة لتحريك عظم في اتجاهين؟</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="e10Input" placeholder="اكتب إجابتك" autocomplete="off">
+          <button type="button" class="btn" id="e10Btn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-e10" hidden></p>
+      </div>
+    </div>
+
+    <div class="eval-summary" id="evalSummary" hidden></div>
+    <!-- إلزامي: بدونه تحقن وحدة الشهادة زرّها عائمًا فيصطدم بزرّ فهيم -->
+    <div id="certTriggerSlot"></div>
+  </section>
+
+</main>
+
+<!-- وسوم shared/ الستّة تسبق سكربت الدرس -->
+<script src="../../shared/sounds/sounds.js"></script>
+<script src="../../shared/xp-system/xp.js"></script>
+<script src="../../shared/faheem-widget/faheem.js"></script>
+<script src="../../shared/template-boilerplate/template.js"></script>
+<script src="../../shared/certificate-system/certificate.js"></script>
+<script src="../../shared/identity/footer.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   الوحدة 2 — الدرس 4 — سكربت الدرس (نصوص المحطات كلّها في T أدناه)
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+var G = {
+  reduced: function(){
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+};
+function el(id){ return document.getElementById(id); }
+function show(id){ var n = el(id); if(n) n.hidden = false; }
+function txt(id, s){ var n = el(id); if(n) n.textContent = s; }
+function fbNeutral(id, s){
+  var n = el(id);
+  if(!n) return;
+  n.textContent = s;
+  n.className = 'explore-feedback is-hint';
+  n.hidden = false;
+}
+function claim(id, kind, reason){
+  if(window.XP && window.XP.POINTS) window.XP.claim(id, window.XP.POINTS[kind], reason);
+}
+function snap(){ if(window.Sounds) window.Sounds.playSnap(); }
+function wrong(){ if(window.Sounds) window.Sounds.playWrong(); }
+
+/* ============ 1) النصوص ============ */
+var T = {
+  s1: {
+    whereFb: 'سجّلنا ملاحظتك. سنعود إليها حين نفتح الذراع من الداخل.',
+    countFb: 'توقّعك مسجَّل — وستعدّها بنفسك بعد قليل.'
+  },
+  s2: {
+    predictFb: 'توقّعك مسجَّل. جرّب الآن بيدك وقِس بنفسك.',
+    hint:  'اسحب المقبض بعيدًا عن المعجون، ثم ادفعه نحوه. جرّب الفعلين.',
+    pull:  'سحبتَ — فشدّ الخيط وزحف المعجون خلفه.',
+    push:  'دفعتَ — فالتوى الخيط على نفسه، والمعجون لم يتزحزح.',
+    count: function(n){ return 'جرّبتَ ' + n + ' من 2'; },
+    done:  'جرّبتَ الفعلين. الفرق بينهما واضح الآن.',
+    oneHint1: 'العضلة تشدّ فقط. فإلى أي جهة يذهب العظم حين تشدّه؟',
+    oneHint2: 'فكّر في العودة: ما الذي يُرجع العظم إلى موضعه الأوّل؟',
+    oneModel: 'يذهب في اتجاه واحد فقط — الاتجاه الذي تسحبه إليه العضلة — ولا يستطيع العودة، لأنّ العضلة لا تدفعه.',
+    pushResult: {
+      correct: '✓ صحيح! الخيط لا ينقل الدفع، ينقل الشدّ وحده.',
+      w1: 'المعجون نفسه لم يتغيّر بين المحاولتين — فما الذي تغيّر إذن؟',
+      w2: 'السطح واحد في المحاولتين، ومع ذلك تحرّك المعجون في إحداهما.',
+      w3: 'الخيط بلغ المعجون فعلًا: انظر، طرفه ملتصق به في الحالتين.'
+    }
+  },
+  s3: {
+    hintPull:  'اسحب المقبض على العضلة الأمامية نحو الكتف.',
+    hintTri:   'ظهرت عضلة ثانية خلف العضد. اسحب مقبضها.',
+    flexed:    'قصُرت العضلة الأمامية فارتفع الساعد.',
+    noPush:    'دفعُ العضلة لا يحرّك شيئًا. العضلة تشدّ ولا تدفع.',
+    stuck:     'الساعد مرفوع، ولا سبيل لإنزاله بهذه العضلة وحدها.',
+    extended:  'قصُرت العضلة الخلفية فنزل الساعد — وفي أثناء ذلك استطالت الأمامية.',
+    taskDone:  'حرّكتَ الساعد في الاتجاهين، كلّ اتجاه بعضلته.',
+    bringDown: {
+      correct: '✓ صحيح! عضلة ثانية تسحب في الاتجاه المعاكس. انظر — لقد ظهرت خلف العضد.',
+      w1: 'جرّبتَ الدفع قبل قليل ولم يحدث شيء. هل تغيّر ذلك بزيادة القوّة؟',
+      w2: 'لو كان الأمر كذلك لسقط ساعدك كلّما توقّفتَ عن التفكير فيه.',
+      w3: 'العظم لا يطول ولا يقصر. الذي يتغيّر طوله شيء آخر في الرسم.'
+    },
+    contract: {
+      correct: '✓ صحيح! قصُرت وانتفخت. وهذا ما نسمّيه انقباض العضلة.',
+      w1: 'قارن طولها في الوضعين: أيّهما تشغل فيه مسافة أطول على العضد؟',
+      w2: 'انظر إليها في الوضعين ثم قارن: هل شكلها واحد فيهما؟',
+      w3: 'طرفاها مربوطان بالعظم في الوضعين — تتبّع الخيط الأبيض في كلٍّ منهما.'
+    },
+    chipHints: {
+      'منقبضة|s3-slot-triceps': 'الخلفية استطالت عند الرفع لا قصُرت. انظر إلى طولها في الوضعين.',
+      'منبسطة|s3-slot-biceps': 'الأمامية هي التي قصُرت فانتفخت — وذلك ليس انبساطًا.',
+      'منقبضة': 'ابحث عن العضلة التي قصُرت وانتفخت عند رفع الساعد.',
+      'منبسطة': 'ابحث عن العضلة التي استطالت ورقّت عند رفع الساعد.'
+    },
+    chipsDone: 'أحسنت — صنّفتَ حال العضلتين عند الرفع.',
+    pattern: {
+      correct: '✓ صحيح! الأدوار تنقلب: من كانت تنقبض تنبسط، ومن كانت تنبسط تنقبض.',
+      w1: 'لو انقبضتا معًا لشدّت كلٌّ منهما في اتجاه — فماذا يبقى للساعد؟',
+      w2: 'لو بقيت كلّ عضلة على حالها لبقي الساعد في موضعه ولم ينزل.',
+      w3: 'لو نزل بثقله وحده لَما احتجتَ عضلة خلفية أصلًا — وقد رأيتَها تعمل.'
+    },
+    closeCount: {
+      correct: '✓ صحيح! عضلتان، لكلّ اتجاه واحدة.',
+      w1: 'جرّبتَ الدفع مرّتين في هذا الدرس ولم يتحرّك شيء في المرّتين.',
+      w2: 'لو كان الثقل هو ما يُنزله لَما استطعتَ إنزاله وأنت مستلقٍ على ظهرك.',
+      w3: 'عُدّ المقبضين على الرسم: كم عضلة عملت على هذا العظم؟'
+    }
+  },
+  s4: {
+    predictFb: 'توقّعك مسجَّل. استكشف الجسد الآن وقارن.',
+    hint: 'انقر كلّ منطقة مضيئة وانظر إلى اتجاهَي حركتها.',
+    count: function(n){ return 'استكشفتَ ' + n + ' من 5'; },
+    zones: {
+      arms:   'الذراعان: ساعدك يصعد وينزل — اتجاهان.',
+      chest:  'الصدر: ذراعك تتقدّم إلى الأمام وترجع إلى الخلف — اتجاهان.',
+      thighs: 'الفخذان: ركبتك تنثني وتمتدّ — اتجاهان.',
+      back:   'الظهر: ذراعك ترتفع عن جذعك وتعود إليه — اتجاهان.',
+      hips:   'الوركان: فخذك يتقدّم إلى الأمام ويرجع إلى الخلف — اتجاهان.'
+    },
+    done: 'خمس مناطق، وفي كلٍّ منها اتجاهان.',
+    chipHints: {
+      'ذات الرأسين وثلاثية الرؤوس': 'هذا الزوج رأيته بعينك في المحطة السابقة على العضد.',
+      'المأبضية ورباعية الرؤوس': 'الزوج الذي يثني الركبة ويمدّها — أين موضعه من الساق؟',
+      'الصدرية الكبرى وشبه المنحرفة': 'اسم أحدهما يحمل موضعه: أين تقع العضلة «الصدرية»؟',
+      'الدالية والظهرية العريضة': 'اسم أحدهما يحمل موضعه: أين تقع العضلة «الظهرية»؟',
+      'الألوية الكبرى والمثنية للورك': 'اسم أحدهما يحمل موضعه: «المثنية للورك» تعمل على أي مفصل؟'
+    },
+    chipsDone: 'أحسنت — وضعتَ الأزواج الخمسة في مواضعها.',
+    pattern: {
+      correct: '✓ صحيح! ليست المسافة ولا الطول ولا عدد المفاصل — بل عدد الاتجاهات.',
+      w1: 'الصدر والظهر قريبان من مركز جسمك، وفيهما زوج كما في الذراع البعيدة.',
+      w2: 'عظم العضد أطول من عظام الوركين، ولكلٍّ منهما زوج واحد.',
+      w3: 'في يدك عشرات المفاصل، وليس فيها عشرات الأزواج المتضادة.'
+    }
+  },
+  s5: {
+    predictFb: 'توقّعك مسجَّل. جرّب الذراع الآن بنفسك.',
+    hint: 'اسحب كلّ مقبض بدوره، وانظر أيّهما ما زال يعمل.',
+    front: 'العضلة الأمامية سليمة: قصُرت فارتفع الساعد.',
+    back:  'العضلة الخلفية ممزّقة: تشدّها فلا يصل شدّها إلى العظم.',
+    done:  'جرّبتَ الاثنتين. اتجاه واحد يعمل، والآخر لا.',
+    symptom: {
+      correct: '✓ صحيح! كلّ عضلة مسؤولة عن اتجاهها وحدها.',
+      w1: 'لو كانت تحرّك مفصلين لظهر الضعف في المفصلين معًا — والشكوى في اتجاه واحد.',
+      w2: 'العظم سليم في الرسم أمامك. انظر إلى ما تغيّر لونه وشكله.',
+      w3: 'سلامة عضلة لا تزيد قوّتها. وهي أصلًا تسحب في الاتجاه المعاكس لا في اتجاه الممزّقة.'
+    },
+    explainHint1: 'ذات الرأسين تسحب الساعد إلى أعلى. فهل تستطيع أن تسحبه إلى أسفل؟',
+    explainHint2: 'تذكّر القاعدة: العضلة تشدّ في اتجاه واحد ولا تدفع في الاتجاه المعاكس.',
+    explainModel: 'لأنّ ذات الرأسين تسحب في اتجاه واحد هو الأعلى فقط، ولا تستطيع الدفع ولا السحب إلى أسفل — والاتجاه الآخر كان عمل الممزّقة وحدها.',
+    bonus: {
+      correct: '✓ صحيح! ومن هنا يخدع النموذج: يوهم بأنّ العضلة تعود وحدها.',
+      w1: 'العضلة ترتبط بالعظم بالوتر — رأيته في الدرس السابق وفي الرسم أمامك.',
+      w2: 'العضلة تسحب العظم فعلًا. هذا وجه شبه بين النموذج والذراع لا وجه اختلاف.',
+      w3: 'المرفق يدور حول محور فعلًا — وهذا أوضح أوجه الشبه بينهما.'
+    }
+  },
+  eval: {
+    e1: 'زوج الذراع هو العضلة ذات الرأسين والعضلة ثلاثية الرؤوس.',
+    e2: 'زوج الصدر هو العضلة الصدرية الكبرى والعضلة شبه المنحرفة.',
+    e3: 'زوج الفخذ هو العضلة المأبضية والعضلة رباعية الرؤوس.',
+    e4: 'العضلة تسحب ولا تدفع، فلا بدّ من واحدة لكلّ اتجاه.',
+    e5: 'عند انقباض ذات الرأسين تنبسط ثلاثية الرؤوس فتستطيل.',
+    e6: 'الانبساط استطالة، والانقباض قِصَر.',
+    e7: 'زوج متضادّ في الفخذ: واحدة تثني الركبة وأخرى تمدّها.',
+    e8: 'العضلة المنقبضة تقصُر وتنتفخ فتُحسّ صلبة، والمنبسطة تستطيل فتُحسّ رخوة.',
+    e9why: 'حين تقصُر العضلة نقول إنها تنقبض.',
+    e10why: 'لأنّ العضلة تسحب ولا تدفع، فتلزم عضلة ثانية للاتجاه المعاكس.'
+  }
+};
+
+/* ============ 2) المحطة 1 ============ */
+function station1(){
+  var whereDone = false, countDone = false;
+  document.querySelectorAll('#s1WhereOptions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(whereDone) return;
+      whereDone = true;
+      fbNeutral('fb-s1where', T.s1.whereFb);
+      show('s1CountStep');
+      snap();
+      claim('u2l4-predict-where', 'PREDICT', 'تنبّأتَ قبل الاستكشاف');
+    });
+  });
+  document.querySelectorAll('#s1CountOptions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(countDone) return;
+      countDone = true;
+      fbNeutral('fb-s1count', T.s1.countFb);
+      show('s1done');
+      snap();
+      claim('u2l4-predict-count', 'PREDICT', 'تنبّأتَ بعدد العضلات العاملة');
+    });
+  });
+}
+
+/* ============ 3) المحطة 2 — الخيط والمعجون ============
+   محور الخيط من المعجون إلى المقبض: (110, -50) طوله 120.7.
+   الإسقاط على هذا المحور هو ما يميّز السحب من الدفع، لا الإزاحة
+   الأفقية وحدها — فالمقبض أعلى من المعجون لا بجواره. */
+function station2(){
+  var stage = el('cordStage');
+  var grip  = el('cordGrip');
+  if(!stage || !grip) return;
+
+  var AX = 0.9114, AY = -0.4145;     // متّجه الوحدة على محور الخيط
+  var TH = 10;                        // عتبة الإسقاط بوحدات viewBox
+  var tried = { pull:false, push:false };
+  var revert = null;
+
+  function counted(){ return (tried.pull ? 1 : 0) + (tried.push ? 1 : 0); }
+
+  function setState(kind){
+    stage.classList.remove('pulling', 'pushing');
+    if(kind === 'pull'){ stage.classList.add('pulling'); }
+    if(kind === 'push'){ stage.classList.add('pushing'); }
+    if(!kind) return;
+
+    if(!tried[kind]){
+      tried[kind] = true;
+      txt('s2TryCount', T.s2.count(counted()));
+      snap();
+    }
+    txt('s2StageMsg', kind === 'pull' ? T.s2.pull : T.s2.push);
+    if(kind === 'push'){
+      stage.classList.add('shake');
+      setTimeout(function(){ stage.classList.remove('shake'); }, 420);
+    }
+    if(tried.pull && tried.push) finish();
+  }
+
+  var finished = false;
+  function finish(){
+    if(finished) return;
+    finished = true;
+    claim('u2l4-string', 'TASK', 'جرّبتَ السحب والدفع وقارنتَ بينهما');
+    grip.classList.remove('invite');
+    var msg = el('s2StageMsg');
+    if(msg) msg.classList.add('done');
+    txt('s2StageMsg', T.s2.done);
+    show('s2ResultBox');
+  }
+
+  function pulse(kind){
+    setState(kind);
+    if(revert) clearTimeout(revert);
+    revert = setTimeout(function(){ setState(null); }, 1100);
+  }
+
+  /* ــــ مسار المؤشّر ــــ */
+  var dragging = false, x0 = 0, y0 = 0;
+  grip.addEventListener('pointerdown', function(e){
+    dragging = true; x0 = e.clientX; y0 = e.clientY;
+    if(grip.setPointerCapture && e.pointerId != null){
+      try{ grip.setPointerCapture(e.pointerId); }catch(err){ /* غير مدعوم */ }
+    }
+    e.preventDefault();
+  });
+  stage.addEventListener('pointermove', function(e){
+    if(!dragging) return;
+    var proj = (e.clientX - x0) * AX + (e.clientY - y0) * AY;
+    if(proj > TH) setState('pull');
+    else if(proj < -TH) setState('push');
+    else setState(null);
+  });
+  function release(){
+    if(!dragging) return;
+    dragging = false;
+    setState(null);
+  }
+  stage.addEventListener('pointerup', release);
+  stage.addEventListener('pointercancel', release);
+  stage.addEventListener('lostpointercapture', release);
+
+  /* ــــ المسار الكوني: لوحة المفاتيح ــــ
+     ليس بديلًا احتياطيًّا للجوال بل طريقًا متاحًا لكل طالب. */
+  stage.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowRight'){ pulse('pull'); e.preventDefault(); }
+    else if(e.key === 'ArrowLeft'){ pulse('push'); e.preventDefault(); }
+  });
+
+  window.Quiz.practice({
+    'u2l4-push-result': { xpId: 'u2l4-push-result', xp: 'MCQ', reason: 'فسّرتَ لماذا لا ينقل الخيط الدفع',
+                          correctText: T.s2.pushResult.correct, hints: T.s2.pushResult }
+  }, { onAllSolved: function(){ show('s2OneBox'); } });
+
+  window.Quiz.short({
+    input: 's2OneInput', button: 's2OneBtn', feedback: 'fb-u2l4-one-muscle',
+    modelBtn: 's2OneModelBtn', model: 's2OneModel',
+    accept: { paths: [
+      { all: [ ['اتجاه','جهه','ناحيه','جانب'], ['واحد','واحده','فقط'] ] },
+      { all: [ [/(^|\s)[وف]?(لا|ما|لن|لم)\s+\S{0,5}(عود|رجع)/] ] },
+      { all: [ [/(^|\s)[وف]?(لا|ما|لن|لم)\s+\S{0,5}دفع/], ['يسحب','تسحب','يشد','تشد','سحب','شد'] ] }
+    ] },
+    normalize: 'ar',
+    hints: [T.s2.oneHint1, T.s2.oneHint2],
+    modelText: T.s2.oneModel,
+    xpId: 'u2l4-one-muscle', xp: 'PRODUCE', reason: 'استنتجتَ حدّ العضلة الواحدة',
+    modelReason: 'راجعتَ الإجابة النموذجية وقارنتها بإجابتك',
+    onDone: function(){
+      show('s2FactLine');
+      show('s2Teaser');
+      show('s2done');
+    }
+  });
+
+  var predictDone = false;
+  document.querySelectorAll('#s2PredictOptions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(predictDone) return;
+      predictDone = true;
+      fbNeutral('fb-s2predict', T.s2.predictFb);
+      show('s2StageBox');
+      snap();
+      claim('u2l4-predict-push', 'PREDICT', 'تنبّأتَ قبل التجربة');
+    });
+  });
+}
+
+/* ============ 4) المحطة 3 — الذراع ============ */
+function station3(){
+  var stage = el('armStage');
+  var bg = el('bicepsGrip'), tg = el('tricepsGrip');
+  if(!stage || !bg || !tg) return;
+
+  var hasTri = false, flexedOnce = false, extendedAgain = false, taskDone = false;
+
+  function setPose(flexed){
+    stage.classList.toggle('flexed', !!flexed);
+  }
+  function shake(){
+    stage.classList.add('shake');
+    setTimeout(function(){ stage.classList.remove('shake'); }, 420);
+  }
+
+  function pullBiceps(){
+    setPose(true);
+    if(!flexedOnce){
+      flexedOnce = true;
+      bg.classList.remove('invite');
+      bg.classList.add('spent');
+      txt('s3StageMsg', T.s3.flexed);
+      snap();
+      setTimeout(function(){
+        if(hasTri) return;
+        txt('s3StageMsg', T.s3.stuck);
+        txt('s3TryHint', '');
+        show('s3DownBox');
+      }, 1200);
+    }else{
+      txt('s3StageMsg', T.s3.flexed);
+      snap();
+    }
+  }
+
+  function pullTriceps(){
+    if(!hasTri){ shake(); wrong(); return; }
+    setPose(false);
+    txt('s3StageMsg', T.s3.extended);
+    snap();
+    if(!extendedAgain){
+      extendedAgain = true;
+      tg.classList.remove('invite');
+      tg.classList.add('spent');
+      if(!taskDone){
+        taskDone = true;
+        claim('u2l4-arm', 'TASK', 'حرّكتَ الساعد في الاتجاهين، كلّ اتجاه بعضلته');
+        txt('s3TryHint', '');
+        var m = el('s3StageMsg');
+        if(m) m.classList.add('done');
+        txt('s3StageMsg', T.s3.taskDone);
+        show('s3NameLine');
+        show('s3ContractBox');
+      }
+    }
+  }
+
+  function pushAttempt(){
+    txt('s3StageMsg', T.s3.noPush);
+    shake();
+    wrong();
+  }
+
+  /* السحب والدفع على كل مقبض: الإزاحة الرأسية وحدها كافية هنا،
+     فالعضلتان رأسيّتان على العضد. الصعود شدّ، والهبوط محاولة دفع. */
+  function bindGrip(node, onPull){
+    var dragging = false, y0 = 0, fired = false;
+    node.addEventListener('pointerdown', function(e){
+      dragging = true; y0 = e.clientY; fired = false;
+      if(node.setPointerCapture && e.pointerId != null){
+        try{ node.setPointerCapture(e.pointerId); }catch(err){ /* غير مدعوم */ }
+      }
+      e.preventDefault();
+    });
+    stage.addEventListener('pointermove', function(e){
+      if(!dragging || fired) return;
+      var dy = e.clientY - y0;
+      if(dy < -8){ fired = true; onPull(); }
+      else if(dy > 8){ fired = true; pushAttempt(); }
+    });
+    function release(){ dragging = false; }
+    stage.addEventListener('pointerup', release);
+    stage.addEventListener('pointercancel', release);
+    stage.addEventListener('lostpointercapture', release);
+
+    node.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar'){ onPull(); e.preventDefault(); }
+      else if(e.key === 'ArrowDown'){ pushAttempt(); e.preventDefault(); }
+    });
+  }
+  bindGrip(bg, pullBiceps);
+  bindGrip(tg, pullTriceps);
+
+  window.Quiz.practice({
+    'u2l4-bring-down': { xpId: 'u2l4-bring-down', xp: 'MCQ', reason: 'استنتجتَ الحاجة إلى عضلة ثانية',
+                         correctText: T.s3.bringDown.correct, hints: T.s3.bringDown }
+  }, { onAllSolved: function(){
+    hasTri = true;
+    stage.classList.add('has-tri');
+    tg.classList.add('invite');
+    txt('s3TryHint', T.s3.hintTri);
+    txt('s3StageMsg', '');
+  } });
+
+  window.Quiz.practice({
+    'u2l4-contract-means': { xpId: 'u2l4-contract-means', xp: 'MCQ', reason: 'قِستَ تغيّر طول العضلة',
+                             correctText: T.s3.contract.correct, hints: T.s3.contract }
+  }, { onAllSolved: function(){
+    show('s3TermLine');
+    show('s3StatesBox');
+  } });
+
+  window.Chips.hints(T.s3.chipHints);
+  window.Chips.onDone('u2l4-states', function(){
+    var fb = document.querySelector('#s3StatesBox .chips-feedback');
+    if(fb){ fb.textContent = T.s3.chipsDone; fb.className = 'explore-feedback chips-feedback is-correct'; fb.hidden = false; }
+    show('s3PatternBox');
+  });
+
+  window.Quiz.practice({
+    'u2l4-extend-pattern': { xpId: 'u2l4-extend-pattern', xp: 'PATTERN', reason: 'اكتشفتَ انقلاب الأدوار بين العضلتين',
+                             correctText: T.s3.pattern.correct, hints: T.s3.pattern }
+  }, { onAllSolved: function(){
+    show('s3AntagLine');
+    show('s3RelaxFact');
+    show('s3CountBox');
+  } });
+
+  window.Quiz.practice({
+    'u2l4-close-count': { xpId: 'u2l4-close-count', xp: 'MCQ', reason: 'أغلقتَ تنبّؤ عدد العضلات',
+                          correctText: T.s3.closeCount.correct, hints: T.s3.closeCount }
+  }, { onAllSolved: function(){ show('s3done'); } });
+}
+
+/* ============ 5) المحطة 4 — الجسد ============ */
+function station4(){
+  var zones = document.querySelectorAll('#s4StageBox .zone');
+  var bodies = document.querySelectorAll('#s4StageBox svg.body');
+  var seen = {}, total = 5, opened = false;
+
+  function count(){ return Object.keys(seen).length; }
+
+  function selectZone(z){
+    zones.forEach(function(n){ n.classList.remove('on'); });
+    z.classList.add('on');
+    z.classList.add('seen');
+    bodies.forEach(function(b){ b.classList.add('has-sel'); });
+    var key = z.getAttribute('data-zone');
+    if(!seen[key]){
+      seen[key] = true;
+      txt('s4ZoneCount', T.s4.count(count()));
+      snap();
+    }
+    txt('s4ZoneMsg', T.s4.zones[key] || '');
+    if(count() >= total) finish();
+  }
+
+  function finish(){
+    if(opened) return;
+    opened = true;
+    /* يُرفع الإخفات والتحديد عند انتهاء الاستكشاف: بقاؤهما يجعل
+       منطقةً واحدة تبدو مميّزة عن أخواتها وهنّ متساويات فيما يليه. */
+    setTimeout(function(){
+      zones.forEach(function(n){ n.classList.remove('on'); });
+      bodies.forEach(function(b){ b.classList.remove('has-sel'); });
+      txt('s4TryHint', '');
+      var m = el('s4ZoneMsg');
+      if(m) m.classList.add('done');
+      txt('s4ZoneMsg', T.s4.done);
+      show('s4PairsBox');
+    }, 1200);
+  }
+
+  zones.forEach(function(z){
+    z.addEventListener('click', function(){ selectZone(z); });
+    z.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar'){ selectZone(z); e.preventDefault(); }
+    });
+  });
+
+  window.Chips.hints(T.s4.chipHints);
+  window.Chips.onDone('u2l4-pairs', function(){
+    var fb = document.querySelector('#s4PairsBox .chips-feedback');
+    if(fb){ fb.textContent = T.s4.chipsDone; fb.className = 'explore-feedback chips-feedback is-correct'; fb.hidden = false; }
+    show('s4PatternBox');
+  });
+
+  window.Quiz.practice({
+    'u2l4-two-way-pattern': { xpId: 'u2l4-two-way-pattern', xp: 'PATTERN', reason: 'اكتشفتَ قاعدة الاتجاهين',
+                              correctText: T.s4.pattern.correct, hints: T.s4.pattern }
+  }, { onAllSolved: function(){ show('s4done'); } });
+
+  var predictDone = false;
+  document.querySelectorAll('#s4PredictOptions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(predictDone) return;
+      predictDone = true;
+      fbNeutral('fb-s4predict', T.s4.predictFb);
+      show('s4StageBox');
+      snap();
+      claim('u2l4-predict-parts', 'PREDICT', 'تنبّأتَ قبل استكشاف الجسد');
+    });
+  });
+}
+
+/* ============ 6) المحطة 5 — الذراع المتضرّرة ============ */
+function station5(){
+  var stage = el('tornStage');
+  var bg = el('tornBicepsGrip'), tg = el('tornTricepsGrip');
+  var triedFront = false, triedBack = false, opened = false;
+
+  function shake(){
+    if(!stage) return;
+    stage.classList.add('shake');
+    setTimeout(function(){ stage.classList.remove('shake'); }, 420);
+  }
+  function maybeOpen(){
+    if(opened || !(triedFront && triedBack)) return;
+    opened = true;
+    setTimeout(function(){
+      txt('s5TryHint', '');
+      var m = el('s5StageMsg');
+      if(m) m.classList.add('done');
+      txt('s5StageMsg', T.s5.done);
+      show('s5SymptomBox');
+    }, 900);
+  }
+  function pullFront(){
+    if(stage) stage.classList.add('flexed');
+    txt('s5StageMsg', T.s5.front);
+    snap();
+    if(!triedFront){ triedFront = true; if(bg){ bg.classList.remove('invite'); bg.classList.add('spent'); } }
+    maybeOpen();
+  }
+  function pullBack(){
+    txt('s5StageMsg', T.s5.back);
+    shake();
+    wrong();
+    if(!triedBack) triedBack = true;
+    maybeOpen();
+  }
+
+  function bind(node, fn){
+    if(!node || !stage) return;
+    var dragging = false, y0 = 0, fired = false;
+    node.addEventListener('pointerdown', function(e){
+      dragging = true; y0 = e.clientY; fired = false;
+      if(node.setPointerCapture && e.pointerId != null){
+        try{ node.setPointerCapture(e.pointerId); }catch(err){ /* غير مدعوم */ }
+      }
+      e.preventDefault();
+    });
+    stage.addEventListener('pointermove', function(e){
+      if(!dragging || fired) return;
+      if(e.clientY - y0 < -8){ fired = true; fn(); }
+    });
+    function release(){ dragging = false; }
+    stage.addEventListener('pointerup', release);
+    stage.addEventListener('pointercancel', release);
+    stage.addEventListener('lostpointercapture', release);
+    node.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar'){ fn(); e.preventDefault(); }
+    });
+  }
+  bind(bg, pullFront);
+  bind(tg, pullBack);
+
+  window.Quiz.practice({
+    'u2l4-tear-symptom': { xpId: 'u2l4-tear-symptom', xp: 'MCQ', reason: 'ربطتَ الضعف باتجاه العضلة التالفة',
+                           correctText: T.s5.symptom.correct, hints: T.s5.symptom }
+  }, { onAllSolved: function(){ show('s5ExplainBox'); } });
+
+  window.Quiz.short({
+    input: 's5ExplainInput', button: 's5ExplainBtn', feedback: 'fb-u2l4-tear-explain',
+    modelBtn: 's5ExplainModelBtn', model: 's5ExplainModel',
+    accept: { paths: [
+      { all: [ ['تسحب','يسحب','تشد','يشد','سحب','شد'], ['اتجاه','جهه','ناحيه','اعلي','فوق','واحد'] ] },
+      { all: [ [/(^|\s)[وف]?(لا|ما|لن|لم)\s+\S{0,6}دفع/] ] },
+      { all: [ [/(^|\s)[وف]?(لا|ما|لن|لم)\s+\S{0,6}(سحب|شد)/], ['اسفل','تحت','المعاكس','معاكس'] ] }
+    ] },
+    normalize: 'ar',
+    hints: [T.s5.explainHint1, T.s5.explainHint2],
+    modelText: T.s5.explainModel,
+    xpId: 'u2l4-tear-explain', xp: 'PRODUCE', reason: 'فسّرتَ لماذا لا تعوّض عضلة عن شريكتها',
+    modelReason: 'راجعتَ الإجابة النموذجية وقارنتها بإجابتك',
+    onDone: function(){
+      show('s5BonusRow');
+      show('s5done');
+    }
+  });
+
+  var bonusLink = el('s5BonusLink');
+  if(bonusLink){
+    bonusLink.addEventListener('click', function(){
+      show('s5BonusBox');
+      bonusLink.disabled = true;
+      bonusLink.classList.add('demoted');
+      bonusLink.textContent = 'التحدّي مفتوح أدناه';
+    });
+  }
+
+  window.Quiz.practice({
+    'u2l4-model-critique-bonus': { xpId: 'u2l4-model-critique-bonus', xp: 'BONUS',
+                                   reason: 'ميّزتَ حدّ النموذج عن الحقيقة',
+                                   correctText: T.s5.bonus.correct, hints: T.s5.bonus }
+  });
+
+  var predictDone = false;
+  document.querySelectorAll('#s5PredictOptions input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(predictDone) return;
+      predictDone = true;
+      fbNeutral('fb-s5predict', T.s5.predictFb);
+      show('s5StageBox');
+      snap();
+      claim('u2l4-tear-predict', 'PREDICT', 'تنبّأتَ قبل رؤية الذراع المتضرّرة');
+    });
+  });
+}
+
+/* ============ 7) المحطة 6 — التقييم والشهادة ============
+   الشهادة بنيوية لا تذكُّرية: Quiz.evaluate ينادي الوحدة بنفسه
+   عند تمرير title، ولا يُكتب نداء Certificate.finish هنا. */
+function normE9(v){
+  var s = window.Quiz.normalizeAr(v);
+  /* «تنقبض» و«انقباض» و«منقبضة» لا يجمعها جذر متّصل واحد:
+     «انقباض» بعد التطبيع «انقباض» فالضاد مفصولة عن الباء بألف.
+     والجذر القصير المشترك «قب» يليه ألف أو ضاد. */
+  return /قب[اض]/.test(s) ? 'مطابق' : s;
+}
+function normE10(v){
+  var s = window.Quiz.normalizeAr(v);
+  var pulls = /سحب|تسحب|يسحب|شد|تشد|يشد/.test(s);
+  var noPush = /دفع/.test(s) || /اتجاه|جهه|ناحيه/.test(s);
+  return (pulls && noPush) ? 'مطابق' : s;
+}
+
+function station6(){
+  window.Quiz.evaluate({
+    title: 'كيف تساعدك العضلات الثنائية المتضادة على الحركة؟',
+    questions: [
+      { name: 'u2l4-e1', why: T.eval.e1 },
+      { name: 'u2l4-e2', why: T.eval.e2 },
+      { name: 'u2l4-e3', why: T.eval.e3 },
+      { name: 'u2l4-e4', why: T.eval.e4 },
+      { name: 'u2l4-e5', why: T.eval.e5 },
+      { name: 'u2l4-e6', why: T.eval.e6 },
+      { name: 'u2l4-e7', why: T.eval.e7 },
+      { name: 'u2l4-e8', why: T.eval.e8 },
+      { name: 'e9', type: 'text', input: 'e9Input', button: 'e9Btn', feedback: 'fb-e9',
+        answer: 'مطابق', normalize: normE9, why: T.eval.e9why },
+      { name: 'e10', type: 'text', input: 'e10Input', button: 'e10Btn', feedback: 'fb-e10',
+        answer: 'مطابق', normalize: normE10, why: T.eval.e10why }
+    ]
+  });
+}
+
+station1();
+station2();
+station3();
+station4();
+station5();
+station6();
+
+/* ══════════════════ الانتقال بين المحطات ══════════════════
+   المحطات الستّ كلّها في الصفحة منذ التحميل بلا hidden — قاعدة
+   منصّية: ما يحمي تسلسل المفاهيم هو الكشف المتدرّج داخل المحطة
+   لا حجب المحطة كلّها. */
+document.querySelectorAll('a.station-next[href^="#station-"]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    var id = a.getAttribute('href').slice(1);
+    var sec = document.getElementById(id);
+    if(!sec) return;
+    sec.hidden = false;
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + id + '"]');
+    if(dot) dot.classList.add('active');
+    if(sec.scrollIntoView){
+      sec.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+    }
+    if(window.Sounds) window.Sounds.playChime();
+  });
+});
+
+/* ══════════════════ الدخول من الخارج بالمرساة ══════════════════ */
+window.addEventListener('load', function(){
+  var id = (location.hash || '').replace(/^#/, '');
+  if(!/^station-[A-Za-z0-9_-]+$/.test(id)) return;
+  var target = document.getElementById(id);
+  if(!target || !target.classList.contains('station')) return;
+  var all = Array.prototype.slice.call(document.querySelectorAll('.station'));
+  var idx = all.indexOf(target);
+  if(idx < 0) return;
+  function activate(sec){
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + sec.id + '"]');
+    if(dot) dot.classList.add('active');
+  }
+  all.slice(0, idx).forEach(function(sec){ if(!sec.hidden) activate(sec); });
+  target.hidden = false;
+  activate(target);
+  if(target.scrollIntoView){
+    target.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+  }
+});
+
+})();
+</script>
+</body>
+</html>
