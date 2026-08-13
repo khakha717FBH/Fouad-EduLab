@@ -1,0 +1,728 @@
+/* =========================================================
+   مختبر فؤاد التعليمي — الهيكل العام لأي درس (نموذج 5E)
+   shared/template-boilerplate/template.css
+
+   عناصر هيكلية/آلية عامة تصلح لأي مادة دراسية فقط: حاوية
+   المحطة، شريط التقدّم، عدّاد XP، سؤال الاختيار من متعدد، نظام
+   السحب والإفلات، إطار الوسائط، بطاقات الحقائق، الحركات المشتركة.
+
+   ممنوع أي محتوى أو رسومات خاصة بمادة معيّنة هنا — تلك تُبنى
+   دائمًا داخل ملف الدرس نفسه.
+
+   يُستدعى بوسم <link> داخل <head>، بعد identity.css مباشرة
+   (يعتمد على متغيرات الألوان المعرّفة هناك):
+
+     <link rel="stylesheet" href="[مسار نسبي]/shared/identity/identity.css">
+     <link rel="stylesheet" href="[مسار نسبي]/shared/template-boilerplate/template.css">
+   ========================================================= */
+
+/* شبكة أمان: [hidden] قد تُلغى بتصريح display بمكان آخر بالملف */
+[hidden]{display:none !important;}
+
+/* ===== ترويسة الدرس ===== */
+header.hero{
+  text-align:center;
+  padding:clamp(28px,6vw,56px) clamp(16px,4vw,32px);
+  border-bottom:1px solid var(--border);
+}
+.eyebrow{
+  color:var(--turquoise);
+  font-weight:700;
+  font-size:clamp(13px,2.2vw,15px);
+  letter-spacing:.5px;
+}
+header.hero h1{
+  font-size:clamp(28px,5vw,44px);
+  margin:8px 0 20px;
+}
+.objectives{
+  display:grid;
+  gap:12px;
+  max-width:620px;
+  margin:0 auto;
+  text-align:right;
+}
+.objective{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  background:var(--turquoise-faint);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:12px 16px;
+  font-size:clamp(14px,2.4vw,16px);
+}
+.objective .num{
+  flex:0 0 auto;
+  width:28px;height:28px;
+  border-radius:50%;
+  border:1px solid var(--turquoise);
+  color:var(--turquoise);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:14px;
+}
+
+/* ===== شريط مؤشر التقدّم (نقاط لاصقة أعلى الصفحة) + عدّاد XP =====
+
+   بنية مرجعية كاملة (انسخها بأي درس جديد):
+
+   <div class="progress-track">
+     <div class="xp-counter" id="xpCounter">
+       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+       </svg>
+       <span id="xpValue">0</span>
+       <span class="xp-label">XP</span>
+     </div>
+     <div class="progress-dot" data-target="station-1"></div>
+     <div class="progress-dot" data-target="station-2"></div>
+     ...
+   </div>
+
+   عدّاد XP اختياري بالكامل: لو غاب من الـHTML، يستمر template.js
+   بتتبّع النقاط بذاكرة الجلسة بصمت دون أي عرض أو خطأ. */
+.progress-track{
+  position:sticky;
+  top:0;
+  z-index:50;
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  padding:14px 10px;
+  background:rgba(19,28,48,.88);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border);
+}
+.progress-dot{
+  width:10px;height:10px;
+  border-radius:50%;
+  background:rgba(255,255,255,.12);
+  border:1px solid var(--ink-dim);
+  transition:transform .35s, background .35s, box-shadow .35s, border-color .35s;
+}
+.progress-dot.active{
+  background:var(--turquoise);
+  border-color:var(--turquoise);
+  box-shadow:0 0 10px var(--turquoise-soft);
+  transform:scale(1.35);
+}
+
+/* ---------- النقاط: إعلانٌ لا عرض (قرار فؤاد، 31 يوليو 2026) ----------
+
+   النقاط مخفيّة عن الطالب في كل دروس المنصّة. السبب: هي والعدّاد
+   («المحطة X من N») كانا يقولان شيئين متناقضين في اللحظة نفسها.
+   النقطة تُضاء أول مرور ولا تنطفئ أبدًا، فمعناها «مررتُ من هنا»؛
+   والرقم يتبع أعلى محطة مرئية فيتراجع، فمعناه «أنا الآن هنا».
+   والنتيجة على شاشة طالبٍ عاد إلى رأس الصفحة: سبع نقاط مضيئة فوق
+   عبارة «المحطة 1 من 7». الفرق بين الدلالتين كان في ذهن المصمّم لا
+   في عين الطالب — لا شيء في شكل النقطة يقول إن الإضاءة زيارةٌ لا
+   موضع. والرقم وحده لا يحتمل قراءتين، وهو المقروء لقارئ الشاشة
+   أصلًا (aria-live) بينما النقاط بلا أي وصف.
+
+   ولماذا visibility لا display؟ لأن النقاط تؤدّي وظيفتين خفيّتين
+   لا تظهران على الشاشة:
+     1) مقام العدّاد مشتقّ من عددها (dots.length في template.js)،
+        فحذفها من الوسم يُسقط العدّاد نفسه لا النقاط فحسب.
+     2) نغمة الوصول معلّقة بأول إضاءة لنقطة المحطة.
+   وvisibility:hidden يُبقي الوظيفتين ويُبقي كذلك ارتفاع الشريط
+   ومساحته كما هما، فلا تنزاح حبّة XP ولا العدّاد عن موضعهما.
+
+   ويبقى الوسم في HTML الدروس كما هو: صار إعلانًا عن عدد المحطات
+   الموعودة لا عنصرًا مرئيًا. وحين يُقطَّر lesson-template.html
+   يُنظر في تسميته باسمه الجديد.
+   ------------------------------------------------------------------ */
+.progress-dot{ visibility:hidden; }
+
+/* عدّاد XP — يتموضع مطلقًا داخل .progress-track (الذي يُعَدّ سياق
+   تموضع صالح لكونه position:sticky) كي لا يزيح توسيط نقاط التقدّم */
+.xp-counter{
+  position:absolute;
+  inset-inline-start:14px;
+  top:50%;
+  transform:translateY(-50%);
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--turquoise);
+  border-radius:999px;
+  padding:6px 14px;
+  font-weight:800;
+  font-size:13px;
+  color:var(--turquoise);
+  white-space:nowrap;
+}
+.xp-counter svg{width:15px;height:15px;flex-shrink:0;}
+.xp-counter .xp-label{color:var(--ink-dim);font-weight:600;font-size:11px;}
+
+/* عدّاد المحطات «المحطة X من N» — يحقنه template.js تلقائيًا داخل
+   .progress-track، فلا يُكتب في HTML الدرس إطلاقًا.
+
+   مطلق التموضع على الطرف المقابل لعدّاد XP كي تبقى النقاط في وسط
+   الشريط بالضبط. وبلا حدّ ولا خلفية عمدًا: عدّاد XP هو الحبّة
+   التركوازية الوحيدة في الشريط لأنه مكافأة، وهذا الرقم توجيهٌ
+   هادئ لا مكافأة — حبّتان متجاورتان تتنازعان النظر بلا داعٍ. */
+.station-counter{
+  position:absolute;
+  inset-inline-end:14px;
+  top:50%;
+  transform:translateY(-50%);
+  display:inline-flex;
+  align-items:baseline;
+  gap:5px;
+  font-family:'Tajawal', sans-serif;
+  font-weight:600;
+  font-size:12px;
+  color:var(--ink-dim);
+  white-space:nowrap;
+  pointer-events:none;
+  user-select:none;
+}
+.station-counter .sc-now{
+  color:var(--ink);
+  font-weight:800;
+  font-size:13px;
+  transition:color .3s;
+}
+.station-counter .sc-total{font-weight:700;}
+
+/* على الشاشات الضيّقة تتزاحم حبّة XP والنقاط والعدّاد في شريط واحد،
+   فيتقلّص العدّاد إلى «3 / 7» — المعنى محفوظ والمساحة تكفي */
+@media (max-width:560px){
+  .station-counter{gap:3px; font-size:11px;}
+  .station-counter .sc-word,
+  .station-counter .sc-sep{display:none;}
+  .station-counter .sc-total::before{content:'/'; margin-inline-end:3px; opacity:.6;}
+}
+
+@keyframes xpBump{
+  0%{transform:translateY(-50%) scale(1);}
+  40%{transform:translateY(-50%) scale(1.12); box-shadow:0 0 14px var(--turquoise-soft);}
+  100%{transform:translateY(-50%) scale(1);}
+}
+.xp-counter.xp-bump{animation:xpBump .45s ease;}
+
+.xp-popup{
+  position:absolute;
+  top:-4px;
+  left:50%;
+  transform:translateX(-50%);
+  color:var(--coral);
+  font-weight:800;
+  font-size:13px;
+  pointer-events:none;
+  animation:xpPopupFloat .9s ease forwards;
+}
+@keyframes xpPopupFloat{
+  0%{opacity:0; transform:translate(-50%, 4px) scale(.8);}
+  20%{opacity:1; transform:translate(-50%, -6px) scale(1);}
+  80%{opacity:1; transform:translate(-50%, -22px) scale(1);}
+  100%{opacity:0; transform:translate(-50%, -30px) scale(1);}
+}
+
+@media (max-width:380px){
+  .xp-counter{padding:5px 10px; font-size:12px;}
+  .xp-counter .xp-label{display:none;}
+}
+
+/* ===== حاوية المحطة + الظهور التدريجي عند التمرير ===== */
+.station{
+  margin-top:clamp(28px,5vw,44px);
+  padding:clamp(18px,4vw,28px);
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:rgba(255,255,255,.02);
+  opacity:0;
+  transform:translateY(26px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+.station.in-view{
+  opacity:1;
+  transform:translateY(0);
+}
+.station-label{
+  display:inline-block;
+  color:var(--turquoise);
+  font-weight:700;
+  font-size:13px;
+  border:1px solid var(--turquoise);
+  border-radius:999px;
+  padding:4px 14px;
+  margin-bottom:12px;
+}
+.station h2{
+  font-size:clamp(19px,3.2vw,24px);
+  margin:0 0 14px;
+}
+/* تنبيه: لو أضفت لاحقًا صنف تغذية راجعة على وسم <p> داخل .station،
+   استخدم دومًا انتقاء مركّب (مثل .quiz-feedback.correct) لا صنفًا
+   منفردًا — القاعدة أدناه سبق أن ألغت ألوان تغذية راجعة بالغلط */
+.station p{color:var(--ink-dim);font-size:clamp(14px,2.4vw,16px);}
+
+/* ===== إطار عرض الوسائط (فيديو/H5P/Genially) ===== */
+.media-frame{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  margin:14px 0;
+  background:#0d1424;
+}
+.media-frame iframe{width:100%;height:100%;border:0;}
+.h5p-frame{aspect-ratio:unset;height:auto;min-height:400px;}
+.h5p-frame iframe{height:400px;}
+
+/* ===== سؤال اختيار من متعدد ===== */
+.quiz-options{
+  display:grid;
+  gap:10px;
+  margin-bottom:16px;
+}
+.quiz-option{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:13px 20px;
+  cursor:pointer;
+  font-size:clamp(14px,2.4vw,16px);
+  transition:.2s;
+}
+.quiz-option:hover{
+  border-color:var(--turquoise);
+  background:var(--turquoise-faint);
+}
+/* حقول الأسئلة مرسومة هنا لا متروكة للمتصفّح.
+   ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
+   كانت accent-color وحدها تكفي ما دامت الصفحة تُقرأ بالنمط
+   الفاتح: يرسم المتصفّح الدائرة الفارغة بيضاء بحدّ رمادي، ولا
+   يستعمل accent-color إلا عند الاختيار.
+
+   ثم أُعلن color-scheme:dark على html (علاجًا لومضة بيضاء عند
+   التمرير السريع)، فصار المتصفّح يشتقّ حدّ الدائرة الفارغة من
+   accent-color بعد إعتامه — والتركوازي معتمًا يعطي زيتونيًّا
+   بنّيًّا. رصده فؤاد بالعين على درسَي الوحدة 02.
+
+   والعلاج ليس التراجع عن color-scheme بل رفع اليد عن اجتهاد
+   المتصفّح: appearance:none ثم نرسم الدائرة والنقطة بأنفسنا،
+   فيخرج التركوازي #14C8A8 حرفيًّا في كل متصفّح ونمط.
+
+   والحدّ رمادي قبل الاختيار وتركوازي بعده: التركوازي عندنا لون
+   الفعل والاختيار، فحملُه إيّاه قبل أن يلمسه الطالب يُفقده
+   معناه — ولونٌ واحد لا يحمل معنيين في وقت واحد. */
+.quiz-option input[type="radio"],
+.quiz-option input[type="checkbox"]{
+  appearance:none;
+  -webkit-appearance:none;
+  width:18px; height:18px;
+  margin:0;
+  flex:0 0 auto;
+  border:2px solid var(--muted);
+  background:transparent;
+  display:inline-grid;
+  place-content:center;
+  cursor:pointer;
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.quiz-option input[type="radio"]{ border-radius:50%; }
+.quiz-option input[type="checkbox"]{ border-radius:5px; }
+.quiz-option input[type="radio"]::before,
+.quiz-option input[type="checkbox"]::before{
+  content:'';
+  width:9px; height:9px;
+  border-radius:inherit;
+  background:var(--turquoise);
+  transform:scale(0);
+  transition:transform .18s ease;
+}
+.quiz-option input[type="radio"]:checked,
+.quiz-option input[type="checkbox"]:checked{ border-color:var(--turquoise); }
+.quiz-option input[type="radio"]:checked::before,
+.quiz-option input[type="checkbox"]:checked::before{ transform:scale(1); }
+.quiz-option input[type="radio"]:focus-visible,
+.quiz-option input[type="checkbox"]:focus-visible{
+  outline:none;
+  box-shadow:0 0 0 3px var(--turquoise-faint);
+}
+/* الحقول المعطَّلة بعد الإجابة: الحدّ وحده يخفت، والنقطة تبقى
+   بلونها — فاختيار الطالب يظلّ مقروءًا بعد إقفال السؤال. */
+.quiz-option input[type="radio"]:disabled,
+.quiz-option input[type="checkbox"]:disabled{ cursor:default; opacity:.85; }
+@media (prefers-reduced-motion: reduce){
+  .quiz-option input[type="radio"],
+  .quiz-option input[type="checkbox"],
+  .quiz-option input[type="radio"]::before,
+  .quiz-option input[type="checkbox"]::before{ transition:none; }
+}
+.quiz-option.selected{
+  border-color:var(--turquoise);
+  box-shadow:0 0 14px var(--turquoise-soft);
+}
+.quiz-option.correct{
+  border-color:var(--turquoise);
+  background:rgba(20,200,168,.16);
+  animation:tplPopIn .35s ease;
+}
+.quiz-option.incorrect{
+  border-color:var(--coral);
+  background:rgba(255,107,74,.1);
+  animation:tplShakeX .4s ease;
+}
+.quiz-feedback{
+  margin-top:6px;
+  font-weight:700;
+  font-size:15px;
+  min-height:22px;
+}
+.quiz-feedback.correct{color:var(--turquoise);}
+.quiz-feedback.incorrect{color:var(--coral);}
+
+/* ===== بطاقات حقائق (شبكة تعريفات/مصطلحات عامة) ===== */
+.facts-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:14px;
+  margin:16px 0;
+}
+.fact-card{
+  background:var(--turquoise-faint);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  text-align:center;
+}
+.fact-card .term{color:var(--turquoise);font-weight:700;margin-bottom:6px;}
+
+/* ===== نظام السحب والإفلات العام (شرائح ← خانات) ===== */
+.chips-pool{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:16px 0 26px;
+  min-height:44px;
+}
+.chip{
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--turquoise);
+  color:var(--ink);
+  border-radius:999px;
+  padding:9px 20px;
+  font-weight:700;
+  font-size:14px;
+  cursor:grab;
+  touch-action:none;
+  user-select:none;
+  transition:box-shadow .2s, opacity .2s;
+}
+.chip:hover{box-shadow:0 0 12px var(--turquoise-soft);}
+.chip:focus-visible{outline:2px solid var(--coral);outline-offset:3px;}
+.chip.dragging{
+  position:fixed;
+  z-index:999;
+  opacity:.92;
+  pointer-events:none;
+  cursor:grabbing;
+  box-shadow:0 0 18px var(--turquoise-soft);
+}
+/* الرقاقة مختارة بالنقر، بانتظار اختيار خانة */
+.chip.selected{
+  background:var(--turquoise);
+  color:var(--navy-dark);
+  box-shadow:0 0 14px var(--turquoise-soft);
+}
+/* display:none لا opacity:0 — النسخة السابقة كانت تُبقي العنصر
+   بإحداثيات fixed محسوبة ثم تجعله absolute، فينتج عنصر شبح بموضع
+   خاطئ قد يولّد مساحة تمرير زائدة. الفراغ المتروك يعالجه .chip-ghost
+   بانكماش متدرّج بدل اختفاء مفاجئ. */
+.chip.placed{display:none;}
+.chip.shake{animation:tplShakeX .4s ease;}
+
+/* حاجز مكان الرقاقة أثناء السحب: يمنع قفز باقي الرقاقات لحظة
+   الرفع، ثم ينكمش بانسياب عند نجاح المطابقة */
+.chip-ghost{
+  display:inline-block;
+  flex:0 0 auto;
+  box-sizing:border-box;
+  border:1px dashed var(--border);
+  border-radius:999px;
+  background:transparent;
+  pointer-events:none;
+  transition:width .26s ease, margin .26s ease, opacity .26s ease;
+}
+.chip-ghost.collapsing{
+  width:0 !important;
+  opacity:0;
+  margin-inline-start:-10px; /* يبتلع فجوة gap المتبقية في المسبح */
+}
+
+.slot{
+  display:inline-block;
+  min-width:70px;
+  border:1px dashed var(--ink-dim);
+  border-radius:999px;
+  padding:6px 14px;
+  font-size:13px;
+  color:var(--ink-dim);
+  transition:.2s;
+}
+.name-slot{display:block;min-height:20px;margin-bottom:4px;}
+.inline-slot{margin-right:4px;}
+.prop-row{margin-top:8px;font-size:13px;color:var(--ink-dim);}
+.slot.correct{
+  border-style:solid;
+  border-color:var(--turquoise);
+  color:var(--turquoise);
+  background:rgba(20,200,168,.1);
+  animation:tplPopIn .35s ease;
+}
+.slot.dragover{
+  border-color:var(--turquoise);
+  box-shadow:0 0 10px var(--turquoise-soft);
+}
+/* خانة صالحة كهدف بعد اختيار رقاقة بالنقر. تمييز هادئ بلا حركة:
+   ستّ من خانات درس 01 عبارة عن <span> داخل جملة جارية، والنبض
+   فيها يعني نبض كلمات وسط نصّ مقروء. */
+.slot.targetable{
+  border-style:solid;
+  border-color:var(--turquoise-soft);
+  color:var(--turquoise);
+}
+.slot:focus-visible{outline:2px solid var(--coral);outline-offset:2px;}
+.slot.correct{cursor:default;}
+
+/* ----- خانة التصنيف: تسع أكثر من رقاقة ويبقى عنوانها ظاهرًا -----
+   الحبّة الدوائية لا تصلح هنا: الخانة صارت صندوقًا يُقرأ عنوانه أولًا
+   ثم تتراكم فيه الرقاقات. ولذلك صنف صريح لا اشتقاق من البنية. */
+.cat-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));
+  gap:14px;
+  margin:14px 0 6px;
+}
+.cat-slot{
+  display:block;
+  border-radius:16px;
+  padding:12px 14px;
+  min-height:74px;
+  text-align:right;
+}
+.cat-slot .slot-label{
+  display:block;
+  color:var(--ink);
+  font-weight:700;
+  font-size:13px;
+  line-height:1.6;
+  margin-bottom:8px;
+}
+.cat-slot.correct .slot-label{color:var(--turquoise);}
+.cat-slot .slot-items{display:flex;flex-wrap:wrap;gap:8px;}
+.slot-item{
+  display:inline-block;
+  background:rgba(20,200,168,.12);
+  border:1px solid var(--turquoise);
+  color:var(--turquoise);
+  border-radius:999px;
+  padding:6px 14px;
+  font-size:13px;
+  font-weight:700;
+  animation:tplPopIn .3s ease;
+}
+/* خانة بدأت تمتلئ ولم تكتمل: تمييز هادئ يقول «ما زال فيها متّسع» */
+.slot.partial{
+  border-style:solid;
+  border-color:var(--turquoise-soft);
+}
+
+/* ===== حركات مشتركة للتغذية الراجعة ===== */
+@keyframes tplPopIn{
+  0%{transform:scale(.82);}
+  60%{transform:scale(1.08);}
+  100%{transform:scale(1);}
+}
+@keyframes tplShakeX{
+  0%,100%{transform:translateX(0);}
+  25%{transform:translateX(-7px);}
+  75%{transform:translateX(7px);}
+}
+
+/* ===== تذييل عام ===== */
+footer.site-footer{
+  text-align:center;
+  color:var(--ink-dim);
+  font-size:13px;
+  padding:32px 16px 40px;
+}
+
+/* ===== صندوق أهداف الدرس (نمط بديل: حدّ + عنوان + قائمة نقطية) =====
+   يُستخدم داخل header.hero بدل .objectives عند الرغبة بنمط أكثر
+   إيجازًا. بنية مرجعية:
+
+     <div class="objectives-box">
+       <h3>في نهاية هذا الدرس سوف تتمكن من أن:</h3>
+       <ul>
+         <li>...</li>
+       </ul>
+     </div> */
+.objectives-box{
+     background:rgba(255,255,255,.03);
+     border:1px solid var(--border);
+     border-radius:16px;
+     padding:16px 22px;
+     text-align:right;
+     max-width:640px;
+     margin:0 auto;
+}
+.objectives-box h3{
+     font-family:'Cairo',sans-serif;
+     color:var(--turquoise);
+     font-weight:800;
+     font-size:clamp(14px,2.4vw,16px);
+     margin:0 0 8px;
+}
+.objectives-box ul{
+     margin:0;
+     padding-inline-start:20px;
+     font-size:clamp(13px,2.2vw,15px);
+     color:var(--ink-dim);
+     line-height:1.9;
+}
+
+/* ===== احترام تفضيل تقليل الحركة (نظام التشغيل) ===== */
+@media (prefers-reduced-motion: reduce){
+  .chip-ghost{transition:none;}
+  .chip.shake{animation:none;}
+  .slot.correct{animation:none;}
+  .slot-item{animation:none;}
+}
+
+/* =========================================================
+   هرم الأزرار — ثلاث درجات وزن بصري (يوليو 2026)
+   ---------------------------------------------------------
+   المشكلة التي يعالجها: كانت كل أزرار الدرس بوزن بصري واحد
+   (حدّ تركوازي على خلفية شفافة)، فلا تُخبر العينُ الطالبَ أيّها
+   الطريق وأيّها خيار جانبي. المتعلّم في الصفّ يسأل معلّمه
+   "وبعدين؟"؛ والمتعلّم في بيته يسأل الشاشة — والهرم هو جواب
+   الشاشة. هذا توجيه يعوّض غياب المعلّم، لا زخرفة.
+
+   الدرجات:
+     1) .station-next  — ممتلئ. ينقل الطالب إلى قسم .station جديد.
+     2) .btn / .pill-link — محدَّد. فعل داخل المحطة نفسها: تحقّق، احفظ،
+        وكذلك أي جسر داخلي يفتح كتلة مطويّة (نموذجه زر "اعرض ما بنيتُه"
+        في المحطة 3). الجسر تقدّمٌ في المعنى لا انتقالٌ في البنية.
+     3) .link-btn      — رابط نصّي. اختياري (تلميح، إجابة نموذجية).
+
+   الحدّ الفاصل بين 1 و2 بنيويّ لا شعوريّ: هل يصل الطالب إلى
+   <section class="station"> أخرى؟ إن نعم فالدرجة الأولى، وإلا فالثانية.
+   بهذا لا تتزاحم الدرجة الأولى داخل المحطة الواحدة مهما كثرت جسورها.
+
+   القاعدة الحاكمة: زر ممتلئ واحد لكل محطة. لو ظهر اثنان انقلب
+   الهرم ضوضاءً وضاعت الفائدة كلّها. لذلك:
+
+     • الشكل الممتلئ مقيَّد بموضعه (داخل .station-handoff وحده)،
+       فلا يعمل خارجه مهما وُضع الصنف — الخطأ لا يقع فيزيائيًا.
+     • الصنف مسمّى بوظيفته التربوية (station-next) لا بوزنه
+       (لا primary): الاسم نفسه يرفض التعميم على زر تحقّق.
+     • حارس تلقائي في template.js يهبّط أي زائد ويحذّر بشاشة
+       المطوّر (لا يراه الطالب).
+   ========================================================= */
+.station-handoff{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  margin-top:26px;
+  text-align:center;
+}
+.handoff-q{
+  color:var(--ink-dim);
+  font-size:clamp(13px,2.2vw,15px);
+  line-height:1.9;
+  max-width:52ch;
+  margin:0;
+}
+
+/* الدرجة 1 — الطريق إلى الأمام */
+.station-handoff .station-next{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--turquoise);
+  border:1.5px solid var(--turquoise);
+  color:var(--navy-dark);
+  border-radius:999px;
+  padding:12px 30px;
+  font-family:inherit;
+  font-weight:800;
+  font-size:.95rem;
+  text-decoration:none;
+  cursor:pointer;
+  transition:box-shadow .25s ease, transform .12s ease;
+}
+.station-handoff .station-next:hover{
+  box-shadow:0 0 20px var(--turquoise-soft);
+}
+.station-handoff .station-next:active{transform:scale(.98);}
+.station-handoff .station-next:focus-visible{
+  outline:2px solid var(--coral);
+  outline-offset:3px;
+}
+/* هُبّط بالحارس التلقائي: يعود إلى الدرجة الثانية بلا كسر التخطيط */
+.station-handoff .station-next.demoted{
+  background:transparent;
+  color:var(--turquoise);
+  font-weight:700;
+}
+
+/* الدرجة 3 — اختياري، بلا إطار كي لا ينافس المسار */
+.link-btn{
+  background:none;
+  border:none;
+  color:var(--ink-dim);
+  text-decoration:underline;
+  cursor:pointer;
+  font-family:inherit;
+  font-size:.84rem;
+  padding:6px 0;
+}
+.link-btn:hover{color:var(--turquoise);}
+.link-btn:focus-visible{outline:2px solid var(--coral); outline-offset:3px;}
+
+@media (prefers-reduced-motion: reduce){
+  .station-handoff .station-next{transition:none;}
+}
+
+/* ==========================================================
+   أنماط ما يكتبه محرّك الأسئلة المشترك (إضافة أغسطس 2026)
+   ----------------------------------------------------------
+   window.Quiz يكتب هذه الأصناف بنفسه: .explore-feedback مع
+   .is-correct / .is-hint في كل تغذية راجعة، و.eval-score و
+   .eval-line في بطاقة نتيجة التقييم. وكانت أنماطها تعيش داخل
+   درس 03 وحده، فأي درس جديد يربط المشترك ويكتب أسئلته صحيحة
+   تخرج رسائله بلا لون ولا تمييز — عطلٌ صامت لا يطبع خطأ.
+
+   المحرّك يشحن أنماطه معه الآن. والقواعد مطابقة لما كان في
+   درس 03 حرفيًا، فلا يتغيّر شيء في مظهره.
+   ========================================================== */
+.explore-feedback{
+  margin-top:10px;
+  font-size:.88rem;
+  min-height:20px;
+}
+.explore-feedback.is-correct{color:var(--turquoise); font-weight:700;}
+.explore-feedback.is-hint{color:var(--ink-dim);}
+
+.eval-score{
+  font-family:'Cairo', sans-serif;
+  font-weight:800;
+  font-size:2.1rem;
+  color:var(--turquoise);
+  line-height:1.2;
+}
+.eval-line{margin:10px 0 0; font-size:.95rem; color:var(--ink); line-height:1.9;}
+.eval-line b{color:var(--turquoise); font-weight:800;}
+.eval-line.dim{color:var(--ink-dim); font-size:.85rem;}
