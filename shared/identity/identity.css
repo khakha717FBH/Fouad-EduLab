@@ -62,6 +62,20 @@
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 
+/* لون قاعدة صلب على html لا على body وحده: خلفية body تنتشر إلى لوحة
+   الصفحة حين لا يحمل html خلفية، لكنّ المنتشر هنا متدرّجٌ مقيس على
+   صندوق body — وأثناء التمرير السريع يكشف المتصفّح منطقةً جديدة قبل
+   أن يصلها الطلاء فيعرضها بلون اللوحة الابتدائي، وهو الأبيض. رصدها
+   فؤاد بالعين على درس الوحدة 02 · 04، وهي في المشترك فتصيب الدروس
+   كلّها منذ أول درس.
+   وطرفا المتدرّج كلاهما --navy-darker، فلا يظهر خطّ بين اللونين.
+   وcolor-scheme:dark يجعل المتصفّح يختار داكنه لشريط التمرير وحقول
+   الإدخال الافتراضية، فلا يومض أبيضها هي الأخرى. */
+html{
+  background-color:var(--navy-darker);
+  color-scheme:dark;
+}
+
 body{
   background:linear-gradient(180deg, var(--navy-darker), var(--navy-dark) 40%, var(--navy-darker));
   color:var(--ink);
