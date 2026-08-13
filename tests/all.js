@@ -6,6 +6,7 @@ const { spawnSync } = require('child_process');
 const path = require('path');
 
 const SUITES = [
+  'identity.test.js',       // ملفّ الهوية نفسه — لا يبلغه أي اختبار درس
   'quiz-engines.test.js',   // المحرّكات المشتركة نفسها
   'chips-multi.test.js',    // توسعة التصنيف متعدّد إلى واحد
   'lesson-03.test.js',      // الدرس المُهاجَر إليها
@@ -22,7 +23,9 @@ const SUITES = [
   'lesson-u2-02.test.js',   // الوحدة 02 · الدرس 02 — إنتاج خلايا الدم
   'geometry-u2-02.test.js', // فحص عددي لمسارح الوحدة 02 · الدرس 02
   'lesson-u2-03.test.js',   // الوحدة 02 · الدرس 03 — المفاصل الزلالية
-  'geometry-u2-03.test.js'  // فحص عددي لمسارح الوحدة 02 · الدرس 03
+  'geometry-u2-03.test.js', // فحص عددي لمسارح الوحدة 02 · الدرس 03
+  'lesson-u2-04.test.js',   // الوحدة 02 · الدرس 04 — العضلات المتضادة
+  'geometry-u2-04.test.js'  // فحص عددي لمسارح الوحدة 02 · الدرس 04
 ];
 
 let pass = 0, fail = 0, broken = [];
