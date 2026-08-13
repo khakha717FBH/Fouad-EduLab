@@ -34,7 +34,12 @@
     --nonmetal:#8e9dfb;
   }
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;overscroll-behavior-y:contain;}
+  /* لون قاعدة صلب: خلفية body متدرّجة، وأثناء التمرير السريع تُعرض
+     المنطقة المكشوفة بلون اللوحة الابتدائي (الأبيض) قبل أن يصلها
+     الطلاء. وهذا الدرس لا يربط الهوية المشتركة، فيعالجها بنفسه.
+     ولا color-scheme هنا: حقوله الأصلية غير مرسومة يدويًّا بعد،
+     والنمط الداكن كان سيُعتم لونها كما وقع في دروس المشترك. */
+  html{scroll-behavior:smooth;overscroll-behavior-y:contain;background-color:var(--navy-dark);}
   body{
     margin:0;
     overscroll-behavior-y:contain;
