@@ -297,10 +297,67 @@ header.hero h1{
   border-color:var(--turquoise);
   background:var(--turquoise-faint);
 }
-.quiz-option input{
-  accent-color:var(--turquoise);
-  width:18px;height:18px;
+/* حقول الأسئلة مرسومة هنا لا متروكة للمتصفّح.
+   ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
+   كانت accent-color وحدها تكفي ما دامت الصفحة تُقرأ بالنمط
+   الفاتح: يرسم المتصفّح الدائرة الفارغة بيضاء بحدّ رمادي، ولا
+   يستعمل accent-color إلا عند الاختيار.
+
+   ثم أُعلن color-scheme:dark على html (علاجًا لومضة بيضاء عند
+   التمرير السريع)، فصار المتصفّح يشتقّ حدّ الدائرة الفارغة من
+   accent-color بعد إعتامه — والتركوازي معتمًا يعطي زيتونيًّا
+   بنّيًّا. رصده فؤاد بالعين على درسَي الوحدة 02.
+
+   والعلاج ليس التراجع عن color-scheme بل رفع اليد عن اجتهاد
+   المتصفّح: appearance:none ثم نرسم الدائرة والنقطة بأنفسنا،
+   فيخرج التركوازي #14C8A8 حرفيًّا في كل متصفّح ونمط.
+
+   والحدّ رمادي قبل الاختيار وتركوازي بعده: التركوازي عندنا لون
+   الفعل والاختيار، فحملُه إيّاه قبل أن يلمسه الطالب يُفقده
+   معناه — ولونٌ واحد لا يحمل معنيين في وقت واحد. */
+.quiz-option input[type="radio"],
+.quiz-option input[type="checkbox"]{
+  appearance:none;
+  -webkit-appearance:none;
+  width:18px; height:18px;
+  margin:0;
   flex:0 0 auto;
+  border:2px solid var(--muted);
+  background:transparent;
+  display:inline-grid;
+  place-content:center;
+  cursor:pointer;
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.quiz-option input[type="radio"]{ border-radius:50%; }
+.quiz-option input[type="checkbox"]{ border-radius:5px; }
+.quiz-option input[type="radio"]::before,
+.quiz-option input[type="checkbox"]::before{
+  content:'';
+  width:9px; height:9px;
+  border-radius:inherit;
+  background:var(--turquoise);
+  transform:scale(0);
+  transition:transform .18s ease;
+}
+.quiz-option input[type="radio"]:checked,
+.quiz-option input[type="checkbox"]:checked{ border-color:var(--turquoise); }
+.quiz-option input[type="radio"]:checked::before,
+.quiz-option input[type="checkbox"]:checked::before{ transform:scale(1); }
+.quiz-option input[type="radio"]:focus-visible,
+.quiz-option input[type="checkbox"]:focus-visible{
+  outline:none;
+  box-shadow:0 0 0 3px var(--turquoise-faint);
+}
+/* الحقول المعطَّلة بعد الإجابة: الحدّ وحده يخفت، والنقطة تبقى
+   بلونها — فاختيار الطالب يظلّ مقروءًا بعد إقفال السؤال. */
+.quiz-option input[type="radio"]:disabled,
+.quiz-option input[type="checkbox"]:disabled{ cursor:default; opacity:.85; }
+@media (prefers-reduced-motion: reduce){
+  .quiz-option input[type="radio"],
+  .quiz-option input[type="checkbox"],
+  .quiz-option input[type="radio"]::before,
+  .quiz-option input[type="checkbox"]::before{ transition:none; }
 }
 .quiz-option.selected{
   border-color:var(--turquoise);
