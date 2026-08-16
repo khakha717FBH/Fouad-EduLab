@@ -310,6 +310,111 @@ describe('هندسة المحطة 3 — الذراع', function(){
     ok(ext.h - flex.h >= 12, 'الفرق غير مرئي: ' + (ext.h - flex.h));
   });
 
+  it('بطن العضلة ملاصقة للعضد بسطحٍ داخلي مسطَّح', async function(){
+    const { doc } = await page();
+    const bones = Array.from(doc.getElementById('armStage').querySelectorAll('.bone-f'))
+      .map(function(n){ return boxOf(n.getAttribute('d')); })
+      .filter(function(b){ return b.h > 90 && b.w < 30; });
+    const hum = bones[0];
+    /* لا فراغ بين العضلة وعظمها في الجسم. والوتر لا يعبر فراغًا
+       جانبيًّا بل يمتدّ من طرفَي البطن طوليًّا إلى ما وراءهما. */
+    [['bicepsExt', 'right'], ['bicepsFlex', 'right'],
+     ['tricepsExt', 'left'], ['tricepsFlex', 'left']].forEach(function(p){
+      const m = pathBox(doc, p[0]);
+      const gap = p[1] === 'right' ? m.x0 - hum.x1 : hum.x0 - m.x1;
+      ok(Math.abs(gap) <= 1,
+         p[0] + ': البطن لا تلاصق العضد — الفراغ ' + gap.toFixed(1));
+    });
+  });
+
+  it('الانتفاخ إلى الخارج وحده: الحافّة الداخلية ثابتة عند العظم', async function(){
+    const { doc } = await page();
+    /* رصدها فؤاد بالعين: بطنٌ متناظرة تنتفخ إلى الجهتين، فتتمدّد
+       نحو العظم ــ أي داخله. والعضلة الحقيقية حافّتها الداخلية
+       ملازمة للعظم، وانتفاخها كلّه إلى الخارج. */
+    const b1 = pathBox(doc, 'bicepsExt'), b2 = pathBox(doc, 'bicepsFlex');
+    ok(Math.abs(b1.x0 - b2.x0) <= 1,
+       'الأمامية تنتفخ نحو العظم: حافّتها الداخلية ' + b1.x0 + ' ← ' + b2.x0);
+    ok(b2.x1 > b1.x1 + 8, 'الأمامية لا تنتفخ إلى الخارج');
+    const t1 = pathBox(doc, 'tricepsExt'), t2 = pathBox(doc, 'tricepsFlex');
+    ok(Math.abs(t1.x1 - t2.x1) <= 1,
+       'الخلفية تنتفخ نحو العظم: حافّتها الداخلية ' + t1.x1 + ' ← ' + t2.x1);
+    ok(t1.x0 < t2.x0 - 8, 'الخلفية لا تنتفخ إلى الخارج');
+  });
+
+  it('وتر العضلة الخلفية ينتهي في متن نتوء الزند لا في الفراغ', async function(){
+    const { doc } = await page();
+    /* أطراف الأوتار تُشتقّ من العظام: النتوء يدور مع الساعد، فوترٌ
+       يقصد نقطةً مثبَّتة بالأرقام يبقى معلّقًا كلّما تحرّك. */
+    [['armExtended'], ['armFlexed'], ['tornExtended'], ['tornFlexed']].forEach(function(p){
+      const g = doc.getElementById(p[0]);
+      const olec = g.querySelector('circle.joint-f');
+      const cx = +olec.getAttribute('cx'), cy = +olec.getAttribute('cy'), r = +olec.getAttribute('r');
+      const tendon = g.querySelector('.tri .sinew:last-of-type');
+      const pts = pointsOf(tendon.getAttribute('d'));
+      const end = pts[pts.length - 1];
+      const dist = Math.hypot(end.x - cx, end.y - cy);
+      ok(dist <= r, p[0] + ': طرف الوتر يبعد ' + dist.toFixed(1) + ' عن مركز النتوء');
+    });
+  });
+
+  it('النتوء أصغر من المفصل فلا يُقرأ مفصلًا ثانيًا', async function(){
+    const { doc } = await page();
+    const elbow = 9;
+    ['armExtended', 'armFlexed'].forEach(function(id){
+      const r = +doc.getElementById(id).querySelector('circle.joint-f').getAttribute('r');
+      ok(r < elbow, id + ': النتوء ' + r + ' والمفصل ' + elbow);
+      ok(r >= 4, id + ': النتوء أصغر من أن يُرى');
+    });
+  });
+
+  it('المسرح يملأ إطاره: الإطار مضيَّق حول المحتوى', async function(){
+    const { doc } = await page();
+    ['armStage', 'tornStage'].forEach(function(id){
+      const vb = viewBoxOf(doc, id);
+      const svg = doc.getElementById(id);
+      let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+      svg.querySelectorAll('path[d]').forEach(function(n){
+        const b = boxOf(n.getAttribute('d'));
+        x0 = Math.min(x0, b.x0); x1 = Math.max(x1, b.x1);
+        y0 = Math.min(y0, b.y0); y1 = Math.max(y1, b.y1);
+      });
+      const fill = ((x1 - x0) * (y1 - y0)) / (vb.w * vb.h);
+      ok(fill >= 0.55, id + ': المحتوى يشغل ' + Math.round(fill * 100) + '٪ من الإطار');
+    });
+  });
+
+  it('لكل عضلة وتران: واحد عند كل طرف من بطنها', async function(){
+    const { doc } = await page();
+    ['armExtended', 'armFlexed'].forEach(function(pose){
+      const g = doc.getElementById(pose);
+      eq(g.querySelectorAll('.sinew').length, 4, 'أوتار ناقصة في ' + pose);
+    });
+  });
+
+  it('القِصَر أظهر من الاتّساع — والدرس يقيس القِصَر لا الانتفاخ', async function(){
+    const { doc } = await page();
+    const e = pathBox(doc, 'bicepsExt'), f = pathBox(doc, 'bicepsFlex');
+    const dLen = (e.h - f.h) / e.h;
+    ok(dLen >= 0.3, 'تغيّر الطول ' + Math.round(dLen * 100) + '٪ — أضعف من أن يُقرأ انقباضًا');
+    /* لا يُطلب أن يفوق تغيّرُ الطول تغيّرَ العرض عدديًّا: الانتفاخ
+       صفةٌ حقيقية للانقباض. المطلوب ألّا يكون القِصَر هامشيًّا. */
+  });
+
+  it('المقبض لا يحجب بطن العضلة تحته', async function(){
+    const { doc, raw } = await page();
+    ok(/\.arm \.grip\{[^}]*stroke:var\(--turquoise\)/.test(raw),
+       'المقبض بلا حدّ تركوازي');
+    no(/\.arm \.grip\{[^}]*fill:var\(--turquoise\)/.test(raw),
+       'المقبض قرص مصمت يحجب ما يقيسه الدرس');
+    ['bicepsGrip', 'tricepsGrip'].forEach(function(id){
+      const r = +doc.getElementById(id).getAttribute('r');
+      const m = pathBox(doc, id === 'bicepsGrip' ? 'bicepsFlex' : 'tricepsExt');
+      ok(r * 2 <= m.w * 0.62,
+         id + ': قطره ' + (r * 2) + ' وعرض البطن ' + m.w.toFixed(0));
+    });
+  });
+
   it('العضلة الأمامية أغلظ في وضع الثني', async function(){
     const { doc } = await page();
     const ext = pathBox(doc, 'bicepsExt');
@@ -336,7 +441,13 @@ describe('هندسة المحطة 3 — الذراع', function(){
   it('العضلتان على جانبَي العظم لا على جانب واحد', async function(){
     const { doc } = await page();
     const bone = pathBox(doc, 'bicepsExt');
-    const humerus = boxOf('M 100,62 L 116,62 L 116,180 L 100,180 Z');
+    /* العضد يُقرأ من الرسم: تثبيته نصًّا في الاختبار يجعل الحارس
+       يفحص نسخةً من الماضي لا ما يراه الطالب. */
+    const bones = Array.from(doc.getElementById('armStage').querySelectorAll('.bone-f'))
+      .map(function(n){ return boxOf(n.getAttribute('d')); })
+      .filter(function(b){ return b.h > 90 && b.w < 30; });
+    ok(bones.length === 1, 'لم يُتعرَّف على العضد: ' + bones.length);
+    const humerus = bones[0];
     const tri = pathBox(doc, 'tricepsExt');
     ok(bone.x0 >= humerus.x0, 'الأمامية ليست أمام العظم');
     ok(tri.x1 <= humerus.x1, 'الخلفية ليست خلف العظم');
@@ -385,15 +496,44 @@ describe('هندسة المحطة 3 — الذراع', function(){
   it('لكل عضلة وترٌ يصلها بالعظم فلا تبقى كتلة معلّقة بلا رابط', async function(){
     const { doc } = await page();
     ['armExtended', 'armFlexed'].forEach(function(id){
-      eq(doc.getElementById(id).querySelectorAll('.sinew').length, 2,
-         'وتر ناقص في: ' + id);
+      eq(doc.getElementById(id).querySelectorAll('.sinew').length, 4,
+         'وتر ناقص في: ' + id + ' — لكل عضلة وتران يصلانها بالعظم');
     });
   });
 
-  it('العضلة الخلفية ومقبضها محجوبان حتى تُكتشف الحاجة إليهما', async function(){
+  it('العضلة الخلفية ومقبضها محجوبان في مسرح المحطة 3 حتى تُكتشف الحاجة إليهما', async function(){
     const { raw } = await page();
-    ok(/\.arm:not\(\.has-tri\) \.tri\{ display:none; \}/.test(raw));
-    ok(/\.arm:not\(\.has-tri\) #tricepsGrip\{ display:none; \}/.test(raw));
+    ok(/#armStage:not\(\.has-tri\) \.tri\{ display:none; \}/.test(raw));
+    ok(/#armStage:not\(\.has-tri\) #tricepsGrip\{ display:none; \}/.test(raw));
+  });
+
+  /* ــــ حارس تسرّب: القاعدة تخصّ محطةً وتصيب أخرى ــــ
+     مسرحا المحطتين 3 و5 يتشاركان الصنف `.arm`، ومسرح المحطة 5 لا
+     يحمل `has-tri` أبدًا. فأيّ قاعدة إخفاء معلَّقة على `.arm` تمحو
+     العضلة الممزّقة — وهي محور المحطة 5 — ويبقى مقبضها ظاهرًا بلا
+     عضلة. والاختبار المنطقي لا يلتقط ذلك: jsdom لا يحسب تخطيطًا،
+     والعنصر موجود في الوسم وفجوته داخل حدوده. فيُقرأ نصّ القاعدة. */
+  it('قاعدة إخفاء الزوج لا تتسرّب إلى مسرح المحطة 5', async function(){
+    const { raw } = await page();
+    no(/\.arm:not\(\.has-tri\)/.test(raw),
+       'قاعدة الإخفاء معلَّقة على `.arm` فتُخفي العضلة الممزّقة في المحطة 5');
+  });
+
+  it('العضلة الممزّقة مرئية في مسرح المحطة 5 منذ التحميل، وفيها فجوة تمزّق', async function(){
+    const { doc, raw } = await page();
+    const stage = doc.getElementById('tornStage');
+    no(stage.classList.contains('has-tri'),
+       'مسرح المحطة 5 يحمل has-tri — فالعلاج صار تحايلًا لا تصحيحًا');
+    ['tornExtended', 'tornFlexed'].forEach(function(id){
+      const pose = doc.getElementById(id);
+      const torn = pose.querySelector('.torn');
+      ok(torn, 'مجموعة التمزّق مفقودة في ' + id);
+      ok(torn.querySelector('.mus-f'), 'العضلة الممزّقة مفقودة في ' + id);
+      ok(pose.querySelector('.tear-gap'), 'فجوة التمزّق مفقودة في ' + id);
+      /* ولا قاعدة تُخفيها: يُفحص نصّ الأنماط لا التخطيط */
+      no(new RegExp('#tornStage[^{]*\\.torn\\s*\\{[^}]*display\\s*:\\s*none').test(raw),
+         'قاعدة تُخفي العضلة الممزّقة');
+    });
   });
 
   it('المقبضان خارج مجموعتَي الوضع فلا يتلاشيان مع التبديل', async function(){
@@ -436,13 +576,26 @@ describe('هندسة المحطة 3 — الذراع', function(){
    --------------------------------------------------------- */
 describe('هندسة المحطة 4 — الجسد', function(){
 
-  it('خمس مناطق موزّعة على المسرحين: ثلاث أمامًا واثنتان خلفًا', async function(){
+  it('خمسة أزواج موزّعة على المسرحين، ولكل زوج رقعة في كل موضع تقع فيه عضلته', async function(){
     const { doc } = await page();
-    eq(doc.getElementById('bodyFront').querySelectorAll('.zone').length, 3);
-    eq(doc.getElementById('bodyBack').querySelectorAll('.zone').length, 2);
+    const front = Array.from(doc.getElementById('bodyFront').querySelectorAll('.zone'));
+    const back  = Array.from(doc.getElementById('bodyBack').querySelectorAll('.zone'));
+    const keys  = new Set(front.concat(back).map(z => z.getAttribute('data-zone')));
+    eq(keys.size, 5, 'عدد الأزواج ليس خمسة');
+    /* لكل زوج رقعتان على الأقلّ — عضلتاه — أينما وقعتا */
+    keys.forEach(function(k){
+      const zs = doc.querySelectorAll('svg.body .zone[data-zone="' + k + '"]');
+      const patches = Array.from(zs).reduce(function(n, z){
+        return n + z.querySelectorAll('ellipse.patch').length;
+      }, 0);
+      const sides = Array.from(zs).length;
+      ok(patches >= 2, 'زوج برقعة واحدة — أين عضلته الثانية؟ ' + k);
+      ok(sides >= 1, 'زوج بلا رقعة: ' + k);
+    });
+    ok(front.length >= 3 && back.length >= 3, 'مسرح شبه فارغ من الرقع');
   });
 
-  it('لكل منطقة رقعة وسهما اتجاه وبقعة دعوة ومساحة نقر', async function(){
+  it('لكل رقعة سهم واحد وبقعة دعوة ومساحة نقر', async function(){
     const { doc } = await page();
     doc.querySelectorAll('svg.body .zone').forEach(function(z){
       const name = z.getAttribute('data-zone');
@@ -450,8 +603,90 @@ describe('هندسة المحطة 4 — الجسد', function(){
       ok(z.querySelector('.arrows'), 'بلا أسهم: ' + name);
       ok(z.querySelector('.dot'), 'بلا بقعة دعوة: ' + name);
       ok(z.querySelector('.hit'), 'بلا مساحة نقر: ' + name);
-      ok(z.querySelectorAll('.arrows polygon').length >= 2,
-         'سهم باتجاه واحد — والمنطقة تتحرّك في اتجاهين: ' + name);
+      /* سهم واحد لكل رقعة: الرقعة عضلة، والعضلة تسحب في اتجاه واحد */
+      eq(z.querySelectorAll('.arrows path').length,
+         z.querySelectorAll('ellipse.patch').length,
+         'عدد الأسهم لا يساوي عدد الرقع — رقعة بلا سهم أو رقعة بسهمين: ' + name);
+    });
+  });
+
+  /* ــــ حارس دلالة لا حارس وجود ــــ
+     السهم ذو الرأسين شيء واحد بطرفين، فيُقرأ «عضلة واحدة تسحب في
+     اتجاهين» — نقضًا لما بناه الطالب بيده في المحطتين 2 و3. والصادق
+     رقعة لكل عضلة، وسهم مفرد لكل رقعة. */
+  it('لا سهم ذا رأسين في المسرحين: لكل ساق رأس واحد', async function(){
+    const { doc } = await page();
+    doc.querySelectorAll('svg.body .zone').forEach(function(z){
+      const name = z.getAttribute('data-zone');
+      const shafts = z.querySelectorAll('.arrows path').length;
+      const heads  = z.querySelectorAll('.arrows polygon').length;
+      eq(heads, shafts,
+         'عدد الرؤوس لا يساوي عدد السيقان — ثمّة سهم ذو رأسين: ' + name);
+    });
+  });
+
+  it('أسهم كل زوج متعاكسة: عضلة تسحب في جهة وشريكتها في الجهة الأخرى', async function(){
+    const { doc } = await page();
+    function dirsOf(key){
+      const out = [];
+      doc.querySelectorAll('svg.body .zone[data-zone="' + key + '"] .arrows path')
+         .forEach(function(p){
+           const m = (p.getAttribute('d') || '')
+             .match(/M\s*([-\d.]+),([-\d.]+)\s*L\s*([-\d.]+),([-\d.]+)/);
+           if(!m) throw new Error('ساق سهم غير مقروءة: ' + p.getAttribute('d'));
+           out.push({ dx: +m[3] - +m[1], dy: +m[4] - +m[2] });
+         });
+      return out;
+    }
+    const keys = new Set(Array.from(doc.querySelectorAll('svg.body .zone'))
+                              .map(z => z.getAttribute('data-zone')));
+    keys.forEach(function(k){
+      const ds = dirsOf(k);
+      ok(ds.length >= 2, 'الزوج بسهم واحد: ' + k);
+      /* لا بدّ أن يوجد في الزوج سهمان متعاكسان على الأقلّ */
+      let opposed = false;
+      for(let i = 0; i < ds.length && !opposed; i++){
+        for(let j = i + 1; j < ds.length; j++){
+          if(ds[i].dx * ds[j].dx + ds[i].dy * ds[j].dy < 0){ opposed = true; break; }
+        }
+      }
+      ok(opposed, 'كلّ أسهم الزوج في الجهة نفسها — أين التضادّ؟ ' + k);
+    });
+  });
+
+  it('لا سهمان متعاكسان على رقعة واحدة — الرقعة عضلة لا عضلتين', async function(){
+    const { doc } = await page();
+    /* لكل رقعة سهمها الأقرب؛ ويُرفض أن يقع سهمان متعاكسان داخل
+       حدود الرقعة نفسها، فذلك هو العطب الذي عولج. */
+    doc.querySelectorAll('svg.body .zone').forEach(function(z){
+      const name = z.getAttribute('data-zone');
+      const patches = Array.from(z.querySelectorAll('ellipse.patch')).map(function(e){
+        return {
+          cx: +e.getAttribute('cx'), cy: +e.getAttribute('cy'),
+          rx: +e.getAttribute('rx'), ry: +e.getAttribute('ry')
+        };
+      });
+      const shafts = Array.from(z.querySelectorAll('.arrows path')).map(function(p){
+        const m = (p.getAttribute('d') || '')
+          .match(/M\s*([-\d.]+),([-\d.]+)\s*L\s*([-\d.]+),([-\d.]+)/);
+        return {
+          mx: (+m[1] + +m[3]) / 2, my: (+m[2] + +m[4]) / 2,
+          dx: +m[3] - +m[1], dy: +m[4] - +m[2]
+        };
+      });
+      patches.forEach(function(pt, i){
+        const inside = shafts.filter(function(s){
+          const nx = (s.mx - pt.cx) / pt.rx, ny = (s.my - pt.cy) / pt.ry;
+          return nx * nx + ny * ny <= 1;
+        });
+        for(let a = 0; a < inside.length; a++){
+          for(let b = a + 1; b < inside.length; b++){
+            ok(inside[a].dx * inside[b].dx + inside[a].dy * inside[b].dy >= 0,
+               'سهمان متعاكسان على الرقعة نفسها — تُقرأ عضلةً تسحب في اتجاهين: '
+               + name + ' / رقعة ' + (i + 1));
+          }
+        }
+      });
     });
   });
 
@@ -531,15 +766,50 @@ describe('هندسة المحطة 4 — الجسد', function(){
   });
 
   it('لا رقعة تخرج عن كفاف الجسد', async function(){
+    /* كان هذا الحارس يقيس على الصندوق المحيط بالظلّية، فرقعةٌ على
+       الكتف تبرز خارج الجسد وهو أخضر. صار يقيس على الكفاف نفسه:
+       يُبنى من نقاط المسار حدّان أيمن وأيسر لكل ارتفاع، ثم تُعاين
+       ثماني نقاط على محيط كل رقعة. */
     const { doc } = await page();
+    function outline(d){
+      const pts = [];
+      const re = /([MLC])\s*([-\d.,\s]+)/g;
+      let m;
+      while((m = re.exec(d))){
+        const nums = m[2].trim().split(/[\s,]+/).map(Number).filter(n => !isNaN(n));
+        for(let i = 0; i + 1 < nums.length; i += 2) pts.push({ x: nums[i], y: nums[i + 1] });
+      }
+      return pts;
+    }
+    function spanAt(pts, y){
+      /* عرض الجسد عند ارتفاع y: يُستنبَط بالاستكمال الخطّي على
+         أضلاع المسار التي تعبر هذا الارتفاع. */
+      const xs = [];
+      for(let i = 0; i < pts.length; i++){
+        const a = pts[i], b = pts[(i + 1) % pts.length];
+        if((a.y - y) * (b.y - y) <= 0 && a.y !== b.y){
+          xs.push(a.x + (b.x - a.x) * (y - a.y) / (b.y - a.y));
+        }
+      }
+      if(!xs.length) return null;
+      return { x0: Math.min.apply(null, xs), x1: Math.max.apply(null, xs) };
+    }
     ['bodyFront', 'bodyBack'].forEach(function(id){
-      const body = boxOf(doc.getElementById(id).querySelector('.body-f').getAttribute('d'));
-      doc.getElementById(id).querySelectorAll('ellipse.patch').forEach(function(e){
+      const svg = doc.getElementById(id);
+      const pts = outline(svg.querySelector('.body-f').getAttribute('d'));
+      svg.querySelectorAll('ellipse.patch').forEach(function(e){
         const cx = +e.getAttribute('cx'), cy = +e.getAttribute('cy');
         const rx = +e.getAttribute('rx'), ry = +e.getAttribute('ry');
-        ok(cx - rx >= body.x0 && cx + rx <= body.x1 &&
-           cy - ry >= body.y0 && cy + ry <= body.y1,
-           id + ': رقعة خارج الجسد في ' + e.closest('.zone').getAttribute('data-zone'));
+        for(let k = 0; k < 8; k++){
+          const t = k * Math.PI / 4;
+          const px = cx + rx * Math.cos(t), py = cy + ry * Math.sin(t);
+          const sp = spanAt(pts, py);
+          ok(sp, id + ': رقعة خارج ارتفاع الجسد في ' + e.closest('.zone').getAttribute('data-zone'));
+          /* هامش وحدة واحدة: الكفاف مرسوم بحدّ سمكه 1 */
+          ok(px >= sp.x0 - 1 && px <= sp.x1 + 1,
+             id + ': رقعة تبرز خارج كفاف الجسد في '
+             + e.closest('.zone').getAttribute('data-zone'));
+        }
       });
     });
   });
@@ -582,6 +852,22 @@ describe('هندسة المحطة 5 — الذراع المتضرّرة', functi
     const { raw } = await page();
     ok(/\.arm \.tear-gap\{[^}]*stroke:var\(--navy-darker\)/.test(raw),
        'الفجوة تكشف خلفية الصفحة بدل أن يبلغها ما حولها');
+  });
+
+  /* ــــ حارس لغوي: لا لفظ بمعنيين ــــ
+     «بعينك» تحمل في العربية معنيين: بحاسّة البصر (وهو ما يفهمه
+     طالب التاسع)، وفي الذهن دون فعل (وهو الفصيح المهجور). وكان
+     سؤالا التصنيف يستعملانها بالمعنى الثاني بينما تستعملها بطاقة
+     الزوج بالمعنى الأول — فيقرأ الطالب «أنزِل الساعد بعينك» أمرًا
+     بحركة، وهو نقيض المقصود. والتجربة اليدوية هنا مضلّلة أصلًا:
+     الانبساط لا يُحسّ بالكفّ كما يُحسّ الانقباض. */
+  it('سؤالا التصنيف يطلبان فعلًا ذهنيًّا صريحًا لا لفظًا ذا معنيين', async function(){
+    const { doc } = await page();
+    ['s3StatesBox', 's3PatternBox'].forEach(function(id){
+      const q = doc.getElementById(id).querySelector('.explore-q').textContent;
+      no(/بعينك/.test(q), 'لفظ ذو معنيين في سؤال التصنيف: ' + id);
+      ok(/تخيّل|تصوّر/.test(q), 'السؤال لا يعلن أنّ المطلوب ذهنيّ: ' + id);
+    });
   });
 
   it('العضلة الأمامية سليمة: ليست داخل مجموعة التمزّق', async function(){

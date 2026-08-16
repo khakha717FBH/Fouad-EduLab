@@ -370,6 +370,94 @@ describe('المحطة 3 — ذراع بعضلة واحدة', function(){
     ok(doc.getElementById('tricepsGrip').classList.contains('invite'));
   });
 
+  /* ــــ الدلالة على الخطوة التالية بعد أن تظهر العضلة الثانية ــــ
+     العلّة المعالَجة: التعليمة تعيش أعلى المسرح وعين الطالب على
+     التغذية الراجعة أسفله، فلا يعلم أنّ عليه الصعود والسحب.
+     هذه الحرّاس تقيس ما يراه الطالب ويفعله لا بنية الطيّ. */
+
+  it('زرّ العودة إلى المسرح لا يظهر قبل حلّ سؤال الإنزال', async function(){
+    const s = scenario(); const { doc, w } = await s.boot();
+    no(h.visible(doc, 's3BackToArm'), 'زرّ العودة ظاهر منذ التحميل');
+    keyOn(doc.getElementById('bicepsGrip'), 'Enter');
+    await h.tick(w, 1400);
+    no(h.visible(doc, 's3BackToArm'), 'زرّ العودة سبق الإجابة');
+  });
+
+  it('حلّ السؤال يُظهر زرّ العودة عند سطر التغذية — لا يبقى الطالب بلا دليل', async function(){
+    const s = scenario(); const { doc, w } = await s.boot();
+    keyOn(doc.getElementById('bicepsGrip'), 'Enter');
+    await h.tick(w, 1400);
+    h.choose(doc, 'u2l4-bring-down', 'correct');
+    ok(h.visible(doc, 's3BackToArm'), 'لا شيء يدلّ الطالب على الخطوة التالية');
+    const btn = doc.getElementById('s3BackToArm');
+    has(btn.textContent, 'الخلفية');
+    ok(/[↑]/.test(btn.textContent), 'الزرّ لا يدلّ على جهة المسرح');
+  });
+
+  it('السؤال المُجاب لا يُطوى تلقائيًّا — وإلّا اختفى الزرّ قبل أن يُرى', async function(){
+    const s = scenario(); const { doc, w } = await s.boot();
+    keyOn(doc.getElementById('bicepsGrip'), 'Enter');
+    await h.tick(w, 1400);
+    h.choose(doc, 'u2l4-bring-down', 'correct');
+    const box = doc.getElementById('s3DownBox');
+    no(box.classList.contains('is-folded'), 'طُوي السؤال بمؤقّت لا بفعل الطالب');
+    ok(box.classList.contains('is-answered'), 'سطر الطيّ لم يُتَح للطالب');
+  });
+
+  it('نقر الزرّ يطوي السؤال وينقل التركيز إلى مقبض العضلة الخلفية', async function(){
+    const s = scenario(); const { doc, w } = await s.boot();
+    keyOn(doc.getElementById('bicepsGrip'), 'Enter');
+    await h.tick(w, 1400);
+    h.choose(doc, 'u2l4-bring-down', 'correct');
+    h.click(doc, 's3BackToArm');
+    ok(doc.getElementById('s3DownBox').classList.contains('is-folded'), 'السؤال لم يُطوَ');
+    eq(doc.activeElement, doc.getElementById('tricepsGrip'), 'التركيز لم ينتقل إلى المقبض');
+  });
+
+  it('نقر سطر الطيّ يعيد فتح السؤال ثم يطويه — فلا يُحبَس المحتوى', async function(){
+    const s = scenario(); const { doc, w } = await s.boot();
+    keyOn(doc.getElementById('bicepsGrip'), 'Enter');
+    await h.tick(w, 1400);
+    h.choose(doc, 'u2l4-bring-down', 'correct');
+    h.click(doc, 's3BackToArm');
+    const box = doc.getElementById('s3DownBox');
+    h.click(doc, 's3DownSum');
+    no(box.classList.contains('is-folded'), 'السطر لم يُعِد فتح السؤال');
+    h.click(doc, 's3DownSum');
+    ok(box.classList.contains('is-folded'), 'السطر لم يُعِد طيّ السؤال');
+  });
+
+  it('مَن صعد ونقر المقبض متجاهلًا الزرّ يُطوى سؤاله أيضًا', async function(){
+    const s = scenario(); const { doc, w } = await s.boot();
+    keyOn(doc.getElementById('bicepsGrip'), 'Enter');
+    await h.tick(w, 1400);
+    h.choose(doc, 'u2l4-bring-down', 'correct');
+    keyOn(doc.getElementById('tricepsGrip'), 'Enter');
+    ok(doc.getElementById('s3DownBox').classList.contains('is-folded'), 'بقي السؤال مفتوحًا بلا داعٍ');
+  });
+
+  it('سطر الطيّ يحمل عنوان السؤال لا إجابته — الفكرة تُقاس ثانيةً لاحقًا', async function(){
+    const s = scenario(); const { doc, w } = await s.boot();
+    keyOn(doc.getElementById('bicepsGrip'), 'Enter');
+    await h.tick(w, 1400);
+    h.choose(doc, 'u2l4-bring-down', 'correct');
+    const sum = (doc.getElementById('s3DownSum').textContent || '').trim();
+    no(/عضلة ثانية/.test(sum), 'سطر الطيّ يكشف الإجابة');
+    no(/المقابل|معاكس/.test(sum), 'سطر الطيّ يكشف الإجابة');
+    ok(sum.length > 0, 'سطر الطيّ فارغ فلا يدلّ على ما طُوي');
+  });
+
+  it('نقر المقبض الخلفي قبل الإجابة لا يطوي سؤالًا لم يُطرح بعد', async function(){
+    const s = scenario(); const { doc, w } = await s.boot();
+    keyOn(doc.getElementById('tricepsGrip'), 'Enter');
+    keyOn(doc.getElementById('bicepsGrip'), 'Enter');
+    keyOn(doc.getElementById('tricepsGrip'), 'Enter');
+    await h.tick(w, 1400);
+    ok(h.visible(doc, 's3DownBox'), 'السؤال لم يظهر');
+    no(doc.getElementById('s3DownBox').classList.contains('is-folded'),
+       'ظهر السؤال مطويًّا فلا يراه الطالب');
+  });
+
   it('التسمية تلحق البناء: الأسماء لا تظهر قبل تحريك الاتجاهين', async function(){
     const s = scenario(); const { doc, w } = await s.boot();
     no(h.visible(doc, 's3NameLine'), 'الأسماء ظهرت قبل البناء');
@@ -457,6 +545,41 @@ describe('المحطة 3 — ذراع بعضلة واحدة', function(){
     ok(h.visible(doc, 's3done'));
   });
 
+  it('رسالة المسرح تصف ما وقع ولا تستنتج جواب السؤال قبله', async function(){
+    const s = scenario(); const { doc, w } = await s.boot();
+    keyOn(doc.getElementById('bicepsGrip'), 'Enter');
+    await h.tick(w, 1400);
+    const msg = h.text(doc, 's3StageMsg');
+    /* «لا سبيل لإنزاله بهذه العضلة وحدها» كان جوابَ السؤال التالي
+       بألفاظ أخرى، ويُسقط مشتّتَين قبل أن يقرأهما الطالب. */
+    ['عضلة ثانية', 'لا سبيل', 'وحدها', 'زوج', 'المقابل'].forEach(function(t){
+      eq(msg.indexOf(t), -1, 'الرسالة تُفشي الجواب: ' + t);
+    });
+    /* نصّ السؤال وحده لا الخيارات: «عضلة ثانية» تعيش في الخيار
+       الصحيح بحقّ، وإنّما يُمنَع ورودها في صدر السؤال. */
+    const stem = doc.querySelector('#s3DownBox .explore-q').textContent;
+    ['لا يفعل شيئًا', 'عضلة ثانية', 'وحدها'].forEach(function(t){
+      eq(stem.indexOf(t), -1, 'صدر السؤال يُسقط مشتّتًا: ' + t);
+    });
+  });
+
+  it('المقبض المستهلَك يبقى عاملًا ولا يبدو معطَّلًا', async function(){
+    const s = scenario(); const { doc, w } = await s.boot();
+    const bg = doc.getElementById('bicepsGrip');
+    keyOn(bg, 'Enter');
+    /* ما يزول هو الدعوة وحدها: الخفوت يقول «معطَّل» والمقبض يعمل،
+       فطالبٌ يريد إعادة المقارنة لا يجرؤ. */
+    no(bg.classList.contains('spent'), 'المقبض يبدو معطَّلًا وهو يعمل');
+    no(bg.classList.contains('invite'), 'الدعوة بقيت بعد استهلاكها');
+    await h.tick(w, 1400);
+    h.choose(doc, 'u2l4-bring-down', 'correct');
+    keyOn(doc.getElementById('tricepsGrip'), 'Enter');
+    ok(!doc.getElementById('armStage').classList.contains('flexed'));
+    keyOn(bg, 'Enter');
+    ok(doc.getElementById('armStage').classList.contains('flexed'),
+       'المقبض توقّف عن العمل بعد أول استعمال');
+  });
+
   it('بطاقة العضلات المتضادة تعرّف ما هو الشيء لا ما ليس هو', async function(){
     const { doc } = await page();
     const t = doc.getElementById('s3AntagLine').textContent || '';
@@ -485,18 +608,42 @@ describe('المحطة 4 — أزواج الجسد الخمسة', function(){
     no(h.visible(doc, 's4PairsBox'), 'الرقاقات ظهرت قبل الاستكشاف');
   });
 
-  it('خمس مناطق، والعدّاد يتقدّم بالنقر ولا يتقدّم بتكرار المنطقة نفسها', async function(){
+  it('خمسة أزواج لا خمس رقع، والعدّاد يعدّ الأزواج ولا يتقدّم بتكرار الزوج نفسه', async function(){
     const s = scenario(); const { doc, w } = await s.boot();
     h.choose(doc, 's4predict', 'c');
     const zones = Array.from(doc.querySelectorAll('#s4StageBox .zone'));
-    eq(zones.length, 5);
+    const pairs = new Set(zones.map(z => z.getAttribute('data-zone')));
+    eq(pairs.size, 5, 'عدد الأزواج ليس خمسة');
+    ok(zones.length > 5, 'الرقع بعدد الأزواج — فكل زوج في رقعة واحدة لا رقعتين');
     eq(h.text(doc, 's4ZoneCount'), 'استكشفتَ 0 من 5');
     h.clickNode(zones[0]);
     eq(h.text(doc, 's4ZoneCount'), 'استكشفتَ 1 من 5');
     h.clickNode(zones[0]);
-    eq(h.text(doc, 's4ZoneCount'), 'استكشفتَ 1 من 5', 'تكرار المنطقة قدّم العدّاد');
-    h.clickNode(zones[1]);
+    eq(h.text(doc, 's4ZoneCount'), 'استكشفتَ 1 من 5', 'تكرار الرقعة قدّم العدّاد');
+    /* نقر رقعة الشريكة في المسرح الآخر لا يقدّم العدّاد: الزوج واحد */
+    const key0 = zones[0].getAttribute('data-zone');
+    const mate = zones.find(z => z !== zones[0] && z.getAttribute('data-zone') === key0);
+    if(mate){
+      h.clickNode(mate);
+      eq(h.text(doc, 's4ZoneCount'), 'استكشفتَ 1 من 5', 'شريكة الزوج عُدّت زوجًا ثانيًا');
+    }
+    const other = zones.find(z => z.getAttribute('data-zone') !== key0);
+    h.clickNode(other);
     eq(h.text(doc, 's4ZoneCount'), 'استكشفتَ 2 من 5');
+  });
+
+  it('نقرة واحدة تُضيء رقعتَي الزوج معًا في المسرحين — موضعان لعضلتين', async function(){
+    const s = scenario(); const { doc, w } = await s.boot();
+    h.choose(doc, 's4predict', 'c');
+    const zones = Array.from(doc.querySelectorAll('#s4StageBox .zone'));
+    const key = 'arms';
+    const mates = zones.filter(z => z.getAttribute('data-zone') === key);
+    ok(mates.length >= 2, 'زوج الذراعين في رقعة واحدة لا رقعتين');
+    h.clickNode(mates[0]);
+    ok(mates.every(z => z.classList.contains('on')), 'أُضيئت رقعة واحدة والشريكة مطفأة');
+    /* ورقع زوج آخر لا تُضاء معها */
+    const others = zones.filter(z => z.getAttribute('data-zone') !== key);
+    ok(others.every(z => !z.classList.contains('on')), 'أُضيء زوج لم يُنقر');
   });
 
   it('الإخفات يخصّ الأخوات، ويُرفع عند انتهاء الاستكشاف', async function(){
@@ -575,6 +722,51 @@ describe('المحطة 5 — حين تتمزّق عضلة', function(){
     no(h.visible(doc, 's5StageBox'));
     h.choose(doc, 's5predict', 'b');
     ok(h.visible(doc, 's5StageBox'));
+  });
+
+  /* ــــ الدلالة على المقبض الباقي ــــ
+     العبارة العامّة «اسحب كلّ مقبض بدوره» لا تقول أيّهما بقي، فيظنّ
+     الطالب أنه أنهى النشاط بعد سحبة واحدة. */
+  it('الدعوة تنتقل إلى المقبض الباقي بعد تجربة الأول', async function(){
+    const s = scenario(); const { doc } = await s.boot();
+    h.choose(doc, 's5predict', 'b');
+    const bg = doc.getElementById('tornBicepsGrip');
+    const tg = doc.getElementById('tornTricepsGrip');
+    ok(bg.classList.contains('invite'), 'لا دعوة على المقبض الأول');
+    no(tg.classList.contains('invite'), 'المقبضان يدعوان معًا فلا يُعرف البدء');
+    keyOn(bg, 'Enter');
+    no(bg.classList.contains('invite'), 'الدعوة بقيت على مقبض جُرّب');
+    ok(tg.classList.contains('invite'), 'الدعوة لم تنتقل إلى المقبض الباقي');
+  });
+
+  it('التلميح يسمّي المقبض الباقي لا يكتفي بعبارة عامّة', async function(){
+    const s = scenario(); const { doc } = await s.boot();
+    h.choose(doc, 's5predict', 'b');
+    keyOn(doc.getElementById('tornBicepsGrip'), 'Enter');
+    has(h.text(doc, 's5TryHint'), 'الخلفية');
+  });
+
+  it('ومَن بدأ بالمقبض الخلفي تنتقل دعوته إلى الأمامي', async function(){
+    const s = scenario(); const { doc } = await s.boot();
+    h.choose(doc, 's5predict', 'b');
+    keyOn(doc.getElementById('tornTricepsGrip'), 'Enter');
+    ok(doc.getElementById('tornBicepsGrip').classList.contains('invite'),
+       'الدعوة لم تنتقل حين بدأ الطالب بالخلفية');
+    has(h.text(doc, 's5TryHint'), 'الأمامية');
+  });
+
+  it('ولا دعوة معلّقة بعد تجربة المقبضين', async function(){
+    const s = scenario(); const { doc, w } = await s.boot();
+    h.choose(doc, 's5predict', 'b');
+    keyOn(doc.getElementById('tornBicepsGrip'), 'Enter');
+    keyOn(doc.getElementById('tornTricepsGrip'), 'Enter');
+    await h.tick(w, 1100);
+    const grips = ['tornBicepsGrip', 'tornTricepsGrip'];
+    grips.forEach(function(id){
+      no(doc.getElementById(id).classList.contains('invite'),
+         'دعوة باقية بعد انتهاء النشاط: ' + id);
+    });
+    ok(h.visible(doc, 's5SymptomBox'), 'السؤال لم يُفتح بعد تجربة المقبضين');
   });
 
   it('العضلة السليمة تعمل والممزّقة لا تعمل', async function(){
