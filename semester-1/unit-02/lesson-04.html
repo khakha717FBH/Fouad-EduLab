@@ -58,6 +58,37 @@
   }
   .explore-step{ margin-top:26px; padding-top:20px; border-top:1px dashed var(--border); }
   .explore-step:first-of-type{ border-top:none; padding-top:0; }
+
+  /* ــــ طيّ السؤال المُجاب وزرّ العودة إلى المسرح ــــ
+     العلّة المعالَجة: حين يُجاب السؤال وتظهر العضلة الخلفية على
+     المسرح فوق رأس الطالب، تتبدّل التعليمة أعلى الصفحة وعينُه على
+     التغذية الراجعة أسفلها — فلا يعلم أنّ ثمّة خطوة باقية.
+     العلاجان معًا: زرٌّ في موضع عينه يصعد به إلى المقبض، وطيُّ
+     السؤال المُجاب فتقصر المسافة بينه وبين المسرح.
+     والسطر المطويّ يحمل عنوان السؤال لا إجابته: الفكرة نفسها
+     تُقاس ثانيةً في سؤال النمط وفي التقييم الختامي. */
+  .step-summary{
+    display:none; width:100%; align-items:center; gap:10px;
+    background:none; border:none; padding:0; cursor:pointer;
+    font-family:'Tajawal', sans-serif; font-size:13.5px; font-weight:700;
+    color:var(--turquoise); text-align:start;
+  }
+  .explore-step.is-answered > .step-summary{ display:flex; }
+  .step-summary:focus-visible{ outline:2px solid var(--coral); outline-offset:4px; border-radius:8px; }
+  .step-caret{
+    width:15px; height:15px; flex:0 0 auto; margin-inline-start:auto;
+    transition:transform .25s ease; stroke:var(--turquoise);
+  }
+  .explore-step.is-answered:not(.is-folded) .step-caret{ transform:rotate(180deg); }
+  .step-body{ overflow:hidden; transition:max-height .34s ease, opacity .2s ease; }
+  .explore-step.is-folded > .step-body{ max-height:0 !important; opacity:0; }
+  /* المسافات تتقلّص مع الطيّ كي تُقرأ السطور كسلسلة متّصلة */
+  .explore-step.is-folded{ margin-top:12px; padding-top:10px; }
+  .stage-return{ margin-top:12px; }
+  @media (prefers-reduced-motion: reduce){
+    .step-body{ transition:none; }
+    .step-caret{ transition:none; }
+  }
   .explore-answer-row{ display:flex; gap:10px; flex-wrap:wrap; }
   .explore-input{
     flex:1 1 140px; min-width:100px; background:rgba(255,255,255,.03);
@@ -128,7 +159,7 @@
      العضلة الوردية والوتر الأبيض بالقيم نفسها المستعملة في درس 03،
      فالطالب يعبر من درس إلى درس ولون النسيج لا يتبدّل تحت عينه. */
   :root{
-    --muscle-p:#C4657A;
+    --muscle-p:#C4657A; --muscle-edge:#7E3B4C;
     --sinew:#F2F0E8; --dough:#8A93A2; --dough-edge:#6E7686;
   }
 
@@ -188,20 +219,35 @@
      فلا يجوز أن يُنتَج بتمديد CSS يشوّه سماكة الحدّ معه. */
   .arm .bone-f{ fill:var(--matter); stroke:var(--matter-edge); stroke-width:1.2; }
   .arm .joint-f{ fill:var(--matter); stroke:var(--matter-edge); stroke-width:1.2; }
-  .arm .mus-f{ fill:var(--muscle-p); stroke:var(--matter-edge); stroke-width:1; }
+  /* حدّ العضلة بلونها لا بلون العظم: البطنان تلاصقان العضد على
+     جانبيه، وحدٌّ عظميّ يذيبهما فيه كتلةً واحدة. وهذا حدّ مادّة لا
+     حدّ واجهة، فلا يزاحم قاعدة اللونين. */
+  .arm .mus-f{ fill:var(--muscle-p); stroke:var(--muscle-edge); stroke-width:1.6; }
   .arm .sinew{ stroke:var(--sinew); stroke-width:2.4; fill:none; stroke-linecap:round; }
   .arm .pose{ transition:opacity .55s ease; }
   .arm .grip{
-    fill:var(--turquoise); stroke:#0E8F79; stroke-width:1.6;
+    /* حلقة مفرغة لا قرصًا مصمتًا: القرص كان يحجب بطن العضلة تحته،
+       وتغيّرُ شكل البطن هو المفهوم المقيس في هذه المحطة. */
+    fill:rgba(20,200,168,.14); stroke:var(--turquoise); stroke-width:3;
     cursor:grab; touch-action:none;
   }
+  .arm .grip-dot{ fill:var(--turquoise); pointer-events:none; }
   .arm .grip:active{ cursor:grabbing; }
+  /* التركيز بلوحة المفاتيح: حدّ مرجاني على المقبض بدل حلقة
+     المتصفّح الافتراضية (إطار أسود وأبيض خارج الهوية). يُستبدل
+     المؤشّر ولا يُحذف. ويظهر في المحطتين 3 و5 معًا. */
+  .arm .grip:focus{ outline:none; }
+  .arm .grip:focus-visible{ outline:none; stroke:var(--coral); stroke-width:3.4; }
   .arm .grip.invite{ animation:gripPulse 1.8s ease-in-out infinite; }
-  .arm .grip.spent{ opacity:.35; }
   /* العضلة الخلفية ومقبضها لا يظهران إلا في المرحلة الثانية:
-     تسلسل المفاهيم يمنع رؤية الزوج قبل أن يكتشف الطالب الحاجة إليه. */
-  .arm:not(.has-tri) .tri{ display:none; }
-  .arm:not(.has-tri) #tricepsGrip{ display:none; }
+     تسلسل المفاهيم يمنع رؤية الزوج قبل أن يكتشف الطالب الحاجة إليه.
+     والقاعدة محصورة بمسرح المحطة 3 بمعرّفه، لا بالصنف `.arm` العامّ:
+     مسرح المحطة 5 يحمل `.arm` نفسه ولا يحمل `has-tri` أبدًا، فكانت
+     القاعدة العامّة تُخفي فيه العضلة الممزّقة — وهي محور تلك المحطة —
+     ويبقى مقبضها ظاهرًا (لأن إخفاءه محصور بمعرّفه)، فتُرى حلقة
+     معلّقة في الفراغ بلا عضلة. */
+  #armStage:not(.has-tri) .tri{ display:none; }
+  #armStage:not(.has-tri) #tricepsGrip{ display:none; }
   #armExtended{ opacity:1; }
   #armFlexed{ opacity:0; }
   #armStage.flexed #armExtended{ opacity:0; }
@@ -238,6 +284,15 @@
   .body .arrows polygon{ fill:var(--turquoise); }
   .body .dot{ fill:var(--turquoise); opacity:.9; }
   .body .zone.on .dot, .body .zone.seen .dot{ opacity:0; }
+  /* ــــ التركيز بلوحة المفاتيح ــــ
+     حلقة المتصفّح الافتراضية على عنصر SVG قابل للتركيز تُرسم إطارًا
+     أسود وأبيض مزدوجًا خارجًا عن الهوية كليًّا. تُلغى ويحلّ محلّها
+     حدّ مرجاني على الشكل نفسه — وهو نمط التركيز المستعمل في
+     المحطة 2 أصلًا. والمؤشّر يُستبدل ولا يُحذف: طالب لوحة
+     المفاتيح لا بدّ أن يرى أين هو. */
+  .body .zone:focus{ outline:none; }
+  .body .zone:focus-visible{ outline:none; }
+  .body .zone:focus-visible .patch{ stroke:var(--coral); stroke-width:2.5; opacity:1; }
   .body-pair{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; max-width:920px; margin:14px auto 0; }
   .body-cell{
     flex:1 1 240px; max-width:300px; background:var(--navy-darker);
@@ -430,7 +485,7 @@
     </div>
 
     <div class="explore-step" id="s2OneBox" hidden>
-      <p class="explore-q">عظمٌ في جسمك عليه عضلة واحدة فقط، والعضلة تعمل كما يعمل هذا الخيط. إلى أين يستطيع هذا العظم أن يذهب، وإلى أين لا يستطيع؟</p>
+      <p class="explore-q">عظمٌ في جسمك عليه عضلة واحدة فقط، والعضلة تعمل كما يعمل هذا الخيط. إلى أي اتجاه يستطيع هذا العظم أن يتحرّك، وإلى أي اتجاه لا يستطيع؟</p>
       <div class="explore-answer-row">
         <input type="text" class="explore-input" id="s2OneInput" placeholder="اكتب إجابتك" autocomplete="off">
         <button type="button" class="btn" id="s2OneBtn">سلّم الإجابة</button>
@@ -462,48 +517,55 @@
 
     <!-- ═══ مرحلة أ — عضلة واحدة ═══ -->
     <div class="stage-wrap narrow">
-      <svg class="stage arm" id="armStage" viewBox="0 0 340 300"
+      <svg class="stage arm" id="armStage" viewBox="46 34 226 246"
            xmlns="http://www.w3.org/2000/svg" role="img"
            aria-label="رسم تخطيطي لذراع: عضد وساعد يلتقيان عند المرفق، وعليهما عضلة أمامية وأخرى خلفية">
 
         <!-- ── العناصر الثابتة: لا تتبدّل بين الوضعين ── -->
-        <path class="bone-f" d="M 62,44 Q 108,36 138,48 L 134,70 Q 104,62 66,68 Z"/>
-        <circle class="joint-f" cx="108" cy="62" r="11"/>
-        <path class="bone-f" d="M 100,62 L 116,62 L 116,180 L 100,180 Z"/>
+        <path class="bone-f" d="M 108,48 Q 124,48 128,60 Q 130,70 120,73 L 96,73 Q 86,70 88,60 Q 92,48 108,48 Z"/>
+        <path class="bone-f" d="M 99,66 L 117,66 L 117,180 L 99,180 Z"/>
         <circle class="joint-f" cx="108" cy="180" r="9"/>
 
         <!-- ── وضع المدّ: الساعد إلى أسفل ── -->
         <g class="pose" id="armExtended">
+          <!-- نتوء الزند: طرف الساعد خلف المرفق، فيدور معه. مرسوم قبل
+               الساعد فيغطّيه إلّا ما نتأ منه، ولا يُقرأ مفصلًا ثانيًا. -->
+          <circle class="joint-f" cx="102.1" cy="174.5" r="6"/>
           <path class="bone-f" d="M 102.9,185.5 L 190.9,267.5 L 201.1,256.5 L 113.1,174.5 Z"/>
           <circle class="joint-f" cx="196" cy="262" r="10"/>
-          <!-- العضلة الأمامية ممدودة ورفيعة -->
-          <path class="mus-f" id="bicepsExt" d="M 117,72 Q 137,120 117,170 Q 110,120 117,72 Z"/>
-          <path class="sinew" d="M 117,170 Q 121,182 128,192"/>
+          <path class="sinew" d="M 120,88 L 114,71"/>
+          <path class="mus-f" id="bicepsExt" d="M 120,88 C 137,108.3 137,145.7 120,166 L 117,160 L 117,94 Z"/>
+          <path class="sinew" d="M 120,166 Q 119,176 125.6,196.4"/>
           <g class="tri">
-            <!-- العضلة الخلفية قصيرة ومنتفخة -->
-            <path class="mus-f" id="tricepsExt" d="M 99,72 Q 64,110 99,150 Q 110,110 99,72 Z"/>
-            <path class="sinew" d="M 99,150 Q 92,180 118,192"/>
+            <path class="sinew" d="M 96,88 L 102,71"/>
+            <path class="mus-f" id="tricepsExt" d="M 96,88 C 65,101.0 65,125.0 96,138 L 99,132 L 99,94 Z"/>
+            <path class="sinew" d="M 96,138 Q 95,150 102.1,174.5"/>
+          </g>
           </g>
         </g>
 
         <!-- ── وضع الثني: الساعد إلى أعلى ── -->
         <g class="pose" id="armFlexed">
+          <!-- نتوء الزند: طرف الساعد خلف المرفق، فيدور معه. مرسوم قبل
+               الساعد فيغطّيه إلّا ما نتأ منه، ولا يُقرأ مفصلًا ثانيًا. -->
+          <circle class="joint-f" cx="101.0" cy="183.9" r="6"/>
           <path class="bone-f" d="M 111.7,186.5 L 217.7,126.5 L 210.3,113.5 L 104.3,173.5 Z"/>
           <circle class="joint-f" cx="214" cy="120" r="10"/>
-          <!-- العضلة الأمامية قصيرة ومنتفخة -->
-          <path class="mus-f" id="bicepsFlex" d="M 117,72 Q 152,110 117,148 Q 106,110 117,72 Z"/>
-          <path class="sinew" d="M 117,148 Q 123,158 130,168"/>
+          <path class="sinew" d="M 120,88 L 114,71"/>
+          <path class="mus-f" id="bicepsFlex" d="M 120,88 C 151,101.0 151,125.0 120,138 L 117,132 L 117,94 Z"/>
+          <path class="sinew" d="M 120,138 Q 119,148 128.9,168.2"/>
           <g class="tri">
-            <!-- العضلة الخلفية ممدودة ورفيعة -->
-            <path class="mus-f" id="tricepsFlex" d="M 99,72 Q 79,120 99,172 Q 106,120 99,72 Z"/>
-            <path class="sinew" d="M 99,172 Q 97,186 106,193"/>
+            <path class="sinew" d="M 96,88 L 102,71"/>
+            <path class="mus-f" id="tricepsFlex" d="M 96,88 C 79,108.3 79,145.7 96,166 L 99,160 L 99,94 Z"/>
+            <path class="sinew" d="M 96,166 Q 95,178 101.0,183.9"/>
+          </g>
           </g>
         </g>
 
         <!-- ── المقبضان: خارج مجموعتَي الوضع فلا يتلاشيان معهما ── -->
-        <circle class="grip invite" id="bicepsGrip" cx="128" cy="110" r="11" tabindex="0"
+        <circle class="grip invite" id="bicepsGrip" cx="125" cy="119" r="7" tabindex="0"
                 role="button" aria-label="اسحب العضلة الأمامية"/>
-        <circle class="grip" id="tricepsGrip" cx="88" cy="110" r="11" tabindex="0"
+        <circle class="grip" id="tricepsGrip" cx="91" cy="119" r="7" tabindex="0"
                 role="button" aria-label="اسحب العضلة الخلفية"/>
       </svg>
     </div>
@@ -514,14 +576,22 @@
 
     <!-- ═══ مرحلة ب — كيف نُعيده؟ ═══ -->
     <div class="explore-step" id="s3DownBox" hidden>
-      <p class="explore-q">الساعد مرفوع الآن، ودفعُ العضلة لا يفعل شيئًا. فما الذي يلزم لإنزاله؟</p>
-      <div class="quiz-options" data-q="u2l4-bring-down">
-        <label class="quiz-option"><input type="radio" name="u2l4-bring-down" value="w1">أن تدفع العضلة نفسها بقوّة أكبر ممّا دفعتَ به أوّل مرّة</label>
-        <label class="quiz-option"><input type="radio" name="u2l4-bring-down" value="w2">أن تنتظر حتى تتعب العضلة الأمامية فيسقط الساعد وحده</label>
-        <label class="quiz-option"><input type="radio" name="u2l4-bring-down" value="correct">عضلة ثانية في الجهة المقابلة تسحب الساعد إلى أسفل</label>
-        <label class="quiz-option"><input type="radio" name="u2l4-bring-down" value="w3">أن يطول العظم قليلًا فيميل الساعد إلى أسفل بثقله</label>
+      <button type="button" class="step-summary" id="s3DownSum" aria-expanded="true" aria-controls="s3DownBody">
+        <span>✓ ما الذي يلزم لإنزال الساعد</span>
+        <svg class="step-caret" viewBox="0 0 24 24" fill="none" stroke-width="2.4"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="step-body" id="s3DownBody">
+        <p class="explore-q">حاولتَ إنزال الساعد ولم تُفلح. فما الذي يلزم لإنزاله؟</p>
+        <div class="quiz-options" data-q="u2l4-bring-down">
+          <label class="quiz-option"><input type="radio" name="u2l4-bring-down" value="w1">أن تدفع العضلة نفسها بقوّة أكبر ممّا دفعتَ به أوّل مرّة</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-bring-down" value="w2">أن تنتظر حتى تتعب العضلة الأمامية فيسقط الساعد وحده</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-bring-down" value="correct">عضلة ثانية في الجهة المقابلة تسحب الساعد إلى أسفل</label>
+          <label class="quiz-option"><input type="radio" name="u2l4-bring-down" value="w3">أن يطول العظم قليلًا فيميل الساعد إلى أسفل بثقله</label>
+        </div>
+        <p class="explore-feedback" id="fb-u2l4-bring-down" hidden></p>
+        <button type="button" class="btn stage-return" id="s3BackToArm" hidden>اسحب العضلة الخلفية ↑</button>
       </div>
-      <p class="explore-feedback" id="fb-u2l4-bring-down" hidden></p>
     </div>
 
     <!-- ═══ مرحلة ج — التسمية والقياس ═══ -->
@@ -541,7 +611,7 @@
     <p class="name-card" id="s3TermLine" hidden>حين تقصُر العضلة نقول إنها <b>تنقبض</b>، وحين تستطيل نقول إنها <b>تنبسط</b>.</p>
 
     <div class="explore-step" id="s3StatesBox" hidden>
-      <p class="explore-q">أعِد الساعد إلى الأعلى بعينك، وصنّف حال كلّ عضلة في تلك اللحظة.</p>
+      <p class="explore-q">تخيّل أنك تُعيد الساعد إلى الأعلى، وصنّف حال كلّ عضلة في تلك اللحظة.</p>
       <div data-chips="u2l4-states">
         <div class="chips-pool" id="s3ChipsPool">
           <div class="chip" data-value="منقبضة" data-xp-id="u2l4-state-biceps" data-xp-reason="حدّدتَ حال العضلة ذات الرأسين عند الرفع" tabindex="0">منقبضة — قصُرت</div>
@@ -560,7 +630,7 @@
     </div>
 
     <div class="explore-step" id="s3PatternBox" hidden>
-      <p class="explore-q">والآن أنزِل الساعد بعينك. ما حال العضلتين في هذه اللحظة؟</p>
+      <p class="explore-q">والآن تخيّل أنك تُنزل الساعد. ما حال العضلتين في هذه اللحظة؟</p>
       <div class="quiz-options" data-q="u2l4-extend-pattern">
         <label class="quiz-option"><input type="radio" name="u2l4-extend-pattern" value="w1">تنقبض العضلتان معًا في اللحظة نفسها لتُنزلا الساعد</label>
         <label class="quiz-option"><input type="radio" name="u2l4-extend-pattern" value="correct">تنقبض ثلاثية الرؤوس وتنبسط ذات الرأسين — أي عكس ما كان</label>
@@ -611,48 +681,57 @@
         <div class="body-cell">
           <svg class="body" id="bodyFront" viewBox="0 0 160 300"
                xmlns="http://www.w3.org/2000/svg" role="img"
-               aria-label="رسم ظلّي لجسم الإنسان من الأمام، عليه ثلاث مناطق قابلة للنقر: الذراعان والصدر والفخذان">
+               aria-label="رسم ظلّي لجسم الإنسان من الأمام، عليه أربع رقع عضلية قابلة للنقر: عضلتا العضدين وعضلة الصدر وعضلتا الوركين وعضلتا الفخذين، على كل رقعة سهم واحد يبيّن جهة سحبها">
             <path class="body-f" d="M 80,12 C 89,12 96,20 96,29 C 96,38 90,44 88,45 L 88,52 L 104,58 L 120,132 L 126,186 L 114,188 L 108,134 L 100,140 L 106,166 L 102,228 L 98,276 L 104,284 L 84,284 L 88,276 L 84,228 L 80,192 L 76,228 L 72,276 L 76,284 L 56,284 L 62,276 L 58,228 L 54,166 L 60,140 L 52,134 L 46,188 L 34,186 L 40,132 L 56,58 L 72,52 L 72,45 C 70,44 64,38 64,29 C 64,20 71,12 80,12 Z"/>
 
-            <g class="zone" id="zoneArms" data-zone="arms" tabindex="0" role="button" aria-label="الذراعان">
-              <ellipse class="patch" cx="112" cy="96" rx="9" ry="30"/>
-              <ellipse class="patch" cx="48" cy="96" rx="9" ry="30"/>
+            <!-- ذات الرأسين: أمام العضدين، تسحب الساعد إلى أعلى -->
+            <g class="zone" id="zoneArmsF" data-zone="arms" tabindex="0" role="button" aria-label="عضلة أمام العضد">
+              <ellipse class="patch" cx="107" cy="108" rx="6" ry="22"/>
+              <ellipse class="patch" cx="53" cy="108" rx="6" ry="22"/>
               <g class="arrows">
-                <path d="M 112,78 L 112,114"/>
-                <polygon points="112,72 108,80 116,80"/>
-                <polygon points="112,120 108,112 116,112"/>
-                <path d="M 48,78 L 48,114"/>
-                <polygon points="48,72 44,80 52,80"/>
-                <polygon points="48,120 44,112 52,112"/>
+                <path d="M 107,120 L 107,98"/>
+                <polygon points="107,92 103,100 111,100"/>
+                <path d="M 53,120 L 53,98"/>
+                <polygon points="53,92 49,100 57,100"/>
               </g>
-              <circle class="dot" cx="112" cy="96" r="3.5"/>
+              <circle class="dot" cx="107" cy="108" r="3.5"/>
               <!-- مساحتا نقر لا واحدة: مستطيل واحد يشمل الذراعين
                    يبتلع الصدر الواقع بينهما، فيلتبس المقصود بالنقرة. -->
-              <rect class="hit" x="36" y="62" width="24" height="70"/>
-              <rect class="hit" x="100" y="62" width="26" height="70"/>
+              <rect class="hit" x="40" y="84" width="20" height="50"/>
+              <rect class="hit" x="100" y="84" width="20" height="50"/>
             </g>
 
-            <g class="zone" id="zoneChest" data-zone="chest" tabindex="0" role="button" aria-label="الصدر">
-              <ellipse class="patch" cx="80" cy="80" rx="20" ry="18"/>
+            <!-- الصدرية الكبرى: تسحب الكتف إلى أسفل -->
+            <g class="zone" id="zoneChestF" data-zone="chest" tabindex="0" role="button" aria-label="عضلة الصدر">
+              <ellipse class="patch" cx="80" cy="80" rx="17" ry="18"/>
               <g class="arrows">
-                <path d="M 64,80 L 96,80"/>
-                <polygon points="58,80 66,76 66,84"/>
-                <polygon points="102,80 94,76 94,84"/>
+                <path d="M 80,70 L 80,88"/>
+                <polygon points="80,94 76,86 84,86"/>
               </g>
               <circle class="dot" cx="80" cy="80" r="3.5"/>
-              <rect class="hit" x="60" y="62" width="40" height="36"/>
+              <rect class="hit" x="62" y="62" width="36" height="36"/>
             </g>
 
-            <g class="zone" id="zoneThighs" data-zone="thighs" tabindex="0" role="button" aria-label="الفخذان">
+            <!-- مثنية الورك: ترفع الفخذ إلى الأمام -->
+            <g class="zone" id="zoneHipsF" data-zone="hips" tabindex="0" role="button" aria-label="عضلة أمام الورك">
+              <ellipse class="patch" cx="80" cy="150" rx="20" ry="11"/>
+              <g class="arrows">
+                <path d="M 80,158 L 80,144"/>
+                <polygon points="80,138 76,146 84,146"/>
+              </g>
+              <circle class="dot" cx="80" cy="150" r="3.5"/>
+              <rect class="hit" x="58" y="136" width="44" height="28"/>
+            </g>
+
+            <!-- رباعية الرؤوس: أمام الفخذين، تمدّ الركبة -->
+            <g class="zone" id="zoneThighsF" data-zone="thighs" tabindex="0" role="button" aria-label="عضلة أمام الفخذ">
               <ellipse class="patch" cx="93" cy="200" rx="9" ry="26"/>
               <ellipse class="patch" cx="67" cy="200" rx="9" ry="26"/>
               <g class="arrows">
-                <path d="M 93,184 L 93,216"/>
-                <polygon points="93,178 89,186 97,186"/>
-                <polygon points="93,222 89,214 97,214"/>
-                <path d="M 67,184 L 67,216"/>
-                <polygon points="67,178 63,186 71,186"/>
-                <polygon points="67,222 63,214 71,214"/>
+                <path d="M 93,188 L 93,210"/>
+                <polygon points="93,216 89,208 97,208"/>
+                <path d="M 67,188 L 67,210"/>
+                <polygon points="67,216 63,208 71,208"/>
               </g>
               <circle class="dot" cx="93" cy="200" r="3.5"/>
               <rect class="hit" x="56" y="174" width="48" height="52"/>
@@ -664,29 +743,79 @@
         <div class="body-cell">
           <svg class="body" id="bodyBack" viewBox="0 0 160 300"
                xmlns="http://www.w3.org/2000/svg" role="img"
-               aria-label="رسم ظلّي لجسم الإنسان من الخلف، عليه منطقتان قابلتان للنقر: الظهر والوركان">
+               aria-label="رسم ظلّي لجسم الإنسان من الخلف، عليه رقع عضلية قابلة للنقر: عضلتا خلف العضدين وعضلة أعلى الظهر وعضلتا الكتفين وعضلة الظهر العريضة وعضلة الوركين، على كل رقعة سهم واحد يبيّن جهة سحبها">
             <path class="body-f" d="M 80,12 C 89,12 96,20 96,29 C 96,38 90,44 88,45 L 88,52 L 104,58 L 120,132 L 126,186 L 114,188 L 108,134 L 100,140 L 106,166 L 102,228 L 98,276 L 104,284 L 84,284 L 88,276 L 84,228 L 80,192 L 76,228 L 72,276 L 76,284 L 56,284 L 62,276 L 58,228 L 54,166 L 60,140 L 52,134 L 46,188 L 34,186 L 40,132 L 56,58 L 72,52 L 72,45 C 70,44 64,38 64,29 C 64,20 71,12 80,12 Z"/>
 
-            <g class="zone" id="zoneBack" data-zone="back" tabindex="0" role="button" aria-label="الظهر">
-              <ellipse class="patch" cx="80" cy="92" rx="22" ry="30"/>
+            <!-- ثلاثية الرؤوس: خلف العضدين، تسحب الساعد إلى أسفل -->
+            <g class="zone" id="zoneArmsB" data-zone="arms" tabindex="0" role="button" aria-label="عضلة خلف العضد">
+              <ellipse class="patch" cx="107" cy="108" rx="6" ry="22"/>
+              <ellipse class="patch" cx="53" cy="108" rx="6" ry="22"/>
               <g class="arrows">
-                <path d="M 80,74 L 80,110"/>
-                <polygon points="80,68 76,76 84,76"/>
-                <polygon points="80,116 76,108 84,108"/>
+                <path d="M 107,98 L 107,120"/>
+                <polygon points="107,126 103,118 111,118"/>
+                <path d="M 53,98 L 53,120"/>
+                <polygon points="53,126 49,118 57,118"/>
               </g>
-              <circle class="dot" cx="80" cy="92" r="3.5"/>
-              <rect class="hit" x="56" y="60" width="48" height="64"/>
+              <circle class="dot" cx="107" cy="108" r="3.5"/>
+              <rect class="hit" x="40" y="84" width="20" height="50"/>
+              <rect class="hit" x="100" y="84" width="20" height="50"/>
             </g>
 
-            <g class="zone" id="zoneHips" data-zone="hips" tabindex="0" role="button" aria-label="الوركان">
+            <!-- شبه المنحرفة: أعلى الظهر، ترفع الكتف -->
+            <g class="zone" id="zoneChestB" data-zone="chest" tabindex="0" role="button" aria-label="عضلة أعلى الظهر">
+              <ellipse class="patch" cx="80" cy="74" rx="11" ry="13"/>
+              <g class="arrows">
+                <path d="M 80,84 L 80,68"/>
+                <polygon points="80,62 76,70 84,70"/>
+              </g>
+              <circle class="dot" cx="80" cy="74" r="3.5"/>
+              <rect class="hit" x="68" y="58" width="24" height="32"/>
+            </g>
+
+            <!-- الظهر: عضلتان في رقعتين — الدالية على رأسَي الكتفين
+                 ترفع الذراع عن الجذع، والظهرية العريضة في متن الظهر
+                 تعيدها إليه. رقعتان لعضلتين، ولكلٍّ سهمها المفرد. -->
+            <g class="zone" id="zoneBackB" data-zone="back" tabindex="0" role="button" aria-label="عضلتا الكتف والظهر">
+              <ellipse class="patch" cx="101" cy="66" rx="5" ry="7"/>
+              <ellipse class="patch" cx="59" cy="66" rx="5" ry="7"/>
+              <ellipse class="patch" cx="80" cy="112" rx="17" ry="18"/>
+              <g class="arrows">
+                <path d="M 101,72 L 101,62"/>
+                <polygon points="101,56 97,64 105,64"/>
+                <path d="M 59,72 L 59,62"/>
+                <polygon points="59,56 55,64 63,64"/>
+                <path d="M 80,102 L 80,120"/>
+                <polygon points="80,126 76,118 84,118"/>
+              </g>
+              <circle class="dot" cx="80" cy="112" r="3.5"/>
+              <rect class="hit" x="94" y="54" width="16" height="20"/>
+              <rect class="hit" x="50" y="54" width="16" height="20"/>
+              <rect class="hit" x="62" y="94" width="36" height="38"/>
+            </g>
+
+            <!-- الألوية الكبرى: تردّ الفخذ إلى الخلف -->
+            <g class="zone" id="zoneHipsB" data-zone="hips" tabindex="0" role="button" aria-label="عضلة الورك من الخلف">
               <ellipse class="patch" cx="80" cy="168" rx="24" ry="16"/>
               <g class="arrows">
-                <path d="M 80,156 L 80,180"/>
-                <polygon points="80,150 76,158 84,158"/>
-                <polygon points="80,186 76,178 84,178"/>
+                <path d="M 80,160 L 80,176"/>
+                <polygon points="80,182 76,174 84,174"/>
               </g>
               <circle class="dot" cx="80" cy="168" r="3.5"/>
               <rect class="hit" x="54" y="150" width="52" height="36"/>
+            </g>
+
+            <!-- المأبضية: خلف الفخذين، تثني الركبة فيرتفع العقب -->
+            <g class="zone" id="zoneThighsB" data-zone="thighs" tabindex="0" role="button" aria-label="عضلة خلف الفخذ">
+              <ellipse class="patch" cx="93" cy="210" rx="9" ry="20"/>
+              <ellipse class="patch" cx="67" cy="210" rx="9" ry="20"/>
+              <g class="arrows">
+                <path d="M 93,220 L 93,202"/>
+                <polygon points="93,196 89,204 97,204"/>
+                <path d="M 67,220 L 67,202"/>
+                <polygon points="67,196 63,204 71,204"/>
+              </g>
+              <circle class="dot" cx="93" cy="210" r="3.5"/>
+              <rect class="hit" x="56" y="188" width="48" height="44"/>
             </g>
           </svg>
           <p class="cell-cap">من الخلف</p>
@@ -763,42 +892,53 @@
 
     <div id="s5StageBox" hidden>
       <div class="stage-wrap narrow">
-        <svg class="stage arm" id="tornStage" viewBox="0 0 340 300"
+        <svg class="stage arm" id="tornStage" viewBox="46 34 226 246"
              xmlns="http://www.w3.org/2000/svg" role="img"
              aria-label="الذراع نفسها، وعضلتها الخلفية باهتة وفيها فجوة تمزّق">
 
-          <path class="bone-f" d="M 62,44 Q 108,36 138,48 L 134,70 Q 104,62 66,68 Z"/>
-          <circle class="joint-f" cx="108" cy="62" r="11"/>
-          <path class="bone-f" d="M 100,62 L 116,62 L 116,180 L 100,180 Z"/>
+          <path class="bone-f" d="M 108,48 Q 124,48 128,60 Q 130,70 120,73 L 96,73 Q 86,70 88,60 Q 92,48 108,48 Z"/>
+          <path class="bone-f" d="M 99,66 L 117,66 L 117,180 L 99,180 Z"/>
           <circle class="joint-f" cx="108" cy="180" r="9"/>
 
           <g class="pose" id="tornExtended">
+            <!-- نتوء الزند: طرف الساعد خلف المرفق، فيدور معه. مرسوم قبل
+                 الساعد فيغطّيه إلّا ما نتأ منه، ولا يُقرأ مفصلًا ثانيًا. -->
+            <circle class="joint-f" cx="102.1" cy="174.5" r="6"/>
             <path class="bone-f" d="M 102.9,185.5 L 190.9,267.5 L 201.1,256.5 L 113.1,174.5 Z"/>
             <circle class="joint-f" cx="196" cy="262" r="10"/>
-            <path class="mus-f" id="tornBicepsExt" d="M 117,72 Q 137,120 117,170 Q 110,120 117,72 Z"/>
-            <path class="sinew" d="M 117,170 Q 121,182 128,192"/>
-            <g class="torn">
-              <path class="mus-f" id="tornTricepsExt" d="M 99,72 Q 64,110 99,150 Q 110,110 99,72 Z"/>
-              <path class="sinew" d="M 99,150 Q 92,180 118,192"/>
+            <path class="sinew" d="M 120,88 L 114,71"/>
+            <path class="mus-f" id="tornBicepsExt" d="M 120,88 C 137,108.3 137,145.7 120,166 L 117,160 L 117,94 Z"/>
+            <path class="sinew" d="M 120,166 Q 119,176 125.6,196.4"/>
+            <g class="tri torn">
+              <path class="sinew" d="M 96,88 L 102,71"/>
+              <path class="mus-f" id="tornTricepsExt" d="M 96,88 C 65,101.0 65,125.0 96,138 L 99,132 L 99,94 Z"/>
+              <path class="sinew" d="M 96,138 Q 95,150 102.1,174.5"/>
             </g>
-            <path class="tear-gap" d="M 84,109 L 103,112"/>
+            <path class="tear-gap" d="M 76,111 L 94,114"/>
+            
           </g>
 
           <g class="pose" id="tornFlexed">
+            <!-- نتوء الزند: طرف الساعد خلف المرفق، فيدور معه. مرسوم قبل
+                 الساعد فيغطّيه إلّا ما نتأ منه، ولا يُقرأ مفصلًا ثانيًا. -->
+            <circle class="joint-f" cx="101.0" cy="183.9" r="6"/>
             <path class="bone-f" d="M 111.7,186.5 L 217.7,126.5 L 210.3,113.5 L 104.3,173.5 Z"/>
             <circle class="joint-f" cx="214" cy="120" r="10"/>
-            <path class="mus-f" id="tornBicepsFlex" d="M 117,72 Q 152,110 117,148 Q 106,110 117,72 Z"/>
-            <path class="sinew" d="M 117,148 Q 123,158 130,168"/>
-            <g class="torn">
-              <path class="mus-f" id="tornTricepsFlex" d="M 99,72 Q 79,120 99,172 Q 106,120 99,72 Z"/>
-              <path class="sinew" d="M 99,172 Q 97,186 106,193"/>
+            <path class="sinew" d="M 120,88 L 114,71"/>
+            <path class="mus-f" id="tornBicepsFlex" d="M 120,88 C 151,101.0 151,125.0 120,138 L 117,132 L 117,94 Z"/>
+            <path class="sinew" d="M 120,138 Q 119,148 128.9,168.2"/>
+            <g class="tri torn">
+              <path class="sinew" d="M 96,88 L 102,71"/>
+              <path class="mus-f" id="tornTricepsFlex" d="M 96,88 C 79,108.3 79,145.7 96,166 L 99,160 L 99,94 Z"/>
+              <path class="sinew" d="M 96,166 Q 95,178 101.0,183.9"/>
             </g>
-            <path class="tear-gap" d="M 90,119 L 101,121"/>
+            <path class="tear-gap" d="M 86,125 L 96,128"/>
+            
           </g>
 
-          <circle class="grip invite" id="tornBicepsGrip" cx="128" cy="110" r="11" tabindex="0"
+          <circle class="grip invite" id="tornBicepsGrip" cx="125" cy="119" r="7" tabindex="0"
                   role="button" aria-label="اسحب العضلة الأمامية"/>
-          <circle class="grip" id="tornTricepsGrip" cx="88" cy="110" r="11" tabindex="0"
+          <circle class="grip" id="tornTricepsGrip" cx="91" cy="119" r="7" tabindex="0"
                   role="button" aria-label="اسحب العضلة الخلفية"/>
         </svg>
       </div>
@@ -1032,9 +1172,9 @@ var T = {
     push:  'دفعتَ — فالتوى الخيط على نفسه، والمعجون لم يتزحزح.',
     count: function(n){ return 'جرّبتَ ' + n + ' من 2'; },
     done:  'جرّبتَ الفعلين. الفرق بينهما واضح الآن.',
-    oneHint1: 'العضلة تشدّ فقط. فإلى أي جهة يذهب العظم حين تشدّه؟',
+    oneHint1: 'العضلة تشدّ فقط. فإلى أي جهة يتحرّك العظم حين تشدّه؟',
     oneHint2: 'فكّر في العودة: ما الذي يُرجع العظم إلى موضعه الأوّل؟',
-    oneModel: 'يذهب في اتجاه واحد فقط — الاتجاه الذي تسحبه إليه العضلة — ولا يستطيع العودة، لأنّ العضلة لا تدفعه.',
+    oneModel: 'يتحرّك في اتجاه واحد فقط — الاتجاه الذي تسحبه إليه العضلة — ولا يستطيع العودة إلى وضعه الأوّل، لأنّ العضلة لا تدفعه.',
     pushResult: {
       correct: '✓ صحيح! الخيط لا ينقل الدفع، ينقل الشدّ وحده.',
       w1: 'المعجون نفسه لم يتغيّر بين المحاولتين — فما الذي تغيّر إذن؟',
@@ -1047,7 +1187,7 @@ var T = {
     hintTri:   'ظهرت عضلة ثانية خلف العضد. اسحب مقبضها.',
     flexed:    'قصُرت العضلة الأمامية فارتفع الساعد.',
     noPush:    'دفعُ العضلة لا يحرّك شيئًا. العضلة تشدّ ولا تدفع.',
-    stuck:     'الساعد مرفوع، ولا سبيل لإنزاله بهذه العضلة وحدها.',
+    stuck:     'الساعد مرفوع الآن. جرّب أن تُعيده إلى أسفل.',
     extended:  'قصُرت العضلة الخلفية فنزل الساعد — وفي أثناء ذلك استطالت الأمامية.',
     taskDone:  'حرّكتَ الساعد في الاتجاهين، كلّ اتجاه بعضلته.',
     bringDown: {
@@ -1088,10 +1228,10 @@ var T = {
     count: function(n){ return 'استكشفتَ ' + n + ' من 5'; },
     zones: {
       arms:   'الذراعان: ساعدك يصعد وينزل — اتجاهان.',
-      chest:  'الصدر: ذراعك تتقدّم إلى الأمام وترجع إلى الخلف — اتجاهان.',
+      chest:  'الصدر: كتفك يرتفع ثم ينزل — اتجاهان.',
       thighs: 'الفخذان: ركبتك تنثني وتمتدّ — اتجاهان.',
       back:   'الظهر: ذراعك ترتفع عن جذعك وتعود إليه — اتجاهان.',
-      hips:   'الوركان: فخذك يتقدّم إلى الأمام ويرجع إلى الخلف — اتجاهان.'
+      hips:   'الوركان: ركبتك ترتفع أمامك ثم تنزل — اتجاهان.'
     },
     done: 'خمس مناطق، وفي كلٍّ منها اتجاهان.',
     chipHints: {
@@ -1112,6 +1252,8 @@ var T = {
   s5: {
     predictFb: 'توقّعك مسجَّل. جرّب الذراع الآن بنفسك.',
     hint: 'اسحب كلّ مقبض بدوره، وانظر أيّهما ما زال يعمل.',
+    nextBack:  'جرّبتَ الأمامية. جرّب الآن الخلفية.',
+    nextFront: 'جرّبتَ الخلفية. جرّب الآن الأمامية.',
     front: 'العضلة الأمامية سليمة: قصُرت فارتفع الساعد.',
     back:  'العضلة الخلفية ممزّقة: تشدّها فلا يصل شدّها إلى العظم.',
     done:  'جرّبتَ الاثنتين. اتجاه واحد يعمل، والآخر لا.',
@@ -1122,8 +1264,8 @@ var T = {
       w3: 'سلامة عضلة لا تزيد قوّتها. وهي أصلًا تسحب في الاتجاه المعاكس لا في اتجاه الممزّقة.'
     },
     explainHint1: 'ذات الرأسين تسحب الساعد إلى أعلى. فهل تستطيع أن تسحبه إلى أسفل؟',
-    explainHint2: 'تذكّر القاعدة: العضلة تشدّ في اتجاه واحد ولا تدفع في الاتجاه المعاكس.',
-    explainModel: 'لأنّ ذات الرأسين تسحب في اتجاه واحد هو الأعلى فقط، ولا تستطيع الدفع ولا السحب إلى أسفل — والاتجاه الآخر كان عمل الممزّقة وحدها.',
+    explainHint2: 'تذكّر: كلّ عضلة تشدّ في اتجاه واحد فقط.',
+    explainModel: 'ذات الرأسين تسحب الساعد إلى أعلى فقط. أمّا سحبه إلى أسفل فكان عمل العضلة الممزّقة، ولا تنوب عنها عضلة أخرى.',
     bonus: {
       correct: '✓ صحيح! ومن هنا يخدع النموذج: يوهم بأنّ العضلة تعود وحدها.',
       w1: 'العضلة ترتبط بالعظم بالوتر — رأيته في الدرس السابق وفي الرسم أمامك.',
@@ -1314,7 +1456,7 @@ function station3(){
     if(!flexedOnce){
       flexedOnce = true;
       bg.classList.remove('invite');
-      bg.classList.add('spent');
+      
       txt('s3StageMsg', T.s3.flexed);
       snap();
       setTimeout(function(){
@@ -1337,7 +1479,7 @@ function station3(){
     if(!extendedAgain){
       extendedAgain = true;
       tg.classList.remove('invite');
-      tg.classList.add('spent');
+      
       if(!taskDone){
         taskDone = true;
         claim('u2l4-arm', 'TASK', 'حرّكتَ الساعد في الاتجاهين، كلّ اتجاه بعضلته');
@@ -1387,6 +1529,48 @@ function station3(){
   bindGrip(bg, pullBiceps);
   bindGrip(tg, pullTriceps);
 
+  /* ــــ الطيّ وزرّ العودة إلى المسرح ــــ */
+  function foldDown(){
+    var box = el('s3DownBox'), body = el('s3DownBody'), sum = el('s3DownSum');
+    if(!box || !body) return;
+    /* الطيّ لا يقع إلّا على سؤال أُجيب فعلًا: لو نُقر المقبض الخلفي
+       قبل الإجابة لطُوي السؤال وهو مخفيّ، فظهر بعدها مطويًّا. */
+    if(!box.classList.contains('is-answered')) return;
+    if(box.classList.contains('is-folded')) return;
+    /* تثبيت الارتفاع الفعلي أوّلًا كي تنساب الحركة من قيمة معلومة */
+    body.style.maxHeight = body.scrollHeight + 'px';
+    void body.offsetHeight;
+    box.classList.add('is-folded');
+    if(sum) sum.setAttribute('aria-expanded', 'false');
+  }
+  function expandDown(){
+    var box = el('s3DownBox'), body = el('s3DownBody'), sum = el('s3DownSum');
+    if(!box || !body) return;
+    box.classList.remove('is-folded');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    if(sum) sum.setAttribute('aria-expanded', 'true');
+    setTimeout(function(){ body.style.maxHeight = ''; }, G.reduced() ? 0 : 360);
+  }
+  var backBtn = el('s3BackToArm');
+  if(backBtn) backBtn.addEventListener('click', function(){
+    foldDown();
+    if(stage.scrollIntoView) stage.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+    /* التركيز على المقبض نفسه لا على المسرح: هو الهدف، وهو
+       قابل للتركيز أصلًا — فينفع مستعمل لوحة المفاتيح مباشرةً. */
+    if(tg.focus) tg.focus();
+  });
+  var downSum = el('s3DownSum');
+  if(downSum) downSum.addEventListener('click', function(){
+    var box = el('s3DownBox');
+    if(box && box.classList.contains('is-folded')) expandDown();
+    else foldDown();
+  });
+  /* ويطوي أيضًا مَن صعد ونقر المقبض متجاهلًا الزرّ */
+  tg.addEventListener('pointerdown', foldDown);
+  tg.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') foldDown();
+  });
+
   window.Quiz.practice({
     'u2l4-bring-down': { xpId: 'u2l4-bring-down', xp: 'MCQ', reason: 'استنتجتَ الحاجة إلى عضلة ثانية',
                          correctText: T.s3.bringDown.correct, hints: T.s3.bringDown }
@@ -1396,6 +1580,12 @@ function station3(){
     tg.classList.add('invite');
     txt('s3TryHint', T.s3.hintTri);
     txt('s3StageMsg', '');
+    /* الزرّ يظهر عند سطر التغذية الراجعة — في موضع عين الطالب —
+       ولا يُطوى السؤال بعدُ: لو طُوي الآن لاختفى الزرّ قبل أن يراه.
+       الطيّ يقع بفعل الطالب: نقر الزرّ أو نقر سطر الطيّ. */
+    var box = el('s3DownBox');
+    if(box) box.classList.add('is-answered');
+    show('s3BackToArm');
   } });
 
   window.Quiz.practice({
@@ -1438,10 +1628,14 @@ function station4(){
 
   function selectZone(z){
     zones.forEach(function(n){ n.classList.remove('on'); });
-    z.classList.add('on');
-    z.classList.add('seen');
-    bodies.forEach(function(b){ b.classList.add('has-sel'); });
     var key = z.getAttribute('data-zone');
+    /* التحديد بالزوج لا بالرقعة: عضلتا الزوج تعيشان في موضعين
+       مختلفين — إحداهما أمام الجسد والأخرى خلفه غالبًا — فنقرةٌ
+       واحدة تُضيء رقعتيهما معًا في المسرحين. وهو نفسه مضمون
+       المحطة: موضعان، اتجاهان، عضلتان. */
+    var mates = document.querySelectorAll('#s4StageBox .zone[data-zone="' + key + '"]');
+    mates.forEach(function(n){ n.classList.add('on'); n.classList.add('seen'); });
+    bodies.forEach(function(b){ b.classList.add('has-sel'); });
     if(!seen[key]){
       seen[key] = true;
       txt('s4ZoneCount', T.s4.count(count()));
@@ -1525,14 +1719,27 @@ function station5(){
     if(stage) stage.classList.add('flexed');
     txt('s5StageMsg', T.s5.front);
     snap();
-    if(!triedFront){ triedFront = true; if(bg){ bg.classList.remove('invite'); bg.classList.add('spent'); } }
+    if(!triedFront){
+      triedFront = true;
+      if(bg) bg.classList.remove('invite');
+      /* الدعوة تنتقل إلى المقبض الباقي، والتلميح يسمّيه: العبارة
+         العامّة «اسحب كلّ مقبض بدوره» لا تقول للطالب أيّهما بقي،
+         فيظنّ أنه أنهى النشاط. */
+      if(!triedBack && tg) tg.classList.add('invite');
+      if(!triedBack) txt('s5TryHint', T.s5.nextBack);
+    }
     maybeOpen();
   }
   function pullBack(){
     txt('s5StageMsg', T.s5.back);
     shake();
     wrong();
-    if(!triedBack) triedBack = true;
+    if(!triedBack){
+      triedBack = true;
+      if(tg) tg.classList.remove('invite');
+      if(!triedFront && bg) bg.classList.add('invite');
+      if(!triedFront) txt('s5TryHint', T.s5.nextFront);
+    }
     maybeOpen();
   }
 
