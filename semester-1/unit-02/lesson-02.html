@@ -183,6 +183,21 @@
        (ملاحظة فؤاد). */
     transition:none;
   }
+  /* .slot.correct المشتركة تحمل animation:tplPopIn، وإطاراتها تكتب
+     transform:scale(...) كاملًا فتمحو translate(-50%,-50%) طوال
+     .35 ثانية — فتقفز الخانة إلى الزاوية العلوية اليسرى لحظة النجاح
+     ثم تعود. نفس علّة .knee-slot في درس 03، ونفس العلاج: حركة محلّية
+     تحمل الإزاحة في كل إطار. ولا تُعدَّل tplPopIn في المشترك — تعديلها
+     يُقحم إزاحةً على خانات الجُمَل الجارية في دروس أخرى فتقفز هي. */
+  .bone-slot.correct{ animation:popCentered .35s ease; }
+  @keyframes popCentered{
+    0%  { transform:translate(-50%,-50%) scale(.82); }
+    60% { transform:translate(-50%,-50%) scale(1.08); }
+    100%{ transform:translate(-50%,-50%) scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .bone-slot.correct{ animation:none; }
+  }
   .bone-legend{ display:flex; flex-direction:column; gap:10px; align-items:flex-start; max-width:260px; margin:16px auto 0; }
   .legend-item{ display:inline-flex; align-items:center; gap:10px; font-size:14px; color:var(--ink); line-height:1.5; }
   .legend-swatch{ width:18px; height:18px; border-radius:50%; background:var(--matter); flex-shrink:0; box-sizing:border-box; }
