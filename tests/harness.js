@@ -33,8 +33,15 @@ function installShims(w, reduceMotion) {
       addListener() {}, removeListener() {}, dispatchEvent() { return false; }
     };
   };
+  /* `connect` يُرجع العقدة الهدف في مواصفة Web Audio — وهو ما يتيح
+     التسلسل `osc.connect(gain).connect(ctx.destination)` المستعمل في
+     `sounds.js`. وبديلٌ يُرجع undefined كان يرمي عند ثاني نداء.
+     ولم ينكشف طويلًا لأن `sounds.js` لا ينشئ AudioContext إلا عند أول
+     `pointerdown` بالصفحة، واختباراتنا كانت تمشي على مسار لوحة المفاتيح
+     وحده — فتخرج دالة النغمة مبكّرة (`if(!audioCtx) return`) ولا تلمس
+     البديل أصلًا. أول اختبار يمرّ بمسار المؤشّر فتح القفل فظهر النقص. */
   const audioNode = () => ({
-    connect() {}, disconnect() {}, start() {}, stop() {},
+    connect(dest) { return dest; }, disconnect() {}, start() {}, stop() {},
     frequency: { value: 0, setValueAtTime() {}, exponentialRampToValueAtTime() {}, linearRampToValueAtTime() {} },
     gain: { value: 0, setValueAtTime() {}, exponentialRampToValueAtTime() {}, linearRampToValueAtTime() {} },
     type: ''

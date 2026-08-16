@@ -238,4 +238,96 @@ describe('خانة التصنيف — نداء الاكتمال', () => {
   });
 });
 
+/* ==========================================================
+   عتبة السحب — النقرة الثابتة لا تنتزع الرقاقة من المسبح
+   ----------------------------------------------------------
+   العلّة التي تحرسها: كان الضغط وحده يكفي لانتزاع الرقاقة إلى <body>
+   وتثبيتها بـposition:fixed ووضع شبح مكانها، ثم يُلغى ذلك عند الرفع.
+   فالنقرة الواحدة رحلة ذهاب وإياب يراها الطالب: الرقاقة تبدو "نازلة"
+   عن مكانها قبل أن تُضيء (رصدها فؤاد بالعين، الوحدة 02 · درس 02).
+   والاختبار يقيس ما يراه الطالب — أين تعيش الرقاقة لحظة الضغط —
+   لا اسم متغيّر داخلي.
+   ========================================================== */
+describe('عتبة السحب — الضغط لا يرفع، الحركة ترفع', function(){
+  function press(el, x, y){
+    const W = el.ownerDocument.defaultView;
+    const e = new W.MouseEvent('pointerdown', { bubbles: true, clientX: x, clientY: y });
+    el.dispatchEvent(e);
+  }
+  function move(el, x, y){
+    const W = el.ownerDocument.defaultView;
+    el.dispatchEvent(new W.MouseEvent('pointermove', { bubbles: true, clientX: x, clientY: y }));
+  }
+  function release(el, x, y){
+    const W = el.ownerDocument.defaultView;
+    el.dispatchEvent(new W.MouseEvent('pointerup', { bubbles: true, clientX: x, clientY: y }));
+  }
+  const inPool = c => !!(c.parentNode && c.parentNode.classList.contains('chips-pool'));
+
+  it('الضغط وحده لا يُخرج الرقاقة من المسبح ولا يضع شبحًا مكانها', async () => {
+    const { doc } = await page();
+    const c = chip(doc, 'ألف');
+    press(c, 100, 100);
+    ok(inPool(c), 'الرقاقة غادرت المسبح بمجرّد الضغط');
+    no(c.classList.contains('dragging'), 'وضع السحب بدأ قبل أي حركة');
+    eq(doc.querySelectorAll('.chip-ghost').length, 0, 'شبحٌ وُضع لنقرة لم تصر سحبًا');
+  });
+
+  it('حركة أقلّ من العتبة لا ترفع — ارتجاف الإصبع ليس سحبًا', async () => {
+    const { doc } = await page();
+    const c = chip(doc, 'ألف');
+    press(c, 100, 100);
+    move(c, 103, 102);
+    ok(inPool(c), 'ارتجافة صغيرة انتزعت الرقاقة');
+    eq(doc.querySelectorAll('.chip-ghost').length, 0);
+  });
+
+  it('حركة تتجاوز العتبة ترفع الرقاقة ويحلّ الشبح مكانها', async () => {
+    const { doc } = await page();
+    const c = chip(doc, 'ألف');
+    press(c, 100, 100);
+    move(c, 140, 130);
+    no(inPool(c), 'السحب لم يُخرج الرقاقة من المسبح');
+    ok(c.classList.contains('dragging'), 'الرقاقة تُسحب بلا وضع سحب');
+    eq(doc.querySelectorAll('.chip-ghost').length, 1, 'المسبح بلا حاجز فتزحف أخواتها');
+  });
+
+  it('النقرة الثابتة تختار الرقاقة كما كانت تفعل', async () => {
+    const { doc } = await page();
+    const c = chip(doc, 'ألف');
+    press(c, 100, 100);
+    release(c, 100, 100);
+    ok(c.classList.contains('selected'), 'النقرة لم تعد تختار');
+    ok(inPool(c), 'الرقاقة استقرّت خارج المسبح بعد نقرة');
+  });
+
+  it('والسحب إلى خانة صحيحة ما زال يضع الرقاقة', async () => {
+    const { w, doc } = await page();
+    const c = chip(doc, 'ألف');
+    const target = slot(doc, 'cat-1');
+    press(c, 100, 100);
+    move(c, 160, 160);
+    // slotFromPoint يعتمد elementFromPoint وهو غير مُنفَّذ في jsdom،
+    // فيُحاكى بإرجاع الخانة المقصودة — المقيس هنا مسار الوضع لا القياس.
+    doc.elementFromPoint = () => target;
+    release(c, 160, 160);
+    eq(items(doc, 'cat-1').length, 1, 'السحب لم يعد يضع الرقاقة');
+    ok(w.XP.total() > 0, 'الوضع بالسحب لم يمنح نقاطًا');
+  });
+
+  it('إلغاء الضغط قبل الرفع لا يترك شبحًا ولا يزيح الرقاقة', async () => {
+    const { doc } = await page();
+    const c = chip(doc, 'ألف');
+    const W = doc.defaultView;
+    press(c, 100, 100);
+    c.dispatchEvent(new W.MouseEvent('pointercancel', { bubbles: true }));
+    ok(inPool(c), 'الإلغاء أزاح رقاقة لم تُنتزع أصلًا');
+    eq(doc.querySelectorAll('.chip-ghost').length, 0);
+    // وبعد الإلغاء يبقى المحرّك قابلًا لبدء تفاعل جديد
+    press(c, 100, 100);
+    release(c, 100, 100);
+    ok(c.classList.contains('selected'), 'المحرّك عَلِق بعد الإلغاء');
+  });
+});
+
 run();

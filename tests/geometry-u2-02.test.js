@@ -188,6 +188,28 @@ describe('هندسة المحطة 2 — مسرح المقطع الطولي (تف
     has(seg, 'transition:none', 'يجب إلغاء الانتقال الموروث كي لا يظهر توسيط متحرّك عند كتابة اسم الرقاقة');
   });
 
+  /* jsdom لا يشغّل حركة ولا يحسب تخطيطًا، فالفحص على نصّ الأنماط:
+     .slot.correct المشتركة تحمل animation:tplPopIn، وإطاراتها تكتب
+     transform:scale(...) كاملًا فتمحو translate(-50%,-50%) — فتقفز
+     الخانة عن مركزها لحظة النجاح (العلّة نفسها المرصودة في .knee-slot
+     بدرس 03، ونفس العلاج: حركة محلّية تحمل الإزاحة في كل إطار). */
+  it('نبضة الخانة الموضوعة فوق مسرح تحفظ توسيطها في كل إطار (لا قفزة عند النجاح)', async function(){
+    const { raw } = await page();
+    const flat = raw.replace(/\s*\n\s*/g, '');
+    const rule = /\.bone-slot\.correct\{([^}]*)\}/.exec(flat);
+    ok(!!rule, 'خانات المسرح ترث نبضة المشترك التي تمحو التوسيط');
+    const name = /animation:\s*([A-Za-z][\w-]*)/.exec(rule[1]);
+    ok(!!name, 'لا حركة معلنة لخانة المسرح');
+    no(/^tplPopIn$/.test(name[1]), 'الحركة هي نفسها التي تمحو التوسيط');
+    const kf = new RegExp('@keyframes ' + name[1] + '\\{([^@]*?)\\}\\}').exec(flat + '}');
+    ok(!!kf, 'لم أجد إطارات ' + name[1]);
+    const frames = kf[1].match(/transform:[^;}]*/g) || [];
+    ok(frames.length >= 3, 'إطارات الحركة أقلّ من ثلاثة');
+    frames.forEach(function(f){
+      ok(/translate\(-50%,\s*-50%\)/.test(f), 'إطار بلا إزاحة توسيط: ' + f);
+    });
+  });
+
   it('خانات الإفلات الثلاث فوق المسرح بنسب مئوية، ولا تراكب بين أيّ اثنتين منها', async function(){
     const { doc } = await page();
     const slots = ['s2-slot-compact', 's2-slot-spongy', 's2-slot-marrow'].map(function(id){
