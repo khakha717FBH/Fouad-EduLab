@@ -817,6 +817,13 @@
   var startX = 0, startY = 0;
   var didMove = false;    // للتمييز بين سحب حقيقي ونقرة
   var selectedChip = null;
+  // الرفع المؤجَّل: الرقاقة لا تُنتزع عند الضغط بل عند أول حركة تتجاوز
+  // العتبة. lifted تعني «انتُزعت فعلًا»، وpressX/Y نقطة الضغط الأولى،
+  // وpressRect صندوقها في المسبح قبل أن تغادره.
+  var DRAG_THRESHOLD = 6; // بكسل — أوسع من 5 لأن الإصبع أقلّ ثباتًا من الفأرة
+  var lifted = false;
+  var pressX = 0, pressY = 0;
+  var pressRect = null;
 
   function allSlots(){ return document.querySelectorAll('.slot'); }
   function clearDragover(){
@@ -851,6 +858,20 @@
     chip.style.left = '';
     chip.style.top = '';
     chip.style.width = '';
+  }
+
+  /* الانتزاع الفعلي: كان يقع في pointerdown، وصار يقع هنا عند أول حركة
+     تتجاوز العتبة. الإحداثيات من pressRect — صندوق الرقاقة في المسبح
+     لحظة الضغط — لا من قياس جديد، لأن الشبح لم يُدرَج بعد. */
+  function liftChip(chip){
+    var rect = pressRect || chip.getBoundingClientRect();
+    makeGhost(chip);
+    chip.classList.add('dragging');
+    chip.style.left = rect.left + 'px';
+    chip.style.top = rect.top + 'px';
+    chip.style.width = rect.width + 'px';
+    document.body.appendChild(chip);
+    lifted = true;
   }
 
   // تُرجع الرقاقة إلى موضعها الأصلي بدقّة: مكان الشبح لا مرجع شقيق
@@ -971,6 +992,7 @@
   // ----- إنهاء السحب: مسار واحد لكل النهايات -----
   function endDrag(chip, slot){
     dragEl = null;
+    lifted = false;
     clearDragover();
     if(slot && slotAccepts(slot, chip)){
       placeChip(chip, slot);
@@ -980,13 +1002,17 @@
     if(slot){ shakeChip(chip); showChipHint(chip, slot); }
   }
 
-  // إلغاء: تُرجع كل شيء كما كان دون حكم على صواب أو خطأ
+  // إلغاء: تُرجع كل شيء كما كان دون حكم على صواب أو خطأ.
+  // ومع الرفع المؤجَّل قد يقع الإلغاء والرقاقة لم تغادر المسبح بعد —
+  // فلا يُعاد إدراجها ولا يُبحث عن شبح لا وجود له.
   function cancelDrag(){
     if(!dragEl) return;
     var chip = dragEl;
+    var wasLifted = lifted;
     dragEl = null;
+    lifted = false;
     clearDragover();
-    returnChipToPool(chip);
+    if(wasLifted) returnChipToPool(chip);
   }
 
   chipEls.forEach(function(chip){
@@ -994,6 +1020,16 @@
     chip.setAttribute('role', 'button');
     chip.setAttribute('aria-pressed', 'false');
 
+    /* الرفع مؤجَّل إلى أول حركة تتجاوز العتبة، لا عند الضغط.
+       العلّة التي يعالجها: كان `pointerdown` ينتزع الرقاقة من المسبح
+       إلى <body> ويثبّتها بـposition:fixed ويضع شبحًا مكانها — ولو كانت
+       نيّة الطالب نقرةً ثابتة. ثم يُلغى ذلك كلّه في `pointerup` وتُعاد
+       الرقاقة. فالنقرة الواحدة كانت رحلة ذهاب وإياب مرئية للعين: الرقاقة
+       تتجمّد في مكانها من الشاشة بينما يتحرّك ما حولها، فتبدو "نازلة"
+       قبل أن تُضيء (رصدها فؤاد بالعين على الوحدة 02 · درس 02، وهي في
+       المشترك فتصيب كل درس فيه رقاقات).
+       والعتبة 6 بكسل لا 5: الطلاب على شاشات لمس، والإصبع أقلّ ثباتًا
+       من الفأرة فيحوّل ارتجافُه النقرةَ سحبًا. */
     chip.addEventListener('pointerdown', function(e){
       if(dragEl) return;                 // إصبع ثانٍ أثناء سحب جارٍ
       if(e.isPrimary === false) return;
@@ -1001,19 +1037,24 @@
       var rect = chip.getBoundingClientRect();
       dragEl = chip;
       didMove = false;
+      lifted = false;
+      pressX = e.clientX;
+      pressY = e.clientY;
+      pressRect = rect;
       startX = e.clientX - rect.left;
       startY = e.clientY - rect.top;
-      makeGhost(chip);
-      chip.classList.add('dragging');
-      chip.style.left = rect.left + 'px';
-      chip.style.top = rect.top + 'px';
-      chip.style.width = rect.width + 'px';
-      document.body.appendChild(chip);
+      // الالتقاط وحده يقع الآن: يضمن وصول pointermove/pointerup حتى لو
+      // خرج الإصبع عن الرقاقة. ولا شيء يُنتزع ولا يُرسم بعد.
       try{ chip.setPointerCapture(e.pointerId); }catch(err){ /* غير مدعوم — السحب يعمل بدونه */ }
     });
 
     chip.addEventListener('pointermove', function(e){
       if(dragEl !== chip) return;
+      if(!lifted){
+        var dx = e.clientX - pressX, dy = e.clientY - pressY;
+        if((dx * dx + dy * dy) < DRAG_THRESHOLD * DRAG_THRESHOLD) return;
+        liftChip(chip);                  // أول حركة حقيقية: الآن يبدأ السحب
+      }
       didMove = true;
       chip.style.left = (e.clientX - startX) + 'px';
       chip.style.top = (e.clientY - startY) + 'px';
@@ -1024,8 +1065,16 @@
 
     chip.addEventListener('pointerup', function(e){
       if(dragEl !== chip) return;
+      // لم تتجاوز الحركة العتبة: نيّة اختيار لا سحب. والرقاقة لم تغادر
+      // المسبح أصلًا، فلا شيء يُعاد.
+      if(!lifted){
+        dragEl = null;
+        clearDragover();
+        toggleSelect(chip);
+        return;
+      }
       var slot = slotFromPoint(e.clientX, e.clientY);
-      // نقرة ثابتة بلا حركة وبلا خانة تحتها = نيّة اختيار لا سحب
+      // سحبٌ انتهى في الفراغ = نيّة اختيار كذلك
       if(!slot && !didMove){
         dragEl = null;
         clearDragover();
