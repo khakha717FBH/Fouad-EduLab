@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدرس N — عنوان الدرس | مختبر فؤاد التعليمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/identity/identity.css">
+<link rel="stylesheet" href="../../shared/template-boilerplate/template.css">
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  ⚠ هذا الملفّ ليس درسًا ولا يُفتح للطلاب.
+
+  هو الهيكل العظمي الذي يُنسخ منه كل درس جديد: ترويسة، وشريط تقدّم،
+  وستّ محطات فارغة، ووسوم المشترك بترتيبها الإلزامي، ومطلع سكربت
+  الدرس. لا محتوى فيه ولا مسرح ولا سؤال — كل ما فيه بديل يُستبدَل.
+
+  لا يُربط من أي صفحة، ولا تُضاف له بطاقة في فهرس أي وحدة.
+
+  ولا يُعدَّل هذا الملفّ إلا بقرار: كل تغيير فيه يرثه كل درس قادم.
+  وحارس في tests/identity.test.js يقرأه ويرفض بلاه صامتًا.
+  ═══════════════════════════════════════════════════════════════════
+
+  ─── كتلة قرارات الدرس — تُملأ في مرحلة التخطيط النصّي ───
+
+  الوحدة N — الدرس N — مختبر فؤاد التعليمي
+  "عنوان الدرس كما يظهر للطالب"
+  ص NN–NN · المعيار XNNNN.N · بادئة data-q/XP: uNlN-
+
+  المحطات: ستّ محطات، ستّ نقاط تقدّم. والمحطة المشطورة داخليًّا إلى
+  مراحل لها نقطة واحدة لا نقطة لكل مرحلة.
+
+  المسارح: (اذكرها ورقم محطة كلٍّ منها)
+
+  قرارات نطاق مسجَّلة:
+  • (كل قرار وسببه — لا القرار وحده. والتعليق يُقرأ بعد أشهر.)
+
+  خارج النطاق نصًّا وبالاختبار:
+  • (ما قُرّر ألّا يُذكر، ولماذا)
+
+  الرصيد المقدَّر: NNN أساسي + N اختياري = NNN.
+  رقم الاختبار هو الحقيقة لا هذا التعليق.
+  ═══════════════════════════════════════════════════════════════════ -->
+<style>
+  /* ============ منع سحب التحديث من تصفير XP ============ */
+  html, body{ overscroll-behavior-y:contain; }
+  html{ scroll-behavior:smooth; }
+  .station{ scroll-margin-top:14px; }
+
+  /* ============ أصناف عامّة — نمط دروس المنصّة ============ */
+  .station-tagline{
+    max-width:920px; margin:0 auto 4px; font-size:.95rem; color:var(--ink-dim); line-height:1.9;
+  }
+  .explore-q{
+    font-weight:700; color:var(--ink); margin:0 0 12px; font-size:clamp(14px,2.4vw,16px);
+  }
+  .explore-step{ margin-top:26px; padding-top:20px; border-top:1px dashed var(--border); }
+  .explore-step:first-of-type{ border-top:none; padding-top:0; }
+
+  /* ============ طيّ السؤال المُجاب وزرّ العودة إلى المسرح ============
+     نمطٌ ثبت في الوحدة 02 (درسا 03 و04): حين يُجاب سؤالٌ ويتغيّر
+     المسرح فوق رأس الطالب وعينُه على التغذية الراجعة أسفله، لا
+     يعلم أنّ ثمّة خطوة باقية. العلاجان معًا: زرّ في موضع عينه
+     يصعد به إلى المسرح، وطيُّ السؤال المُجاب فتقصر المسافة.
+     والسطر المطويّ يحمل عنوان السؤال لا إجابته حين يُقاس المفهوم
+     نفسه مرّة أخرى لاحقًا في الدرس.
+     يُحذف من الدرس الذي لا يحتاجه. */
+  .step-summary{
+    display:none; width:100%; align-items:center; gap:10px;
+    background:none; border:none; padding:0; cursor:pointer;
+    font-family:'Tajawal', sans-serif; font-size:13.5px; font-weight:700;
+    color:var(--turquoise); text-align:start;
+  }
+  .explore-step.is-answered > .step-summary{ display:flex; }
+  .step-summary:focus-visible{ outline:2px solid var(--coral); outline-offset:4px; border-radius:8px; }
+  .step-caret{
+    width:15px; height:15px; flex:0 0 auto; margin-inline-start:auto;
+    transition:transform .25s ease; stroke:var(--turquoise);
+  }
+  .explore-step.is-answered:not(.is-folded) .step-caret{ transform:rotate(180deg); }
+  .step-body{ overflow:hidden; transition:max-height .34s ease, opacity .2s ease; }
+  .explore-step.is-folded > .step-body{ max-height:0 !important; opacity:0; }
+  .explore-step.is-folded{ margin-top:12px; padding-top:10px; }
+  .stage-return{ margin-top:12px; }
+  @media (prefers-reduced-motion: reduce){
+    .step-body{ transition:none; }
+    .step-caret{ transition:none; }
+  }
+
+  /* ============ محطة التقييم الختامي ============ */
+  .q-num{
+    display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px;
+    border-radius:50%; background:rgba(20,200,168,.12); border:1px solid var(--turquoise-soft);
+    color:var(--turquoise); font-family:'Cairo', sans-serif; font-weight:800; font-size:.8rem;
+    margin-inline-end:8px; flex-shrink:0;
+  }
+  .eval-summary{
+    margin-top:30px; background:rgba(20,200,168,.06); border:1px solid var(--turquoise-soft);
+    border-radius:18px; padding:20px 18px; text-align:center;
+  }
+  #certTriggerSlot{ display:flex; justify-content:center; margin-top:18px; }
+
+  /* ============ أنماط مسارح هذا الدرس ============
+     كل ما يخصّ مسرحًا بعينه يُكتب هنا وحده. ولا يُنقل إلى المشترك
+     إلا بعد أن يتكرّر في مادّتين مختلفتين. */
+
+</style>
+</head>
+<body>
+
+<nav class="crumb">
+  <a href="../../index.html">الرئيسية</a> ›
+  <a href="../index.html">الفصل الأول</a> ›
+  <a href="index.html">الوحدة N</a> ›
+  الدرس N
+</nav>
+
+<!-- نقاط التقدّم مخفيّة بصريًّا في المنصّة كلّها (visibility:hidden في
+     template.css) ولا تُحذف من الوسم: مقام عدّاد «المحطة X من N»
+     مشتقّ من عددها، ونغمة الوصول معلّقة بأوّل إضاءة نقطة. فعددها
+     يساوي عدد المحطات دائمًا. -->
+<div class="progress-track">
+  <div class="xp-counter" id="xpCounter">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+    <span id="xpValue">0</span>
+    <span class="xp-label">XP</span>
+  </div>
+  <div class="progress-dot" data-target="station-1"></div>
+  <div class="progress-dot" data-target="station-2"></div>
+  <div class="progress-dot" data-target="station-3"></div>
+  <div class="progress-dot" data-target="station-4"></div>
+  <div class="progress-dot" data-target="station-5"></div>
+  <div class="progress-dot" data-target="station-6"></div>
+</div>
+
+<header class="hero">
+  <div class="eyebrow">الوحدة N · الدرس N</div>
+  <h1>عنوان الدرس كما يظهر للطالب</h1>
+  <div class="objectives-box">
+    <h3>في نهاية هذا الدرس سوف تتمكّن من أن:</h3>
+    <ul>
+      <li>الهدف الأول كما في دليل المعلّم.</li>
+      <li>الهدف الثاني.</li>
+      <li>الهدف الثالث.</li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ═════════════════════ محطة 1 — Engage ═════════════════════
+       سؤال محفّز أو ملاحظة أولى. التنبّؤ قبل الكشف، ولا يُصحَّح
+       التنبّؤ هنا: حلقته تُغلق في محطة لاحقة حيث يُقاس المفهوم. -->
+  <section class="station" id="station-1">
+    <div class="station-label">المحطة الأولى</div>
+    <h2>عنوان المحطة</h2>
+    <p class="station-tagline">سطر تمهيدي يصف ما سيفعله الطالب، لا ما سيتعلّمه.</p>
+
+    <div class="station-handoff" id="s1done" hidden>
+      <a href="#station-2" class="station-next">عنوان المحطة التالية ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 2 — Explore ═════════════════════
+       استكشاف حرّ قبل أي تفسير. لا يظهر شرح مباشر قبل أن يحاول
+       الطالب. وأربعة عناصر تفاعلية مرئية معًا سقفٌ لا يُتجاوز. -->
+  <section class="station" id="station-2">
+    <div class="station-label">المحطة الثانية</div>
+    <h2>عنوان المحطة</h2>
+    <p class="station-tagline">سطر تمهيدي.</p>
+
+    <div class="station-handoff" id="s2done" hidden>
+      <a href="#station-3" class="station-next">عنوان المحطة التالية ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 3 — Explore ═════════════════════ -->
+  <section class="station" id="station-3">
+    <div class="station-label">المحطة الثالثة</div>
+    <h2>عنوان المحطة</h2>
+    <p class="station-tagline">سطر تمهيدي.</p>
+
+    <div class="station-handoff" id="s3done" hidden>
+      <a href="#station-4" class="station-next">عنوان المحطة التالية ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 4 — Explain ═════════════════════
+       تنظيم المفهوم بعد المحاولة. وما بناه الطالب بيده لا يُعاد
+       سرده نصًّا. -->
+  <section class="station" id="station-4">
+    <div class="station-label">المحطة الرابعة</div>
+    <h2>عنوان المحطة</h2>
+    <p class="station-tagline">سطر تمهيدي.</p>
+
+    <div class="station-handoff" id="s4done" hidden>
+      <a href="#station-5" class="station-next">عنوان المحطة التالية ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 5 — Elaborate ═════════════════════
+       توسيع وربط بحياة الطالب في قطر. والتحدّي الاختياري يظهر
+       بعد أوّل تفاعل لا كتصنيف مسبق. -->
+  <section class="station" id="station-5">
+    <div class="station-label">المحطة الخامسة</div>
+    <h2>عنوان المحطة</h2>
+    <p class="station-tagline">سطر تمهيدي.</p>
+
+    <div class="station-handoff" id="s5done" hidden>
+      <a href="#station-6" class="station-next">التقييم الختامي ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 6 — Evaluate ═════════════════════
+       اسمها «التقييم الختامي» حصرًا على المنصّة كلّها.
+       ومواضع الإجابات الصحيحة موزّعة على أ/ب/ج/د، والمشتتات من
+       أخطاء مفاهيمية شائعة لا خيارات عشوائية. -->
+  <section class="station" id="station-6">
+    <div class="station-label">المحطة السادسة</div>
+    <h2>التقييم الختامي</h2>
+    <p class="station-tagline">عشرة أسئلة، ومحاولة واحدة لكلّ سؤال. وفي نهايتها شهادتك باسمك.</p>
+
+    <div class="name-gate">
+      <label for="evalName">اكتب اسمك كما تريده أن يظهر على الشهادة</label>
+      <input type="text" class="explore-input" id="evalName" placeholder="الاسم الكامل" autocomplete="off">
+      <button type="button" class="btn" id="evalStart">ابدأ التقييم</button>
+      <p class="explore-feedback" id="evalNameFb" hidden></p>
+      <p class="gate-note">هذا هو التقييم الختامي لهذا الدرس. لكلّ سؤال محاولة واحدة، وبعد آخر سؤال تظهر نتيجتك وشهادتك. خذ وقتك.</p>
+    </div>
+
+    <div id="evalQuestions" hidden>
+
+      <!-- نموذج سؤال اختيار — يُكرَّر ثمانيًا بمعرّفات متتابعة -->
+      <div class="eval-q first">
+        <p class="explore-q"><span class="q-num">1</span> نصّ السؤال.</p>
+        <div class="quiz-options" data-q="uNlN-e1">
+          <label class="quiz-option"><input type="radio" name="uNlN-e1" value="w1">مشتّت من خطأ مفاهيمي شائع</label>
+          <label class="quiz-option"><input type="radio" name="uNlN-e1" value="ok">الإجابة الصحيحة</label>
+          <label class="quiz-option"><input type="radio" name="uNlN-e1" value="w2">مشتّت آخر</label>
+          <label class="quiz-option"><input type="radio" name="uNlN-e1" value="w3">مشتّت ثالث</label>
+        </div>
+        <p class="explore-feedback" id="fb-uNlN-e1" hidden></p>
+      </div>
+
+      <!-- نموذج سؤال نصّي — والمصحّح يقيس كلمات مفتاحية لا تطابقًا حرفيًّا -->
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">9</span> نصّ السؤال النصّي.</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="e9Input" placeholder="اكتب إجابتك" autocomplete="off">
+          <button type="button" class="btn" id="e9Btn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-e9" hidden></p>
+      </div>
+
+    </div>
+
+    <div class="eval-summary" id="evalSummary" hidden></div>
+    <!-- إلزامي: بدونه تحقن وحدة الشهادة زرّها عائمًا فيصطدم بزرّ فهيم -->
+    <div id="certTriggerSlot"></div>
+  </section>
+
+</main>
+
+<!-- وسوم shared/ الستّة تسبق سكربت الدرس — والترتيب إلزامي:
+     template.js بعد xp.js وجوبًا. -->
+<script src="../../shared/sounds/sounds.js"></script>
+<script src="../../shared/xp-system/xp.js"></script>
+<script src="../../shared/faheem-widget/faheem.js"></script>
+<script src="../../shared/template-boilerplate/template.js"></script>
+<script src="../../shared/certificate-system/certificate.js"></script>
+<script src="../../shared/identity/footer.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   الوحدة N — الدرس N — سكربت الدرس (نصوص المحطات كلّها في T أدناه)
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+var NS = 'http://www.w3.org/2000/svg';
+
+var G = {
+  reduced: function(){
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+};
+function el(id){ return document.getElementById(id); }
+function show(id){ var n = el(id); if(n) n.hidden = false; }
+function txt(id, s){ var n = el(id); if(n) n.textContent = s; }
+function fbNeutral(id, s){
+  var n = el(id);
+  if(!n) return;
+  n.textContent = s;
+  n.className = 'explore-feedback is-hint';
+  n.hidden = false;
+}
+
+/* ============ 1) النصوص ============
+   كل نصّ يقرأه الطالب يعيش هنا لا داخل منطق المحطة: فمراجعة
+   اللغة تُقرأ في موضع واحد، والمنطق يبقى مقروءًا. */
+var T = {
+  s1: {},
+  s2: {},
+  s3: {},
+  s4: {},
+  s5: {},
+  eval: {}
+};
+
+/* ============ 2) المحطات ============ */
+function station1(){}
+function station2(){}
+function station3(){}
+function station4(){}
+function station5(){}
+
+/* ============ 3) المحطة 6 — التقييم والشهادة ============
+   الشهادة بنيوية لا تذكُّرية: Quiz.evaluate ينادي وحدة الشهادة
+   بنفسه عند تمرير title، ولا يُكتب نداء Certificate.finish هنا. */
+function station6(){
+  window.Quiz.evaluate({
+    title: 'عنوان الدرس كما يظهر على الشهادة',
+    questions: [
+      { name: 'uNlN-e1', why: T.eval.e1 }
+      /* … بقية أسئلة الاختيار …
+      { name: 'e9', type: 'text', input: 'e9Input', button: 'e9Btn', feedback: 'fb-e9',
+        answer: 'مطابق', normalize: normE9, why: T.eval.e9why } */
+    ]
+  });
+}
+
+station1();
+station2();
+station3();
+station4();
+station5();
+station6();
+
+/* ══════════════════ الانتقال بين المحطات ══════════════════
+   المحطات كلّها في الصفحة منذ التحميل بلا hidden — قاعدة منصّية:
+   ما يحمي تسلسل المفاهيم هو الكشف المتدرّج داخل المحطة لا حجب
+   المحطة كلّها.
+
+   والانتقال بمعالج صريح لا بمرساة الجزء وحدها: المرساة تفشل
+   صامتة على محطة لم تُكشَف بعد. */
+document.querySelectorAll('a.station-next[href^="#station-"]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    var id = a.getAttribute('href').slice(1);
+    var sec = document.getElementById(id);
+    if(!sec) return;
+    sec.hidden = false;
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + id + '"]');
+    if(dot) dot.classList.add('active');
+    if(sec.scrollIntoView){
+      sec.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+    }
+    if(window.Sounds) window.Sounds.playChime();
+  });
+});
+
+/* ══════════════════ الدخول من الخارج بالمرساة ══════════════════
+   يدخل الطالب من زرّ «عودة للدرس» في صفحة مختبر، أو من رابط
+   محفوظ. فتُفتح المحطة المقصودة وما قبلها. */
+window.addEventListener('load', function(){
+  var id = (location.hash || '').replace(/^#/, '');
+  if(!/^station-[A-Za-z0-9_-]+$/.test(id)) return;
+  var target = document.getElementById(id);
+  if(!target || !target.classList.contains('station')) return;
+  var all = Array.prototype.slice.call(document.querySelectorAll('.station'));
+  var idx = all.indexOf(target);
+  if(idx < 0) return;
+  function activate(sec){
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + sec.id + '"]');
+    if(dot) dot.classList.add('active');
+  }
+  all.slice(0, idx).forEach(function(sec){ if(!sec.hidden) activate(sec); });
+  target.hidden = false;
+  activate(target);
+  if(target.scrollIntoView){
+    target.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+  }
+});
+
+})();
+</script>
+</body>
+</html>
