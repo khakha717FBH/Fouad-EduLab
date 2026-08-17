@@ -156,4 +156,118 @@ describe('رموز الهوية — ثبات نظام اللون', function(){
   });
 });
 
+/* ==========================================================
+   قالب الدرس — shared/template-boilerplate/lesson-template.html
+   ----------------------------------------------------------
+   القالب ليس درسًا فلا يفحصه حارس درس، وليس ملفًّا مشتركًا
+   يُحمَّل فلا يكشف عطبَه طالب. فالسبيل الوحيد إلى بلاه: أن
+   يتغيّر عرفٌ منصّي في الدروس ويبقى القالب على القديم، فيرثه
+   كل درس قادم. وهذه الحرّاس تقرأ القالب وتقابله بالعرف نفسه
+   الذي تقيسه حرّاس الدروس.
+   ========================================================== */
+const LESSON_TPL = path.join(ROOT, 'shared', 'template-boilerplate', 'lesson-template.html');
+
+describe('قالب الدرس — لا يبلى صامتًا', function(){
+
+  const tplHtml = fs.existsSync(LESSON_TPL) ? fs.readFileSync(LESSON_TPL, 'utf8') : null;
+
+  it('القالب موجود في موضعه', function(){
+    ok(tplHtml, 'لا قالب في shared/template-boilerplate/lesson-template.html');
+  });
+
+  it('وسوم المشترك الستّة كاملة وبترتيبها الإلزامي', function(){
+    const order = (tplHtml.match(/<script src="\.\.\/\.\.\/shared\/[^"]+"><\/script>/g) || [])
+      .map(function(s){ return /shared\/([^/]+)\//.exec(s)[1]; });
+    eq(order.join(' → '),
+       'sounds → xp-system → faheem-widget → template-boilerplate → certificate-system → identity',
+       'ترتيب وسوم المشترك في القالب خالف الترتيب الإلزامي');
+  });
+
+  it('وسوم المشترك تسبق سكربت الدرس', function(){
+    const lastShared = tplHtml.lastIndexOf('<script src="../../shared/');
+    const inline = tplHtml.indexOf('<script>\n/*');
+    ok(lastShared !== -1 && inline !== -1, 'تعذّر تحديد موضع السكربتات في القالب');
+    ok(lastShared < inline, 'سكربت الدرس في القالب يسبق وسوم المشترك');
+  });
+
+  it('ملفّا التصميم المشتركان مربوطان بمسار ../../shared/', function(){
+    ok(/href="\.\.\/\.\.\/shared\/identity\/identity\.css"/.test(tplHtml), 'identity.css غير مربوط');
+    ok(/href="\.\.\/\.\.\/shared\/template-boilerplate\/template\.css"/.test(tplHtml), 'template.css غير مربوط');
+  });
+
+  it('عدد نقاط التقدّم يساوي عدد المحطات', function(){
+    const dots = (tplHtml.match(/class="progress-dot"/g) || []).length;
+    const stations = (tplHtml.match(/<section class="station"/g) || []).length;
+    eq(dots, stations, 'مقام عدّاد «المحطة X من N» مشتقّ من عدد النقاط، فاختلافه يكذب العدّاد');
+  });
+
+  it('لا محطة محجوبة بـhidden — الحجب داخل المحطة لا عليها', function(){
+    const tags = tplHtml.match(/<section class="station"[^>]*>/g) || [];
+    tags.forEach(function(t){
+      no(/\bhidden\b/.test(t), 'محطة في القالب تحمل hidden: ' + t);
+    });
+  });
+
+  it('محطة التقييم اسمها «التقييم الختامي» حصرًا', function(){
+    ok(/<h2>التقييم الختامي<\/h2>/.test(tplHtml), 'اسم محطة التقييم في القالب خالف التسمية المعتمدة');
+  });
+
+  it('خانة زرّ الشهادة موجودة — بدونها يعوم الزرّ فيصطدم بزرّ فهيم', function(){
+    ok(/id="certTriggerSlot"/.test(tplHtml), 'certTriggerSlot مفقود من القالب');
+  });
+
+  it('الشهادة تُنادى عبر Quiz.evaluate لا بنداء Certificate.finish صريح', function(){
+    ok(/window\.Quiz\.evaluate\(/.test(tplHtml), 'القالب بلا نداء Quiz.evaluate');
+    no(/Certificate\.finish\s*\(/.test(tplHtml), 'القالب يكتب Certificate.finish صراحةً — والوحدة تُنادى من داخل Quiz.evaluate');
+  });
+
+  it('حارس تقليل الحركة يحكم كلّ انتقال في القالب', function(){
+    const scrolls = tplHtml.match(/scrollIntoView\(\{[^}]*\}\)/g) || [];
+    ok(scrolls.length >= 2, 'كتلتا التنقّل غير مكتملتين في القالب');
+    scrolls.forEach(function(s){
+      ok(/G\.reduced\(\)/.test(s),
+         'انتقال في القالب بلا حارس تقليل الحركة: ' + s);
+    });
+    ok(/prefers-reduced-motion/.test(tplHtml), 'القالب بلا قاعدة تقليل حركة في أنماطه');
+  });
+
+  /* يقارن الكود وحده: التعليقات تُنزع قبل المقابلة. فالقالب يشرح
+     لقارئه ما لا يحتاج الدرس شرحه، واختلاف الشرح ليس اختلاف سلوك.
+     (القاعدة: الحارس يقيس الصفة لا القيمة الحرفية.) */
+  it('كتلتا التنقّل في القالب مطابقتان لأحدث درس مبنيّ', function(){
+    const latest = fs.readFileSync(
+      path.join(ROOT, 'semester-1', 'unit-02', 'lesson-04.html'), 'utf8');
+    function navOf(src){
+      const bare = src.replace(/\/\*[\s\S]*?\*\//g, ' ');
+      const i = bare.indexOf('a.station-next[href^="#station-"]');
+      const j = bare.indexOf('})();', i);
+      if(i === -1 || j === -1) return null;
+      return bare.slice(i, j).replace(/\s+/g, ' ').trim();
+    }
+    const a = navOf(tplHtml), b = navOf(latest);
+    ok(a && b, 'تعذّرت قراءة كتلة التنقّل من أحد الملفّين');
+    eq(a, b, 'كتلة التنقّل في القالب فارقت نظيرتها في أحدث درس — إحداهما تغيّرت وحدها');
+  });
+
+  it('القالب هيكل بلا محتوى: لا مسرح SVG ولا نصّ درس', function(){
+    no(/<svg[^>]*viewBox="0 0 (2|3)\d\d/.test(tplHtml), 'مسرح درس تسرّب إلى القالب');
+    const evalQs = (tplHtml.match(/class="quiz-options" data-q=/g) || []).length;
+    ok(evalQs <= 2, 'أسئلة درس تسرّبت إلى القالب: ' + evalQs);
+  });
+
+  it('القالب معلَّم بأنه ليس درسًا، ولا يُربط من أي صفحة', function(){
+    ok(/ليس درسًا/.test(tplHtml), 'القالب بلا لافتة تميّزه عن الدروس');
+    const pages = [
+      'index.html', 'semester-1/index.html',
+      'semester-1/unit-01/index.html', 'semester-1/unit-02/index.html'
+    ];
+    pages.forEach(function(p){
+      const f = path.join(ROOT, p);
+      if(!fs.existsSync(f)) return;
+      no(/lesson-template\.html/.test(fs.readFileSync(f, 'utf8')),
+         'صفحة تشير إلى القالب: ' + p);
+    });
+  });
+});
+
 run();
