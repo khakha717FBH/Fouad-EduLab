@@ -9,6 +9,7 @@
 
 const { describe, it, eq, ok, no, has, run } = require('./run');
 const h = require('./harness');
+const guards = require('./guards');
 const f = require('./flows-l4');
 
 function scenario(opts) {
@@ -756,5 +757,15 @@ describe('قواعد الدقّة', () => {
     eq(bad.length, 0);
   });
 });
+
+/* ــــ قواعد أسئلة الاختيار — حرّاس مشتركة (tests/guards.js) ــــ
+   القاعدتان منصّيّتان لا خاصّتين بهذا الدرس، فتُقرآن من موضع
+   واحد. والعتبات هنا لأنّ الدرس يحتملها لا لأنها القاعدة. */
+async function guardDoc(){ return (await scenario().boot()).doc; }
+const api = { describe, it, eq, ok, no, has };
+guards.describeMcqRules(api, guardDoc, {
+    evalSpread:   { minDistinct: 4 },
+    lessonSpread: { minDistinct: 4 }
+  });
 
 run();

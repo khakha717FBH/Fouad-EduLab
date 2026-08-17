@@ -10,6 +10,7 @@
 
 const { describe, it, eq, ok, no, has, run } = require('./run');
 const h = require('./harness');
+const guards = require('./guards');
 
 const FILE = 'semester-1/unit-02/lesson-04.html';
 
@@ -924,35 +925,6 @@ describe('المحطة 6 — التقييم', function(){
    --------------------------------------------------------- */
 describe('حرّاس جودة الأسئلة', function(){
 
-  it('تنويع موضع الإجابة الصحيحة في أسئلة التقييم الثمانية', async function(){
-    const { doc } = await page();
-    const at = [0,0,0,0];
-    EVAL_Q.forEach(n => { at[correctIndex(doc, n)]++; });
-    eq(at.filter(x => x > 0).length, 4, 'مواضع الإجابة: ' + at.join('/'));
-    ok(Math.max.apply(null, at) <= 4, 'موضع متكرّر أكثر من اللازم: ' + at.join('/'));
-  });
-
-  it('تنويع موضع الإجابة الصحيحة في أسئلة الدرس كلّه لا التقييم وحده', async function(){
-    const { doc } = await page();
-    const at = [0,0,0,0];
-    PRACTICE_Q.concat(EVAL_Q).forEach(n => { at[correctIndex(doc, n)]++; });
-    eq(at.filter(x => x > 0).length, 4, 'مواضع الإجابة: ' + at.join('/'));
-    ok(Math.max.apply(null, at) <= Math.ceil((PRACTICE_Q.length + EVAL_Q.length) / 2),
-       'موضع مهيمن: ' + at.join('/'));
-  });
-
-  it('الخيار الصحيح لا يتجاوز أطول مشتّت بأكثر من 12 حرفًا — في الدرس كلّه', async function(){
-    const { doc } = await page();
-    PRACTICE_Q.concat(EVAL_Q).forEach(function(n){
-      const opts = optionTexts(doc, n);
-      const idx = correctIndex(doc, n);
-      const correct = opts[idx].length;
-      const longestWrong = Math.max.apply(null, opts.filter((_, i) => i !== idx).map(t => t.length));
-      ok(correct - longestWrong <= 12,
-         n + ': الصحيح ' + correct + ' وأطول مشتّت ' + longestWrong);
-    });
-  });
-
   it('لكل مشتّت تلميح يخاطب الخطأ نفسه لا السؤال', async function(){
     const { raw } = await page();
     ['w1:', 'w2:', 'w3:'].forEach(function(k){
@@ -1099,5 +1071,15 @@ describe('التنقّل بين المحطات', function(){
     });
   });
 });
+
+/* ــــ قواعد أسئلة الاختيار — حرّاس مشتركة (tests/guards.js) ــــ
+   القاعدتان منصّيّتان لا خاصّتين بهذا الدرس، فتُقرآن من موضع
+   واحد. والعتبات هنا لأنّ الدرس يحتملها لا لأنها القاعدة. */
+async function guardDoc(){ return (await page()).doc; }
+const api = { describe, it, eq, ok, no, has };
+guards.describeMcqRules(api, guardDoc, {
+    evalSpread:   { expect: 8, minDistinct: 4, maxAtOne: 2 },
+    lessonSpread: { minDistinct: 4 }
+  });
 
 run();

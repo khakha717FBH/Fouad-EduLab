@@ -10,6 +10,7 @@
 
 const { describe, it, eq, ok, no, has, run } = require('./run');
 const h = require('./harness');
+const guards = require('./guards');
 
 const LESSON = 'semester-1/unit-02/lesson-03.html';
 const BASE_XP = 155;
@@ -1198,42 +1199,6 @@ describe('الوحدة 02 · الدرس 03 — حرّاس جودة الأسئل�
     return radios.findIndex(function(r){ return r.value === 'correct'; });
   }
 
-  it('تنويع الموضع في أسئلة التقييم الثمانية: أربعة مواضع مختلفة', async function(){
-    const { doc } = await page();
-    const evalGroups = Array.prototype.slice.call(doc.querySelectorAll('#evalQuestions .quiz-options[data-q]'));
-    eq(evalGroups.length, 8);
-    const counts = [0, 0, 0, 0];
-    evalGroups.forEach(function(g){ counts[positionOf(g)]++; });
-    ok(counts.filter(function(c){ return c > 0; }).length >= 3, 'مواضع الإجابات أقلّ من ثلاثة: ' + counts);
-    ok(Math.max.apply(null, counts) <= 4, 'موضع يتكرّر أكثر من نصف الأسئلة: ' + counts);
-  });
-
-  it('تنويع الموضع في أسئلة الاختيار في الدرس كلّه لا التقييم وحده', async function(){
-    const { doc } = await page();
-    const groups = mcqGroups(doc);
-    ok(groups.length >= 18, 'عدد أسئلة الاختيار أقلّ من المتوقَّع: ' + groups.length);
-    const counts = [0, 0, 0, 0];
-    groups.forEach(function(g){ counts[positionOf(g)]++; });
-    ok(counts.filter(function(c){ return c > 0; }).length >= 3, 'مواضع أقلّ من ثلاثة: ' + counts);
-    ok(Math.max.apply(null, counts) <= groups.length / 2,
-       'موضع واحد يحمل أكثر من نصف الإجابات الصحيحة: ' + counts);
-  });
-
-  it('الخيار الصحيح لا يتجاوز أطول مشتّت بأكثر من 12 حرفًا — في الدرس كلّه', async function(){
-    const { doc } = await page();
-    const offenders = [];
-    mcqGroups(doc).forEach(function(g){
-      const opts = Array.prototype.map.call(g.querySelectorAll('.quiz-option'), function(o){
-        return { v: o.querySelector('input').value, len: o.textContent.trim().length };
-      });
-      const right = opts.find(function(o){ return o.v === 'correct'; }).len;
-      const longestWrong = Math.max.apply(null, opts.filter(function(o){ return o.v !== 'correct'; })
-                                                    .map(function(o){ return o.len; }));
-      if(right - longestWrong > 12) offenders.push(g.dataset.q + ' (+' + (right - longestWrong) + ')');
-    });
-    eq(offenders.length, 0, 'خيارات صحيحة أطول من المسموح: ' + offenders.join(' · '));
-  });
-
   it('لكل سؤال اختيار أربعة خيارات أو ثلاثة، وواحد صحيح لا أكثر', async function(){
     const { doc } = await page();
     mcqGroups(doc).forEach(function(g){
@@ -1273,5 +1238,15 @@ describe('الوحدة 02 · الدرس 03 — حدود النطاق', function(
       .forEach(function(w){ no(body.indexOf(w) !== -1, 'اسم عظم خارج الكتاب: ' + w); });
   });
 });
+
+/* ــــ قواعد أسئلة الاختيار — حرّاس مشتركة (tests/guards.js) ــــ
+   القاعدتان منصّيّتان لا خاصّتين بهذا الدرس، فتُقرآن من موضع
+   واحد. والعتبات هنا لأنّ الدرس يحتملها لا لأنها القاعدة. */
+async function guardDoc(){ return (await page()).doc; }
+const api = { describe, it, eq, ok, no, has };
+guards.describeMcqRules(api, guardDoc, {
+    evalSpread:   { expect: 8, minDistinct: 4, maxAtOne: 2 },
+    lessonSpread: { minDistinct: 4 }
+  });
 
 run();

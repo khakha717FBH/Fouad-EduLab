@@ -12,6 +12,7 @@
 
 const { describe, it, eq, ok, no, has, run } = require('./run');
 const h = require('./harness');
+const guards = require('./guards');
 
 const LESSON = 'semester-1/unit-01/lesson-06.html';
 const BASE_XP = 222;   // 8 + 60 + 16 + 33 + 60 + 45 + 0
@@ -417,5 +418,27 @@ describe('المحطة 7 — التقييم الختامي والشهادة، و
     no(hidden(s.doc, 'evalSummary'));
   });
 });
+
+/* ــــ قواعد أسئلة الاختيار — حرّاس مشتركة (tests/guards.js) ــــ
+   القاعدتان منصّيّتان لا خاصّتين بهذا الدرس، فتُقرآن من موضع
+   واحد. والعتبات هنا لأنّ الدرس يحتملها لا لأنها القاعدة. */
+async function guardDoc(){ return (await page()).doc; }
+const api = { describe, it, eq, ok, no, has };
+guards.describeMcqRules(api, guardDoc, {
+    evalSpread:   { expect: 8, minDistinct: 4, maxAtOne: 2 },
+    lessonSpread: { minDistinct: 4 },
+    /* e8 أُصلح (17 أغسطس): كان +30 في التقييم المرتبط بالشهادة،
+       وعولج بإطالة المشتّتات الثلاثة لا بتقصير الصحيحة. فصار
+       الفارق سالبًا، ولا مدخلة له هنا.
+
+       والخمسة الباقية داخل الدرس لا في التقييم — الطالب يرى
+       تصحيحها وتفسيرها فورًا. أرقامها سقوفٌ معلنة لا إعفاء:
+       يسقط الحارس إن ازدادت. وتُحذف عند إصلاح نصوصها في جلسة
+       مراجعة الوحدة 01. */
+    lengthGap:    { known: {
+      'meltQ': 15, 'paradoxQ': 13, 'breakIonic': 21,
+      'etheneConduct': 13, 'graphiteQ': 24
+    } }
+  });
 
 run();

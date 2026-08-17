@@ -7,6 +7,7 @@
 
 const { describe, it, eq, ok, no, has, run } = require('./run');
 const h = require('./harness');
+const guards = require('./guards');
 const { flows, put } = require('./flows-l5');
 
 const LESSON = 'semester-1/unit-01/lesson-05.html';
@@ -603,5 +604,17 @@ describe('درس 05 — الرصيد الكامل والتخزين', () => {
     no(hidden(doc, 'station-5'), 'المحطة لم تُفتح بالمرساة');
   });
 });
+
+/* ــــ قواعد أسئلة الاختيار — حرّاس مشتركة (tests/guards.js) ــــ
+   القاعدتان منصّيّتان لا خاصّتين بهذا الدرس، فتُقرآن من موضع
+   واحد. والعتبات هنا لأنّ الدرس يحتملها لا لأنها القاعدة. */
+async function guardDoc(){ return (await page()).doc; }
+const api = { describe, it, eq, ok, no, has };
+guards.describeMcqRules(api, guardDoc, {
+    evalSpread:   { expect: 8, minDistinct: 4, maxAtOne: 2 },
+    lessonSpread: { minDistinct: 4 },
+    /* مخالفة قائمة — تُصلَح في جلسة مراجعة الوحدة 01. */
+    lengthGap:    { known: { 'whereElectron': 13 } }
+  });
 
 run();

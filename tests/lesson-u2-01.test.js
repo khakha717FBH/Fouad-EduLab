@@ -9,6 +9,7 @@
 
 const { describe, it, eq, ok, no, has, run } = require('./run');
 const h = require('./harness');
+const guards = require('./guards');
 
 const LESSON = 'semester-1/unit-02/lesson-01.html';
 const BASE_XP = 143;
@@ -389,35 +390,6 @@ describe('المحطة 5 — الشكل يخدم الوظيفة', function(){
 
 /* ---------- محطة 6 ---------- */
 describe('المحطة 6 — التقييم الختامي والشهادة، ورصيد المسار الكامل', function(){
-  it('لا يتجاوز طول الخيار الصحيح أطول مشتّت بأكثر من 12 حرفًا في أيّ سؤال (منع الاستبعاد اللغوي)', async function(){
-    const s = await page();
-    const { doc } = s;
-    h.type(doc, 'evalName', 'م');
-    h.click(doc, 'evalStart');
-    ['u2l1-e1', 'u2l1-e2', 'u2l1-e3', 'u2l1-e4', 'u2l1-e5', 'u2l1-e6', 'u2l1-e7', 'u2l1-e8'].forEach(function(name){
-      const opts = Array.from(doc.querySelectorAll('[name="' + name + '"]'));
-      const lens = opts.map(function(o){ return o.closest('.quiz-option').textContent.trim().length; });
-      const correctIdx = opts.findIndex(function(o){ return o.value === 'correct'; });
-      const maxOther = Math.max.apply(null, lens.filter(function(_, i){ return i !== correctIdx; }));
-      const diff = lens[correctIdx] - maxOther;
-      ok(diff <= 12, name + ': الخيار الصحيح أطول من أطول مشتّت بـ' + diff + ' حرفًا');
-    });
-  });
-
-  it('مواضع الإجابة الصحيحة بين أسئلة الاختيار الثمانية متنوّعة، لا نمطًا واحدًا', async function(){
-    const { doc } = await page();
-    const positions = ['u2l1-e1', 'u2l1-e2', 'u2l1-e3', 'u2l1-e4', 'u2l1-e5', 'u2l1-e6', 'u2l1-e7', 'u2l1-e8']
-      .map(function(name){
-        const opts = Array.from(doc.querySelectorAll('[name="' + name + '"]'));
-        return opts.findIndex(function(o){ return o.value === 'correct'; });
-      });
-    const distinctPositions = new Set(positions);
-    ok(distinctPositions.size >= 3, 'المواضع المستعملة: ' + positions.join(',') + ' — يجب أن تتنوّع بين 3 مواضع مختلفة على الأقلّ');
-    const maxRepeat = Math.max.apply(null, [0, 1, 2, 3].map(function(pos){
-      return positions.filter(function(p){ return p === pos; }).length;
-    }));
-    ok(maxRepeat <= 3, 'موضع واحد لا يتكرّر أكثر من ثلاث مرّات من أصل ثمانية أسئلة (تكرّر ' + maxRepeat + ' مرّات)');
-  });
 
   it('السؤال 9 لا يذكر الجمجمة أو الضلوع كاستثناء من الهيكل الطرفي (هما أصلًا من الهيكل المحوري)', async function(){
     const { doc } = await page();
@@ -488,5 +460,24 @@ function document_hasClass(doc, id, cls){
   const el = doc.getElementById(id);
   return !!el && el.classList.contains(cls);
 }
+
+/* ــــ قواعد أسئلة الاختيار — حرّاس مشتركة (tests/guards.js) ــــ
+   القاعدتان منصّيّتان لا خاصّتين بهذا الدرس، فتُقرآن من موضع
+   واحد. والعتبات هنا لأنّ الدرس يحتملها لا لأنها القاعدة. */
+async function guardDoc(){ return (await page()).doc; }
+const api = { describe, it, eq, ok, no, has };
+guards.describeMcqRules(api, guardDoc, {
+    evalSpread:   { expect: 8, minDistinct: 4, maxAtOne: 2 },
+    lessonSpread: { minDistinct: 4 },
+    /* أربع مخالفات قائمة، كلّها داخل الدرس لا في التقييم —
+       الطالب يرى تصحيحها وتفسيرها فورًا، والخطأ نفسه تعليم.
+       ولم يكن هذا الحارس مربوطًا بهذا الدرس يوم بُني، فمرّت.
+       الأرقام سقوفٌ معلنة لا إعفاء: يسقط الحارس إن ازدادت،
+       وتُحذف المدخلة عند إصلاح نصّها. */
+    lengthGap:    { known: {
+      'u2l1-helmet': 50, 'u2l1-cast': 36,
+      'u2l1-support-property': 34, 'u2l1-shape-function-pattern': 67
+    } }
+  });
 
 run();
