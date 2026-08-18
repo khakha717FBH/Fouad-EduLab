@@ -143,6 +143,15 @@
   .atom .glyph{ font-family:'Cairo', sans-serif; font-weight:800; fill:#101828; pointer-events:none; }
   .atom .tag{ font-family:'Tajawal', sans-serif; font-size:13px; fill:var(--ink-dim); }
   .atom .lead{ stroke:rgba(255,255,255,.28); stroke-width:1; }
+  /* شارة الشحنة — لونها لون الجسيم الذي أحدثها: البروتون الزائد
+     يعطي موجبًا، والإلكترون الزائد يعطي سالبًا. ولا تُرسم على ذرّة
+     متعادلة إطلاقًا: صفرٌ مكتوب يوحي بأنّ شيئًا حدث. */
+  .atom .charge-badge{ font-family:'Cairo', sans-serif; font-weight:800; font-size:30px; }
+  .atom .charge-badge.pos{ fill:var(--proton); }
+  .atom .charge-badge.neg{ fill:var(--electron); }
+  .atom .charge-ring{ fill:none; stroke-width:1.4; stroke-dasharray:5 4; }
+  .atom .charge-ring.pos{ stroke:var(--proton-edge); }
+  .atom .charge-ring.neg{ stroke:var(--electron-edge); }
   .atom.shake .nuc{ animation:atomShake .38s ease; }
   @keyframes atomShake{
     0%,100%{ transform:translateX(0); }
@@ -157,6 +166,16 @@
   .gold .grain{ fill:var(--gold); }
   .gold .link{ stroke:rgba(255,255,255,.30); stroke-width:1.2; stroke-dasharray:4 4; }
   .gold .tag{ font-family:'Tajawal', sans-serif; font-size:13px; fill:var(--ink-dim); }
+
+  /* ============ رسم اصطلاح الرمز — م4 ============
+     يُري الطالب أين يقع كلّ رقم من الرمز قبل أن يقرأ تعريفه.
+     الحرف X رمزٌ عامّ لأيّ عنصر لا رمز الصوديوم: لو كُتب Na لظنّه
+     الطالب اصطلاحًا خاصًّا بذرّة واحدة. */
+  .sym-fig{ display:block; width:100%; max-width:440px; margin:0 auto; height:auto; }
+  .sym-fig .sym-x{ font-family:'Cairo', sans-serif; font-weight:800; font-size:74px; fill:var(--ink); }
+  .sym-fig .sym-num{ font-family:'Cairo', sans-serif; font-weight:700; font-size:30px; fill:var(--turquoise); }
+  .sym-fig .sym-tag{ font-family:'Tajawal', sans-serif; font-size:15px; fill:var(--ink-dim); }
+  .sym-fig .sym-lead{ stroke:rgba(255,255,255,.28); stroke-width:1.2; }
 
   /* ============ بطاقة الحساب — م4 و م5 و م6 ============ */
   .nuc-card{
@@ -299,12 +318,26 @@
       <button type="button" class="btn" id="addNeutron">ضع نيوترونًا</button>
     </div>
 
+    <!-- زرّان لا زرّ واحد: القرار التربوي هنا هو «في أيّ مستوى؟»،
+         وزرٌّ واحد يضع الإلكترون تلقائيًّا يُلغي القرار. والنقر على
+         المستوى نفسه يبقى عاملًا — والزرّان طريق ثانٍ يصله من لا
+         يستطيع النقر الدقيق ومن يتنقّل بلوحة المفاتيح. -->
+    <div class="btn-row" id="s2eBtns" hidden>
+      <button type="button" class="btn" id="addEInner">ضع إلكترونًا في المستوى الداخلي</button>
+      <button type="button" class="btn" id="addEOuter">ضع إلكترونًا في المستوى الذي يليه</button>
+    </div>
+
     <div class="explore-step" id="s2levelsStep" hidden>
-      <p class="explore-q">انظر إلى نموذج ذرّة النيون، ثمّ انقر على المستوى الذي تضع فيه كلّ إلكترون من إلكترونات الفلور التسعة.</p>
+      <p class="explore-q">قبل أن تختار: انظر كيف وُزّعت إلكترونات النيون على مستوييه.</p>
       <div class="stage-wrap narrow">
         <svg id="neonFig" class="stage atom" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نموذج ذرّة النيون: نواتها فيها عشرة بروتونات وعشرة نيوترونات، وحولها مستويان فيهما إلكترونان وثمانية إلكترونات"></svg>
       </div>
       <p class="stage-caption">ذرّة النيون — وهو الغاز الذي يضيء لافتات المحالّ الملوّنة. مستواها الداخلي فيه إلكترونان، وبقيّة إلكتروناتها في المستوى الذي يليه.</p>
+      <!-- أعداد النيون مكتوبة بإزاء أعداد الفلور: بها وحدها يستطيع
+           الطالب أن يقارن، والمقارنة هي مادّة سؤال النيوترون أدناه. -->
+      <div class="fact-line center">
+        ذرّة النيون: <b>10</b> بروتونات · <b>10</b> نيوترونات · <b>10</b> إلكترونات.
+      </div>
     </div>
 
     <div id="s2questions" hidden>
@@ -328,6 +361,21 @@
           <label class="quiz-option"><input type="radio" name="l1-where-pn" value="correct"> داخل النواة في مركز الذرّة</label>
         </div>
         <p class="explore-feedback" id="fb-l1-where-pn" hidden></p>
+      </div>
+
+      <!-- الاستنتاج محصور فيما تسمح به المعطيات: النيوترونات متساوية
+           فتُستبعد وحدها. والبروتونات والإلكترونات تختلفان معًا بواحد،
+           فلا يفصل بينهما شيء هنا — والفصل يقع في المحطة الخامسة حين
+           تفقد ذرّة الصوديوم إلكترونًا وتبقى صوديومًا. -->
+      <div class="explore-step">
+        <p class="explore-q">الفلور والنيون عنصران مختلفان، وفي كلٍّ منهما <span dir="ltr">10</span> نيوترونات. فماذا تستنتج؟</p>
+        <div class="quiz-options" data-q="l1-neutron-clue">
+          <label class="quiz-option"><input type="radio" name="l1-neutron-clue" value="w1"> النيوترونات هي التي جعلت أحدهما فلورًا والآخر نيونًا</label>
+          <label class="quiz-option"><input type="radio" name="l1-neutron-clue" value="w2"> الفلور والنيون في الحقيقة عنصر واحد بأسماء مختلفة</label>
+          <label class="quiz-option"><input type="radio" name="l1-neutron-clue" value="correct"> عدد النيوترونات ليس هو ما يفرّق بين العنصرين</label>
+          <label class="quiz-option"><input type="radio" name="l1-neutron-clue" value="w3"> كلّ ذرّات العناصر فيها <span dir="ltr">10</span> نيوترونات دائمًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-l1-neutron-clue" hidden></p>
       </div>
 
       <div class="explore-step">
@@ -400,7 +448,7 @@
     </div>
 
     <div id="s3after" hidden>
-      <p class="fact-line"><b>النيوكليون:</b> جسيم داخل نواة الذرّة — بروتون أو نيوترون. والنيوكليونات هي التي تحمل معظم كتلة الذرّة.</p>
+      <p class="fact-line"><b>النيوكليونات:</b> جسيمات نواة الذرّة — البروتونات والنيوترونات. وهي التي تحمل معظم كتلة الذرّة.</p>
 
       <div class="explore-step">
         <p class="explore-q">لماذا تُعدّ الذرّة متعادلة الشحنة؟</p>
@@ -456,6 +504,26 @@
     </div>
 
     <div id="s4after" hidden>
+      <!-- الرسم يُري الموضع، والبطاقتان تحته تقولان المعنى. ولا يكفي
+           أحدهما وحده: الرسم لا يقول إنّ A مجموع البروتونات
+           والنيوترونات، والبطاقة لا تُثبّت أين يُكتب كلّ رقم. -->
+      <svg class="sym-fig" viewBox="0 0 440 220" xmlns="http://www.w3.org/2000/svg"
+           role="img" aria-label="اصطلاح كتابة الرمز: حرف يمثّل رمز العنصر، والعدد الكتلي أعلى يساره، والعدد الذرّي أسفل يساره">
+        <text class="sym-x" x="240" y="132" text-anchor="middle">X</text>
+        <text class="sym-num" x="185" y="88"  text-anchor="middle">A</text>
+        <text class="sym-num" x="185" y="160" text-anchor="middle">Z</text>
+
+        <line class="sym-lead" x1="172" y1="78"  x2="126" y2="52"/>
+        <text class="sym-tag" x="120" y="48" text-anchor="end" direction="rtl">العدد الكتلي</text>
+
+        <line class="sym-lead" x1="172" y1="168" x2="126" y2="192"/>
+        <text class="sym-tag" x="120" y="197" text-anchor="end" direction="rtl">العدد الذرّي</text>
+
+        <line class="sym-lead" x1="272" y1="118" x2="316" y2="100"/>
+        <text class="sym-tag" x="322" y="96"  text-anchor="start" direction="rtl">رمز العنصر</text>
+        <text class="sym-tag" x="322" y="116" text-anchor="start" direction="rtl">الكيميائي</text>
+      </svg>
+
       <div class="facts-grid">
         <div class="fact-card">
           <div class="term">العدد الذرّي <span dir="ltr">(Z)</span></div>
@@ -598,6 +666,20 @@
           <label class="quiz-option"><input type="radio" name="l1-ion-what-changes" value="w3"> عدد البروتونات وعدد الإلكترونات معًا</label>
         </div>
         <p class="explore-feedback" id="fb-l1-ion-what-changes" hidden></p>
+      </div>
+
+      <!-- هنا تُغلق الحلقة المفتوحة في المحطة الثانية: هناك استُبعد
+           النيوترون بمقارنة الفلور بالنيون، وهنا يُستبعد الإلكترون
+           بتجربة الطالب نفسه — فلا يبقى إلا البروتون. -->
+      <div class="explore-step">
+        <p class="explore-q">فقدت الذرّة إلكترونًا وبقيت صوديومًا. وقد رأيتَ في المحطة الثانية أنّ النيوترونات لا تفرّق بين عنصرين. فما الذي يحدّد هوية العنصر إذن؟</p>
+        <div class="quiz-options" data-q="l1-identity">
+          <label class="quiz-option"><input type="radio" name="l1-identity" value="w1"> عدد الإلكترونات التي تدور حول النواة</label>
+          <label class="quiz-option"><input type="radio" name="l1-identity" value="w2"> عدد النيوترونات الموجودة في النواة</label>
+          <label class="quiz-option"><input type="radio" name="l1-identity" value="w3"> كتلة الذرّة بجسيماتها الثلاثة معًا</label>
+          <label class="quiz-option"><input type="radio" name="l1-identity" value="correct"> عدد البروتونات الموجودة في النواة</label>
+        </div>
+        <p class="explore-feedback" id="fb-l1-identity" hidden></p>
       </div>
     </div>
 
@@ -936,8 +1018,8 @@ var T = {
   },
   s2: {
     nucleusAsk: 'ابدأ بالنواة: ضع فيها بروتونات ونيوترونات ذرّة الفلور.',
-    nucleusDone: 'اكتملت النواة. بقيت الإلكترونات التسعة.',
-    levelsAsk: 'انقر على المستوى الذي تريد وضع الإلكترون فيه.',
+    nucleusDone: 'اكتملت النواة. بقيت إلكترونات الفلور التسعة — اختر لكلٍّ منها مستواه بالزرّين أدناه أو بالنقر على المستوى.',
+    levelsAsk: 'اختر مستوى الإلكترون التالي: بالزرّين أدناه أو بالنقر على المستوى في المسرح.',
     innerFull: 'المستوى الداخلي يسع إلكترونين كما في نموذج النيون. ضع البقيّة في المستوى الذي يليه.',
     outerFull: 'ما زال في يدك إلكترونان. انظر إلى نموذج النيون: أين يقع أوّل إلكترونين فيه؟',
     built: 'اكتملت ذرّة الفلور: نواة في المركز، وإلكترونات في مستويات حولها.',
@@ -955,6 +1037,13 @@ var T = {
       w3: 'لم يتوزّع البروتون ولا النيوترون على المستويات إطلاقًا.',
       any: 'تذكّر أوّل ما ضغطتَ: أين ظهر البروتون؟'
     },
+    neutronClue: {
+      correct: '✓ صحيح! العدد الذي يتساوى في العنصرين لا يمكن أن يكون هو ما يفرّق بينهما.',
+      w1: 'لو كانت النيوترونات هي الفارق لاختلف عددها بين الذرّتين — وهو متساوٍ فيهما.',
+      w2: 'الفلور غاز خانق، والنيون غاز خامل يضيء اللافتات — وشتّان بينهما.',
+      w3: 'عدد النيوترونات يختلف من عنصر إلى آخر، وتساويه هنا في الذرّتين مصادفة.',
+      any: 'قارن الرقمين: 10 هنا و10 هناك. هل يستطيع عددٌ متساوٍ أن يميّز أحدهما؟'
+    },
     whyModel: {
       correct: '✓ صحيح! الذرّة أصغر من أن نرى داخلها، فنجمع الأدلّة ونبني نموذجًا يمثّلها.',
       w1: 'السرعة ليست العائق هنا؛ العائق أنّ الذرّة نفسها أصغر من أن تُرى.',
@@ -965,7 +1054,7 @@ var T = {
   },
   s3: {
     predictFb: 'سجّلنا توقّعك. رتّب الآن بطاقات الشحنة والكتلة، ثمّ احكم بنفسك.',
-    chipsDone: 'اكتملت البطاقات الثلاث. انظر إلى عمود الكتلة: البروتون والنيوترون كتلة كلٍّ منهما 1، والإلكترون جزء من 1836 من ذلك.',
+    chipsDone: 'اكتملت البطاقات الثلاث. انظر إلى سطر الكتلة في كلّ بطاقة: البروتون والنيوترون كتلة كلٍّ منهما 1، والإلكترون جزء من 1836 من ذلك.',
     hintMassOnCharge: 'هذه خانة شحنة لا خانة كتلة.',
     hintChargeOnMass: 'هذه خانة كتلة لا خانة شحنة.',
     hintLightOnHeavy: 'الجسيم الأخفّ بكثير هو الذي يدور حول النواة، لا الذي يسكنها.',
@@ -1031,6 +1120,13 @@ var T = {
       w2: 'النيوترونات لم تتحرّك ولم يتغيّر عددها إطلاقًا.',
       w3: 'عدّاد البروتونات ثبت على قيمته أثناء التجربة.',
       any: 'أعد التجربة وراقب العدّادات الثلاثة معًا.'
+    },
+    identity: {
+      correct: '✓ صحيح! عدد البروتونات وحده هو ما يجعل هذه الذرّة صوديومًا لا عنصرًا آخر.',
+      w1: 'الذرّة فقدت إلكترونًا للتوّ أمام عينيك وبقيت صوديومًا — فالإلكترونات ليست هي.',
+      w2: 'رأيتَ في المحطة الثانية ذرّتين مختلفتين وفي كلٍّ منهما 10 نيوترونات.',
+      w3: 'الكتلة تتبع عدد الجسيمات، وقد استبعدتَ منها النيوترونات في المحطة الثانية.',
+      any: 'استبعدتَ النيوترونات في المحطة الثانية، واستبعد المسرحُ الإلكترونات الآن. فماذا بقي؟'
     },
     hintIonE: 'ابدأ من عدد البروتونات: الشحنة الموجبة تعني فقد إلكترونات، والسالبة تعني كسبها.',
     atomIonHint1: 'اذكر في إجابتك ما بقي كما هو وما تغيّر بالاسم.',
@@ -1178,6 +1274,20 @@ function drawAtom(svg, cfg){
       G.text(eLayer, '-', { x: x.toFixed(2), y: (y + 4.5).toFixed(2), class: 'glyph', 'font-size': 15 });
     }
   });
+
+  /* شارة الشحنة — أعلى يمين الذرّة كما يُكتب الأيون في الكتاب
+     (‎Na⁺‎). تُرسم على المسرح لا في سطر العدّاد وحده: الشحنة صفة
+     للذرّة كلّها، فموضعها عليها. ولا تُرسم إذا كانت صفرًا. */
+  if(cfg.charge){
+    var q    = cfg.charge;
+    var sign = q > 0 ? '+' + q : String(q).replace('-', '−');
+    var kind = q > 0 ? 'pos' : 'neg';
+    var rMax = ringBase + (shells.length - 1) * ringStep;
+    var bx   = cx + rMax * 0.74;
+    var by   = cy - rMax * 0.74;
+    G.add(root, 'circle', { class: 'charge-ring ' + kind, cx: bx, cy: by, r: 24 });
+    G.text(root, sign, { x: bx, y: by + 11, class: 'charge-badge ' + kind, 'text-anchor': 'middle' });
+  }
 
   /* التسمية تلحق البناء: لا تظهر إلا حين يطلبها الدرس بعد الاكتمال */
   if(cfg.labels){
@@ -1355,6 +1465,17 @@ function station2(){
     setTimeout(function(){ svg.classList.remove('shake'); }, 420);
   }
 
+  /* حالة الزرّين تتبع حالة المستويين: زرٌّ لمستوى امتلأ يُعطَّل بدل
+     أن يُخفى — الاختفاء يُربك، والتعطيل يقول «هذا الطريق أُغلق». */
+  function eBtns(){
+    var box = el('s2eBtns');
+    if(!box) return;
+    box.hidden = !(st.phase === 'levels' && !st.built);
+    var bi = el('addEInner'), bo = el('addEOuter');
+    if(bi) bi.disabled = st.built || st.shells[0] >= CAPS[0];
+    if(bo) bo.disabled = st.built || st.shells[1] >= CAPS[1];
+  }
+
   function onRing(level){
     if(st.phase !== 'levels' || st.built) return;
     if(st.shells[level] >= CAPS[level]){
@@ -1382,6 +1503,7 @@ function station2(){
     }
     render();
     counts();
+    eBtns();
   }
 
   function place(kind){
@@ -1400,6 +1522,7 @@ function station2(){
       var box = el('s2nucleusBtns');
       if(box) box.hidden = true;
       show('s2levelsStep');
+      eBtns();
       drawAtom(el('neonFig'), {
         p: 10, n: 10, shells: [2, 8], caps: [2, 8],
         rNuc: 40, ringBase: 78, ringStep: 46
@@ -1413,6 +1536,10 @@ function station2(){
   if(addP) addP.addEventListener('click', function(){ place('p'); });
   if(addN) addN.addEventListener('click', function(){ place('n'); });
 
+  var eIn = el('addEInner'), eOut = el('addEOuter');
+  if(eIn)  eIn.addEventListener('click',  function(){ onRing(0); });
+  if(eOut) eOut.addEventListener('click', function(){ onRing(1); });
+
   txt('s2msg', T.s2.nucleusAsk);
   render();
   counts();
@@ -1422,6 +1549,8 @@ function station2(){
                        correctText: T.s2.whereE.correct,   hints: T.s2.whereE },
     'l1-where-pn':   { xpId: 'l1-where-pn',   xp: 'MCQ', reason: 'حدّدتَ موقع النيوكليونات',
                        correctText: T.s2.wherePN.correct,  hints: T.s2.wherePN },
+    'l1-neutron-clue': { xpId: 'l1-neutron-clue', xp: 'MCQ', reason: 'استبعدتَ النيوترون بمقارنة ذرّتين',
+                       correctText: T.s2.neutronClue.correct, hints: T.s2.neutronClue },
     'l1-why-model':  { xpId: 'l1-why-model',  xp: 'MCQ', reason: 'فسّرتَ سبب استعمال النماذج في العلوم',
                        correctText: T.s2.whyModel.correct, hints: T.s2.whyModel }
   }, {
@@ -1581,7 +1710,8 @@ function station5(){
     var a = ATOMS[st.mode];
     drawAtom(svg, {
       p: a.p, n: a.n, shells: st.shells, caps: a.caps,
-      ringBase: 95, ringStep: 45
+      ringBase: 95, ringStep: 45,
+      charge: st.acted ? (a.p - electrons()) : 0
     });
   }
   function counts(){
@@ -1672,7 +1802,9 @@ function station5(){
     'l1-charge-rule':       { xpId: 'l1-charge-rule', xp: 'MCQ', reason: 'ربطتَ عدد الإلكترونات المفقودة بقيمة الشحنة',
                               correctText: T.s5.chargeRule.correct,  hints: T.s5.chargeRule },
     'l1-ion-what-changes':  { xpId: 'l1-ion-what-changes', xp: 'MCQ', reason: 'حدّدتَ ما يتغيّر فعلًا عند تكوّن الأيون',
-                              correctText: T.s5.whatChanges.correct, hints: T.s5.whatChanges }
+                              correctText: T.s5.whatChanges.correct, hints: T.s5.whatChanges },
+    'l1-identity':          { xpId: 'l1-identity', xp: 'MCQ', reason: 'استنتجتَ ما يحدّد هوية العنصر',
+                              correctText: T.s5.identity.correct,    hints: T.s5.identity }
   }, {
     onAllSolved: function(){ show('s5cards'); }
   });
