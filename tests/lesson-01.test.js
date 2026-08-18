@@ -121,6 +121,18 @@ describe('الهيكل والهوية', () => {
     has(RAW, 'prefers-reduced-motion');
   });
 
+  /* الطبقة الثانية: ما لا يمرّ عبر JS. تمريرٌ يبدأه المتصفّح (مرساة في
+     الرابط، تركيز بلوحة المفاتيح) لا يستدعي scrollIntoView فلا يبلغه
+     G.reduced() — يحكمه scroll-behavior وحده. والحارس أعلاه يفحص JS
+     ويمرّ أخضر على هذا النقص، فلزم فحصٌ مستقلّ. */
+  it('scroll-behavior:smooth مقابَل بقاعدة تُعيده إلى auto', async () => {
+    const css = RAW.replace(/\/\*[\s\S]*?\*\//g, ' ');
+    if(!/scroll-behavior\s*:\s*smooth/.test(css)) return;   // لا انزلاق فلا شيء يُبطَل
+    const blocks = css.match(/@media[^{]*prefers-reduced-motion[^{]*\{[\s\S]*?\}\s*\}/g) || [];
+    ok(blocks.some(b => /scroll-behavior\s*:\s*auto/.test(b)),
+      'الدرس يفرض انزلاق التمرير ولا يُبطله عند تفضيل تقليل الحركة');
+  });
+
   it('كتلة التنقّل مطابقة لنظيرتها في القالب', async () => {
     const tpl = fs.readFileSync(
       path.join(ROOT, 'shared', 'template-boilerplate', 'lesson-template.html'), 'utf8');
