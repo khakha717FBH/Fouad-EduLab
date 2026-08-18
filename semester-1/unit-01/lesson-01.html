@@ -146,12 +146,9 @@
   /* شارة الشحنة — لونها لون الجسيم الذي أحدثها: البروتون الزائد
      يعطي موجبًا، والإلكترون الزائد يعطي سالبًا. ولا تُرسم على ذرّة
      متعادلة إطلاقًا: صفرٌ مكتوب يوحي بأنّ شيئًا حدث. */
-  .atom .charge-badge{ font-family:'Cairo', sans-serif; font-weight:800; font-size:30px; }
+  .atom .charge-badge{ font-family:'Cairo', sans-serif; font-weight:800; font-size:36px; }
   .atom .charge-badge.pos{ fill:var(--proton); }
   .atom .charge-badge.neg{ fill:var(--electron); }
-  .atom .charge-ring{ fill:none; stroke-width:1.4; stroke-dasharray:5 4; }
-  .atom .charge-ring.pos{ stroke:var(--proton-edge); }
-  .atom .charge-ring.neg{ stroke:var(--electron-edge); }
   .atom.shake .nuc{ animation:atomShake .38s ease; }
   @keyframes atomShake{
     0%,100%{ transform:translateX(0); }
@@ -1185,6 +1182,13 @@ function nucleusTypes(p, n){
   return arr;
 }
 
+/* صياغة الشحنة في موضع واحد: الشارة على المسرح وسطر العدّاد
+   يقرآن منها معًا، فلا ينطق أحدهما ‎1+‎ والآخر ‎+1‎. */
+function chargeLabel(q){
+  if(!q) return '';
+  return String(Math.abs(q)) + (q > 0 ? '+' : '−');
+}
+
 function drawAtom(svg, cfg){
   if(!svg) return;
   G.clear(svg);
@@ -1275,18 +1279,19 @@ function drawAtom(svg, cfg){
     }
   });
 
-  /* شارة الشحنة — أعلى يمين الذرّة كما يُكتب الأيون في الكتاب
-     (‎Na⁺‎). تُرسم على المسرح لا في سطر العدّاد وحده: الشحنة صفة
-     للذرّة كلّها، فموضعها عليها. ولا تُرسم إذا كانت صفرًا. */
+  /* شارة الشحنة — في ركن المسرح لا على الذرّة.
+     وُضعت أوّلًا فوق المستوى الخارجي فقُرئت جسيمًا ثالثًا يجلس في
+     مدار: حجمها من حجم الإلكترون، ودائرتها تشبه دائرته، وموضعها
+     على مسار المستوى. فأُخرجت إلى الركن وأُسقطت دائرتها: ما ليس
+     جسيمًا لا يأخذ شكل جسيم. والشحنة صفة للذرّة كلّها لا لموضع
+     فيها. والإشارة يمين الرقم كما يكتبها الكتاب (‎1+‎ لا ‎+1‎).
+     ولا تُرسم إذا كانت صفرًا: صفرٌ مكتوب يوحي بأنّ شيئًا حدث. */
   if(cfg.charge){
     var q    = cfg.charge;
-    var sign = q > 0 ? '+' + q : String(q).replace('-', '−');
     var kind = q > 0 ? 'pos' : 'neg';
-    var rMax = ringBase + (shells.length - 1) * ringStep;
-    var bx   = cx + rMax * 0.74;
-    var by   = cy - rMax * 0.74;
-    G.add(root, 'circle', { class: 'charge-ring ' + kind, cx: bx, cy: by, r: 24 });
-    G.text(root, sign, { x: bx, y: by + 11, class: 'charge-badge ' + kind, 'text-anchor': 'middle' });
+    var bx   = vb[0] + vb[2] - 40;
+    var by   = vb[1] + 52;
+    G.text(root, chargeLabel(q), { x: bx, y: by, class: 'charge-badge ' + kind, 'text-anchor': 'middle' });
   }
 
   /* التسمية تلحق البناء: لا تظهر إلا حين يطلبها الدرس بعد الاكتمال */
@@ -1721,8 +1726,7 @@ function station5(){
     var line = 'بروتونات <span dir="ltr">' + a.p + '</span> · إلكترونات <span dir="ltr">' + electrons() + '</span>';
     if(st.acted){
       var q = a.p - electrons();
-      var sign = q > 0 ? '+' + q : (q < 0 ? q : '0');
-      line += ' · الشحنة <span dir="ltr">' + sign + '</span>';
+      line += ' · الشحنة <span dir="ltr">' + (chargeLabel(q) || '0') + '</span>';
     }
     c.innerHTML = line;
   }
