@@ -231,6 +231,19 @@ describe('قالب الدرس — لا يبلى صامتًا', function(){
     ok(/prefers-reduced-motion/.test(tplHtml), 'القالب بلا قاعدة تقليل حركة في أنماطه');
   });
 
+  /* الطبقة الثانية: ما لا يمرّ عبر JS. تمريرٌ يبدأه المتصفّح (مرساة في
+     الرابط، تركيز بلوحة المفاتيح) لا يستدعي scrollIntoView فلا يبلغه
+     G.reduced() — يحكمه scroll-behavior وحده. والحارس أعلاه يفحص JS
+     ويمرّ أخضر على هذا النقص، فلزم فحصٌ مستقلّ. */
+  it('scroll-behavior:smooth في القالب مقابَل بقاعدة تُعيده إلى auto', function(){
+    const css = tplHtml.replace(/\/\*[\s\S]*?\*\//g, ' ');
+    if(!/scroll-behavior\s*:\s*smooth/.test(css)) return;   // لا انزلاق فلا شيء يُبطَل
+    const blocks = css.match(/@media[^{]*prefers-reduced-motion[^{]*\{[\s\S]*?\}\s*\}/g) || [];
+    ok(blocks.some(function(b){
+      return /scroll-behavior\s*:\s*auto/.test(b) || /scroll-behavior\s*:\s*auto\s*!important/.test(b);
+    }), 'القالب يفرض انزلاق التمرير ولا يُبطله عند تفضيل تقليل الحركة');
+  });
+
   /* يقارن الكود وحده: التعليقات تُنزع قبل المقابلة. فالقالب يشرح
      لقارئه ما لا يحتاج الدرس شرحه، واختلاف الشرح ليس اختلاف سلوك.
      (القاعدة: الحارس يقيس الصفة لا القيمة الحرفية.) */
