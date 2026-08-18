@@ -436,11 +436,20 @@ describe('المحطة 5 — ذرّة تفقد وذرّة تكسب', () => {
     eq(doc.querySelectorAll('#ionStage circle.e').length, 10);
     eq(doc.querySelectorAll('#ionStage circle.p').length, 11, 'تغيّر عدد البروتونات — وهو الخطأ الذي يقيسه السؤال');
     eq(doc.querySelectorAll('#ionStage circle.n').length, 12);
-    has(h.text(doc, 's5count'), '+1');
+    has(h.text(doc, 's5count'), '1+');
     const badge = doc.querySelector('#ionStage text.charge-badge');
     ok(badge, 'شحنة الأيون غير معروضة على المسرح');
-    eq(badge.textContent, '+1');
+    eq(badge.textContent, '1+', 'الإشارة يسار الرقم — والكتاب يكتبها يمينه');
     ok(badge.getAttribute('class').indexOf('pos') > -1, 'الشارة بلا دلالة الإشارة');
+    eq(doc.querySelectorAll('#ionStage circle.charge-ring').length, 0,
+       'دائرة حول الشارة تجعلها تُقرأ جسيمًا في مدار');
+    const cxBadge = Number(badge.getAttribute('x'));
+    const cyBadge = Number(badge.getAttribute('y'));
+    const rings = Array.from(doc.querySelectorAll('#ionStage circle.ring'));
+    const rMax = Math.max(...rings.map(c => Number(c.getAttribute('r'))));
+    const cx0 = Number(rings[0].getAttribute('cx')), cy0 = Number(rings[0].getAttribute('cy'));
+    ok(Math.hypot(cxBadge - cx0, cyBadge - cy0) > rMax + 20,
+       'الشارة داخل مدارات الذرّة فتُقرأ جسيمًا ثالثًا');
   });
 
   it('الذرّة المتعادلة بلا شارة، والشارة تزول بإعادة الذرّة', async () => {
@@ -460,7 +469,8 @@ describe('المحطة 5 — ذرّة تفقد وذرّة تكسب', () => {
     no(/الشحنة/.test(h.text(doc, 's5count')), 'شحنة معروضة على ذرّة متعادلة');
     h.click(doc, 'ionAdd');
     eq(doc.querySelectorAll('#ionStage circle.e').length, 10);
-    has(h.text(doc, 's5count'), '-1');
+    has(h.text(doc, 's5count'), '1−');
+    eq(doc.querySelector('#ionStage text.charge-badge').textContent, '1−');
     eq(w.XP.total(), 13, 'التنبّؤ + بناء الأيونين');
     ok(h.visible(doc, 's5after'), 'ما بعد المسرح لم يُكشَف');
   });
