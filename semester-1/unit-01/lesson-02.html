@@ -475,15 +475,15 @@
     <span class="brand-text">مختبر فؤاد التعليمي</span>
   </span>
   <div class="stepper">
-    <button class="step-seg" data-station="engage" title="المحطة الأولى — تحدي البداية" onclick="document.getElementById('st-engage').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
-    <button class="step-seg" data-station="explore1" title="المحطة الثانية · المرحلة الأولى" onclick="document.getElementById('st-explore1').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
-    <button class="step-seg" data-station="explore2" title="المحطة الثانية · المرحلة الثانية" onclick="document.getElementById('st-explore2').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
-    <button class="step-seg" data-station="explore3" title="المحطة الثانية · المرحلة الثالثة" onclick="document.getElementById('st-explore3').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
-    <button class="step-seg" data-station="checkin" title="المحطة الثانية · المرحلة الرابعة" onclick="document.getElementById('st-checkin').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
-    <button class="step-seg" data-station="explain3" title="المحطة الثالثة · المرحلة الأولى" onclick="document.getElementById('st-explain3').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
-    <button class="step-seg" data-station="valency" title="المحطة الثالثة · المرحلة الثانية" onclick="document.getElementById('st-valency').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
-    <button class="step-seg" data-station="elaborate" title="المحطة الرابعة — دراسة الحالة" onclick="document.getElementById('st-elaborate').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
-    <button class="step-seg" data-station="evaluate" title="المحطة الأخيرة — التقييم الختامي" onclick="document.getElementById('st-evaluate').scrollIntoView({behavior:'smooth'})"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="engage" title="المحطة الأولى — تحدي البداية" onclick="goTo('st-engage')"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="explore1" title="المحطة الثانية · المرحلة الأولى" onclick="goTo('st-explore1')"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="explore2" title="المحطة الثانية · المرحلة الثانية" onclick="goTo('st-explore2')"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="explore3" title="المحطة الثانية · المرحلة الثالثة" onclick="goTo('st-explore3')"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="checkin" title="المحطة الثانية · المرحلة الرابعة" onclick="goTo('st-checkin')"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="explain3" title="المحطة الثالثة · المرحلة الأولى" onclick="goTo('st-explain3')"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="valency" title="المحطة الثالثة · المرحلة الثانية" onclick="goTo('st-valency')"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="elaborate" title="المحطة الرابعة — دراسة الحالة" onclick="goTo('st-elaborate')"><span class="step-seg-fill"></span></button>
+    <button class="step-seg" data-station="evaluate" title="المحطة الأخيرة — التقييم الختامي" onclick="goTo('st-evaluate')"><span class="step-seg-fill"></span></button>
   </div>
   <span class="xp-pill" id="xpCounter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg><span id="xpValue">0</span> XP</span>
 </div>
@@ -963,6 +963,26 @@ function sndClick(){ tone(520,480,.09,.07); }
 function sndSuccess(){ tone(520,900,.35,.13); }
 function sndTransition(){ tone(400,650,.45,.09); }
 function sndError(){ tone(300,220,.25,.08,'sawtooth'); }
+
+/* ==================================================================
+   التنقّل بين المحطات — حارس تقليل الحركة
+   ------------------------------------------------------------------
+   بند وصول (UDL) لا تجميل. قاعدة CSS الشاملة في أنماط هذا الدرس
+   تُبطل الحركات والانتقالات، لكنّ أمر scrollIntoView الصريح
+   بـbehavior:'smooth' يتجاوزها — فالمتصفّح يطيع الأمر المباشر لا
+   القاعدة العامّة. فلزم فحص التفضيل هنا في JS.
+
+   ولا يُتّكل على G.reduced() القادم من shared/template.js: هذا الدرس
+   لا يربط المشترك إطلاقًا (حصانة موثَّقة في tests/lesson-02.test.js).
+   ================================================================== */
+function prefersReducedMotion(){
+  return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+}
+function goTo(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+}
 
 /* ==================================================================
    الحالة والتقدّم — لا تراجع أبدًا، بلا شارات أثناء الأنشطة
