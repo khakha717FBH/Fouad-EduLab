@@ -3,164 +3,220 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الدرس 1 | ما تركيب الذرة؟ | مختبر فؤاد التعليمي</title>
+<title>الدرس 1 — ما تركيب الذرّة؟ | مختبر فؤاد التعليمي</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../shared/identity/identity.css">
 <link rel="stylesheet" href="../../shared/template-boilerplate/template.css">
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  الوحدة 1 — الدرس 1 — مختبر فؤاد التعليمي
+  "ما تركيب الذرّة؟"
+  ص 4–11 · المعياران C0901.1 و C0901.2 · بادئة data-q/XP: l1-
+
+  سبع محطات، سبع نقاط تقدّم. المحطتان 2 و5 مشطورتان داخليًّا إلى
+  مرحلتين، ولكلّ محطة نقطة واحدة لا نقطة لكل مرحلة.
+
+  بُني من shared/template-boilerplate/lesson-template.html لا من درسٍ
+  سابق. ودرس 01 القديم لم يُورَّث منه شيء بقرار فؤاد (17 أغسطس 2026):
+  لا محطاته ولا أنماطه ولا منطق أسئلته ولا مُعرّفات نقاطه. وسقطت معه
+  إطاراته الخارجية الثلاثة (H5P ×2 · جينيالي) ورابط مختبر atom-L1
+  ورابط التقييم الخارجي — والتقييم صار محطةً داخلية بشهادة.
+
+  المسارح: راسم الذرّة (م2، مرحلتان) · نموذج النيون المرجعي (م2) ·
+  رمز الصوديوم (م4) · راسم الذرّة نفسه لتكوين الأيون (م5، مرحلتان).
+
+  وراسم الذرّة دالّة واحدة داخل هذا الملفّ (drawAtom) تخدم أربعة
+  مواضع. ولم يُرقَّ إلى المشترك: راسمو الدروس 03–05 تمثيلٌ نقطيّ
+  لإلكترونات التكافؤ وحدها، وهذا نموذج قشرات بنواة ومحتواها — فترقيته
+  إعادةُ كتابة لا إضافة (النواة §3.5، الشرط الثالث). يُراجَع إن احتاجه
+  درسٌ ثانٍ.
+
+  قرارات نطاق مسجَّلة:
+  • سعة مستويات الطاقة (2 ثمّ 8) لا تُعلَن قاعدةً ولا يُسأل عنها.
+    الفلور يُبنى بمحاكاة نموذج النيون المعروض كما يطلب الكتاب حرفيًّا،
+    والتوزيع الإلكتروني محتوى درس 02 من هذه الوحدة.
+  • «النظائر» مستبعدة: الكلمة في خلفية الدليل المعرفية ولا وجود لها في
+    كتاب الطالب. الفرق بين ذرّتَي الكلور يُوصف بعدد النيوترونات بلا
+    تسمية.
+  • «99.9% من حجم الذرّة فراغ» وتشبيه الملعب والكرة الزجاجية —
+    مُسقَطان بقرار فؤاد. من خلفية الدليل لا كتاب الطالب، ولا يقيسهما
+    هدفٌ ولا يُبنى عليهما شيء في الوحدة. وأثر الإسقاط: حلقة تنبّؤ
+    المحطة 1 تُغلَق بالكتلة لا بالفراغ، ولا سطر يزعم أنّ مسرحًا هنا
+    مرسوم بمقياس.
+  • ذرّة الصوديوم لا الليثيوم في مسرح تكوين الأيون: كسبُ الليثيوم
+    إلكترونًا لا يقع كيميائيًّا، والدقّة العلمية أولوية. والاتّجاهان
+    يُرَيان على ذرّتين حقيقيّتين: Na تفقد و F تكسب.
+
+  خارج النطاق نصًّا وبالاختبار: النظائر · التوزيع الإلكتروني كقاعدة ·
+  الكتلة الذرّية النسبية · القوة النووية · الروابط بأنواعها (دروس
+  03–06) · ترقيم أشكال الكتاب في واجهة الطالب.
+
+  الرصيد المقدَّر: 215 أساسي (3+33+43+55+61+20) + 8 اختياري
+  (l1-fe-ion) = 223. رقم الاختبار هو الحقيقة لا هذا التعليق.
+  ═══════════════════════════════════════════════════════════════════ -->
 <style>
-  /* =========================================================
-     CSS خاص بمحتوى درس "ما تركيب الذرة؟" فقط — كل ما هو عام
-     (الألوان، الأزرار، الهيكل، شريط التقدّم، الأسئلة، السحب
-     والإفلات) موجود في shared/identity و shared/template-boilerplate
-     ========================================================= */
+  /* ============ منع سحب التحديث من تصفير XP ============ */
+  html, body{ overscroll-behavior-y:contain; }
+  html{ scroll-behavior:smooth; }
+  .station{ scroll-margin-top:14px; }
 
-  /* ملاحظة على بطاقة الحقيقة — إضافة محلية غير موجودة بـtemplate.css */
-  .fact-note{
-    margin-top:10px;
-    padding-top:10px;
-    border-top:1px dashed var(--border);
-    color:var(--coral);
-    font-weight:700;
-    font-size:13px;
+  /* ============ أصناف عامّة — نمط دروس المنصّة ============ */
+  .station-tagline{
+    max-width:920px; margin:0 auto 4px; font-size:.95rem; color:var(--ink-dim); line-height:1.9;
+  }
+  .explore-q{
+    font-weight:700; color:var(--ink); margin:0 0 12px; font-size:clamp(14px,2.4vw,16px);
+  }
+  .explore-step{ margin-top:26px; padding-top:20px; border-top:1px dashed var(--border); }
+  .explore-step:first-of-type{ border-top:none; padding-top:0; }
+  .explore-answer-row{ display:flex; gap:10px; flex-wrap:wrap; }
+  .explore-input{
+    flex:1 1 140px; min-width:100px; background:rgba(255,255,255,.03);
+    border:1px solid var(--border); border-radius:999px; padding:11px 20px;
+    color:var(--ink); font-family:'Tajawal', sans-serif; font-size:15px; text-align:center;
+  }
+  .explore-input::placeholder{ color:var(--ink-dim); opacity:.55; font-size:.86em; }
+  .explore-input:focus{ outline:none; border-color:var(--turquoise); box-shadow:0 0 0 3px var(--turquoise-faint); }
+  .explore-input:disabled{ opacity:.7; }
+  .fact-line{
+    max-width:920px; margin:14px auto 0; border:1px dashed var(--turquoise-soft); border-radius:14px;
+    padding:12px 16px; font-size:.92rem; line-height:1.9; background:rgba(20,200,168,.05);
+  }
+  .fact-line.center{ text-align:center; }
+  .name-card{
+    max-width:920px; margin:16px auto 0; border:1px dashed var(--turquoise-soft); border-radius:14px;
+    padding:12px 16px; font-size:.92rem; line-height:1.9; background:rgba(20,200,168,.05);
+  }
+  .name-card b{ color:var(--turquoise); font-weight:800; }
+  .stage-msg{
+    max-width:920px; margin:10px auto 0; min-height:22px; text-align:center;
+    font-size:14px; color:var(--ink-dim); line-height:1.9;
+  }
+  .stage-msg.done{ color:var(--turquoise); font-weight:700; }
+  .stage-wrap{
+    width:100%; max-width:640px; margin:12px auto 0;
+    background:var(--navy-darker); border:1px solid rgba(20,200,168,0.15);
+    border-radius:22px; padding:14px;
+  }
+  .stage-wrap.narrow{ max-width:420px; }
+  svg.stage{ width:100%; height:auto; display:block; -webkit-tap-highlight-color:transparent; }
+  .stage-caption{
+    max-width:920px; margin:8px auto 0; text-align:center;
+    font-size:12.5px; color:var(--ink-dim); line-height:1.85;
+  }
+  .step-count{
+    max-width:920px; margin:8px auto 0; text-align:center;
+    font-size:12.5px; color:var(--ink-dim); font-weight:600;
+  }
+  .btn-row{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:12px; }
+  .bonus-box{
+    max-width:920px; margin:24px auto 0; border:1px dashed var(--coral); border-radius:16px;
+    padding:16px 18px; background:rgba(255,107,74,.04);
+  }
+  .bonus-tag{
+    display:inline-block; font-family:'Cairo', sans-serif; font-weight:800; font-size:.75rem;
+    color:var(--coral); border:1px solid var(--coral); border-radius:999px; padding:3px 12px; margin-bottom:10px;
   }
 
-  /* ===== بطاقات النويدات (بروتونات/إلكترونات/نيوترونات) ===== */
-  .nuclide-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-    gap:16px;
-    margin:16px 0;
+  /* ============ ألوان جسيمات الذرّة — ألوان مادّة لا ألوان واجهة ============
+     ثلاثة جسيمات يجب أن تُميَّز عن بعضها في كل مسرح، فالفرق يحمله
+     الشكل أوّلًا: البروتون عليه علامة + والإلكترون عليه علامة −
+     والنيوترون بلا علامة. واللون إشارة ثانية تلبّي UDL لا تحمل
+     المعنى وحدها. ولا يعني أيٌّ منها «اضغط هنا» ولا «أحسنت». */
+  :root{
+    --proton:#D4726A;   --proton-edge:#8E463F;
+    --neutron:#98A2B3;  --neutron-edge:#5C6474;
+    --electron:#6FB3D2; --electron-edge:#396A85;
+    --gold:#D9A441;     --gold-edge:#8A6420;
   }
-  .nuclide-card{
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:18px 16px;
-    background:rgba(255,255,255,.02);
-    text-align:center;
-  }
-  .nuclide-symbol{
-    display:inline-flex;
-    align-items:center;
-    gap:4px;
-    margin-bottom:18px;
-    font-family:'Cairo',sans-serif;
-  }
-  .nuclide-numbers{
-    display:flex;
-    flex-direction:column;
-    line-height:1.15;
-    font-weight:800;
-  }
-  .nuclide-numbers .mass-num{color:var(--ink);font-size:19px;}
-  .nuclide-numbers .atomic-num{color:var(--turquoise);font-size:19px;margin-top:2px;}
-  .nuclide-symbol .element-letter{font-size:42px;font-weight:800;color:var(--ink);}
 
-  .nuclide-fields{display:grid;gap:10px;}
-  .nuclide-field{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    background:rgba(255,255,255,.03);
-    border:1px solid var(--border);
-    border-radius:999px;
-    padding:8px 8px 8px 16px;
-    transition:.2s;
+  /* ============ مسارح الذرّة — م2 و م5 ============ */
+  .atom .ring{ fill:none; stroke:rgba(255,255,255,.16); stroke-width:1.6; }
+  .atom .ring.pickable{ stroke:var(--turquoise); stroke-width:2.2; cursor:pointer; touch-action:none; }
+  .atom .ring-hit{ fill:none; stroke:transparent; stroke-width:26; cursor:pointer; touch-action:none; }
+  .atom .nucleus-bg{ fill:rgba(255,255,255,.05); stroke:rgba(255,255,255,.18); stroke-width:1.4; }
+  .atom .p{ fill:var(--proton); stroke:var(--proton-edge); stroke-width:1.2; }
+  .atom .n{ fill:var(--neutron); stroke:var(--neutron-edge); stroke-width:1.2; }
+  .atom .e{ fill:var(--electron); stroke:var(--electron-edge); stroke-width:1.2; }
+  .atom .glyph{ font-family:'Cairo', sans-serif; font-weight:800; fill:#101828; pointer-events:none; }
+  .atom .tag{ font-family:'Tajawal', sans-serif; font-size:13px; fill:var(--ink-dim); }
+  .atom .lead{ stroke:rgba(255,255,255,.28); stroke-width:1; }
+  .atom.shake .nuc{ animation:atomShake .38s ease; }
+  @keyframes atomShake{
+    0%,100%{ transform:translateX(0); }
+    25%{ transform:translateX(-4px); }
+    75%{ transform:translateX(4px); }
   }
-  .nuclide-field label{font-size:13px;color:var(--ink-dim);}
-  .nuclide-field input{
-    width:54px;
-    text-align:center;
-    background:var(--navy-darker);
-    border:1px solid var(--border);
-    border-radius:999px;
-    color:var(--ink);
-    font-family:'Tajawal',sans-serif;
-    font-weight:700;
-    padding:6px 4px;
-    font-size:15px;
-  }
-  .nuclide-field input::-webkit-outer-spin-button,
-  .nuclide-field input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
-  .nuclide-field input[type="number"]{-moz-appearance:textfield;}
-  .nuclide-field input:focus{outline:none;border-color:var(--turquoise);box-shadow:0 0 0 3px var(--turquoise-soft);}
-  .nuclide-field.correct{border-color:var(--turquoise);background:rgba(20,200,168,.1);animation:tplPopIn .35s ease;}
-  .nuclide-field.correct input{border-color:var(--turquoise);color:var(--turquoise);}
-  .nuclide-field.incorrect{border-color:var(--coral);background:rgba(255,107,74,.08);animation:tplShakeX .4s ease;}
-  .nuclide-field.incorrect input{border-color:var(--coral);color:var(--coral);}
 
-  .nuclide-check-btn{margin-top:14px;}
-  .nuclide-feedback{margin-top:8px;font-weight:700;font-size:14px;min-height:20px;}
-  .nuclide-feedback.correct{color:var(--turquoise);}
-  .nuclide-feedback.incorrect{color:var(--coral);}
+  /* ============ مشهد الذهب — م1 ============ */
+  .gold .bar{ fill:var(--gold); stroke:var(--gold-edge); stroke-width:1.4; }
+  .gold .bar.dim{ fill:#B98C36; }
+  .gold .lens{ fill:rgba(11,17,32,.92); stroke:rgba(255,255,255,.30); stroke-width:2; }
+  .gold .grain{ fill:var(--gold); }
+  .gold .link{ stroke:rgba(255,255,255,.30); stroke-width:1.2; stroke-dasharray:4 4; }
+  .gold .tag{ font-family:'Tajawal', sans-serif; font-size:13px; fill:var(--ink-dim); }
 
-  /* ===== بطاقات حالات الأيون ===== */
-  .ion-states{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-    gap:14px;
-    margin:16px 0;
+  /* ============ بطاقة الحساب — م4 و م5 و م6 ============ */
+  .nuc-card{
+    max-width:520px; margin:16px auto 0; background:var(--navy-darker);
+    border:1px solid var(--border); border-radius:18px; padding:16px;
   }
-  .ion-card{
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:14px;
-    text-align:center;
-    background:rgba(255,255,255,.02);
+  .nuc-sym{
+    display:flex; align-items:center; justify-content:center; gap:4px;
+    font-family:'Cairo', sans-serif; margin-bottom:14px;
   }
-  .ion-card img{width:100%;border-radius:10px;margin-bottom:10px;}
-  .ion-card h3{margin:6px 0;font-size:15px;color:var(--turquoise);}
-  .ion-card .charge{color:var(--coral);font-weight:700;}
+  .nuc-ab{ display:flex; flex-direction:column; align-items:flex-end; line-height:1.15; }
+  .nuc-ab .a{ font-size:15px; color:var(--ink); font-weight:700; }
+  .nuc-ab .z{ font-size:15px; color:var(--ink); font-weight:700; }
+  .nuc-letter{ font-size:34px; font-weight:800; color:var(--turquoise); }
+  .nuc-letter sup{ font-size:16px; }
+  .nuc-fields{ display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; }
+  .nuc-field{ display:flex; flex-direction:column; gap:6px; }
+  .nuc-field label{ font-size:12.5px; color:var(--ink-dim); text-align:center; }
+  .nuc-actions{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:14px; }
 
-  /* ===== بطاقات الجسيمات الذرية (بروتون/نيوترون/إلكترون) ===== */
-  .particle-cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-    gap:16px;
+  /* ============ محطة التقييم الختامي ============ */
+  .q-num{
+    display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px;
+    border-radius:50%; background:rgba(20,200,168,.12); border:1px solid var(--turquoise-soft);
+    color:var(--turquoise); font-family:'Cairo', sans-serif; font-weight:800; font-size:.8rem;
+    margin-inline-end:8px; flex-shrink:0;
   }
-  .particle-card{
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:16px;
-    text-align:center;
-    background:rgba(255,255,255,.02);
+  .eval-q{ margin-top:26px; padding-top:20px; border-top:1px dashed var(--border); }
+  .eval-q.first{ border-top:none; padding-top:0; }
+  .name-gate{ max-width:520px; margin:0 auto; text-align:center; display:grid; gap:12px; }
+  .name-gate label{ font-size:.92rem; color:var(--ink-dim); }
+  .gate-note{ font-size:12.5px; color:var(--ink-dim); line-height:1.9; }
+  .eval-summary{
+    margin-top:30px; background:rgba(20,200,168,.06); border:1px solid var(--turquoise-soft);
+    border-radius:18px; padding:20px 18px; text-align:center;
   }
-  .ball{
-    width:64px;height:64px;
-    border-radius:50%;
-    margin:12px auto;
-    display:flex;align-items:center;justify-content:center;
-    font-weight:800;
-    font-size:22px;
-    color:#fff;
+  #certTriggerSlot{ display:flex; justify-content:center; margin-top:18px; }
+
+  @media (prefers-reduced-motion: reduce){
+    .atom.shake .nuc{ animation:none; }
   }
-  .ball-p{background:radial-gradient(circle at 35% 30%,#ff8a70,var(--coral) 70%);}
-  .ball-n{background:radial-gradient(circle at 35% 30%,#5fd9c9,var(--turquoise) 70%);}
-  .ball-e{width:34px;height:34px;background:radial-gradient(circle at 35% 30%,#8fe0c9,var(--turquoise) 70%);}
 </style>
+</head>
 <body>
 
-<div class="crumb">
-  <a href="../../index.html">الرئيسية</a> ·
-  <a href="../index.html">الفصل الأول</a> ·
-  <a href="index.html">الوحدة الأولى</a> ·
+<nav class="crumb">
+  <a href="../../index.html">الرئيسية</a> ›
+  <a href="../index.html">الفصل الأول</a> ›
+  <a href="index.html">الوحدة الأولى</a> ›
   الدرس 1
-</div>
+</nav>
 
-<header class="hero">
-  <div class="eyebrow">مختبر فؤاد التعليمي · الوحدة الأولى</div>
-  <h1>الدرس 1: ما تركيب الذرة؟</h1>
-  <div class="objectives">
-    <div class="objective"><span class="num">1</span><span>تصف تركيب الذرة.</span></div>
-    <div class="objective"><span class="num">2</span><span>تحدد العدد الذري (Z) والعدد الكتلي (A) للذرة.</span></div>
-    <div class="objective"><span class="num">3</span><span>تحسب عدد الجسيمات الذرية في أيون موجب أو سالب.</span></div>
-  </div>
-</header>
-
-<div class="progress-track" aria-label="مؤشر التقدّم عبر محطات الدرس">
+<!-- نقاط التقدّم مخفيّة بصريًّا في المنصّة كلّها (visibility:hidden في
+     template.css) ولا تُحذف من الوسم: مقام عدّاد «المحطة X من N»
+     مشتقّ من عددها، ونغمة الوصول معلّقة بأوّل إضاءة نقطة. -->
+<div class="progress-track">
   <div class="xp-counter" id="xpCounter">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
     <span id="xpValue">0</span>
     <span class="xp-label">XP</span>
   </div>
@@ -169,500 +225,1621 @@
   <div class="progress-dot" data-target="station-3"></div>
   <div class="progress-dot" data-target="station-4"></div>
   <div class="progress-dot" data-target="station-5"></div>
+  <div class="progress-dot" data-target="station-6"></div>
+  <div class="progress-dot" data-target="station-7"></div>
 </div>
 
-<div class="wrap">
+<header class="hero">
+  <div class="eyebrow">الوحدة 1 · الدرس 1</div>
+  <h1>ما تركيب الذرّة؟</h1>
+  <div class="objectives-box">
+    <h3>في نهاية هذا الدرس سوف تتمكّن من أن:</h3>
+    <ul>
+      <li>تصف تركيب الذرّة.</li>
+      <li>تحدّد العدد الذرّي (Z) والعدد الكتلي (A) للذرّة.</li>
+      <li>تحسب عدد الجسيمات الذرّية في أيون موجب أو سالب.</li>
+    </ul>
+  </div>
+</header>
 
+<main class="wrap">
+
+  <!-- ═════════════════════ محطة 1 — Engage ═════════════════════
+       تنبّؤ لا يُصحَّح: حلقته تُغلق في المحطة 3 بعد أن يبني الطالب
+       الذرّة ويرتّب كتل جسيماتها، فيحكم على توقّعه بما بناه لا بما
+       قيل له. -->
   <section class="station" id="station-1">
-    <span class="station-label">المحطة الأولى</span>
-    <h2>تحدي البداية</h2>
-    <p style="color:var(--ink);font-size:clamp(16px,2.8vw,19px);font-weight:600;margin-bottom:18px;">
-      إذا كبّرت ذرة الذهب ملايين المرات، ماذا تتوقع أن تجد بداخلها؟
-    </p>
+    <div class="station-label">المحطة الأولى</div>
+    <h2>داخل سبيكة الذهب</h2>
+    <p class="station-tagline">انظر إلى ما تحت العدسة، ثمّ سجّل توقّعك قبل أن تكمل.</p>
 
-    <div class="quiz-options" id="q1-options">
-      <label class="quiz-option">
-        <input type="radio" name="q1" value="neutrons">
-        <span>نيوترونات فقط</span>
-      </label>
-      <label class="quiz-option">
-        <input type="radio" name="q1" value="electrons">
-        <span>إلكترونات فقط</span>
-      </label>
-      <label class="quiz-option">
-        <input type="radio" name="q1" value="all">
-        <span>بروتونات وإلكترونات ونيوترونات</span>
-      </label>
-      <label class="quiz-option">
-        <input type="radio" name="q1" value="protons">
-        <span>بروتونات فقط</span>
-      </label>
+    <div class="stage-wrap">
+      <svg id="goldStage" class="stage gold" viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="سبائك ذهب، وعدسة مكبّرة تكشف نقاطًا صغيرة منتظمة داخل سطح السبيكة"></svg>
+    </div>
+    <p class="stage-caption">كلّ نقطة داخل العدسة ذرّة ذهب واحدة من سبيكة تُباع في سوق الذهب بالدوحة.</p>
+
+    <div class="explore-step">
+      <p class="explore-q">ماذا تتوقّع أن تجد لو كبّرتَ نقطةً واحدة من هذه النقاط ملايين المرّات؟</p>
+      <div class="quiz-options" id="s1predictOptions">
+        <label class="quiz-option"><input type="radio" name="l1predict" value="solid"> كتلة صمّاء متراصّة لا أجزاء لها</label>
+        <label class="quiz-option"><input type="radio" name="l1predict" value="parts"> جسيمات أصغر، لكلٍّ منها موقعه فيها</label>
+        <label class="quiz-option"><input type="radio" name="l1predict" value="point"> نقطةً لا شيء أصغر منها أبدًا</label>
+        <label class="quiz-option"><input type="radio" name="l1predict" value="drop"> قطرةً سائلة من الذهب اللامع</label>
+      </div>
+      <p class="explore-feedback" id="fb-s1predict" hidden></p>
     </div>
 
-    <button class="btn" onclick="checkQ1()">تحقق</button>
-    <div id="q1-feedback" class="quiz-feedback"></div>
+    <div class="station-handoff" id="s1done" hidden>
+      <a href="#station-2" class="station-next">ابنِ الذرّة بيدك ←</a>
+    </div>
   </section>
 
+  <!-- ═════════════════════ محطة 2 — Explore ═════════════════════
+       مرحلتان بنقطة تقدّم واحدة. الحدّ يفرضه المسرح: الزرّ يتعطّل
+       عند بلوغ العدد المُعطى، ولا سطر يخبر الطالب «توقّف الآن».
+       ونموذج النيون معروضٌ ليُحاكى كما يطلب الكتاب حرفيًّا —
+       ولا تُعلَن قاعدة سعة المستويات: تلك محتوى درس 02. -->
   <section class="station" id="station-2">
-    <span class="station-label">المحطة الثانية</span>
-    <h2>داخل الذرة</h2>
-    <p>شاهد الفيديو التفاعلي</p>
-    <div class="media-frame h5p-frame">
-      <iframe src="https://app.lumi.education/api/v1/run/Y3bpBe/embed" title="فيديو تفاعلي - داخل الذرة" loading="lazy" allowfullscreen="allowfullscreen" allow="geolocation *; microphone *; camera *; midi *; encrypted-media *"></iframe>
-    </div>
-    <p>ساعدنا في إعادة ترتيب بطاقات الجسيمات الذرية بعد أن اختلطت المعلومات — اسحب كل بطاقة إلى مكانها الصحيح</p>
+    <div class="station-label">المحطة الثانية</div>
+    <h2>ابنِ ذرّة الفلور</h2>
+    <p class="station-tagline">الفلور في معجون أسنانك. هذه معطياته، وأمامك مسرح فارغ لتضع فيه جسيماته.</p>
 
-    <div class="chips-pool" id="chips-pool">
-      <div class="chip" data-value="النيوترون">النيوترون</div>
-      <div class="chip" data-value="البروتون">البروتون</div>
-      <div class="chip" data-value="الإلكترون">الإلكترون</div>
-      <div class="chip" data-value="موجبة">موجبة</div>
-      <div class="chip" data-value="سالبة">سالبة</div>
-      <div class="chip" data-value="متعادلة">متعادلة</div>
-      <div class="chip" data-value="1">1</div>
-      <div class="chip" data-value="1">1</div>
-      <div class="chip" data-value="1/1836">1/1836</div>
+    <div class="fact-line center">
+      ذرّة الفلور: <b>9</b> بروتونات · <b>10</b> نيوترونات · <b>9</b> إلكترونات.
     </div>
 
-    <div class="particle-cards">
-      <div class="particle-card">
-        <div class="slot name-slot" data-answer="البروتون" data-xp-id="l1-slot-p-name" data-xp-reason="حدّدتَ اسم الجسيم">اسم الجسيم</div>
-        <div class="ball ball-p">p</div>
-        <div class="prop-row">الشحنة: <span class="slot inline-slot" data-answer="موجبة" data-xp-id="l1-slot-p-charge" data-xp-reason="حدّدتَ شحنة الجسيم">؟</span></div>
-        <div class="prop-row">الكتلة: <span class="slot inline-slot" data-answer="1" data-xp-id="l1-slot-p-mass" data-xp-reason="حدّدتَ كتلته النسبية">؟</span></div>
+    <div class="stage-wrap">
+      <svg id="atomStage" class="stage atom" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="مسرح بناء الذرّة: نواة فارغة في المركز، وحولها مستويان للطاقة"></svg>
+    </div>
+    <p class="stage-msg" id="s2msg" aria-live="polite"></p>
+    <p class="step-count" id="s2count"></p>
+
+    <div class="btn-row" id="s2nucleusBtns">
+      <button type="button" class="btn" id="addProton">ضع بروتونًا</button>
+      <button type="button" class="btn" id="addNeutron">ضع نيوترونًا</button>
+    </div>
+
+    <div class="explore-step" id="s2levelsStep" hidden>
+      <p class="explore-q">انظر إلى نموذج ذرّة النيون، ثمّ انقر على المستوى الذي تضع فيه كلّ إلكترون من إلكترونات الفلور التسعة.</p>
+      <div class="stage-wrap narrow">
+        <svg id="neonFig" class="stage atom" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نموذج ذرّة النيون: نواتها فيها عشرة بروتونات وعشرة نيوترونات، وحولها مستويان فيهما إلكترونان وثمانية إلكترونات"></svg>
       </div>
-      <div class="particle-card">
-        <div class="slot name-slot" data-answer="النيوترون" data-xp-id="l1-slot-n-name" data-xp-reason="حدّدتَ اسم الجسيم">اسم الجسيم</div>
-        <div class="ball ball-n">n</div>
-        <div class="prop-row">الشحنة: <span class="slot inline-slot" data-answer="متعادلة" data-xp-id="l1-slot-n-charge" data-xp-reason="حدّدتَ شحنة الجسيم">؟</span></div>
-        <div class="prop-row">الكتلة: <span class="slot inline-slot" data-answer="1" data-xp-id="l1-slot-n-mass" data-xp-reason="حدّدتَ كتلته النسبية">؟</span></div>
+      <p class="stage-caption">ذرّة النيون — وهو الغاز الذي يضيء لافتات المحالّ الملوّنة. مستواها الداخلي فيه إلكترونان، وبقيّة إلكتروناتها في المستوى الذي يليه.</p>
+    </div>
+
+    <div id="s2questions" hidden>
+      <div class="explore-step">
+        <p class="explore-q">في الذرّة التي بنيتَها الآن، أين تقع الإلكترونات؟</p>
+        <div class="quiz-options" data-q="l1-where-e">
+          <label class="quiz-option"><input type="radio" name="l1-where-e" value="w1"> داخل النواة مع البروتونات</label>
+          <label class="quiz-option"><input type="radio" name="l1-where-e" value="correct"> في مستويات الطاقة حول النواة</label>
+          <label class="quiz-option"><input type="radio" name="l1-where-e" value="w2"> داخل النيوترونات المتعادلة</label>
+          <label class="quiz-option"><input type="radio" name="l1-where-e" value="w3"> ملتصقة بسطح النواة تمامًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-l1-where-e" hidden></p>
       </div>
-      <div class="particle-card">
-        <div class="slot name-slot" data-answer="الإلكترون" data-xp-id="l1-slot-e-name" data-xp-reason="حدّدتَ اسم الجسيم">اسم الجسيم</div>
-        <div class="ball ball-e">e</div>
-        <div class="prop-row">الشحنة: <span class="slot inline-slot" data-answer="سالبة" data-xp-id="l1-slot-e-charge" data-xp-reason="حدّدتَ شحنة الجسيم">؟</span></div>
-        <div class="prop-row">الكتلة: <span class="slot inline-slot" data-answer="1/1836" data-xp-id="l1-slot-e-mass" data-xp-reason="حدّدتَ كتلته النسبية">؟</span></div>
+
+      <div class="explore-step">
+        <p class="explore-q">وأين وضعتَ البروتونات والنيوترونات؟</p>
+        <div class="quiz-options" data-q="l1-where-pn">
+          <label class="quiz-option"><input type="radio" name="l1-where-pn" value="w1"> في المستوى الأقرب إلى النواة</label>
+          <label class="quiz-option"><input type="radio" name="l1-where-pn" value="w2"> في المستوى الخارجي البعيد</label>
+          <label class="quiz-option"><input type="radio" name="l1-where-pn" value="w3"> موزّعة بين المستويين معًا</label>
+          <label class="quiz-option"><input type="radio" name="l1-where-pn" value="correct"> داخل النواة في مركز الذرّة</label>
+        </div>
+        <p class="explore-feedback" id="fb-l1-where-pn" hidden></p>
+      </div>
+
+      <div class="explore-step">
+        <p class="explore-q">لماذا نستخدم نموذجًا كهذا بدل مراقبة ذرّة الفلور نفسها؟</p>
+        <div class="quiz-options" data-q="l1-why-model">
+          <label class="quiz-option"><input type="radio" name="l1-why-model" value="correct"> لأنها أصغر من أن يُرى داخلها</label>
+          <label class="quiz-option"><input type="radio" name="l1-why-model" value="w1"> لأنها تتحرّك بسرعة تمنع رؤيتها</label>
+          <label class="quiz-option"><input type="radio" name="l1-why-model" value="w2"> لأنّ شكلها يتبدّل في كلّ لحظة</label>
+          <label class="quiz-option"><input type="radio" name="l1-why-model" value="w3"> لأنّ الرسم أوضح من أيّ صورة لها</label>
+        </div>
+        <p class="explore-feedback" id="fb-l1-why-model" hidden></p>
       </div>
     </div>
-    <p style="font-size:13px;color:var(--ink-dim);margin-top:10px;">ملاحظة: حجوم الجسيمات غير متناسبة فعليًا؛ الإلكترون أصغر بكثير من البروتون والنيوترون.</p>
+
+    <div class="station-handoff" id="s2done" hidden>
+      <a href="#station-3" class="station-next">ما وزن ما بنيتَه؟ ←</a>
+    </div>
   </section>
 
+  <!-- ═════════════════════ محطة 3 — Explain ═════════════════════
+       هنا تُغلق حلقة تنبّؤ المحطة 1: الطالب بنى الذرّة، ثمّ رتّب
+       شحنات جسيماتها وكتلها، فيحكم على توقّعه بما بناه بيده. -->
   <section class="station" id="station-3">
-    <span class="station-label">المحطة الثالثة</span>
-    <h2>أسرار الذرة</h2>
-    <p>أكتشف</p>
-    <a class="btn" href="https://khakha717fbh.github.io/atom-L1/" target="_blank" rel="noopener">مختبر افتراضي: اكتشف أسرار الذرة</a>
-    <p style="font-size:13px;color:var(--ink-dim);margin-top:8px;">يفتح في صفحة كاملة لتجربة تفاعلية بلا تمرير مزدوج — يحتوي زر عودة لهذا الدرس داخل كود النشاط نفسه.</p>
+    <div class="station-label">المحطة الثالثة</div>
+    <h2>الشحنة والكتلة</h2>
+    <p class="station-tagline">ثلاثة جسيمات بنيتَ بها الذرّة — وهذه بطاقاتها الفارغة.</p>
 
-    <p style="margin-top:20px;">لخّص</p>
-    <div class="facts-grid">
-      <div class="fact-card">
-        <div class="term">العدد الكتلي (A)</div>
-        عدد البروتونات + عدد النيوترونات في نواة الذرة
-        <div class="fact-note">عدد النيوترونات = العدد الكتلي (A) − العدد الذري (Z)</div>
+    <div class="explore-step">
+      <p class="explore-q">أيّ الجسيمات الثلاثة يحمل معظم كتلة الذرّة في رأيك؟</p>
+      <div class="quiz-options" id="s3predictOptions">
+        <label class="quiz-option"><input type="radio" name="l1massPredict" value="pn"> البروتونات والنيوترونات معًا</label>
+        <label class="quiz-option"><input type="radio" name="l1massPredict" value="e"> الإلكترونات</label>
+        <label class="quiz-option"><input type="radio" name="l1massPredict" value="all"> الثلاثة بالتساوي</label>
+        <label class="quiz-option"><input type="radio" name="l1massPredict" value="n"> النيوترونات وحدها</label>
       </div>
-      <div class="fact-card">
-        <div class="term">العدد الذري (Z)</div>
-        عدد البروتونات في نواة الذرة
-        <div class="fact-note">عدد البروتونات = عدد الإلكترونات في الذرة المتعادلة</div>
-      </div>
-    </div>
-    <p>الرمز الكيميائي العام لعنصر كيميائي</p>
-
-    <p style="margin-top:20px;">تحقق من فهمك</p>
-    <div class="media-frame h5p-frame">
-      <iframe src="https://app.lumi.education/api/v1/run/CrvOu4/embed" title="تقييم سريع - العدد الذري والكتلي" loading="lazy" allowfullscreen="allowfullscreen" allow="geolocation *; microphone *; camera *; midi *; encrypted-media *"></iframe>
+      <p class="explore-feedback" id="fb-s3predict" hidden></p>
     </div>
 
-    <p style="margin-top:20px;">والآن جرّب بنفسك — أدخل عدد الجسيمات الثلاثة لكل ذرة متعادلة</p>
-    <div class="nuclide-grid">
-      <div class="nuclide-card" data-atomic="6" data-mass="12">
-        <div class="nuclide-symbol" dir="ltr">
-          <span class="nuclide-numbers">
-            <span class="mass-num">12</span>
-            <span class="atomic-num">6</span>
-          </span>
-          <span class="element-letter">C</span>
+    <div class="explore-step" id="s3chipsStep" hidden>
+      <p class="explore-q">ضع كلّ رقاقة في خانتها: الشحنة النسبية والكتلة النسبية لكلّ جسيم.</p>
+      <div data-chips="l1-particles">
+        <div class="chips-pool" id="s3pool">
+          <span class="chip" data-value="+1" data-xp-id="l1-chip-charge-p"><span dir="ltr">+1</span></span>
+          <span class="chip" data-value="0" data-xp-id="l1-chip-charge-n"><span dir="ltr">0</span></span>
+          <span class="chip" data-value="-1" data-xp-id="l1-chip-charge-e"><span dir="ltr">-1</span></span>
+          <span class="chip" data-value="1" data-xp-id="l1-chip-mass-a"><span dir="ltr">1</span></span>
+          <span class="chip" data-value="1" data-xp-id="l1-chip-mass-b"><span dir="ltr">1</span></span>
+          <span class="chip" data-value="1/1836" data-xp-id="l1-chip-mass-e"><span dir="ltr">1/1836</span></span>
         </div>
-        <div class="nuclide-fields">
-          <div class="nuclide-field">
-            <label>عدد البروتونات</label>
-            <input type="number" inputmode="numeric" class="protons-input">
-          </div>
-          <div class="nuclide-field">
-            <label>عدد الإلكترونات</label>
-            <input type="number" inputmode="numeric" class="electrons-input">
-          </div>
-          <div class="nuclide-field">
-            <label>عدد النيوترونات</label>
-            <input type="number" inputmode="numeric" class="neutrons-input">
-          </div>
-        </div>
-        <button class="btn nuclide-check-btn" onclick="checkNuclide(this)">تحقق</button>
-        <div class="nuclide-feedback"></div>
-      </div>
 
-      <div class="nuclide-card" data-atomic="11" data-mass="23">
-        <div class="nuclide-symbol" dir="ltr">
-          <span class="nuclide-numbers">
-            <span class="mass-num">23</span>
-            <span class="atomic-num">11</span>
-          </span>
-          <span class="element-letter">Na</span>
-        </div>
-        <div class="nuclide-fields">
-          <div class="nuclide-field">
-            <label>عدد البروتونات</label>
-            <input type="number" inputmode="numeric" class="protons-input">
+        <div class="facts-grid">
+          <div class="fact-card">
+            <div class="term">البروتون</div>
+            <div class="prop-row">الشحنة النسبية: <span class="slot inline-slot" id="s3-p-charge" data-answer="+1">؟</span></div>
+            <div class="prop-row">الكتلة النسبية: <span class="slot inline-slot" id="s3-p-mass" data-answer="1">؟</span></div>
           </div>
-          <div class="nuclide-field">
-            <label>عدد الإلكترونات</label>
-            <input type="number" inputmode="numeric" class="electrons-input">
+          <div class="fact-card">
+            <div class="term">النيوترون</div>
+            <div class="prop-row">الشحنة النسبية: <span class="slot inline-slot" id="s3-n-charge" data-answer="0">؟</span></div>
+            <div class="prop-row">الكتلة النسبية: <span class="slot inline-slot" id="s3-n-mass" data-answer="1">؟</span></div>
           </div>
-          <div class="nuclide-field">
-            <label>عدد النيوترونات</label>
-            <input type="number" inputmode="numeric" class="neutrons-input">
+          <div class="fact-card">
+            <div class="term">الإلكترون</div>
+            <div class="prop-row">الشحنة النسبية: <span class="slot inline-slot" id="s3-e-charge" data-answer="-1">؟</span></div>
+            <div class="prop-row">الكتلة النسبية: <span class="slot inline-slot" id="s3-e-mass" data-answer="1/1836">؟</span></div>
           </div>
         </div>
-        <button class="btn nuclide-check-btn" onclick="checkNuclide(this)">تحقق</button>
-        <div class="nuclide-feedback"></div>
-      </div>
-
-      <div class="nuclide-card" data-atomic="17" data-mass="35">
-        <div class="nuclide-symbol" dir="ltr">
-          <span class="nuclide-numbers">
-            <span class="mass-num">35</span>
-            <span class="atomic-num">17</span>
-          </span>
-          <span class="element-letter">Cl</span>
-        </div>
-        <div class="nuclide-fields">
-          <div class="nuclide-field">
-            <label>عدد البروتونات</label>
-            <input type="number" inputmode="numeric" class="protons-input">
-          </div>
-          <div class="nuclide-field">
-            <label>عدد الإلكترونات</label>
-            <input type="number" inputmode="numeric" class="electrons-input">
-          </div>
-          <div class="nuclide-field">
-            <label>عدد النيوترونات</label>
-            <input type="number" inputmode="numeric" class="neutrons-input">
-          </div>
-        </div>
-        <button class="btn nuclide-check-btn" onclick="checkNuclide(this)">تحقق</button>
-        <div class="nuclide-feedback"></div>
+        <p class="explore-feedback chips-feedback" hidden></p>
       </div>
     </div>
 
+    <div id="s3after" hidden>
+      <p class="fact-line"><b>النيوكليون:</b> جسيم داخل نواة الذرّة — بروتون أو نيوترون. والنيوكليونات هي التي تحمل معظم كتلة الذرّة.</p>
+
+      <div class="explore-step">
+        <p class="explore-q">لماذا تُعدّ الذرّة متعادلة الشحنة؟</p>
+        <div class="quiz-options" data-q="l1-neutral">
+          <label class="quiz-option"><input type="radio" name="l1-neutral" value="w1"> لأنّ النيوترونات تُلغي شحنة البروتونات</label>
+          <label class="quiz-option"><input type="radio" name="l1-neutral" value="w2"> لأنّ كتلة الإلكترون صغيرة إلى هذا الحدّ</label>
+          <label class="quiz-option"><input type="radio" name="l1-neutral" value="correct"> لأنّ عدد بروتوناتها يساوي عدد إلكتروناتها</label>
+          <label class="quiz-option"><input type="radio" name="l1-neutral" value="w3"> لأنّ شحناتها كلّها محبوسة داخل نواتها</label>
+        </div>
+        <p class="explore-feedback" id="fb-l1-neutral" hidden></p>
+      </div>
+
+      <div class="explore-step">
+        <p class="explore-q">في المحطة الأولى سجّلتَ توقّعك عمّا داخل نقطة الذهب. أيّ العبارات يصف ما بنيتَه ورتّبتَه بنفسك؟</p>
+        <div class="quiz-options" data-q="l1-close-loop">
+          <label class="quiz-option"><input type="radio" name="l1-close-loop" value="w1"> كتلة صمّاء موزّعة بالتساوي في كامل الذرّة</label>
+          <label class="quiz-option"><input type="radio" name="l1-close-loop" value="correct"> جسيمات لكلٍّ منها موقعه، ومعظم الكتلة في النواة</label>
+          <label class="quiz-option"><input type="radio" name="l1-close-loop" value="w2"> جسيمات لكلٍّ منها موقعه، ومعظم الكتلة تدور حولها</label>
+          <label class="quiz-option"><input type="radio" name="l1-close-loop" value="w3"> نقطة صغيرة لا أجزاء لها ولا شيء أصغر منها</label>
+        </div>
+        <p class="explore-feedback" id="fb-l1-close-loop" hidden></p>
+      </div>
+    </div>
+
+    <div class="station-handoff" id="s3done" hidden>
+      <a href="#station-4" class="station-next">كيف نكتب هذا كلّه برمز؟ ←</a>
+    </div>
   </section>
 
+  <!-- ═════════════════════ محطة 4 — Explain ═════════════════════
+       الاصطلاح يُفهَم قبل أن يُستعمل: الرقمان يُستنتجان من معطياتٍ
+       معروضة قبل أن يُسمّيا. والبطاقات واحدةً بعد أخرى — أربعة
+       عناصر تفاعلية مرئية معًا سقفٌ لا يُتجاوز. -->
   <section class="station" id="station-4">
-    <span class="station-label">المحطة الرابعة</span>
-    <h2>ماذا لو فقدت الذرة المتعادلة أحد إلكتروناتها؟</h2>
+    <div class="station-label">المحطة الرابعة</div>
+    <h2>رقمان يكفيان</h2>
+    <p class="station-tagline">هكذا يكتب الكيميائيّون ذرّة الصوديوم — وهي الذرّة التي في ملح مائدتك.</p>
 
-    <p>جرّب</p>
-    <div class="media-frame">
-      <iframe src="https://view.genially.com/6a441e1f1d86309ec3926be7" title="مختبر الأيونات" loading="lazy" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe>
+    <div class="fact-line center">
+      <span class="nuc-sym" dir="ltr"><span class="nuc-ab"><span class="a">23</span><span class="z">11</span></span><span class="nuc-letter">Na</span></span>
+      <br>ذرّة الصوديوم: <b>11</b> بروتونًا · <b>12</b> نيوترونًا · <b>11</b> إلكترونًا.
     </div>
 
-    <p style="margin-top:20px;">قارن حالات الذرة في الليثيوم</p>
-    <div class="ion-states">
-      <div class="ion-card">
-        <h3>الأيون السالب</h3>
-        <div>3 بروتونات</div>
-        <div>4 إلكترونات</div>
-        <div class="charge">الشحنة = −1</div>
+    <div class="explore-step">
+      <p class="explore-q">بالنظر إلى المعطيات أعلاه، ماذا يمثّل الرقم <span dir="ltr">23</span> في الرمز؟</p>
+      <div class="quiz-options" data-q="l1-symbol-read">
+        <label class="quiz-option"><input type="radio" name="l1-symbol-read" value="w1"> عدد البروتونات في نواة الذرّة</label>
+        <label class="quiz-option"><input type="radio" name="l1-symbol-read" value="w2"> عدد النيوترونات في نواة الذرّة</label>
+        <label class="quiz-option"><input type="radio" name="l1-symbol-read" value="w3"> عدد الإلكترونات حول نواة الذرّة</label>
+        <label class="quiz-option"><input type="radio" name="l1-symbol-read" value="correct"> عدد البروتونات والنيوترونات معًا</label>
       </div>
-      <div class="ion-card">
-        <h3>الذرة المتعادلة</h3>
-        <div>3 بروتونات</div>
-        <div>3 إلكترونات</div>
-        <div class="charge">الشحنة = 0</div>
-      </div>
-      <div class="ion-card">
-        <h3>الأيون الموجب</h3>
-        <div>3 بروتونات</div>
-        <div>2 إلكترونات</div>
-        <div class="charge">الشحنة = +1</div>
-      </div>
+      <p class="explore-feedback" id="fb-l1-symbol-read" hidden></p>
     </div>
 
-    <p style="margin-top:20px;">والآن جرّب بنفسك — احسب عدد الجسيمات الثلاثة في كل حالة (تذكّر: الشحنة تغيّر عدد الإلكترونات فقط)</p>
-    <div class="nuclide-grid">
-      <div class="nuclide-card" data-atomic="11" data-mass="23" data-charge="1">
-        <div class="nuclide-symbol" dir="ltr">
-          <span class="nuclide-numbers">
-            <span class="mass-num">23</span>
-            <span class="atomic-num">11</span>
-          </span>
-          <span class="element-letter">Na<sup>+</sup></span>
+    <div id="s4after" hidden>
+      <div class="facts-grid">
+        <div class="fact-card">
+          <div class="term">العدد الذرّي <span dir="ltr">(Z)</span></div>
+          عدد البروتونات في ذرّة العنصر، ويُكتب أسفل يسار الرمز.
         </div>
-        <div class="nuclide-fields">
-          <div class="nuclide-field">
-            <label>عدد البروتونات</label>
-            <input type="number" inputmode="numeric" class="protons-input">
-          </div>
-          <div class="nuclide-field">
-            <label>عدد الإلكترونات</label>
-            <input type="number" inputmode="numeric" class="electrons-input">
-          </div>
-          <div class="nuclide-field">
-            <label>عدد النيوترونات</label>
-            <input type="number" inputmode="numeric" class="neutrons-input">
-          </div>
+        <div class="fact-card">
+          <div class="term">العدد الكتلي <span dir="ltr">(A)</span></div>
+          عدد البروتونات + عدد النيوترونات، ويُكتب أعلى يسار الرمز.
         </div>
-        <button class="btn nuclide-check-btn" onclick="checkIonParticles(this)">تحقق</button>
-        <div class="nuclide-feedback"></div>
       </div>
 
-      <div class="nuclide-card" data-atomic="17" data-mass="35" data-charge="-1">
-        <div class="nuclide-symbol" dir="ltr">
-          <span class="nuclide-numbers">
-            <span class="mass-num">35</span>
-            <span class="atomic-num">17</span>
-          </span>
-          <span class="element-letter">Cl<sup>−</sup></span>
+      <p class="explore-q" style="margin-top:22px;">املأ بطاقة كلّ ذرّة من رمزها وحده.</p>
+
+      <div class="nuc-card" id="cardC">
+        <div class="nuc-sym" dir="ltr"><span class="nuc-ab"><span class="a">12</span><span class="z">6</span></span><span class="nuc-letter">C</span></div>
+        <div class="nuc-fields">
+          <div class="nuc-field"><label for="cardC-p">عدد البروتونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardC-p" autocomplete="off"></div>
+          <div class="nuc-field"><label for="cardC-e">عدد الإلكترونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardC-e" autocomplete="off"></div>
+          <div class="nuc-field"><label for="cardC-n">عدد النيوترونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardC-n" autocomplete="off"></div>
         </div>
-        <div class="nuclide-fields">
-          <div class="nuclide-field">
-            <label>عدد البروتونات</label>
-            <input type="number" inputmode="numeric" class="protons-input">
-          </div>
-          <div class="nuclide-field">
-            <label>عدد الإلكترونات</label>
-            <input type="number" inputmode="numeric" class="electrons-input">
-          </div>
-          <div class="nuclide-field">
-            <label>عدد النيوترونات</label>
-            <input type="number" inputmode="numeric" class="neutrons-input">
-          </div>
+        <div class="nuc-actions">
+          <button type="button" class="btn" id="cardC-btn">تحقّق</button>
+          <button type="button" class="link-btn" id="cardC-esc" hidden>أرِني الأعداد وطريقة حسابها</button>
         </div>
-        <button class="btn nuclide-check-btn" onclick="checkIonParticles(this)">تحقق</button>
-        <div class="nuclide-feedback"></div>
+        <p class="explore-feedback" id="fb-cardC" hidden></p>
       </div>
 
-      <div class="nuclide-card" data-atomic="10" data-mass="20" data-charge="0">
-        <div class="nuclide-symbol" dir="ltr">
-          <span class="nuclide-numbers">
-            <span class="mass-num">20</span>
-            <span class="atomic-num">10</span>
-          </span>
-          <span class="element-letter">Ne</span>
+      <div class="nuc-card" id="cardK" hidden>
+        <div class="nuc-sym" dir="ltr"><span class="nuc-ab"><span class="a">39</span><span class="z">19</span></span><span class="nuc-letter">K</span></div>
+        <div class="nuc-fields">
+          <div class="nuc-field"><label for="cardK-p">عدد البروتونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardK-p" autocomplete="off"></div>
+          <div class="nuc-field"><label for="cardK-e">عدد الإلكترونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardK-e" autocomplete="off"></div>
+          <div class="nuc-field"><label for="cardK-n">عدد النيوترونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardK-n" autocomplete="off"></div>
         </div>
-        <div class="nuclide-fields">
-          <div class="nuclide-field">
-            <label>عدد البروتونات</label>
-            <input type="number" inputmode="numeric" class="protons-input">
-          </div>
-          <div class="nuclide-field">
-            <label>عدد الإلكترونات</label>
-            <input type="number" inputmode="numeric" class="electrons-input">
-          </div>
-          <div class="nuclide-field">
-            <label>عدد النيوترونات</label>
-            <input type="number" inputmode="numeric" class="neutrons-input">
-          </div>
+        <div class="nuc-actions">
+          <button type="button" class="btn" id="cardK-btn">تحقّق</button>
+          <button type="button" class="link-btn" id="cardK-esc" hidden>أرِني الأعداد وطريقة حسابها</button>
         </div>
-        <button class="btn nuclide-check-btn" onclick="checkIonParticles(this)">تحقق</button>
-        <div class="nuclide-feedback"></div>
+        <p class="explore-feedback" id="fb-cardK" hidden></p>
       </div>
 
-      <div class="nuclide-card" data-atomic="12" data-mass="24" data-charge="2">
-        <div class="nuclide-symbol" dir="ltr">
-          <span class="nuclide-numbers">
-            <span class="mass-num">24</span>
-            <span class="atomic-num">12</span>
-          </span>
-          <span class="element-letter">Mg<sup>2+</sup></span>
+      <div class="nuc-card" id="cardH" hidden>
+        <div class="nuc-sym" dir="ltr"><span class="nuc-ab"><span class="a">1</span><span class="z">1</span></span><span class="nuc-letter">H</span></div>
+        <div class="nuc-fields">
+          <div class="nuc-field"><label for="cardH-p">عدد البروتونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardH-p" autocomplete="off"></div>
+          <div class="nuc-field"><label for="cardH-e">عدد الإلكترونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardH-e" autocomplete="off"></div>
+          <div class="nuc-field"><label for="cardH-n">عدد النيوترونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardH-n" autocomplete="off"></div>
         </div>
-        <div class="nuclide-fields">
-          <div class="nuclide-field">
-            <label>عدد البروتونات</label>
-            <input type="number" inputmode="numeric" class="protons-input">
-          </div>
-          <div class="nuclide-field">
-            <label>عدد الإلكترونات</label>
-            <input type="number" inputmode="numeric" class="electrons-input">
-          </div>
-          <div class="nuclide-field">
-            <label>عدد النيوترونات</label>
-            <input type="number" inputmode="numeric" class="neutrons-input">
-          </div>
+        <div class="nuc-actions">
+          <button type="button" class="btn" id="cardH-btn">تحقّق</button>
+          <button type="button" class="link-btn" id="cardH-esc" hidden>أرِني الأعداد وطريقة حسابها</button>
         </div>
-        <button class="btn nuclide-check-btn" onclick="checkIonParticles(this)">تحقق</button>
-        <div class="nuclide-feedback"></div>
+        <p class="explore-feedback" id="fb-cardH" hidden></p>
       </div>
 
-      <div class="nuclide-card" data-atomic="8" data-mass="16" data-charge="-2">
-        <div class="nuclide-symbol" dir="ltr">
-          <span class="nuclide-numbers">
-            <span class="mass-num">16</span>
-            <span class="atomic-num">8</span>
-          </span>
-          <span class="element-letter">O<sup>2−</sup></span>
+      <div class="explore-step" id="s4patternStep" hidden>
+        <p class="explore-q">ملأتَ ثلاث بطاقات. بمَ حسبتَ عدد النيوترونات في كلّ مرّة؟</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="patternInput" placeholder="اكتب القاعدة بكلماتك" autocomplete="off">
+          <button type="button" class="btn" id="patternBtn">سلّم الإجابة</button>
         </div>
-        <div class="nuclide-fields">
-          <div class="nuclide-field">
-            <label>عدد البروتونات</label>
-            <input type="number" inputmode="numeric" class="protons-input">
-          </div>
-          <div class="nuclide-field">
-            <label>عدد الإلكترونات</label>
-            <input type="number" inputmode="numeric" class="electrons-input">
-          </div>
-          <div class="nuclide-field">
-            <label>عدد النيوترونات</label>
-            <input type="number" inputmode="numeric" class="neutrons-input">
-          </div>
+        <button type="button" class="link-btn" id="patternModelBtn" hidden>أرِني الإجابة النموذجية</button>
+        <p class="name-card" id="patternModel" hidden></p>
+        <p class="explore-feedback" id="fb-pattern" hidden></p>
+      </div>
+
+      <div class="explore-step" id="s4hydrogenStep" hidden>
+        <p class="explore-q">بطاقة الهيدروجين خرجت مختلفة عن أختيها. لماذا؟</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="hydrogenInput" placeholder="اكتب سبب الاختلاف" autocomplete="off">
+          <button type="button" class="btn" id="hydrogenBtn">سلّم الإجابة</button>
         </div>
-        <button class="btn nuclide-check-btn" onclick="checkIonParticles(this)">تحقق</button>
-        <div class="nuclide-feedback"></div>
+        <button type="button" class="link-btn" id="hydrogenModelBtn" hidden>أرِني الإجابة النموذجية</button>
+        <p class="name-card" id="hydrogenModel" hidden></p>
+        <p class="explore-feedback" id="fb-hydrogen" hidden></p>
       </div>
     </div>
 
+    <div class="station-handoff" id="s4done" hidden>
+      <a href="#station-5" class="station-next">ماذا لو فقدت الذرّة إلكترونًا؟ ←</a>
+    </div>
   </section>
 
-  <section class="station" id="station-5" style="text-align:center;">
-    <span class="station-label">المحطة الأخيرة</span>
-    <h2>تقييم نهاية الدرس 1-1: ما تركيب الذرة؟</h2>
-    <a class="btn btn-coral" href="https://khakha717fbh.github.io/Term-1-U-1-Exam-1-1/" target="_blank" rel="noopener">ابدأ التقييم</a>
+  <!-- ═════════════════════ محطة 5 — Explore/Explain ═════════════════════
+       مرحلتان بنقطة تقدّم واحدة: الصوديوم يفقد، والفلور يكسب. وذرّتان
+       حقيقيّتان لأنّ الاتّجاه الواحد على ذرّة واحدة يُنتج علمًا مغلوطًا.
+       والشحنة لا تظهر قبل أن يفعل الطالب شيئًا. -->
+  <section class="station" id="station-5">
+    <div class="station-label">المحطة الخامسة</div>
+    <h2>ذرّة تفقد وذرّة تكسب</h2>
+    <p class="station-tagline">أمامك ذرّة صوديوم كاملة. جرّب أن تنزع منها إلكترونًا واحدًا وراقب العدّادات.</p>
+
+    <div class="explore-step">
+      <p class="explore-q">لو فقدت ذرّة الصوديوم إلكترونًا واحدًا، ما الذي تتوقّع أن يتغيّر فيها؟</p>
+      <div class="quiz-options" id="s5predictOptions">
+        <label class="quiz-option"><input type="radio" name="l1ionPredict" value="p"> عدد بروتوناتها</label>
+        <label class="quiz-option"><input type="radio" name="l1ionPredict" value="e"> عدد إلكتروناتها</label>
+        <label class="quiz-option"><input type="radio" name="l1ionPredict" value="n"> عدد نيوتروناتها</label>
+        <label class="quiz-option"><input type="radio" name="l1ionPredict" value="el"> نوع العنصر نفسه</label>
+      </div>
+      <p class="explore-feedback" id="fb-s5predict" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s5stageStep" hidden>
+      <div class="stage-wrap">
+        <svg id="ionStage" class="stage atom" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ذرّة صوديوم: نواتها فيها أحد عشر بروتونًا واثنا عشر نيوترونًا، وحولها ثلاثة مستويات للطاقة"></svg>
+      </div>
+      <p class="stage-msg" id="s5msg" aria-live="polite"></p>
+      <p class="step-count" id="s5count"></p>
+      <div class="btn-row">
+        <button type="button" class="btn" id="ionRemove">انزع الإلكترون الخارجي</button>
+        <button type="button" class="btn" id="ionAdd" hidden>أضف إلكترونًا</button>
+        <button type="button" class="btn" id="ionSwitch" hidden>انتقل إلى ذرّة الفلور</button>
+        <button type="button" class="link-btn" id="ionReset" hidden>أعد الذرّة كما كانت</button>
+      </div>
+    </div>
+
+    <div id="s5after" hidden>
+      <p class="fact-line">الذرّة التي فقدت أو كسبت إلكترونًا تُسمّى <b>أيونًا</b>، وتُكتب شحنته أعلى يمين الرمز:
+        <span dir="ltr">Na<sup>+</sup></span> أيون موجب، و<span dir="ltr">F<sup>-</sup></span> أيون سالب.
+        وأيونا الصوديوم والكلوريد هما ما يذوب في ماء البحر على شاطئ الدوحة.</p>
+
+      <div class="explore-step">
+        <p class="explore-q">ما شحنة الأيون الذي يتكوّن عندما تفقد ذرّة ما إلكترونين؟</p>
+        <div class="quiz-options" data-q="l1-charge-rule">
+          <label class="quiz-option"><input type="radio" name="l1-charge-rule" value="correct"><span dir="ltr">2+</span></label>
+          <label class="quiz-option"><input type="radio" name="l1-charge-rule" value="w1"><span dir="ltr">2-</span></label>
+          <label class="quiz-option"><input type="radio" name="l1-charge-rule" value="w2"><span dir="ltr">1+</span></label>
+          <label class="quiz-option"><input type="radio" name="l1-charge-rule" value="w3"><span dir="ltr">0</span></label>
+        </div>
+        <p class="explore-feedback" id="fb-l1-charge-rule" hidden></p>
+      </div>
+
+      <div class="explore-step">
+        <p class="explore-q">وبعد أن جرّبتَ المسرح بنفسك: عند تكوّن الأيون، أيّ الأعداد يتغيّر؟</p>
+        <div class="quiz-options" data-q="l1-ion-what-changes">
+          <label class="quiz-option"><input type="radio" name="l1-ion-what-changes" value="w1"> عدد البروتونات في النواة وحده</label>
+          <label class="quiz-option"><input type="radio" name="l1-ion-what-changes" value="w2"> عدد النيوترونات في النواة وحده</label>
+          <label class="quiz-option"><input type="radio" name="l1-ion-what-changes" value="correct"> عدد الإلكترونات حول النواة وحده</label>
+          <label class="quiz-option"><input type="radio" name="l1-ion-what-changes" value="w3"> عدد البروتونات وعدد الإلكترونات معًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-l1-ion-what-changes" hidden></p>
+      </div>
+    </div>
+
+    <div id="s5cards" hidden>
+      <p class="explore-q" style="margin-top:22px;">والآن احسب جسيمات هذه الأيونات من رموزها.</p>
+
+      <div class="nuc-card" id="cardMg">
+        <div class="nuc-sym" dir="ltr"><span class="nuc-ab"><span class="a">24</span><span class="z">12</span></span><span class="nuc-letter">Mg<sup>2+</sup></span></div>
+        <div class="nuc-fields">
+          <div class="nuc-field"><label for="cardMg-p">عدد البروتونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardMg-p" autocomplete="off"></div>
+          <div class="nuc-field"><label for="cardMg-e">عدد الإلكترونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardMg-e" autocomplete="off"></div>
+          <div class="nuc-field"><label for="cardMg-n">عدد النيوترونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardMg-n" autocomplete="off"></div>
+        </div>
+        <div class="nuc-actions">
+          <button type="button" class="btn" id="cardMg-btn">تحقّق</button>
+          <button type="button" class="link-btn" id="cardMg-esc" hidden>أرِني الأعداد وطريقة حسابها</button>
+        </div>
+        <p class="explore-feedback" id="fb-cardMg" hidden></p>
+      </div>
+
+      <div class="nuc-card" id="cardCl" hidden>
+        <div class="nuc-sym" dir="ltr"><span class="nuc-ab"><span class="a">35</span><span class="z">17</span></span><span class="nuc-letter">Cl<sup>-</sup></span></div>
+        <div class="nuc-fields">
+          <div class="nuc-field"><label for="cardCl-p">عدد البروتونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardCl-p" autocomplete="off"></div>
+          <div class="nuc-field"><label for="cardCl-e">عدد الإلكترونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardCl-e" autocomplete="off"></div>
+          <div class="nuc-field"><label for="cardCl-n">عدد النيوترونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardCl-n" autocomplete="off"></div>
+        </div>
+        <div class="nuc-actions">
+          <button type="button" class="btn" id="cardCl-btn">تحقّق</button>
+          <button type="button" class="link-btn" id="cardCl-esc" hidden>أرِني الأعداد وطريقة حسابها</button>
+        </div>
+        <p class="explore-feedback" id="fb-cardCl" hidden></p>
+      </div>
+
+      <div class="nuc-card" id="cardO" hidden>
+        <div class="nuc-sym" dir="ltr"><span class="nuc-ab"><span class="a">16</span><span class="z">8</span></span><span class="nuc-letter">O<sup>2-</sup></span></div>
+        <div class="nuc-fields">
+          <div class="nuc-field"><label for="cardO-p">عدد البروتونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardO-p" autocomplete="off"></div>
+          <div class="nuc-field"><label for="cardO-e">عدد الإلكترونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardO-e" autocomplete="off"></div>
+          <div class="nuc-field"><label for="cardO-n">عدد النيوترونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardO-n" autocomplete="off"></div>
+        </div>
+        <div class="nuc-actions">
+          <button type="button" class="btn" id="cardO-btn">تحقّق</button>
+          <button type="button" class="link-btn" id="cardO-esc" hidden>أرِني الأعداد وطريقة حسابها</button>
+        </div>
+        <p class="explore-feedback" id="fb-cardO" hidden></p>
+      </div>
+
+      <div class="explore-step" id="s5closeStep" hidden>
+        <p class="explore-q">بمَ تتشابه الذرّة وأيونها، وبمَ يختلفان؟</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="atomIonInput" placeholder="اكتب إجابتك" autocomplete="off">
+          <button type="button" class="btn" id="atomIonBtn">سلّم الإجابة</button>
+        </div>
+        <button type="button" class="link-btn" id="atomIonModelBtn" hidden>أرِني الإجابة النموذجية</button>
+        <p class="name-card" id="atomIonModel" hidden></p>
+        <p class="explore-feedback" id="fb-atomIon" hidden></p>
+      </div>
+    </div>
+
+    <div class="station-handoff" id="s5done" hidden>
+      <a href="#station-6" class="station-next">ذرّة صُنعت في مختبر ←</a>
+    </div>
   </section>
 
-</div>
+  <!-- ═════════════════════ محطة 6 — Elaborate ═════════════════════
+       عنصر صناعي لم يره الطالب في جدول ولا في حياته: القاعدة نفسها
+       تعمل على ذرّة لم تُصنع إلا مرّات معدودة. -->
+  <section class="station" id="station-6">
+    <div class="station-label">المحطة السادسة</div>
+    <h2>الأوجانيسون — ذرّة صُنعت في مختبر</h2>
+    <p class="station-tagline">عنصر حضّره علماء روس وأمريكيون سنة 2002، ولم تُصنع منه إلا ذرّات معدودة.</p>
 
-<footer class="site-footer">
-  آفاق لا تنتهي للتعلم الإبداعي · Fouad EduLab 2026 © · منصة تعليم العلوم - دولة قطر
-</footer>
+    <p class="fact-line center">الرمز الكيميائي للأوجانيسون:
+      <span class="nuc-sym" dir="ltr"><span class="nuc-ab"><span class="a">294</span><span class="z">118</span></span><span class="nuc-letter">Og</span></span></p>
 
-<script>
-  function checkQ1(){
-    const selected = document.querySelector('input[name="q1"]:checked');
-    const feedback = document.getElementById('q1-feedback');
-    if(!selected){
-      feedback.textContent = 'اختر إجابة أولاً';
-      feedback.className = 'quiz-feedback incorrect';
-      return;
-    }
-    document.querySelectorAll('#q1-options .quiz-option').forEach(o=>o.classList.remove('correct','incorrect'));
-    const chosenLabel = selected.closest('.quiz-option');
+    <div class="nuc-card" id="cardOg">
+      <div class="nuc-sym" dir="ltr"><span class="nuc-ab"><span class="a">294</span><span class="z">118</span></span><span class="nuc-letter">Og</span></div>
+      <div class="nuc-fields">
+        <div class="nuc-field"><label for="cardOg-p">عدد البروتونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardOg-p" autocomplete="off"></div>
+        <div class="nuc-field"><label for="cardOg-e">عدد الإلكترونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardOg-e" autocomplete="off"></div>
+        <div class="nuc-field"><label for="cardOg-n">عدد النيوترونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardOg-n" autocomplete="off"></div>
+      </div>
+      <div class="nuc-actions">
+        <button type="button" class="btn" id="cardOg-btn">تحقّق</button>
+        <button type="button" class="link-btn" id="cardOg-esc" hidden>أرِني الأعداد وطريقة حسابها</button>
+      </div>
+      <p class="explore-feedback" id="fb-cardOg" hidden></p>
+    </div>
 
-    if(selected.value === 'all'){
-      chosenLabel.classList.add('correct');
-      feedback.textContent = 'إجابة صحيحة — الذرة تحتوي دائمًا على البروتونات والإلكترونات والنيوترونات مهما تغير حجمها';
-      feedback.className = 'quiz-feedback correct';
-      if(window.Sounds) window.Sounds.playSnap();
-      if(window.XP) window.XP.claim('l1-q1', window.XP.POINTS.MCQ,
-                                    'ميّزتَ مكوّنات الذرّة الثلاثة');
-    } else {
-      chosenLabel.classList.add('incorrect');
-      feedback.textContent = 'حاول مرة أخرى — فكّر في مكونات الذرة الثلاثة معًا';
-      feedback.className = 'quiz-feedback incorrect';
-      if(window.Sounds) window.Sounds.playWrong();
-    }
-  }
+    <div id="s6after" hidden>
+      <div class="explore-step">
+        <p class="explore-q">يعتقد العلماء أنّ بعض ذرّات الأوجانيسون عددها الكتلي <span dir="ltr">295</span>. كم عدد نيوتروناتها؟</p>
+        <div class="quiz-options" data-q="l1-og-295">
+          <label class="quiz-option"><input type="radio" name="l1-og-295" value="w1"><span dir="ltr">176</span> نيوترونًا</label>
+          <label class="quiz-option"><input type="radio" name="l1-og-295" value="correct"><span dir="ltr">177</span> نيوترونًا</label>
+          <label class="quiz-option"><input type="radio" name="l1-og-295" value="w2"><span dir="ltr">118</span> نيوترونًا</label>
+          <label class="quiz-option"><input type="radio" name="l1-og-295" value="w3"><span dir="ltr">295</span> نيوترونًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-l1-og-295" hidden></p>
+      </div>
 
-  function checkNuclide(btn){
-    const card = btn.closest('.nuclide-card');
-    const Z = parseInt(card.dataset.atomic, 10);
-    const A = parseInt(card.dataset.mass, 10);
-    const N = A - Z;
+      <div class="explore-step">
+        <p class="explore-q">الكلور يُستعمل في تعقيم مياه المسابح. وهاتان ذرّتان منه: <span dir="ltr">Cl</span> عددها الكتلي <span dir="ltr">35</span>، و<span dir="ltr">Cl</span> عددها الكتلي <span dir="ltr">37</span>، وعددهما الذرّي <span dir="ltr">17</span>. بمَ تختلفان؟</p>
+        <div class="quiz-options" data-q="l1-cl-difference">
+          <label class="quiz-option"><input type="radio" name="l1-cl-difference" value="correct"> في عدد النيوترونات داخل النواة</label>
+          <label class="quiz-option"><input type="radio" name="l1-cl-difference" value="w1"> في عدد البروتونات داخل النواة</label>
+          <label class="quiz-option"><input type="radio" name="l1-cl-difference" value="w2"> في عدد الإلكترونات حول النواة</label>
+          <label class="quiz-option"><input type="radio" name="l1-cl-difference" value="w3"> في نوع العنصر الذي تنتمي إليه</label>
+        </div>
+        <p class="explore-feedback" id="fb-l1-cl-difference" hidden></p>
+      </div>
+    </div>
 
-    const pInput = card.querySelector('.protons-input');
-    const eInput = card.querySelector('.electrons-input');
-    const nInput = card.querySelector('.neutrons-input');
-    const pField = pInput.closest('.nuclide-field');
-    const eField = eInput.closest('.nuclide-field');
-    const nField = nInput.closest('.nuclide-field');
-    const feedback = card.querySelector('.nuclide-feedback');
+    <div class="bonus-box" id="s6bonus" hidden>
+      <span class="bonus-tag">تحدٍّ اختياري</span>
+      <p class="explore-q">أيون الحديد في دمك يحمل شحنة <span dir="ltr">3+</span>. احسب جسيماته الثلاثة.</p>
+      <div class="nuc-card" id="cardFe">
+        <div class="nuc-sym" dir="ltr"><span class="nuc-ab"><span class="a">56</span><span class="z">26</span></span><span class="nuc-letter">Fe<sup>3+</sup></span></div>
+        <div class="nuc-fields">
+          <div class="nuc-field"><label for="cardFe-p">عدد البروتونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardFe-p" autocomplete="off"></div>
+          <div class="nuc-field"><label for="cardFe-e">عدد الإلكترونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardFe-e" autocomplete="off"></div>
+          <div class="nuc-field"><label for="cardFe-n">عدد النيوترونات</label><input type="text" inputmode="numeric" class="explore-input" id="cardFe-n" autocomplete="off"></div>
+        </div>
+        <div class="nuc-actions">
+          <button type="button" class="btn" id="cardFe-btn">تحقّق</button>
+          <button type="button" class="link-btn" id="cardFe-esc" hidden>أرِني الأعداد وطريقة حسابها</button>
+        </div>
+        <p class="explore-feedback" id="fb-cardFe" hidden></p>
+      </div>
+    </div>
 
-    [pField, eField, nField].forEach(f=> f.classList.remove('correct','incorrect'));
+    <div class="station-handoff" id="s6done" hidden>
+      <a href="#station-7" class="station-next">التقييم الختامي ←</a>
+    </div>
+  </section>
 
-    if(pInput.value === '' || eInput.value === '' || nInput.value === ''){
-      feedback.textContent = 'أكمل الحقول الثلاثة أولاً';
-      feedback.className = 'nuclide-feedback incorrect';
-      return;
-    }
+  <!-- ═════════════════════ محطة 7 — Evaluate ═════════════════════
+       عشرة أسئلة: ثمانية اختيار وسؤالان مكتوبان. محاولة واحدة لكلّ
+       سؤال، وعند الخطأ يُضاء الصحيح مع سطر يشرح لماذا — آخر لحظة
+       تعلّم، والطالب قد يكون في بيته بلا معلّم. -->
+  <section class="station" id="station-7">
+    <div class="station-label">المحطة السابعة</div>
+    <h2>التقييم الختامي</h2>
+    <p class="station-tagline">عشرة أسئلة، ومحاولة واحدة لكلّ سؤال. وفي نهايتها شهادتك باسمك.</p>
 
-    const pVal = parseInt(pInput.value, 10);
-    const eVal = parseInt(eInput.value, 10);
-    const nVal = parseInt(nInput.value, 10);
+    <div class="name-gate">
+      <label for="evalName">اكتب اسمك كما تريده أن يظهر على الشهادة</label>
+      <input type="text" class="explore-input" id="evalName" placeholder="الاسم الكامل" autocomplete="off">
+      <button type="button" class="btn" id="evalStart">ابدأ التقييم</button>
+      <p class="explore-feedback" id="evalNameFb" hidden></p>
+      <p class="gate-note">هذا هو التقييم الختامي لهذا الدرس. لكلّ سؤال محاولة واحدة، وبعد آخر سؤال تظهر نتيجتك وشهادتك. خذ وقتك.</p>
+    </div>
 
-    let allCorrect = true;
-    if(pVal === Z){ pField.classList.add('correct'); } else { pField.classList.add('incorrect'); allCorrect = false; }
-    if(eVal === Z){ eField.classList.add('correct'); } else { eField.classList.add('incorrect'); allCorrect = false; }
-    if(nVal === N){ nField.classList.add('correct'); } else { nField.classList.add('incorrect'); allCorrect = false; }
+    <div id="evalQuestions" hidden>
 
-    if(allCorrect){
-      feedback.textContent = 'ممتاز! الأعداد الثلاثة صحيحة';
-      feedback.className = 'nuclide-feedback correct';
-      if(window.Sounds) window.Sounds.playSnap();
-      if(window.XP) window.XP.claim('l1-nuclide-' + Z + '-' + A, window.XP.POINTS.PRODUCE,
-                                    'حسبتَ جسيمات الذرّة المتعادلة بنفسك');
-    } else {
-      feedback.textContent = 'راجع الحقول المظللة بالمرجاني وحاول مرة أخرى';
-      feedback.className = 'nuclide-feedback incorrect';
-      if(window.Sounds) window.Sounds.playWrong();
-    }
-  }
+      <div class="eval-q first">
+        <p class="explore-q"><span class="q-num">1</span> أين تقع الإلكترونات في الذرّة؟</p>
+        <div class="quiz-options" data-q="e1">
+          <label class="quiz-option"><input type="radio" name="e1" value="w1"> داخل النواة مع النيوكليونات</label>
+          <label class="quiz-option"><input type="radio" name="e1" value="w2"> داخل البروتونات الموجبة الشحنة</label>
+          <label class="quiz-option"><input type="radio" name="e1" value="w3"> داخل النيوترونات المتعادلة الشحنة</label>
+          <label class="quiz-option"><input type="radio" name="e1" value="correct"> في مستويات الطاقة حول النواة</label>
+        </div>
+        <p class="explore-feedback" id="fb-e1" hidden></p>
+      </div>
 
-  function checkIonParticles(btn){
-    const card = btn.closest('.nuclide-card');
-    const Z = parseInt(card.dataset.atomic, 10);
-    const A = parseInt(card.dataset.mass, 10);
-    const charge = parseInt(card.dataset.charge, 10) || 0;
-    const N = A - Z;
-    const eExpected = Z - charge;
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">2</span> أيّ زوج من جسيمات الذرّة يُمثّل النيوكليونات؟</p>
+        <div class="quiz-options" data-q="e2">
+          <label class="quiz-option"><input type="radio" name="e2" value="correct"> البروتونات والنيوترونات</label>
+          <label class="quiz-option"><input type="radio" name="e2" value="w1"> الإلكترونات والبروتونات</label>
+          <label class="quiz-option"><input type="radio" name="e2" value="w2"> الإلكترونات والنيوترونات</label>
+          <label class="quiz-option"><input type="radio" name="e2" value="w3"> النيوترونات ومستويات الطاقة</label>
+        </div>
+        <p class="explore-feedback" id="fb-e2" hidden></p>
+      </div>
 
-    const pInput = card.querySelector('.protons-input');
-    const eInput = card.querySelector('.electrons-input');
-    const nInput = card.querySelector('.neutrons-input');
-    const pField = pInput.closest('.nuclide-field');
-    const eField = eInput.closest('.nuclide-field');
-    const nField = nInput.closest('.nuclide-field');
-    const feedback = card.querySelector('.nuclide-feedback');
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">3</span> تحتوي ذرّة متعادلة على <span dir="ltr">12</span> بروتونًا. كم يجب أن يكون عدد إلكتروناتها؟</p>
+        <div class="quiz-options" data-q="e3">
+          <label class="quiz-option"><input type="radio" name="e3" value="w1"><span dir="ltr">6</span> إلكترونات</label>
+          <label class="quiz-option"><input type="radio" name="e3" value="w2"><span dir="ltr">11</span> إلكترونًا</label>
+          <label class="quiz-option"><input type="radio" name="e3" value="correct"><span dir="ltr">12</span> إلكترونًا</label>
+          <label class="quiz-option"><input type="radio" name="e3" value="w3"><span dir="ltr">24</span> إلكترونًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-e3" hidden></p>
+      </div>
 
-    [pField, eField, nField].forEach(f=> f.classList.remove('correct','incorrect'));
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">4</span> أيّ جسيم ذرّي لديه أقلّ كتلة؟</p>
+        <div class="quiz-options" data-q="e4">
+          <label class="quiz-option"><input type="radio" name="e4" value="w1"> النيوترون</label>
+          <label class="quiz-option"><input type="radio" name="e4" value="correct"> الإلكترون</label>
+          <label class="quiz-option"><input type="radio" name="e4" value="w2"> البروتون</label>
+          <label class="quiz-option"><input type="radio" name="e4" value="w3"> النيوكليون</label>
+        </div>
+        <p class="explore-feedback" id="fb-e4" hidden></p>
+      </div>
 
-    if(pInput.value === '' || eInput.value === '' || nInput.value === ''){
-      feedback.textContent = 'أكمل الحقول الثلاثة أولاً';
-      feedback.className = 'nuclide-feedback incorrect';
-      return;
-    }
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">5</span> كيف نحسب عدد النيوترونات في ذرّة عنصر ما؟</p>
+        <div class="quiz-options" data-q="e5">
+          <label class="quiz-option"><input type="radio" name="e5" value="w1"> العدد الذرّي ناقص العدد الكتلي</label>
+          <label class="quiz-option"><input type="radio" name="e5" value="w2"> العدد الذرّي زائد العدد الكتلي</label>
+          <label class="quiz-option"><input type="radio" name="e5" value="w3"> العدد الذرّي مضروبًا في العدد الكتلي</label>
+          <label class="quiz-option"><input type="radio" name="e5" value="correct"> العدد الكتلي ناقص العدد الذرّي</label>
+        </div>
+        <p class="explore-feedback" id="fb-e5" hidden></p>
+      </div>
 
-    const pVal = parseInt(pInput.value, 10);
-    const eVal = parseInt(eInput.value, 10);
-    const nVal = parseInt(nInput.value, 10);
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">6</span> الرمز الكيميائي لعنصر السكانديوم هو <span dir="ltr">Sc</span>، وعدده الكتلي <span dir="ltr">45</span> وعدده الذرّي <span dir="ltr">21</span>. ما عدد الإلكترونات في ذرّة هذا العنصر؟</p>
+        <div class="quiz-options" data-q="e6">
+          <label class="quiz-option"><input type="radio" name="e6" value="correct"><span dir="ltr">21</span> إلكترونًا</label>
+          <label class="quiz-option"><input type="radio" name="e6" value="w1"><span dir="ltr">24</span> إلكترونًا</label>
+          <label class="quiz-option"><input type="radio" name="e6" value="w2"><span dir="ltr">45</span> إلكترونًا</label>
+          <label class="quiz-option"><input type="radio" name="e6" value="w3"><span dir="ltr">66</span> إلكترونًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-e6" hidden></p>
+      </div>
 
-    let allCorrect = true;
-    if(pVal === Z){ pField.classList.add('correct'); } else { pField.classList.add('incorrect'); allCorrect = false; }
-    if(eVal === eExpected){ eField.classList.add('correct'); } else { eField.classList.add('incorrect'); allCorrect = false; }
-    if(nVal === N){ nField.classList.add('correct'); } else { nField.classList.add('incorrect'); allCorrect = false; }
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">7</span> ذرّة النيتروجين <span dir="ltr">N</span> عددها الذرّي <span dir="ltr">7</span>، وهي تكتسب ثلاثة إلكترونات لتكوّن أيونها. ما عدد الإلكترونات في هذا الأيون؟</p>
+        <div class="quiz-options" data-q="e7">
+          <label class="quiz-option"><input type="radio" name="e7" value="w1"><span dir="ltr">4</span> إلكترونات</label>
+          <label class="quiz-option"><input type="radio" name="e7" value="w2"><span dir="ltr">7</span> إلكترونات</label>
+          <label class="quiz-option"><input type="radio" name="e7" value="correct"><span dir="ltr">10</span> إلكترونات</label>
+          <label class="quiz-option"><input type="radio" name="e7" value="w3"><span dir="ltr">14</span> إلكترونًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-e7" hidden></p>
+      </div>
 
-    if(allCorrect){
-      feedback.textContent = charge === 0
-        ? 'ممتاز! ذرة متعادلة: عدد البروتونات = عدد الإلكترونات'
-        : 'صحيح! لاحظ أن البروتونات والنيوترونات لم تتغيّرا — الشحنة غيّرت عدد الإلكترونات فقط';
-      feedback.className = 'nuclide-feedback correct';
-      if(window.Sounds) window.Sounds.playSnap();
-      if(window.XP) window.XP.claim('l1-ion-' + Z + '-' + A + '-' + charge,
-                                    window.XP.POINTS.PRODUCE,
-                                    charge === 0
-                                      ? 'أثبتّ توازن الذرّة المتعادلة'
-                                      : 'حسبتَ جسيمات الأيون بعد تغيّر الشحنة');
-    } else {
-      feedback.textContent = 'راجع الحقول المظللة بالمرجاني وحاول مرة أخرى';
-      feedback.className = 'nuclide-feedback incorrect';
-      if(window.Sounds) window.Sounds.playWrong();
-    }
-  }
-</script>
-<script src="https://app.Lumi.education/api/v1/h5p/core/js/h5p-resizer.js" charset="UTF-8"></script>
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">8</span> ذرّة الأرجون عددها الكتلي <span dir="ltr">40</span> وعددها الذرّي <span dir="ltr">18</span>. أيّ العبارات تصفها وصفًا صحيحًا؟</p>
+        <div class="quiz-options" data-q="e8">
+          <label class="quiz-option"><input type="radio" name="e8" value="w1"> فيها <span dir="ltr">18</span> بروتونًا و<span dir="ltr">40</span> نيوترونًا</label>
+          <label class="quiz-option"><input type="radio" name="e8" value="correct"> فيها <span dir="ltr">18</span> بروتونًا و<span dir="ltr">22</span> نيوترونًا</label>
+          <label class="quiz-option"><input type="radio" name="e8" value="w2"> فيها <span dir="ltr">40</span> بروتونًا و<span dir="ltr">18</span> إلكترونًا</label>
+          <label class="quiz-option"><input type="radio" name="e8" value="w3"> فيها <span dir="ltr">22</span> بروتونًا و<span dir="ltr">18</span> نيوترونًا</label>
+        </div>
+        <p class="explore-feedback" id="fb-e8" hidden></p>
+      </div>
 
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">9</span> العدد الكتلي لذرّة الصوديوم <span dir="ltr">23</span>، والعدد الكتلي لأيون الصوديوم <span dir="ltr">23</span> أيضًا. اشرح سبب تطابقهما.</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="e9Input" placeholder="اكتب إجابتك" autocomplete="off">
+          <button type="button" class="btn" id="e9Btn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-e9" hidden></p>
+      </div>
 
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">10</span> ذرّة عنصر عددها الذرّي <span dir="ltr">20</span> وعددها الكتلي <span dir="ltr">40</span>. ما عدد نيوتروناتها؟</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="e10Input" placeholder="اكتب العدد" autocomplete="off">
+          <button type="button" class="btn" id="e10Btn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-e10" hidden></p>
+      </div>
+
+    </div>
+
+    <div class="eval-summary" id="evalSummary" hidden></div>
+    <!-- إلزامي: بدونه تحقن وحدة الشهادة زرّها عائمًا فيصطدم بزرّ فهيم -->
+    <div id="certTriggerSlot"></div>
+  </section>
+
+</main>
+
+<!-- وسوم shared/ الستّة تسبق سكربت الدرس — والترتيب إلزامي:
+     template.js بعد xp.js وجوبًا. -->
 <script src="../../shared/sounds/sounds.js"></script>
 <script src="../../shared/xp-system/xp.js"></script>
 <script src="../../shared/faheem-widget/faheem.js"></script>
 <script src="../../shared/template-boilerplate/template.js"></script>
+<script src="../../shared/certificate-system/certificate.js"></script>
+<script src="../../shared/identity/footer.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   الوحدة 1 — الدرس 1 — سكربت الدرس (نصوص المحطات كلّها في T أدناه)
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+var NS = 'http://www.w3.org/2000/svg';
+
+var G = {
+  el: function(tag, attrs){
+    var n = document.createElementNS(NS, tag);
+    if(attrs) Object.keys(attrs).forEach(function(k){ n.setAttribute(k, attrs[k]); });
+    return n;
+  },
+  add: function(parent, tag, attrs){
+    var n = G.el(tag, attrs);
+    parent.appendChild(n);
+    return n;
+  },
+  text: function(parent, str, attrs){
+    var n = G.add(parent, 'text', attrs || {});
+    n.setAttribute('text-anchor', n.getAttribute('text-anchor') || 'middle');
+    n.setAttribute('direction', 'ltr');
+    n.style.unicodeBidi = 'isolate';
+    n.textContent = str;
+    return n;
+  },
+  clear: function(node){ while(node.firstChild) node.removeChild(node.firstChild); },
+  reduced: function(){
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+};
+function el(id){ return id ? document.getElementById(id) : null; }
+function show(id){ var n = el(id); if(n) n.hidden = false; }
+function txt(id, s){ var n = el(id); if(n) n.textContent = s; }
+function fbNeutral(id, s){
+  var n = el(id);
+  if(!n) return;
+  n.textContent = s;
+  n.className = 'explore-feedback is-hint';
+  n.hidden = false;
+}
+function claim(id, key, reason){
+  if(window.XP) window.XP.claim(id, window.XP.POINTS[key], reason);
+}
+function claimHalf(id, key, reason){
+  if(window.XP) window.XP.claim(id, Math.round(window.XP.POINTS[key] / 2), reason);
+}
+
+/* ============ 1) النصوص ============
+   كل نصّ يقرأه الطالب يعيش هنا لا داخل منطق المحطة. */
+var T = {
+  s1: {
+    predictFb: 'سجّلنا توقّعك، ولن نخبرك الآن مَن أصاب. ستبني الذرّة بيدك في المحطة التالية، وتحكم بنفسك في المحطة التي تليها.'
+  },
+  s2: {
+    nucleusAsk: 'ابدأ بالنواة: ضع فيها بروتونات ونيوترونات ذرّة الفلور.',
+    nucleusDone: 'اكتملت النواة. بقيت الإلكترونات التسعة.',
+    levelsAsk: 'انقر على المستوى الذي تريد وضع الإلكترون فيه.',
+    innerFull: 'المستوى الداخلي يسع إلكترونين كما في نموذج النيون. ضع البقيّة في المستوى الذي يليه.',
+    outerFull: 'ما زال في يدك إلكترونان. انظر إلى نموذج النيون: أين يقع أوّل إلكترونين فيه؟',
+    built: 'اكتملت ذرّة الفلور: نواة في المركز، وإلكترونات في مستويات حولها.',
+    whereE: {
+      correct: '✓ صحيح! الإلكترونات في مستويات الطاقة حول النواة، لا داخلها.',
+      w1: 'ضعتَ الإلكترونات بيدك — هل نقرتَ داخل النواة أم على المستويات المحيطة بها؟',
+      w2: 'النيوترون جسيم داخل النواة، ولم تضع أنت شيئًا داخله.',
+      w3: 'انظر إلى المسرح: هل تلامس الإلكترونات حافّة النواة، أم تبعد عنها؟',
+      any: 'ارجع إلى ما بنيتَه وانظر أين استقرّ كلّ إلكترون.'
+    },
+    wherePN: {
+      correct: '✓ صحيح! البروتونات والنيوترونات معًا داخل النواة في مركز الذرّة.',
+      w1: 'المستويات وضعتَ فيها الإلكترونات وحدها.',
+      w2: 'المستوى الخارجي أبعد ما يكون عن المركز، والبروتونات لم تصل إليه.',
+      w3: 'لم يتوزّع البروتون ولا النيوترون على المستويات إطلاقًا.',
+      any: 'تذكّر أوّل ما ضغطتَ: أين ظهر البروتون؟'
+    },
+    whyModel: {
+      correct: '✓ صحيح! الذرّة أصغر من أن نرى داخلها، فنجمع الأدلّة ونبني نموذجًا يمثّلها.',
+      w1: 'السرعة ليست العائق هنا؛ العائق أنّ الذرّة نفسها أصغر من أن تُرى.',
+      w2: 'تركيب الذرّة ثابت لا يتبدّل لحظةً بلحظة.',
+      w3: 'النموذج ليس رسمًا أجمل — هو أداة تمثّل ما لا نستطيع رؤيته.',
+      any: 'فكّر في حجم الذرّة نفسها: هل يمكن فتحها والنظر داخلها؟'
+    }
+  },
+  s3: {
+    predictFb: 'سجّلنا توقّعك. رتّب الآن بطاقات الشحنة والكتلة، ثمّ احكم بنفسك.',
+    chipsDone: 'اكتملت البطاقات الثلاث. انظر إلى عمود الكتلة: البروتون والنيوترون كتلة كلٍّ منهما 1، والإلكترون جزء من 1836 من ذلك.',
+    hintMassOnCharge: 'هذه خانة شحنة لا خانة كتلة.',
+    hintChargeOnMass: 'هذه خانة كتلة لا خانة شحنة.',
+    hintLightOnHeavy: 'الجسيم الأخفّ بكثير هو الذي يدور حول النواة، لا الذي يسكنها.',
+    hintHeavyOnLight: 'الإلكترون أخفّ من هذا بكثير — ابحث عن الكسر.',
+    hintPlusOnNeutral: 'اسم الجسيم يدلّ على شحنته: النيوترون متعادل.',
+    hintPlusOnE: 'الإلكترون سالب الشحنة، وهو ما يجعله ينجذب إلى النواة.',
+    hintMinusOnP: 'البروتون موجب الشحنة.',
+    hintZeroOnCharged: 'هذا الجسيم مشحون لا متعادل.',
+    neutral: {
+      correct: '✓ صحيح! كلّ شحنة موجبة يقابلها إلكترون سالب، فمجموع الشحنات صفر.',
+      w1: 'النيوترون بلا شحنة أصلًا، فلا يُلغي شيئًا.',
+      w2: 'الكتلة شيء والشحنة شيء آخر — الإلكترون خفيف لكنّ شحنته كاملة.',
+      w3: 'الإلكترونات خارج النواة تمامًا، ومع ذلك تبقى الذرّة متعادلة.',
+      any: 'قارن بين عدد البروتونات وعدد الإلكترونات في الذرّة التي بنيتَها.'
+    },
+    closeLoop: {
+      correct: '✓ صحيح! هذا بالضبط ما بنيتَه: جسيمات مرتّبة، ونواة صغيرة تحمل معظم الكتلة.',
+      w1: 'لو كانت كتلة صمّاء موزّعة بالتساوي لما كان لجسيماتها مواقع مختلفة.',
+      w2: 'الذي يدور حول النواة هو الإلكترون، وكتلته جزء ضئيل من كتلة الذرّة.',
+      w3: 'أنت نفسك وضعتَ داخلها ثلاثة أنواع من الجسيمات.',
+      any: 'ارجع بعينك إلى المسرح وإلى بطاقات الكتلة معًا.'
+    }
+  },
+  s4: {
+    symbolRead: {
+      correct: '✓ صحيح! 11 بروتونًا + 12 نيوترونًا = 23، وهو العدد المكتوب أعلى يسار الرمز.',
+      w1: 'البروتونات 11 لا 23 — والرقم 11 مكتوب في موضع آخر من الرمز.',
+      w2: 'النيوترونات 12 وحدها، والرقم 23 أكبر منها.',
+      w3: 'الإلكترونات 11 في الذرّة المتعادلة، لا 23.',
+      any: 'اجمع عددين من المعطيات الثلاثة أعلاه وانظر أيّهما يعطيك 23.'
+    },
+    cardOk: '✓ صحيح! ',
+    hintZ: 'العدد أسفل يسار الرمز هو العدد الذرّي، وهو عدد البروتونات نفسه.',
+    hintNeutralE: 'الذرّة متعادلة: عدد إلكتروناتها يساوي عدد بروتوناتها.',
+    hintN: 'العدد أعلى يسار الرمز = البروتونات + النيوترونات. فماذا يبقى إن طرحت؟',
+    escLead: 'هذه أعداد هذه الذرّة وطريقة حسابها: ',
+    patternHint1: 'انظر إلى بطاقة الكربون: العدد الكتلي 12 والعدد الذرّي 6، والنيوترونات 6. ما العملية التي تربطها؟',
+    patternHint2: 'اذكر في إجابتك العددين معًا: الكتلي والذرّي، وماذا فعلتَ بهما.',
+    patternModel: 'عدد النيوترونات = العدد الكتلي ناقص العدد الذرّي.',
+    patternOk: '✓ صحيح! هذه هي القاعدة، وقد استخرجتَها من البطاقات الثلاث بنفسك.',
+    hydrogenHint1: 'قارن بطاقة الهيدروجين ببطاقتَي الكربون والبوتاسيوم: أيّ خانة خرجت فيها بعدد لم يخرج في غيرها؟',
+    hydrogenHint2: 'اذكر اسم الجسيم الذي غاب عن نواة الهيدروجين.',
+    hydrogenModel: 'ذرّة الهيدروجين لا تحتوي على أيّ نيوترون: عددها الكتلي يساوي عددها الذرّي، فالفرق بينهما صفر.',
+    hydrogenOk: '✓ صحيح! نواة الهيدروجين بروتون واحد بلا نيوترونات — وهي الذرّة الوحيدة كذلك.'
+  },
+  s5: {
+    predictFb: 'سجّلنا توقّعك. المسرح أمامك الآن — جرّب بنفسك وراقب العدّادات.',
+    naStart: 'ذرّة صوديوم متعادلة: عدد بروتوناتها يساوي عدد إلكتروناتها.',
+    naIon: 'نزع الإلكترون فبقيت بروتونات أكثر من الإلكترونات، فظهرت شحنة موجبة.',
+    fStart: 'ذرّة فلور متعادلة — والآن أضف إليها إلكترونًا.',
+    fIon: 'كسبت الذرّة إلكترونًا فصارت إلكتروناتها أكثر من بروتوناتها، فظهرت شحنة سالبة.',
+    bothDone: 'رأيتَ الاتّجاهين: ذرّة تفقد فتصير موجبة، وذرّة تكسب فتصير سالبة.',
+    chargeRule: {
+      correct: '✓ صحيح! فقدُ إلكترونين يترك شحنتين موجبتين بلا مقابل.',
+      w1: 'الشحنة السالبة تنشأ من كسب الإلكترونات لا من فقدها.',
+      w2: 'إلكترون واحد يعطي شحنة 1+، والسؤال عن إلكترونين.',
+      w3: 'لو بقيت الشحنة صفرًا لما تكوّن أيون أصلًا.',
+      any: 'الإلكترون سالب: كم شحنة موجبة تبقى بلا مقابل بعد فقد اثنين؟'
+    },
+    whatChanges: {
+      correct: '✓ صحيح! الإلكترونات وحدها هي ما فقدته الذرّة أو كسبته.',
+      w1: 'البروتونات في النواة لم تتغيّر في المسرح — راقب عدّادها.',
+      w2: 'النيوترونات لم تتحرّك ولم يتغيّر عددها إطلاقًا.',
+      w3: 'عدّاد البروتونات ثبت على قيمته أثناء التجربة.',
+      any: 'أعد التجربة وراقب العدّادات الثلاثة معًا.'
+    },
+    hintIonE: 'ابدأ من عدد البروتونات: الشحنة الموجبة تعني فقد إلكترونات، والسالبة تعني كسبها.',
+    atomIonHint1: 'اذكر في إجابتك ما بقي كما هو وما تغيّر بالاسم.',
+    atomIonHint2: 'ثلاثة جسيمات: أيّها تغيّر عدده وأيّها لم يتغيّر؟',
+    atomIonModel: 'تحتوي الذرّة وأيونها على العدد نفسه من البروتونات والنيوترونات، ويختلفان في عدد الإلكترونات.',
+    atomIonOk: '✓ صحيح! البروتونات والنيوترونات كما هي، والاختلاف في الإلكترونات وحدها.'
+  },
+  s6: {
+    og295: {
+      correct: '✓ صحيح! 295 ناقص 118 = 177 نيوترونًا.',
+      w1: '176 هي نيوترونات الذرّة التي عددها الكتلي 294، والسؤال عن 295.',
+      w2: '118 هو العدد الذرّي، أي عدد البروتونات.',
+      w3: '295 هو العدد الكتلي كلّه: بروتونات ونيوترونات معًا.',
+      any: 'اطرح العدد الذرّي من العدد الكتلي الجديد.'
+    },
+    clDiff: {
+      correct: '✓ صحيح! العدد الذرّي واحد في الذرّتين، والفرق في العدد الكتلي يعني نيوترونات أكثر باثنين.',
+      w1: 'عددهما الذرّي 17 في الحالتين، فالبروتونات متساوية.',
+      w2: 'كلتاهما ذرّة متعادلة عدد إلكتروناتها يساوي عدد بروتوناتها.',
+      w3: 'العدد الذرّي هو ما يحدّد هوية العنصر، وهو نفسه هنا.',
+      any: 'ما الرقم الذي اختلف بينهما، وأيّ جسيم يدخل في حسابه وحده؟'
+    },
+    bonusOk: '✓ صحيح! أتممتَ التحدّي الاختياري.'
+  },
+  eval: {
+    e1: 'الإلكترونات تدور حول النواة في مناطق تُسمّى مستويات الطاقة.',
+    e2: 'النيوكليونات هي جسيمات النواة: البروتونات والنيوترونات.',
+    e3: 'في الذرّة المتعادلة عدد الإلكترونات يساوي عدد البروتونات، أي 12.',
+    e4: 'كتلة الإلكترون النسبية 1/1836، وهي أقلّ بكثير من كتلة البروتون أو النيوترون.',
+    e5: 'عدد النيوترونات = العدد الكتلي ناقص العدد الذرّي.',
+    e6: 'العدد الذرّي 21، والذرّة متعادلة، فعدد إلكتروناتها 21.',
+    e7: 'ذرّة النيتروجين فيها 7 إلكترونات، وباكتساب ثلاثة تصير 10.',
+    e8: 'العدد الذرّي 18 هو عدد البروتونات، والنيوترونات = 40 ناقص 18 = 22.',
+    e9why: 'كلاهما فيه 11 بروتونًا و12 نيوترونًا؛ والمفقود إلكترون واحد، وكتلة الإلكترون ضئيلة فلا تدخل في العدد الكتلي.',
+    e10why: 'عدد النيوترونات = 40 ناقص 20 = 20 نيوترونًا.'
+  }
+};
+
+/* ============ 2) راسم الذرّة ============
+   دالّة واحدة تخدم أربعة مواضع: بناء الفلور (م2)، ونموذج النيون
+   المرجعي (م2)، وذرّتَي الصوديوم والفلور في تكوين الأيون (م5).
+
+   مواضع النيوكليونات ثابتة لا تُعاد قسمتها كلّما أُضيف جسيم:
+   تُحسب مرّة للعدد النهائي (targetP + targetN) بتوزيع لولبيّ، ثمّ
+   يُرسم منها ما وُضع فعلًا. ولولا ذلك لقفز ما وضعه الطالب سابقًا
+   في كلّ نقرة.
+
+   والفرق بين الجسيمات يحمله الشكل أوّلًا: البروتون عليه + والإلكترون
+   عليه − والنيوترون بلا علامة. واللون إشارة ثانية لا وحيدة. */
+function nucleusTypes(p, n){
+  var arr = [], pp = p, nn = n;
+  while(pp > 0 || nn > 0){
+    if(nn >= pp && nn > 0){ arr.push('n'); nn--; }
+    else if(pp > 0){ arr.push('p'); pp--; }
+  }
+  return arr;
+}
+
+function drawAtom(svg, cfg){
+  if(!svg) return;
+  G.clear(svg);
+  var vb  = (svg.getAttribute('viewBox') || '0 0 640 400').split(/\s+/).map(Number);
+  var cx  = vb[0] + vb[2] / 2;
+  var cy  = vb[1] + vb[3] / 2;
+  var rNuc     = cfg.rNuc || 48;
+  var ringBase = cfg.ringBase || 105;
+  var ringStep = cfg.ringStep || 55;
+  var shells   = cfg.shells || [];
+  var caps     = cfg.caps || shells;
+
+  var root = G.add(svg, 'g', { class: 'atom-root' });
+
+  /* مستويات الطاقة — تُرسم أوّلًا فتقع خلف كل شيء */
+  shells.forEach(function(count, i){
+    G.add(root, 'circle', {
+      class: 'ring' + (cfg.pickable ? ' pickable' : ''),
+      cx: cx, cy: cy, r: ringBase + i * ringStep
+    });
+  });
+
+  /* النواة ومحتواها */
+  var nuc   = G.add(root, 'g', { class: 'nuc' });
+  var tP    = typeof cfg.targetP === 'number' ? cfg.targetP : cfg.p;
+  var tN    = typeof cfg.targetN === 'number' ? cfg.targetN : cfg.n;
+  var types = nucleusTypes(tP, tN);
+  var total = types.length || 1;
+
+  /* نصف قطر الجسيم يُشتقّ من تباعد المواضع الفعلي لا من رقم ثابت:
+     رقمٌ ثابت يجعل جسيمات نواة الفلور (19) تتراكب فتُقرأ كتلة واحدة،
+     ويجعل جسيمات نواة الليثيوم (7) نقاطًا ضائعة في فراغ. والقياس
+     يسبق الرسم: تُولَّد المواضع، ثمّ يُقاس أقلّ تباعد بينها، ثمّ
+     يُحسب نصف القطر منه. */
+  function ringOf(span){
+    var pts = [];
+    for(var i = 0; i < total; i++){
+      var rr  = span * Math.sqrt((i + 0.5) / total);
+      var ang = i * 2.399963229728653;
+      pts.push([cx + rr * Math.cos(ang), cy + rr * Math.sin(ang)]);
+    }
+    return pts;
+  }
+  function minGap(pts){
+    var m = Infinity;
+    for(var i = 0; i < pts.length; i++){
+      for(var j = i + 1; j < pts.length; j++){
+        var d = Math.hypot(pts[i][0] - pts[j][0], pts[i][1] - pts[j][1]);
+        if(d < m) m = d;
+      }
+    }
+    return isFinite(m) ? m : rNuc;
+  }
+  var span0 = rNuc - 8;
+  var gap0  = minGap(ringOf(span0));
+  var rp    = Math.min(9, Math.max(3.2, gap0 * 0.47));
+  var span  = rNuc - rp - 1.5;
+  rp        = Math.min(rp, minGap(ringOf(span)) * 0.47);
+  span      = rNuc - rp - 1.5;
+  var pts   = ringOf(span);
+
+  G.add(nuc, 'circle', { class: 'nucleus-bg', cx: cx, cy: cy, r: rNuc });
+
+  var drawnP = 0, drawnN = 0;
+  types.forEach(function(kind, i){
+    if(kind === 'p'){ if(drawnP >= cfg.p) return; drawnP++; }
+    else            { if(drawnN >= cfg.n) return; drawnN++; }
+    var x = pts[i][0], y = pts[i][1];
+    G.add(nuc, 'circle', { class: kind, cx: x.toFixed(2), cy: y.toFixed(2), r: rp.toFixed(2) });
+    if(kind === 'p' && rp >= 5){
+      G.text(nuc, '+', { x: x.toFixed(2), y: (y + rp * 0.36).toFixed(2), class: 'glyph', 'font-size': (rp * 1.3).toFixed(1) });
+    }
+  });
+
+  /* الإلكترونات — مواضعها مشتقّة من سعة المستوى لا من عددها الحالي،
+     فلا يزحف إلكترونٌ وُضع سابقًا حين يُضاف الذي بعده. */
+  var eLayer = G.add(root, 'g', { class: 'e-layer' });
+  shells.forEach(function(count, i){
+    var r   = ringBase + i * ringStep;
+    var cap = Math.max(caps[i] || count, 1);
+    var re  = 10;
+    for(var k = 0; k < count; k++){
+      var ang = (-90 + k * (360 / cap)) * Math.PI / 180;
+      var x = cx + r * Math.cos(ang);
+      var y = cy + r * Math.sin(ang);
+      G.add(eLayer, 'circle', { class: 'e', cx: x.toFixed(2), cy: y.toFixed(2), r: re, 'data-level': i });
+      G.text(eLayer, '-', { x: x.toFixed(2), y: (y + 4.5).toFixed(2), class: 'glyph', 'font-size': 15 });
+    }
+  });
+
+  /* التسمية تلحق البناء: لا تظهر إلا حين يطلبها الدرس بعد الاكتمال */
+  if(cfg.labels){
+    var rOut = ringBase + (shells.length - 1) * ringStep;
+    G.add(root, 'line', { class: 'lead', x1: cx, y1: cy - rNuc, x2: cx, y2: cy - rNuc - 26 });
+    G.text(root, 'النواة', { x: cx, y: cy - rNuc - 32, class: 'tag', direction: 'rtl' })
+      .setAttribute('direction', 'rtl');
+    G.add(root, 'line', { class: 'lead', x1: cx + rOut, y1: cy, x2: cx + rOut + 24, y2: cy });
+    var t2 = G.text(root, 'مستويات الطاقة', { x: cx + rOut + 28, y: cy + 4, class: 'tag', 'text-anchor': 'start' });
+    t2.setAttribute('direction', 'rtl');
+  }
+
+  /* مناطق النقر — آخر ما يُضاف كي تعلو ما تحتها، وهي شفّافة عريضة
+     ليصلها إصبع الطالب على الجوال. */
+  if(cfg.pickable && typeof cfg.onRing === 'function'){
+    shells.forEach(function(count, i){
+      var hit = G.add(root, 'circle', {
+        class: 'ring-hit', cx: cx, cy: cy, r: ringBase + i * ringStep, 'data-level': i
+      });
+      hit.addEventListener('click', function(){ cfg.onRing(i); });
+    });
+  }
+  return { cx: cx, cy: cy, rNuc: rNuc };
+}
+
+/* ============ 3) بطاقة حساب الجسيمات ============
+   تُستعمل ستّ مرّات (م4 ×3 · م5 ×3 · م6 ×2). ومخرج النجاة فيها
+   ليس زينة: طالبٌ في بيته بلا معلّم لا يجوز أن يعلَق أمام ثلاث
+   خانات بلا طريق للخروج. يظهر بعد محاولتين ويمنح نصف النقاط. */
+function toWesternDigits(s){
+  return String(s == null ? '' : s)
+    .replace(/[\u0660-\u0669]/g, function(d){ return String(d.charCodeAt(0) - 0x0660); })
+    .replace(/[\u06F0-\u06F9]/g, function(d){ return String(d.charCodeAt(0) - 0x06F0); });
+}
+
+function nuclideCard(cfg){
+  var card = el(cfg.id);
+  if(!card) return;
+  var pIn = el(cfg.id + '-p'), eIn = el(cfg.id + '-e'), nIn = el(cfg.id + '-n');
+  var btn = el(cfg.id + '-btn'), esc = el(cfg.id + '-esc'), fb = el('fb-' + cfg.id);
+  if(!pIn || !eIn || !nIn || !btn) return;
+
+  var tries = 0, done = false;
+  function val(node){
+    var v = toWesternDigits(node.value).replace(/[^0-9]/g, '');
+    return v === '' ? null : parseInt(v, 10);
+  }
+  function setFb(kind, str){
+    if(!fb) return;
+    fb.textContent = str;
+    fb.className = 'explore-feedback ' + (kind === 'correct' ? 'is-correct' : 'is-hint');
+    fb.hidden = false;
+  }
+  function lock(){
+    done = true;
+    [pIn, eIn, nIn].forEach(function(i){ i.disabled = true; });
+    btn.disabled = true;
+    if(esc) esc.hidden = true;
+  }
+  function fill(){
+    pIn.value = cfg.p; eIn.value = cfg.e; nIn.value = cfg.n;
+  }
+
+  btn.addEventListener('click', function(){
+    if(done) return;
+    var p = val(pIn), e = val(eIn), n = val(nIn);
+    if(p === null || e === null || n === null){
+      setFb('hint', '💡 املأ الخانات الثلاث أوّلًا.');
+      return;
+    }
+    if(window.XP && window.XP.attempt) window.XP.attempt(cfg.xpId);
+    if(p === cfg.p && e === cfg.e && n === cfg.n){
+      setFb('correct', cfg.okText || (T.s4.cardOk + cfg.method));
+      lock();
+      if(window.Sounds) window.Sounds.playSnap();
+      claim(cfg.xpId, cfg.xp || 'TASK', cfg.reason);
+      if(cfg.onSolved) cfg.onSolved();
+      return;
+    }
+    tries++;
+    var hint = (p !== cfg.p) ? T.s4.hintZ
+             : (e !== cfg.e) ? (cfg.charge ? T.s5.hintIonE : T.s4.hintNeutralE)
+             : T.s4.hintN;
+    setFb('hint', '💡 ' + hint);
+    if(window.Sounds) window.Sounds.playWrong();
+    if(tries >= 2 && esc) esc.hidden = false;
+  });
+
+  if(esc){
+    esc.addEventListener('click', function(){
+      if(done) return;
+      fill();
+      setFb('hint', T.s4.escLead + cfg.method);
+      lock();
+      claimHalf(cfg.xpId, cfg.xp || 'TASK', 'راجعتَ طريقة الحساب وقارنتها بمحاولتك');
+      if(cfg.onSolved) cfg.onSolved();
+    });
+  }
+}
+
+/* ============ 4) المحطة 1 ============ */
+function station1(){
+  var svg = el('goldStage');
+  if(svg){
+    G.clear(svg);
+    var defs = G.add(svg, 'defs');
+    var clip = G.add(defs, 'clipPath', { id: 'goldLensClip' });
+    G.add(clip, 'circle', { cx: 452, cy: 150, r: 92 });
+
+    G.add(svg, 'rect', { class: 'bar dim', x: 44,  y: 196, width: 210, height: 48, rx: 7 });
+    G.add(svg, 'rect', { class: 'bar',     x: 70,  y: 142, width: 210, height: 48, rx: 7 });
+    G.add(svg, 'rect', { class: 'bar',     x: 96,  y: 88,  width: 210, height: 48, rx: 7 });
+
+    G.add(svg, 'line', { class: 'link', x1: 300, y1: 112, x2: 366, y2: 132 });
+
+    var lens = G.add(svg, 'g', { 'clip-path': 'url(#goldLensClip)' });
+    G.add(lens, 'circle', { class: 'lens', cx: 452, cy: 150, r: 92 });
+    /* لا تُولَّد حبيبة يخفيها حدّ القصّ: الرسم لا يحمل ما لا يُرى */
+    for(var row = -4; row <= 4; row++){
+      for(var col = -4; col <= 4; col++){
+        var gx = 452 + col * 22, gy = 150 + row * 22;
+        if(Math.hypot(gx - 452, gy - 150) - 5 > 92) continue;
+        G.add(lens, 'circle', { class: 'grain', cx: gx, cy: gy, r: 5 });
+      }
+    }
+    G.add(svg, 'circle', { class: 'lens', cx: 452, cy: 150, r: 92, fill: 'none' });
+  }
+
+  var predictDone = false;
+  document.querySelectorAll('#s1predictOptions input[type="radio"]').forEach(function(radio){
+    radio.addEventListener('change', function(){
+      if(predictDone) return;
+      predictDone = true;
+      fbNeutral('fb-s1predict', T.s1.predictFb);
+      document.querySelectorAll('#s1predictOptions input[type="radio"]').forEach(function(r){ r.disabled = true; });
+      if(window.Sounds) window.Sounds.playTick();
+      claim('l1-predict', 'PREDICT', 'تنبّأتَ قبل أن تبني');
+      show('s1done');
+    });
+  });
+}
+
+/* ============ 5) المحطة 2 — راسم الفلور ============ */
+function station2(){
+  var svg = el('atomStage');
+  if(!svg) return;
+
+  var TARGET_P = 9, TARGET_N = 10;
+  var CAPS = [2, 7];
+  var st = { p: 0, n: 0, shells: [0, 0], phase: 'nucleus', built: false };
+
+  function counts(){
+    var c = el('s2count');
+    if(!c) return;
+    if(st.phase === 'nucleus'){
+      c.innerHTML = 'بروتونات <span dir="ltr">' + st.p + '/' + TARGET_P + '</span> · نيوترونات <span dir="ltr">' + st.n + '/' + TARGET_N + '</span>';
+    }else{
+      c.innerHTML = 'إلكترونات <span dir="ltr">' + (st.shells[0] + st.shells[1]) + '/9</span>';
+    }
+  }
+
+  function render(){
+    drawAtom(svg, {
+      p: st.p, n: st.n, targetP: TARGET_P, targetN: TARGET_N,
+      shells: st.shells, caps: CAPS,
+      pickable: st.phase === 'levels' && !st.built,
+      labels: st.built,
+      onRing: onRing
+    });
+  }
+
+  function shake(){
+    if(G.reduced()) return;
+    svg.classList.add('shake');
+    setTimeout(function(){ svg.classList.remove('shake'); }, 420);
+  }
+
+  function onRing(level){
+    if(st.phase !== 'levels' || st.built) return;
+    if(st.shells[level] >= CAPS[level]){
+      /* رسالتان لا واحدة: المستوى الداخلي يمتلئ فعلًا عند اثنين كما
+         يُري نموذج النيون، وأمّا المستوى الذي يليه فلم يمتلئ — الطالب
+         هو من بقيت في يده إلكترونات لم يضعها في الداخلي. وسعة المستوى
+         الخارجي محتوى درس 02 فلا تُدَّعى هنا. */
+      txt('s2msg', level === 0 ? T.s2.innerFull : T.s2.outerFull);
+      shake();
+      if(window.Sounds) window.Sounds.playWrong();
+      return;
+    }
+    st.shells[level]++;
+    if(window.Sounds) window.Sounds.playTick();
+    var totalE = st.shells[0] + st.shells[1];
+    if(totalE >= 9){
+      st.built = true;
+      var msg = el('s2msg');
+      if(msg){ msg.textContent = T.s2.built; msg.classList.add('done'); }
+      claim('l1-build-levels', 'PRODUCE', 'وزّعتَ إلكترونات الفلور على مستويات الطاقة');
+      if(window.Sounds) window.Sounds.playChime();
+      show('s2questions');
+    }else{
+      txt('s2msg', T.s2.levelsAsk);
+    }
+    render();
+    counts();
+  }
+
+  function place(kind){
+    if(st.phase !== 'nucleus') return;
+    if(kind === 'p'){ if(st.p >= TARGET_P) return; st.p++; }
+    else            { if(st.n >= TARGET_N) return; st.n++; }
+    if(window.Sounds) window.Sounds.playTick();
+    var pBtn = el('addProton'), nBtn = el('addNeutron');
+    if(pBtn) pBtn.disabled = st.p >= TARGET_P;
+    if(nBtn) nBtn.disabled = st.n >= TARGET_N;
+    if(st.p >= TARGET_P && st.n >= TARGET_N){
+      st.phase = 'levels';
+      txt('s2msg', T.s2.nucleusDone);
+      claim('l1-build-nucleus', 'TASK', 'بنيتَ نواة الفلور بجسيماتها');
+      if(window.Sounds) window.Sounds.playChime();
+      var box = el('s2nucleusBtns');
+      if(box) box.hidden = true;
+      show('s2levelsStep');
+      drawAtom(el('neonFig'), {
+        p: 10, n: 10, shells: [2, 8], caps: [2, 8],
+        rNuc: 40, ringBase: 78, ringStep: 46
+      });
+    }
+    render();
+    counts();
+  }
+
+  var addP = el('addProton'), addN = el('addNeutron');
+  if(addP) addP.addEventListener('click', function(){ place('p'); });
+  if(addN) addN.addEventListener('click', function(){ place('n'); });
+
+  txt('s2msg', T.s2.nucleusAsk);
+  render();
+  counts();
+
+  window.Quiz.practice({
+    'l1-where-e':    { xpId: 'l1-where-e',    xp: 'MCQ', reason: 'حدّدتَ موقع الإلكترونات في الذرّة',
+                       correctText: T.s2.whereE.correct,   hints: T.s2.whereE },
+    'l1-where-pn':   { xpId: 'l1-where-pn',   xp: 'MCQ', reason: 'حدّدتَ موقع النيوكليونات',
+                       correctText: T.s2.wherePN.correct,  hints: T.s2.wherePN },
+    'l1-why-model':  { xpId: 'l1-why-model',  xp: 'MCQ', reason: 'فسّرتَ سبب استعمال النماذج في العلوم',
+                       correctText: T.s2.whyModel.correct, hints: T.s2.whyModel }
+  }, {
+    onAllSolved: function(){ show('s2done'); }
+  });
+}
+
+/* ============ 6) المحطة 3 — الشحنة والكتلة ============ */
+function station3(){
+  var predictDone = false;
+  document.querySelectorAll('#s3predictOptions input[type="radio"]').forEach(function(radio){
+    radio.addEventListener('change', function(){
+      if(predictDone) return;
+      predictDone = true;
+      fbNeutral('fb-s3predict', T.s3.predictFb);
+      document.querySelectorAll('#s3predictOptions input[type="radio"]').forEach(function(r){ r.disabled = true; });
+      if(window.Sounds) window.Sounds.playTick();
+      claim('l1-predict-mass', 'PREDICT', 'تنبّأتَ بموضع الكتلة قبل أن تقيسها');
+      show('s3chipsStep');
+    });
+  });
+
+  /* التلميح مركّب: الرقاقة نفسها قد تُخطئ بطرق مختلفة بحسب الخانة */
+  window.Chips.hints({
+    '1|s3-p-charge': T.s3.hintMassOnCharge,
+    '1|s3-n-charge': T.s3.hintMassOnCharge,
+    '1|s3-e-charge': T.s3.hintMassOnCharge,
+    '1/1836|s3-p-charge': T.s3.hintMassOnCharge,
+    '1/1836|s3-n-charge': T.s3.hintMassOnCharge,
+    '1/1836|s3-e-charge': T.s3.hintMassOnCharge,
+    '+1|s3-p-mass': T.s3.hintChargeOnMass,
+    '+1|s3-n-mass': T.s3.hintChargeOnMass,
+    '+1|s3-e-mass': T.s3.hintChargeOnMass,
+    '-1|s3-p-mass': T.s3.hintChargeOnMass,
+    '-1|s3-n-mass': T.s3.hintChargeOnMass,
+    '-1|s3-e-mass': T.s3.hintChargeOnMass,
+    '0|s3-p-mass':  T.s3.hintChargeOnMass,
+    '0|s3-n-mass':  T.s3.hintChargeOnMass,
+    '0|s3-e-mass':  T.s3.hintChargeOnMass,
+    '1/1836|s3-p-mass': T.s3.hintLightOnHeavy,
+    '1/1836|s3-n-mass': T.s3.hintLightOnHeavy,
+    '1|s3-e-mass':      T.s3.hintHeavyOnLight,
+    '+1|s3-n-charge':   T.s3.hintPlusOnNeutral,
+    '-1|s3-n-charge':   T.s3.hintPlusOnNeutral,
+    '+1|s3-e-charge':   T.s3.hintPlusOnE,
+    '-1|s3-p-charge':   T.s3.hintMinusOnP,
+    '0|s3-p-charge':    T.s3.hintZeroOnCharged,
+    '0|s3-e-charge':    T.s3.hintZeroOnCharged
+  });
+
+  window.Chips.onDone('l1-particles', function(){
+    var fb = document.querySelector('[data-chips="l1-particles"] .chips-feedback');
+    if(fb){
+      fb.textContent = T.s3.chipsDone;
+      fb.className = 'explore-feedback chips-feedback is-correct';
+      fb.hidden = false;
+    }
+    show('s3after');
+  });
+
+  window.Quiz.practice({
+    'l1-neutral':    { xpId: 'l1-neutral',    xp: 'MCQ', reason: 'فسّرتَ تعادل الذرّة بعدد جسيماتها',
+                       correctText: T.s3.neutral.correct,   hints: T.s3.neutral },
+    'l1-close-loop': { xpId: 'l1-close-loop', xp: 'MCQ', reason: 'قارنتَ ما بنيتَه بما توقّعتَه في البداية',
+                       correctText: T.s3.closeLoop.correct, hints: T.s3.closeLoop }
+  }, {
+    onAllSolved: function(){ show('s3done'); }
+  });
+}
+
+/* ============ 7) المحطة 4 — العدد الذرّي والعدد الكتلي ============ */
+function station4(){
+  window.Quiz.practice({
+    'l1-symbol-read': { xpId: 'l1-symbol-read', xp: 'MCQ', reason: 'قرأتَ رقمَي الرمز الكيميائي من معطياته',
+                        correctText: T.s4.symbolRead.correct, hints: T.s4.symbolRead }
+  }, {
+    onSolved: function(){ show('s4after'); }
+  });
+
+  nuclideCard({
+    id: 'cardC', p: 6, e: 6, n: 6, xpId: 'l1-card-c', xp: 'TASK',
+    reason: 'حسبتَ جسيمات ذرّة الكربون من رمزها',
+    method: 'العدد الذرّي 6 هو عدد البروتونات، وعدد الإلكترونات مثله في الذرّة المتعادلة، والنيوترونات = 12 − 6 = 6.',
+    onSolved: function(){ show('cardK'); }
+  });
+  nuclideCard({
+    id: 'cardK', p: 19, e: 19, n: 20, xpId: 'l1-card-k', xp: 'TASK',
+    reason: 'حسبتَ جسيمات ذرّة البوتاسيوم من رمزها',
+    method: 'العدد الذرّي 19 هو عدد البروتونات وعدد الإلكترونات، والنيوترونات = 39 − 19 = 20.',
+    onSolved: function(){ show('cardH'); }
+  });
+  nuclideCard({
+    id: 'cardH', p: 1, e: 1, n: 0, xpId: 'l1-card-h', xp: 'TASK',
+    reason: 'حسبتَ جسيمات ذرّة الهيدروجين من رمزها',
+    method: 'بروتون واحد وإلكترون واحد، والنيوترونات = 1 − 1 = 0.',
+    onSolved: function(){ show('s4patternStep'); }
+  });
+
+  window.Quiz.short({
+    input: 'patternInput', button: 'patternBtn', feedback: 'fb-pattern',
+    modelBtn: 'patternModelBtn', model: 'patternModel',
+    normalize: 'ar',
+    accept: function(norm){
+      if(norm.indexOf('كتلي') < 0 || norm.indexOf('ذري') < 0) return false;
+      if(/(زايد|زائد|اجمع|نجمع|جمع|ضرب|مضروب|قسم)/.test(norm)) return false;
+      if(/(ناقص|نطرح|اطرح|طرح|الفرق|فرق|ينقص|نقص|منقوص)/.test(norm)) return true;
+      return norm.indexOf('كتلي') < norm.indexOf('ذري');
+    },
+    hints: [T.s4.patternHint1, T.s4.patternHint2],
+    modelText: T.s4.patternModel,
+    correctText: T.s4.patternOk,
+    xpId: 'l1-neutron-pattern', xp: 'PATTERN',
+    reason: 'استخرجتَ قاعدة حساب النيوترونات من بطاقاتك الثلاث',
+    modelReason: 'راجعتَ القاعدة النموذجية وقارنتها بإجابتك',
+    onDone: function(){ show('s4hydrogenStep'); }
+  });
+
+  window.Quiz.short({
+    input: 'hydrogenInput', button: 'hydrogenBtn', feedback: 'fb-hydrogen',
+    modelBtn: 'hydrogenModelBtn', model: 'hydrogenModel',
+    normalize: 'ar',
+    accept: function(norm){
+      var noNeutron = norm.indexOf('نيوترون') >= 0 &&
+        /(لا|بلا|ليس|ليست|صفر|خالي|تخلو|يخلو|عديم|بدون)/.test(norm);
+      var equalNums = norm.indexOf('كتلي') >= 0 && norm.indexOf('ذري') >= 0 &&
+        /(يساوي|تساوي|متساوي|نفسه|نفس|واحد)/.test(norm);
+      return noNeutron || equalNums;
+    },
+    hints: [T.s4.hydrogenHint1, T.s4.hydrogenHint2],
+    modelText: T.s4.hydrogenModel,
+    correctText: T.s4.hydrogenOk,
+    xpId: 'l1-hydrogen', xp: 'PRODUCE',
+    reason: 'فسّرتَ شذوذ الهيدروجين عن بقيّة الذرّات',
+    modelReason: 'راجعتَ الإجابة النموذجية وقارنتها بإجابتك',
+    onDone: function(){ show('s4done'); }
+  });
+}
+
+/* ============ 8) المحطة 5 — تكوين الأيون ============
+   ذرّتان حقيقيّتان لا ذرّة واحدة تفعل الاتّجاهين: الصوديوم يفقد
+   والفلور يكسب. وذرّةٌ واحدة تُجبَر على الاتّجاهين تُنتج علمًا
+   مغلوطًا، والدقّة العلمية أولوية دائمة. */
+function station5(){
+  var svg = el('ionStage');
+  if(!svg) return;
+
+  var ATOMS = {
+    na: { p: 11, n: 12, base: [2, 8, 1], caps: [2, 8, 8], sym: 'Na' },
+    f:  { p: 9,  n: 10, base: [2, 7],    caps: [2, 8],    sym: 'F'  }
+  };
+  var st = { mode: 'na', shells: ATOMS.na.base.slice(), acted: false, naDone: false, fDone: false };
+
+  function electrons(){
+    return st.shells.reduce(function(a, b){ return a + b; }, 0);
+  }
+  function render(){
+    var a = ATOMS[st.mode];
+    drawAtom(svg, {
+      p: a.p, n: a.n, shells: st.shells, caps: a.caps,
+      ringBase: 95, ringStep: 45
+    });
+  }
+  function counts(){
+    var a = ATOMS[st.mode];
+    var c = el('s5count');
+    if(!c) return;
+    var line = 'بروتونات <span dir="ltr">' + a.p + '</span> · إلكترونات <span dir="ltr">' + electrons() + '</span>';
+    if(st.acted){
+      var q = a.p - electrons();
+      var sign = q > 0 ? '+' + q : (q < 0 ? q : '0');
+      line += ' · الشحنة <span dir="ltr">' + sign + '</span>';
+    }
+    c.innerHTML = line;
+  }
+  function msg(str, done){
+    var m = el('s5msg');
+    if(!m) return;
+    m.textContent = str;
+    m.className = 'stage-msg' + (done ? ' done' : '');
+  }
+  function bothDone(){
+    if(!(st.naDone && st.fDone)) return;
+    msg(T.s5.bothDone, true);
+    claim('l1-ion-build', 'TASK', 'كوّنتَ أيونًا موجبًا وأيونًا سالبًا بيدك');
+    if(window.Sounds) window.Sounds.playChime();
+    show('s5after');
+  }
+
+  var removeBtn = el('ionRemove'), addBtn = el('ionAdd'),
+      switchBtn = el('ionSwitch'), resetBtn = el('ionReset');
+
+  if(removeBtn) removeBtn.addEventListener('click', function(){
+    if(st.mode !== 'na' || st.naDone) return;
+    st.shells = [2, 8];
+    st.acted = true; st.naDone = true;
+    render(); counts(); msg(T.s5.naIon);
+    if(window.Sounds) window.Sounds.playSnap();
+    removeBtn.hidden = true;
+    if(resetBtn) resetBtn.hidden = false;
+    if(switchBtn) switchBtn.hidden = false;
+  });
+
+  if(switchBtn) switchBtn.addEventListener('click', function(){
+    st.mode = 'f';
+    st.shells = ATOMS.f.base.slice();
+    st.acted = false;
+    render(); counts(); msg(T.s5.fStart);
+    switchBtn.hidden = true;
+    if(addBtn) addBtn.hidden = false;
+    if(resetBtn) resetBtn.hidden = true;
+    svg.setAttribute('aria-label', 'ذرّة فلور: نواتها فيها تسعة بروتونات وعشرة نيوترونات، وحولها مستويان للطاقة');
+  });
+
+  if(addBtn) addBtn.addEventListener('click', function(){
+    if(st.mode !== 'f' || st.fDone) return;
+    st.shells = [2, 8];
+    st.acted = true; st.fDone = true;
+    render(); counts(); msg(T.s5.fIon);
+    if(window.Sounds) window.Sounds.playSnap();
+    addBtn.hidden = true;
+    if(resetBtn) resetBtn.hidden = false;
+    bothDone();
+  });
+
+  if(resetBtn) resetBtn.addEventListener('click', function(){
+    var a = ATOMS[st.mode];
+    st.shells = a.base.slice();
+    st.acted = false;
+    render(); counts();
+    msg(st.mode === 'na' ? T.s5.naStart : T.s5.fStart);
+  });
+
+  var predictDone = false;
+  document.querySelectorAll('#s5predictOptions input[type="radio"]').forEach(function(radio){
+    radio.addEventListener('change', function(){
+      if(predictDone) return;
+      predictDone = true;
+      fbNeutral('fb-s5predict', T.s5.predictFb);
+      document.querySelectorAll('#s5predictOptions input[type="radio"]').forEach(function(r){ r.disabled = true; });
+      if(window.Sounds) window.Sounds.playTick();
+      claim('l1-ion-predict', 'PREDICT', 'تنبّأتَ قبل أن تجرّب');
+      show('s5stageStep');
+      render(); counts(); msg(T.s5.naStart);
+    });
+  });
+
+  window.Quiz.practice({
+    'l1-charge-rule':       { xpId: 'l1-charge-rule', xp: 'MCQ', reason: 'ربطتَ عدد الإلكترونات المفقودة بقيمة الشحنة',
+                              correctText: T.s5.chargeRule.correct,  hints: T.s5.chargeRule },
+    'l1-ion-what-changes':  { xpId: 'l1-ion-what-changes', xp: 'MCQ', reason: 'حدّدتَ ما يتغيّر فعلًا عند تكوّن الأيون',
+                              correctText: T.s5.whatChanges.correct, hints: T.s5.whatChanges }
+  }, {
+    onAllSolved: function(){ show('s5cards'); }
+  });
+
+  nuclideCard({
+    id: 'cardMg', p: 12, e: 10, n: 12, charge: true, xpId: 'l1-ion-mg', xp: 'TASK',
+    reason: 'حسبتَ جسيمات أيون المغنيسيوم',
+    method: 'البروتونات 12، والشحنة 2+ تعني فقد إلكترونين فصارت الإلكترونات 10، والنيوترونات = 24 − 12 = 12.',
+    onSolved: function(){ show('cardCl'); }
+  });
+  nuclideCard({
+    id: 'cardCl', p: 17, e: 18, n: 18, charge: true, xpId: 'l1-ion-cl', xp: 'TASK',
+    reason: 'حسبتَ جسيمات أيون الكلوريد',
+    method: 'البروتونات 17، والشحنة −1 تعني كسب إلكترون فصارت الإلكترونات 18، والنيوترونات = 35 − 17 = 18.',
+    onSolved: function(){ show('cardO'); }
+  });
+  nuclideCard({
+    id: 'cardO', p: 8, e: 10, n: 8, charge: true, xpId: 'l1-ion-o', xp: 'TASK',
+    reason: 'حسبتَ جسيمات أيون الأكسيد',
+    method: 'البروتونات 8، والشحنة 2− تعني كسب إلكترونين فصارت الإلكترونات 10، والنيوترونات = 16 − 8 = 8.',
+    onSolved: function(){ show('s5closeStep'); }
+  });
+
+  window.Quiz.short({
+    input: 'atomIonInput', button: 'atomIonBtn', feedback: 'fb-atomIon',
+    modelBtn: 'atomIonModelBtn', model: 'atomIonModel',
+    normalize: 'ar',
+    accept: function(norm){
+      var hasP = norm.indexOf('بروتون') >= 0;
+      var hasE = norm.indexOf('الكترون') >= 0;
+      var diff = /(يختلف|تختلف|مختلف|اختلاف|فرق|يتغير|تتغير|تغير|اقل|اكثر|زاد|نقص)/.test(norm);
+      return hasP && hasE && diff;
+    },
+    hints: [T.s5.atomIonHint1, T.s5.atomIonHint2],
+    modelText: T.s5.atomIonModel,
+    correctText: T.s5.atomIonOk,
+    xpId: 'l1-atom-vs-ion', xp: 'PRODUCE',
+    reason: 'قارنتَ الذرّة بأيونها جسيمًا جسيمًا',
+    modelReason: 'راجعتَ الإجابة النموذجية وقارنتها بإجابتك',
+    onDone: function(){ show('s5done'); }
+  });
+}
+
+/* ============ 9) المحطة 6 — الأوجانيسون ============ */
+function station6(){
+  nuclideCard({
+    id: 'cardOg', p: 118, e: 118, n: 176, xpId: 'l1-og-calc', xp: 'TASK',
+    reason: 'طبّقتَ القاعدة على عنصر صناعي لم تره من قبل',
+    method: 'العدد الذرّي 118 هو البروتونات والإلكترونات، والنيوترونات = 294 − 118 = 176.',
+    onSolved: function(){ show('s6after'); }
+  });
+
+  window.Quiz.practice({
+    'l1-og-295':       { xpId: 'l1-og-295', xp: 'MCQ', reason: 'حسبتَ نيوترونات ذرّة بعدد كتلي مختلف',
+                         correctText: T.s6.og295.correct, hints: T.s6.og295 },
+    'l1-cl-difference':{ xpId: 'l1-cl-difference', xp: 'MCQ', reason: 'ميّزتَ الفرق بين ذرّتين للعنصر نفسه',
+                         correctText: T.s6.clDiff.correct, hints: T.s6.clDiff }
+  }, {
+    onAllSolved: function(){
+      show('s6bonus');
+      show('s6done');
+    }
+  });
+
+  nuclideCard({
+    id: 'cardFe', p: 26, e: 23, n: 30, charge: true, xpId: 'l1-fe-ion', xp: 'BONUS',
+    reason: 'أتممتَ التحدّي الاختياري',
+    okText: T.s6.bonusOk,
+    method: 'البروتونات 26، والشحنة 3+ تعني فقد ثلاثة إلكترونات فصارت الإلكترونات 23، والنيوترونات = 56 − 26 = 30.'
+  });
+}
+
+/* ============ 10) المحطة 7 — التقييم والشهادة ============
+   الشهادة بنيوية لا تذكُّرية: Quiz.evaluate ينادي وحدة الشهادة
+   بنفسه عند تمرير title، ولا يُكتب نداء Certificate.finish هنا. */
+function station7(){
+  var keys9 = window.Quiz.matcher({ paths: [
+    { all: [ ['بروتون', 'نيوترون'],
+             ['نفسه', 'نفس', 'لم يتغير', 'لم تتغير', 'لا يتغير', 'ثابت', 'ثابته', 'كما هي', 'كما هو'] ] },
+    { all: [ ['الكترون'], ['كتله', 'كتلته'],
+             ['ضييله', 'ضييل', 'صغيره', 'صغير', 'مهمله', 'لا تؤثر', 'لا تدخل'] ] }
+  ] });
+  function normE9(s){
+    var n = window.Quiz.normalizeAr(s);
+    return keys9(n, s) ? 'مطابق' : n;
+  }
+  function normE10(s){
+    var d = toWesternDigits(s).replace(/[^0-9]/g, '');
+    return d !== '' ? d : window.Quiz.normalizeAr(s);
+  }
+
+  window.Quiz.evaluate({
+    title: 'ما تركيب الذرّة؟',
+    questions: [
+      { name: 'e1', why: T.eval.e1 },
+      { name: 'e2', why: T.eval.e2 },
+      { name: 'e3', why: T.eval.e3 },
+      { name: 'e4', why: T.eval.e4 },
+      { name: 'e5', why: T.eval.e5 },
+      { name: 'e6', why: T.eval.e6 },
+      { name: 'e7', why: T.eval.e7 },
+      { name: 'e8', why: T.eval.e8 },
+      { name: 'e9',  type: 'text', input: 'e9Input',  button: 'e9Btn',  feedback: 'fb-e9',
+        answer: 'مطابق', normalize: normE9,  why: T.eval.e9why },
+      { name: 'e10', type: 'text', input: 'e10Input', button: 'e10Btn', feedback: 'fb-e10',
+        answer: '20', normalize: normE10, why: T.eval.e10why }
+    ]
+  });
+}
+
+station1();
+station2();
+station3();
+station4();
+station5();
+station6();
+station7();
+
+/* ══════════════════ الانتقال بين المحطات ══════════════════
+   المحطات كلّها في الصفحة منذ التحميل بلا hidden — قاعدة منصّية:
+   ما يحمي تسلسل المفاهيم هو الكشف المتدرّج داخل المحطة لا حجب
+   المحطة كلّها.
+
+   والانتقال بمعالج صريح لا بمرساة الجزء وحدها: المرساة تفشل
+   صامتة على محطة لم تُكشَف بعد. */
+document.querySelectorAll('a.station-next[href^="#station-"]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    var id = a.getAttribute('href').slice(1);
+    var sec = document.getElementById(id);
+    if(!sec) return;
+    sec.hidden = false;
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + id + '"]');
+    if(dot) dot.classList.add('active');
+    if(sec.scrollIntoView){
+      sec.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+    }
+    if(window.Sounds) window.Sounds.playChime();
+  });
+});
+
+/* ══════════════════ الدخول من الخارج بالمرساة ══════════════════
+   يدخل الطالب من زرّ «عودة للدرس» في صفحة مختبر، أو من رابط
+   محفوظ. فتُفتح المحطة المقصودة وما قبلها. */
+window.addEventListener('load', function(){
+  var id = (location.hash || '').replace(/^#/, '');
+  if(!/^station-[A-Za-z0-9_-]+$/.test(id)) return;
+  var target = document.getElementById(id);
+  if(!target || !target.classList.contains('station')) return;
+  var all = Array.prototype.slice.call(document.querySelectorAll('.station'));
+  var idx = all.indexOf(target);
+  if(idx < 0) return;
+  function activate(sec){
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + sec.id + '"]');
+    if(dot) dot.classList.add('active');
+  }
+  all.slice(0, idx).forEach(function(sec){ if(!sec.hidden) activate(sec); });
+  target.hidden = false;
+  activate(target);
+  if(target.scrollIntoView){
+    target.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+  }
+});
+
+})();
+</script>
 </body>
 </html>
