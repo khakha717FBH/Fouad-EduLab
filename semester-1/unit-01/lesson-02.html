@@ -638,17 +638,17 @@
       </div>
 
       <h2 style="margin-top:24px;">🔎 قارن ذرّتين من نفس المجموعة</h2>
-      <p>الليثيوم (Li) والصوديوم (Na) اللذان بنيتهما أعلاه يقعان في نفس المجموعة (1) رغم اختلاف دورتيهما. انظر إلى الرسمين التاليين وعُدّ بنفسك عدد إلكترونات المستوى الأخير (الأبعد عن النواة) في كلّ منهما:</p>
+      <p>الليثيوم (Li) والصوديوم (Na) اللذان بنيتهما أعلاه يقعان في نفس المجموعة (1) رغم اختلاف دورتيهما. انظر إلى الرسمين التاليين وعُدّ بنفسك عدد إلكترونات المستوى الخارجي (الأبعد عن النواة) في كلّ منهما:</p>
       <div class="engage-atoms-row" id="groupPatternAtoms" dir="ltr"></div>
       <div class="builder-confirm-inputs" id="groupPatternInputs" dir="ltr" style="margin-top:14px;">
-        <label class="builder-confirm-field">Li — المستوى الأخير<input type="number" min="0" max="8" class="gp-input" id="gpLi"></label>
-        <label class="builder-confirm-field">Na — المستوى الأخير<input type="number" min="0" max="8" class="gp-input" id="gpNa"></label>
+        <label class="builder-confirm-field">Li — المستوى الخارجي<input type="number" min="0" max="8" class="gp-input" id="gpLi"></label>
+        <label class="builder-confirm-field">Na — المستوى الخارجي<input type="number" min="0" max="8" class="gp-input" id="gpNa"></label>
       </div>
       <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
         <button type="button" class="pill-btn small" onclick="checkGroupPattern()">تحقّق ✓</button>
       </div>
       <p class="fb" id="fb-groupPattern"></p>
-      <p class="note">💡 هذا العدد يُسمّى "إلكترونات المستوى الأخير"، وهو غير "التكافؤ" (مفهوم مختلف ستتعرّف عليه في محطة قادمة، مستخدمًا هذا العدد نفسه).</p>
+      <p class="note">💡 هذا العدد يُسمّى "إلكترونات المستوى الخارجي"، وهو غير "التكافؤ" (مفهوم مختلف ستتعرّف عليه في محطة قادمة، مستخدمًا هذا العدد نفسه).</p>
 
       <h2 style="margin-top:24px;">🔎 قارن ذرّتين من نفس الدورة</h2>
       <p>الصوديوم (Na) الذي بنيته أعلاه والكلور (Cl) يقعان في نفس الدورة (3) رغم اختلاف مجموعتيهما. انظر إلى الرسمين التاليين وعُدّ بنفسك عدد مستويات الطاقة الكلي (لا عدد الإلكترونات) في كلّ منهما:</p>
@@ -662,7 +662,7 @@
       </div>
       <p class="fb" id="fb-periodPattern"></p>
 
-      <p class="reveal-note" id="groupPeriodSynthesis" hidden>🔗 الآن تعرّفتَ إلى نمطين مهمّين في الجدول الدوري:<br>١. عناصر المجموعة الواحدة تشترك في نفس عدد إلكترونات مستوى الطاقة الأخير.<br>٢. عناصر الدورة الواحدة تشترك في نفس عدد مستويات الطاقة.</p>
+      <p class="reveal-note" id="groupPeriodSynthesis" hidden>🔗 الآن تعرّفتَ إلى نمطين مهمّين في الجدول الدوري:<br>١. عناصر المجموعة الواحدة تشترك في نفس عدد إلكترونات مستوى الطاقة الخارجي.<br>٢. عناصر الدورة الواحدة تشترك في نفس عدد مستويات الطاقة.</p>
 
       <h2 style="margin-top:24px;">🎮 طابق كل عنصر بتوزيعه الإلكتروني</h2>
       <p>انقر بطاقة عنصر، ثم انقر التوزيع الذي تراه مطابقًا لها (أو بالترتيب المعاكس). لا حدّ لعدد المحاولات.</p>
@@ -1656,7 +1656,7 @@ function checkGroupPattern(){
   });
   const fb=document.getElementById('fb-groupPattern');
   if(li===correct && na===correct){
-    fb.textContent='صحيح! كلاهما إلكترون واحد في المستوى الأخير — لأنّهما في نفس المجموعة (1)، رغم اختلاف عدد المستويات الكلي بينهما.';
+    fb.textContent='صحيح! كلاهما إلكترون واحد في المستوى الخارجي — لأنّهما في نفس المجموعة (1)، رغم اختلاف عدد المستويات الكلي بينهما.';
     fb.className='fb fb-correct';
     sndSuccess(); claimXP('l2-pattern-group', P('PATTERN'), 'استنتجتَ نمط المجموعة'); markDone('explore3','groupPattern');
     checkGroupPeriodSynthesis();
@@ -1690,7 +1690,7 @@ function checkPeriodPattern(){
   });
   const fb=document.getElementById('fb-periodPattern');
   if(na===correct && cl===correct){
-    fb.textContent='صحيح! كلاهما 3 مستويات طاقة — لأنّهما في نفس الدورة (3)، رغم اختلاف عدد إلكترونات مستواهما الأخير.';
+    fb.textContent='صحيح! كلاهما 3 مستويات طاقة — لأنّهما في نفس الدورة (3)، رغم اختلاف عدد إلكترونات مستواهما الخارجي.';
     fb.className='fb fb-correct';
     sndSuccess(); claimXP('l2-pattern-period', P('PATTERN'), 'استنتجتَ نمط الدورة'); markDone('explore3','periodPattern');
     checkGroupPeriodSynthesis();
@@ -1804,12 +1804,12 @@ function selectMatchCard(btn, sym, type){
    محطة التفسير — تحدّيات الاستقرار
    ================================================================== */
 const CHALLENGES = [
-  {id:'c1', el:'البوتاسيوم (K)', z:19, action:'lose', count:1, sign:'+', hint:'توزيع البوتاسيوم 2,8,8,1 — كم إلكترونًا في مستواه الأخير؟'},
-  {id:'c2', el:'الألومنيوم (Al)', z:13, action:'lose', count:3, sign:'+', hint:'توزيع الألومنيوم 2,8,3 — كم إلكترونًا في مستواه الأخير؟'},
+  {id:'c1', el:'البوتاسيوم (K)', z:19, action:'lose', count:1, sign:'+', hint:'توزيع البوتاسيوم 2,8,8,1 — كم إلكترونًا في مستواه الخارجي؟'},
+  {id:'c2', el:'الألومنيوم (Al)', z:13, action:'lose', count:3, sign:'+', hint:'توزيع الألومنيوم 2,8,3 — كم إلكترونًا في مستواه الخارجي؟'},
   {id:'c3', el:'الفلور (F)', z:9, action:'gain', count:1, sign:'-', hint:'توزيع الفلور 2,7 — كم إلكترونًا ينقصه ليصل إلى توزيع النيون (2,8)؟'}
 ];
 const BONUS_CHALLENGES = [
-  {id:'bonus1', el:'الكالسيوم (Ca)', z:20, action:'lose', count:2, sign:'+', hint:'توزيع الكالسيوم 2,8,8,2 — كم إلكترونًا في مستواه الأخير؟', isBonus:true},
+  {id:'bonus1', el:'الكالسيوم (Ca)', z:20, action:'lose', count:2, sign:'+', hint:'توزيع الكالسيوم 2,8,8,2 — كم إلكترونًا في مستواه الخارجي؟', isBonus:true},
   {id:'bonus2', el:'الأكسجين (O)', z:8, action:'gain', count:2, sign:'-', hint:'توزيع الأكسجين 2,6 — كم إلكترونًا ينقصه ليصل إلى توزيع النيون (2,8)؟', isBonus:true}
 ];
 const ALL_CHALLENGES = CHALLENGES.concat(BONUS_CHALLENGES);
@@ -1891,8 +1891,8 @@ const EQ3_CORRECT = 2;
 const EQ3_FEEDBACK = [
   'غير صحيح — الكالسيوم فلزّ، والفلزّات تفقد الإلكترونات لا تكتسبها. الصحيح: يفقد الكالسيوم إلكترونين ليصل إلى توزيع الأرجون (2,8,8).',
   'غير صحيح — الكلور لافلزّ، واللافلزّات تكتسب الإلكترونات لا تفقدها. الصحيح: يكتسب الكلور إلكترونًا واحدًا ليصل إلى توزيع الأرجون (2,8,8).',
-  'إجابة صحيحة ✓ — الفلور لافلزّ فيكتسب الإلكترونات، ويحتاج إلكترونًا واحدًا بالضبط ليكتمل مستواه الأخير ويصل إلى توزيع النيون (2,8).',
-  'غير صحيح — الاتجاه صحيح (فلزّ يفقد)، لكن العدد غير كافٍ: يحتاج فقد إلكترونين لا واحدًا، لأن مستواه الأخير يحوي إلكترونين.'
+  'إجابة صحيحة ✓ — الفلور لافلزّ فيكتسب الإلكترونات، ويحتاج إلكترونًا واحدًا بالضبط ليكتمل مستواه الخارجي ويصل إلى توزيع النيون (2,8).',
+  'غير صحيح — الاتجاه صحيح (فلزّ يفقد)، لكن العدد غير كافٍ: يحتاج فقد إلكترونين لا واحدًا، لأن مستواه الخارجي يحوي إلكترونين.'
 ];
 function renderEq3(){
   const options = [
@@ -2341,7 +2341,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   });
   document.getElementById('checkBuilderBtn').addEventListener('click', checkBuilderConfirm);
   document.getElementById('resetAtomBtn').addEventListener('click', resetBuilder);
-  renderMC('tq1Wrap', {id:'tq1', q:'X وY يقعان في المجموعة نفسها (15). استنتج من بيانات كلٍّ منهما في الجدول أعلاه: كم إلكترونًا في المستوى الأخير لكلٍّ من X وY معًا؟', options:['2','15','7','5'], correct:3}, 'checkin','tq1');
+  renderMC('tq1Wrap', {id:'tq1', q:'X وY يقعان في المجموعة نفسها (15). استنتج من بيانات كلٍّ منهما في الجدول أعلاه: كم إلكترونًا في المستوى الخارجي لكلٍّ من X وY معًا؟', options:['2','15','7','5'], correct:3}, 'checkin','tq1');
   renderMC('tq2Wrap', {id:'tq2', q:'بالنظر إلى موضع Y في الجدول أعلاه (الدورة 3)، كم عدد مستويات الطاقة في ذرّته؟', options:['3','2','4','1'], correct:0}, 'checkin','tq2');
   renderMC('tq3Wrap', {id:'tq3', q:'أيّ الرموز الثلاثة (X، Y، Z) توزيعه الإلكتروني 2,8,5؟', options:['X','Y','Z'], correct:1}, 'checkin','tq3');
   document.getElementById('explain3Cards').innerHTML = CHALLENGES.map(challengeCardHTML).join('');
