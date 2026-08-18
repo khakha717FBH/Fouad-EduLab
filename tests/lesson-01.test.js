@@ -59,7 +59,8 @@ function buildNucleus(doc){
 function buildLevels(doc){
   const r = ringHits(doc);
   for(let i = 0; i < 2; i++) h.clickNode(r[0]);
-  for(let i = 0; i < 7; i++) h.clickNode(r[1]);
+  h.click(doc, 'addEOuter');                       /* الطريق الثاني يُمشى مرّة */
+  for(let i = 0; i < 6; i++) h.clickNode(ringHits(doc)[1]);
 }
 function chipInto(doc, w, value, slotId){
   const chip = Array.from(doc.querySelectorAll('#s3pool .chip'))
@@ -230,12 +231,40 @@ describe('المحطة 2 — بناء ذرّة الفلور', () => {
     has(h.text(doc, 's2msg'), 'يسع إلكترونين');
   });
 
+  it('زرّا المستويين يظهران مع مرحلة الإلكترونات لا قبلها', async () => {
+    const { doc } = await s.boot();
+    ok(h.visible(doc, 's2eBtns'), 'صفّ أزرار الإلكترون لم يُكشف بعد اكتمال النواة');
+    no(h.visible(doc, 's2nucleusBtns'), 'زرّا النواة باقيان بعد اكتمالها');
+    ok(doc.getElementById('addEInner').disabled, 'زرّ المستوى الداخلي لم يتعطّل وهو ممتلئ');
+    no(doc.getElementById('addEOuter').disabled, 'زرّ المستوى الخارجي معطّل وفيه متّسع');
+  });
+
+  it('الزرّ يضع الإلكترون في مستواه كما يفعل النقر', async () => {
+    const { doc } = await s.boot();
+    h.click(doc, 'addEOuter');
+    eq(doc.querySelectorAll('#atomStage circle.e').length, 3, 'الزرّ لم يضع إلكترونًا');
+    eq(doc.querySelectorAll('#atomStage circle.e[data-level="1"]').length, 1, 'وُضع في المستوى الخطأ');
+  });
+
+  it('التعليمة تظهر لحظة اكتمال النواة لا بعد أوّل إلكترون', async () => {
+    const { doc } = await h.loadLesson(FILE, {});
+    buildNucleus(doc);
+    has(h.text(doc, 's2msg'), 'الزرّين', 'الطالب لا يعرف ما المطلوب منه عند اكتمال النواة');
+  });
+
+  it('أرقام النيون معروضة بإزاء أرقام الفلور فتصحّ المقارنة', async () => {
+    const { doc } = await s.boot();
+    const t = doc.getElementById('s2levelsStep').textContent.replace(/\s+/g, ' ');
+    has(t, 'ذرّة النيون: 10 بروتونات · 10 نيوترونات · 10 إلكترونات');
+  });
+
   it('اكتمال التسعة يمنح النقاط ويكشف التسمية والأسئلة', async () => {
     const { doc, w } = await s.boot();
     const r = ringHits(doc);
-    for(let i = 0; i < 7; i++) h.clickNode(r[1]);
+    for(let i = 0; i < 6; i++) h.clickNode(r[1]);
     eq(doc.querySelectorAll('#atomStage circle.e').length, 9);
     eq(w.XP.total(), 18, 'نقاط التوزيع الإلكتروني');
+    no(h.visible(doc, 's2eBtns'), 'الزرّان باقيان بعد اكتمال البناء');
     ok(doc.querySelectorAll('#atomStage text.tag').length >= 2, 'التسمية لم تلحق البناء');
     ok(h.visible(doc, 's2questions'), 'أسئلة المحطة لم تُكشَف');
   });
@@ -247,8 +276,9 @@ describe('المحطة 2 — بناء ذرّة الفلور', () => {
 
   it('أسئلة ما بعد البناء تمنح نقاطها وتكشف الانتقال', async () => {
     const { doc, w } = await s.boot();
-    ['l1-where-e', 'l1-where-pn', 'l1-why-model'].forEach(n => h.choose(doc, n, 'correct'));
-    eq(w.XP.total(), 33, 'رصيد المحطة 2');
+    ['l1-where-e', 'l1-where-pn', 'l1-neutron-clue', 'l1-why-model']
+      .forEach(n => h.choose(doc, n, 'correct'));
+    eq(w.XP.total(), 38, 'رصيد المحطة 2');
     ok(h.visible(doc, 's2done'));
   });
 });
@@ -290,10 +320,17 @@ describe('المحطة 3 — الرقاقات وإغلاق حلقة التنبّ
     ok(h.visible(doc, 's3after'), 'ما بعد الجدول لم يُكشَف');
   });
 
-  it('بطاقة النيوكليون تُعرَّف بعد بناء النواة لا قبله', async () => {
+  it('بطاقة النيوكليونات بالجمع ولا تجعل الجسيم الواحد نوعين', async () => {
     const { doc } = await s.boot();
-    const line = doc.getElementById('s3after').textContent;
-    has(line, 'النيوكليون');
+    const line = doc.getElementById('s3after').textContent.replace(/\s+/g, ' ');
+    has(line, 'النيوكليونات');
+    has(line, 'البروتونات والنيوترونات');
+    no(/بروتون أو نيوترون/.test(line), 'صياغة «أو» تصف مفردًا في موضع الجمع');
+  });
+
+  it('تفسير الكتلة يشير إلى سطر البطاقة لا إلى عمود لا وجود له', async () => {
+    has(BODY, 'سطر الكتلة');
+    no(/عمود الكتلة/.test(BODY), 'البطاقات بطاقات لا جدول ذو أعمدة');
   });
 
   it('سؤال إغلاق الحلقة يشير إلى تنبّؤ المحطة 1 ويمنح نقاطه', async () => {
@@ -318,6 +355,18 @@ describe('المحطة 4 — البطاقات ومخرج النجاة', () => {
     h.choose(doc, 'l1-symbol-read', 'correct');
     ok(h.visible(doc, 's4after'));
     no(h.visible(doc, 'cardK'), 'البطاقات الثلاث ظاهرة معًا — وسقف الكثافة أربعة عناصر');
+  });
+
+  it('اصطلاح الرمز مرسوم برمز عامّ لا برمز عنصر بعينه', async () => {
+    const { doc } = await s.boot();
+    const fig = doc.querySelector('#s4after svg.sym-fig');
+    ok(fig, 'رسم اصطلاح الرمز غائب');
+    const t = fig.textContent.replace(/\s+/g, ' ');
+    has(t, 'X');
+    has(t, 'العدد الكتلي');
+    has(t, 'العدد الذرّي');
+    no(/Na/.test(t), 'الرسم يستعمل رمز الصوديوم فيبدو اصطلاحًا خاصًّا بذرّة واحدة');
+    ok(doc.querySelectorAll('#s4after .fact-card').length >= 2, 'البطاقتان أُسقطتا مع الرسم');
   });
 
   it('إجابة خاطئة تُعطي تلميحًا يخاطب الخانة الخاطئة لا السؤال', async () => {
@@ -388,6 +437,20 @@ describe('المحطة 5 — ذرّة تفقد وذرّة تكسب', () => {
     eq(doc.querySelectorAll('#ionStage circle.p').length, 11, 'تغيّر عدد البروتونات — وهو الخطأ الذي يقيسه السؤال');
     eq(doc.querySelectorAll('#ionStage circle.n').length, 12);
     has(h.text(doc, 's5count'), '+1');
+    const badge = doc.querySelector('#ionStage text.charge-badge');
+    ok(badge, 'شحنة الأيون غير معروضة على المسرح');
+    eq(badge.textContent, '+1');
+    ok(badge.getAttribute('class').indexOf('pos') > -1, 'الشارة بلا دلالة الإشارة');
+  });
+
+  it('الذرّة المتعادلة بلا شارة، والشارة تزول بإعادة الذرّة', async () => {
+    const { doc } = await h.loadLesson(FILE, {});
+    h.choose(doc, 'l1ionPredict', 'p');
+    eq(doc.querySelectorAll('#ionStage text.charge-badge').length, 0, 'شارة على ذرّة متعادلة');
+    h.click(doc, 'ionRemove');
+    eq(doc.querySelectorAll('#ionStage text.charge-badge').length, 1);
+    h.click(doc, 'ionReset');
+    eq(doc.querySelectorAll('#ionStage text.charge-badge').length, 0, 'الشارة بقيت بعد إعادة الذرّة');
   });
 
   it('الانتقال إلى الفلور ثمّ كسب إلكترون يُظهر شحنة سالبة ويمنح النقاط', async () => {
@@ -406,6 +469,8 @@ describe('المحطة 5 — ذرّة تفقد وذرّة تكسب', () => {
     const { doc, w } = await s.boot();
     h.choose(doc, 'l1-charge-rule', 'correct');
     h.choose(doc, 'l1-ion-what-changes', 'correct');
+    no(h.visible(doc, 's5cards'), 'البطاقات سبقت إغلاق حلقة الهوية');
+    h.choose(doc, 'l1-identity', 'correct');
     ok(h.visible(doc, 's5cards'));
     fillCard(doc, 'cardMg', 12, 12, 12);
     has(h.text(doc, 'fb-cardMg'), 'الشحنة الموجبة تعني فقد');
@@ -413,7 +478,7 @@ describe('المحطة 5 — ذرّة تفقد وذرّة تكسب', () => {
     ok(h.visible(doc, 'cardCl'));
     fillCard(doc, 'cardCl', 17, 18, 18);
     fillCard(doc, 'cardO',  8, 10, 8);
-    eq(w.XP.total(), 53);
+    eq(w.XP.total(), 58);
     ok(h.visible(doc, 's5closeStep'));
   });
 
@@ -422,7 +487,7 @@ describe('المحطة 5 — ذرّة تفقد وذرّة تكسب', () => {
     h.type(doc, 'atomIonInput', 'البروتونات والنيوترونات نفسها ويختلف عدد الإلكترونات');
     h.click(doc, 'atomIonBtn');
     has(h.text(doc, 'fb-atomIon'), '✓');
-    eq(w.XP.total(), 61, 'رصيد المحطة 5');
+    eq(w.XP.total(), 66, 'رصيد المحطة 5');
     ok(h.visible(doc, 's5done'));
   });
 });
@@ -541,7 +606,8 @@ describe('الرصيد ومنع الكسب المزدوج', () => {
     h.choose(doc, 'l1predict', 'parts');
     buildNucleus(doc);
     buildLevels(doc);
-    ['l1-where-e', 'l1-where-pn', 'l1-why-model'].forEach(n => h.choose(doc, n, 'correct'));
+    ['l1-where-e', 'l1-where-pn', 'l1-neutron-clue', 'l1-why-model']
+      .forEach(n => h.choose(doc, n, 'correct'));
     h.choose(doc, 'l1massPredict', 'pn');
     chipInto(doc, w, '+1', 's3-p-charge');
     chipInto(doc, w, '0',  's3-n-charge');
@@ -565,6 +631,7 @@ describe('الرصيد ومنع الكسب المزدوج', () => {
     h.click(doc, 'ionAdd');
     h.choose(doc, 'l1-charge-rule', 'correct');
     h.choose(doc, 'l1-ion-what-changes', 'correct');
+    h.choose(doc, 'l1-identity', 'correct');
     fillCard(doc, 'cardMg', 12, 10, 12);
     fillCard(doc, 'cardCl', 17, 18, 18);
     fillCard(doc, 'cardO',  8, 10, 8);
@@ -576,22 +643,22 @@ describe('الرصيد ومنع الكسب المزدوج', () => {
     return s;
   }
 
-  it('الرصيد الأساسي 215 نقطة، والتحدّي الاختياري ثمانٍ فوقها', async () => {
+  it('الرصيد الأساسي 225 نقطة، والتحدّي الاختياري ثمانٍ فوقها', async () => {
     const store = {};
     const s = await walkAll(store);
-    eq(s.w.XP.total(), 215, 'الرصيد الأساسي');
+    eq(s.w.XP.total(), 225, 'الرصيد الأساسي');
     fillCard(s.doc, 'cardFe', 26, 23, 30);
-    eq(s.w.XP.total(), 223, 'الرصيد مع التحدّي');
+    eq(s.w.XP.total(), 233, 'الرصيد مع التحدّي');
   });
 
   it('إعادة تحميل الصفحة لا تُعيد منح ما كُسب', async () => {
     const store = {};
     await walkAll(store);
     const again = await h.loadLesson(FILE, { storage: store });
-    eq(again.w.XP.total(), 215, 'الرصيد بعد إعادة التحميل');
+    eq(again.w.XP.total(), 225, 'الرصيد بعد إعادة التحميل');
     h.choose(again.doc, 'l1predict', 'parts');
     buildNucleus(again.doc);
-    eq(again.w.XP.total(), 215, 'كسبٌ مزدوج بعد إعادة التحميل');
+    eq(again.w.XP.total(), 225, 'كسبٌ مزدوج بعد إعادة التحميل');
   });
 });
 
