@@ -613,8 +613,8 @@ const api = { describe, it, eq, ok, no, has };
 guards.describeMcqRules(api, guardDoc, {
     evalSpread:   { expect: 8, minDistinct: 4, maxAtOne: 2 },
     lessonSpread: { minDistinct: 4 },
-    /* مخالفة قائمة — تُصلَح في جلسة مراجعة الوحدة 01. */
-    lengthGap:    { known: { 'whereElectron': 13 } }
+    /* لا مخالفة طول قائمة (18 أغسطس 2026): whereElectron أُصلح
+       بإطالة مشتّتاته الثلاثة، ويسري عليه الحدّ العامّ الآن. */
   });
 
 run();
