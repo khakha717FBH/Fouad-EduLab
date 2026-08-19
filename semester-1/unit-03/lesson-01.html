@@ -103,6 +103,28 @@
      كل قاعدة مصدَّرة بمعرّف مسرحها لا بالصنف وحده: مسرحان بالبنية
      نفسها في صفحة واحدة يسرق أحدهما أنماط الآخر بلا خطأ ظاهر. */
 
+  /* ── أصناف تُنسخ يدويًّا في كل درس منذ الوحدة 01: ليست في shared/
+     رغم أنّ عشرة دروس تستعملها. غيابها هنا أوقع الحقول على تنسيق
+     المتصفّح الافتراضي. تُنسخ حرفيًّا كما في الوحدة 02 حفاظًا على
+     تطابق المظهر، وتوحيدها في template.css بند مؤجَّل. ── */
+  .explore-answer-row{ display:flex; gap:10px; flex-wrap:wrap; }
+  .explore-input{
+    flex:1 1 140px; min-width:100px; background:rgba(255,255,255,.03);
+    border:1px solid var(--border); border-radius:999px; padding:11px 20px;
+    color:var(--ink); font-family:'Tajawal', sans-serif; font-size:15px; text-align:center;
+  }
+  .explore-input::placeholder{ color:var(--ink-dim); opacity:.55; font-size:.86em; }
+  .explore-input:focus{ outline:none; border-color:var(--turquoise); box-shadow:0 0 0 3px var(--turquoise-faint); }
+  .explore-input:disabled{ opacity:.7; }
+  .name-gate{
+    margin-top:20px; background:rgba(255,255,255,.03); border:1px solid rgba(20,200,168,.2);
+    border-radius:16px; padding:16px 18px;
+  }
+  .fact-line{
+    max-width:920px; margin:14px auto 0; border:1px dashed var(--turquoise-soft); border-radius:14px;
+    padding:12px 16px; font-size:.92rem; line-height:1.9; background:rgba(20,200,168,.05);
+  }
+
   /* ── مشترك بين مسارح الوحدة 03 ── */
   .optics-stage{
     width:100%; height:auto; display:block; margin:0 auto;
@@ -115,10 +137,31 @@
   .optics-stage .hatch{ stroke:var(--ink-dim); stroke-width:2; stroke-linecap:round; opacity:.75; }
   .optics-stage .ray{ stroke-width:2.4; stroke-linecap:round; fill:none; }
   .optics-stage .stage-note{ fill:var(--ink); font-family:'Tajawal',sans-serif; font-size:13px; }
+  .optics-stage .panel-label{ fill:var(--ink-dim); font-family:'Tajawal',sans-serif; font-size:13px; text-anchor:middle; }
+
+  /* ── اصطلاح الشعاع: الساقط عريض فاتح، والمنعكس أنحف أعمق فوقه.
+     لا إزاحة رأسية ولا تقطيع — التقطيع محجوز للامتدادات التقديرية
+     في درس 02. ورأس السهم بلون خطّه دائمًا. ── */
+  .optics-stage .beam{ stroke:#ffe9b0; stroke-width:3.4; stroke-linecap:round; fill:none; }
+  .optics-stage .beam-out{ stroke:#e8962a; stroke-width:1.7; stroke-linecap:round; fill:none; }
+  .optics-stage .arrow-in{ stroke:#ffe9b0; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; fill:none; }
+  .optics-stage .arrow-out{ stroke:#e8962a; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; fill:none; }
+  .optics-stage .lamp-body{ fill:#ffd27a; stroke:#e0a83c; stroke-width:1.5; }
+  .optics-stage .lightbox{ fill:rgba(20,200,168,.14); stroke:var(--turquoise); stroke-width:2; }
+  .optics-stage .focal-brace{ stroke:var(--coral); stroke-width:2; fill:none; }
+  .optics-stage .focal-text{ fill:var(--coral); font-family:'Cairo',sans-serif; font-weight:700; font-size:13px; text-anchor:middle; }
+
+  /* ── حالة الزرّ النشط — محلّية بهذا الدرس عمدًا.
+     identity.css لا يعرّفها، ولمسه يستلزم إعادة اختبار كل درس سابق.
+     يُنظر في نقلها إلى المشترك بعد أن تستقرّ هنا. ── */
+  .btn.is-active{
+    background:var(--turquoise); color:var(--navy-darker);
+    box-shadow:0 0 14px var(--turquoise-soft);
+  }
 
   /* ── المحطة 1 — الملعقة ── */
   #spoonStage .spoon-metal{ fill:url(#spoonSheen1); stroke:var(--turquoise-soft); stroke-width:2; }
-  #spoonStage .spoon-face{ fill:rgba(20,200,168,.10); stroke:var(--turquoise); stroke-width:2.5; }
+  #spoonStage .spoon-face{ fill:rgba(20,200,168,.07); stroke:var(--turquoise-soft); stroke-width:1.4; }
   #spoonStage .flame{ fill:#ffb347; }
   #spoonStage .wax{ fill:#f2e9d8; }
   #spoonStage .face-caption{ fill:var(--turquoise); font-family:'Cairo',sans-serif; font-weight:700; font-size:14px; }
@@ -126,22 +169,38 @@
   #s1FaceRow{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:14px; }
 
   /* ── المحطة 2 — أوجه المرايا ── */
-  #facesStage .hit{ fill:transparent; cursor:pointer; touch-action:none; }
+  /* حلقة تركيز المتصفّح تُكتم عند النقر بالفأرة (كانت تُرسم بيضاء وتبقى)،
+     وتبقى حلقتنا لمن يتنقّل بلوحة المفاتيح. */
+  #facesStage .hit{ fill:transparent; cursor:pointer; touch-action:none; outline:none; transition:fill .45s ease; }
   #facesStage .hit:focus-visible{ outline:2px solid var(--coral); outline-offset:2px; }
-  #facesStage .panel-label{ fill:var(--ink-dim); font-family:'Tajawal',sans-serif; font-size:13px; text-anchor:middle; }
-  #facesStage .lamp-body{ fill:#ffd27a; stroke:#e0a83c; stroke-width:1.5; }
+  #facesStage .hit.is-flash{ fill:rgba(20,200,168,.22); }
+  #facesStage .panel-bg{ fill:transparent; cursor:pointer; touch-action:none; }
+  @media (prefers-reduced-motion: reduce){ #facesStage .hit{ transition:none; } }
   #facesStage .done-tick{ stroke:var(--turquoise); stroke-width:3; fill:none; stroke-linecap:round; }
   #sphereStage .shell{ fill:none; stroke:var(--turquoise); stroke-width:3.5; }
   #sphereStage .shell-dim{ fill:none; stroke:var(--ink-dim); stroke-width:2; opacity:.45; }
   #sphereStage .piece-label{ fill:var(--turquoise); font-family:'Cairo',sans-serif; font-weight:700; font-size:14px; text-anchor:middle; }
 
+  /* ── المحطة 4 — الشعاع الواحد والعمودي ──
+     العمودي منقّط بنقط قصيرة (3 4) ليتميّز عن المحور الرئيس (7 6):
+     خطّان متقطّعان في مشهد واحد يجب أن يختلف نبضهما، لا لونهما فقط. */
+  .optics-stage .normal-line{ stroke:var(--ink); stroke-width:1.6; stroke-dasharray:3 4; opacity:.9; fill:none; }
+  #s4StageBox .slider-row{ display:flex; align-items:center; gap:12px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
+  #s4StageBox .slider-row label{ color:var(--ink-dim); font-family:'Tajawal',sans-serif; font-size:14px; }
+  #s4StageBox input[type=range]{ width:min(360px,70%); accent-color:var(--turquoise); cursor:pointer; }
+  .btn.demoted{ opacity:.45; cursor:not-allowed; }
+  /* جدول القراءات من اليسار لليمين: الأرقام تُقرأ في عمود واحد متّسق */
+  .read-table{ width:100%; max-width:430px; margin:14px auto 0; border-collapse:collapse;
+    font-family:'Tajawal',sans-serif; font-size:14px; }
+  .read-table th, .read-table td{ border:1px solid var(--border); padding:8px 10px; text-align:center; color:var(--ink); }
+  .read-table th{ color:var(--turquoise); font-weight:700; font-size:13px; }
+  .read-table td.pending{ color:var(--ink-dim); }
+
   /* ── المحطة 3 — الحزمة الثلاثية ── */
-  #beamStage .beam{ stroke:url(#beamGrad3); stroke-width:2.6; stroke-linecap:round; fill:none; }
-  #beamStage .beam-out{ stroke:#ffd27a; stroke-width:2.6; stroke-linecap:round; fill:none; }
-  #beamStage .lightbox{ fill:rgba(20,200,168,.14); stroke:var(--turquoise); stroke-width:2; }
-  #beamStage .focal-brace{ stroke:var(--coral); stroke-width:2; fill:none; }
-  #beamStage .focal-text{ fill:var(--coral); font-family:'Cairo',sans-serif; font-weight:700; font-size:13px; text-anchor:middle; }
   #s3MirrorRow{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:14px 0 6px; }
+  /* صورة ثابتة مرجعية فوق سؤال البعد البؤري: السؤال يسأل عن مشهد
+     يجب أن يكون أمام العين، لا في الذاكرة. */
+  #beamStill{ max-width:470px; margin:0 auto 14px; }
 
   .mirror-btn[disabled], #s1FaceRow .btn[disabled]{ opacity:.4; cursor:not-allowed; }
 </style>
@@ -221,7 +280,7 @@
   <section class="station" id="station-2">
     <div class="station-label">المحطة الثانية</div>
     <h2>ما أشكال المرايا؟</h2>
-    <p class="station-tagline">ثلاثة مقاطع لمرايا منظورة من الجانب، ومصباح على يسار كلٍّ منها. حدّد في كلٍّ منها الجانب الذي يعكس الضوء.</p>
+    <p class="station-tagline">ثلاثة مقاطع لمرايا منظورة من الجانب، ومصباح على يسار كلٍّ منها. <b>انقر على أحد جانبَي كلّ مرآة</b>: أيّهما يعكس الضوء؟</p>
 
     <svg class="optics-stage" id="facesStage" viewBox="0 0 660 260" role="img" aria-label="ثلاثة مقاطع جانبية لمرايا، ومصباح على يسار كلٍّ منها"></svg>
     <p class="explore-feedback" id="fb-s2Faces" hidden></p>
@@ -320,6 +379,7 @@
     <div class="facts-grid" id="s3Facts" hidden></div>
 
     <div class="explore-step" id="s3FocalBox" hidden>
+      <svg class="optics-stage" id="beamStill" viewBox="0 0 660 380" role="img" aria-label="مشهد ثابت للمرآة المقعّرة بعد تشغيل الضوء"></svg>
       <p class="explore-q">في مشهد المرآة المقعّرة الذي رأيته، أيّ مسافة هي البعد البؤري؟</p>
       <div class="quiz-options" data-q="u3l1-focal-name">
         <label class="quiz-option"><input type="radio" name="u3l1-focal-name" value="w1">المسافة بين صندوق الضوء وسطح المرآة العاكس.</label>
@@ -348,12 +408,66 @@
     </div>
   </section>
 
-  <!-- ═════════════════════ محطة 4 — Explain ═════════════════════
-       ⚠ لم تُبنَ بعد — جلسة التنفيذ الثانية. المواصفة §4/المحطة 4 و§5.4. -->
+  <!-- ═════════════════════ محطة 4 — Explain ═════════════════════ -->
   <section class="station" id="station-4">
     <div class="station-label">المحطة الرابعة</div>
     <h2>القانون واحد… فما الذي تغيّر؟</h2>
     <p class="station-tagline">شعاع واحد، ومنزلق يحرّك نقطة سقوطه على المرآة. راقب العمودي والزاويتين.</p>
+
+    <!-- الاصطلاح يُفهَم قبل أن يُستعمل: المسرح لا يظهر قبل حسم هذا السؤال -->
+    <div class="explore-step" id="s4NormalBox">
+      <p class="explore-q">زاوية السقوط وزاوية الانعكاس تُقاسان بالنسبة إلى…</p>
+      <div class="quiz-options" data-q="u3l1-normal-mcq">
+        <label class="quiz-option"><input type="radio" name="u3l1-normal-mcq" value="w1">سطح المرآة نفسه عند موضع سقوط الشعاع.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-normal-mcq" value="w2">المحور الرئيس المارّ بمنتصف سطح المرآة.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-normal-mcq" value="w3">حافّة المرآة التي ينتهي عندها سطحها العاكس.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-normal-mcq" value="correct">العمودي المُقام على السطح عند نقطة السقوط.</label>
+      </div>
+      <p class="explore-feedback" id="fb-u3l1-normal-mcq" hidden></p>
+    </div>
+
+    <div id="s4StageBox" hidden>
+      <svg class="optics-stage" id="normalStage" viewBox="0 0 660 380" role="img" aria-label="شعاع واحد يسقط على مرآة، والعمودي مرسوم عند نقطة السقوط"></svg>
+      <div class="slider-row">
+        <label for="s4Slider">حرّك نقطة السقوط</label>
+        <input type="range" id="s4Slider" min="-100" max="100" step="1" value="0"
+               aria-label="موضع نقطة سقوط الشعاع على المرآة">
+      </div>
+      <p class="explore-feedback" id="fb-s4Stage" hidden></p>
+
+      <div id="s4BridgeRow" hidden style="text-align:center;margin-top:16px;">
+        <button type="button" class="btn" id="s4BridgeBtn">الآن جرّبها على مرآة مقعّرة</button>
+      </div>
+    </div>
+
+    <div class="explore-step" id="s4TaskBox" hidden>
+      <p class="explore-q">سجّل ثلاث قراءات عند ثلاث نقاط مختلفة على المرآة المقعّرة.</p>
+      <table class="read-table" id="s4Table" dir="ltr">
+        <thead><tr><th>#</th><th>زاوية السقوط</th><th>زاوية الانعكاس</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td class="pending">—</td><td class="pending">—</td></tr>
+          <tr><td>2</td><td class="pending">—</td><td class="pending">—</td></tr>
+          <tr><td>3</td><td class="pending">—</td><td class="pending">—</td></tr>
+        </tbody>
+      </table>
+      <div style="text-align:center;margin-top:12px;">
+        <button type="button" class="btn" id="s4RecordBtn">سجّل القراءة</button>
+      </div>
+      <p class="explore-feedback" id="fb-u3l1-measure-task" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s4WhyBox" hidden>
+      <p class="explore-q">الزاويتان متساويتان عند كل نقطة، وهذا لم يتغيّر. فما الذي تغيّر إذن حين نقلتَ نقطة السقوط على المرآة؟ اذكر الشيء وكيف تغيّر.</p>
+      <div class="explore-answer-row">
+        <input type="text" class="explore-input" id="s4WhyInput" placeholder="اكتب إجابتك" autocomplete="off">
+        <button type="button" class="btn" id="s4WhyBtn">سلّم الإجابة</button>
+      </div>
+      <p class="explore-feedback" id="fb-u3l1-why-converge" hidden></p>
+      <button type="button" class="link-btn" id="s4WhyModelBtn" hidden>أرِني الإجابة النموذجية</button>
+      <p class="name-card" id="s4WhyModel" hidden></p>
+    </div>
+
+    <p class="name-card" id="s4FactCard" hidden><b>العمودي:</b> خطّ يخرج من نقطة سقوط الشعاع، ويصنع زاوية قائمة مع سطح المرآة. وعلى السطح المنحني يختلف اتّجاهه من نقطة إلى أخرى.</p>
 
     <div class="station-handoff" id="s4done" hidden>
       <a href="#station-5" class="station-next">كيف تبدو الصورة؟ ←</a>
@@ -443,8 +557,10 @@ var OPT = (function(){
     convex:  { cx:720, cy:180, R:260, sign: 1, p0x:460 },
     flat:    { flat:true, x:460 }
   };
+  /* المستوية تقبل محورًا خاصًّا بها (m.cy) لتصلح لمسارح لا محور لها 180 */
+  function base(m){ return (typeof m.cy === 'number') ? m.cy : AXIS; }
   function point(m, d){
-    if(m.flat) return { x:m.x, y:AXIS + d };
+    if(m.flat) return { x:m.x, y:base(m) + d };
     var h = Math.sqrt(m.R*m.R - d*d);
     return { x:m.cx - m.sign*h, y:m.cy + d };
   }
@@ -479,7 +595,7 @@ var OPT = (function(){
   /* مسار قوس المرآة بين d = −half و d = +half */
   function arcPath(m, half){
     if(m.flat){
-      return 'M ' + m.x + ' ' + (AXIS - half) + ' L ' + m.x + ' ' + (AXIS + half);
+      return 'M ' + m.x + ' ' + (base(m) - half) + ' L ' + m.x + ' ' + (base(m) + half);
     }
     var a = point(m, -half), b = point(m, half);
     var sweep = m.sign < 0 ? 1 : 0;
@@ -497,6 +613,25 @@ var OPT = (function(){
     }
     return out;
   }
+  /* رأس سهم مفتوح عند نقطة، باتّجاه v. يُرسم مسارًا لا marker:
+     لون الرأس يجب أن يطابق لون خطّه دائمًا، والمسار يرث الصنف. */
+  function arrowPath(P, v, size){
+    var a = { x:-v.x, y:-v.y }, c = Math.cos(0.44), s = Math.sin(0.44);
+    var w1 = { x:a.x*c - a.y*s, y:a.x*s + a.y*c };
+    var w2 = { x:a.x*c + a.y*s, y:-a.x*s + a.y*c };
+    return 'M ' + (P.x + w1.x*size).toFixed(2) + ' ' + (P.y + w1.y*size).toFixed(2) +
+           ' L ' + P.x.toFixed(2) + ' ' + P.y.toFixed(2) +
+           ' L ' + (P.x + w2.x*size).toFixed(2) + ' ' + (P.y + w2.y*size).toFixed(2);
+  }
+  /* أطول طول يبقى عنده الشعاع داخل إطار المسرح — لا شيء يغادر المشهد */
+  function clampT(P, v, box, tMax){
+    var t = tMax;
+    if(v.x >  1e-9) t = Math.min(t, (box.x2 - P.x)/v.x);
+    if(v.x < -1e-9) t = Math.min(t, (box.x1 - P.x)/v.x);
+    if(v.y >  1e-9) t = Math.min(t, (box.y2 - P.y)/v.y);
+    if(v.y < -1e-9) t = Math.min(t, (box.y1 - P.y)/v.y);
+    return t > 0 ? t : 0;
+  }
   function svg(tag, attrs){
     var e = document.createElementNS(NS, tag), k;
     for(k in attrs){ if(attrs[k] !== null && attrs[k] !== undefined) e.setAttribute(k, attrs[k]); }
@@ -505,7 +640,7 @@ var OPT = (function(){
   return {
     AXIS:AXIS, MIRRORS:MIRRORS, point:point, normal:normal, unit:unit,
     reflect:reflect, incidence:incidence, between:between, axisHit:axisHit,
-    arcPath:arcPath, hatchMarks:hatchMarks, svg:svg
+    arcPath:arcPath, hatchMarks:hatchMarks, arrowPath:arrowPath, clampT:clampT, svg:svg
   };
 })();
 /* === نهاية عدّة المسرح الضوئي === */
@@ -566,8 +701,26 @@ var T = {
       w1: 'عد إلى المرآة المستوية: هل تجمّعت أشعتها؟',
       w2: 'لم نغيّر شدّة الضوء في المشاهد الثلاثة — غيّرنا المرآة وحدها.',
       w3: 'راجع المشهدين: أيّهما التقت أشعته في نقطة؟'
+    }
+  },
+  s4: {
+    normal: {
+      correct: '✓ صحيح! الزاويتان تُقاسان من العمودي، لا من السطح.',
+      w1: 'هذا أشيع خطأ في هذا الدرس. القياس من السطح يعطي زاوية مكمّلة لا الزاوية المقصودة.',
+      w2: 'المحور الرئيس خطّ واحد للمرآة كلّها. والزاويتان تُقاسان عند نقطة السقوط وحدها.',
+      w3: 'الحافّة نهاية السطح لا مرجعًا للقياس. ابحث عن مستقيم يقوم على السطح نفسه.'
     },
-    flatNote: 'الأشعة تعود في مساراتها نفسها — وأُزيحت قليلًا في الرسم لتراها.'
+    task: 'حرّك المنزلق إلى ثلاثة مواضع مختلفة على الأقلّ، وراقب في كل موضع: الخطّ المنقّط والرقمين.',
+    obsFlat: 'عند كل نقطة جرّبتها: العمودي يبقى بالاتّجاه نفسه، والزاويتان متساويتان.',
+    obsConcave: 'الزاويتان ما زالتا متساويتين — لكن انظر إلى العمودي وهو ينتقل معك.',
+    sameSpot: 'هذه القراءة عند النقطة نفسها تقريبًا. حرّك المنزلق إلى نقطة أخرى ثمّ سجّل.',
+    recorded: 'سجّلتَ قراءة. بقي ',
+    taskDone: 'ثلاث قراءات عند ثلاث نقاط: الزاويتان متساويتان في كلّ صفّ.',
+    whyHint1: 'قانون الانعكاس لم يتغيّر. فانظر إلى الخطّ المنقّط: هل بقي كما هو حين حرّكت النقطة؟',
+    whyHint2: 'استعمل كلمة «العمودي» في إجابتك، وقل ما الذي طرأ عليه من نقطة إلى أخرى.',
+    whyModel: 'اتّجاه العمودي. فالمرآة منحنية، فيميل العمودي ميلًا مختلفًا عند كل نقطة — ولذلك ينعكس كل شعاع في اتّجاه مختلف، فتلتقي الأشعة.',
+    whyCorrect: '✓ صحيح! القانون واحد، والذي تغيّر هو اتّجاه العمودي عند كل نقطة.',
+    normalLegend: 'الخطّ المنقّط الرفيع هو العمودي عند نقطة السقوط.'
   }
 };
 
@@ -586,31 +739,33 @@ function station1(){
   grad.appendChild(S('stop', { offset:'100%', 'stop-color':'#c6dcd8' }));
   defs.appendChild(grad);
   var clip = S('clipPath', { id:'spoonBowlClip1' });
-  clip.appendChild(S('ellipse', { cx:400, cy:150, rx:96, ry:76 }));
+  clip.appendChild(S('ellipse', { cx:400, cy:148, rx:60, ry:84 }));
   defs.appendChild(clip);
   stage.appendChild(defs);
 
-  /* الشمعة الحقيقية — قريبة من الملعقة */
-  function candle(g, cx, cy, scale, dim){
+  /* الشمعة الحقيقية والصورة تُرسمان بالدالّة نفسها وبالألوان نفسها:
+     لا شفافية على الصورة. لو نفذ لون المعدن من خلفها لبدا الفرق لونًا،
+     وأحد مشتّتات سؤال التنبّؤ هو "الفرق بينهما في اللون وحده". */
+  function candle(g, cx, cy, scale){
     var w = 22*scale, h = 62*scale;
-    g.appendChild(S('rect', { x:cx-w/2, y:cy-h/2, width:w, height:h, rx:4*scale,
-      'class':'wax', opacity: dim ? .85 : 1 }));
+    g.appendChild(S('rect', { x:cx-w/2, y:cy-h/2, width:w, height:h, rx:4*scale, 'class':'wax' }));
     g.appendChild(S('ellipse', { cx:cx, cy:cy-h/2-9*scale, rx:7*scale, ry:11*scale, 'class':'flame' }));
   }
 
   var real = S('g', {});
-  candle(real, 150, 168, 1, false);
-  real.appendChild(S('text', { x:150, y:236, 'class':'idle-note', 'text-anchor':'middle' }));
+  candle(real, 150, 148, 1);
+  real.appendChild(S('text', { x:150, y:216, 'class':'idle-note', 'text-anchor':'middle' }));
   real.lastChild.textContent = 'الشمعة';
   stage.appendChild(real);
 
-  /* الملعقة: كفّة بيضوية وذراع */
+  /* الملعقة: كفّة بيضوية طويلة رأسيًّا وذراع نحيل — لا كفّة شبه دائرية
+     بحلقة لامعة، فتلك تُقرأ مرآة يد، والمرآة مفهوم المحطة 2 لا المحطة 1. */
   var spoon = S('g', {});
-  spoon.appendChild(S('rect', { x:392, y:216, width:16, height:74, rx:8, 'class':'spoon-metal' }));
-  spoon.appendChild(S('ellipse', { cx:400, cy:150, rx:100, ry:80, 'class':'spoon-metal' }));
+  spoon.appendChild(S('rect', { x:395, y:230, width:10, height:50, rx:5, 'class':'spoon-metal' }));
+  spoon.appendChild(S('ellipse', { cx:400, cy:148, rx:64, ry:88, 'class':'spoon-metal' }));
   stage.appendChild(spoon);
 
-  var faceRing = S('ellipse', { cx:400, cy:150, rx:96, ry:76, 'class':'spoon-face' });
+  var faceRing = S('ellipse', { cx:400, cy:148, rx:60, ry:84, 'class':'spoon-face' });
   stage.appendChild(faceRing);
 
   var inside = S('g', { 'clip-path':'url(#spoonBowlClip1)' });
@@ -618,17 +773,19 @@ function station1(){
 
   var caption = S('text', { x:400, y:44, 'class':'face-caption', 'text-anchor':'middle' });
   stage.appendChild(caption);
-  var note = S('text', { x:400, y:296, 'class':'idle-note', 'text-anchor':'middle' });
+  var note = S('text', { x:400, y:306, 'class':'idle-note', 'text-anchor':'middle' });
   note.textContent = T.s1.idle;
   stage.appendChild(note);
 
   function showFace(which){
     while(inside.firstChild) inside.removeChild(inside.firstChild);
     /* كلتاهما معتدلة — الشمعة قريبة. والفرق في الحجم وحده. */
-    candle(inside, 400, 150, which === 'inner' ? 1.55 : 0.55, true);
+    candle(inside, 400, 148, which === 'inner' ? 1.55 : 0.55);
     caption.textContent = which === 'inner' ? T.s1.inner : T.s1.outer;
     note.textContent = which === 'inner' ? T.s1.innerNote : T.s1.outerNote;
     stage.setAttribute('data-face', which);
+    if(inner) inner.classList.toggle('is-active', which === 'inner');
+    if(outer) outer.classList.toggle('is-active', which === 'outer');
     seen[which] = true;
     if(seen.inner && seen.outer){
       show('s1Teaser');
@@ -638,6 +795,7 @@ function station1(){
 
   var seen = {};
   var inner = el('s1InnerBtn'), outer = el('s1OuterBtn');
+
   if(inner) inner.addEventListener('click', function(){ showFace('inner'); });
   if(outer) outer.addEventListener('click', function(){ showFace('outer'); });
 
@@ -660,10 +818,18 @@ function station2(){
   var stage = el('facesStage');
   if(!stage) return;
   var S = OPT.svg;
+  /* نماذج المقاطع بأرقامها لا بمسارات مكتوبة يدويًّا: القوس والتظليل
+     يُشتقّان من النموذج نفسه، فلا ينزاح أحدهما عن الآخر بلا خطأ ظاهر. */
+  var P2 = {
+    flat:    { flat:true, x:140, cy:130 },
+    concave: { cx:8,   cy:130, R:140, sign:-1 },
+    convex:  { cx:272, cy:130, R:140, sign: 1 }
+  };
+  var HALF2 = 70;
   var PANELS = [
-    { key:'flat',    ox:0,   label:'المقطع الأول',  path:'M 140 60 L 140 200' },
-    { key:'concave', ox:220, label:'المقطع الثاني', path:'M 128 60 A 140 140 0 0 1 128 200' },
-    { key:'convex',  ox:440, label:'المقطع الثالث', path:'M 152 60 A 140 140 0 0 0 152 200' }
+    { key:'flat',    ox:0,   label:'المقطع الأول'  },
+    { key:'concave', ox:220, label:'المقطع الثاني' },
+    { key:'convex',  ox:440, label:'المقطع الثالث' }
   ];
   var solved = {}, count = 0;
 
@@ -676,7 +842,7 @@ function station2(){
     g.appendChild(S('path', { d:'M 24 116 L 16 108 M 24 144 L 16 152 M 52 130 L 62 130',
       stroke:'#e0a83c', 'stroke-width':'2', 'stroke-linecap':'round', fill:'none' }));
 
-    g.appendChild(S('path', { d:p.path, 'class':'mirror-body' }));
+    g.appendChild(S('path', { d:OPT.arcPath(P2[p.key], HALF2), 'class':'mirror-body' }));
 
     var lbl = S('text', { x:140, y:232, 'class':'panel-label' });
     lbl.textContent = p.label;
@@ -687,6 +853,14 @@ function station2(){
     var hatch = S('g', { 'data-hatch':p.key });
     g.appendChild(hatch);
 
+    function flash(){
+      if(solved[p.key]) return;
+      [front, back].forEach(function(r){
+        r.classList.add('is-flash');
+        window.setTimeout(function(){ r.classList.remove('is-flash'); }, 700);
+      });
+    }
+
     function mark(side){
       if(solved[p.key]) return;
       if(side === 'back'){
@@ -695,25 +869,18 @@ function station2(){
       }
       solved[p.key] = true; count++;
       var fbn = el('fb-s2Faces'); if(fbn) fbn.hidden = true;
-      /* الشعاع يبلغ الجانب المواجه للمصباح ويرتدّ عنه */
-      rays.appendChild(S('path', { d:'M 54 130 L 132 130', 'class':'ray', stroke:'#ffd27a' }));
-      rays.appendChild(S('path', { d:'M 132 138 L 58 152', 'class':'ray', stroke:'#ffd27a', opacity:'.75' }));
-      /* التظليل يُرسم تلقائيًّا على الجانب الآخر */
-      var m = p.key === 'flat' ? { flat:true, x:140 }
-            : (p.key === 'concave' ? { cx:8, cy:130, R:140, sign:-1 } : { cx:292, cy:130, R:140, sign:1 });
-      var saveAxis = OPT.AXIS;
-      var marks = [], i, d, pt, n;
-      for(i = 0; i < 9; i++){
-        d = -70 + 140*(i/8);
-        if(m.flat){ pt = { x:140, y:130 + d }; n = { x:-1, y:0 }; }
-        else{
-          var h = Math.sqrt(m.R*m.R - d*d);
-          pt = { x:m.cx - m.sign*h, y:m.cy + d };
-          n = { x:m.sign*(pt.x - m.cx)/m.R, y:m.sign*(pt.y - m.cy)/m.R };
-        }
-        marks.push(S('line', { x1:pt.x, y1:pt.y, x2:pt.x - n.x*13, y2:pt.y - n.y*13, 'class':'hatch' }));
-      }
-      marks.forEach(function(l){ hatch.appendChild(l); });
+      /* الشعاع يبلغ الجانب المواجه للمصباح ويرتدّ عنه في مساره نفسه.
+         الاصطلاح الواحد: ساقط عريض فاتح، منعكس أنحف أعمق فوقه،
+         ورأسا سهم في موضعين مختلفين من الخطّ لئلّا يتراكبا. */
+      var mm = P2[p.key], p0 = OPT.point(mm, 0), L = p0.x - 54;
+      rays.appendChild(S('line', { x1:54, y1:130, x2:p0.x, y2:130, 'class':'beam' }));
+      rays.appendChild(S('path', { d:OPT.arrowPath({ x:54 + L*0.40, y:130 }, { x:1, y:0 }, 6), 'class':'arrow-in' }));
+      rays.appendChild(S('line', { x1:p0.x, y1:130, x2:56, y2:130, 'class':'beam-out' }));
+      rays.appendChild(S('path', { d:OPT.arrowPath({ x:54 + L*0.74, y:130 }, { x:-1, y:0 }, 6), 'class':'arrow-out' }));
+      /* التظليل يُرسم تلقائيًّا على الجانب الآخر — من النموذج نفسه */
+      OPT.hatchMarks(mm, HALF2, 9, 13).forEach(function(h){
+        hatch.appendChild(S('line', { x1:h.x1, y1:h.y1, x2:h.x2, y2:h.y2, 'class':'hatch' }));
+      });
       g.setAttribute('data-solved', '1');
       if(count === 3){
         fbNeutral('fb-s2Faces', T.s2.faceDone);
@@ -722,10 +889,18 @@ function station2(){
       }
     }
 
-    var front = S('rect', { x:88, y:52, width:46, height:156, 'class':'hit',
+    /* خلفية المقطع تلتقط اللمس خارج المنطقتين فتومض المنطقتان معًا:
+       لا مؤشّر دائم يزيّن المشهد، والتلميح يظهر بسببه ويزول بزواله. */
+    var bg = S('rect', { x:0, y:30, width:214, height:190, 'class':'panel-bg' });
+    bg.addEventListener('click', function(){ flash(); });
+    g.appendChild(bg);
+
+    /* المنطقتان متطابقتان وتلتقيان عند سطح المرآة: لا فجوة ميّتة على
+       المرآة نفسها، وهي أوّل ما يلمسه الإصبع. */
+    var front = S('rect', { x:76, y:44, width:62, height:172, 'class':'hit',
       'data-side':'front', tabindex:'0', role:'button' });
     front.appendChild(S('title', {})); front.lastChild.textContent = 'الجانب المواجه للمصباح';
-    var back = S('rect', { x:158, y:52, width:46, height:156, 'class':'hit',
+    var back = S('rect', { x:142, y:44, width:62, height:172, 'class':'hit',
       'data-side':'back', tabindex:'0', role:'button' });
     back.appendChild(S('title', {})); back.lastChild.textContent = 'الجانب البعيد عن المصباح';
     front.addEventListener('click', function(){ mark('front'); });
@@ -744,6 +919,9 @@ function station2(){
   if(sph){
     sph.appendChild(S('circle', { cx:180, cy:140, r:96, 'class':'shell-dim' }));
     sph.appendChild(S('path', { d:'M 246 71 A 96 96 0 0 1 246 209', 'class':'shell' }));
+    /* الصنف panel-label صار مقيَّدًا بـ optics-stage لا بمسرح واحد:
+       كان مقيَّدًا بـ facesStage فلم تبلغه القاعدة هنا، فورث الأسود
+       وبلا توسيط — ومن غياب التوسيط جاء خروجه عن المسرح. */
     var cap = S('text', { x:180, y:256, 'class':'panel-label' });
     cap.textContent = 'كرة مجوّفة لامعة، تُقتطع منها قطعة';
     sph.appendChild(cap);
@@ -798,17 +976,22 @@ function station3(){
   var DS = [-90, -30, 30], HALF = 110, START_X = 70;
   var current = 'flat', ran = {}, predicted = { concave:false, convex:false };
 
-  var defs = S('defs', {});
-  var g3 = S('linearGradient', { id:'beamGrad3', x1:'0', y1:'0', x2:'1', y2:'0' });
-  g3.appendChild(S('stop', { offset:'0%',   'stop-color':'#ffe9b0' }));
-  g3.appendChild(S('stop', { offset:'100%', 'stop-color':'#ffd27a' }));
-  defs.appendChild(g3);
-  stage.appendChild(defs);
+  /* الأشعة بألوان صريحة لا بتدرّج: الفرق بين الساقط والمنعكس درجتان
+     من عائلة واحدة، ورأس السهم يرث لون خطّه. */
 
-  stage.appendChild(S('line', { x1:90, y1:180, x2:640, y2:180, 'class':'axis-line' }));
-  var axLbl = S('text', { x:600, y:172, 'class':'axis-label', 'text-anchor':'end' });
-  axLbl.textContent = 'المحور الرئيس';
-  stage.appendChild(axLbl);
+  /* أطول ما يبلغه شعاع منعكس داخل المشهد. حدّ x الأيسر عند حافّة صندوق
+     الضوء، وحدّ y الأسفل فوق تسمية الصندوق — لا خطّ يعبر نصًّا. */
+  var BOX = { x1:74, y1:26, x2:640, y2:296 };
+
+  function axisWith(target){
+    target.appendChild(S('line', { x1:90, y1:180, x2:640, y2:180, 'class':'axis-line' }));
+    /* محاذاة end في العربية تثبّت الطرف الأيسر ويمتدّ النصّ يمينًا
+       فيتجاوز الحافّة. التوسيط هو المحاذاة الصحيحة هنا. */
+    var t = S('text', { x:570, y:170, 'class':'axis-label', 'text-anchor':'middle' });
+    t.textContent = 'المحور الرئيس';
+    target.appendChild(t);
+  }
+  axisWith(stage);
 
   stage.appendChild(S('rect', { x:34, y:66, width:38, height:228, rx:8, 'class':'lightbox' }));
   var lbLbl = S('text', { x:53, y:314, 'class':'axis-label', 'text-anchor':'middle' });
@@ -822,10 +1005,48 @@ function station3(){
   var inG  = S('g', { 'data-in':'1' });  stage.appendChild(inG);
   var outG = S('g', { 'data-out':'1' }); stage.appendChild(outG);
   var focalG = S('g', { 'data-focal':'1' }); stage.appendChild(focalG);
-  var noteT = S('text', { x:330, y:352, 'class':'stage-note', 'text-anchor':'middle' });
-  stage.appendChild(noteT);
 
   function clear(g){ while(g.firstChild) g.removeChild(g.firstChild); }
+
+  /* هندسة الحزمة لمرآة واحدة. الأشعة المنعكسة عن المقعّرة تقف عند
+     تقاطع كلٍّ منها مع المحور — لا تتجاوزه فتتفرّق من جديد وتناقض
+     الملاحظة. ولا يُزوَّر التقاطع إلى نقطة واحدة: كلّ شعاع عند تقاطعه هو. */
+  function beamGeom(m){
+    return DS.map(function(d){
+      var p = OPT.point(m, d), nv = OPT.normal(m, d);
+      var vr = OPT.reflect({ x:1, y:0 }, nv);
+      var hit = OPT.axisHit(p, vr);
+      var t = (m.sign < 0 && hit && hit.t > 0) ? hit.t : OPT.clampT(p, vr, BOX, 420);
+      return { d:d, p:p, vr:vr, t:t, hit:hit };
+    });
+  }
+
+  /* الرسم الواحد يخدم المسرح الحيّ والصورة الثابتة معًا */
+  function paintBeams(gi, go, gf, m, withReflect){
+    var geo = beamGeom(m), hits = [], fx = null;
+    geo.forEach(function(b){
+      var sx = START_X, sy = 180 + b.d;
+      gi.appendChild(S('line', { x1:sx, y1:sy, x2:b.p.x, y2:b.p.y, 'class':'beam' }));
+      var vi = OPT.unit(b.p.x - sx, b.p.y - sy);
+      gi.appendChild(S('path', {
+        d:OPT.arrowPath({ x:sx + (b.p.x - sx)*0.40, y:sy + (b.p.y - sy)*0.40 }, vi, 7),
+        'class':'arrow-in' }));
+      if(!withReflect) return;
+      go.appendChild(S('line', { x1:b.p.x, y1:b.p.y,
+        x2:b.p.x + b.vr.x*b.t, y2:b.p.y + b.vr.y*b.t, 'class':'beam-out' }));
+      /* السهمان عند كسرين مختلفين من الطول: في المستوية يتطابق مسارا
+         الذهاب والإياب، فلو وُضعا عند الكسر نفسه لتراكب الرأسان. */
+      go.appendChild(S('path', {
+        d:OPT.arrowPath({ x:b.p.x + b.vr.x*b.t*0.35, y:b.p.y + b.vr.y*b.t*0.35 }, b.vr, 7),
+        'class':'arrow-out' }));
+      if(b.hit && b.hit.t > 0) hits.push(b.hit.x);
+    });
+    if(withReflect && m.sign < 0 && hits.length){
+      fx = hits.reduce(function(a, b){ return a + b; }, 0)/hits.length;
+      gf.appendChild(S('circle', { cx:fx.toFixed(2), cy:180, r:5, fill:'var(--coral)' }));
+    }
+    return fx;
+  }
 
   function drawMirror(){
     var m = M[current];
@@ -835,45 +1056,37 @@ function station3(){
       hatchG.appendChild(S('line', { x1:h.x1, y1:h.y1, x2:h.x2, y2:h.y2, 'class':'hatch' }));
     });
     clear(inG); clear(outG); clear(focalG);
-    noteT.textContent = '';
-    DS.forEach(function(d){
-      var p = OPT.point(m, d);
-      inG.appendChild(S('line', { x1:START_X, y1:180 + d, x2:p.x, y2:p.y, 'class':'beam' }));
-    });
+    paintBeams(inG, outG, focalG, m, false);
     stage.setAttribute('data-mirror', current);
+    setActiveBtn(current);
   }
 
   function runLight(){
     var m = M[current];
-    clear(outG); clear(focalG);
-    var hits = [];
-    DS.forEach(function(d){
-      var p = OPT.point(m, d), n = OPT.normal(m, d);
-      var v = { x:1, y:0 }, vr = OPT.reflect(v, n);
-      var t = 420, ex = p.x + vr.x*t, ey = p.y + vr.y*t;
-      /* المستوية: الشعاع يعود في مساره نفسه؛ يُزاح في الرسم ليُرى، والنصّ يعلن الإزاحة */
-      var dy = m.flat ? (d < 0 ? -7 : 7) : 0;
-      if(m.flat){ t = 390; ex = p.x + vr.x*t; ey = p.y + vr.y*t; }
-      outG.appendChild(S('line', { x1:p.x, y1:p.y + dy, x2:ex, y2:ey + dy, 'class':'beam-out' }));
-      var h = OPT.axisHit(p, vr);
-      if(h) hits.push(h.x);
-    });
+    clear(inG); clear(outG); clear(focalG);
+    var fx = paintBeams(inG, outG, focalG, m, true);
+    if(fx !== null) stage.setAttribute('data-focus-x', fx.toFixed(1));
     ran[current] = true;
     if(m.flat){
-      noteT.textContent = T.s3.flatNote;
       fbNeutral('fb-s3Stage', T.s3.obsFlat + ' ' + T.s3.nextConcave);
       enable('s3BtnConcave');
     } else if(current === 'concave'){
-      var fx = hits.reduce(function(a, b){ return a + b; }, 0)/hits.length;
-      focalG.appendChild(S('circle', { cx:fx, cy:180, r:5, fill:'var(--coral)' }));
-      stage.setAttribute('data-focus-x', fx.toFixed(1));
       fbNeutral('fb-s3Stage', T.s3.obsConcave + ' ' + T.s3.nextConvex);
       enable('s3BtnConvex');
     } else {
       fbNeutral('fb-s3Stage', T.s3.obsConvex);
       buildFacts();
+      drawStill();
       show('s3FocalBox');
+      /* شُغّلت الثلاثة، فلا سبب يُبقي أيّ زرّ مقفلًا: القيد يزول بزوال سببه */
+      enable('s3BtnFlat'); enable('s3BtnConcave'); enable('s3BtnConvex');
     }
+  }
+
+  function setActiveBtn(key){
+    document.querySelectorAll('.mirror-btn').forEach(function(b){
+      b.classList.toggle('is-active', b.getAttribute('data-mirror') === key);
+    });
   }
 
   function enable(id){ var b = el(id); if(b) b.disabled = false; }
@@ -893,17 +1106,41 @@ function station3(){
     show('s3Facts');
   }
 
+  /* صورة ثابتة للمقعّرة فوق السؤال: السؤال يقول "في المشهد الذي رأيته"،
+     وبلا هذه الصورة يُسأل الطالب عن مشهد غادر الشاشة. ولا تُعاد المرآة
+     الحيّة إلى المقعّرة من خلفه — المسرح يبقى حيث تركه الطالب. */
+  var stillG = null, stillFx = null;
+  function drawStill(){
+    var st = el('beamStill');
+    if(!st || st.childElementCount) return;
+    var m = M.concave;
+    axisWith(st);
+    st.appendChild(S('rect', { x:34, y:66, width:38, height:228, rx:8, 'class':'lightbox' }));
+    var lb = S('text', { x:53, y:314, 'class':'axis-label', 'text-anchor':'middle' });
+    lb.textContent = 'صندوق ضوء';
+    st.appendChild(lb);
+    st.appendChild(S('path', { d:OPT.arcPath(m, HALF), 'class':'mirror-body' }));
+    var hg = S('g', {}); st.appendChild(hg);
+    OPT.hatchMarks(m, HALF, 9, 15).forEach(function(h){
+      hg.appendChild(S('line', { x1:h.x1, y1:h.y1, x2:h.x2, y2:h.y2, 'class':'hatch' }));
+    });
+    var gi = S('g', {}), go = S('g', {}), gf = S('g', {});
+    st.appendChild(gi); st.appendChild(go); st.appendChild(gf);
+    stillFx = paintBeams(gi, go, gf, m, true);
+    stillG = gf;
+    st.setAttribute('data-focus-x', stillFx.toFixed(1));
+  }
+
   /* البعد البؤري يُرسم مسمًّى بعد السؤال لا قبله: لو رُسم مسمًّى قبله
      لأجاب الرسمُ عن السؤال. ويُرسم ولا يُقاس رقمًا — القياس مادّة درس 02. */
   function drawFocalBrace(){
-    current = 'concave';
-    drawMirror(); runLight();
-    var fx = parseFloat(stage.getAttribute('data-focus-x'));
-    focalG.appendChild(S('path', { d:'M ' + fx + ' 196 L ' + fx + ' 214 L 460 214 L 460 196', 'class':'focal-brace' }));
-    var t = S('text', { x:(fx + 460)/2, y:234, 'class':'focal-text' });
+    if(!stillG || stillFx === null) return;
+    var fx = stillFx.toFixed(2);
+    stillG.appendChild(S('path', { d:'M ' + fx + ' 196 L ' + fx + ' 214 L 460 214 L 460 196', 'class':'focal-brace' }));
+    var t = S('text', { x:((stillFx + 460)/2).toFixed(2), y:234, 'class':'focal-text' });
     t.textContent = 'البعد البؤري';
-    focalG.appendChild(t);
-    stage.setAttribute('data-focal-labelled', '1');
+    stillG.appendChild(t);
+    var st = el('beamStill'); if(st) st.setAttribute('data-focal-labelled', '1');
   }
 
   document.querySelectorAll('.mirror-btn').forEach(function(b){
@@ -952,11 +1189,219 @@ function station3(){
   }, { onAllSolved: function(){ show('s3Teaser'); show('s3done'); } });
 }
 
-/* ─────────────── المحطات 4 و5 و6 — لم تُبنَ بعد ───────────────
-   جلسة التنفيذ الثانية. المواصفة: §4/المحطات 4 و5 · §5.4 و§5.5 · §6.
+/* ─────────────── المحطة 4 — القانون واحد… فما الذي تغيّر؟ ─────────────── */
+function station4(){
+  var stage = el('normalStage');
+  if(!stage) return;
+  var S = OPT.svg, M = OPT.MIRRORS;
+  var SRC = { x:60, y:60 }, HALF4 = 110;
+  /* حدود الإطار: لا شعاع يغادر المشهد مهما بلغ طوله */
+  var BOX = { x1:10, y1:10, x2:650, y2:330 };
+  var current = 'flat';
+  var flatSeen = [], readD = [], rows = 0;
+  var lastAi = 0, lastAr = 0;
+
+  stage.appendChild(S('line', { x1:90, y1:180, x2:640, y2:180, 'class':'axis-line' }));
+  var axl = S('text', { x:570, y:170, 'class':'axis-label', 'text-anchor':'middle' });
+  axl.textContent = 'المحور الرئيس';
+  stage.appendChild(axl);
+
+  var mirrorPath = S('path', { d:OPT.arcPath(M.flat, HALF4), 'class':'mirror-body' });
+  stage.appendChild(mirrorPath);
+  var hatchG = S('g', { 'data-hatch':'normal' }); stage.appendChild(hatchG);
+  var normG  = S('g', { 'data-normal':'1' });     stage.appendChild(normG);
+  var rayG   = S('g', { 'data-rays':'1' });       stage.appendChild(rayG);
+
+  var src = S('g', {});
+  src.appendChild(S('circle', { cx:SRC.x, cy:SRC.y, r:11, 'class':'lamp-body' }));
+  src.appendChild(S('path', { d:'M 48 48 L 40 40 M 48 72 L 40 80 M 74 60 L 85 60',
+    stroke:'#e0a83c', 'stroke-width':'2', 'stroke-linecap':'round', fill:'none' }));
+  stage.appendChild(src);
+
+  /* القراءتان في الفراغ يمين المرآة: لا يمرّ به شعاع في أيّ وضع للمنزلق */
+  var readIn  = S('text', { x:555, y:104, 'class':'stage-note', 'text-anchor':'middle' });
+  var readOut = S('text', { x:555, y:132, 'class':'stage-note', 'text-anchor':'middle' });
+  stage.appendChild(readIn); stage.appendChild(readOut);
+
+  var legend = S('text', { x:330, y:356, 'class':'stage-note', 'text-anchor':'middle' });
+  legend.textContent = T.s4.normalLegend;
+  stage.appendChild(legend);
+
+  function clear(g){ while(g.firstChild) g.removeChild(g.firstChild); }
+
+  function drawMirror(){
+    var m = M[current];
+    mirrorPath.setAttribute('d', OPT.arcPath(m, HALF4));
+    clear(hatchG);
+    OPT.hatchMarks(m, HALF4, 9, 15).forEach(function(h){
+      hatchG.appendChild(S('line', { x1:h.x1, y1:h.y1, x2:h.x2, y2:h.y2, 'class':'hatch' }));
+    });
+    stage.setAttribute('data-mirror', current);
+  }
+
+  function draw(d){
+    var m = M[current];
+    var P  = OPT.point(m, d);
+    var n  = OPT.normal(m, d);
+    var v  = OPT.unit(P.x - SRC.x, P.y - SRC.y);
+    var vr = OPT.reflect(v, n);
+    lastAi = OPT.incidence(v, n);
+    lastAr = OPT.incidence(vr, n);
+
+    clear(normG); clear(rayG);
+    /* العمودي مقطع محدود: 90 نحو الضوء و25 خلف السطح.
+       مدّه أبعد من ذلك يرسم نصف قطر التكوّر ويكشف مركزه — ومركز
+       التكوّر ليس من هذا الدرس. */
+    normG.appendChild(S('line', {
+      x1:(P.x + n.x*90).toFixed(2), y1:(P.y + n.y*90).toFixed(2),
+      x2:(P.x - n.x*25).toFixed(2), y2:(P.y - n.y*25).toFixed(2), 'class':'normal-line' }));
+
+    rayG.appendChild(S('line', { x1:SRC.x, y1:SRC.y, x2:P.x.toFixed(2), y2:P.y.toFixed(2), 'class':'beam' }));
+    rayG.appendChild(S('path', { 'class':'arrow-in', d:OPT.arrowPath(
+      { x:SRC.x + (P.x - SRC.x)*0.55, y:SRC.y + (P.y - SRC.y)*0.55 }, v, 7) }));
+
+    var t = OPT.clampT(P, vr, BOX, 420);
+    rayG.appendChild(S('line', { x1:P.x.toFixed(2), y1:P.y.toFixed(2),
+      x2:(P.x + vr.x*t).toFixed(2), y2:(P.y + vr.y*t).toFixed(2), 'class':'beam-out' }));
+    rayG.appendChild(S('path', { 'class':'arrow-out', d:OPT.arrowPath(
+      { x:P.x + vr.x*t*0.45, y:P.y + vr.y*t*0.45 }, vr, 7) }));
+
+    readIn.textContent  = 'زاوية السقوط: '   + lastAi.toFixed(1) + '°';
+    readOut.textContent = 'زاوية الانعكاس: ' + lastAr.toFixed(1) + '°';
+
+    stage.setAttribute('data-d',  String(d));
+    stage.setAttribute('data-px', P.x.toFixed(2));
+    stage.setAttribute('data-py', P.y.toFixed(2));
+    stage.setAttribute('data-nx', n.x.toFixed(4));
+    stage.setAttribute('data-ny', n.y.toFixed(4));
+    stage.setAttribute('data-ai', lastAi.toFixed(2));
+    stage.setAttribute('data-ar', lastAr.toFixed(2));
+  }
+
+  var slider = el('s4Slider');
+  function bucket(d){ return Math.round(d/20)*20; }
+
+  function onMove(){
+    var d = parseInt(slider.value, 10);
+    if(isNaN(d)) d = 0;
+    draw(d);
+  }
+
+  /* الموضع يُحتسب عند استقرار المنزلق لا أثناء جرّه: سحبة واحدة من
+     طرف إلى طرف تمرّ بالمواضع الثلاثة في ثانية بلا ملاحظة، فيُستوفى
+     الشرط الذي وُضع ليفرض الملاحظة. الرسم يبقى لحظيًّا. */
+  var settleT = null;
+  function settle(){
+    if(current !== 'flat') return;
+    var d = parseInt(slider.value, 10);
+    if(isNaN(d)) d = 0;
+    var k = bucket(d);
+    if(flatSeen.indexOf(k) === -1) flatSeen.push(k);
+    if(flatSeen.length >= 3 && el('s4BridgeRow').hidden){
+      fbNeutral('fb-s4Stage', T.s4.obsFlat);
+      show('s4BridgeRow');
+    }
+  }
+  function scheduleSettle(){
+    if(settleT !== null) window.clearTimeout(settleT);
+    settleT = window.setTimeout(function(){ settleT = null; settle(); }, 420);
+  }
+
+  if(slider){
+    slider.addEventListener('input', function(){ onMove(); scheduleSettle(); });
+    /* لوحة المفاتيح والفأرة يُنهيان الحركة صراحةً: لا ننتظر المهلة */
+    ['change','pointerup','keyup','blur'].forEach(function(ev){
+      slider.addEventListener(ev, function(){
+        if(settleT !== null){ window.clearTimeout(settleT); settleT = null; }
+        settle();
+      });
+    });
+  }
+
+  var bridge = el('s4BridgeBtn');
+  if(bridge) bridge.addEventListener('click', function(){
+    current = 'concave';
+    bridge.disabled = true;
+    bridge.classList.add('demoted');
+    drawMirror();
+    draw(parseInt(slider.value, 10) || 0);
+    fbNeutral('fb-s4Stage', T.s4.obsConcave);
+    show('s4TaskBox');
+  });
+
+  /* المهمّة: ثلاث قراءات عند ثلاث نقاط مختلفة فعلًا — لا ثلاث ضغطات
+     في الموضع نفسه. والفرق يُقاس بحزمة عرضها 20 وحدة. */
+  var recordBtn = el('s4RecordBtn');
+  if(recordBtn) recordBtn.addEventListener('click', function(){
+    if(rows >= 3) return;
+    var d = parseInt(slider.value, 10);
+    if(isNaN(d)) d = 0;
+    var k = bucket(d);
+    if(readD.indexOf(k) !== -1){
+      fbNeutral('fb-u3l1-measure-task', T.s4.sameSpot);
+      return;
+    }
+    readD.push(k);
+    var tb = el('s4Table').tBodies[0], tr = tb.rows[rows];
+    tr.cells[1].textContent = lastAi.toFixed(1) + '°';
+    tr.cells[2].textContent = lastAr.toFixed(1) + '°';
+    tr.cells[1].className = ''; tr.cells[2].className = '';
+    rows++;
+    el('s4Table').setAttribute('data-rows', String(rows));
+    if(rows < 3){
+      fbNeutral('fb-u3l1-measure-task', T.s4.recorded + (3 - rows) + '.');
+      return;
+    }
+    recordBtn.disabled = true;
+    recordBtn.classList.add('demoted');
+    fbNeutral('fb-u3l1-measure-task', T.s4.taskDone);
+    if(window.XP) window.XP.claim('u3l1-measure-task', window.XP.POINTS.TASK,
+      'سجّلتَ ثلاث قراءات عند ثلاث نقاط مختلفة');
+    show('s4WhyBox');
+  });
+
+  drawMirror();
+  draw(0);
+
+  window.Quiz.practice({
+    'u3l1-normal-mcq': { xpId:'u3l1-normal-mcq', xp:'MCQ', reason:'عرفتَ مرجع قياس الزاويتين',
+                         correctText:T.s4.normal.correct, hints:T.s4.normal }
+  }, { onAllSolved: function(){
+         show('s4StageBox');
+         /* التعليمة تسكن خانة الملاحظة نفسها: حين تكتمل المهمّة يمحوها
+            سطر الملاحظة، فالتلميح يزول بزوال سببه بلا عنصر إضافي. */
+         fbNeutral('fb-s4Stage', T.s4.task);
+       } });
+
+  window.Quiz.short({
+    input:'s4WhyInput', button:'s4WhyBtn', feedback:'fb-u3l1-why-converge',
+    modelBtn:'s4WhyModelBtn', model:'s4WhyModel',
+    /* المطابقة دالّة لا قائمة جذور: القائمة وحدها تقبل «العمودي لم
+       يتغيّر» لأن جذر «تغي» حاضر داخل النفي — فيُكافأ الطالب على
+       نقيض المطلوب. والنفي يُفحص ملاصقًا لكلمة التغيّر وحدها، كي
+       تبقى «يختلف اتّجاهه لا شكله» إجابةً مقبولة. */
+    accept: function(normalized){
+      if(!/عمود/.test(normalized)) return false;
+      if(!/(ختلف|تجاه|ميل|مال|تغي)/.test(normalized)) return false;
+      if(/(^|\s)[وف]?(لا|ما|لم|لن|ليس)\s+\S{0,7}(ختلف|تجاه|ميل|مال|تغي)/.test(normalized)) return false;
+      return true;
+    },
+    normalize: 'ar',
+    hints: [T.s4.whyHint1, T.s4.whyHint2],
+    modelText: T.s4.whyModel,
+    correctText: T.s4.whyCorrect,
+    xpId:'u3l1-why-converge', xp:'PRODUCE', reason:'استنتجتَ سبب اختلاف مصير الأشعة',
+    onDone: function(){
+      show('s4FactCard');
+      show('s4done');
+    }
+  });
+}
+
+/* ─────────────── المحطات 5 و6 — لم تُبنَ بعد ───────────────
+   جلسة التنفيذ الثانية. المواصفة: §4/المحطة 5 · §5.5 · §6.
    والشهادة تُربط عبر Quiz.evaluate وحدها عند بناء المحطة 6 —
    ولا يُكتب نداء Certificate.finish في هذا السكربت إطلاقًا. */
-function station4(){}
 function station5(){}
 function station6(){}
 
