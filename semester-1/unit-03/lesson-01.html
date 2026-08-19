@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدرس 1 — ما نوع الصور التي تكوّنها المرايا الكروية؟ | مختبر فؤاد التعليمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/identity/identity.css">
+<link rel="stylesheet" href="../../shared/template-boilerplate/template.css">
+<!--
+  ─── كتلة قرارات الدرس ───
+
+  الوحدة 03 — الدرس 01 — مختبر فؤاد التعليمي
+  "ما نوع الصور التي تكوّنها المرايا الكروية؟"
+  بادئة data-q/XP: u3l1-
+
+  المحطات: ستّ محطات، ستّ نقاط تقدّم. المحطتان 4 و5 مشطورتان
+  داخليًّا إلى مرحلتين ولكلٍّ منهما نقطة واحدة لا نقطتان.
+
+  المسارح:
+  • المحطة 1 — الملعقة والشمعة (spoonStage)
+  • المحطة 2 — مقاطع المرايا الثلاثة (facesStage) + اقتطاع الكرة (sphereStage)
+  • المحطة 3 — الحزمة الثلاثية (beamStage)
+  • المحطة 4 — الشعاع الواحد والعمودي (normalStage)
+  • المحطة 5 — تكوّن الصورة على المسطرة (imageStage)
+
+  قرارات نطاق مسجَّلة:
+  • لا امتدادات منقّطة خلف المحدّبة في هذا الدرس — يُعرض التفرّق وحده،
+    ويُسمّى البعد البؤري للمقعّرة فقط. الامتدادات مادّة درس 02، وعرضها
+    هنا يستلزم "حقيقية/تقديرية" وهي خارج حدود هذا الدرس.
+  • المحور الرئيس معرَّف ناقصًا عمدًا: "المستقيم العمودي على المرآة عند
+    منتصفها" بلا "المارّ بمركز التكوّر" — لأنّ مركز التكوّر نفسه ممنوع هنا.
+  • عدّة المسرح الضوئي تعيش داخل هذا الملفّ ككتلة معلَّمة وتُنسخ إلى
+    دروس 02–04، ولا تدخل shared/ لأنها منطق مادّة لا بنية منصّة.
+
+  خارج النطاق نصًّا وبالاختبار:
+  • قطب المرآة · مركز التكوّر · r = 2f · مخطّط الأشعة بشعاعين ·
+    حقيقية/تقديرية · "تُستقبَل على حائل" · تطبيقات الأجهزة ·
+    لفظ "بؤرة" مفردًا · الامتدادات المنقّطة.
+
+  الرصيد المقدَّر: 126 أساسي + 8 اختياري = 134.
+  رقم الاختبار هو الحقيقة لا هذا التعليق.
+  ═══════════════════════════════════════════════════════════════════ -->
+<style>
+  /* ============ منع سحب التحديث من تصفير XP ============ */
+  html, body{ overscroll-behavior-y:contain; }
+  html{ scroll-behavior:smooth; }
+  .station{ scroll-margin-top:14px; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+  }
+
+  /* ============ أصناف عامّة — نمط دروس المنصّة ============ */
+  .station-tagline{
+    max-width:920px; margin:0 auto 4px; font-size:.95rem; color:var(--ink-dim); line-height:1.9;
+  }
+  .explore-q{
+    font-weight:700; color:var(--ink); margin:0 0 12px; font-size:clamp(14px,2.4vw,16px);
+  }
+  .explore-step{ margin-top:26px; padding-top:20px; border-top:1px dashed var(--border); }
+  .explore-step:first-of-type{ border-top:none; padding-top:0; }
+
+  /* ============ طيّ السؤال المُجاب وزرّ العودة إلى المسرح ============ */
+  .step-summary{
+    display:none; width:100%; align-items:center; gap:10px;
+    background:none; border:none; padding:0; cursor:pointer;
+    font-family:'Tajawal', sans-serif; font-size:13.5px; font-weight:700;
+    color:var(--turquoise); text-align:start;
+  }
+  .explore-step.is-answered > .step-summary{ display:flex; }
+  .step-summary:focus-visible{ outline:2px solid var(--coral); outline-offset:4px; border-radius:8px; }
+  .step-caret{
+    width:15px; height:15px; flex:0 0 auto; margin-inline-start:auto;
+    transition:transform .25s ease; stroke:var(--turquoise);
+  }
+  .explore-step.is-answered:not(.is-folded) .step-caret{ transform:rotate(180deg); }
+  .step-body{ overflow:hidden; transition:max-height .34s ease, opacity .2s ease; }
+  .explore-step.is-folded > .step-body{ max-height:0 !important; opacity:0; }
+  .explore-step.is-folded{ margin-top:12px; padding-top:10px; }
+  .stage-return{ margin-top:12px; }
+  @media (prefers-reduced-motion: reduce){
+    .step-body{ transition:none; }
+    .step-caret{ transition:none; }
+  }
+
+  /* ============ محطة التقييم الختامي ============ */
+  .q-num{
+    display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px;
+    border-radius:50%; background:rgba(20,200,168,.12); border:1px solid var(--turquoise-soft);
+    color:var(--turquoise); font-family:'Cairo', sans-serif; font-weight:800; font-size:.8rem;
+    margin-inline-end:8px; flex-shrink:0;
+  }
+  .eval-summary{
+    margin-top:30px; background:rgba(20,200,168,.06); border:1px solid var(--turquoise-soft);
+    border-radius:18px; padding:20px 18px; text-align:center;
+  }
+  #certTriggerSlot{ display:flex; justify-content:center; margin-top:18px; }
+
+  /* ============ أنماط مسارح هذا الدرس ============
+     كل قاعدة مصدَّرة بمعرّف مسرحها لا بالصنف وحده: مسرحان بالبنية
+     نفسها في صفحة واحدة يسرق أحدهما أنماط الآخر بلا خطأ ظاهر. */
+
+  /* ── مشترك بين مسارح الوحدة 03 ── */
+  .optics-stage{
+    width:100%; height:auto; display:block; margin:0 auto;
+    background:rgba(255,255,255,.02);
+    border:1px solid var(--border); border-radius:16px;
+  }
+  .optics-stage .axis-line{ stroke:var(--ink-dim); stroke-width:1; stroke-dasharray:7 6; opacity:.55; }
+  .optics-stage .axis-label{ fill:var(--ink-dim); font-family:'Tajawal',sans-serif; font-size:12px; }
+  .optics-stage .mirror-body{ fill:none; stroke:var(--turquoise); stroke-width:4; stroke-linecap:round; }
+  .optics-stage .hatch{ stroke:var(--ink-dim); stroke-width:2; stroke-linecap:round; opacity:.75; }
+  .optics-stage .ray{ stroke-width:2.4; stroke-linecap:round; fill:none; }
+  .optics-stage .stage-note{ fill:var(--ink); font-family:'Tajawal',sans-serif; font-size:13px; }
+
+  /* ── المحطة 1 — الملعقة ── */
+  #spoonStage .spoon-metal{ fill:url(#spoonSheen1); stroke:var(--turquoise-soft); stroke-width:2; }
+  #spoonStage .spoon-face{ fill:rgba(20,200,168,.10); stroke:var(--turquoise); stroke-width:2.5; }
+  #spoonStage .flame{ fill:#ffb347; }
+  #spoonStage .wax{ fill:#f2e9d8; }
+  #spoonStage .face-caption{ fill:var(--turquoise); font-family:'Cairo',sans-serif; font-weight:700; font-size:14px; }
+  #spoonStage .idle-note{ fill:var(--ink-dim); font-family:'Tajawal',sans-serif; font-size:14px; }
+  #s1FaceRow{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:14px; }
+
+  /* ── المحطة 2 — أوجه المرايا ── */
+  #facesStage .hit{ fill:transparent; cursor:pointer; touch-action:none; }
+  #facesStage .hit:focus-visible{ outline:2px solid var(--coral); outline-offset:2px; }
+  #facesStage .panel-label{ fill:var(--ink-dim); font-family:'Tajawal',sans-serif; font-size:13px; text-anchor:middle; }
+  #facesStage .lamp-body{ fill:#ffd27a; stroke:#e0a83c; stroke-width:1.5; }
+  #facesStage .done-tick{ stroke:var(--turquoise); stroke-width:3; fill:none; stroke-linecap:round; }
+  #sphereStage .shell{ fill:none; stroke:var(--turquoise); stroke-width:3.5; }
+  #sphereStage .shell-dim{ fill:none; stroke:var(--ink-dim); stroke-width:2; opacity:.45; }
+  #sphereStage .piece-label{ fill:var(--turquoise); font-family:'Cairo',sans-serif; font-weight:700; font-size:14px; text-anchor:middle; }
+
+  /* ── المحطة 3 — الحزمة الثلاثية ── */
+  #beamStage .beam{ stroke:url(#beamGrad3); stroke-width:2.6; stroke-linecap:round; fill:none; }
+  #beamStage .beam-out{ stroke:#ffd27a; stroke-width:2.6; stroke-linecap:round; fill:none; }
+  #beamStage .lightbox{ fill:rgba(20,200,168,.14); stroke:var(--turquoise); stroke-width:2; }
+  #beamStage .focal-brace{ stroke:var(--coral); stroke-width:2; fill:none; }
+  #beamStage .focal-text{ fill:var(--coral); font-family:'Cairo',sans-serif; font-weight:700; font-size:13px; text-anchor:middle; }
+  #s3MirrorRow{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:14px 0 6px; }
+
+  .mirror-btn[disabled], #s1FaceRow .btn[disabled]{ opacity:.4; cursor:not-allowed; }
+</style>
+</head>
+<body>
+
+<nav class="crumb">
+  <a href="../../index.html">الرئيسية</a> ›
+  <a href="../index.html">الفصل الأول</a> ›
+  <a href="index.html">الوحدة 3: الصور المتكوّنة في المرايا الكروية</a> ›
+  الدرس 1
+</nav>
+
+<div class="progress-track">
+  <div class="xp-counter" id="xpCounter">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+    <span id="xpValue">0</span>
+    <span class="xp-label">XP</span>
+  </div>
+  <div class="progress-dot" data-target="station-1"></div>
+  <div class="progress-dot" data-target="station-2"></div>
+  <div class="progress-dot" data-target="station-3"></div>
+  <div class="progress-dot" data-target="station-4"></div>
+  <div class="progress-dot" data-target="station-5"></div>
+  <div class="progress-dot" data-target="station-6"></div>
+</div>
+
+<header class="hero">
+  <div class="eyebrow">الوحدة 3 · الدرس 1</div>
+  <h1>ما نوع الصور التي تكوّنها المرايا الكروية؟</h1>
+  <div class="objectives-box">
+    <h3>في نهاية هذا الدرس سوف تتمكّن من أن:</h3>
+    <ul>
+      <li>تصف المرآة المستوية والمقعّرة والمحدّبة، وتميّز سطحها العاكس.</li>
+      <li>تستنتج لماذا تتجمّع الأشعة عن المرآة المقعّرة وتتفرّق عن المحدّبة.</li>
+      <li>تقارن الصورة المتكوّنة في المرايا الكروية بالصورة في المرآة المستوية.</li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ═════════════════════ محطة 1 — Engage ═════════════════════ -->
+  <section class="station" id="station-1">
+    <div class="station-label">المحطة الأولى</div>
+    <h2>وجهان لملعقة</h2>
+    <p class="station-tagline">ملعقة واحدة، ووجهان لامعان، وشمعة قريبة منها. قبل أن تنظر — ماذا تتوقّع؟</p>
+
+    <div class="explore-step">
+      <p class="explore-q">شمعة موضوعة <b>قريبًا</b> من ملعقة لامعة. ماذا ترى في وجهَي الملعقة؟</p>
+      <div class="quiz-options" data-q="u3l1-predict-spoon">
+        <label class="quiz-option"><input type="radio" name="u3l1-predict-spoon" value="p1">الصورتان متشابهتان تمامًا، فالمعدن واحد واللمعان واحد.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-predict-spoon" value="p2">صورة أحد الوجهين أكبر من الشمعة، وصورة الوجه الآخر أصغر منها.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-predict-spoon" value="p3">وجه واحد يعكس ويكوّن صورة، والآخر يبعثر الضوء بلا صورة.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-predict-spoon" value="p4">الصورتان بالحجم نفسه، والفرق بينهما في اللون وحده.</label>
+      </div>
+      <p class="explore-feedback" id="fb-u3l1-predict-spoon" hidden></p>
+    </div>
+
+    <svg class="optics-stage" id="spoonStage" viewBox="0 0 640 320" role="img" aria-label="ملعقة لامعة وشمعة قريبة منها"></svg>
+
+    <div id="s1FaceRow">
+      <button type="button" class="btn" id="s1InnerBtn" disabled>الوجه الداخلي</button>
+      <button type="button" class="btn" id="s1OuterBtn" disabled>الوجه الخارجي</button>
+    </div>
+
+    <p class="fact-line" id="s1Teaser" hidden>الوجهان من قطعة معدن واحدة، والصورتان مختلفتان. فالفرق إذن في <b>الشكل</b> لا في المادّة. فما أشكال المرايا؟</p>
+
+    <div class="station-handoff" id="s1done" hidden>
+      <a href="#station-2" class="station-next">ما أشكال المرايا؟ ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 2 — Explore ═════════════════════ -->
+  <section class="station" id="station-2">
+    <div class="station-label">المحطة الثانية</div>
+    <h2>ما أشكال المرايا؟</h2>
+    <p class="station-tagline">ثلاثة مقاطع لمرايا منظورة من الجانب، ومصباح على يسار كلٍّ منها. حدّد في كلٍّ منها الجانب الذي يعكس الضوء.</p>
+
+    <svg class="optics-stage" id="facesStage" viewBox="0 0 660 260" role="img" aria-label="ثلاثة مقاطع جانبية لمرايا، ومصباح على يسار كلٍّ منها"></svg>
+    <p class="explore-feedback" id="fb-s2Faces" hidden></p>
+
+    <div class="explore-step" id="s2SphereBox" hidden>
+      <p class="explore-q">من أين تأتي المرايا الكروية؟ اضغط الزرّ لتقلب القطعة المقتطعة وتنظر في وجهيها.</p>
+      <svg class="optics-stage" id="sphereStage" viewBox="0 0 640 280" role="img" aria-label="كرة مجوّفة لامعة تُقتطع منها قطعة"></svg>
+      <div style="display:flex;justify-content:center;margin-top:12px;">
+        <button type="button" class="btn" id="s2FlipBtn">اقلب القطعة</button>
+      </div>
+    </div>
+
+    <div class="explore-step" id="s2OriginBox" hidden>
+      <p class="explore-q">قطعة واحدة اقتُطعت من كرة مجوّفة لامعة من وجهيها. أيّ العبارات يصف سطحيها؟</p>
+      <div class="quiz-options" data-q="u3l1-sphere-origin">
+        <label class="quiz-option"><input type="radio" name="u3l1-sphere-origin" value="correct">وجهها الداخلي مقعّر، ووجهها الخارجي محدّب.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-sphere-origin" value="w1">وجهاها مقعّران معًا، لأنّ الكرة مجوّفة من داخلها.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-sphere-origin" value="w2">وجهاها محدّبان معًا، لأنّ الكرة منتفخة من خارجها.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-sphere-origin" value="w3">الوجه المواجه للضوء مقعّر، والوجه الآخر محدّب.</label>
+      </div>
+      <p class="explore-feedback" id="fb-u3l1-sphere-origin" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s2NameBox" hidden>
+      <p class="explore-q">اسحب اسم كل مرآة إلى مقطعها.</p>
+      <div data-chips="u3l1-names">
+        <div class="chips-pool" id="s2ChipsPool">
+          <div class="chip" data-value="مرآة مستوية" data-xp-id="u3l1-chip-flat" data-xp-reason="سمّيت المرآة المستوية من شكل سطحها العاكس" tabindex="0">مرآة مستوية</div>
+          <div class="chip" data-value="مرآة مقعّرة" data-xp-id="u3l1-chip-concave" data-xp-reason="سمّيت المرآة المقعّرة من شكل سطحها العاكس" tabindex="0">مرآة مقعّرة</div>
+          <div class="chip" data-value="مرآة محدّبة" data-xp-id="u3l1-chip-convex" data-xp-reason="سمّيت المرآة المحدّبة من شكل سطحها العاكس" tabindex="0">مرآة محدّبة</div>
+        </div>
+        <div class="cat-grid">
+          <div class="slot cat-slot" id="slot-flat" data-answer="مرآة مستوية" tabindex="0">
+            <span class="slot-label">المقطع الأول</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="slot-concave" data-answer="مرآة مقعّرة" tabindex="0">
+            <span class="slot-label">المقطع الثاني</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="slot-convex" data-answer="مرآة محدّبة" tabindex="0">
+            <span class="slot-label">المقطع الثالث</span><span class="slot-items"></span>
+          </div>
+        </div>
+        <p class="explore-feedback chips-feedback" hidden></p>
+      </div>
+    </div>
+
+    <div class="facts-grid" id="s2Facts" hidden></div>
+
+    <div class="station-handoff" id="s2done" hidden>
+      <a href="#station-3" class="station-next">ثلاثة أشعة… ثلاث مرايا ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 3 — Explore ═════════════════════ -->
+  <section class="station" id="station-3">
+    <div class="station-label">المحطة الثالثة</div>
+    <h2>ثلاثة أشعة… ثلاث مرايا</h2>
+    <p class="station-tagline">صندوق ضوء يُخرج ثلاثة أشعة متوازية. توقّع مصيرها عند كل مرآة، ثم شغّل الضوء.</p>
+
+    <p class="name-card" id="s3AxisCard"><b>المحور الرئيس:</b> المستقيم العمودي على المرآة عند منتصفها. والأشعة الثلاثة في هذا المشهد موازية له.</p>
+
+    <div id="s3MirrorRow">
+      <button type="button" class="btn mirror-btn" id="s3BtnFlat" data-mirror="flat">مرآة مستوية</button>
+      <button type="button" class="btn mirror-btn" id="s3BtnConcave" data-mirror="concave">مرآة مقعّرة</button>
+      <button type="button" class="btn mirror-btn" id="s3BtnConvex" data-mirror="convex">مرآة محدّبة</button>
+    </div>
+
+    <div class="explore-step" id="s3PredictConcave" hidden>
+      <p class="explore-q">ثلاثة أشعة متوازية ستسقط على مرآة <b>مقعّرة</b>. ما مصيرها بعد الانعكاس؟</p>
+      <div class="quiz-options" data-q="u3l1-predict-concave">
+        <label class="quiz-option"><input type="radio" name="u3l1-predict-concave" value="p1">تبقى متوازية كما كانت قبل سقوطها.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-predict-concave" value="p2">تتقارب حتى تلتقي في نقطة واحدة.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-predict-concave" value="p3">تتباعد بعضها عن بعض كلّما ابتعدت.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-predict-concave" value="p4">يعود كلّ شعاع في المسار الذي جاء فيه.</label>
+      </div>
+      <p class="explore-feedback" id="fb-u3l1-predict-concave" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s3PredictConvex" hidden>
+      <p class="explore-q">ثلاثة أشعة متوازية ستسقط على مرآة <b>محدّبة</b>. ما مصيرها بعد الانعكاس؟</p>
+      <div class="quiz-options" data-q="u3l1-predict-convex">
+        <label class="quiz-option"><input type="radio" name="u3l1-predict-convex" value="p1">تبقى متوازية كما كانت قبل سقوطها.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-predict-convex" value="p2">تتقارب حتى تلتقي في نقطة واحدة.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-predict-convex" value="p3">تتباعد بعضها عن بعض كلّما ابتعدت.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-predict-convex" value="p4">يعود كلّ شعاع في المسار الذي جاء فيه.</label>
+      </div>
+      <p class="explore-feedback" id="fb-u3l1-predict-convex" hidden></p>
+    </div>
+
+    <svg class="optics-stage" id="beamStage" viewBox="0 0 660 380" role="img" aria-label="صندوق ضوء وثلاثة أشعة متوازية أمام مرآة"></svg>
+    <div style="display:flex;justify-content:center;margin-top:12px;">
+      <button type="button" class="btn" id="s3RunBtn">شغّل الضوء</button>
+    </div>
+    <p class="explore-feedback" id="fb-s3Stage" hidden></p>
+
+    <div class="facts-grid" id="s3Facts" hidden></div>
+
+    <div class="explore-step" id="s3FocalBox" hidden>
+      <p class="explore-q">في مشهد المرآة المقعّرة الذي رأيته، أيّ مسافة هي البعد البؤري؟</p>
+      <div class="quiz-options" data-q="u3l1-focal-name">
+        <label class="quiz-option"><input type="radio" name="u3l1-focal-name" value="w1">المسافة بين صندوق الضوء وسطح المرآة العاكس.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-focal-name" value="correct">المسافة بين سطح المرآة ونقطة التقاء الأشعة.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-focal-name" value="w2">المسافة بين الشعاعين الخارجيَّين عند خروجهما.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-focal-name" value="w3">المسافة بين طرف المرآة الأعلى وطرفها الأسفل.</label>
+      </div>
+      <p class="explore-feedback" id="fb-u3l1-focal-name" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s3PatternBox" hidden>
+      <p class="explore-q">ما القاعدة التي تجمع ما رأيته في المرايا الثلاث؟</p>
+      <div class="quiz-options" data-q="u3l1-pattern-beams">
+        <label class="quiz-option"><input type="radio" name="u3l1-pattern-beams" value="w1">كل مرآة كروية تجمّع الأشعة، والفرق في سرعة التجمّع.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-pattern-beams" value="w2">اتّجاه الأشعة بعد الانعكاس يتبع شدّة الضوء لا الشكل.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-pattern-beams" value="correct">المستوية تُبقيها متوازية، والمقعّرة تجمّعها، والمحدّبة تفرّقها.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-pattern-beams" value="w3">المقعّرة تفرّق الأشعة، والمحدّبة تجمّعها في نقطة أمامها.</label>
+      </div>
+      <p class="explore-feedback" id="fb-u3l1-pattern-beams" hidden></p>
+    </div>
+
+    <p class="fact-line" id="s3Teaser" hidden>سقطت الأشعة الثلاثة متوازية، وقانون الانعكاس هو نفسه في المرايا الثلاث. فما الذي اختلف؟</p>
+
+    <div class="station-handoff" id="s3done" hidden>
+      <a href="#station-4" class="station-next">القانون واحد… فما الذي تغيّر؟ ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 4 — Explain ═════════════════════
+       ⚠ لم تُبنَ بعد — جلسة التنفيذ الثانية. المواصفة §4/المحطة 4 و§5.4. -->
+  <section class="station" id="station-4">
+    <div class="station-label">المحطة الرابعة</div>
+    <h2>القانون واحد… فما الذي تغيّر؟</h2>
+    <p class="station-tagline">شعاع واحد، ومنزلق يحرّك نقطة سقوطه على المرآة. راقب العمودي والزاويتين.</p>
+
+    <div class="station-handoff" id="s4done" hidden>
+      <a href="#station-5" class="station-next">كيف تبدو الصورة؟ ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 5 — Elaborate ═════════════════════
+       ⚠ لم تُبنَ بعد — جلسة التنفيذ الثانية. المواصفة §4/المحطة 5 و§5.5. -->
+  <section class="station" id="station-5">
+    <div class="station-label">المحطة الخامسة</div>
+    <h2>كيف تبدو الصورة؟</h2>
+    <p class="station-tagline">جسم على مسطرة أمام المرآة. حرّكه، وراقب صورته في المرآة.</p>
+
+    <div class="station-handoff" id="s5done" hidden>
+      <a href="#station-6" class="station-next">التقييم الختامي ←</a>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ محطة 6 — Evaluate ═════════════════════
+       ⚠ لم تُبنَ بعد — جلسة التنفيذ الثانية. بنك الأسئلة في المواصفة §6. -->
+  <section class="station" id="station-6">
+    <div class="station-label">المحطة السادسة</div>
+    <h2>التقييم الختامي</h2>
+    <p class="station-tagline">عشرة أسئلة، ومحاولة واحدة لكلّ سؤال. وفي نهايتها شهادتك باسمك.</p>
+
+    <div class="name-gate">
+      <label for="evalName">اكتب اسمك كما تريده أن يظهر على الشهادة</label>
+      <input type="text" class="explore-input" id="evalName" placeholder="الاسم الكامل" autocomplete="off">
+      <button type="button" class="btn" id="evalStart">ابدأ التقييم</button>
+      <p class="explore-feedback" id="evalNameFb" hidden></p>
+      <p class="gate-note">هذا هو التقييم الختامي لهذا الدرس. لكلّ سؤال محاولة واحدة، وبعد آخر سؤال تظهر نتيجتك وشهادتك. خذ وقتك.</p>
+    </div>
+
+    <div id="evalQuestions" hidden></div>
+
+    <div class="eval-summary" id="evalSummary" hidden></div>
+    <div id="certTriggerSlot"></div>
+  </section>
+
+</main>
+
+<script src="../../shared/sounds/sounds.js"></script>
+<script src="../../shared/xp-system/xp.js"></script>
+<script src="../../shared/faheem-widget/faheem.js"></script>
+<script src="../../shared/template-boilerplate/template.js"></script>
+<script src="../../shared/certificate-system/certificate.js"></script>
+<script src="../../shared/identity/footer.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   الوحدة 03 — الدرس 01 — سكربت الدرس (نصوص المحطات كلّها في T أدناه)
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+var NS = 'http://www.w3.org/2000/svg';
+
+var G = {
+  reduced: function(){
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+};
+function el(id){ return document.getElementById(id); }
+function show(id){ var n = el(id); if(n) n.hidden = false; }
+function txt(id, s){ var n = el(id); if(n) n.textContent = s; }
+function fbNeutral(id, s){
+  var n = el(id);
+  if(!n) return;
+  n.textContent = s;
+  n.className = 'explore-feedback is-hint';
+  n.hidden = false;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   === عدّة المسرح الضوئي — تُنسخ إلى دروس الوحدة 03 ===
+
+   منطق مادّة لا بنية منصّة، فلا تدخل shared/. وأي تحسين فيها
+   لا يسري تلقائيًّا على بقيّة دروس الوحدة — تُنسخ يدويًّا.
+   حدودها هذا التعليق وتعليق النهاية أسفله. لا تُدسّ داخلها
+   دالّة تخصّ درسًا بعينه.
+   ══════════════════════════════════════════════════════════════ */
+var OPT = (function(){
+  var AXIS = 180;
+  /* sign = -1 مقعّرة (مركز التكوّر نحو الضوء) · sign = +1 محدّبة */
+  var MIRRORS = {
+    concave: { cx:200, cy:180, R:260, sign:-1, p0x:460 },
+    convex:  { cx:720, cy:180, R:260, sign: 1, p0x:460 },
+    flat:    { flat:true, x:460 }
+  };
+  function point(m, d){
+    if(m.flat) return { x:m.x, y:AXIS + d };
+    var h = Math.sqrt(m.R*m.R - d*d);
+    return { x:m.cx - m.sign*h, y:m.cy + d };
+  }
+  /* مقعّرة: n = (C − P)/R · محدّبة: n = (P − C)/R — وكلتاهما نحو الضوء */
+  function normal(m, d){
+    if(m.flat) return { x:-1, y:0 };
+    var p = point(m, d);
+    return { x:m.sign*(p.x - m.cx)/m.R, y:m.sign*(p.y - m.cy)/m.R };
+  }
+  function unit(vx, vy){ var L = Math.hypot(vx, vy); return { x:vx/L, y:vy/L }; }
+  function reflect(v, n){
+    var dot = v.x*n.x + v.y*n.y;
+    return { x:v.x - 2*dot*n.x, y:v.y - 2*dot*n.y };
+  }
+  function incidence(v, n){
+    var dot = Math.abs(v.x*n.x + v.y*n.y);
+    if(dot > 1) dot = 1;
+    return Math.acos(dot)*180/Math.PI;
+  }
+  /* الزاوية بين متّجهين بـacos لا بفرق atan2 — الفرق يلتفّ حول ±180 فيكذب */
+  function between(a, b){
+    var d = a.x*b.x + a.y*b.y;
+    if(d > 1) d = 1; if(d < -1) d = -1;
+    return Math.acos(d)*180/Math.PI;
+  }
+  function axisHit(P, v){
+    if(Math.abs(v.y) < 1e-9) return null;
+    var t = (AXIS - P.y)/v.y;
+    if(t <= 0) return null;
+    return { x:P.x + v.x*t, y:AXIS, t:t };
+  }
+  /* مسار قوس المرآة بين d = −half و d = +half */
+  function arcPath(m, half){
+    if(m.flat){
+      return 'M ' + m.x + ' ' + (AXIS - half) + ' L ' + m.x + ' ' + (AXIS + half);
+    }
+    var a = point(m, -half), b = point(m, half);
+    var sweep = m.sign < 0 ? 1 : 0;
+    return 'M ' + a.x.toFixed(2) + ' ' + a.y.toFixed(2) +
+           ' A ' + m.R + ' ' + m.R + ' 0 0 ' + sweep + ' ' +
+           b.x.toFixed(2) + ' ' + b.y.toFixed(2);
+  }
+  /* شرطات الجانب غير العاكس — اتّجاه كل شرطة عكس n عند موضعها */
+  function hatchMarks(m, half, count, len){
+    var out = [], i, d, p, n;
+    for(i = 0; i < count; i++){
+      d = -half + (2*half) * (i/(count-1));
+      p = point(m, d); n = normal(m, d);
+      out.push({ x1:p.x, y1:p.y, x2:p.x - n.x*len, y2:p.y - n.y*len });
+    }
+    return out;
+  }
+  function svg(tag, attrs){
+    var e = document.createElementNS(NS, tag), k;
+    for(k in attrs){ if(attrs[k] !== null && attrs[k] !== undefined) e.setAttribute(k, attrs[k]); }
+    return e;
+  }
+  return {
+    AXIS:AXIS, MIRRORS:MIRRORS, point:point, normal:normal, unit:unit,
+    reflect:reflect, incidence:incidence, between:between, axisHit:axisHit,
+    arcPath:arcPath, hatchMarks:hatchMarks, svg:svg
+  };
+})();
+/* === نهاية عدّة المسرح الضوئي === */
+
+/* ============ 1) النصوص ============ */
+var T = {
+  s1: {
+    predictNeutral: 'سجّلنا توقّعك. انظر الآن في الوجهين واحكم بنفسك.',
+    idle: 'اختر وجهًا من الزرّين تحت الرسم.',
+    inner: 'الوجه الداخلي',
+    outer: 'الوجه الخارجي',
+    innerNote: 'الصورة أكبر من الشمعة.',
+    outerNote: 'الصورة أصغر من الشمعة.'
+  },
+  s2: {
+    backHint: 'الضوء لا يبلغ هذا الجانب أصلًا. أيّ الجانبين يواجه المصباح؟',
+    faceDone: 'أحسنت — حدّدت الجانب العاكس في المرايا الثلاث.',
+    origin: {
+      correct: '✓ صحيح! القطعة واحدة، ووجهاها مختلفان لأنّ الكرة مجوّفة من داخلها منتفخة من خارجها.',
+      w1: 'الكرة مجوّفة من الداخل ومنتفخة من الخارج — فهل يستوي وجهاها؟',
+      w2: 'الكرة مجوّفة من الداخل ومنتفخة من الخارج — فهل يستوي وجهاها؟',
+      w3: 'هل يتغيّر شكل القطعة إن أطفأتَ المصباح؟'
+    },
+    chipHints: {
+      'مرآة محدّبة|slot-concave': 'انظر إلى السطح العاكس: هل ينحني نحوك أم بعيدًا عنك؟',
+      'مرآة مقعّرة|slot-convex': 'انظر إلى السطح العاكس: هل ينحني نحوك أم بعيدًا عنك؟',
+      'مرآة مستوية|slot-concave': 'هل يمكن أن تنطبق مسطرة مستقيمة على هذا السطح؟',
+      'مرآة مستوية|slot-convex': 'هل يمكن أن تنطبق مسطرة مستقيمة على هذا السطح؟'
+    },
+    facts: [
+      ['المرآة المستوية', 'مرآة سطحها العاكس مسطّح.'],
+      ['المرآة المقعّرة', 'مرآة سطحها العاكس منحنٍ إلى الداخل، وهو جزء من السطح الداخلي لكرة مجوّفة.'],
+      ['المرآة المحدّبة', 'مرآة سطحها العاكس منحنٍ إلى الخارج، وهو جزء من السطح الخارجي لكرة مجوّفة.'],
+      ['التظليل بالخطوط الصغيرة', 'علامة تُرسم على الجانب غير العاكس من المرآة لتمييزه.']
+    ]
+  },
+  s3: {
+    predictNeutral: 'سجّلنا توقّعك. شغّل الضوء الآن وانظر بنفسك.',
+    runFirst: 'شغّل الضوء لترى ما يحدث.',
+    obsFlat: 'الأشعة الثلاثة عادت في مساراتها نفسها، وبقيت متوازية كما جاءت.',
+    obsConcave: 'الأشعة الثلاثة تقاربت بعد الانعكاس حتى التقت أمام المرآة.',
+    obsConvex: 'الأشعة الثلاثة تباعدت بعد الانعكاس، وكلّما ابتعدت زاد ما بينها.',
+    nextConcave: 'جرّبها الآن على المرآة المقعّرة.',
+    nextConvex: 'بقيت المرآة المحدّبة.',
+    facts: [
+      ['التجمّع', 'التقاء الأشعة المنعكسة في نقطة واحدة.'],
+      ['التفرّق', 'تباعد الأشعة بعضها عن بعض بعد الانعكاس.'],
+      ['البعد البؤري', 'المسافة من سطح المرآة إلى النقطة التي تلتقي عندها الأشعة المتجمّعة.']
+    ],
+    focal: {
+      correct: '✓ صحيح! وهي مرسومة الآن على المشهد.',
+      w1: 'صندوق الضوء خارج المرآة — فهل تتغيّر خاصّة المرآة إن قرّبتَه أو أبعدتَه؟',
+      w2: 'تلك مسافة بين شعاعين قبل أن يبلغا المرآة، لا بينها وبين شيء.',
+      w3: 'ذلك مقاس المرآة نفسها لا مسافةٌ أمامها.'
+    },
+    beams: {
+      correct: '✓ صحيح! الشكل وحده هو ما غيّر مصير الأشعة.',
+      w1: 'عد إلى المرآة المستوية: هل تجمّعت أشعتها؟',
+      w2: 'لم نغيّر شدّة الضوء في المشاهد الثلاثة — غيّرنا المرآة وحدها.',
+      w3: 'راجع المشهدين: أيّهما التقت أشعته في نقطة؟'
+    },
+    flatNote: 'الأشعة تعود في مساراتها نفسها — وأُزيحت قليلًا في الرسم لتراها.'
+  }
+};
+
+/* ============ 2) المحطات ============ */
+
+/* ─────────────── المحطة 1 — وجهان لملعقة ─────────────── */
+function station1(){
+  var stage = el('spoonStage');
+  if(!stage) return;
+  var S = OPT.svg;
+
+  var defs = S('defs', {});
+  var grad = S('linearGradient', { id:'spoonSheen1', x1:'0', y1:'0', x2:'1', y2:'1' });
+  grad.appendChild(S('stop', { offset:'0%',   'stop-color':'#cfe4e0' }));
+  grad.appendChild(S('stop', { offset:'55%',  'stop-color':'#8fb3ae' }));
+  grad.appendChild(S('stop', { offset:'100%', 'stop-color':'#c6dcd8' }));
+  defs.appendChild(grad);
+  var clip = S('clipPath', { id:'spoonBowlClip1' });
+  clip.appendChild(S('ellipse', { cx:400, cy:150, rx:96, ry:76 }));
+  defs.appendChild(clip);
+  stage.appendChild(defs);
+
+  /* الشمعة الحقيقية — قريبة من الملعقة */
+  function candle(g, cx, cy, scale, dim){
+    var w = 22*scale, h = 62*scale;
+    g.appendChild(S('rect', { x:cx-w/2, y:cy-h/2, width:w, height:h, rx:4*scale,
+      'class':'wax', opacity: dim ? .85 : 1 }));
+    g.appendChild(S('ellipse', { cx:cx, cy:cy-h/2-9*scale, rx:7*scale, ry:11*scale, 'class':'flame' }));
+  }
+
+  var real = S('g', {});
+  candle(real, 150, 168, 1, false);
+  real.appendChild(S('text', { x:150, y:236, 'class':'idle-note', 'text-anchor':'middle' }));
+  real.lastChild.textContent = 'الشمعة';
+  stage.appendChild(real);
+
+  /* الملعقة: كفّة بيضوية وذراع */
+  var spoon = S('g', {});
+  spoon.appendChild(S('rect', { x:392, y:216, width:16, height:74, rx:8, 'class':'spoon-metal' }));
+  spoon.appendChild(S('ellipse', { cx:400, cy:150, rx:100, ry:80, 'class':'spoon-metal' }));
+  stage.appendChild(spoon);
+
+  var faceRing = S('ellipse', { cx:400, cy:150, rx:96, ry:76, 'class':'spoon-face' });
+  stage.appendChild(faceRing);
+
+  var inside = S('g', { 'clip-path':'url(#spoonBowlClip1)' });
+  stage.appendChild(inside);
+
+  var caption = S('text', { x:400, y:44, 'class':'face-caption', 'text-anchor':'middle' });
+  stage.appendChild(caption);
+  var note = S('text', { x:400, y:296, 'class':'idle-note', 'text-anchor':'middle' });
+  note.textContent = T.s1.idle;
+  stage.appendChild(note);
+
+  function showFace(which){
+    while(inside.firstChild) inside.removeChild(inside.firstChild);
+    /* كلتاهما معتدلة — الشمعة قريبة. والفرق في الحجم وحده. */
+    candle(inside, 400, 150, which === 'inner' ? 1.55 : 0.55, true);
+    caption.textContent = which === 'inner' ? T.s1.inner : T.s1.outer;
+    note.textContent = which === 'inner' ? T.s1.innerNote : T.s1.outerNote;
+    stage.setAttribute('data-face', which);
+    seen[which] = true;
+    if(seen.inner && seen.outer){
+      show('s1Teaser');
+      show('s1done');
+    }
+  }
+
+  var seen = {};
+  var inner = el('s1InnerBtn'), outer = el('s1OuterBtn');
+  if(inner) inner.addEventListener('click', function(){ showFace('inner'); });
+  if(outer) outer.addEventListener('click', function(){ showFace('outer'); });
+
+  /* التنبّؤ لا يُصحَّح: تغذية محايدة واحدة لكل الخيارات، ونقاط المشاركة. */
+  var done = false;
+  document.querySelectorAll('[data-q="u3l1-predict-spoon"] input[type="radio"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if(done) return;
+      done = true;
+      fbNeutral('fb-u3l1-predict-spoon', T.s1.predictNeutral);
+      if(window.XP) window.XP.claim('u3l1-predict-spoon', window.XP.POINTS.PREDICT, 'سجّلتَ توقّعك قبل أن تنظر');
+      if(inner) inner.disabled = false;
+      if(outer) outer.disabled = false;
+    });
+  });
+}
+
+/* ─────────────── المحطة 2 — ما أشكال المرايا؟ ─────────────── */
+function station2(){
+  var stage = el('facesStage');
+  if(!stage) return;
+  var S = OPT.svg;
+  var PANELS = [
+    { key:'flat',    ox:0,   label:'المقطع الأول',  path:'M 140 60 L 140 200' },
+    { key:'concave', ox:220, label:'المقطع الثاني', path:'M 128 60 A 140 140 0 0 1 128 200' },
+    { key:'convex',  ox:440, label:'المقطع الثالث', path:'M 152 60 A 140 140 0 0 0 152 200' }
+  ];
+  var solved = {}, count = 0;
+
+  PANELS.forEach(function(p){
+    var g = S('g', { transform:'translate(' + p.ox + ',0)', 'data-panel':p.key });
+
+    /* مصباح على يسار كلّ مقطع: الضوء يأتي من الجهة نفسها في الثلاثة،
+       وهو الشرط الذي يجعل السؤال «أيّ الجانبين يواجه المصباح» ذا معنى. */
+    g.appendChild(S('circle', { cx:38, cy:130, r:13, 'class':'lamp-body' }));
+    g.appendChild(S('path', { d:'M 24 116 L 16 108 M 24 144 L 16 152 M 52 130 L 62 130',
+      stroke:'#e0a83c', 'stroke-width':'2', 'stroke-linecap':'round', fill:'none' }));
+
+    g.appendChild(S('path', { d:p.path, 'class':'mirror-body' }));
+
+    var lbl = S('text', { x:140, y:232, 'class':'panel-label' });
+    lbl.textContent = p.label;
+    g.appendChild(lbl);
+
+    var rays = S('g', { 'data-rays':p.key });
+    g.appendChild(rays);
+    var hatch = S('g', { 'data-hatch':p.key });
+    g.appendChild(hatch);
+
+    function mark(side){
+      if(solved[p.key]) return;
+      if(side === 'back'){
+        fbNeutral('fb-s2Faces', T.s2.backHint);
+        return;
+      }
+      solved[p.key] = true; count++;
+      var fbn = el('fb-s2Faces'); if(fbn) fbn.hidden = true;
+      /* الشعاع يبلغ الجانب المواجه للمصباح ويرتدّ عنه */
+      rays.appendChild(S('path', { d:'M 54 130 L 132 130', 'class':'ray', stroke:'#ffd27a' }));
+      rays.appendChild(S('path', { d:'M 132 138 L 58 152', 'class':'ray', stroke:'#ffd27a', opacity:'.75' }));
+      /* التظليل يُرسم تلقائيًّا على الجانب الآخر */
+      var m = p.key === 'flat' ? { flat:true, x:140 }
+            : (p.key === 'concave' ? { cx:8, cy:130, R:140, sign:-1 } : { cx:292, cy:130, R:140, sign:1 });
+      var saveAxis = OPT.AXIS;
+      var marks = [], i, d, pt, n;
+      for(i = 0; i < 9; i++){
+        d = -70 + 140*(i/8);
+        if(m.flat){ pt = { x:140, y:130 + d }; n = { x:-1, y:0 }; }
+        else{
+          var h = Math.sqrt(m.R*m.R - d*d);
+          pt = { x:m.cx - m.sign*h, y:m.cy + d };
+          n = { x:m.sign*(pt.x - m.cx)/m.R, y:m.sign*(pt.y - m.cy)/m.R };
+        }
+        marks.push(S('line', { x1:pt.x, y1:pt.y, x2:pt.x - n.x*13, y2:pt.y - n.y*13, 'class':'hatch' }));
+      }
+      marks.forEach(function(l){ hatch.appendChild(l); });
+      g.setAttribute('data-solved', '1');
+      if(count === 3){
+        fbNeutral('fb-s2Faces', T.s2.faceDone);
+        if(window.XP) window.XP.claim('u3l1-face-task', window.XP.POINTS.TASK, 'حدّدتَ الجانب العاكس في المرايا الثلاث');
+        show('s2SphereBox');
+      }
+    }
+
+    var front = S('rect', { x:88, y:52, width:46, height:156, 'class':'hit',
+      'data-side':'front', tabindex:'0', role:'button' });
+    front.appendChild(S('title', {})); front.lastChild.textContent = 'الجانب المواجه للمصباح';
+    var back = S('rect', { x:158, y:52, width:46, height:156, 'class':'hit',
+      'data-side':'back', tabindex:'0', role:'button' });
+    back.appendChild(S('title', {})); back.lastChild.textContent = 'الجانب البعيد عن المصباح';
+    front.addEventListener('click', function(){ mark('front'); });
+    back.addEventListener('click', function(){ mark('back'); });
+    [front, back].forEach(function(r){
+      r.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); r.dispatchEvent(new Event('click')); }
+      });
+    });
+    g.appendChild(front); g.appendChild(back);
+    stage.appendChild(g);
+  });
+
+  /* ── المسرح ب — اقتطاع القطعة من كرة مجوّفة ── */
+  var sph = el('sphereStage');
+  if(sph){
+    sph.appendChild(S('circle', { cx:180, cy:140, r:96, 'class':'shell-dim' }));
+    sph.appendChild(S('path', { d:'M 246 71 A 96 96 0 0 1 246 209', 'class':'shell' }));
+    var cap = S('text', { x:180, y:256, 'class':'panel-label' });
+    cap.textContent = 'كرة مجوّفة لامعة، تُقتطع منها قطعة';
+    sph.appendChild(cap);
+
+    var piece = S('g', { transform:'translate(470,0)' });
+    var arc = S('path', { d:'M -34 71 A 96 96 0 0 1 -34 209', 'class':'shell' });
+    piece.appendChild(arc);
+    var pLbl = S('text', { x:0, y:256, 'class':'piece-label' });
+    pLbl.textContent = 'الوجه الداخلي';
+    piece.appendChild(pLbl);
+    sph.appendChild(piece);
+
+    var flipped = false;
+    var fb = el('s2FlipBtn');
+    if(fb) fb.addEventListener('click', function(){
+      flipped = !flipped;
+      arc.setAttribute('d', flipped ? 'M 34 71 A 96 96 0 0 0 34 209' : 'M -34 71 A 96 96 0 0 1 -34 209');
+      pLbl.textContent = flipped ? 'الوجه الخارجي' : 'الوجه الداخلي';
+      sph.setAttribute('data-flipped', flipped ? '1' : '0');
+      if(flipped) show('s2OriginBox');
+    });
+  }
+
+  window.Quiz.practice({
+    'u3l1-sphere-origin': { xpId:'u3l1-sphere-origin', xp:'MCQ', reason:'وصفتَ وجهَي القطعة المقتطعة',
+                            correctText:T.s2.origin.correct, hints:T.s2.origin }
+  }, { onAllSolved: function(){ show('s2NameBox'); } });
+
+  window.Chips.hints(T.s2.chipHints);
+  window.Chips.onDone('u3l1-names', function(){
+    var grid = el('s2Facts');
+    if(grid && !grid.childElementCount){
+      T.s2.facts.forEach(function(f){
+        var card = document.createElement('div');
+        card.className = 'fact-card';
+        card.innerHTML = '<h4></h4><p></p>';
+        card.querySelector('h4').textContent = f[0];
+        card.querySelector('p').textContent = f[1];
+        grid.appendChild(card);
+      });
+    }
+    show('s2Facts');
+    show('s2done');
+  });
+}
+
+/* ─────────────── المحطة 3 — الحزمة الثلاثية ─────────────── */
+function station3(){
+  var stage = el('beamStage');
+  if(!stage) return;
+  var S = OPT.svg, M = OPT.MIRRORS;
+  var DS = [-90, -30, 30], HALF = 110, START_X = 70;
+  var current = 'flat', ran = {}, predicted = { concave:false, convex:false };
+
+  var defs = S('defs', {});
+  var g3 = S('linearGradient', { id:'beamGrad3', x1:'0', y1:'0', x2:'1', y2:'0' });
+  g3.appendChild(S('stop', { offset:'0%',   'stop-color':'#ffe9b0' }));
+  g3.appendChild(S('stop', { offset:'100%', 'stop-color':'#ffd27a' }));
+  defs.appendChild(g3);
+  stage.appendChild(defs);
+
+  stage.appendChild(S('line', { x1:90, y1:180, x2:640, y2:180, 'class':'axis-line' }));
+  var axLbl = S('text', { x:600, y:172, 'class':'axis-label', 'text-anchor':'end' });
+  axLbl.textContent = 'المحور الرئيس';
+  stage.appendChild(axLbl);
+
+  stage.appendChild(S('rect', { x:34, y:66, width:38, height:228, rx:8, 'class':'lightbox' }));
+  var lbLbl = S('text', { x:53, y:314, 'class':'axis-label', 'text-anchor':'middle' });
+  lbLbl.textContent = 'صندوق ضوء';
+  stage.appendChild(lbLbl);
+
+  var mirrorPath = S('path', { d:OPT.arcPath(M.flat, HALF), 'class':'mirror-body' });
+  stage.appendChild(mirrorPath);
+  var hatchG = S('g', { 'data-hatch':'beam' });
+  stage.appendChild(hatchG);
+  var inG  = S('g', { 'data-in':'1' });  stage.appendChild(inG);
+  var outG = S('g', { 'data-out':'1' }); stage.appendChild(outG);
+  var focalG = S('g', { 'data-focal':'1' }); stage.appendChild(focalG);
+  var noteT = S('text', { x:330, y:352, 'class':'stage-note', 'text-anchor':'middle' });
+  stage.appendChild(noteT);
+
+  function clear(g){ while(g.firstChild) g.removeChild(g.firstChild); }
+
+  function drawMirror(){
+    var m = M[current];
+    mirrorPath.setAttribute('d', OPT.arcPath(m, HALF));
+    clear(hatchG);
+    OPT.hatchMarks(m, HALF, 9, 15).forEach(function(h){
+      hatchG.appendChild(S('line', { x1:h.x1, y1:h.y1, x2:h.x2, y2:h.y2, 'class':'hatch' }));
+    });
+    clear(inG); clear(outG); clear(focalG);
+    noteT.textContent = '';
+    DS.forEach(function(d){
+      var p = OPT.point(m, d);
+      inG.appendChild(S('line', { x1:START_X, y1:180 + d, x2:p.x, y2:p.y, 'class':'beam' }));
+    });
+    stage.setAttribute('data-mirror', current);
+  }
+
+  function runLight(){
+    var m = M[current];
+    clear(outG); clear(focalG);
+    var hits = [];
+    DS.forEach(function(d){
+      var p = OPT.point(m, d), n = OPT.normal(m, d);
+      var v = { x:1, y:0 }, vr = OPT.reflect(v, n);
+      var t = 420, ex = p.x + vr.x*t, ey = p.y + vr.y*t;
+      /* المستوية: الشعاع يعود في مساره نفسه؛ يُزاح في الرسم ليُرى، والنصّ يعلن الإزاحة */
+      var dy = m.flat ? (d < 0 ? -7 : 7) : 0;
+      if(m.flat){ t = 390; ex = p.x + vr.x*t; ey = p.y + vr.y*t; }
+      outG.appendChild(S('line', { x1:p.x, y1:p.y + dy, x2:ex, y2:ey + dy, 'class':'beam-out' }));
+      var h = OPT.axisHit(p, vr);
+      if(h) hits.push(h.x);
+    });
+    ran[current] = true;
+    if(m.flat){
+      noteT.textContent = T.s3.flatNote;
+      fbNeutral('fb-s3Stage', T.s3.obsFlat + ' ' + T.s3.nextConcave);
+      enable('s3BtnConcave');
+    } else if(current === 'concave'){
+      var fx = hits.reduce(function(a, b){ return a + b; }, 0)/hits.length;
+      focalG.appendChild(S('circle', { cx:fx, cy:180, r:5, fill:'var(--coral)' }));
+      stage.setAttribute('data-focus-x', fx.toFixed(1));
+      fbNeutral('fb-s3Stage', T.s3.obsConcave + ' ' + T.s3.nextConvex);
+      enable('s3BtnConvex');
+    } else {
+      fbNeutral('fb-s3Stage', T.s3.obsConvex);
+      buildFacts();
+      show('s3FocalBox');
+    }
+  }
+
+  function enable(id){ var b = el(id); if(b) b.disabled = false; }
+
+  function buildFacts(){
+    var grid = el('s3Facts');
+    if(grid && !grid.childElementCount){
+      T.s3.facts.forEach(function(f){
+        var card = document.createElement('div');
+        card.className = 'fact-card';
+        card.innerHTML = '<h4></h4><p></p>';
+        card.querySelector('h4').textContent = f[0];
+        card.querySelector('p').textContent = f[1];
+        grid.appendChild(card);
+      });
+    }
+    show('s3Facts');
+  }
+
+  /* البعد البؤري يُرسم مسمًّى بعد السؤال لا قبله: لو رُسم مسمًّى قبله
+     لأجاب الرسمُ عن السؤال. ويُرسم ولا يُقاس رقمًا — القياس مادّة درس 02. */
+  function drawFocalBrace(){
+    current = 'concave';
+    drawMirror(); runLight();
+    var fx = parseFloat(stage.getAttribute('data-focus-x'));
+    focalG.appendChild(S('path', { d:'M ' + fx + ' 196 L ' + fx + ' 214 L 460 214 L 460 196', 'class':'focal-brace' }));
+    var t = S('text', { x:(fx + 460)/2, y:234, 'class':'focal-text' });
+    t.textContent = 'البعد البؤري';
+    focalG.appendChild(t);
+    stage.setAttribute('data-focal-labelled', '1');
+  }
+
+  document.querySelectorAll('.mirror-btn').forEach(function(b){
+    b.addEventListener('click', function(){
+      current = b.getAttribute('data-mirror');
+      drawMirror();
+      var fbn = el('fb-s3Stage'); if(fbn) fbn.hidden = true;
+      var run = el('s3RunBtn');
+      if(current !== 'flat' && !predicted[current]){
+        show(current === 'concave' ? 's3PredictConcave' : 's3PredictConvex');
+        if(run) run.disabled = true;
+        fbNeutral('fb-s3Stage', 'أجب عن سؤال التنبّؤ أولًا، ثم شغّل الضوء.');
+      } else if(run){ run.disabled = false; }
+    });
+  });
+
+  ['concave','convex'].forEach(function(key){
+    var q = 'u3l1-predict-' + key, done = false;
+    document.querySelectorAll('[data-q="' + q + '"] input[type="radio"]').forEach(function(r){
+      r.addEventListener('change', function(){
+        if(done) return;
+        done = true; predicted[key] = true;
+        fbNeutral('fb-' + q, T.s3.predictNeutral);
+        if(window.XP) window.XP.claim(q, window.XP.POINTS.PREDICT, 'سجّلتَ توقّعك قبل تشغيل الضوء');
+        var run = el('s3RunBtn');
+        if(run && current === key) run.disabled = false;
+      });
+    });
+  });
+
+  var runBtn = el('s3RunBtn');
+  if(runBtn) runBtn.addEventListener('click', runLight);
+
+  el('s3BtnConcave').disabled = true;
+  el('s3BtnConvex').disabled = true;
+  drawMirror();
+
+  window.Quiz.practice({
+    'u3l1-focal-name': { xpId:'u3l1-focal-name', xp:'MCQ', reason:'حدّدتَ البعد البؤري على المشهد',
+                         correctText:T.s3.focal.correct, hints:T.s3.focal }
+  }, { onAllSolved: function(){ drawFocalBrace(); show('s3PatternBox'); } });
+
+  window.Quiz.practice({
+    'u3l1-pattern-beams': { xpId:'u3l1-pattern-beams', xp:'PATTERN', reason:'استنتجتَ القاعدة الجامعة للمرايا الثلاث',
+                            correctText:T.s3.beams.correct, hints:T.s3.beams }
+  }, { onAllSolved: function(){ show('s3Teaser'); show('s3done'); } });
+}
+
+/* ─────────────── المحطات 4 و5 و6 — لم تُبنَ بعد ───────────────
+   جلسة التنفيذ الثانية. المواصفة: §4/المحطات 4 و5 · §5.4 و§5.5 · §6.
+   والشهادة تُربط عبر Quiz.evaluate وحدها عند بناء المحطة 6 —
+   ولا يُكتب نداء Certificate.finish في هذا السكربت إطلاقًا. */
+function station4(){}
+function station5(){}
+function station6(){}
+
+station1();
+station2();
+station3();
+station4();
+station5();
+station6();
+
+/* ══════════════════ الانتقال بين المحطات ══════════════════ */
+document.querySelectorAll('a.station-next[href^="#station-"]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    var id = a.getAttribute('href').slice(1);
+    var sec = document.getElementById(id);
+    if(!sec) return;
+    sec.hidden = false;
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + id + '"]');
+    if(dot) dot.classList.add('active');
+    if(sec.scrollIntoView){
+      sec.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+    }
+    if(window.Sounds) window.Sounds.playChime();
+  });
+});
+
+/* ══════════════════ الدخول من الخارج بالمرساة ══════════════════ */
+window.addEventListener('load', function(){
+  var id = (location.hash || '').replace(/^#/, '');
+  if(!/^station-[A-Za-z0-9_-]+$/.test(id)) return;
+  var target = document.getElementById(id);
+  if(!target || !target.classList.contains('station')) return;
+  var all = Array.prototype.slice.call(document.querySelectorAll('.station'));
+  var idx = all.indexOf(target);
+  if(idx < 0) return;
+  function activate(sec){
+    sec.classList.add('in-view');
+    var dot = document.querySelector('.progress-dot[data-target="' + sec.id + '"]');
+    if(dot) dot.classList.add('active');
+  }
+  all.slice(0, idx).forEach(function(sec){ if(!sec.hidden) activate(sec); });
+  target.hidden = false;
+  activate(target);
+  if(target.scrollIntoView){
+    target.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block: 'start' });
+  }
+});
+
+})();
+</script>
+</body>
+</html>
