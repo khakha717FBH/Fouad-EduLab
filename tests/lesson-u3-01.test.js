@@ -211,6 +211,19 @@ function pathNums(d){ return (d.match(/-?\d+(\.\d+)?/g) || []).map(Number); }
   ok('أزرار المرايا مقفلة قبل أوانها', btnCav.disabled && btnVex.disabled && !btnFlat.disabled);
   ok('زرّ المرآة المعروضة نشط', btnFlat.classList.contains('is-active'));
 
+  /* صندوق الضوء لا يُخرج ضوءًا قبل تشغيله: المسرح مطفأ عند الدخول،
+     وإلّا وعد الزرّ بفعلٍ تمّ بعضه قبل الضغط. */
+  const s3Next = document.getElementById('s3Next');
+  ok('المسرح مطفأ قبل تشغيل الضوء',
+     $$('#beamStage [data-in] line').length === 0 &&
+     $$('#beamStage [data-out] line').length === 0);
+  ok('لا نقطة تجمّع مسجَّلة قبل التشغيل', beam.getAttribute('data-focus-x') === null);
+  ok('سطر الخطوة التالية ظاهر عند الدخول', !s3Next.hidden && s3Next.textContent.length > 0);
+  ok('السطر يحمل العدّاد على الصفر', s3Next.textContent.indexOf('(0 من 3)') !== -1,
+     s3Next.textContent);
+  ok('السطر يعلن سبب قفل الزرَّين',
+     s3Next.textContent.indexOf('تُفتحان') !== -1, s3Next.textContent);
+
   /* تسمية المحور: موسَّطة وداخل المسرح */
   const axLbl = $$('#beamStage text').filter(t => t.getAttribute('class') === 'axis-label')[0];
   ok('تسمية المحور موسَّطة لا بمحاذاة end',
@@ -225,6 +238,12 @@ function pathNums(d){ return (d.match(/-?\d+(\.\d+)?/g) || []).map(Number); }
   const outFlat = $$('#beamStage [data-out] line');
   ok('ثلاثة أشعة ساقطة وثلاثة منعكسة في المستوية',
      inFlat.length === 3 && outFlat.length === 3);
+  ok('العدّاد ارتفع إلى واحد بعد أوّل تشغيل',
+     s3Next.textContent.indexOf('(1 من 3)') !== -1, s3Next.textContent);
+  ok('السطر يدلّ على المقعّرة بعد المستوية',
+     s3Next.textContent.indexOf('المقعّرة') !== -1, s3Next.textContent);
+  ok('الملاحظة الملاصقة للمسرح صارت وصفًا بلا توجيه',
+     document.getElementById('fb-s3Stage').textContent.indexOf('جرّبها') === -1);
   outFlat.forEach(function(l, i){
     ok('لا إزاحة رأسية في الشعاع ' + (i + 1),
        num(l, 'y1') === num(inFlat[i], 'y2') && num(l, 'y2') === num(l, 'y1'));
@@ -247,7 +266,16 @@ function pathNums(d){ return (d.match(/-?\d+(\.\d+)?/g) || []).map(Number); }
 
   /* المقعّرة: الأشعة تقف عند المحور ولا تتجاوزه */
   clickNode(btnCav);
+  ok('تبديل المرآة يُطفئ المسرح',
+     $$('#beamStage [data-in] line').length === 0 &&
+     $$('#beamStage [data-out] line').length === 0);
+  ok('السطر يطلب التوقّع قبل التشغيل',
+     s3Next.textContent.indexOf('التوقّع') !== -1, s3Next.textContent);
+  ok('العدّاد لا يرتفع بالتبديل وحده',
+     s3Next.textContent.indexOf('(1 من 3)') !== -1, s3Next.textContent);
   H.choose(document, 'u3l1-predict-concave', 'p2');
+  ok('السطر يطلب التشغيل بعد تسجيل التوقّع',
+     s3Next.textContent.indexOf('شغّل الضوء') !== -1, s3Next.textContent);
   H.click(document, 's3RunBtn');
   const outCav = $$('#beamStage [data-out] line');
   const fx = parseFloat(beam.getAttribute('data-focus-x'));
@@ -305,6 +333,8 @@ function pathNums(d){ return (d.match(/-?\d+(\.\d+)?/g) || []).map(Number); }
 
   ok('الأزرار الثلاثة تُفتح بعد تشغيل الثلاثة',
      !btnFlat.disabled && !btnCav.disabled && !btnVex.disabled);
+  ok('السطر ينتقل إلى البعد البؤري بعد المرايا الثلاث',
+     s3Next.textContent.indexOf('البعد البؤري') !== -1, s3Next.textContent);
 
   /* الصورة الثابتة */
   const still = document.getElementById('beamStill');
@@ -331,6 +361,13 @@ function pathNums(d){ return (d.match(/-?\d+(\.\d+)?/g) || []).map(Number); }
   })());
 
   ok('سؤال النمط يظهر بعد سؤال البعد البؤري', !document.getElementById('s3PatternBox').hidden);
+  ok('السطر ينتقل إلى سؤال القاعدة الجامعة',
+     s3Next.textContent.indexOf('القاعدة الجامعة') !== -1, s3Next.textContent);
+
+  /* السطر يزول بزوال سببه: لم يبقَ في المحطة ما يُطلب */
+  H.choose(document, 'u3l1-pattern-beams', 'correct');
+  ok('سطر الخطوة التالية يختفي عند اكتمال المحطة',
+     s3Next.hidden && s3Next.textContent === '');
 
   /* حارس الأصناف: صنف يُستعمل في الصفحة ولا يُعرَّف لا محلّيًّا ولا في
      المشترك يقع على تنسيق المتصفّح الافتراضي — وهو خلل لا يظهر في jsdom
