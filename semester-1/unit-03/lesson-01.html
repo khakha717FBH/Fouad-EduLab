@@ -215,6 +215,17 @@
   #imageStage .eye-note{ fill:var(--ink-dim); font-family:'Tajawal',sans-serif; font-size:12px; text-anchor:middle; }
   #imageStage .stage-note{ fill:var(--ink-dim); font-family:'Tajawal',sans-serif; font-size:15px; text-anchor:middle; }
   .ctrl-row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; align-items:center; margin-top:12px; }
+  /* سطر الخطوة التالية: حدّ جانبي واحد بلا زوايا مستديرة (القاعدة:
+     الاستدارة لا تصلح مع حدّ من جانب واحد)، والعدّاد بلون الفعل. */
+  .next-step{
+    margin:20px 0 0; padding:10px 16px;
+    border-right:3px solid var(--turquoise);
+    background:var(--turquoise-faint);
+    font-family:'Tajawal',sans-serif; font-size:15px;
+  }
+  .station p.next-step{ color:var(--ink); }
+  .next-step .count{ color:var(--turquoise); font-weight:700; }
+  .next-step .aside{ color:var(--ink-dim); font-size:13px; }
   .ctrl-row .row-label{ color:var(--ink-dim); font-family:'Tajawal',sans-serif; font-size:14px; }
 
   .mirror-btn[disabled], #s1FaceRow .btn[disabled]{ opacity:.4; cursor:not-allowed; }
@@ -519,7 +530,6 @@
         <button type="button" class="btn mirror-btn" id="s5MirrorFL" disabled>مستوية</button>
       </div>
 
-      <p class="explore-feedback" id="fb-s5Stage" hidden></p>
     </div>
 
     <div class="explore-step" id="s5TaskBox" hidden>
@@ -596,6 +606,12 @@
       </div>
       <p class="explore-feedback" id="fb-u3l1-compare-flat" hidden></p>
     </div>
+
+    <!-- سطر الخطوة التالية: يسكن ذيل المحطة دائمًا، تحت كلّ ما ظهر.
+         موضعه هو الفكرة كلّها — عين الطالب تنتهي عنده حتمًا، فلا
+         يخمّن المطلوب. ومكانٌ واحد للتعليمات لا مكانان: سطر المسرح
+         السابق أُلغي لأنّه كان يقع فوق رأس الطالب وعيناه تحت. -->
+    <p class="next-step" id="s5Next" aria-live="polite"></p>
 
     <p class="name-card" id="s5Closing" hidden>جرّبها بيدك: أمسك ملعقة معدنية لامعة، وقرّبها من وجهك ثمّ أبعدها، وانظر في وجهيها. وإن كان معك ورقة بيضاء، قابِل بالوجه المقعّر ضوء نافذة وحرّك الورقة أمامه ببطء — هل ظهر عليها شيء؟ احتفظ بما رأيت، فسنعود إليه. وحين تمرّ بمخرج موقف أحد المجمّعات في الدوحة، انظر إلى المرآة الكبيرة المثبّتة هناك: أيّ الأشكال الثلاثة تشبه؟</p>
 
@@ -949,16 +965,23 @@ var T = {
     normalLegend: 'الخطّ المنقّط الرفيع هو العمودي عند نقطة السقوط.'
   },
   s5: {
-    explore:  'حرّك الجسم على المسطرة، وراقب صورته داخل وجه المرآة.',
+    next: {
+      explore: 'حرّك الجسم إلى ثلاثة مواضع متباعدة على المسطرة، وراقب صورته في كلّ موضع.',
+      task:    'أجب عن السؤال أعلاه: عند أيّ مسافة انقلبت الصورة؟',
+      convex:  'بدّل إلى المرآة المحدّبة، وحرّك الجسم إلى ثلاثة مواضع متباعدة.',
+      convexAside: 'والتحدّي الاختياري أعلاه إن أردته.',
+      pattern: 'أجب عن سؤال النمط أعلاه.',
+      flat:    'بقيت المرآة المستوية. بدّل إليها وحرّك الجسم إلى ثلاثة مواضع متباعدة.',
+      table:   'اسحب الأوصاف الأربعة، كلّ وصف إلى الحالة التي رأيته فيها.',
+      compare: 'أجب عن سؤال المقارنة أعلاه.'
+    },
     noImage:  'لا تظهر صورة واضحة عند هذه المسافة.',
-    taskCue:  'الآن جرّب أن تُبعد الجسم حتى تنقلب صورته.',
     flipEmpty:'اكتب الرقم بالسنتيمتر أوّلًا.',
     flipHint: 'عُد قليلًا وتقدّم قليلًا حول الموضع الذي رأيت الصورة تنقلب عنده.',
     flipDone: '✓ صحيح! الصورة تنقلب حول هذه المسافة مهما أعدت التجربة.',
     helpStep1:'وضعتُ الجسم عند 18 cm — الصورة معتدلة الآن. حرّكه سنتيمترًا واحدًا في كل مرّة وراقب متى تنقلب.',
     helpStep2:'أرِني الإجابة',
     helpModel:'تنقلب عند 20 cm. سجّلتُها لك، ولك نصف نقاط المهمّة.',
-    unlock:   'جرّب الآن الشكلين الآخرين، وحرّك الجسم في المدى كلّه أمام كلٍّ منهما.',
     bonusGate:'بدّل إلى الجسم الأكبر أوّلًا، ثمّ أجب.',
     bonusOn:  'أعد التجربة بالجسم الأكبر، ثمّ اختر.',
     bonus: {
@@ -1702,6 +1725,7 @@ function station5(){
   var kind = 'concave', size = 'small';
   var seen = { concave: [], convex: [], flat: [] };
   var taskDone = false, patternDone = false, tableShown = false;
+  var tableDone = false, compareDone = false;
   var flipTries = 0, helpStage = 0, bonusWrong = 0;
 
   var defs  = OPT.svg('defs', {});
@@ -1715,6 +1739,64 @@ function station5(){
   var objG    = OPT.svg('g', {});
   var noteG   = OPT.svg('g', {});
   [mirrorG, rulerG, imgG, objG, noteG].forEach(function(g){ stage.appendChild(g); });
+
+  /* الكشف يُتبَع بتمرير أقلّ ما يكفي: block:'nearest' لا 'start'، ولا
+     تمرير أصلًا إن كان الصندوق ظاهرًا في الشاشة — فالدرس لا يقفز تحت
+     يد الطالب، ولا يختفي عنه صندوقٌ ظهر تحت الطيّة. */
+  function reveal(id){
+    var n = el(id);
+    if(!n) return;
+    n.hidden = false;
+    if(!n.getBoundingClientRect || !n.scrollIntoView) return;
+    var r = n.getBoundingClientRect();
+    var h = window.innerHeight || 0;
+    if(h && r.bottom > h){
+      n.scrollIntoView({ behavior: G.reduced() ? 'auto' : 'smooth', block:'nearest' });
+    }
+  }
+
+  /* سطر الخطوة التالية يُشتقّ من حالة الطالب الفعلية لا من عدّاد خطوات:
+     من بدّل إلى المستوية قبل المحدّبة لا يُقال له «بقيت المستوية».
+     والعدّاد هو التغذية الراجعة نفسها — حركةٌ قصيرة لا ترفعه، فيفهم
+     معنى «متباعدة» بلا سطر يشرحه. */
+  function setNext(msg, count, aside){
+    var n = el('s5Next');
+    if(!n) return;
+    n.textContent = '← ' + msg;
+    if(typeof count === 'number'){
+      var c = document.createElement('span');
+      c.className = 'count';
+      c.textContent = ' (' + Math.min(count, 3) + ' من 3)';
+      n.appendChild(c);
+    }
+    if(aside){
+      var a = document.createElement('span');
+      a.className = 'aside';
+      a.textContent = ' — ' + aside;
+      n.appendChild(a);
+    }
+    n.hidden = false;
+  }
+  function updateNext(){
+    var n = el('s5Next');
+    if(!n) return;
+    if(compareDone){ n.textContent = ''; n.hidden = true; return; }
+    if(tableDone)  return setNext(T.s5.next.compare);
+    if(tableShown) return setNext(T.s5.next.table);
+    if(patternDone){
+      if(seen.flat.length < 3) return setNext(T.s5.next.flat, seen.flat.length);
+      return setNext(T.s5.next.table);
+    }
+    if(taskDone){
+      if(!el('s5PatternBox').hidden) return setNext(T.s5.next.pattern);
+      if(seen.convex.length < 3){
+        return setNext(T.s5.next.convex, seen.convex.length, T.s5.next.convexAside);
+      }
+      return setNext(T.s5.next.pattern);
+    }
+    if(el('s5TaskBox').hidden) return setNext(T.s5.next.explore, seen.concave.length);
+    return setNext(T.s5.next.task);
+  }
 
   function mirrorOf(k){
     if(k === 'flat') return { flat:true, x:VERTEX };
@@ -1851,7 +1933,7 @@ function station5(){
   }
   function pickMirror(name, btn){
     if(btn.disabled) return;
-    kind = name; setActive('s5MirrorRow', btn); draw(); settle();
+    kind = name; setActive('s5MirrorRow', btn); draw(); settle(); updateNext();
   }
   el('s5SizeSmall').addEventListener('click', function(){ pickSize('small', this); });
   el('s5SizeBig')  .addEventListener('click', function(){ pickSize('big',   this); });
@@ -1868,19 +1950,20 @@ function station5(){
     if(list.indexOf(k) === -1) list.push(k);
 
     if(!taskDone && kind === 'concave' && seen.concave.length >= 3 && el('s5TaskBox').hidden){
-      show('s5TaskBox');
-      fbNeutral('fb-s5Stage', T.s5.taskCue);
+      reveal('s5TaskBox');
     }
     if(taskDone && kind === 'convex' && seen.convex.length >= 3 && el('s5PatternBox').hidden){
-      show('s5PatternBox');
+      reveal('s5PatternBox');
     }
     maybeTable();
+    updateNext();
   }
   function maybeTable(){
     if(tableShown || !patternDone) return;
     if(seen.convex.length < 3 || seen.flat.length < 3) return;
     tableShown = true;
-    show('s5TableBox');
+    reveal('s5TableBox');
+    updateNext();
   }
 
   var settleT = null;
@@ -1905,10 +1988,10 @@ function station5(){
   function unlockMirrors(){
     el('s5MirrorCX').disabled = false;
     el('s5MirrorFL').disabled = false;
-    fbNeutral('fb-s5Stage', T.s5.unlock);
-    show('s5BonusBox');
+    reveal('s5BonusBox');
     fbNeutral('fb-u3l1-bigger-object-bonus', T.s5.bonusGate);
     if(size === 'big') enableBonus();
+    updateNext();
   }
   function finishTask(viaHelp){
     if(taskDone) return;
@@ -1987,6 +2070,7 @@ function station5(){
       window.XP.claim('u3l1-bigger-object-bonus',
         bonusWrong >= 2 ? Math.round(window.XP.POINTS.BONUS / 2) : window.XP.POINTS.BONUS,
         'اختبرتَ أثر حجم الجسم على موضع الانقلاب');
+      updateNext();
     }
   });
 
@@ -1994,7 +2078,7 @@ function station5(){
     'u3l1-pattern-convex': { xpId:'u3l1-pattern-convex', xp:'PATTERN',
       reason:'استنتجتَ نمط صورة المرآة المحدّبة',
       correctText:T.s5.pattern.correct, hints:T.s5.pattern }
-  }, { onSolved: function(){ patternDone = true; maybeTable(); } });
+  }, { onSolved: function(){ patternDone = true; maybeTable(); updateNext(); } });
 
   window.Chips.hints({
     'معتدلة وأكبر من الجسم':   T.s5.chipHints.near,
@@ -2003,18 +2087,25 @@ function station5(){
     'معتدلة وبحجم الجسم نفسه': T.s5.chipHints.fl
   });
   window.Chips.onDone('u3l1-image-table', function(){
-    show('s5CompareBox');
+    tableDone = true;
+    reveal('s5CompareBox');
+    updateNext();
   });
 
   window.Quiz.practice({
     'u3l1-compare-flat': { xpId:'u3l1-compare-flat', xp:'MCQ',
       reason:'ميّزتَ صورة المرآة المستوية عن صورتي المرآتين الكرويتين',
       correctText:T.s5.compare.correct, hints:T.s5.compare }
-  }, { onSolved: function(){ show('s5Closing'); show('s5done'); } });
+  }, { onSolved: function(){
+         compareDone = true;
+         show('s5Closing');
+         reveal('s5done');
+         updateNext();
+       } });
 
   drawRuler();
   draw();
-  fbNeutral('fb-s5Stage', T.s5.explore);
+  updateNext();
 }
 
 /* ─────────────── المحطة 6 — التقييم الختامي ───────────────
