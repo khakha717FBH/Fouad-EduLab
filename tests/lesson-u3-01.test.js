@@ -499,6 +499,190 @@ function pathNums(d){ return (d.match(/-?\d+(\.\d+)?/g) || []).map(Number); }
   ok('بطاقة العمودي تظهر بعد الإجابة لا قبلها', !document.getElementById('s4FactCard').hidden);
   ok('الانتقال إلى المحطة 5 يظهر', !document.getElementById('s4done').hidden);
 
+  /* ───────────── المحطة 5: الجسم والصورة ───────────── */
+  console.log('\n— المحطة 5: المسرح والمهمّة —');
+
+  function slide(doc, w, id, v){
+    const s = doc.getElementById(id);
+    s.value = String(v);
+    s.dispatchEvent(new w.Event('input', { bubbles:true }));
+    s.dispatchEvent(new w.Event('change', { bubbles:true }));
+    return s;
+  }
+  const stage5 = document.getElementById('imageStage');
+
+  ok('مسرح المحطة 5 ظاهر بلا بوّابة', !document.getElementById('s5StageBox').hidden);
+  ok('يبدأ الطالب على المقعّرة', stage5.getAttribute('data-mirror') === 'concave');
+  ok('الصورة معتدلة عند 8 cm', stage5.getAttribute('data-image') === 'upright');
+  ok('المحدّبة والمستوية معطَّلتان قبل المهمّة',
+     document.getElementById('s5MirrorCX').disabled &&
+     document.getElementById('s5MirrorFL').disabled);
+  ok('المهمّة لا تظهر قبل الاستكشاف', document.getElementById('s5TaskBox').hidden);
+
+  slide(document, window, 's5Slider', 12);
+  slide(document, window, 's5Slider', 16);
+  ok('موضعان لا يكفيان لفتح المهمّة', document.getElementById('s5TaskBox').hidden);
+  slide(document, window, 's5Slider', 30);
+  ok('ثلاثة مواضع مختلفة تفتح المهمّة', !document.getElementById('s5TaskBox').hidden);
+
+  slide(document, window, 's5Slider', 20);
+  ok('عند 20 cm لا تُرسم صورة', stage5.getAttribute('data-image') === 'none');
+  ok('العبارة المعروضة محايدة بلا تفسير',
+     (stage5.textContent || '').indexOf('لا تظهر صورة واضحة') !== -1);
+  slide(document, window, 's5Slider', 19);
+  ok('عند 19 cm الصورة معتدلة يراها الطالب', stage5.getAttribute('data-image') === 'upright');
+  slide(document, window, 's5Slider', 21);
+  ok('عند 21 cm الصورة مقلوبة يراها الطالب', stage5.getAttribute('data-image') === 'inverted');
+  slide(document, window, 's5Slider', 60);
+  ok('الصورة البعيدة مقلوبة وأصغر',
+     stage5.getAttribute('data-image') === 'inverted' &&
+     Math.abs(parseFloat(stage5.getAttribute('data-m'))) < 1);
+
+  H.type(document, 's5FlipInput', '35');
+  H.click(document, 's5FlipBtn');
+  ok('رقم بعيد يُرفض بتلميح لا بصمت',
+     document.getElementById('s5MirrorCX').disabled &&
+     H.text(document, 'fb-u3l1-flip-task').length > 15);
+  ok('مخرج النجاة مخفيّ بعد محاولة واحدة', document.getElementById('s5FlipHelpBtn').hidden);
+  H.type(document, 's5FlipInput', '5');  H.click(document, 's5FlipBtn');
+  H.type(document, 's5FlipInput', '40'); H.click(document, 's5FlipBtn');
+  ok('مخرج النجاة يظهر بعد ثلاث محاولات', !document.getElementById('s5FlipHelpBtn').hidden);
+
+  H.click(document, 's5FlipHelpBtn');
+  ok('أوّل معونة تضع الجسم عند 18 لا تكشف الرقم',
+     stage5.getAttribute('data-u') === '18' &&
+     document.getElementById('s5MirrorCX').disabled);
+
+  H.type(document, 's5FlipInput', '20');
+  H.click(document, 's5FlipBtn');
+  ok('إجابة 20 تُقبل', document.getElementById('s5FlipBtn').disabled);
+  ok('المحدّبة والمستوية تُفتحان بعد المهمّة',
+     !document.getElementById('s5MirrorCX').disabled &&
+     !document.getElementById('s5MirrorFL').disabled);
+  ok('التحدّي الاختياري يظهر بعد المهمّة', !document.getElementById('s5BonusBox').hidden);
+
+  const bonusG = H.groupByName(document, 'u3l1-bigger-object-bonus');
+  ok('خيارات التحدّي مقفلة قبل تبديل الحجم',
+     bonusG.querySelector('input[value="correct"]').disabled);
+  H.click(document, 's5SizeBig');
+  ok('تبديل الحجم يفتح خيارات التحدّي',
+     !bonusG.querySelector('input[value="correct"]').disabled);
+  ok('حجم الجسم لا يغيّر موضع الانقلاب', (function(){
+    slide(document, window, 's5Slider', 19);
+    const a = stage5.getAttribute('data-image');
+    slide(document, window, 's5Slider', 21);
+    const b = stage5.getAttribute('data-image');
+    return a === 'upright' && b === 'inverted';
+  })());
+  H.choose(document, 'u3l1-bigger-object-bonus', 'correct');
+  ok('التحدّي يُحتسب صحيحًا', H.text(document, 'fb-u3l1-bigger-object-bonus').indexOf('✓') === 0);
+
+  console.log('\n— المحطة 5: المحدّبة والمستوية والجدول —');
+  ok('سؤال النمط مخفيّ قبل التبديل إلى المحدّبة',
+     document.getElementById('s5PatternBox').hidden);
+  H.click(document, 's5MirrorCX');
+  ok('المحدّبة: الصورة معتدلة وأصغر عند القريب',
+     (function(){ slide(document, window, 's5Slider', 10);
+       return stage5.getAttribute('data-image') === 'upright' &&
+              Math.abs(parseFloat(stage5.getAttribute('data-m'))) < 1; })());
+  ok('سؤال النمط لا يظهر بموضعين', document.getElementById('s5PatternBox').hidden);
+  slide(document, window, 's5Slider', 50);
+  ok('المحدّبة لا تقلب الصورة في المدى كلّه',
+     stage5.getAttribute('data-image') === 'upright');
+  ok('سؤال النمط يظهر بعد ثلاثة مواضع على المحدّبة',
+     !document.getElementById('s5PatternBox').hidden);
+
+  H.choose(document, 'u3l1-pattern-convex', 'w1');
+  ok('مشتّت النمط يُقابَل بتلميح لا بصمت',
+     H.text(document, 'fb-u3l1-pattern-convex').length > 15);
+  H.choose(document, 'u3l1-pattern-convex', 'correct');
+  ok('الجدول لا يظهر قبل زيارة المستوية', document.getElementById('s5TableBox').hidden);
+
+  H.click(document, 's5MirrorFL');
+  slide(document, window, 's5Slider', 15);
+  ok('المستوية: الصورة بحجم الجسم نفسه',
+     Math.abs(parseFloat(stage5.getAttribute('data-m')) - 1) < 1e-9);
+  slide(document, window, 's5Slider', 35);
+  slide(document, window, 's5Slider', 55);
+  ok('المستوية لا تتغيّر صورتها مع المسافة',
+     Math.abs(parseFloat(stage5.getAttribute('data-m')) - 1) < 1e-9);
+  ok('الجدول يظهر بعد النمط وزيارة المستوية',
+     !document.getElementById('s5TableBox').hidden);
+
+  function chipOf(v){
+    return $$('#s5ChipsPool .chip').filter(c => c.dataset.value === v)[0];
+  }
+  const slotFar = document.getElementById('slot-cc-far');
+  H.selectChip(chipOf('معتدلة وأكبر من الجسم'));
+  H.clickNode(slotFar);
+  ok('وضع خاطئ لا يملأ الخانة', slotFar.querySelector('.slot-items').children.length === 0);
+  ok('الوضع الخاطئ مصحوب بتلميح',
+     !document.querySelector('#s5TableBox .chips-feedback').hidden);
+
+  ok('سؤال المقارنة مخفيّ قبل اكتمال الجدول',
+     document.getElementById('s5CompareBox').hidden);
+  [['معتدلة وأكبر من الجسم', 'slot-cc-near'],
+   ['مقلوبة وأصغر من الجسم', 'slot-cc-far'],
+   ['معتدلة وأصغر من الجسم', 'slot-cx-any'],
+   ['معتدلة وبحجم الجسم نفسه', 'slot-fl-any']].forEach(function(pair){
+    const c = chipOf(pair[0]);
+    if(!c) return;
+    H.selectChip(c);
+    H.clickNode(document.getElementById(pair[1]));
+  });
+  ok('الجدول يكتمل بأربع رقاقات في مواضعها',
+     $$('#s5TableBox .slot').every(s => s.querySelector('.slot-items').children.length === 1));
+  ok('سؤال المقارنة يظهر باكتمال الجدول',
+     !document.getElementById('s5CompareBox').hidden);
+
+  ok('الخاتمة مخفيّة قبل سؤال المقارنة', document.getElementById('s5Closing').hidden);
+  H.choose(document, 'u3l1-compare-flat', 'correct');
+  ok('دعوة الخاتمة تظهر بعد المقارنة', !document.getElementById('s5Closing').hidden);
+  ok('الدعوة تحيل إلى تجربة حسّية بيد الطالب',
+     H.text(document, 's5Closing').indexOf('ملعقة') !== -1 &&
+     H.text(document, 's5Closing').indexOf('ورقة بيضاء') !== -1);
+  ok('الانتقال إلى المحطة 6 يظهر', !document.getElementById('s5done').hidden);
+
+  /* ───────────── المحطة 6: التقييم والشهادة ───────────── */
+  console.log('\n— المحطة 6: التقييم الختامي —');
+  ok('عشرة أسئلة في التقييم',
+     $$('#evalQuestions .eval-q').length === 10);
+  ok('تسعة أسئلة اختيار وسؤال نصّي واحد',
+     $$('#evalQuestions .quiz-options[data-q]').length === 9 &&
+     !!document.getElementById('e10Input'));
+  ok('الأسئلة مخفيّة قبل بوّابة الاسم', document.getElementById('evalQuestions').hidden);
+
+  H.click(document, 'evalStart');
+  ok('بوّابة الاسم لا تُفتح باسم فارغ',
+     document.getElementById('evalQuestions').hidden &&
+     !document.getElementById('evalNameFb').hidden);
+
+  H.type(document, 'evalName', 'فؤاد');
+  H.click(document, 'evalStart');
+  ok('الاسم يفتح الأسئلة', !document.getElementById('evalQuestions').hidden);
+
+  H.choose(document, 'u3l1-e1', 'w1');
+  const g1 = H.groupByName(document, 'u3l1-e1');
+  ok('أول اختيار يقفل السؤال',
+     Array.prototype.every.call(g1.querySelectorAll('input'), r => r.disabled));
+  ok('الخيار الخاطئ يُوسم والصحيح يُضاء',
+     !!g1.querySelector('.quiz-option.incorrect') &&
+     !!g1.querySelector('.quiz-option.correct'));
+  ok('سطر تفسير مصاحب للخطأ', H.text(document, 'fb-u3l1-e1').length > 10);
+
+  ['u3l1-e2','u3l1-e3','u3l1-e4','u3l1-e5','u3l1-e6','u3l1-e7','u3l1-e8','u3l1-e9']
+    .forEach(n => H.choose(document, n, 'correct'));
+
+  H.type(document, 'e10Input', 'تتجمع');
+  ok('النتيجة لا تظهر قبل السؤال العاشر', document.getElementById('evalSummary').hidden);
+  H.click(document, 'e10Btn');
+  ok('«تتجمع» تُرفض في سؤال المرآة المحدّبة',
+     H.text(document, 'fb-e10').indexOf('✗') === 0);
+  ok('النتيجة تظهر بعد السؤال العاشر', !document.getElementById('evalSummary').hidden);
+  ok('النسبة بأرقام غربية', /[0-9]+%/.test(H.text(document, 'evalSummary')));
+  ok('الشهادة تُحقن في مكانها المخصّص',
+     document.getElementById('certTriggerSlot').children.length > 0);
+
   /* ───────────── حرّاس المصطلح ───────────── */
   console.log('\n— حدود المصطلح —');
   const body = src;
