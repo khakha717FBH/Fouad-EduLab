@@ -518,12 +518,25 @@ function pathNums(d){ return (d.match(/-?\d+(\.\d+)?/g) || []).map(Number); }
      document.getElementById('s5MirrorCX').disabled &&
      document.getElementById('s5MirrorFL').disabled);
   ok('المهمّة لا تظهر قبل الاستكشاف', document.getElementById('s5TaskBox').hidden);
+  ok('لا موضع ثانٍ للتعليمات: سطر المسرح القديم أُزيل',
+     !document.getElementById('fb-s5Stage'));
+  ok('سطر الخطوة التالية ظاهر منذ فتح المحطة',
+     !document.getElementById('s5Next').hidden);
+  ok('التعليمة الأولى تُصرّح بالعدد المطلوب',
+     H.text(document, 's5Next').indexOf('ثلاثة مواضع متباعدة') !== -1, H.text(document, 's5Next'));
+  ok('العدّاد يبدأ من صفر', H.text(document, 's5Next').indexOf('(0 من 3)') !== -1, H.text(document, 's5Next'));
 
   slide(document, window, 's5Slider', 12);
   slide(document, window, 's5Slider', 16);
+  ok('العدّاد يرتفع مع كل موضع متباعد',
+     H.text(document, 's5Next').indexOf('(2 من 3)') !== -1, H.text(document, 's5Next'));
+  ok('العدّاد بأرقام غربية', /\([0-9] من 3\)/.test(H.text(document, 's5Next')));
   ok('موضعان لا يكفيان لفتح المهمّة', document.getElementById('s5TaskBox').hidden);
   slide(document, window, 's5Slider', 30);
   ok('ثلاثة مواضع مختلفة تفتح المهمّة', !document.getElementById('s5TaskBox').hidden);
+  ok('السطر ينتقل إلى الإجابة عن السؤال',
+     H.text(document, 's5Next').indexOf('عند أيّ مسافة انقلبت') !== -1, H.text(document, 's5Next'));
+  ok('السطر لا يحمل عدّادًا حين لا يُطلب عدّ', H.text(document, 's5Next').indexOf('من 3') === -1);
 
   slide(document, window, 's5Slider', 20);
   ok('عند 20 cm لا تُرسم صورة', stage5.getAttribute('data-image') === 'none');
@@ -560,6 +573,10 @@ function pathNums(d){ return (d.match(/-?\d+(\.\d+)?/g) || []).map(Number); }
      !document.getElementById('s5MirrorCX').disabled &&
      !document.getElementById('s5MirrorFL').disabled);
   ok('التحدّي الاختياري يظهر بعد المهمّة', !document.getElementById('s5BonusBox').hidden);
+  ok('السطر يوجّه إلى المحدّبة بعدّاد جديد',
+     H.text(document, 's5Next').indexOf('المحدّبة') !== -1 && H.text(document, 's5Next').indexOf('(0 من 3)') !== -1, H.text(document, 's5Next'));
+  ok('التحدّي الاختياري مذكور جانبًا لا أمرًا',
+     H.text(document, 's5Next').indexOf('إن أردته') !== -1);
 
   const bonusG = H.groupByName(document, 'u3l1-bigger-object-bonus');
   ok('خيارات التحدّي مقفلة قبل تبديل الحجم',
@@ -586,17 +603,23 @@ function pathNums(d){ return (d.match(/-?\d+(\.\d+)?/g) || []).map(Number); }
        return stage5.getAttribute('data-image') === 'upright' &&
               Math.abs(parseFloat(stage5.getAttribute('data-m'))) < 1; })());
   ok('سؤال النمط لا يظهر بموضعين', document.getElementById('s5PatternBox').hidden);
+  ok('عدّاد المحدّبة مستقلّ عن عدّاد المقعّرة',
+     H.text(document, 's5Next').indexOf('(2 من 3)') !== -1, H.text(document, 's5Next'));
   slide(document, window, 's5Slider', 50);
   ok('المحدّبة لا تقلب الصورة في المدى كلّه',
      stage5.getAttribute('data-image') === 'upright');
   ok('سؤال النمط يظهر بعد ثلاثة مواضع على المحدّبة',
      !document.getElementById('s5PatternBox').hidden);
+  ok('السطر ينتقل إلى سؤال النمط',
+     H.text(document, 's5Next').indexOf('سؤال النمط') !== -1, H.text(document, 's5Next'));
 
   H.choose(document, 'u3l1-pattern-convex', 'w1');
   ok('مشتّت النمط يُقابَل بتلميح لا بصمت',
      H.text(document, 'fb-u3l1-pattern-convex').length > 15);
   H.choose(document, 'u3l1-pattern-convex', 'correct');
   ok('الجدول لا يظهر قبل زيارة المستوية', document.getElementById('s5TableBox').hidden);
+  ok('السطر يطلب المستوية صراحةً بعد النمط',
+     H.text(document, 's5Next').indexOf('المستوية') !== -1 && H.text(document, 's5Next').indexOf('(0 من 3)') !== -1, H.text(document, 's5Next'));
 
   H.click(document, 's5MirrorFL');
   slide(document, window, 's5Slider', 15);
@@ -608,6 +631,8 @@ function pathNums(d){ return (d.match(/-?\d+(\.\d+)?/g) || []).map(Number); }
      Math.abs(parseFloat(stage5.getAttribute('data-m')) - 1) < 1e-9);
   ok('الجدول يظهر بعد النمط وزيارة المستوية',
      !document.getElementById('s5TableBox').hidden);
+  ok('السطر يشرح مطلوب الجدول',
+     H.text(document, 's5Next').indexOf('اسحب الأوصاف الأربعة') !== -1, H.text(document, 's5Next'));
 
   function chipOf(v){
     return $$('#s5ChipsPool .chip').filter(c => c.dataset.value === v)[0];
@@ -634,6 +659,8 @@ function pathNums(d){ return (d.match(/-?\d+(\.\d+)?/g) || []).map(Number); }
      $$('#s5TableBox .slot').every(s => s.querySelector('.slot-items').children.length === 1));
   ok('سؤال المقارنة يظهر باكتمال الجدول',
      !document.getElementById('s5CompareBox').hidden);
+  ok('السطر ينتقل إلى سؤال المقارنة',
+     H.text(document, 's5Next').indexOf('سؤال المقارنة') !== -1, H.text(document, 's5Next'));
 
   ok('الخاتمة مخفيّة قبل سؤال المقارنة', document.getElementById('s5Closing').hidden);
   H.choose(document, 'u3l1-compare-flat', 'correct');
@@ -642,6 +669,9 @@ function pathNums(d){ return (d.match(/-?\d+(\.\d+)?/g) || []).map(Number); }
      H.text(document, 's5Closing').indexOf('ملعقة') !== -1 &&
      H.text(document, 's5Closing').indexOf('ورقة بيضاء') !== -1);
   ok('الانتقال إلى المحطة 6 يظهر', !document.getElementById('s5done').hidden);
+  ok('سطر الخطوة التالية يختفي عند الاكتمال',
+     document.getElementById('s5Next').hidden && H.text(document, 's5Next') === '',
+     H.text(document, 's5Next'));
 
   /* ───────────── المحطة 6: التقييم والشهادة ───────────── */
   console.log('\n— المحطة 6: التقييم الختامي —');
