@@ -236,7 +236,7 @@
 <nav class="crumb">
   <a href="../../index.html">الرئيسية</a> ›
   <a href="../index.html">الفصل الأول</a> ›
-  <a href="index.html">الوحدة 3: الصور المتكوّنة في المرايا الكروية</a> ›
+  <a href="index.html">الوحدة 3</a> ›
   الدرس 1
 </nav>
 
@@ -364,7 +364,7 @@
   <section class="station" id="station-3">
     <div class="station-label">المحطة الثالثة</div>
     <h2>ثلاثة أشعة… ثلاث مرايا</h2>
-    <p class="station-tagline">صندوق ضوء يُخرج ثلاثة أشعة متوازية. توقّع مصيرها عند كل مرآة، ثم شغّل الضوء.</p>
+    <p class="station-tagline">صندوق ضوء يُخرج ثلاثة أشعة متوازية عند تشغيله. توقّع مصيرها عند كل مرآة، ثم شغّل الضوء.</p>
 
     <p class="name-card" id="s3AxisCard"><b>المحور الرئيس:</b> المستقيم العمودي على المرآة عند منتصفها. والأشعة الثلاثة في هذا المشهد موازية له.</p>
 
@@ -428,6 +428,11 @@
     </div>
 
     <p class="fact-line" id="s3Teaser" hidden>سقطت الأشعة الثلاثة متوازية، وقانون الانعكاس هو نفسه في المرايا الثلاث. فما الذي اختلف؟</p>
+
+    <!-- سطر الخطوة التالية: مكان واحد للتعليمات لا مكانان. الرسائل
+         الملاصقة للمسرح تقول ما حدث (ملاحظة علمية)، وهذا السطر وحده
+         يقول ما بقي. وموضعه في الذيل مقصود: عين الطالب تنتهي عنده. -->
+    <p class="next-step" id="s3Next" aria-live="polite"></p>
 
     <div class="station-handoff" id="s3done" hidden>
       <a href="#station-4" class="station-next">القانون واحد… فما الذي تغيّر؟ ←</a>
@@ -925,8 +930,17 @@ var T = {
     obsFlat: 'الأشعة الثلاثة عادت في مساراتها نفسها، وبقيت متوازية كما جاءت.',
     obsConcave: 'الأشعة الثلاثة تقاربت بعد الانعكاس حتى التقت أمام المرآة.',
     obsConvex: 'الأشعة الثلاثة تباعدت بعد الانعكاس، وكلّما ابتعدت زاد ما بينها.',
-    nextConcave: 'جرّبها الآن على المرآة المقعّرة.',
-    nextConvex: 'بقيت المرآة المحدّبة.',
+    next: {
+      lockAside: 'المقعّرة والمحدّبة تُفتحان بعد تشغيل ما قبلهما',
+      runFlat:    'شغّل الضوء على المرآة المستوية',
+      runConcave: 'شغّل الضوء على المرآة المقعّرة',
+      runConvex:  'شغّل الضوء على المرآة المحدّبة',
+      goConcave:  'انتقل إلى المرآة المقعّرة',
+      goConvex:   'انتقل إلى المرآة المحدّبة',
+      predict:    'أجب عن سؤال التوقّع، ثم شغّل الضوء',
+      focal:      'حدّد البعد البؤري في المشهد الثابت أدناه',
+      pattern:    'أجب عن سؤال القاعدة الجامعة للمرايا الثلاث'
+    },
     facts: [
       ['التجمّع', 'التقاء الأشعة المنعكسة في نقطة واحدة.'],
       ['التفرّق', 'تباعد الأشعة بعضها عن بعض بعد الانعكاس.'],
@@ -1278,6 +1292,7 @@ function station3(){
   var S = OPT.svg, M = OPT.MIRRORS;
   var DS = [-90, -30, 30], HALF = 110, START_X = 70;
   var current = 'flat', ran = {}, predicted = { concave:false, convex:false };
+  var focalSolved = false, patternSolved = false;
 
   /* الأشعة بألوان صريحة لا بتدرّج: الفرق بين الساقط والمنعكس درجتان
      من عائلة واحدة، ورأس السهم يرث لون خطّه. */
@@ -1358,8 +1373,11 @@ function station3(){
     OPT.hatchMarks(m, HALF, 9, 15).forEach(function(h){
       hatchG.appendChild(S('line', { x1:h.x1, y1:h.y1, x2:h.x2, y2:h.y2, 'class':'hatch' }));
     });
+    /* المسرح مطفأ حتى يُضغط الزرّ: صندوق ضوء لا يُخرج ضوءًا قبل تشغيله،
+       وزرّ «شغّل الضوء» يفعل ما يقوله بالضبط. وتبديل المرآة يُطفئه ثانيةً
+       لأنّ كل مرآة مشهد مستقلّ يُشغَّل بنفسه. */
     clear(inG); clear(outG); clear(focalG);
-    paintBeams(inG, outG, focalG, m, false);
+    stage.removeAttribute('data-focus-x');
     stage.setAttribute('data-mirror', current);
     setActiveBtn(current);
   }
@@ -1371,10 +1389,10 @@ function station3(){
     if(fx !== null) stage.setAttribute('data-focus-x', fx.toFixed(1));
     ran[current] = true;
     if(m.flat){
-      fbNeutral('fb-s3Stage', T.s3.obsFlat + ' ' + T.s3.nextConcave);
+      fbNeutral('fb-s3Stage', T.s3.obsFlat);
       enable('s3BtnConcave');
     } else if(current === 'concave'){
-      fbNeutral('fb-s3Stage', T.s3.obsConcave + ' ' + T.s3.nextConvex);
+      fbNeutral('fb-s3Stage', T.s3.obsConcave);
       enable('s3BtnConvex');
     } else {
       fbNeutral('fb-s3Stage', T.s3.obsConvex);
@@ -1384,12 +1402,53 @@ function station3(){
       /* شُغّلت الثلاثة، فلا سبب يُبقي أيّ زرّ مقفلًا: القيد يزول بزوال سببه */
       enable('s3BtnFlat'); enable('s3BtnConcave'); enable('s3BtnConvex');
     }
+    updateNext();
   }
 
   function setActiveBtn(key){
     document.querySelectorAll('.mirror-btn').forEach(function(b){
       b.classList.toggle('is-active', b.getAttribute('data-mirror') === key);
     });
+  }
+
+  /* سطر الخطوة التالية — يُشتقّ من حالة الطالب لا من عدّاد خطوات (كالمحطة 5).
+     والعدّاد يعدّ المرايا التي شُغّل عليها الضوء فعلًا لا الأزرار المنقورة:
+     التبديل بلا تشغيل لا يرفعه، فيتعلّم الطالب أنّ التشغيل هو المطلوب. */
+  function setNext(msg, count, aside){
+    var n = el('s3Next');
+    if(!n) return;
+    n.textContent = '← ' + msg;
+    if(typeof count === 'number'){
+      var c = document.createElement('span');
+      c.className = 'count';
+      c.textContent = ' (' + Math.min(count, 3) + ' من 3)';
+      n.appendChild(c);
+    }
+    if(aside){
+      var a = document.createElement('span');
+      a.className = 'aside';
+      a.textContent = ' — ' + aside;
+      n.appendChild(a);
+    }
+    n.hidden = false;
+  }
+  function runCount(){
+    return ['flat','concave','convex'].filter(function(k){ return ran[k]; }).length;
+  }
+  function updateNext(){
+    var n = el('s3Next'), N = T.s3.next;
+    if(!n) return;
+    if(patternSolved){ n.textContent = ''; n.hidden = true; return; }
+    if(focalSolved) return setNext(N.pattern);
+    var c = runCount();
+    if(c >= 3) return setNext(N.focal);
+    if(!ran[current]){
+      if(current !== 'flat' && !predicted[current]) return setNext(N.predict, c);
+      return setNext(N['run' + current.charAt(0).toUpperCase() + current.slice(1)],
+                     c, c === 0 ? N.lockAside : null);
+    }
+    /* المرآة المعروضة شُغّلت وبقيت غيرها: يُدَلّ على أقربها في التسلسل */
+    return setNext(ran.concave ? N.goConvex : N.goConcave, c);
   }
 
   function enable(id){ var b = el(id); if(b) b.disabled = false; }
@@ -1455,8 +1514,8 @@ function station3(){
       if(current !== 'flat' && !predicted[current]){
         show(current === 'concave' ? 's3PredictConcave' : 's3PredictConvex');
         if(run) run.disabled = true;
-        fbNeutral('fb-s3Stage', 'أجب عن سؤال التنبّؤ أولًا، ثم شغّل الضوء.');
       } else if(run){ run.disabled = false; }
+      updateNext();
     });
   });
 
@@ -1470,6 +1529,7 @@ function station3(){
         if(window.XP) window.XP.claim(q, window.XP.POINTS.PREDICT, 'سجّلتَ توقّعك قبل تشغيل الضوء');
         var run = el('s3RunBtn');
         if(run && current === key) run.disabled = false;
+        updateNext();
       });
     });
   });
@@ -1480,16 +1540,17 @@ function station3(){
   el('s3BtnConcave').disabled = true;
   el('s3BtnConvex').disabled = true;
   drawMirror();
+  updateNext();
 
   window.Quiz.practice({
     'u3l1-focal-name': { xpId:'u3l1-focal-name', xp:'MCQ', reason:'حدّدتَ البعد البؤري على المشهد',
                          correctText:T.s3.focal.correct, hints:T.s3.focal }
-  }, { onAllSolved: function(){ drawFocalBrace(); show('s3PatternBox'); } });
+  }, { onAllSolved: function(){ focalSolved = true; drawFocalBrace(); show('s3PatternBox'); updateNext(); } });
 
   window.Quiz.practice({
     'u3l1-pattern-beams': { xpId:'u3l1-pattern-beams', xp:'PATTERN', reason:'استنتجتَ القاعدة الجامعة للمرايا الثلاث',
                             correctText:T.s3.beams.correct, hints:T.s3.beams }
-  }, { onAllSolved: function(){ show('s3Teaser'); show('s3done'); } });
+  }, { onAllSolved: function(){ patternSolved = true; show('s3Teaser'); show('s3done'); updateNext(); } });
 }
 
 /* ─────────────── المحطة 4 — القانون واحد… فما الذي تغيّر؟ ─────────────── */
