@@ -185,9 +185,8 @@
      العمودي منقّط بنقط قصيرة (3 4) ليتميّز عن المحور الرئيس (7 6):
      خطّان متقطّعان في مشهد واحد يجب أن يختلف نبضهما، لا لونهما فقط. */
   .optics-stage .normal-line{ stroke:var(--ink); stroke-width:1.6; stroke-dasharray:3 4; opacity:.9; fill:none; }
-  #s4StageBox .slider-row{ display:flex; align-items:center; gap:12px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
-  #s4StageBox .slider-row label{ color:var(--ink-dim); font-family:'Tajawal',sans-serif; font-size:14px; }
-  #s4StageBox input[type=range]{ width:min(360px,70%); accent-color:var(--turquoise); cursor:pointer; }
+  /* صفّ المنزلق وتنسيق المنزلق نفسه انتقلا إلى template.css المشترك
+     (أغسطس 2026): المحطتان 4 و5 تستعملانه، ودروس الوحدة الباقية ستفعل. */
   .btn.demoted{ opacity:.45; cursor:not-allowed; }
   /* جدول القراءات من اليسار لليمين: الأرقام تُقرأ في عمود واحد متّسق */
   .read-table{ width:100%; max-width:430px; margin:14px auto 0; border-collapse:collapse;
@@ -201,6 +200,22 @@
   /* صورة ثابتة مرجعية فوق سؤال البعد البؤري: السؤال يسأل عن مشهد
      يجب أن يكون أمام العين، لا في الذاكرة. */
   #beamStill{ max-width:470px; margin:0 auto 14px; }
+
+  /* ── المحطة 5 — الجسم والصورة على المسطرة ── */
+  #imageStage .ruler-line{ stroke:var(--ink-dim); stroke-width:1.4; opacity:.55; }
+  #imageStage .ruler-tick{ stroke:var(--ink-dim); stroke-width:1.2; opacity:.6; }
+  #imageStage .ruler-num{ fill:var(--ink-dim); font-family:'Cairo',sans-serif; font-size:12px; text-anchor:middle; }
+  #imageStage .mirror-body{ fill:rgba(20,200,168,.09); stroke:var(--turquoise); stroke-width:2; }
+  #imageStage .stand{ stroke:var(--ink-dim); stroke-width:3; stroke-linecap:round; opacity:.7; }
+  #imageStage .obj-shape{ fill:var(--turquoise); }
+  /* الصورة أخفت من الجسم: انعكاسٌ يُرى لا جسمٌ ثانٍ على المنضدة */
+  #imageStage .img-shape{ fill:var(--turquoise); opacity:.55; }
+  #imageStage .eye-mark{ fill:none; stroke:var(--ink-dim); stroke-width:1.6; }
+  #imageStage .eye-pupil{ fill:var(--ink-dim); }
+  #imageStage .eye-note{ fill:var(--ink-dim); font-family:'Tajawal',sans-serif; font-size:12px; text-anchor:middle; }
+  #imageStage .stage-note{ fill:var(--ink-dim); font-family:'Tajawal',sans-serif; font-size:15px; text-anchor:middle; }
+  .ctrl-row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; align-items:center; margin-top:12px; }
+  .ctrl-row .row-label{ color:var(--ink-dim); font-family:'Tajawal',sans-serif; font-size:14px; }
 
   .mirror-btn[disabled], #s1FaceRow .btn[disabled]{ opacity:.4; cursor:not-allowed; }
 </style>
@@ -474,20 +489,122 @@
     </div>
   </section>
 
-  <!-- ═════════════════════ محطة 5 — Elaborate ═════════════════════
-       ⚠ لم تُبنَ بعد — جلسة التنفيذ الثانية. المواصفة §4/المحطة 5 و§5.5. -->
+  <!-- ═════════════════════ محطة 5 — Elaborate ═════════════════════ -->
   <section class="station" id="station-5">
     <div class="station-label">المحطة الخامسة</div>
     <h2>كيف تبدو الصورة؟</h2>
     <p class="station-tagline">جسم على مسطرة أمام المرآة. حرّكه، وراقب صورته في المرآة.</p>
+
+    <div id="s5StageBox">
+      <svg class="optics-stage" id="imageStage" viewBox="0 0 660 380" role="img"
+           aria-label="جسم على مسطرة أمام مرآة على حامل، وصورته مرسومة داخل وجه المرآة"></svg>
+
+      <div class="slider-row">
+        <label for="s5Slider">مسافة الجسم عن المرآة</label>
+        <input type="range" id="s5Slider" min="5" max="60" step="1" value="8"
+               aria-label="مسافة الجسم عن المرآة بالسنتيمتر">
+        <span class="slider-read" id="s5Read" dir="ltr">8 cm</span>
+      </div>
+
+      <div class="ctrl-row" id="s5SizeRow">
+        <span class="row-label">حجم الجسم</span>
+        <button type="button" class="btn is-active" id="s5SizeSmall">صغير</button>
+        <button type="button" class="btn" id="s5SizeBig">كبير</button>
+      </div>
+
+      <div class="ctrl-row" id="s5MirrorRow">
+        <span class="row-label">شكل المرآة</span>
+        <button type="button" class="btn mirror-btn is-active" id="s5MirrorCC">مقعّرة</button>
+        <button type="button" class="btn mirror-btn" id="s5MirrorCX" disabled>محدّبة</button>
+        <button type="button" class="btn mirror-btn" id="s5MirrorFL" disabled>مستوية</button>
+      </div>
+
+      <p class="explore-feedback" id="fb-s5Stage" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s5TaskBox" hidden>
+      <p class="explore-q">حرّك الجسم مبتعدًا حتى تنقلب صورته. عند أيّ مسافة انقلبت؟ اكتب الرقم بالسنتيمتر.</p>
+      <div class="explore-answer-row">
+        <input type="text" class="explore-input" id="s5FlipInput" inputmode="numeric"
+               placeholder="الرقم بالسنتيمتر" autocomplete="off">
+        <button type="button" class="btn" id="s5FlipBtn">سلّم الإجابة</button>
+      </div>
+      <p class="explore-feedback" id="fb-u3l1-flip-task" hidden></p>
+      <button type="button" class="link-btn" id="s5FlipHelpBtn" hidden>أرِني أين أنظر</button>
+    </div>
+
+    <div class="explore-step" id="s5BonusBox" hidden>
+      <p class="explore-q">تحدٍّ اختياري: بدّل إلى الجسم الأكبر وأعد التجربة. هل تغيّرت المسافة التي تنقلب عندها الصورة؟</p>
+      <div class="quiz-options" data-q="u3l1-bigger-object-bonus">
+        <label class="quiz-option"><input type="radio" name="u3l1-bigger-object-bonus" value="w1" disabled>نعم، انقلبت عند مسافة أقرب إلى المرآة.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-bigger-object-bonus" value="w2" disabled>نعم، انقلبت عند مسافة أبعد عن المرآة.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-bigger-object-bonus" value="w3" disabled>لم تنقلب صورة الجسم الأكبر إطلاقًا.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-bigger-object-bonus" value="correct" disabled>لا، انقلبت عند المسافة نفسها تمامًا.</label>
+      </div>
+      <p class="explore-feedback" id="fb-u3l1-bigger-object-bonus" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s5PatternBox" hidden>
+      <p class="explore-q">حرّكت الجسم في المدى كلّه أمام المرآة المحدّبة. ما النمط الذي لاحظته؟</p>
+      <div class="quiz-options" data-q="u3l1-pattern-convex">
+        <label class="quiz-option"><input type="radio" name="u3l1-pattern-convex" value="w1">تنقلب الصورة بعد مسافة معيّنة كما في المقعّرة.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-pattern-convex" value="correct">تبقى الصورة معتدلة وأصغر من الجسم عند كل مسافة.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-pattern-convex" value="w2">تكبر الصورة كلّما أبعدت الجسم عن سطح المرآة.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-pattern-convex" value="w3">تختفي الصورة تمامًا إذا تجاوز الجسم منتصف المسطرة.</label>
+      </div>
+      <p class="explore-feedback" id="fb-u3l1-pattern-convex" hidden></p>
+    </div>
+
+    <div class="explore-step" id="s5TableBox" hidden>
+      <p class="explore-q">اسحب كل وصف إلى الحالة التي رأيته فيها.</p>
+      <div data-chips="u3l1-image-table">
+        <div class="chips-pool" id="s5ChipsPool">
+          <div class="chip" data-value="مقلوبة وأصغر من الجسم" data-xp-id="u3l1-chip-table-2"
+               data-xp-reason="وصفتَ صورة الجسم البعيد عن المقعّرة" tabindex="0">مقلوبة وأصغر من الجسم</div>
+          <div class="chip" data-value="معتدلة وبحجم الجسم نفسه" data-xp-id="u3l1-chip-table-4"
+               data-xp-reason="وصفتَ صورة المرآة المستوية" tabindex="0">معتدلة وبحجم الجسم نفسه</div>
+          <div class="chip" data-value="معتدلة وأكبر من الجسم" data-xp-id="u3l1-chip-table-1"
+               data-xp-reason="وصفتَ صورة الجسم القريب من المقعّرة" tabindex="0">معتدلة وأكبر من الجسم</div>
+          <div class="chip" data-value="معتدلة وأصغر من الجسم" data-xp-id="u3l1-chip-table-3"
+               data-xp-reason="وصفتَ صورة المرآة المحدّبة" tabindex="0">معتدلة وأصغر من الجسم</div>
+        </div>
+        <div class="cat-grid">
+          <div class="slot cat-slot" id="slot-cc-near" data-answer="معتدلة وأكبر من الجسم" tabindex="0">
+            <span class="slot-label">جسم قريب من المقعّرة</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="slot-cc-far" data-answer="مقلوبة وأصغر من الجسم" tabindex="0">
+            <span class="slot-label">جسم بعيد عن المقعّرة</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="slot-cx-any" data-answer="معتدلة وأصغر من الجسم" tabindex="0">
+            <span class="slot-label">أيّ مسافة أمام المحدّبة</span><span class="slot-items"></span>
+          </div>
+          <div class="slot cat-slot" id="slot-fl-any" data-answer="معتدلة وبحجم الجسم نفسه" tabindex="0">
+            <span class="slot-label">أيّ مسافة أمام المستوية</span><span class="slot-items"></span>
+          </div>
+        </div>
+        <p class="explore-feedback chips-feedback" hidden></p>
+      </div>
+    </div>
+
+    <div class="explore-step" id="s5CompareBox" hidden>
+      <p class="explore-q">ما الذي يميّز صورة المرآة المستوية عن صورة المرآتين الكرويتين؟</p>
+      <div class="quiz-options" data-q="u3l1-compare-flat">
+        <label class="quiz-option"><input type="radio" name="u3l1-compare-flat" value="w1">أنها الوحيدة التي تظهر معتدلة غير مقلوبة.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-compare-flat" value="w2">أنها الوحيدة التي تتغيّر كلّما تحرّك الجسم.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-compare-flat" value="correct">أنها الوحيدة التي تبقى بحجم الجسم نفسه دائمًا.</label>
+        <label class="quiz-option"><input type="radio" name="u3l1-compare-flat" value="w3">أنها الوحيدة التي تظهر داخل سطح المرآة نفسه.</label>
+      </div>
+      <p class="explore-feedback" id="fb-u3l1-compare-flat" hidden></p>
+    </div>
+
+    <p class="name-card" id="s5Closing" hidden>جرّبها بيدك: أمسك ملعقة معدنية لامعة، وقرّبها من وجهك ثمّ أبعدها، وانظر في وجهيها. وإن كان معك ورقة بيضاء، قابِل بالوجه المقعّر ضوء نافذة وحرّك الورقة أمامه ببطء — هل ظهر عليها شيء؟ احتفظ بما رأيت، فسنعود إليه. وحين تمرّ بمخرج موقف أحد المجمّعات في الدوحة، انظر إلى المرآة الكبيرة المثبّتة هناك: أيّ الأشكال الثلاثة تشبه؟</p>
 
     <div class="station-handoff" id="s5done" hidden>
       <a href="#station-6" class="station-next">التقييم الختامي ←</a>
     </div>
   </section>
 
-  <!-- ═════════════════════ محطة 6 — Evaluate ═════════════════════
-       ⚠ لم تُبنَ بعد — جلسة التنفيذ الثانية. بنك الأسئلة في المواصفة §6. -->
+  <!-- ═════════════════════ محطة 6 — Evaluate ═════════════════════ -->
   <section class="station" id="station-6">
     <div class="station-label">المحطة السادسة</div>
     <h2>التقييم الختامي</h2>
@@ -501,7 +618,116 @@
       <p class="gate-note">هذا هو التقييم الختامي لهذا الدرس. لكلّ سؤال محاولة واحدة، وبعد آخر سؤال تظهر نتيجتك وشهادتك. خذ وقتك.</p>
     </div>
 
-    <div id="evalQuestions" hidden></div>
+    <div id="evalQuestions" hidden>
+
+      <div class="eval-q first">
+        <p class="explore-q"><span class="q-num">1</span> أيّ العبارات التالية يمثّل قانون الانعكاس؟</p>
+        <div class="quiz-options" data-q="u3l1-e1">
+          <label class="quiz-option"><input type="radio" name="u3l1-e1" value="w1">تنتقل الأشعة الضوئية في خطوط مستقيمة دائمًا.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e1" value="w2">زاوية الانعكاس أكبر من زاوية السقوط دائمًا.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e1" value="correct">زاوية الانعكاس تساوي زاوية السقوط دائمًا.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e1" value="w3">زاوية الانعكاس أصغر من زاوية السقوط دائمًا.</label>
+        </div>
+        <p class="explore-feedback" id="fb-u3l1-e1" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">2</span> كيف تُقاس زاوية الانعكاس؟</p>
+        <div class="quiz-options" data-q="u3l1-e2">
+          <label class="quiz-option"><input type="radio" name="u3l1-e2" value="correct">بقياس الزاوية بين الشعاع المنعكس والعمودي على السطح.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e2" value="w1">بقياس الزاوية بين الشعاع المنعكس وسطح المرآة نفسه.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e2" value="w2">بقياس الزاوية بين الشعاع الساقط وسطح المرآة نفسه.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e2" value="w3">بقياس الزاوية بين الشعاع الساقط والشعاع المنعكس.</label>
+        </div>
+        <p class="explore-feedback" id="fb-u3l1-e2" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">3</span> مرآة سطحها العاكس منحنٍ إلى الداخل، وهو جزء من السطح الداخلي لكرة مجوّفة. ما اسمها؟</p>
+        <div class="quiz-options" data-q="u3l1-e3">
+          <label class="quiz-option"><input type="radio" name="u3l1-e3" value="w1">مرآة مستوية، لأنّ سطحها العاكس مسطّح تمامًا.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e3" value="w2">مرآة محدّبة، لأنّ سطحها العاكس منحنٍ للخارج.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e3" value="w3">مرآة محدّبة، لأنّ كل مرآة كروية محدّبة الشكل.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e3" value="correct">مرآة مقعّرة، لأنّ سطحها العاكس منحنٍ للداخل.</label>
+        </div>
+        <p class="explore-feedback" id="fb-u3l1-e3" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">4</span> في مخطّطات المرايا، ماذا يعني نمط الخطوط الصغيرة المرسومة على أحد جانبَي المرآة؟</p>
+        <div class="quiz-options" data-q="u3l1-e4">
+          <label class="quiz-option"><input type="radio" name="u3l1-e4" value="w1">أنه الجانب الذي يسقط عليه الضوء وينعكس عنه.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e4" value="correct">أنه الجانب غير العاكس من المرآة، وظهره للضوء.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e4" value="w2">أنه الجانب الذي ينفذ منه الضوء إلى خلف المرآة.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e4" value="w3">أنه الجانب الذي يُقاس منه البعد البؤري للمرآة.</label>
+        </div>
+        <p class="explore-feedback" id="fb-u3l1-e4" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">5</span> أشعة ضوئية متوازية سقطت على مرآة مقعّرة. صِف ما يحدث لها بعد الانعكاس.</p>
+        <div class="quiz-options" data-q="u3l1-e5">
+          <label class="quiz-option"><input type="radio" name="u3l1-e5" value="w1">تبقى متوازية كما كانت قبل سقوطها على المرآة.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e5" value="correct">تتجمّع وتلتقي في نقطة واحدة أمام سطح المرآة.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e5" value="w2">تتفرّق وتتباعد بعضها عن بعض بابتعادها عنها.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e5" value="w3">يعود كلّ شعاع في المسار الذي جاء فيه بالضبط.</label>
+        </div>
+        <p class="explore-feedback" id="fb-u3l1-e5" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">6</span> ما وصف الصورة المتكوّنة في مرآة محدّبة؟</p>
+        <div class="quiz-options" data-q="u3l1-e6">
+          <label class="quiz-option"><input type="radio" name="u3l1-e6" value="w1">تكون مقلوبة دائمًا، وأصغر من الجسم نفسه.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e6" value="w2">تكون معتدلة دائمًا، وأكبر من الجسم نفسه.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e6" value="correct">تكون معتدلة دائمًا، وأصغر من الجسم نفسه.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e6" value="w3">تكون مقلوبة دائمًا، وأكبر من الجسم نفسه.</label>
+        </div>
+        <p class="explore-feedback" id="fb-u3l1-e6" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">7</span> حرّك طالب جسمًا صغيرًا مبتعدًا عن مرآة مقعّرة، فانقلبت صورته عند 20 cm. ثمّ أعاد التجربة بجسم أكبر قليلًا. عند أيّ مسافة تنقلب صورة الجسم الأكبر؟</p>
+        <div class="quiz-options" data-q="u3l1-e7">
+          <label class="quiz-option"><input type="radio" name="u3l1-e7" value="w1">عند مسافة أقلّ من 20 cm، لأنّ الجسم الأكبر يملأ المرآة.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e7" value="w2">عند مسافة أكبر من 20 cm، لأنّ الجسم الأكبر يحتاج بعدًا.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e7" value="w3">لا يمكن توقّع ذلك، فالأمر يعتمد على شكل الجسم وحجمه.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e7" value="correct">عند 20 cm نفسها، فموضع الانقلاب لا يتبع حجم الجسم.</label>
+        </div>
+        <p class="explore-feedback" id="fb-u3l1-e7" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">8</span> سقط شعاع على مرآة مقعّرة بزاوية 25° عن العمودي عند نقطة السقوط. كم تكون زاوية انعكاسه؟</p>
+        <div class="quiz-options" data-q="u3l1-e8">
+          <label class="quiz-option"><input type="radio" name="u3l1-e8" value="correct">25°، فقانون الانعكاس ينطبق على المرايا الكروية أيضًا.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e8" value="w1">50°، لأنّ السطح المنحني يضاعف الزاوية عند انعكاسها.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e8" value="w2">65°، لأنّ الزاويتين معًا تكمّلان الزاوية القائمة دائمًا.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e8" value="w3">0°، لأنّ الشعاع يعود في مساره نفسه عن سطح منحنٍ.</label>
+        </div>
+        <p class="explore-feedback" id="fb-u3l1-e8" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">9</span> جسم أمام مرآة مستوية، ثمّ نُقل إلى الموضع نفسه أمام مرآة محدّبة. ما الفرق بين الصورتين؟</p>
+        <div class="quiz-options" data-q="u3l1-e9">
+          <label class="quiz-option"><input type="radio" name="u3l1-e9" value="w1">صورة المستوية أصغر من الجسم، وصورة المحدّبة بحجمه.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e9" value="w2">الصورتان بحجم الجسم نفسه، والفرق في اتّجاههما فقط.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e9" value="correct">صورة المستوية بحجم الجسم، وصورة المحدّبة أصغر منه.</label>
+          <label class="quiz-option"><input type="radio" name="u3l1-e9" value="w3">صورة المستوية مقلوبة، وصورة المحدّبة معتدلة ومكبّرة.</label>
+        </div>
+        <p class="explore-feedback" id="fb-u3l1-e9" hidden></p>
+      </div>
+
+      <div class="eval-q">
+        <p class="explore-q"><span class="q-num">10</span> أشعة ضوئية متوازية سقطت على مرآة محدّبة. بكلمة واحدة: ماذا يحدث لها بعد الانعكاس؟</p>
+        <div class="explore-answer-row">
+          <input type="text" class="explore-input" id="e10Input" placeholder="اكتب إجابتك" autocomplete="off">
+          <button type="button" class="btn" id="e10Btn">سلّم الإجابة</button>
+        </div>
+        <p class="explore-feedback" id="fb-e10" hidden></p>
+      </div>
+    </div>
 
     <div class="eval-summary" id="evalSummary" hidden></div>
     <div id="certTriggerSlot"></div>
@@ -721,6 +947,60 @@ var T = {
     whyModel: 'اتّجاه العمودي. فالمرآة منحنية، فيميل العمودي ميلًا مختلفًا عند كل نقطة — ولذلك ينعكس كل شعاع في اتّجاه مختلف، فتلتقي الأشعة.',
     whyCorrect: '✓ صحيح! القانون واحد، والذي تغيّر هو اتّجاه العمودي عند كل نقطة.',
     normalLegend: 'الخطّ المنقّط الرفيع هو العمودي عند نقطة السقوط.'
+  },
+  s5: {
+    explore:  'حرّك الجسم على المسطرة، وراقب صورته داخل وجه المرآة.',
+    noImage:  'لا تظهر صورة واضحة عند هذه المسافة.',
+    taskCue:  'الآن جرّب أن تُبعد الجسم حتى تنقلب صورته.',
+    flipEmpty:'اكتب الرقم بالسنتيمتر أوّلًا.',
+    flipHint: 'عُد قليلًا وتقدّم قليلًا حول الموضع الذي رأيت الصورة تنقلب عنده.',
+    flipDone: '✓ صحيح! الصورة تنقلب حول هذه المسافة مهما أعدت التجربة.',
+    helpStep1:'وضعتُ الجسم عند 18 cm — الصورة معتدلة الآن. حرّكه سنتيمترًا واحدًا في كل مرّة وراقب متى تنقلب.',
+    helpStep2:'أرِني الإجابة',
+    helpModel:'تنقلب عند 20 cm. سجّلتُها لك، ولك نصف نقاط المهمّة.',
+    unlock:   'جرّب الآن الشكلين الآخرين، وحرّك الجسم في المدى كلّه أمام كلٍّ منهما.',
+    bonusGate:'بدّل إلى الجسم الأكبر أوّلًا، ثمّ أجب.',
+    bonusOn:  'أعد التجربة بالجسم الأكبر، ثمّ اختر.',
+    bonus: {
+      w1: 'أعد النظر: الجسم الأكبر صورته أكبر، لكن أين وقعت لحظة الانقلاب على المسطرة؟',
+      w2: 'أعد النظر: الجسم الأكبر صورته أكبر، لكن أين وقعت لحظة الانقلاب على المسطرة؟',
+      w3: 'انقلبت فعلًا — أبعد الجسم الأكبر إلى ما بعد منتصف المسطرة وراقب.',
+      any: 'أعد التجربة بالجسم الأكبر وراقب رقم المسافة عند لحظة الانقلاب.',
+      correct: '✓ صحيح! موضع الانقلاب لا يتبع حجم الجسم.'
+    },
+    pattern: {
+      w1: 'هل رأيت الصورة تنقلب مرّة واحدة أمام المحدّبة في المدى كلّه؟',
+      w2: 'راقب الحجم وأنت تُبعد الجسم: أيكبر أم يصغر؟',
+      w3: 'حرّك الجسم إلى آخر المسطرة: هل اختفت الصورة أم بقيت؟',
+      any: 'حرّك الجسم في المدى كلّه مرّة أخرى، وراقب اتّجاه الصورة وحجمها.',
+      correct: '✓ صحيح! المحدّبة نمطها واحد لا يتغيّر مع المسافة.'
+    },
+    compare: {
+      w1: 'المحدّبة أيضًا صورتها معتدلة في كل مسافة — فليست هذه هي الميزة.',
+      w2: 'صورة المستوية لم تتغيّر وأنت تحرّك الجسم أمامها.',
+      w3: 'الصور الثلاث كلّها رُسمت داخل وجه المرآة في هذا المسرح.',
+      any: 'قارن الأحجام الثلاثة: أيّها بقي مساويًا للجسم؟',
+      correct: '✓ صحيح! المستوية وحدها لا تكبّر ولا تصغّر.'
+    },
+    chipHints: {
+      near: 'هذه صورة رأيتها عند مسافة قريبة من المقعّرة — راجع الحالة المكتوبة على الخانة.',
+      far:  'هذه صورة رأيتها بعد أن أبعدت الجسم عن المقعّرة.',
+      cx:   'هذه صورة المرآة المحدّبة — لم تتغيّر مهما حرّكت الجسم.',
+      fl:   'هذه صورة المرآة المستوية — بقيت بحجم الجسم نفسه.'
+    },
+    tableDone: 'اكتمل الجدول: أربع حالات، وأربعة أوصاف بنيتَها بالملاحظة.'
+  },
+  eval: {
+    e1: 'قانون الانعكاس: زاوية الانعكاس تساوي زاوية السقوط.',
+    e2: 'الزاويتان تُقاسان بالنسبة إلى العمودي على السطح عند نقطة السقوط.',
+    e3: 'السطح العاكس المنحني إلى الداخل هو سطح المرآة المقعّرة.',
+    e4: 'الخطوط الصغيرة تُرسم على الجانب غير العاكس من المرآة.',
+    e5: 'المرآة المقعّرة تجمع الأشعة المتوازية في نقطة واحدة أمامها.',
+    e6: 'صورة المرآة المحدّبة معتدلة وأصغر من الجسم عند كل مسافة.',
+    e7: 'موضع انقلاب الصورة يتبع المرآة نفسها لا حجم الجسم.',
+    e8: 'قانون الانعكاس ينطبق عند كل نقطة، فزاوية الانعكاس 25° كذلك.',
+    e9: 'صورة المستوية بحجم الجسم، وصورة المحدّبة أصغر منه.',
+    e10:'المرآة المحدّبة تفرّق الأشعة المتوازية الساقطة عليها.'
   }
 };
 
@@ -1398,12 +1678,375 @@ function station4(){
   });
 }
 
-/* ─────────────── المحطات 5 و6 — لم تُبنَ بعد ───────────────
-   جلسة التنفيذ الثانية. المواصفة: §4/المحطة 5 · §5.5 · §6.
-   والشهادة تُربط عبر Quiz.evaluate وحدها عند بناء المحطة 6 —
-   ولا يُكتب نداء Certificate.finish في هذا السكربت إطلاقًا. */
-function station5(){}
-function station6(){}
+/* ─────────────── المحطة 5 — كيف تبدو الصورة؟ ───────────────
+   المسرح يرسم ما تراه العين في المرآة: الصورة داخل وجه المرآة
+   لا في فراغ خلفها ولا أمامها. وأين تقع الصورة في الفراغ سؤالٌ
+   يملكه درس 03 — ولذلك رمز العين على المسرح: يقول للطالب إنّ ما
+   يراه مرتبط بموضع نظره، بلا تسمية ولا شرح.
+
+   f = 20 cm للمقعّرة و −20 للمحدّبة، والمستوية m = 1 دائمًا.
+   وعند u = 20 بالضبط لا تُرسم صورة: الأشعة تخرج متوازية فلا
+   تلتقي. العبارة محايدة بلا تفسير — التفسير مادّة درس 02. */
+function station5(){
+  var stage = el('imageStage');
+  if(!stage) return;
+
+  var VERTEX = 460;      /* موضع منتصف سطح المرآة على المحور — مطابق لـOPT */
+  var PXCM   = 6.6;      /* بكسل لكل سنتيمتر: 5 cm ← x=427 · 60 cm ← x=64 */
+  var HALF   = 130;      /* نصف ارتفاع قوس المرآة */
+  var OFF    = 46;       /* سُمك وجه المرآة — والصورة تُرسم داخله */
+  var IMGX   = VERTEX + 23;
+  var FLIP   = 20;       /* موضع الانقلاب بالسنتيمتر */
+  var SIZES  = { small: 36, big: 54 };
+
+  var kind = 'concave', size = 'small';
+  var seen = { concave: [], convex: [], flat: [] };
+  var taskDone = false, patternDone = false, tableShown = false;
+  var flipTries = 0, helpStage = 0, bonusWrong = 0;
+
+  var defs  = OPT.svg('defs', {});
+  var clip  = OPT.svg('clipPath', { id:'s5BandClip' });
+  var clipP = OPT.svg('path', { d:'' });
+  clip.appendChild(clipP); defs.appendChild(clip); stage.appendChild(defs);
+
+  var mirrorG = OPT.svg('g', {});
+  var rulerG  = OPT.svg('g', {});
+  var imgG    = OPT.svg('g', { 'clip-path':'url(#s5BandClip)' });
+  var objG    = OPT.svg('g', {});
+  var noteG   = OPT.svg('g', {});
+  [mirrorG, rulerG, imgG, objG, noteG].forEach(function(g){ stage.appendChild(g); });
+
+  function mirrorOf(k){
+    if(k === 'flat') return { flat:true, x:VERTEX };
+    return OPT.MIRRORS[k];
+  }
+  /* وجه المرآة شريطٌ بين قوسين: القوس العاكس، ومثله مزاحًا بعيدًا
+     عن الضوء. والعلامة المعكوسة في القوس الثاني لأنّه يُرسم رجوعًا. */
+  function bandPath(m){
+    if(m.flat){
+      var y1 = OPT.AXIS - HALF, y2 = OPT.AXIS + HALF;
+      return 'M ' + m.x + ' ' + y1 + ' L ' + m.x + ' ' + y2 +
+             ' L ' + (m.x + OFF) + ' ' + y2 + ' L ' + (m.x + OFF) + ' ' + y1 + ' Z';
+    }
+    var a = OPT.point(m, -HALF), b = OPT.point(m, HALF);
+    var sweep = m.sign < 0 ? 1 : 0;
+    return 'M ' + a.x.toFixed(2) + ' ' + a.y.toFixed(2) +
+           ' A ' + m.R + ' ' + m.R + ' 0 0 ' + sweep + ' ' + b.x.toFixed(2) + ' ' + b.y.toFixed(2) +
+           ' L ' + (b.x + OFF).toFixed(2) + ' ' + b.y.toFixed(2) +
+           ' A ' + m.R + ' ' + m.R + ' 0 0 ' + (1 - sweep) + ' ' +
+                   (a.x + OFF).toFixed(2) + ' ' + a.y.toFixed(2) + ' Z';
+  }
+  function backMirror(m){
+    return m.flat ? { flat:true, x:m.x + OFF }
+                  : { cx:m.cx + OFF, cy:m.cy, R:m.R, sign:m.sign };
+  }
+
+  /* قطعة الشطرنج بإحداثيات صريحة لا بـtransform: الاختبار الهندسي
+     يقيس أرقامًا، وjsdom لا يحسب المصفوفات. dir = +1 معتدلة، −1 مقلوبة. */
+  function pawn(g, cx, base, H, dir, cls){
+    var e = dir;
+    g.appendChild(OPT.svg('rect', {
+      x:(cx - H*0.20).toFixed(2), y:(e > 0 ? base - H*0.08 : base).toFixed(2),
+      width:(H*0.40).toFixed(2), height:(H*0.08).toFixed(2), rx:2, 'class':cls }));
+    g.appendChild(OPT.svg('path', { 'class':cls, d:
+      'M ' + (cx - H*0.16).toFixed(2) + ' ' + (base - e*H*0.08).toFixed(2) +
+      ' L ' + (cx + H*0.16).toFixed(2) + ' ' + (base - e*H*0.08).toFixed(2) +
+      ' L ' + (cx + H*0.07).toFixed(2) + ' ' + (base - e*H*0.62).toFixed(2) +
+      ' L ' + (cx - H*0.07).toFixed(2) + ' ' + (base - e*H*0.62).toFixed(2) + ' Z' }));
+    g.appendChild(OPT.svg('circle', {
+      cx:cx.toFixed(2), cy:(base - e*H*0.74).toFixed(2), r:(H*0.12).toFixed(2), 'class':cls }));
+  }
+
+  /* 1/u + 1/v = 1/f · m = −v/u. المستوية m = 1، والمقعّرة عند u = f
+     بلا صورة (المقام صفر) — تُرجع null لا رقمًا لا نهائيًّا. */
+  function magnify(u, k){
+    if(k === 'flat') return 1;
+    var f = (k === 'concave') ? 20 : -20;
+    if(k === 'concave' && u === FLIP) return null;
+    var v = 1 / (1/f - 1/u);
+    return -v / u;
+  }
+
+  function drawRuler(){
+    rulerG.textContent = '';
+    rulerG.appendChild(OPT.svg('line', {
+      x1:(VERTEX - 60*PXCM).toFixed(1), y1:OPT.AXIS,
+      x2:(VERTEX - 3*PXCM).toFixed(1),  y2:OPT.AXIS, 'class':'ruler-line' }));
+    for(var c = 5; c <= 60; c += 5){
+      var x = VERTEX - c*PXCM;
+      rulerG.appendChild(OPT.svg('line', {
+        x1:x.toFixed(1), y1:OPT.AXIS + 2, x2:x.toFixed(1),
+        y2:(OPT.AXIS + (c % 10 === 0 ? 16 : 9)), 'class':'ruler-tick' }));
+      if(c % 10 === 0){
+        var t = OPT.svg('text', { x:x.toFixed(1), y:OPT.AXIS + 34, 'class':'ruler-num' });
+        t.textContent = String(c);
+        rulerG.appendChild(t);
+      }
+    }
+    /* رمز العين: من هنا تنظر. بلا مصطلح ولا نقاط — عتبة درس 03. */
+    var e = OPT.svg('g', {});
+    e.appendChild(OPT.svg('path', { 'class':'eye-mark',
+      d:'M 62 96 Q 78 84 94 96 Q 78 108 62 96 Z' }));
+    e.appendChild(OPT.svg('circle', { cx:78, cy:96, r:3.6, 'class':'eye-pupil' }));
+    var lbl = OPT.svg('text', { x:78, y:74, 'class':'eye-note' });
+    lbl.textContent = 'أنت تنظر من هنا';
+    e.appendChild(lbl);
+    rulerG.appendChild(e);
+  }
+
+  function draw(){
+    var u = parseInt(el('s5Slider').value, 10);
+    if(isNaN(u)) u = 8;
+    var m  = mirrorOf(kind);
+    var H  = SIZES[size];
+
+    mirrorG.textContent = ''; imgG.textContent = '';
+    objG.textContent = '';    noteG.textContent = '';
+
+    var d = bandPath(m);
+    clipP.setAttribute('d', d);
+    mirrorG.appendChild(OPT.svg('path', { d:d, 'class':'mirror-body' }));
+    OPT.hatchMarks(backMirror(m), HALF, 9, 13).forEach(function(h){
+      mirrorG.appendChild(OPT.svg('line', {
+        x1:h.x1.toFixed(2), y1:h.y1.toFixed(2),
+        x2:h.x2.toFixed(2), y2:h.y2.toFixed(2), 'class':'ruler-tick' }));
+    });
+    /* الحامل: المرآة قائمة على منضدة لا معلّقة في الهواء */
+    mirrorG.appendChild(OPT.svg('line', {
+      x1:IMGX, y1:OPT.AXIS + HALF, x2:IMGX, y2:OPT.AXIS + HALF + 30, 'class':'stand' }));
+    mirrorG.appendChild(OPT.svg('line', {
+      x1:IMGX - 26, y1:OPT.AXIS + HALF + 30, x2:IMGX + 26,
+      y2:OPT.AXIS + HALF + 30, 'class':'stand' }));
+
+    pawn(objG, VERTEX - u*PXCM, OPT.AXIS, H, 1, 'obj-shape');
+
+    var mag = magnify(u, kind);
+    if(mag === null){
+      var t = OPT.svg('text', { x:230, y:110, 'class':'stage-note' });
+      t.textContent = T.s5.noImage;
+      noteG.appendChild(t);
+      stage.setAttribute('data-image', 'none');
+      stage.removeAttribute('data-m');
+    }else{
+      var s = Math.min(2.2, Math.max(0.25, Math.abs(mag)));
+      pawn(imgG, IMGX, OPT.AXIS, H*s, mag > 0 ? 1 : -1, 'img-shape');
+      stage.setAttribute('data-image', mag > 0 ? 'upright' : 'inverted');
+      stage.setAttribute('data-m', mag.toFixed(4));
+    }
+    stage.setAttribute('data-u', String(u));
+    stage.setAttribute('data-mirror', kind);
+    stage.setAttribute('data-size', size);
+    txt('s5Read', u + ' cm');
+  }
+
+  /* ── التبديل بين الأزرار ── */
+  function setActive(row, btn){
+    var all = document.querySelectorAll('#' + row + ' .btn');
+    Array.prototype.forEach.call(all, function(b){ b.classList.remove('is-active'); });
+    btn.classList.add('is-active');
+  }
+  function pickSize(name, btn){
+    size = name; setActive('s5SizeRow', btn); draw();
+    if(name === 'big' && !el('s5BonusBox').hidden) enableBonus();
+  }
+  function pickMirror(name, btn){
+    if(btn.disabled) return;
+    kind = name; setActive('s5MirrorRow', btn); draw(); settle();
+  }
+  el('s5SizeSmall').addEventListener('click', function(){ pickSize('small', this); });
+  el('s5SizeBig')  .addEventListener('click', function(){ pickSize('big',   this); });
+  el('s5MirrorCC') .addEventListener('click', function(){ pickMirror('concave', this); });
+  el('s5MirrorCX') .addEventListener('click', function(){ pickMirror('convex',  this); });
+  el('s5MirrorFL') .addEventListener('click', function(){ pickMirror('flat',    this); });
+
+  /* ── الملاحظة تُحتسب عند استقرار المنزلق لا أثناء جرّه ── */
+  function bucket(u){ return Math.round(u/5)*5; }
+  function settle(){
+    var u = parseInt(el('s5Slider').value, 10);
+    if(isNaN(u)) return;
+    var k = bucket(u), list = seen[kind];
+    if(list.indexOf(k) === -1) list.push(k);
+
+    if(!taskDone && kind === 'concave' && seen.concave.length >= 3 && el('s5TaskBox').hidden){
+      show('s5TaskBox');
+      fbNeutral('fb-s5Stage', T.s5.taskCue);
+    }
+    if(taskDone && kind === 'convex' && seen.convex.length >= 3 && el('s5PatternBox').hidden){
+      show('s5PatternBox');
+    }
+    maybeTable();
+  }
+  function maybeTable(){
+    if(tableShown || !patternDone) return;
+    if(seen.convex.length < 3 || seen.flat.length < 3) return;
+    tableShown = true;
+    show('s5TableBox');
+  }
+
+  var settleT = null;
+  var slider = el('s5Slider');
+  slider.addEventListener('input', function(){
+    draw();
+    if(settleT !== null) window.clearTimeout(settleT);
+    settleT = window.setTimeout(function(){ settleT = null; settle(); }, 420);
+  });
+  ['change', 'pointerup', 'keyup', 'blur'].forEach(function(ev){
+    slider.addEventListener(ev, function(){
+      if(settleT !== null){ window.clearTimeout(settleT); settleT = null; }
+      settle();
+    });
+  });
+
+  /* ── المهمّة: عند أيّ مسافة انقلبت الصورة؟ ── */
+  function arabicDigits(s){
+    return String(s).replace(/[\u0660-\u0669]/g, function(c){ return String(c.charCodeAt(0) - 0x0660); })
+                    .replace(/[\u06F0-\u06F9]/g, function(c){ return String(c.charCodeAt(0) - 0x06F0); });
+  }
+  function unlockMirrors(){
+    el('s5MirrorCX').disabled = false;
+    el('s5MirrorFL').disabled = false;
+    fbNeutral('fb-s5Stage', T.s5.unlock);
+    show('s5BonusBox');
+    fbNeutral('fb-u3l1-bigger-object-bonus', T.s5.bonusGate);
+    if(size === 'big') enableBonus();
+  }
+  function finishTask(viaHelp){
+    if(taskDone) return;
+    taskDone = true;
+    el('s5FlipInput').disabled = true;
+    el('s5FlipBtn').disabled = true;
+    el('s5FlipBtn').classList.add('demoted');
+    el('s5FlipHelpBtn').hidden = true;
+    if(window.XP){
+      window.XP.claim('u3l1-flip-task',
+        viaHelp ? Math.round(window.XP.POINTS.TASK / 2) : window.XP.POINTS.TASK,
+        viaHelp ? 'أتممتَ مهمّة الانقلاب بمعونة' : 'حدّدتَ المسافة التي تنقلب عندها الصورة');
+    }
+    unlockMirrors();
+  }
+  el('s5FlipBtn').addEventListener('click', function(){
+    if(taskDone) return;
+    var raw = (el('s5FlipInput').value || '').trim();
+    if(!raw){ fbNeutral('fb-u3l1-flip-task', T.s5.flipEmpty); return; }
+    var n = parseInt(arabicDigits(raw).replace(/[^0-9-]/g, ''), 10);
+    if(n === 19 || n === 20 || n === 21){
+      var fb = el('fb-u3l1-flip-task');
+      fb.textContent = T.s5.flipDone;
+      fb.className = 'explore-feedback is-correct';
+      fb.hidden = false;
+      if(window.Sounds) window.Sounds.playSnap();
+      finishTask(false);
+      return;
+    }
+    flipTries++;
+    fbNeutral('fb-u3l1-flip-task', T.s5.flipHint);
+    if(window.Sounds) window.Sounds.playWrong();
+    /* مخرج النجاة: لا يُترك طالب في حلقة. أوّل ضغطة تضعه عند الموضع
+       المجاور فيرى بعينه، والثانية تكشف الرقم بنصف النقاط. */
+    if(flipTries >= 3) el('s5FlipHelpBtn').hidden = false;
+  });
+  el('s5FlipInput').addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){ e.preventDefault(); el('s5FlipBtn').dispatchEvent(new window.Event('click')); }
+  });
+  el('s5FlipHelpBtn').addEventListener('click', function(){
+    if(taskDone) return;
+    if(helpStage === 0){
+      helpStage = 1;
+      slider.value = '18';
+      kind = 'concave';
+      setActive('s5MirrorRow', el('s5MirrorCC'));
+      draw();
+      fbNeutral('fb-u3l1-flip-task', T.s5.helpStep1);
+      this.textContent = T.s5.helpStep2;
+      return;
+    }
+    el('s5FlipInput').value = '20';
+    fbNeutral('fb-u3l1-flip-task', T.s5.helpModel);
+    finishTask(true);
+  });
+
+  /* ── التحدّي الاختياري ── */
+  function enableBonus(){
+    var g = document.querySelector('.quiz-options[data-q="u3l1-bigger-object-bonus"]');
+    if(!g) return;
+    var rs = g.querySelectorAll('input[type="radio"]');
+    if(!rs.length || !rs[0].disabled) return;
+    Array.prototype.forEach.call(rs, function(r){ r.disabled = false; });
+    fbNeutral('fb-u3l1-bigger-object-bonus', T.s5.bonusOn);
+  }
+
+  window.Quiz.practice({
+    'u3l1-bigger-object-bonus': { correctText:T.s5.bonus.correct, hints:T.s5.bonus }
+  }, {
+    onWrong: function(){ bonusWrong++; },
+    onSolved: function(){
+      if(!window.XP) return;
+      /* مخرج النجاة في سؤال اختيار هو نصف النقاط بعد محاولتين:
+         السؤال لا يُغلق أبدًا، والطالب لا يُحبَس — لكن الجائزة تتبع
+         الاستنتاج لا التخمين المتكرّر. */
+      window.XP.claim('u3l1-bigger-object-bonus',
+        bonusWrong >= 2 ? Math.round(window.XP.POINTS.BONUS / 2) : window.XP.POINTS.BONUS,
+        'اختبرتَ أثر حجم الجسم على موضع الانقلاب');
+    }
+  });
+
+  window.Quiz.practice({
+    'u3l1-pattern-convex': { xpId:'u3l1-pattern-convex', xp:'PATTERN',
+      reason:'استنتجتَ نمط صورة المرآة المحدّبة',
+      correctText:T.s5.pattern.correct, hints:T.s5.pattern }
+  }, { onSolved: function(){ patternDone = true; maybeTable(); } });
+
+  window.Chips.hints({
+    'معتدلة وأكبر من الجسم':   T.s5.chipHints.near,
+    'مقلوبة وأصغر من الجسم':   T.s5.chipHints.far,
+    'معتدلة وأصغر من الجسم':   T.s5.chipHints.cx,
+    'معتدلة وبحجم الجسم نفسه': T.s5.chipHints.fl
+  });
+  window.Chips.onDone('u3l1-image-table', function(){
+    show('s5CompareBox');
+  });
+
+  window.Quiz.practice({
+    'u3l1-compare-flat': { xpId:'u3l1-compare-flat', xp:'MCQ',
+      reason:'ميّزتَ صورة المرآة المستوية عن صورتي المرآتين الكرويتين',
+      correctText:T.s5.compare.correct, hints:T.s5.compare }
+  }, { onSolved: function(){ show('s5Closing'); show('s5done'); } });
+
+  drawRuler();
+  draw();
+  fbNeutral('fb-s5Stage', T.s5.explore);
+}
+
+/* ─────────────── المحطة 6 — التقييم الختامي ───────────────
+   الشهادة تُربط داخل Quiz.evaluate وحدها: لا نداء Certificate.finish
+   في هذا السكربت إطلاقًا. */
+function normE10(v){
+  var s = window.Quiz.normalizeAr(v);
+  /* النقيض يُفحص أوّلًا: «لا تتفرق» و«تتجمع» كلاهما مرفوض، ولا
+     يُنقذهما وجود جذر التفرّق في نفيٍ أو مقارنة. */
+  if(/(تجمع|تلتقي|تلاقي|توازي|تتوازي|تركز)/.test(s)) return s;
+  if(/(^|\s)[وف]?(لا|ما|لم|لن|ليس)\s+\S{0,7}(فرق|شتت|باعد|بعد)/.test(s)) return s;
+  return /(فرق|شتت|باعد|تبعد|انتشر|تنتشر)/.test(s) ? 'مطابق' : s;
+}
+
+function station6(){
+  window.Quiz.evaluate({
+    title: 'ما نوع الصور التي تكوّنها المرايا الكروية؟',
+    questions: [
+      { name:'u3l1-e1', why:T.eval.e1 },
+      { name:'u3l1-e2', why:T.eval.e2 },
+      { name:'u3l1-e3', why:T.eval.e3 },
+      { name:'u3l1-e4', why:T.eval.e4 },
+      { name:'u3l1-e5', why:T.eval.e5 },
+      { name:'u3l1-e6', why:T.eval.e6 },
+      { name:'u3l1-e7', why:T.eval.e7 },
+      { name:'u3l1-e8', why:T.eval.e8 },
+      { name:'u3l1-e9', why:T.eval.e9 },
+      { name:'e10', type:'text', input:'e10Input', button:'e10Btn', feedback:'fb-e10',
+        answer:'مطابق', normalize:normE10, why:T.eval.e10 }
+    ]
+  });
+}
 
 station1();
 station2();
